@@ -1,10 +1,12 @@
 class ListsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :restrict_list_access, only: [:show, :edit, :update, :destroy]
 
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = List.by_user(current_user)
   end
 
   # GET /lists/1
@@ -70,5 +72,11 @@ class ListsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
       params.require(:list).permit(:owner_id, :name)
+    end
+
+    def restrict_list_access
+      unless current_user.lists.include?(@list)
+        redirect_to lists_path, notice: "That's not your list"
+      end
     end
 end

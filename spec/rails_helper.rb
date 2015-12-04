@@ -7,6 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+require 'devise'
 require "shoulda/matchers"
 require 'support/controller_helpers'
 require 'support/feature_helpers'
@@ -39,6 +40,8 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
+  config.include Devise::TestHelpers, type: :controller
+  config.include Warden::Test::Helpers
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 
