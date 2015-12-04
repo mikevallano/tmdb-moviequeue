@@ -11,9 +11,15 @@ feature "Can sign up a new user" do
   end
 
   scenario "existing users can sign in" do
-    sign_in_user
+    sign_in_user(user)
 
     expect(page).to have_content("Signed in as: #{@email}")
+  end
+
+ scenario "user can sign out" do
+    sign_in_user(user)
+    click_link "Sign Out"
+    expect(page).to have_content("Signed out successfully")
   end
 
 end

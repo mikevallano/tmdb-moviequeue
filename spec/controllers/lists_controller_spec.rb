@@ -7,8 +7,6 @@ RSpec.describe ListsController, type: :controller do
   let(:list) { FactoryGirl.create(:list, :owner => user) }
   let(:list2) { FactoryGirl.create(:list, :owner => user2) }
   let(:invalid_list) { FactoryGirl.create(:invalid_list) }
-  # let(:log_in_user) { login_user(user) }
-  # let(:current_user) { User.find(log_in_user[0][0]) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
