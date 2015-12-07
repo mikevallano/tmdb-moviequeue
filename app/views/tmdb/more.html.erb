@@ -2,6 +2,14 @@
 
   <%= image_tag "http://image.tmdb.org/t/p/w150#{@result[:poster_path]}" %>
 
+  <p>Add this movie to a list:</p>
+  <p><%= form_for(Listing.new) do |f| %>
+        <%= f.collection_select :list_id, current_user.lists, :id, :name %>
+        <%= hidden_field_tag :tmdb_id, @movie_id %>
+        <%= f.submit "add movie to list" %>
+      <% end %>
+  </p>
+
   <p>Release Date: <%= @result[:release_date] %></p>
   <p>TMDB Vote Average: <%= @result[:vote_average] %></p>
   <p>Genres: <%= @result[:genres].map {|g| g[:name] }.join(", ") %></p>

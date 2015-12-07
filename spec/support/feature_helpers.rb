@@ -21,4 +21,18 @@ module FeatureHelpers
     @current_user = User.find_by_email(user.email)
   end
 
+  def api_search_for_movie
+    VCR.use_cassette('tmdb_search') do
+      fill_in "Enter Title", with: 'fargo'
+      click_button 'Search'
+    end
+  end
+
+  def api_more_info
+    VCR.use_cassette('tmdb_more') do
+      click_link('More info', match: :first)
+    end
+
+  end
+
 end

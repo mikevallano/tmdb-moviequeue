@@ -3,5 +3,8 @@ class List < ActiveRecord::Base
 
   belongs_to :owner, :class_name => "User"
 
+  has_many :listings
+  has_many :movies, through: :listings
+
   scope :by_user, lambda { |user| where(:owner_id => user.id) }
 end

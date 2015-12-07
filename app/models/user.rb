@@ -5,4 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lists, :foreign_key => "owner_id"
+  has_many :listings, through: :lists
+
+  has_many :movies, through: :listings
 end
