@@ -1,0 +1,31 @@
+<% if !@movie_title.present? %>
+
+  <h1>Search the TMDB Database to Find a Movie</h1>
+
+  <%= form_tag '/tmdb/search', method: :get do %>
+    <%= label_tag :movie_title, "Enter Title: " %>
+    <%= text_field_tag :movie_title %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+<% else %>
+
+  <h2>Here are the matching movies from TMDB</h2>
+  <br><br>
+
+  <%= form_tag '/tmdb/search', method: :get do %>
+    <%= label_tag :movie_title, "Enter Title: " %>
+    <%= text_field_tag :movie_title %> <%= submit_tag "Search Again" %>
+  <% end %>
+
+     <% @results.each do |result| %>
+       <div>
+           <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+          <h3><%= result[:title] %></h3>
+          <p><%= result[:release_date] %></p>
+          <p><%= result[:vote_average] %></p>
+          <p><%= result[:overview] %></p>
+          <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+      <% end %>
+
+<% end %>

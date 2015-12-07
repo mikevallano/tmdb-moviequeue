@@ -1,0 +1,14 @@
+<h1>Movie: <%= @result[:title] %></h1>
+
+  <%= image_tag "http://image.tmdb.org/t/p/w150#{@result[:poster_path]}" %>
+
+  <p>Release Date: <%= @result[:release_date] %></p>
+  <p>TMDB Vote Average: <%= @result[:vote_average] %></p>
+  <p>Genres: <%= @result[:genres].map {|g| g[:name] }.join(", ") %></p>
+  <p>Overview: <%= @result[:overview] %></p>
+  <p>Trailer:</p>
+  <% if @result[:trailers][:youtube].present? %>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @result[:trailers][:youtube][0][:source] %>" frameborder="0" allowfullscreen></iframe>
+  <% else %>
+    <a href="https://www.youtube.com/results?search_query=<%= @result[:title] %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
+  <% end %>
