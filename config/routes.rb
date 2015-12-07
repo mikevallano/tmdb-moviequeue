@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :movies
   devise_for :users, :controllers => {:registrations => "registrations"}
 
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
