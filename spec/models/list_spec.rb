@@ -12,6 +12,8 @@ RSpec.describe List, type: :model do
     end
 
     it { is_expected.to belong_to(:owner) }
+    it { is_expected.to have_many(:listings) }
+    it { is_expected.to have_many(:movies) }
 
     it "belongs has an owner_id" do
       expect(list.owner_id).not_to be nil

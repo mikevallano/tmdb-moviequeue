@@ -11,6 +11,9 @@ RSpec.describe Movie, type: :model do
       expect(movie).to be_valid
     end
 
+    it { is_expected.to have_many(:listings) }
+    it { is_expected.to have_many(:lists) }
+
   end #valid factory context
 
   it "is invalid without a tmdb_id" do
