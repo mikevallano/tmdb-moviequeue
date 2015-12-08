@@ -66,30 +66,31 @@ RSpec.describe ListsController, type: :controller do
       context "with valid params" do
         it "creates a new List" do
           expect {
-            post :create, {list: FactoryGirl.attributes_for(:list)}
+            # post :create, {list: FactoryGirl.attributes_for(:list)}
+            post :create, :list => valid_attributes
           }.to change(List, :count).by(1)
         end
 
         it "assigns a newly created list as @list" do
-          post :create, {list: FactoryGirl.attributes_for(:list)}
+          post :create, :list => valid_attributes
           expect(assigns(:list)).to be_a(List)
           expect(assigns(:list)).to be_persisted
         end
 
         it "redirects to the created list" do
-          post :create, {list: FactoryGirl.attributes_for(:list)}
+          post :create, :list => valid_attributes
           expect(response).to redirect_to(List.last)
         end
       end
 
       context "with invalid params" do
         it "assigns a newly created but unsaved list as @list" do
-          post :create, {list: FactoryGirl.attributes_for(:invalid_list)}
+          post :create, :list => invalid_attributes
           expect(assigns(:list)).to be_a_new(List)
         end
 
         it "re-renders the 'new' template" do
-          post :create, {list: FactoryGirl.attributes_for(:invalid_list)}
+          post :create, :list => invalid_attributes
           expect(response).to render_template("new")
         end
       end
@@ -106,13 +107,13 @@ RSpec.describe ListsController, type: :controller do
         end
 
         it "assigns the requested list as @list" do
-          put :update, {:id => list.to_param, :list => FactoryGirl.attributes_for(:list) }
+          put :update, {:id => list.to_param, :list => valid_attributes }
           expect(assigns(:list)).to eq(list)
         end
 
         it "redirects to the list" do
           list
-          put :update, {:id => list.to_param, :list => FactoryGirl.attributes_for(:list) }
+          put :update, {:id => list.to_param, :list => valid_attributes }
           expect(response).to redirect_to(list)
         end
       end
@@ -120,13 +121,13 @@ RSpec.describe ListsController, type: :controller do
       context "with invalid params" do
         it "assigns the list as @list" do
           list
-          put :update, {:id => list.to_param, :list => FactoryGirl.attributes_for(:invalid_list)}
+          put :update, {:id => list.to_param, :list => invalid_attributes }
           expect(assigns(:list)).to eq(list)
         end
 
         it "re-renders the 'edit' template" do
           list
-          put :update, {:id => list.to_param, :list => FactoryGirl.attributes_for(:invalid_list)}
+          put :update, {:id => list.to_param, :list => invalid_attributes }
           expect(response).to render_template("edit")
         end
       end
@@ -182,14 +183,14 @@ RSpec.describe ListsController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-          post :create, {list: FactoryGirl.attributes_for(:list)}
+         post :create, :list => valid_attributes
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
 
       context "with invalid params" do
         before(:example) do
-          post :create, {list: FactoryGirl.attributes_for(:invalid_list)}
+          post :create, :list => invalid_attributes
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
