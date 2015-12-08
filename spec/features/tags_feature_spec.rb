@@ -3,12 +3,13 @@ require 'rails_helper'
 feature "User can create a new tag" do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:email) { FFaker::Internet.email }
 
   context "with signed in user" do
 
     scenario "users can tag a movie" do
 
-      sign_in_user(user)
+      sign_up_with(email, "password")
       visit(api_search_path)
       api_search_for_movie #method in features_helper
       api_more_info #method in features_helper
@@ -16,9 +17,11 @@ feature "User can create a new tag" do
       VCR.use_cassette('tmdb_add_movie') do
         click_button("add movie to list")
       end
-      fill_in "tags", with: "dark comedy"
+      click_link("movies")
+      fill_in "tag_list", with: "dark comedy"
       click_button("add tags", match: :first)
       expect(page).to have_content("added")
+      expect(page).to have_content("dark-comedy")
 
     end #user can tag movie
 

@@ -31,7 +31,7 @@ feature "User can visit the search page" do
     api_search_for_movie #method in features_helper
 
     api_more_info #method in features_helper
-    expect(page).to have_content("Genres: Crime, Drama, Thriller")
+    expect(page).to have_content("you betcha")
 
   end
 

@@ -8,4 +8,9 @@ class User < ActiveRecord::Base
   has_many :listings, through: :lists
 
   has_many :movies, through: :listings
+
+  has_many :taggings
+  has_many :tags, through: :taggings
+
+
 end
