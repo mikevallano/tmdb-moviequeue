@@ -2,17 +2,32 @@ require 'rails_helper'
 
 RSpec.describe TaggingsController, type: :controller do
 
-  let(:tagging) { FactoryGirl.create(:tagging) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:current_user) { login_with user }
+  let(:movie) { FactoryGirl.create(:movie) }
+  let(:tag_list) { "funny, scary" }
 
 
   describe "GET #create" do
     it "creates a new tagging" do
-      skip "skip until controller is implemented"
+      current_user
       movie
-      tmdb_id
       expect {
-        post :create, :tagging => { movie_id: movie.id }, tmdb_id: tmdb_id
-      }.to change(Tagging, :count).by(1)
+        post :create, :tagging => {}, movie_id: movie.id, tag_list: tag_list
+      }.to change(Tagging, :count).by(2)
+    end
+
+    it "does not create duplicate taggings" do
+      current_user
+      movie
+      expect {
+        post :create, :tagging => {}, movie_id: movie.id, tag_list: tag_list
+      }.to change(Tagging, :count).by(2)
+
+      expect {
+        post :create, :tagging => {}, movie_id: movie.id, tag_list: tag_list
+      }.to change(Tagging, :count).by(0)
+
     end
   end
 

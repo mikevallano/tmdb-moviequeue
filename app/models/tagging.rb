@@ -12,12 +12,12 @@ class Tagging < ActiveRecord::Base
 
   def self.create_taggings(tags, movie, user)
 
+    @movie = Movie.find(movie)
+    @current_user = user
+
     @cleantags = tags.split(',').map do |tag|
       tag.strip.gsub(' ','-')
     end
-
-    @movie = Movie.find(movie)
-    @current_user = user
 
     Tag.first_or_create_tags(@cleantags)
 

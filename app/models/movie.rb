@@ -18,6 +18,6 @@ class Movie < ActiveRecord::Base
   end
 
   def tag_list(user)
-    tags.by_user(user).uniq.map(&:name)
+    tags.by_user(user).map(&:name)
   end
 end

@@ -3,9 +3,9 @@ class MoviesController < ApplicationController
 
   def index
     if params["tag"]
-      @movies = Movie.by_user(current_user).tagged_with(params["tag"], current_user)
+      @movies = Movie.includes(:tags, :taggings).by_user(current_user).tagged_with(params["tag"], current_user)
     else
-      @movies = Movie.by_user(current_user)
+      @movies = Movie.includes(:taggings).by_user(current_user)
     end
   end
 
