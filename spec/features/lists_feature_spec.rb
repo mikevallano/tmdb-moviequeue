@@ -14,7 +14,6 @@ feature "User can create a new list" do
       click_link "New List"
       fill_in 'Name', with: 'test list one'
       expect { click_button 'Create List' }.to change(List, :count).by(1)
-      @list = List.last
       expect(page).to have_content("List was successfully created")
       click_link "Sign Out"
 
@@ -40,7 +39,6 @@ feature "User can create a new list" do
       click_link "New List"
       fill_in 'Name', with: 'test list one'
       click_button 'Create List'
-      @list = List.last
       click_link "Lists"
       click_link "Destroy"
       expect(page).to have_content("destroyed")
@@ -56,6 +54,7 @@ feature "User can create a new list" do
       click_link "Lists"
       click_link "New List"
       fill_in 'Name', with: 'test list one'
+      click_button 'Create List'
       @list = List.last
       click_link "Sign Out"
       sign_in_user(user2)
