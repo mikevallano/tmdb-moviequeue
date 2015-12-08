@@ -8,8 +8,8 @@ RSpec.describe MoviesController, type: :controller do
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
   let(:movie) { FactoryGirl.create(:movie) }
-
-  let(:valid_session) { {} }
+  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
+  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
 
   shared_examples_for 'with logged in user' do
 
@@ -53,6 +53,8 @@ RSpec.describe MoviesController, type: :controller do
     before :each do
       current_user
       movie
+      list
+      listing
     end
 
     it_behaves_like 'with logged in user'
