@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :membership do
-    list nil
-member_id 1
+    list
+    member
   end
 
 end

@@ -13,16 +13,8 @@ class Movie < ActiveRecord::Base
     joins(:lists).where(lists: { owner_id: user.id }).uniq
   end
 
-  # def self.tagged_with(name, user)
-  #   Tag.find_by_name!(name).movies.by_user(user)
-  # end
-
-  # def tag_list(user)
-  #   tags.by_user(user).map(&:name)
-  # end
-
-  def self.tagged_with(name, userlist)
-    Tag.by_user_or_list(userlist).find_by_name!(name).movies.uniq
+  def self.tagged_with(tag_name, userlist)
+    Tag.by_user_or_list(userlist).find_by_name!(tag_name).movies.uniq
   end
 
   def tag_list(userlist)
