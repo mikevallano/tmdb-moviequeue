@@ -22,5 +22,9 @@ class User < ActiveRecord::Base
     (self.lists | self.member_lists).uniq
   end
 
+  def all_movies
+    (self.movies | self.member_movies).uniq
+  end
+
 
 end

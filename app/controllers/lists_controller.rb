@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.by_user(current_user)
+    @lists = current_user.all_lists
   end
 
   # GET /lists/1
@@ -75,7 +75,7 @@ class ListsController < ApplicationController
     end
 
     def restrict_list_access
-      unless current_user.lists.include?(@list)
+      unless current_user.all_lists.include?(@list)
         redirect_to lists_path, notice: "That's not your list"
       end
     end

@@ -6,9 +6,9 @@ class Tag < ActiveRecord::Base
   has_many :movies, through: :taggings
   has_many :users, through: :taggings
 
-  # def self.by_user(user)
-  #   joins(:taggings).where(taggings: { user_id: user.id }).uniq
-  # end
+  def self.by_user(user)
+    joins(:taggings).where(taggings: { user_id: user.id }).uniq
+  end
 
   # def self.by_list(list)
   #   by_user(:user => List.find(list.id).members)
@@ -18,10 +18,7 @@ class Tag < ActiveRecord::Base
     if userlist.is_a?(User) || !userlist.members.present?
       joins(:taggings).where(taggings: { user_id: userlist.id }).uniq
     else
-      userlist.members.each do |member|
-        joins(:taggings).where(taggings: { user_id: member.id }).uniq
-        # by_user_or_list(member) #TODO: check this out to try to call the method itself
-      end
+      joins(:taggings).where(taggings: { user_id: userlist.members.ids }).uniq
     end
   end
 
