@@ -18,7 +18,7 @@
       <tr>
         <td><%= movie.title  %></td>
         <td><%= link_to 'Remove from this list', delete_listing_path(@list, movie), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= raw movie.tags.by_user(current_user).map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+          <td><%= raw movie.tags.by_user_or_list(current_user).map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></td>
         <td>
           <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "tags:") %>
