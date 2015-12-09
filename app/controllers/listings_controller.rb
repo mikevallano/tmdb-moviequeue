@@ -5,6 +5,7 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @tmdb_id = params[:tmdb_id]
+    @user_id = params[:user_id]
 
     unless Movie.exists?(tmdb_id: @tmdb_id)
       tmdb_handler_add_movie(@tmdb_id)
@@ -12,6 +13,7 @@ class ListingsController < ApplicationController
 
     @movie = Movie.find_by_tmdb_id(@tmdb_id)
     @listing.movie_id = @movie.id
+    @listing.user_id = @user_id
 
     respond_to do |format|
       if @listing.save

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ListingsController, type: :controller do
 
+  let(:user) { FactoryGirl.create(:user) }
+  let(:current_user) { login_with user }
   let(:movie) { FactoryGirl.create(:movie) }
   let(:tmdb_id) { movie.tmdb_id }
   let(:valid_attributes) { {tmdb_id: tmdb_id} }
