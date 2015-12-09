@@ -20,6 +20,7 @@ class Tag < ActiveRecord::Base
     else
       userlist.members.each do |member|
         joins(:taggings).where(taggings: { user_id: member.id }).uniq
+        # by_user_or_list(member) #TODO: check this out to try to call the method itself
       end
     end
   end
