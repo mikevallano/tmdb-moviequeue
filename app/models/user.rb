@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
   has_many :taggings
   has_many :tags, through: :taggings
 
+  has_many :sent_invites, :class_name => "Invite",
+  :foreign_key => "sender_id"
+
+  has_many :received_invites, :class_name => "Invite",
+  :foreign_key => "receiver_id"
+
   def all_lists
     (self.lists | self.member_lists).uniq
   end

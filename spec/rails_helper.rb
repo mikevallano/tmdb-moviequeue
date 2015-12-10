@@ -11,6 +11,7 @@ require 'devise'
 require "shoulda/matchers"
 require 'support/controller_helpers'
 require 'support/feature_helpers'
+require 'support/mailer_helpers'
 require 'support/vcr'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -45,6 +46,8 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
+  config.include MailerHelpers
+  config.before(:each) { reset_mailer }
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

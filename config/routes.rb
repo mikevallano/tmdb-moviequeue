@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
   get 'tmdb/more', to: 'tmdb#more', as: :more_info
 
+  resources :invites, only: [:create]
+
   root 'pages#home'
   get 'pages/about'
 

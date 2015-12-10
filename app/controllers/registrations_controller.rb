@@ -7,6 +7,13 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     build_resource({})
     set_minimum_password_length
+
+     if params[:token].present?
+      @token = params[:token]
+      @invite = Invite.find_by_token(@token)
+      resource.email = @invite.email
+    end
+
     yield resource if block_given?
     respond_with self.resource
   end
@@ -15,7 +22,17 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    resource.save
+    if params[:token].present?
+      @token = params[:token]
+      @invite = Invite.find_by_token(@token)
+      resource.email = @invite.email
+      resource.save
+      resource.memberships << Membership.new(member_id: resource.id, list_id: @invite.list_id)
+
+    else
+      resource.save
+    end
+
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
