@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214204436) do
+ActiveRecord::Schema.define(version: 20151214212646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,19 @@ ActiveRecord::Schema.define(version: 20151214204436) do
   add_index "reviews", ["movie_id"], name: "index_reviews_on_movie_id", using: :btree
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
+  create_table "screenings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "movie_id"
+    t.date     "date_watched"
+    t.string   "location_watched"
+    t.text     "notes"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "screenings", ["movie_id"], name: "index_screenings_on_movie_id", using: :btree
+  add_index "screenings", ["user_id"], name: "index_screenings_on_user_id", using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "movie_id"
@@ -133,6 +146,8 @@ ActiveRecord::Schema.define(version: 20151214204436) do
   add_foreign_key "ratings", "users"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
+  add_foreign_key "screenings", "movies"
+  add_foreign_key "screenings", "users"
   add_foreign_key "taggings", "movies"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"

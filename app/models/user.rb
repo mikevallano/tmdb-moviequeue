@@ -25,11 +25,15 @@ class User < ActiveRecord::Base
   :foreign_key => "receiver_id"
 
   has_many :reviews
-  has_many :reviewed_movies, :through => :reviews,
+  has_many :reviewed_movies, through: :reviews,
   :source => :movie
 
   has_many :ratings
-  has_many :rated_movies, :through => :ratings,
+  has_many :rated_movies, through: :ratings,
+  :source => :movie
+
+  has_many :screenings
+  has_many :screened_movies, through: :screenings,
   :source => :movie
 
   def all_lists

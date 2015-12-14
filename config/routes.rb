@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show] do
     resources :reviews
     resources :ratings
+    resources :screenings
   end
   resources :lists
   delete '/listings/:list_id/:movie_id', to: 'listings#destroy', as: :delete_listing

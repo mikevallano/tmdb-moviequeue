@@ -13,6 +13,12 @@ class Movie < ActiveRecord::Base
 
   has_many :ratings
 
+  has_many :screenings
+
+  def times_seen_by(user)
+    Screening.where(user_id: user.id, movie_id: self.id).count
+  end
+
   def self.by_user(user)
     joins(:lists).where(lists: { owner_id: user.id }).uniq
   end
