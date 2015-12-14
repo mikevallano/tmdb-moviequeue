@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
   has_many :reviewed_movies, :through => :reviews,
   :source => :movie
 
+  has_many :ratings
+  has_many :rated_movies, :through => :ratings,
+  :source => :movie
+
   def all_lists
     (self.lists | self.member_lists).uniq
   end

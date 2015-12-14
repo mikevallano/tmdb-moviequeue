@@ -26,12 +26,21 @@
 </p>
 
 <p>
-<% if current_user.reviewed_movies.include?(@movie) %>
-  <strong>My Review:</strong>
-  <%= Review.by_user(current_user).find_by_movie_id(@movie.id).body %>
-<% else %>
-  <%= link_to "Review this movie", new_movie_review_path(@movie) %></td>
-<% end %>
+  <% if current_user.reviewed_movies.include?(@movie) %>
+    <strong>My Review:</strong>
+    <%= @movie.reviews.by_user(current_user).first.body %>
+  <% else %>
+    <%= link_to "Review this movie", new_movie_review_path(@movie) %></td>
+  <% end %>
+</p>
+
+<p>
+  <% if current_user.rated_movies.include?(@movie) %>
+    <strong>My Rating</strong>
+    <%= @movie.ratings.by_user(current_user).first.value %>
+  <% else %>
+    <%= link_to "Rate this movie", new_movie_rating_path(@movie) %>
+  <% end %>
 </p>
 
 <%= link_to 'Back', movies_path %>

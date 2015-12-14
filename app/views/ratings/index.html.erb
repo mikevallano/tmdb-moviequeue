@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ratings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ratings.each do |rating| %>
+      <tr>
+        <td><%= rating.movie.title %></td>
+        <td><%= rating.value %></td>
+        <td><%= link_to 'Show', movie_rating_path(@movie, rating) %></td>
+        <td><%= link_to 'Edit', edit_movie_rating_path(@movie, rating) %></td>
+        <td><%= link_to 'Destroy', movie_rating_path(@movie, rating), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rating', new_movie_rating_path(@movie) %>

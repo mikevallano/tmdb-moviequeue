@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
 
-
-
   devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :movies, only: [:index, :show] do
     resources :reviews
+    resources :ratings
   end
   resources :lists
   delete '/listings/:list_id/:movie_id', to: 'listings#destroy', as: :delete_listing

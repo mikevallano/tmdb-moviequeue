@@ -11,6 +11,8 @@ class Movie < ActiveRecord::Base
 
   has_many :reviews
 
+  has_many :ratings
+
   def self.by_user(user)
     joins(:lists).where(lists: { owner_id: user.id }).uniq
   end
