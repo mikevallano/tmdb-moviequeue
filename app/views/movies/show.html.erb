@@ -1,26 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Tmdb:</strong>
-  <%= @movie.tmdb_id %>
-</p>
-
-<p>
-  <strong>Imdb:</strong>
-  <%= @movie.imdb_id %>
-</p>
-
-<p>
-  <strong>Backdrop path:</strong>
-  <%= @movie.backdrop_path %>
-</p>
-
-<p>
-  <strong>Poster path:</strong>
-  <%= @movie.poster_path %>
-</p>
-
-<p>
   <strong>Release date:</strong>
   <%= @movie.release_date %>
 </p>
@@ -43,6 +23,15 @@
 <p>
   <strong>Popularity:</strong>
   <%= @movie.popularity %>
+</p>
+
+<p>
+<% if current_user.reviewed_movies.include?(@movie) %>
+  <strong>My Review:</strong>
+  <%= Review.by_user(current_user).find_by_movie_id(@movie.id).body %>
+<% else %>
+  <%= link_to "Review this movie", new_movie_review_path(@movie) %></td>
+<% end %>
 </p>
 
 <%= link_to 'Back', movies_path %>

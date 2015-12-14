@@ -9,6 +9,8 @@ class Movie < ActiveRecord::Base
   has_many :taggings
   has_many :tags, through: :taggings
 
+  has_many :reviews
+
   def self.by_user(user)
     joins(:lists).where(lists: { owner_id: user.id }).uniq
   end

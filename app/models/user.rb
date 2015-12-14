@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
   has_many :received_invites, :class_name => "Invite",
   :foreign_key => "receiver_id"
 
+  has_many :reviews
+  has_many :reviewed_movies, :through => :reviews,
+  :source => :movie
+
   def all_lists
     (self.lists | self.member_lists).uniq
   end
