@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     resources :ratings
     resources :screenings
   end
+
   resources :lists
+  patch '/listings/:list_id/:movie_id', to: 'listings#update', as: :update_listing
   delete '/listings/:list_id/:movie_id', to: 'listings#destroy', as: :delete_listing
   resources :listings, only: [:create]
 

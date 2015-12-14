@@ -4,6 +4,11 @@ feature "User can create a new list" do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
+  let(:movie) { FactoryGirl.create(:movie) }
+  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
+  let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
+  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
 
   context "with signed in user" do
 

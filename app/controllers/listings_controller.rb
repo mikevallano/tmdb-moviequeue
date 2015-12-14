@@ -15,12 +15,31 @@ class ListingsController < ApplicationController
     @listing.movie_id = @movie.id
     @listing.user_id = @user_id
 
+    #TODO: clean this up
+    unless params[:priority].present?
+      @listing.priority = 5
+    end
+
     respond_to do |format|
       if @listing.save
         format.html { redirect_to movies_path, notice: 'added to your list.' }
         format.json { render :show, status: :created, location: @listing }
       else
         format.html { render :new }
+        format.json { render json: @listing.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    @listing = current_user.listings.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
+    @priority = params[:priority]
+    respond_to do |format|
+      if @listing.update_attributes(:priority => @priority)
+        format.html { redirect_to list_path(@listing.list_id), notice: 'Priority added.' }
+        format.json { render :show, status: :ok, location: @listing }
+      else
+        format.html { redirect_to list_path(@listing.list_id) }
         format.json { render json: @listing.errors, status: :unprocessable_entity }
       end
     end
@@ -38,7 +57,7 @@ class ListingsController < ApplicationController
   private
 
   def listing_params
-    params.require(:listing).permit(:list_id, :movie_id)
+    params.require(:listing).permit(:list_id, :movie_id, :priority)
   end
 
 end

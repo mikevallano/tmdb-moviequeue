@@ -27,6 +27,15 @@
             <%= submit_tag("add tags") %>
           <% end %>
         </td>
+
+        <td>Priority: <%= movie.listings.find_by(list_id: @list.id).priority %></td>
+        <td><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
+          <%= label_tag(:priority, "new priority:") %>
+          <%= number_field_tag(:priority) %>
+          <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
+          <%= submit_tag("Prioritize") %>
+        <% end %>
+        </td>
       </tr>
       <% end %>
 
