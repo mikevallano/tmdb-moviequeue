@@ -25,9 +25,9 @@ feature "Can sign up a new user" do
     expect(@current_user.lists.count).to eq(1)
   end
 
-  scenario "user has a default list with main_list=true after signing up" do
+  scenario "user has a default list with is_main=true after signing up" do
     sign_up_with(email, "password")
-    expect(@current_user.lists.first.main_list).to eq(true)
+    expect(@current_user.lists.first.is_main).to eq(true)
   end
 
 end
