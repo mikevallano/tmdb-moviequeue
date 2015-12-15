@@ -1,4 +1,5 @@
 class ListingsController < ApplicationController
+  before_action :authenticate_user!
 
   include TmdbHandler
 
@@ -49,7 +50,7 @@ class ListingsController < ApplicationController
     @listing = current_user.listings.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
     @listing.destroy
     respond_to do |format|
-      format.html { redirect_to movies_path, notice: 'Movie was removed from list.' }
+      format.html { redirect_to list_path(@listing.list_id), notice: 'Movie was removed from list.' }
       format.json { head :no_content }
     end
   end
