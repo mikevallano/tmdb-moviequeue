@@ -165,7 +165,7 @@ class RegistrationsController < Devise::RegistrationsController
 
    def add_queue
     if resource.persisted?
-      resource.lists.create(name: "my queue", main: true)
+      resource.lists.create(name: "my queue", main_list: true)
     end
   end
 end
