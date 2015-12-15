@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Release date:</strong>
-  <%= @movie.release_date %>
-</p>
-
-<p>
   <strong>Overview:</strong>
   <%= @movie.overview %>
 </p>
@@ -13,16 +8,6 @@
 <p>
   <strong>Trailer:</strong>
   <%= @movie.trailer %>
-</p>
-
-<p>
-  <strong>Vote average:</strong>
-  <%= @movie.vote_average %>
-</p>
-
-<p>
-  <strong>Popularity:</strong>
-  <%= @movie.popularity %>
 </p>
 
 <p>
@@ -45,10 +30,10 @@
 
 <p>
   <% if @movie.times_seen_by(current_user) > 0 %>
-  <strong>Movie has been watched.</strong>
+  <strong>Movie has been watched.</strong><br>
   <strong> <%= link_to "view my screenings", movie_screenings_path(@movie) %></strong>
   <% else %>
-    <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id, user_id: current_user.id }, movie_id: @movie.id), :method => :post %>
+    <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id, user_id: current_user.id }, movie_id: @movie.id), :method => :post %><br>
     <%= link_to "add a screening", new_movie_screening_path(@movie) %>
   <% end %>
 </p>
