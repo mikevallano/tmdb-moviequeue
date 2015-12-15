@@ -1,4 +1,5 @@
 class TmdbController < ApplicationController
+  before_action :authenticate_user!
 
   require 'open-uri'
   include TmdbHandler
