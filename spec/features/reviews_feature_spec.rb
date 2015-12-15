@@ -9,8 +9,9 @@ feature "User can create a new review" do
   let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
   let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
   let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
+  let(:review) { FactoryGirl.create(:review, user_id: user.id, movie_id: movie.id, body: "an epic win") }
 
-  context "with signed in user" do
+  context "from the movie show page" do
 
     scenario "users can create a review" do
 
@@ -53,7 +54,42 @@ feature "User can create a new review" do
 
     end #only current user's review
 
-  end #end signed-in context
+  end #end from movie show page
+
+  context 'from the list show page' do
+
+    scenario 'can add a review from the list show page' do
+
+      listing
+      list
+      movie
+
+      sign_in_user(user)
+      visit(list_path(list))
+      click_link "Review this movie"
+      fill_in 'Body', with: "Epic win!"
+      click_button "Create Review"
+      expect(page).to have_content("success")
+
+    end
+
+    scenario 'user sees existing review on the list show page' do
+
+      listing
+      list
+      movie
+      review
+
+      sign_in_user(user)
+      visit(list_path(list))
+      expect(page).not_to have_content("Review this movie")
+      expect(page).to have_content("My Review")
+      expect(page).to have_content("an epic win")
+
+
+    end
+
+  end #from list show page
 
 
 
