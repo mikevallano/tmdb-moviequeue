@@ -15,6 +15,14 @@ RSpec.describe List, type: :model do
     it { is_expected.to have_many(:listings) }
     it { is_expected.to have_many(:movies) }
 
+    it "has a default false is_main field" do
+      expect(list.is_main).to be false
+    end
+
+    it "has a default false is_public field" do
+      expect(list.is_public).to be false
+    end
+
     it "belongs has an owner_id" do
       expect(list.owner_id).not_to be nil
     end

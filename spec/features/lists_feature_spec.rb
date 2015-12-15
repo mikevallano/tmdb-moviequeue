@@ -49,6 +49,17 @@ feature "User can create a new list" do
       expect(page).to have_content("destroyed")
     end
 
+    scenario 'user can mark a list as public' do
+      sign_in_user(user)
+      click_link "Lists"
+      click_link "New List"
+      fill_in 'Name', with: 'test list one'
+      check 'list_is_public'
+      click_button 'Create List'
+      expect(List.last.is_public).to be true
+
+    end
+
   end #signed in user context
 
   context "user trying to access other users' lists" do

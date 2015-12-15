@@ -30,4 +30,9 @@ feature "Can sign up a new user" do
     expect(@current_user.lists.first.is_main).to eq(true)
   end
 
+  scenario "user's default list has a default false value for is_public after signing up" do
+    sign_up_with(email, "password")
+    expect(@current_user.lists.first.is_public).to eq(false)
+  end
+
 end

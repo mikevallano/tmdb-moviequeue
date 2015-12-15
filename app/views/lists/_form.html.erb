@@ -16,6 +16,11 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
+  <div class="field">
+    <%= f.label "Make public?" %> <br />
+    <%= f.check_box :is_public %> <br />
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

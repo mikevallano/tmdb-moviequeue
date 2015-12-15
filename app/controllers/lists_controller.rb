@@ -71,12 +71,14 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:owner_id, :name)
+      params.require(:list).permit(:owner_id, :name, :is_public)
     end
 
     def restrict_list_access
-      unless current_user.all_lists.include?(@list)
-        redirect_to lists_path, notice: "That's not your list"
+      if @list.is_public == false
+        unless current_user.all_lists.include?(@list)
+          redirect_to lists_path, notice: "That's not your list"
+        end
       end
     end
 end
