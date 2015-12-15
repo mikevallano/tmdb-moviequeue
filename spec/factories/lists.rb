@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :list do
     owner_id 1
     name { FFaker::HipsterIpsum.word }
+    main true
 
     factory :invalid_list do
       name nil

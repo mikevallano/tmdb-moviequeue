@@ -14,7 +14,7 @@ feature "Can sign up a new user" do
     expect(page).to have_content("Signed in as: #{@email}")
   end
 
- scenario "user can sign out" do
+  scenario "user can sign out" do
     sign_in_user(existing_user)
     click_link "Sign Out"
     expect(page).to have_content("Signed out successfully")
@@ -23,6 +23,11 @@ feature "Can sign up a new user" do
   scenario "user has a default list after signing up" do
     sign_up_with(email, "password")
     expect(@current_user.lists.count).to eq(1)
+  end
+
+  scenario "user has a default list with main=true after signing up" do
+    sign_up_with(email, "password")
+    expect(@current_user.lists.first.main).to eq(true)
   end
 
 end
