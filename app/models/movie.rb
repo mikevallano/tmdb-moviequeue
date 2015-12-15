@@ -28,6 +28,7 @@ class Movie < ActiveRecord::Base
   end
 
   def tag_list(userlist)
-    tags.by_user_or_list(userlist).map(&:name)
+    tags.by_user_or_list(userlist).map
   end
+
 end

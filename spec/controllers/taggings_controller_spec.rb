@@ -7,6 +7,8 @@ RSpec.describe TaggingsController, type: :controller do
   let(:invalid_user) { login_with nil }
   let(:movie) { FactoryGirl.create(:movie) }
   let(:tag_list) { "funny, scary" }
+  let(:tag) { FactoryGirl.create(:tag) }
+  let(:tagging) { FactoryGirl.create(:tagging, tag_id: tag.id, movie_id: movie.id, user_id: user.id) }
 
   context 'with a logged in user' do
 
@@ -35,11 +37,21 @@ RSpec.describe TaggingsController, type: :controller do
 
     describe "GET #destroy" do
       it "destroys the requested tagging" do
-        skip "skip until controller is implemented"
+        current_user
+        tagging
+
         expect {
-            delete :destroy, delete_tagging_path("#{tagging.list_id}", "#{tagging.movie_id}")
+            delete :destroy, { :tag_id => tagging.tag_id, movie_id: tagging.movie_id }
           }.to change(Tagging, :count).by(-1)
-        end
+      end
+
+      it "redirects to movies path after deleting" do
+        current_user
+        tagging
+
+        delete :destroy, { :tag_id => tagging.tag_id, movie_id: tagging.movie_id }
+        expect(response).to redirect_to(movie_path(tagging.movie_id))
+      end
     end
 
   end #logged in user scenario
@@ -52,6 +64,15 @@ RSpec.describe TaggingsController, type: :controller do
         post :create, :tagging => {}, movie_id: movie.id, tag_list: tag_list
       end
       it { is_expected.to redirect_to new_user_session_path }
+    end
+
+    describe "DELETE #destroy" do
+      before(:example) do
+        invalid_user
+        tagging
+        delete :destroy, { :tag_id => tagging.tag_id, movie_id: tagging.movie_id }
+      end
+     it { is_expected.to redirect_to new_user_session_path }
     end
 
   end #invalid user context

@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   resources :listings, only: [:create]
 
   get 'tags/:tag', to: 'movies#index', as: :tag
-  resources :taggings, only:[:create, :destroy]
+  delete '/taggings/:tag_id/:movie_id', to: 'taggings#destroy', as: :delete_tagging
+  resources :taggings, only:[:create]
 
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
   get 'tmdb/more', to: 'tmdb#more', as: :more_info
