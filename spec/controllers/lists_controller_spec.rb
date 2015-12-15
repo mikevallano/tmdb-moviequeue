@@ -66,7 +66,6 @@ RSpec.describe ListsController, type: :controller do
       context "with valid params" do
         it "creates a new List" do
           expect {
-            # post :create, {list: FactoryGirl.attributes_for(:list)}
             post :create, :list => valid_attributes
           }.to change(List, :count).by(1)
         end
@@ -112,7 +111,6 @@ RSpec.describe ListsController, type: :controller do
         end
 
         it "redirects to the list" do
-          list
           put :update, {:id => list.to_param, :list => valid_attributes }
           expect(response).to redirect_to(list)
         end
@@ -120,13 +118,11 @@ RSpec.describe ListsController, type: :controller do
 
       context "with invalid params" do
         it "assigns the list as @list" do
-          list
           put :update, {:id => list.to_param, :list => invalid_attributes }
           expect(assigns(:list)).to eq(list)
         end
 
         it "re-renders the 'edit' template" do
-          list
           put :update, {:id => list.to_param, :list => invalid_attributes }
           expect(response).to render_template("edit")
         end
@@ -135,15 +131,13 @@ RSpec.describe ListsController, type: :controller do
 
     describe "DELETE #destroy" do
       it "destroys the requested list" do
-        list
         expect {
-          delete :destroy, {:id => list.to_param}
+          delete :destroy, { :id => list.to_param }
         }.to change(List, :count).by(-1)
       end
 
       it "redirects to the lists list" do
-        list
-        delete :destroy, {:id => list.to_param}
+        delete :destroy, { :id => list.to_param }
         expect(response).to redirect_to(lists_url)
       end
     end
@@ -159,7 +153,6 @@ RSpec.describe ListsController, type: :controller do
 
     describe "GET #show" do
       before(:example) do
-        list
         get :show, {:id => list.to_param}
       end
         it { is_expected.to redirect_to new_user_session_path }
@@ -174,7 +167,6 @@ RSpec.describe ListsController, type: :controller do
 
     describe "GET #edit" do
       before(:example) do
-        list
         get :edit, {:id => list.to_param}
       end
      it { is_expected.to redirect_to new_user_session_path }
@@ -201,7 +193,6 @@ RSpec.describe ListsController, type: :controller do
         let(:new_attributes) { FactoryGirl.attributes_for(:list, name: "zibbler", description: "zag nuts") }
 
         before(:example) do
-          list
           put :update, {:id => list.to_param, :list => new_attributes}
         end
 
@@ -210,7 +201,6 @@ RSpec.describe ListsController, type: :controller do
 
       context "with invalid params" do
         before(:example) do
-          list
           put :update, {:id => list.to_param, :list => FactoryGirl.attributes_for(:invalid_list)}
         end
         it { is_expected.to redirect_to new_user_session_path }
@@ -220,7 +210,6 @@ RSpec.describe ListsController, type: :controller do
     describe "DELETE #destroy" do
 
       before(:example) do
-        list
         delete :destroy, {:id => list.to_param}
       end
      it { is_expected.to redirect_to new_user_session_path }
@@ -273,7 +262,6 @@ RSpec.describe ListsController, type: :controller do
     describe "DELETE #destroy" do
 
       before(:example) do
-        list
         delete :destroy, {:id => list2.to_param}
       end
      it { is_expected.to redirect_to lists_path }
@@ -294,6 +282,7 @@ RSpec.describe ListsController, type: :controller do
   describe "user not logged in" do
     before(:each) do
       invalid_user
+      list
     end
 
     it_behaves_like 'restricted access when not logged in'

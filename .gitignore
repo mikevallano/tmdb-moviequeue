@@ -13,6 +13,8 @@
 /tmp
 
 rubberduck.txt
+tester.rb
+tester2.rb
 
 # Ignore application configuration
 /config/application.yml

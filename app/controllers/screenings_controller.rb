@@ -1,11 +1,12 @@
 class ScreeningsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_movie
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
 
   # GET /screenings
   # GET /screenings.json
   def index
-    @screenings = Screening.all
+    @screenings = @movie.screenings.by_user(current_user)
   end
 
   # GET /screenings/1
