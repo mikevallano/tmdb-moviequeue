@@ -15,7 +15,11 @@ module TmdbHandler
     tmdb_handler_movie_info(id)
     @genres = @result[:genres].map { |genre| genre[:name]}
     @actors = @result[:credits][:cast].map { |cast| cast[:name] }
-    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres, actors: @actors)
+    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres,
+      actors: @actors, adult: @result[:adult], backdrop_path: @result[:backdrop_path],
+      poster_path: @result[:poster_path], release_date: @result[:release_date],
+      overview: @result[:overview], trailer: @result[:trailers][:youtube][0][:source],
+      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime] )
   end
 
 end

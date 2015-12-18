@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Fri, 18 Dec 2015 20:05:18 GMT
+      - Fri, 18 Dec 2015 20:40:18 GMT
       Server:
       - openresty
       Vary:
@@ -35,7 +35,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '39'
       X-Ratelimit-Reset:
-      - '1450469128'
+      - '1450471228'
       Content-Length:
       - '2947'
       Connection:
@@ -107,5 +107,5 @@ http_interactions:
         White - Live from the Fargo Theatre","original_language":"en","title":"Jack
         White - Live from the Fargo Theatre","backdrop_path":null,"popularity":1.015,"vote_count":0,"video":false,"vote_average":0}],"total_results":8,"total_pages":1}'
     http_version: 
-  recorded_at: Fri, 18 Dec 2015 20:05:17 GMT
+  recorded_at: Fri, 18 Dec 2015 20:40:18 GMT
 recorded_with: VCR 2.9.3
