@@ -14,7 +14,8 @@ module TmdbHandler
   def tmdb_handler_add_movie(id)
     tmdb_handler_movie_info(id)
     @genres = @result[:genres].map { |genre| genre[:name]}
-    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres)
+    @actors = @result[:credits][:cast].map { |cast| cast[:name] }
+    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres, actors: @actors)
   end
 
 end
