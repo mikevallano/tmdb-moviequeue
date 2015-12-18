@@ -7,14 +7,15 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_info(id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers"
+    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
   end
 
   def tmdb_handler_add_movie(id)
     tmdb_handler_movie_info(id)
     @genres = @result[:genres].map { |genre| genre[:name]}
-    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres)
+    @actors = @result[:credits][:cast].map { |cast| cast[:name] }
+    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres, actors: @actors)
   end
 
 end
