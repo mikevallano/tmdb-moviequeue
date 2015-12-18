@@ -17,7 +17,7 @@ feature "User can visit the search page" do
 
     sign_up_with(email, "password")
     visit(api_search_path)
-    api_search_for_movie #method in features_helper
+    api_search_for_movie
 
     expect(page).to have_content("1996-04-05")
     expect(page).to have_content("Fargo")
@@ -28,9 +28,9 @@ feature "User can visit the search page" do
 
     sign_up_with(email, "password")
     visit(api_search_path)
-    api_search_for_movie #method in features_helper
+    api_search_for_movie
 
-    api_more_info #method in features_helper
+    api_more_info
     expect(page).to have_content("you betcha")
 
   end
@@ -39,9 +39,9 @@ feature "User can visit the search page" do
 
     sign_up_with(email, "password")
     visit(api_search_path)
-    api_search_for_movie #method in features_helper
+    api_search_for_movie
 
-    api_more_info #method in features_helper
+    api_more_info
 
     all('#new_listing option')[0].select_option
     VCR.use_cassette('tmdb_add_movie') do
@@ -55,9 +55,9 @@ feature "User can visit the search page" do
 
     sign_up_with(email, "password")
     visit(api_search_path)
-    api_search_for_movie #method in features_helper
+    api_search_for_movie
 
-    api_more_info #method in features_helper
+    api_more_info
 
     all('#new_listing option')[0].select_option
     VCR.use_cassette('tmdb_add_movie') do
@@ -71,9 +71,9 @@ feature "User can visit the search page" do
 
     sign_up_with(email, "password")
     visit(api_search_path)
-    api_search_for_movie #method in features_helper
+    api_search_for_movie
 
-    api_more_info #method in features_helper
+    api_more_info
 
     all('#new_listing option')[0].select_option
     VCR.use_cassette('tmdb_add_movie') do
