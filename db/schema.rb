@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215145819) do
+ActiveRecord::Schema.define(version: 20151218191027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "genre_movies", force: :cascade do |t|
+    t.integer  "genre_id"
+    t.integer  "movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "genre_movies", ["genre_id"], name: "index_genre_movies_on_genre_id", using: :btree
+  add_index "genre_movies", ["movie_id"], name: "index_genre_movies_on_movie_id", using: :btree
+
+  create_table "genres", force: :cascade do |t|
+    t.integer  "tmdb_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "invites", force: :cascade do |t|
     t.integer  "sender_id"
@@ -67,8 +84,9 @@ ActiveRecord::Schema.define(version: 20151215145819) do
     t.string   "trailer"
     t.float    "vote_average"
     t.float    "popularity"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "genres",        default: [],              array: true
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -142,6 +160,8 @@ ActiveRecord::Schema.define(version: 20151215145819) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "genre_movies", "genres"
+  add_foreign_key "genre_movies", "movies"
   add_foreign_key "listings", "lists"
   add_foreign_key "listings", "movies"
   add_foreign_key "memberships", "lists"
