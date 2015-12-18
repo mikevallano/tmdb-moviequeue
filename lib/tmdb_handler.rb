@@ -7,7 +7,7 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_info(id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers"
+    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
   end
 
