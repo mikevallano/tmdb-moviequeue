@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
   get 'tmdb/more', to: 'tmdb#more', as: :more_info
+  get 'tmdb/actor_search', to: 'tmdb#actor_search', as: :actor_search
 
   resources :invites, only: [:create]
 

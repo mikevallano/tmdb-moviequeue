@@ -20,4 +20,13 @@ class TmdbController < ApplicationController
     end
   end
 
+  def actor_search
+    if params[:name]
+      @name = params[:name]
+      tmdb_handler_actor_search(@name)
+    else
+      redirect_to movies_path
+    end
+  end
+
 end

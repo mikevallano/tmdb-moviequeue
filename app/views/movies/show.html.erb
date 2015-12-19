@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Overview:</strong>
-  <%= @movie.overview %>
+  <strong>Title:</strong>
+  <%= @movie.title %>
 </p>
 
 <p>
@@ -17,7 +17,7 @@
 
 <p>
   <strong>Actors:</strong>
-  <%= @movie.actors.join(', ') %>
+  <%= raw @movie.actors.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %>
 </p>
 
 <p>
