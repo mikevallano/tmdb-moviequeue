@@ -1,25 +1,54 @@
-<p>Been in: </p>
 
- <% @been_in.each do |result| %>
-  <% @tmdb_id = result[:id] %>
-   <div>
-       <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
-      <h3><%= result[:title] %></h3>
-      <p><%= result[:release_date] %></p>
-      <p><%= result[:vote_average] %></p>
-      <p><%= result[:overview] %></p>
-      <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
-        <p>On List</p>
-      <% else %>
-        <p>Add this movie to a list:</p>
-        <p>
-        <%= form_for(Listing.new) do |f| %>
-          <%= f.collection_select :list_id, current_user.lists, :id, :name %>
-          <%= hidden_field_tag :tmdb_id, @tmdb_id %>
-          <%= hidden_field_tag :user_id, current_user.id %>
-          <%= f.submit "add movie to list" %>
-        <% end %>
-        </p>
-      <% end %>
-      <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+<% if !@been_in.present? %>
+
+  <h1>Search the TMDB Database for an actor</h1>
+
+  <%= form_tag '/tmdb/actor_search', method: :get do %>
+    <%= label_tag :name, "Enter Actor Name: " %>
+    <%= text_field_tag :name %>
+    <%= submit_tag "Search" %>
   <% end %>
+
+
+  <h1>Or see what movies two actors have been in together!</h1>
+
+  <%= form_tag '/tmdb/two_actor_search', method: :get do %>
+    <%= label_tag :name_one, "Enter Actor Name: " %>
+    <%= text_field_tag :name_one %>
+    <%= label_tag :name_two, "Enter Other Actor Name: " %>
+    <%= text_field_tag :name_two %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+<% else %>
+  <p>Been in: </p>
+
+  <p><%= link_to "Search again", two_actor_search_path %> </p>
+
+   <% @been_in.each do |result| %>
+    <% @tmdb_id = result[:id] %>
+     <div>
+         <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+        <h3><%= result[:title] %></h3>
+        <p><%= result[:release_date] %></p>
+        <p><%= result[:vote_average] %></p>
+        <p><%= result[:overview] %></p>
+        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
+          <p>On List</p>
+        <% else %>
+          <p>Add this movie to a list:</p>
+          <p>
+          <%= form_for(Listing.new) do |f| %>
+            <%= f.collection_select :list_id, current_user.lists, :id, :name %>
+            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "add movie to list" %>
+          <% end %>
+          </p>
+        <% end %>
+        <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+    <% end %>
+
+<% end %>
+
+

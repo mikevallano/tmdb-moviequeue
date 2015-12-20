@@ -22,11 +22,18 @@ class TmdbController < ApplicationController
 
   def actor_search
     if params[:name]
-      @name = params[:name]
+      @name = params[:name].gsub(' ', '-')
       tmdb_handler_actor_search(@name)
-    else
-      redirect_to movies_path
     end
+  end
+
+  def two_actor_search
+    if params[:name_one] && params[:name_two]
+      @name_one = params[:name_one].gsub(' ', '-')
+      @name_two = params[:name_two].gsub(' ', '-')
+      tmdb_handler_two_actor_search(@name_one, @name_two)
+    end
+    render :actor_search
   end
 
 end
