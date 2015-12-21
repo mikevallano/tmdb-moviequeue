@@ -4,6 +4,9 @@ RSpec.describe User, type: :model do
   let(:user) { FactoryGirl.build(:user) }
   let(:invalid_user) { FactoryGirl.build(:invalid_user) }
 
+  it { is_expected.to validate_uniqueness_of(:username) }
+  it { is_expected.to validate_presence_of(:username) }
+
   context "with a valid factory" do
     it "has a valid factory" do
       expect(user).to be_valid

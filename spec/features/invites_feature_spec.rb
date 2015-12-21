@@ -4,6 +4,7 @@ feature "User can send an invite to another user" do
 
   let(:user1) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
+  let(:username) { FFaker::Internet.user_name }
   let(:receiver_email) { FFaker::Internet.email }
   let(:list) { FactoryGirl.create(:list, owner_id: user1.id) }
 
@@ -45,6 +46,7 @@ feature "User can send an invite to another user" do
 
       visit new_user_registration_path(:token => Invite.last.token)
 
+      fill_in "Username", with: username
       fill_in "Password", with: "password"
       fill_in "Password confirmation", with: "password"
       click_link_or_button 'Sign up'

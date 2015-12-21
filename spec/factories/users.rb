@@ -3,6 +3,7 @@ FactoryGirl.define do
     email { FFaker::Internet.email }
     password 'password'
     password_confirmation 'password'
+    username { FFaker::Internet.user_name }
 
     factory :invalid_user do
       email nil

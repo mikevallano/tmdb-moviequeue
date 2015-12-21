@@ -7,6 +7,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :login, "Sign in with email or username" %><br />
+    <%= f.text_field :login %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>

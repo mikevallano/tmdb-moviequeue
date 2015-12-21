@@ -4,12 +4,13 @@ feature "User can create a new tag" do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:email) { FFaker::Internet.email }
+  let(:username) { FFaker::Internet.user_name }
 
   context "with signed in user" do
 
     scenario "users can tag a movie" do
 
-      sign_up_with(email, "password")
+      sign_up_with(email, username, "password")
       visit(api_search_path)
       api_search_for_movie
       api_more_info

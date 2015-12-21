@@ -3,6 +3,7 @@ require 'rails_helper'
 feature "User can search for a movie and add it to their list" do
 
   let(:email) { FFaker::Internet.email }
+  let(:username) { FFaker::Internet.user_name }
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
   let(:movie) { FactoryGirl.create(:movie) }
@@ -13,7 +14,7 @@ feature "User can search for a movie and add it to their list" do
 
   scenario "users can add a movie to their list" do
 
-    sign_up_with(email, "password")
+    sign_up_with(email, username, "password")
     visit(api_search_path)
     api_search_for_movie #method in features_helper
 
@@ -29,7 +30,7 @@ feature "User can search for a movie and add it to their list" do
 
    scenario "users can remove a movie from their list" do
 
-    sign_up_with(email, "password")
+    sign_up_with(email, username, "password")
     visit(api_search_path)
     api_search_for_movie #method in features_helper
 
