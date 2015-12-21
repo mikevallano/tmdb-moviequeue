@@ -6,7 +6,7 @@ class TmdbController < ApplicationController
 
   def search
     if params[:movie_title]
-      @movie_title = params[:movie_title].gsub(' ', '-')
+      @movie_title = params[:movie_title]
       tmdb_handler_search(@movie_title)
     end
   end
@@ -22,15 +22,15 @@ class TmdbController < ApplicationController
 
   def actor_search
     if params[:name]
-      @name = params[:name].gsub(' ', '-')
+      @name = params[:name]
       tmdb_handler_actor_search(@name)
     end
   end
 
   def two_actor_search
     if params[:name_one] && params[:name_two]
-      @name_one = params[:name_one].gsub(' ', '-')
-      @name_two = params[:name_two].gsub(' ', '-')
+      @name_one = params[:name_one]
+      @name_two = params[:name_two]
       tmdb_handler_two_actor_search(@name_one, @name_two)
     end
   end
