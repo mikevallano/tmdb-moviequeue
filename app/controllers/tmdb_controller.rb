@@ -33,7 +33,6 @@ class TmdbController < ApplicationController
       @name_two = params[:name_two].gsub(' ', '-')
       tmdb_handler_two_actor_search(@name_one, @name_two)
     end
-    render :actor_search
   end
 
 end

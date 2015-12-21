@@ -1,25 +1,25 @@
 
-<% if !@name.present? %>
+<% if !@name_one.present? && !@name_two.present? %>
 
-  <h1>Search the TMDB Database for an actor</h1>
+<h1>Find which movies two actors have been in together.</h1>
 
-  <%= form_tag '/tmdb/actor_search', method: :get do %>
-    <%= label_tag :name, "Enter Actor Name: " %>
-    <%= text_field_tag :name %>
+  <%= form_tag '/tmdb/two_actor_search', method: :get do %>
+    <%= label_tag :name_one, "Enter Actor Name: " %>
+    <%= text_field_tag :name_one %>
+    <%= label_tag :name_two, "Enter Other Actor Name: " %>
+    <%= text_field_tag :name_two %>
     <%= submit_tag "Search" %>
   <% end %>
-
-
-  <h3><%= link_to "Or see what movies two actors have been in together!", two_actor_search_path %></h3>
 
 <% else %>
 
   <% if !@been_in.present? %>
-      <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
+      <h2>Hmm. No movies found with those two in it. Check spelling to be sure.</h2>
     <% else %>
-      <h2>Here are the results for that actor:</h2>
+      <h2>Here are the movies those two have been in together:</h2>
     <% end %>
-  <p><%= link_to "Search again", actor_search_path %> </p>
+  <br>
+  <p><%= link_to "Search again", two_actor_search_path %> </p>
 
    <% @been_in.each do |result| %>
     <% @tmdb_id = result[:id] %>

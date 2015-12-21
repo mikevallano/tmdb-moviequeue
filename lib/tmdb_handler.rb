@@ -25,30 +25,29 @@ module TmdbHandler
 
   def tmdb_handler_actor_search(name)
     @search_url = "https://api.themoviedb.org/3/search/person?query=#{name}&api_key=#{ENV['tmdb_api_key']}"
-    @actor_search_result = JSON.parse(open(@search_url).read, symbolize_names: true)
-    @results = @actor_search_result[:results]
-    @id = @results.first[:id]
-    @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@id}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
-    # @search_id_url = "https://api.themoviedb.org/3/person/#{@id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    @actor_results = JSON.parse(open(@search_id_url).read, symbolize_names: true)
-    @been_in = @actor_results[:results]
-    # @been_in = @actor_results[:credits][:cast]
+    @actor_search_result = JSON.parse(open(@search_url).read, symbolize_names: true)[:results]
+    if @actor_search_result.present?
+      @id = @actor_search_result.first[:id]
+      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@id}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
+      @been_in = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:results]
+    else
+      @been_in = []
+    end
   end
 
   def tmdb_handler_two_actor_search(name_one, name_two)
     @search_url1 = "https://api.themoviedb.org/3/search/person?query=#{name_one}&api_key=#{ENV['tmdb_api_key']}"
     @search_url2 = "https://api.themoviedb.org/3/search/person?query=#{name_two}&api_key=#{ENV['tmdb_api_key']}"
-    @actor_search_result1 = JSON.parse(open(@search_url1).read, symbolize_names: true)
-    @actor_search_result2 = JSON.parse(open(@search_url2).read, symbolize_names: true)
-    @results1 = @actor_search_result1[:results]
-    @results2 = @actor_search_result2[:results]
-    @id1 = @results1.first[:id]
-    @id2 = @results2.first[:id]
-    @search_ids_url = "https://api.themoviedb.org/3/discover/movie?with_people=#{@id1},#{@id2}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
-    # @search_id_url = "https://api.themoviedb.org/3/person/#{@id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    @actor_results = JSON.parse(open(@search_ids_url).read, symbolize_names: true)
-    @been_in = @actor_results[:results]
-    # @been_in = @actor_results[:credits][:cast]
+    @actor1_search_result = JSON.parse(open(@search_url1).read, symbolize_names: true)[:results]
+    @actor2_search_result = JSON.parse(open(@search_url2).read, symbolize_names: true)[:results]
+    if @actor1_search_result.present? && @actor2_search_result.present?
+      @id1 = @actor1_search_result.first[:id]
+      @id2 = @actor2_search_result.first[:id]
+      @search_ids_url = "https://api.themoviedb.org/3/discover/movie?with_people=#{@id1},#{@id2}&sort_by=revenue.desc&api_key=#{ENV['tmdb_api_key']}"
+      @been_in = JSON.parse(open(@search_ids_url).read, symbolize_names: true)[:results]
+    else
+      @been_in = []
+    end
   end
 
 end

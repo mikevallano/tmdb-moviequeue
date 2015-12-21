@@ -16,6 +16,7 @@
     <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %>
     <%= link_to 'movies', movies_path %>
     <%= link_to 'Find a movie', api_search_path %>
+    <%= link_to 'Search by actor', actor_search_path %>
     <%= link_to 'Lists', lists_path %>
 
   <% else %>

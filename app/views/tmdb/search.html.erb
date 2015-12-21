@@ -10,9 +10,12 @@
 
 <% else %>
 
-  <h2>Here are the matching movies from TMDB</h2>
-  <br><br>
-
+  <% if !@results.present? %>
+    <h2>Darn it. No movie found for that search.</h2>
+  <% else %>
+    <h2>Here are the matching movies from TMDB</h2>
+  <% end %>
+<br>
   <%= form_tag '/tmdb/search', method: :get do %>
     <%= label_tag :movie_title, "Enter Title: " %>
     <%= text_field_tag :movie_title %> <%= submit_tag "Search Again" %>
