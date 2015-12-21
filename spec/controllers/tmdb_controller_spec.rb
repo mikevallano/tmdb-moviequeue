@@ -17,6 +17,22 @@ RSpec.describe TmdbController, type: :controller do
       end
     end
 
+    describe "GET #actor_search" do
+      it "returns http success" do
+        current_user
+        get :actor_search
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe "GET #two_actor_search" do
+      it "returns http success" do
+        current_user
+        get :two_actor_search
+        expect(response).to have_http_status(:success)
+      end
+    end
+
     describe "GET #more" do
       it "searches the tmdb api and returns an http success" do
         current_user
@@ -41,6 +57,22 @@ RSpec.describe TmdbController, type: :controller do
       before(:example) do
         invalid_user
         get :search
+      end
+      it { is_expected.to redirect_to new_user_session_path }
+    end
+
+    describe "GET #actor_search" do
+      before(:example) do
+        invalid_user
+        get :actor_search
+      end
+      it { is_expected.to redirect_to new_user_session_path }
+    end
+
+    describe "GET #two_actor_search" do
+      before(:example) do
+        invalid_user
+        get :two_actor_search
       end
       it { is_expected.to redirect_to new_user_session_path }
     end

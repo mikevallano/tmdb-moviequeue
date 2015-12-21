@@ -24,6 +24,56 @@ feature "User can visit the search page" do
 
   end
 
+  scenario "users searches for an actor and the API returns results" do
+
+    sign_up_with(email, "password")
+    visit(actor_search_path)
+    api_actor_search
+
+    expect(page).to have_content("The Big Lebowski")
+
+  end
+
+  scenario "users searches for an actor not found and the page indicates results not found" do
+
+    sign_up_with(email, "password")
+    visit(actor_search_path)
+    bad_api_actor_search
+
+    expect(page).to have_content("No actor found for that search")
+
+  end
+
+  scenario "users searches for an two actors and the API returns results" do
+
+    sign_up_with(email, "password")
+    visit(two_actor_search_path)
+    api_two_actor_search
+
+    expect(page).to have_content("The Big Lebowski")
+
+  end
+
+  scenario "users searches for an two actors not found and the page indicates results not found" do
+
+    sign_up_with(email, "password")
+    visit(two_actor_search_path)
+    bad_api_two_actor_search
+
+    expect(page).to have_content("No movies found with those two in it")
+
+  end
+
+  scenario "users searches a movie not found and the page indicates movie not found" do
+
+    sign_up_with(email, "password")
+    visit(api_search_path)
+    bad_api_search_for_movie
+
+    expect(page).to have_content("No movie found for that search")
+
+  end
+
   scenario "users clicks 'more info' and sees more info returned from API" do
 
     sign_up_with(email, "password")
