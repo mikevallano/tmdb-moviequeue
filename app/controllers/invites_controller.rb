@@ -14,9 +14,9 @@ class InvitesController < ApplicationController
           @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
           ExistingInviteMailer.existing_invite_mailer(@invite).deliver_now
 
-          format.html { redirect_to list_path(@invite.list), notice: 'Invite was sent.' }
+          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
         else
-          format.html { redirect_to list_path(@invite.list), notice: 'Enter a valid email.' }
+          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
           format.json { render json: @invite.errors, status: :unprocessable_entity }
         end
       end #end respond_to
@@ -28,10 +28,10 @@ class InvitesController < ApplicationController
           InviteMailer.new_invite_mailer(@invite).deliver_now
           #assign the sender the membership as well, TODO: move logic to user.rb
           @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
-          format.html { redirect_to list_path(@invite.list), notice: 'Invite was sent.' }
+          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
           format.json { render :show, status: :created, location: @invite }
         else
-          format.html { redirect_to list_path(@invite.list), notice: 'Enter a valid email.' }
+          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
           format.json { render json: @invite.errors, status: :unprocessable_entity }
         end
       end

@@ -33,7 +33,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         fill_in 'Name', with: 'test list one'
         click_button 'Create List'
         @list = List.last
-        visit(edit_list_path(@list))
+        visit(edit_user_list_path(user, @list))
         expect(page).to have_content("Editing List")
         fill_in 'Name', with: 'test list update'
         click_button "Update"
@@ -66,7 +66,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     context "user trying to access other users' lists" do
 
-      scenario  "user's can't view or edit another user's list" do
+      scenario  "user's can't view or edit another user's list (without being a member)" do
 
         sign_in_user(user)
         click_link "Lists"
@@ -77,10 +77,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
         click_link "Sign Out"
         sign_in_user(user2)
 
-        visit(list_path(@list))
+        visit(user_list_path(user, @list))
         expect(page).to have_content("That's not your list")
 
-        visit(edit_list_path(@list))
+        visit(edit_user_list_path(user, @list))
         expect(page).to have_content("That's not your list")
 
       end

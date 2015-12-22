@@ -7,7 +7,7 @@ RSpec.describe InvitesController, type: :controller do
   let(:list) { FactoryGirl.create(:list) }
   let(:receiver_email) { FFaker::Internet.email }
   let(:invite) { FactoryGirl.build(:invite, list_id: list.id, email: receiver_email, sender_id: user1.id) }
-  let(:invalid_invite) { FactoryGirl.build(:invalid_invite, list_id: list.id) }
+  let(:invalid_invite) { FactoryGirl.build(:invalid_invite, list_id: list.id, sender_id: user1.id) }
   let(:current_user) { login_with user1 }
   let(:invalid_user) { login_with nil }
   let(:valid_attributes) { invite.attributes }
@@ -35,14 +35,14 @@ RSpec.describe InvitesController, type: :controller do
 
         it "redirects to the created invite" do
           post :create, :invite => valid_attributes
-          expect(response).to redirect_to(list_path(invite.list_id))
+          expect(response).to redirect_to(user_list_path(invite.sender, invite.list))
         end
       end #valid params context
 
       context "with invalid params" do
         it "redirects the user back to the list page" do
           post :create, { :invite => invalid_attributes }
-          expect(response).to redirect_to(list_path(invite.list_id))
+          expect(response).to redirect_to(user_list_path(invite.sender, invite.list))
         end
       end #invalid params context
     end #create action

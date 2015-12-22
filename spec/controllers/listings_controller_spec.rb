@@ -39,7 +39,7 @@ RSpec.describe ListingsController, type: :controller do
 
       it "redirects to movies path after deleting" do
         delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
-        expect(response).to redirect_to(list_path(listing.list_id))
+        expect(response).to redirect_to(user_list_path(listing.list.owner, listing.list))
       end
     end
 

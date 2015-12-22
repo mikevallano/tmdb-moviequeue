@@ -37,10 +37,10 @@ class ListingsController < ApplicationController
     @priority = params[:priority]
     respond_to do |format|
       if @listing.update_attributes(:priority => @priority)
-        format.html { redirect_to list_path(@listing.list_id), notice: 'Priority added.' }
+        format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Priority added.' }
         format.json { render :show, status: :ok, location: @listing }
       else
-        format.html { redirect_to list_path(@listing.list_id) }
+        format.html { redirect_to user_list_path(@listing.list.owner, @listing.list) }
         format.json { render json: @listing.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +50,7 @@ class ListingsController < ApplicationController
     @listing = current_user.listings.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
     @listing.destroy
     respond_to do |format|
-      format.html { redirect_to list_path(@listing.list_id), notice: 'Movie was removed from list.' }
+      format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Movie was removed from list.' }
       format.json { head :no_content }
     end
   end

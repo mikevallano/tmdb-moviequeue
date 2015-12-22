@@ -55,13 +55,13 @@ RSpec.feature "Users feature spec", :type => :feature do
 
     scenario 'user can visit their profile page' do
       sign_in_user(existing_user)
-      visit(user_profile_path(existing_user))
+      visit(user_path(existing_user))
       expect(page).to have_content(existing_user.email)
     end
 
     scenario 'user profile page has slugged url' do
       sign_in_user(existing_user)
-      visit(user_profile_path(existing_user))
+      visit(user_path(existing_user))
       url = URI.parse(current_url)
       expect("#{url}").to include("#{existing_user.slug}")
     end

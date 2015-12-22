@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :list do
     owner_id 1
-    name { FFaker::HipsterIpsum.word }
+    name { FFaker::HipsterIpsum.words(3) }
     is_main false
     is_public false
 

@@ -1,4 +1,10 @@
 class List < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: [:history, :scoped], :scope => :owner
+
+  scope :by_user, lambda { |user| where(:owner_id => user.id) }
+  scope :main_lists, lambda { where(:is_main => true) }
+
   validates_presence_of :name
 
   belongs_to :owner, :class_name => "User"
@@ -11,5 +17,9 @@ class List < ActiveRecord::Base
 
   has_many :invites
 
-  scope :by_user, lambda { |user| where(:owner_id => user.id) }
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
+
 end

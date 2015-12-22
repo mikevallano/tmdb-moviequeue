@@ -36,7 +36,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       sign_in_user(user1)
       click_link("Lists")
       expect(page).to have_content("awesome 90s")
-      visit(list_path(list.id))
+      visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
 
     end
@@ -46,7 +46,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       sign_in_user(user2)
       click_link("Lists")
       expect(page).to have_content("awesome 90s")
-      visit(list_path(list.id))
+      visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
 
     end
@@ -55,7 +55,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users can see other members' tags but not other users' tags" do
 
       sign_in_user(user2)
-      visit(list_path(list.id))
+      visit(user_list_path(user1, list))
       expect(page).to have_content(tag1.name)
       expect(page).not_to have_content(tag2.name)
 
@@ -64,7 +64,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users can click other member's tags and see tagged movies" do
 
       sign_in_user(user2)
-      visit(list_path(list.id))
+      visit(user_list_path(user1, list))
       click_link(tag1.name)
       expect(page).to have_content(movie1.title)
 

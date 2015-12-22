@@ -67,7 +67,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         movie
 
         sign_in_user(user)
-        visit(list_path(list))
+        visit(user_list_path(user, list))
         click_link "Review this movie"
         fill_in 'Body', with: "Epic win!"
         click_button "Create Review"
@@ -83,7 +83,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         review
 
         sign_in_user(user)
-        visit(list_path(list))
+        visit(user_list_path(user, list))
         expect(page).not_to have_content("Review this movie")
         expect(page).to have_content("My Review")
         expect(page).to have_content("an epic win")

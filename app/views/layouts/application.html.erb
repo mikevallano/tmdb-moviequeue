@@ -17,7 +17,7 @@
     <%= link_to 'movies', movies_path %>
     <%= link_to 'Find a movie', api_search_path %>
     <%= link_to 'Search by actor', actor_search_path %>
-    <%= link_to 'Lists', lists_path %>
+    <%= link_to 'Lists', user_lists_path(current_user) %>
 
   <% else %>
     <%= link_to "Sign In", new_user_session_path %>

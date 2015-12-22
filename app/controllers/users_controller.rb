@@ -7,4 +7,5 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: "That's not your page"
     end
   end
+
 end

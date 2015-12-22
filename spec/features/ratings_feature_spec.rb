@@ -67,7 +67,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         movie
 
         sign_in_user(user)
-        visit(list_path(list))
+        visit(user_list_path(user, list))
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
 
@@ -85,7 +85,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         rating
 
         sign_in_user(user)
-        visit(list_path(list))
+        visit(user_list_path(user, list))
 
         expect(page).to_not have_content("Rate this movie")
         expect(page).to have_content("My Rating")

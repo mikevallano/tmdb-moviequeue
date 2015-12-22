@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @list %> |
-<%= link_to 'Back', lists_path %>
+<%= link_to 'Show', user_list_path(@list.owner_id, @list.id) %> |
+<%= link_to 'Back', user_lists_path(current_user) %>

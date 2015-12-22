@@ -5,7 +5,7 @@
     </head>
     <body>
       <h2>Someone wants you to share their list with you.</h2>
-      <p><%= link_to "Check out the list here", list_url(@invite.list_id) %>
+      <p><%= link_to "Check out the list here", user_list_url(@invite.list.owner, @invite.list) %>
 
     </body>
 

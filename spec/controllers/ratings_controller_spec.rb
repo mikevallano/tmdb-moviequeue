@@ -94,12 +94,12 @@ RSpec.describe RatingsController, type: :controller do
         end
 
         it "assigns the requested rating as @rating" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => valid_attributes }
+          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           expect(assigns(:rating)).to eq(rating)
         end
 
         it "redirects to the movie" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => valid_attributes }
+          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           expect(response).to redirect_to(movie_path(movie))
         end
       end
