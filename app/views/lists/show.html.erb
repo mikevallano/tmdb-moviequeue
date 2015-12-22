@@ -23,7 +23,7 @@
     <% @list.movies.each do |movie| %>
       <tr>
         <td><%= movie.title  %></td>
-        <td><%= link_to 'Remove from this list', delete_listing_path(@list, movie), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Remove from this list', delete_listing_path(@list, movie.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <td><%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, tag_path(t, :list_id => "#{@list.id}") }.join(', ') %></td>
         <td>
           <%= form_tag('/taggings') do %>

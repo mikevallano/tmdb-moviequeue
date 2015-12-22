@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222004944) do
+ActiveRecord::Schema.define(version: 20151222013811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,10 @@ ActiveRecord::Schema.define(version: 20151222004944) do
     t.string   "actors",        default: [],                 array: true
     t.boolean  "adult",         default: false, null: false
     t.integer  "runtime"
+    t.string   "slug"
   end
+
+  add_index "movies", ["slug"], name: "index_movies_on_slug", unique: true, using: :btree
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "user_id"

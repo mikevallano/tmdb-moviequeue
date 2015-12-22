@@ -1,5 +1,8 @@
 class Movie < ActiveRecord::Base
 
+  extend FriendlyId
+  friendly_id :title, :use => :history
+
   validates_presence_of :tmdb_id
   validates_uniqueness_of :tmdb_id
 

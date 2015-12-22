@@ -70,7 +70,7 @@ class RatingsController < ApplicationController
     end
 
     def set_movie
-      @movie = Movie.find(params[:movie_id])
+      @movie = Movie.friendly.find(params[:movie_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

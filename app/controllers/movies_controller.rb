@@ -15,7 +15,10 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    @movie = Movie.friendly.find(params[:id])
+    if request.path != movie_path(@movie)
+      return redirect_to @movie, :status => :moved_permanently
+    end
   end
 
 
