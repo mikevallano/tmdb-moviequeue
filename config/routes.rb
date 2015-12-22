@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
+  resources :users, only: [:show], as: :user_profile
+
   resources :movies, only: [:index, :show] do
     resources :reviews
     resources :ratings

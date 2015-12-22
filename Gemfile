@@ -11,7 +11,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
-gem "figaro"
+gem 'figaro'
+gem 'friendly_id'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
@@ -32,10 +33,10 @@ end
 
 group :test do
     gem 'shoulda-matchers'
-    gem "capybara"
-    gem "database_cleaner"
-    gem "launchy"
-    gem "selenium-webdriver"
+    gem 'capybara'
+    gem 'database_cleaner'
+    gem 'launchy'
+    gem 'selenium-webdriver'
     gem 'vcr'
     gem 'webmock'
 end

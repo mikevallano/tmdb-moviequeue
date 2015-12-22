@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Can sign up a new user" do
+feature "Users can sign up, sign in, log out, have a list, and visit profile" do
   let(:email) { FFaker::Internet.email }
   let(:username) { FFaker::Internet.user_name }
   let(:existing_user) { FactoryGirl.create(:user) }
@@ -51,4 +51,16 @@ feature "Can sign up a new user" do
     expect(@current_user.lists.first.is_public).to eq(false)
   end
 
+  scenario 'user can visit their profile page' do
+    sign_in_user(existing_user)
+    visit(user_profile_path(existing_user))
+    expect(page).to have_content(existing_user.email)
+  end
+
+  scenario 'user profile page has slugged url' do
+    sign_in_user(existing_user)
+    visit(user_profile_path(existing_user))
+    url = URI.parse(current_url)
+    expect("#{url}").to include("#{existing_user.slug}")
+  end
 end

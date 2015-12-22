@@ -11,7 +11,7 @@ feature "User can access lists and movies they're members of" do
   let(:membership1) { FactoryGirl.create(:membership, list_id: list.id, member_id: user1.id) }
   let(:membership2) { FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id) }
   let(:tag1) { FactoryGirl.create(:tag) }
-  let(:tag2) { FactoryGirl.create(:tag, name: FFaker::Lorem.word) }
+  let(:tag2) { FactoryGirl.create(:tag, name: FFaker::Color.name) }
   let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
   let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
