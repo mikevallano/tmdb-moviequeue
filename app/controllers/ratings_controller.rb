@@ -2,11 +2,12 @@ class RatingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
+  before_action :restrict_ratings_access, only: [:show, :edit, :update, :destroy]
 
   # GET /ratings
   # GET /ratings.json
   def index
-    @ratings = @movie.ratings.by_user(current_user)
+    @ratings = @movie.ratings
   end
 
   # GET /ratings/1
@@ -16,7 +17,11 @@ class RatingsController < ApplicationController
 
   # GET /ratings/new
   def new
-    @rating = current_user.ratings.new
+    if @movie.ratings.by_user(current_user).present?
+      redirect_to movie_path(@movie), notice: "You've already rated this movie"
+    else
+      @rating = current_user.ratings.new
+    end
   end
 
   # GET /ratings/1/edit
@@ -66,7 +71,7 @@ class RatingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rating
-      @rating = @movie.ratings.by_user(current_user).find(params[:id])
+      @rating = Rating.find(params[:id])
     end
 
     def set_movie
@@ -76,5 +81,11 @@ class RatingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def rating_params
       params.require(:rating).permit(:user_id, :movie_id, :value)
+    end
+
+    def restrict_ratings_access
+      unless current_user.ratings.include?(@rating)
+        redirect_to movie_path(@movie), notice: "That's not your rating"
+      end
     end
 end

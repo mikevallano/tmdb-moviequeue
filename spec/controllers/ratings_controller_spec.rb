@@ -9,6 +9,8 @@ RSpec.describe RatingsController, type: :controller do
   let(:list) { FactoryGirl.create(:list, :owner => user) }
   let(:list2) { FactoryGirl.create(:list, :owner => user2) }
   let(:movie)  { FactoryGirl.create(:movie) }
+  let(:movie2)  { FactoryGirl.create(:movie) }
+  let(:movie3)  { FactoryGirl.create(:movie) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
@@ -59,14 +61,14 @@ RSpec.describe RatingsController, type: :controller do
         end
 
         it "assigns a newly created rating as @rating" do
-          post :create, { :rating => valid_attributes, movie_id: movie.id }
+          post :create, { :rating => { user_id: user.id, movie_id: movie2.id, value: 9 }, movie_id: movie2.id }
           expect(assigns(:rating)).to be_a(Rating)
           expect(assigns(:rating)).to be_persisted
         end
 
         it "redirects to the movie" do
-          post :create, { :rating => valid_attributes, movie_id: movie.id }
-          expect(response).to redirect_to(movie_url(movie))
+          post :create, { :rating => { user_id: user.id, movie_id: movie3.id, value: 9 }, movie_id: movie3.id }
+          expect(response).to redirect_to(movie_url(movie3))
         end
       end
 
@@ -119,6 +121,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "DELETE #destroy" do
       it "destroys the requested rating" do
+        rating
         expect {
           delete :destroy, { :id => rating.id, movie_id: movie.id }
         }.to change(Rating, :count).by(-1)
@@ -207,55 +210,48 @@ RSpec.describe RatingsController, type: :controller do
 
   shared_examples_for 'users can only access their own ratings' do
     describe "GET #index" do
-      it "ratings index page shows only current users' ratings" do
+      it "ratings index page shows all users' ratings" do
         get :index, { :movie_id => movie.id }
-        expect(assigns(:ratings)).to eq([rating])
-        expect(assigns(:ratings)).not_to include(rating2)
+        expect(assigns(:ratings)).to include(rating2)
       end
     end
 
     describe "GET #show" do
-      it "it raises an exception if user visits another users review show page" do
-        expect {
-          get :show, { :movie_id => movie.id, :id => rating2.to_param }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        get :show, { :movie_id => movie.id, :id => rating2.to_param }
       end
+     it { is_expected.to redirect_to(movie_path(movie))}
     end
 
     describe "GET #edit" do
-     it "it raises an exception if user visits another users edit review page" do
-        expect {
-          get :edit, { :movie_id => movie.id, :id => rating2.to_param }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        get :edit, { :movie_id => movie.id, :id => rating2.to_param }
       end
+     it { is_expected.to redirect_to(movie_path(movie))}
     end
 
     describe "PUT #update" do
       context "with valid params" do
         let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: '5') }
-
-        it "it raises an exception if user tries to update another users's rating"  do
-          expect {
-            put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
-            }.to raise_exception(ActiveRecord::RecordNotFound)
+        before(:example) do
+          put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
         end
+       it { is_expected.to redirect_to(movie_path(movie))}
       end
 
       context "with invalid params" do
-        it "it raises an exception if user tries to update another users's rating" do
-          expect {
-            put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => invalid_attributes }
-            }.to raise_exception(ActiveRecord::RecordNotFound)
+        before(:example) do
+          put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => invalid_attributes }
         end
+       it { is_expected.to redirect_to(movie_path(movie))}
       end
     end
 
     describe "DELETE #destroy" do
-     it "it raises an exception if user tries to delete another user's rating" do
-        expect {
-          delete :destroy, { :id => rating2.id, movie_id: movie.id }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        delete :destroy, { :id => rating2.id, movie_id: movie.id }
       end
+      it { is_expected.to redirect_to(movie_path(movie))}
     end
 
   end #end of user can't access another user's ratings
@@ -264,7 +260,6 @@ RSpec.describe RatingsController, type: :controller do
     before :each do
       current_user
       listing
-      rating
     end
 
     it_behaves_like 'logged in access'
