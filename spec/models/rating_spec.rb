@@ -7,7 +7,7 @@ RSpec.describe Rating, type: :model do
   let(:invalid_rating) { FactoryGirl.build(:invalid_rating) }
 
   it { is_expected.to validate_presence_of(:value) }
-  it { is_expected.to validate_presence_of(:user) }
+  it { is_expected.to validate_presence_of(:user_id) }
   it { is_expected.to validate_presence_of(:movie) }
 
   context "with a valid factory" do
