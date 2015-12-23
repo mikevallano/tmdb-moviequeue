@@ -35,4 +35,12 @@ class TmdbController < ApplicationController
     end
   end
 
+  def director_search
+    if params[:director_id]
+      @director_id = params[:director_id]
+      @name = params[:name]
+      tmdb_handler_director_search(@director_id)
+    end
+  end
+
 end

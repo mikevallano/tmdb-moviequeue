@@ -13,18 +13,33 @@ module TmdbHandler
   def tmdb_handler_movie_info(id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    @crew = @result[:credits][:crew]
+    @crew.find do |i|
+      if i[:department] == "Directing"
+        @director = i[:name]
+        @director_id = i[:id]
+      end
+    end
   end
 
   def tmdb_handler_add_movie(id)
     tmdb_handler_movie_info(id)
     @genres = @result[:genres].map { |genre| genre[:name]}
     @actors = @result[:credits][:cast].map { |cast| cast[:name] }
+    @crew = @result[:credits][:crew]
+    @crew.find do |i|
+      if i[:department] == "Directing"
+        @director = i[:name]
+        @director_id = i[:id]
+      end
+    end
     @trailer = @result[:trailers][:youtube][0][:source] if @result[:trailers][:youtube].present?
-    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id], genres: @genres,
-      actors: @actors, adult: @result[:adult], backdrop_path: @result[:backdrop_path],
+
+    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id],
+      genres: @genres, actors: @actors, adult: @result[:adult], backdrop_path: @result[:backdrop_path],
       poster_path: @result[:poster_path], release_date: @result[:release_date],
-      overview: @result[:overview], trailer: @trailer,
-      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime] )
+      overview: @result[:overview], trailer: @trailer, director: @director, director_id: @director_id,
+      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime])
   end
 
   def tmdb_handler_actor_search(name)
@@ -63,6 +78,19 @@ module TmdbHandler
     unless @tmdb_response1.present? && @tmdb_response2.present?
       @been_in = []
     end
+  end
+
+  def tmdb_handler_director_search(id)
+    @director_url = "https://api.themoviedb.org/3/person/#{id}/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188"
+    @result = JSON.parse(open(@director_url).read, symbolize_names: true)
+
+    @actor_credits = @result[:cast]
+    @director_credits = @result[:crew].select { |crew| crew[:job] == "Director" }
+    @editor_credits = @result[:crew].select { |crew| crew[:job] == "Editor" }
+    @writer_credits = @result[:crew ].select { |crew| crew[:job] == "Writer" }
+    @screenplay_credits = @result[:crew].select { |crew| crew[:job] == "Screenplay" }
+    @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
+
   end
 
 end

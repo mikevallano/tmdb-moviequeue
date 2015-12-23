@@ -15,6 +15,7 @@
   <p>Genres: <%= raw @result[:genres].map { |g| g[:name] }.map { |g| link_to g, genre_path(genre: g) }.join(', ') %></p>
   <p>Overview: <%= @result[:overview] %></p>
   <p>Actors: <%= raw @result[:credits][:cast].map { |cast| cast[:name] }.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %></p>
+  <p>Director: <%= link_to "#{@director}", director_search_path(director_id: @director_id, name: @director) %>
   <p>Trailer:</p>
   <% if @result[:trailers][:youtube].present? %>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @result[:trailers][:youtube][0][:source] %>" frameborder="0" allowfullscreen></iframe>

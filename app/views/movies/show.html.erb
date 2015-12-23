@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <strong>Director:</strong>
+  <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director) %>
+</p>
+
+<p>
   <strong>release date:</strong>
   <%= @movie.release_date %>
 </p>
