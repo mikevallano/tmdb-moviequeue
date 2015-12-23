@@ -3,6 +3,7 @@ class Review < ActiveRecord::Base
   belongs_to :movie
 
   validates_presence_of :user
+  validates :user_id, :uniqueness => { :scope => :movie_id }
   validates_presence_of :movie
   validates_presence_of :body
 
