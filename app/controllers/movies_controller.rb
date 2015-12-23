@@ -12,6 +12,9 @@ class MoviesController < ApplicationController
     else
       @movies = current_user.all_movies
     end
+    if params[:genre]
+      @movies = current_user.movies.by_genre(params[:genre])
+    end
   end
 
   def show

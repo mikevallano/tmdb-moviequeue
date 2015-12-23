@@ -34,4 +34,8 @@ class Movie < ActiveRecord::Base
     tags.by_user_or_list(userlist).map
   end
 
+  def self.by_genre(genre)
+    Movie.where("genres && ARRAY[?]::varchar[]", genre)
+  end
+
 end

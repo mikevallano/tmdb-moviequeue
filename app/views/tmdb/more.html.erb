@@ -10,10 +10,9 @@
         <%= f.submit "add movie to list" %>
       <% end %>
   </p>
-
   <p>Release Date: <%= @result[:release_date] %></p>
   <p>TMDB Vote Average: <%= @result[:vote_average] %></p>
-  <p>Genres: <%= @result[:genres].map {|g| g[:name] }.join(", ") %></p>
+  <p>Genres: <%= raw @result[:genres].map { |g| g[:name] }.map { |g| link_to g, genre_path(genre: g) }.join(', ') %></p>
   <p>Overview: <%= @result[:overview] %></p>
   <p>Actors: <%= raw @result[:credits][:cast].map { |cast| cast[:name] }.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %></p>
   <p>Trailer:</p>

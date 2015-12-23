@@ -12,7 +12,7 @@
 
 <p>
   <strong>Genres:</strong>
-  <%= @movie.genres.join(', ') %>
+  <%= raw @movie.genres.map { |g| link_to g, genre_path(genre: g) }.join(', ') %></p>
 </p>
 
 <p>
