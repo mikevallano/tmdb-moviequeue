@@ -9,10 +9,15 @@ RSpec.describe ReviewsController, type: :controller do
   let(:list) { FactoryGirl.create(:list, :owner => user) }
   let(:list2) { FactoryGirl.create(:list, :owner => user2) }
   let(:movie)  { FactoryGirl.create(:movie) }
+  let(:movie1)  { FactoryGirl.create(:movie) }
+  let(:movie2)  { FactoryGirl.create(:movie) }
+  let(:movie3) { FactoryGirl.create(:movie) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
   let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:listing2) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie2.id) }
+  let(:listing3) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie3.id) }
   let(:review) { FactoryGirl.create(:review, user_id: user.id, movie_id: movie.id) }
   let(:review2) { FactoryGirl.create(:review, user_id: user2.id, movie_id: movie.id) }
   let(:invalid_review) { FactoryGirl.build(:invalid_review) }
@@ -37,7 +42,8 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe "GET #new" do
       it "assigns a new review as @review" do
-        get :new, { :movie_id => movie.id }
+        list2
+        get :new, { :movie_id => movie2.id }
         expect(assigns(:review)).to be_a_new(Review)
       end
     end
@@ -58,14 +64,14 @@ RSpec.describe ReviewsController, type: :controller do
         end
 
         it "assigns a newly created review as @review" do
-          post :create, { :review => valid_attributes, movie_id: movie.id }
+          post :create, { :review => { user_id: user.id, movie_id: movie2.id, body: "the jam" }, movie_id: movie2.id }
           expect(assigns(:review)).to be_a(Review)
           expect(assigns(:review)).to be_persisted
         end
 
         it "redirects to the movie" do
-          post :create, { :review => valid_attributes, movie_id: movie.id }
-          expect(response).to redirect_to(movie_url(movie))
+          post :create, { :review => { user_id: user.id, movie_id: movie3.id, body: "the jammer" }, movie_id: movie3.id }
+          expect(response).to redirect_to(movie_url(movie3))
         end
       end
 
@@ -118,6 +124,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     describe "DELETE #destroy" do
       it "destroys the requested review" do
+        review
         expect {
           delete :destroy, { :id => review.id, movie_id: movie.id }
         }.to change(Review, :count).by(-1)
@@ -206,55 +213,48 @@ RSpec.describe ReviewsController, type: :controller do
 
   shared_examples_for 'users can only access their own reviews' do
     describe "GET #index" do
-      it "reviews index page shows only current users' reviews" do
+      it "ratings index page shows all users' reviews" do
         get :index, { :movie_id => movie.id }
-        expect(assigns(:reviews)).to eq([review])
-        expect(assigns(:reviews)).not_to include(review2)
+        expect(assigns(:reviews)).to include(review2)
       end
     end
 
     describe "GET #show" do
-      it "it raises an exception if user visits another users review show page" do
-        expect {
-          get :show, { :movie_id => movie.id, :id => review2.to_param }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        get :show, { :movie_id => movie.id, :id => review2.to_param }
       end
+     it { is_expected.to redirect_to(movie_path(movie))}
     end
 
     describe "GET #edit" do
-     it "it raises an exception if user visits another users edit review page" do
-        expect {
-          get :edit, { :movie_id => movie.id, :id => review2.to_param }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        get :edit, { :movie_id => movie.id, :id => review2.to_param }
       end
+     it { is_expected.to redirect_to(movie_path(movie))}
     end
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:review, body: "epic movie!") }
-
-        it "it raises an exception if user tries to update another users's review"  do
-          expect {
-            put :update, { :movie_id => movie.id, :id => review2.to_param, :review => new_attributes }
-            }.to raise_exception(ActiveRecord::RecordNotFound)
+        let(:new_attributes) { FactoryGirl.attributes_for(:review, body: 'it was teh bestest') }
+        before(:example) do
+          put :update, { :movie_id => movie.id, :id => review2.to_param, :rating => new_attributes }
         end
+       it { is_expected.to redirect_to(movie_path(movie))}
       end
 
       context "with invalid params" do
-        it "it raises an exception if user tries to update another users's review" do
-          expect {
-            put :update, { :movie_id => movie.id, :id => review2.to_param, :review => invalid_attributes }
-            }.to raise_exception(ActiveRecord::RecordNotFound)
+        before(:example) do
+          put :update, { :movie_id => movie.id, :id => review2.to_param, :rating => invalid_attributes }
         end
+       it { is_expected.to redirect_to(movie_path(movie))}
       end
     end
 
     describe "DELETE #destroy" do
-     it "it raises an exception if user tries to delete another user's review" do
-        expect {
-          delete :destroy, { :id => review2.id, movie_id: movie.id }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
+      before(:example) do
+        delete :destroy, { :id => review2.id, movie_id: movie.id }
       end
+      it { is_expected.to redirect_to(movie_path(movie))}
     end
 
   end #end of user can't access another user's reviews
@@ -263,7 +263,6 @@ RSpec.describe ReviewsController, type: :controller do
     before :each do
       current_user
       listing
-      review
     end
 
     it_behaves_like 'logged in access'

@@ -2,11 +2,12 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :restrict_reviews_access, only: [:show, :edit, :update, :destroy]
 
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = @movie.reviews.by_user(current_user)
+    @reviews = @movie.reviews
   end
 
   # GET /reviews/1
@@ -16,7 +17,11 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
-    @review = current_user.reviews.new
+    if @movie.reviews.by_user(current_user).present?
+      redirect_to movie_review_path(@movie, @movie.reviews.by_user(current_user).first), notice: "You've already reviewed this movie"
+    else
+      @review = current_user.reviews.new
+    end
   end
 
   # GET /reviews/1/edit
@@ -66,7 +71,7 @@ class ReviewsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_review
-      @review = @movie.reviews.by_user(current_user).find(params[:id])
+      @review = Review.find(params[:id])
     end
 
     def set_movie
@@ -76,5 +81,11 @@ class ReviewsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
       params.require(:review).permit(:user_id, :movie_id, :body)
+    end
+
+    def restrict_reviews_access
+      unless current_user.reviews.include?(@review)
+        redirect_to movie_path(@movie), notice: "That's not your review"
+      end
     end
 end

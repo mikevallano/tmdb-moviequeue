@@ -3,7 +3,7 @@
 
 <p>
   <strong>Movie:</strong>
-  <%= @rating.movie.title %>
+  <%= link_to "#{@rating.movie.title}", movie_path(@rating.movie) %>
 </p>
 
 <p>
