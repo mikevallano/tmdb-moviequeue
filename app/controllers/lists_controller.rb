@@ -6,6 +6,10 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
+    @owner = User.friendly.find(params[:user_id])
+    unless @owner == current_user
+      redirect_to user_lists_path(current_user), notice: "Those aren't your lists"
+    end
     @lists = current_user.all_lists
   end
 

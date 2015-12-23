@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ListsController, type: :controller do
 
+  let(:list_name) { FFaker::HipsterIpsum.words(3).join(' ') }
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
   let(:list) { FactoryGirl.create(:list, :owner => user) }
@@ -10,7 +11,7 @@ RSpec.describe ListsController, type: :controller do
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
-  let(:valid_attributes) { {name: list.name, owner_id: user.id} }
+  let(:valid_attributes) { {name: list_name, owner_id: user.id} }
   let(:invalid_attributes) { {name: nil} }
 
   shared_examples_for 'logged in access to lists' do
@@ -76,6 +77,7 @@ RSpec.describe ListsController, type: :controller do
           post :create, { :list => valid_attributes, user_id: user.to_param }
           expect(response).to redirect_to(user_lists_path(user))
         end
+
       end
 
       context "with invalid params" do

@@ -6,6 +6,7 @@ class List < ActiveRecord::Base
   scope :main_lists, lambda { where(:is_main => true) }
 
   validates_presence_of :name
+  validates :name, :uniqueness => { :scope => :owner_id }
 
   belongs_to :owner, :class_name => "User"
 

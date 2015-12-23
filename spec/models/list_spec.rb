@@ -5,6 +5,7 @@ RSpec.describe List, type: :model do
   let(:invalid_list) { FactoryGirl.build(:invalid_list) }
 
   it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:owner_id) }
 
   context "with a valid factory" do
     it "has a valid factory" do
