@@ -30,6 +30,23 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
       end #end create review scenario
 
+      scenario "users can only review a movie once" do
+
+        listing
+        sign_in_user(user)
+        click_link "movies"
+        click_link "Show"
+        click_link "Review this movie"
+        fill_in 'Body', with: "OMG. best. movie. eva."
+
+        expect { click_button 'Create Review' }.to change(Review.by_user(user), :count).by(1)
+        visit(new_movie_review_path(movie))
+        expect(page).to have_content("You've already reviewed this movie")
+        url = URI.parse(current_url)
+        expect("#{url}").to include("#{movie.slug}/reviews/#{movie.reviews.by_user(user).first.id}")
+
+      end #end can only review a movie once
+
       scenario "movie show page shows only the current user's review" do
 
         listing

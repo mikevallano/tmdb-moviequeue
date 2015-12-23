@@ -30,6 +30,26 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
       end #end create rating scenario
 
+      scenario "users can only rate a movie once" do
+
+        listing
+        sign_in_user(user)
+        click_link "movies"
+        click_link "Show"
+        click_link "Rate this movie"
+        fill_in 'Value', with: "9"
+
+        expect { click_button 'Create Rating' }.to change(Rating.by_user(user), :count).by(1)
+        expect(page).to have_content("successfully")
+        expect(page).to have_content("9")
+
+        visit(new_movie_rating_path(movie))
+        expect(page).to have_content("You've already rated this movie")
+        url = URI.parse(current_url)
+        expect("#{url}").to include("#{movie.slug}/ratings/#{movie.ratings.by_user(user).first.id}")
+
+      end #end can only rate a movie once
+
       scenario "movie show page shows only the current user's rating" do
 
         listing
