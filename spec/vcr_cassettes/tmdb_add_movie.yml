@@ -25,9 +25,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Fri, 18 Dec 2015 20:40:19 GMT
+      - Thu, 24 Dec 2015 15:50:23 GMT
       Etag:
-      - W/"866c5c70fbb41cc72013eaefc39d9d46"
+      - W/"4082bfaffbaafb54e60a06a639d5c5c4"
       Server:
       - openresty
       Status:
@@ -37,19 +37,19 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '24783'
+      - '7309'
       X-Memc-Expires:
-      - '4017'
+      - '21491'
       X-Memc-Key:
       - 1d1ae1d16d08b874c2ef85c916776047
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '37'
+      - '29'
       X-Ratelimit-Reset:
-      - '1450471228'
+      - '1450972229'
       Content-Length:
-      - '2457'
+      - '2456'
       Connection:
       - keep-alive
     body:
@@ -75,7 +75,7 @@ http_interactions:
         IGdldCBoZXIgbWFuLiBBbmQgaWYgeW91IHRoaW5rIGhlciBzbWFsbC10aW1l
         IGludmVzdGlnYXRpdmUgc2tpbGxzIHdpbGwgZ2l2ZSB0aGUgY3Jvb2tzIGEg
         cnVuIGZvciB0aGVpciByYW5zb20uLi4geW91IGJldGNoYSEiLCJwb3B1bGFy
-        aXR5IjoxLjkwOTcxNiwicG9zdGVyX3BhdGgiOiIvYVplWDRYTlNxYTA4VGRN
+        aXR5IjoxLjgxNjIwMiwicG9zdGVyX3BhdGgiOiIvYVplWDRYTlNxYTA4VGRN
         SFJCMWdETE82R09pLmpwZyIsInByb2R1Y3Rpb25fY29tcGFuaWVzIjpbeyJu
         YW1lIjoiUG9seUdyYW0gRmlsbWVkIEVudGVydGFpbm1lbnQiLCJpZCI6MTM4
         Mn0seyJuYW1lIjoiV29ya2luZyBUaXRsZSBGaWxtcyIsImlkIjoxMDE2M31d
@@ -86,7 +86,7 @@ http_interactions:
         YW1lIjoiRW5nbGlzaCJ9XSwic3RhdHVzIjoiUmVsZWFzZWQiLCJ0YWdsaW5l
         IjoiQSBsb3QgY2FuIGhhcHBlbiBpbiB0aGUgbWlkZGxlIG9mIG5vd2hlcmUu
         IiwidGl0bGUiOiJGYXJnbyIsInZpZGVvIjpmYWxzZSwidm90ZV9hdmVyYWdl
-        Ijo3LjQsInZvdGVfY291bnQiOjY5NywidHJhaWxlcnMiOnsicXVpY2t0aW1l
+        Ijo3LjQsInZvdGVfY291bnQiOjcwMywidHJhaWxlcnMiOnsicXVpY2t0aW1l
         IjpbXSwieW91dHViZSI6W3sibmFtZSI6IlRyYWlsZXIgMSIsInNpemUiOiJT
         dGFuZGFyZCIsInNvdXJjZSI6ImgydFk4MnozeFhVIiwidHlwZSI6IlRyYWls
         ZXIifV19LCJjcmVkaXRzIjp7ImNhc3QiOlt7ImNhc3RfaWQiOjcsImNoYXJh
@@ -193,5 +193,5 @@ http_interactions:
         ImlkIjo5NjQ5LCJqb2IiOiJBcnQgRGlyZWN0aW9uIiwibmFtZSI6IlRob21h
         cyBQLiBXaWxraW5zIiwicHJvZmlsZV9wYXRoIjpudWxsfV19fQ==
     http_version: 
-  recorded_at: Fri, 18 Dec 2015 20:40:19 GMT
+  recorded_at: Thu, 24 Dec 2015 15:50:23 GMT
 recorded_with: VCR 2.9.3

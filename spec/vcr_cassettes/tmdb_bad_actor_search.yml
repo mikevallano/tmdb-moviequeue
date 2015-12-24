@@ -21,15 +21,15 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Mon, 21 Dec 2015 17:57:51 GMT
+      - Thu, 24 Dec 2015 15:50:21 GMT
       Server:
       - openresty
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '39'
+      - '36'
       X-Ratelimit-Reset:
-      - '1450720681'
+      - '1450972229'
       Content-Length:
       - '37'
       Connection:
@@ -38,5 +38,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"errors":["query must be provided"]}'
     http_version: 
-  recorded_at: Mon, 21 Dec 2015 17:57:49 GMT
+  recorded_at: Thu, 24 Dec 2015 15:50:21 GMT
 recorded_with: VCR 2.9.3
