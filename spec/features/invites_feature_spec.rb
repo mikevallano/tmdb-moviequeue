@@ -52,6 +52,11 @@ RSpec.feature "Invites feature spec", :type => :feature do
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "password"
         click_link_or_button 'Sign up'
+        visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
+        visit new_user_session_path
+        fill_in 'Sign in with email or username', with: username
+        fill_in 'Password', with: "password"
+        click_button 'Log in'
 
         expect(page).to have_content("success")
 

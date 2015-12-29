@@ -9,6 +9,11 @@ module FeatureHelpers
     fill_in "Password", with: password
     fill_in "Password confirmation", with: password
     click_link_or_button 'Sign up'
+    visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
+    visit new_user_session_path
+    fill_in 'Sign in with email or username', with: email
+    fill_in 'Password', with: password
+    click_button 'Log in'
     @email = email
     @current_user = User.find_by_email(email)
   end
