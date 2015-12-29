@@ -30,11 +30,9 @@ RSpec.feature "Invites feature spec", :type => :feature do
         fill_in "Email", with: receiver_email
         click_button "Send invite"
 
-        expect(last_email).to have_content("To: #{receiver_email}")
-        expect(last_email.to).to eq([receiver_email])
-        expect(last_email.from).to eq([user1.email])
-        expect(last_email.body.encoded).to include new_user_registration_path(:token =>
-            Invite.last.token)
+        open_email(receiver_email)
+        expect(current_email).to have_content("Sign up here!")
+
 
       end
 
@@ -44,16 +42,19 @@ RSpec.feature "Invites feature spec", :type => :feature do
         visit(user_list_path(user1, list))
         fill_in "Email", with: receiver_email
         click_button "Send invite"
-        click_link "Sign Out"
 
-        visit new_user_registration_path(:token => Invite.last.token)
+        open_email(receiver_email)
+        current_email.click_link "Sign up here!"
 
+        #email field is already populated with reciever_email
         fill_in "Username", with: username
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "password"
         click_link_or_button 'Sign up'
-        visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
-        visit new_user_session_path
+        open_email(receiver_email)
+        current_email.click_link "Confirm my account"
+        # visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
+        # visit new_user_session_path
         fill_in 'Sign in with email or username', with: username
         fill_in 'Password', with: "password"
         click_button 'Log in'
@@ -77,9 +78,8 @@ RSpec.feature "Invites feature spec", :type => :feature do
         fill_in "Email", with: user2.email
         click_button "Send invite"
 
-        expect(last_email).to have_content("To: #{user2.email}")
-        expect(last_email.to).to eq([user2.email])
-        expect(last_email.from).to eq([user1.email])
+        open_email(user2.email)
+        expect(current_email).to have_content("Check out the list here")
         expect(last_email.body.encoded).to include user_list_path(user1, Invite.last.list)
 
       end

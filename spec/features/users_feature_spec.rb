@@ -69,21 +69,22 @@ RSpec.feature "Users feature spec", :type => :feature do
       expect(page).to have_content("Signed out successfully")
     end
 
-    scenario "user can request a password reset" do
+    scenario "user can reset their password" do
+
       sign_in_user(existing_user)
       click_link "Sign Out"
       click_link "Sign In"
       click_link "Forgot your password?"
       fill_in "Email", with: existing_user.email
       click_link_or_button "Send me reset password instructions"
-      expect(last_email).to have_content("To: #{existing_user.email}")
-      expect(last_email.body.encoded).to have_content "Change my password"
-      # visit edit_user_password_url(reset_password_token: existing_user.reset_password_token)
-      # save_and_open_page
-      # fill_in "New password", with: "password1"
-      # fill_in "Confirm new password", with: "password1"
-      # click_link_or_button "Change my password"
-      # expect(page).to have_content("Your password has been changed successfully.")
+      open_email(existing_user.email)
+      expect(current_email).to have_content("#{existing_user.email}")
+      expect(current_email).to have_content "Change my password"
+      current_email.click_link "Change my password"
+      fill_in "New password", with: "password1"
+      fill_in "Confirm new password", with: "password1"
+      click_link_or_button "Change my password"
+      expect(page).to have_content("Your password has been changed successfully.")
     end
 
     scenario "user has a default list after signing up" do

@@ -23,6 +23,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
   gem 'letter_opener'
+  gem 'capybara-email'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'spring-commands-rspec'
