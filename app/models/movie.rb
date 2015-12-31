@@ -1,5 +1,7 @@
 class Movie < ActiveRecord::Base
 
+  self.per_page = 20
+
   extend FriendlyId
   friendly_id :title, :use => :history
 

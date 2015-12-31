@@ -62,6 +62,23 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       end
 
+      describe "pagination" do
+        it "should paginate the movies" do
+          sign_in_user(user)
+          30.times { FactoryGirl.create(:movie) }
+          counter = 1
+          30.times do
+            FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+            counter += 1
+          end
+          visit user_list_path(user, list)
+          expect(page).to have_content("Next")
+          click_link("Next")
+          expect(page).to have_content("Previous")
+          expect(page).not_to have_link("Next")
+        end
+      end
+
     end #signed in user context
 
     context "user trying to access other users' lists" do

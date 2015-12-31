@@ -19,6 +19,7 @@ class ListsController < ApplicationController
     if request.path != user_list_path(@list.owner, @list)
       return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
     end
+    @movies = @list.movies.paginate(:page => params[:page])
   end
 
   # GET /lists/new
