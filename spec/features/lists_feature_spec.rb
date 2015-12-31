@@ -66,7 +66,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         it "should paginate the movies" do
           sign_in_user(user)
           30.times { FactoryGirl.create(:movie) }
-          counter = 1
+          counter = Movie.first.id
           30.times do
             FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
             counter += 1
@@ -77,6 +77,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end
+        Movie.destroy_all
       end
 
     end #signed in user context

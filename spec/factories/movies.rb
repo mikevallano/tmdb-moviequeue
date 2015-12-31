@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :movie do
     title { FFaker::Movie.title }
-    tmdb_id { FFaker::Address.building_number }
+    tmdb_id { (FFaker::Address.building_number + FFaker::PhoneNumberAU.home_work_phone_prefix) }
     imdb_id { FFaker::Product.model }
     backdrop_path "/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg"
     poster_path "/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg"
