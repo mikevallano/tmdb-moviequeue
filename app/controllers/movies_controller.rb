@@ -5,15 +5,15 @@ class MoviesController < ApplicationController
     if params["tag"]
       if params[:list_id]
         @list = List.find(params[:list_id])
-        @movies = @list.movies.tagged_with(params['tag'], @list)
+        @movies = @list.movies.tagged_with(params['tag'], @list).paginate(:page => params[:page], :per_page => 1)
       else
-        @movies = current_user.movies.tagged_with(params["tag"], current_user)
+        @movies = current_user.movies.tagged_with(params["tag"], current_user).paginate(:page => params[:page], :per_page => 1)
       end
     else
-      @movies = current_user.all_movies
+      @movies = current_user.all_movies.paginate(:page => params[:page], :per_page => 1)
     end
     if params[:genre]
-      @movies = current_user.movies.by_genre(params[:genre])
+      @movies = current_user.movies.by_genre(params[:genre]).paginate(:page => params[:page], :per_page => 1)
     end
   end
 

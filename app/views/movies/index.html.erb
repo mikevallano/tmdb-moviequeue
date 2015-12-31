@@ -17,7 +17,7 @@
     <% @movies.each do |movie| %>
       <tr>
         <td><%= movie.title %></td>
-        <td><%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t) }.join(', ') %></td>
+        <td><%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></td>
         <td><%= raw movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></td>
         <td>
           <%= form_tag('/taggings') do %>
@@ -32,5 +32,7 @@
     <% end %>
   </tbody>
 </table>
+
+<p><%= will_paginate @movies %></p>
 
 <br>
