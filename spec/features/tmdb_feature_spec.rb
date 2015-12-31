@@ -37,6 +37,22 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
+    scenario "actor results are paginated" do
+
+      sign_up_with(email, username, "password")
+      visit(actor_search_path)
+      api_actor_search
+
+      expect(page).to have_content("Page 1 of 6")
+      expect(page).not_to have_content("Previous page")
+      VCR.use_cassette('tmdb_actor_next_page') do
+        click_link("Next page")
+      end
+      expect(page).to have_content("Page 2 of 6")
+      expect(page).to have_content("Previous page")
+
+    end
+
     scenario "users searches for an actor not found and the page indicates results not found" do
 
       sign_up_with(email, username, "password")

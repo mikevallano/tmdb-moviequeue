@@ -42,14 +42,22 @@ module TmdbHandler
       vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime])
   end
 
-  def tmdb_handler_actor_search(name)
+  def tmdb_handler_actor_search(name, page)
+    @page = page.to_i
     @search_url = "https://api.themoviedb.org/3/search/person?query=#{name}&api_key=#{ENV['tmdb_api_key']}"
      @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
      @actor_search_result = @tmdb_response[:results]
     if @actor_search_result.present?
       @id = @actor_search_result.first[:id]
-      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@id}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
+      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@id}&page=#{@page}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
       @been_in = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:results]
+      @total_pages = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:total_pages]
+      if @page > 1
+        @previous_page = @page - 1
+      end
+      unless @page >= @total_pages
+        @next_page = @page + 1
+      end
     else
       @been_in = []
     end

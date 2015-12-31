@@ -29,6 +29,7 @@
         <p><%= result[:release_date] %></p>
         <p><%= result[:vote_average] %></p>
         <p><%= result[:overview] %></p>
+        <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
         <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
           <p>On List</p>
         <% else %>
@@ -42,7 +43,16 @@
           <% end %>
           </p>
         <% end %>
-        <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+    <% end %>
+
+    <%= "Page #{@page} of #{@total_pages}" %></br>
+
+    <% if @previous_page.present? %>
+      <%= link_to "Previous page", actor_search_path(name: "#{@name}", page: "#{@previous_page}") %>
+    <% end %>
+
+    <% if @next_page.present? %>
+      <%= link_to "Next page", actor_search_path(name: "#{@name}", page: "#{@next_page}") %>
     <% end %>
 
 <% end %>

@@ -23,7 +23,12 @@ class TmdbController < ApplicationController
   def actor_search
     if params[:name]
       @name = params[:name]
-      tmdb_handler_actor_search(@name)
+      if params[:page]
+        @page = params[:page]
+      else
+        @page = 1
+      end
+      tmdb_handler_actor_search(@name, @page)
     end
   end
 
