@@ -7,6 +7,7 @@ RSpec.feature "Genres feature spec", :type => :feature do
     let(:user) { FactoryGirl.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
+    let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
 
     context "with signed in user" do
 
@@ -35,6 +36,30 @@ RSpec.feature "Genres feature spec", :type => :feature do
         expect(page).to have_content("Fargo")
 
       end #genres are links
+
+      describe "pagination" do
+        it "should paginate the movies by tag" do
+          sign_in_user(user)
+          30.times do
+            @movie = FactoryGirl.create(:movie)
+            @movie.genres = ["Crime"]
+            @movie.save
+          end
+          counter = Movie.first.id
+          30.times do
+            FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+            counter += 1
+          end
+          visit(movie_path(Movie.last))
+          click_link("Crime", match: :first)
+          expect(page).to have_content("Next")
+          click_link("Next")
+          expect(page).to have_content("Previous")
+          expect(page).not_to have_link("Next")
+        end
+        Movie.destroy_all
+        Listing.destroy_all
+      end
 
     end #signed in user context
 
