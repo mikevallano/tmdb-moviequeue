@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :movie do
     title { FFaker::Movie.title }
-    tmdb_id { rand(1..9999) }
+    sequence(:tmdb_id) { |n| n + 10 }
     imdb_id { FFaker::Product.model }
     backdrop_path "/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg"
     poster_path "/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg"
