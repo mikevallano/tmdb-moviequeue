@@ -20,7 +20,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie #method in features_helper
 
-      api_more_info #method in features_helper
+      api_movie_more_info #method in features_helper
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
@@ -36,7 +36,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie #method in features_helper
 
-      api_more_info #method in features_helper
+      api_movie_more_info #method in features_helper
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do

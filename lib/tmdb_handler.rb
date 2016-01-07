@@ -86,7 +86,6 @@ module TmdbHandler
     @writer_credits = @credits_results[:crew ].select { |crew| crew[:job] == "Writer" }
     @screenplay_credits = @credits_results[:crew].select { |crew| crew[:job] == "Screenplay" }
     @producer_credits = @credits_results[:crew].select { |crew| crew[:job] == "Producer" }
-
   end
 
   def tmdb_handler_actor_credit(credit_id)
@@ -162,7 +161,6 @@ module TmdbHandler
     @writer_credits = @result[:crew ].select { |crew| crew[:job] == "Writer" }
     @screenplay_credits = @result[:crew].select { |crew| crew[:job] == "Screenplay" }
     @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
-
   end
 
 end

@@ -16,7 +16,7 @@ RSpec.feature "Genres feature spec", :type => :feature do
         sign_up_with(email, username, "password")
         visit(api_search_path)
         api_search_for_movie
-        api_more_info
+        api_movie_more_info
         expect(page).to have_content("Crime")
 
       end #movies have genres
@@ -26,7 +26,7 @@ RSpec.feature "Genres feature spec", :type => :feature do
         sign_up_with(email, username, "password")
         visit(api_search_path)
         api_search_for_movie
-        api_more_info
+        api_movie_more_info
         all('#new_listing option')[0].select_option
         VCR.use_cassette('tmdb_add_movie') do
           click_button("add movie to list")

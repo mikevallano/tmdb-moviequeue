@@ -99,7 +99,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
 
-      api_more_info
+      api_movie_more_info
       expect(page).to have_content("you betcha")
 
     end
@@ -110,7 +110,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
 
-      api_more_info
+      api_movie_more_info
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
@@ -126,7 +126,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
 
-      api_more_info
+      api_movie_more_info
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
@@ -142,7 +142,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
 
-      api_more_info
+      api_movie_more_info
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
@@ -158,7 +158,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
 
-      api_more_info
+      api_movie_more_info
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do

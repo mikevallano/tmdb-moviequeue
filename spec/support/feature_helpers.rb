@@ -42,8 +42,8 @@ module FeatureHelpers
     end
   end
 
-  def api_more_info
-    VCR.use_cassette('tmdb_more') do
+  def api_movie_more_info
+    VCR.use_cassette('tmdb_movie_more') do
       click_link('More info', match: :first)
     end
   end
