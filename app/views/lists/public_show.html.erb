@@ -1,0 +1,29 @@
+<p>
+  <strong>Name:</strong>
+  <%= @list.name %>
+</p>
+
+<h3>Movies on this list:</h3>
+
+  <% @list.movies.each do |movie| %>
+   <div>
+       <%= image_tag "http://image.tmdb.org/t/p/w150#{movie.poster_path}" %>
+      <h3><%= movie.title %></h3>
+      <p><%= movie.release_date %></p>
+      <p><%= movie.vote_average %></p>
+      <p><%= movie.overview %></p>
+      <p><%= link_to "More info", movie_path(movie) %></p>
+      <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: movie.tmdb_id)) %>
+        <p>On List</p>
+      <% else %>
+        <p>Add this movie to a list:</p>
+        <p>
+        <%= form_for(Listing.new) do |f| %>
+          <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+          <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <%= f.submit "add movie to list" %>
+        <% end %>
+        </p>
+      <% end %>
+  <% end %>
