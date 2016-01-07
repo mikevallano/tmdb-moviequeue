@@ -16,10 +16,9 @@
 
 <h3>TV Credits (<%= @tv_credits.size %>)</h3>
 <ul>
-  <!-- need to link "more info" to the credit_id, then link the name of the show to the show_id -->
 <% @tv_credits.each do |credit| %>
   <li><%= link_to "#{credit[:name]}", tv_more_path(show_id: credit[:id], actor_id: @actor_id) %>,
-    <%= link_to "more info", actor_credit_path(actor_id: @actor_id, credit_id: credit[:credit_id]) %>
+    <%= link_to "more info", actor_credit_path(actor_id: @actor_id, credit_id: credit[:credit_id], show_name: "#{credit[:name]}") %>
      <%= ", Character: #{credit[:character]}" if credit[:character].present? %></li>
 <% end %>
 </ul>

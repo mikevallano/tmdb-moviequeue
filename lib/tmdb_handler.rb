@@ -95,7 +95,7 @@ module TmdbHandler
     @show_id = @credit_results[:media][:id]
     if @credit_results[:media][:episodes].present?
       @air_date = @credit_results[:media][:episodes].first[:air_date]
-      @show_name = @credit_results[:media][:episodes].first[:name]
+      @episode_name = @credit_results[:media][:episodes].first[:name]
       @season_number = @credit_results[:media][:episodes].first[:season_number]
       @episode_number = @credit_results[:media][:episodes].first[:episode_number]
       @episode_overview = @credit_results[:media][:episodes].first[:overview]

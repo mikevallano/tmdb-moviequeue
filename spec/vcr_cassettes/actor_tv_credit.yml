@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/credit/5256c32c19c2956ff601d1f7?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=28800
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 07 Jan 2016 20:20:20 GMT
+      Etag:
+      - W/"7810ad1734f0e5d6107f0bde6ef7b0f9"
+      Server:
+      - openresty
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '212'
+      X-Memc-Expires:
+      - '28588'
+      X-Memc-Key:
+      - ef9ce80f591f53fd49812fe478b97c6a
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Reset:
+      - '1452198030'
+      Content-Length:
+      - '1324'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"credit_type":"cast","department":"Actors","job":"Actor","media":{"id":456,"name":"The
+        Simpsons","original_name":"The Simpsons","character":"","episodes":[{"air_date":"2003-05-11","episode_number":20,"name":"Brake
+        My Wife, Please","overview":"At the Springfield Aquarium, Marge accompanies
+        the kids on a school field trip. Lisa spots penguins flying and after Bart
+        has shown off his \"flawless pearls,\" which results in him being taken the
+        hospital, where a lack of insurance card keeps him prisoner. Homer has the
+        insurance card, but is nowhere to be found. As a solution, Homer gets a mobile
+        phone and a few extra unnecessary accessories, which only leads to him not
+        paying attention to where he is driving. That is until it is much too late
+        and he drives off of a pier. Judge Harm takes his license away and Homer is
+        no longer able to drive. Marge picks up the slack and starts becoming \"Stresserella.\"
+        Homer walks to Moe''s, but much to Moe''s dismay he decide to keep on walking
+        and starts getting healthy. Homer walks to work and is the only employee to
+        arrive, everyone else is caught in a traffic jam. Marge is frazzled from all
+        her driving, meanwhile Homer sings and walks about the virtues of walking
+        when he is stuck by a car; the driver of the car was Marge. Marge, who cares
+        so much for Homer, tries to help in his recovery, but Homer perceives that
+        she might be trying to kill him. It leads to fight, which in turn leads them
+        to see a marriage counselor. After Marge leaves, the counselor suggests that
+        Homer perform one unselfish act of love to win Marge back, in other words
+        take her to dinner. Homer decides to one up that suggestion and invites everyone
+        in Springfield (except the Flanders family) to a backyard barbeque in Marge''s
+        honor. Homer joins Jackson Browne in a duet to sing his praises of Marge.","season_number":14,"still_path":"/AlYJsfGR68g3DrTcTC0XwbuAcvz.jpg"},{"air_date":"2007-10-14","episode_number":4,"name":"I
+        Don''t Wanna Know Why the Caged Bird Sings","overview":"During a bank robbery,
+        Marge convinces Dwight, the bank robber, to turn himself in with the assurance
+        that she will visit him once in jail. Marge never makes good on her promise
+        and things get interesting when Dwight escapes from jail and comes looking
+        for Marge.","season_number":19,"still_path":"/yXPpE8RmOqpAA9KHFQTV19pAAWw.jpg"}],"seasons":[]},"media_type":"tv","id":"5256c32c19c2956ff601d1f7","person":{"name":"Steve
+        Buscemi","id":884}}'
+    http_version: 
+  recorded_at: Thu, 07 Jan 2016 20:20:20 GMT
+recorded_with: VCR 2.9.3
