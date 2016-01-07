@@ -4,7 +4,7 @@
 
 <ul>
 <% @director_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -12,7 +12,7 @@
 
 <ul>
 <% @producer_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -20,7 +20,7 @@
 
 <ul>
 <% @editor_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -28,20 +28,20 @@
 
 <ul>
 <% @writer_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
 <h2>Screenplay Credits (<%= @screenplay_credits.size %>)</h2>
 <ul>
 <% @screenplay_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
 <h2>Actor Credits (<%= @actor_credits.size %>)</h2>
 <ul>
 <% @actor_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", more_info_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>

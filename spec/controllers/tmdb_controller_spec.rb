@@ -37,14 +37,14 @@ RSpec.describe TmdbController, type: :controller do
       it "searches the tmdb api and returns an http success" do
         current_user
         VCR.use_cassette('tmdb_controller_more') do
-          get :more, { movie_id: 275 }
+          get :movie_more, { movie_id: 275 }
         end
         expect(response).to have_http_status(:success)
       end
 
       it "redirects the user back to search page with if no movie_id is passed" do
         current_user
-        get :more
+        get :movie_more
         expect(response).to have_http_status(:redirect)
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe TmdbController, type: :controller do
       before(:example) do
         invalid_user
         VCR.use_cassette('tmdb_controller_more') do
-          get :more, { movie_id: 275 }
+          get :movie_more, { movie_id: 275 }
         end
       end
       it { is_expected.to redirect_to new_user_session_path }

@@ -28,7 +28,7 @@
           <p><%= result[:release_date] %></p>
           <p><%= result[:vote_average] %></p>
           <p><%= result[:overview] %></p>
-          <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+          <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
       <% end %>
 
 <% end %>

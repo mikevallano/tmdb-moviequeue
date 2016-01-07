@@ -11,8 +11,9 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_info(id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits"
+    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    @similar = @result[:similar][:results]
     @crew = @result[:credits][:crew]
     @crew.find do |i|
       if i[:department] == "Directing"
@@ -48,8 +49,8 @@ module TmdbHandler
      @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
      @actor_search_result = @tmdb_response[:results]
     if @actor_search_result.present?
-      @id = @actor_search_result.first[:id]
-      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@id}&page=#{@page}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
+      @actor_id = @actor_search_result.first[:id]
+      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@actor_id}&page=#{@page}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
       @been_in = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:results]
       @total_pages = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:total_pages]
       if @page > 1
@@ -65,6 +66,69 @@ module TmdbHandler
       unless @tmdb_response.present?
         @been_in = []
       end
+  end
+
+  def tmdb_handler_actor_more(actor_id)
+    @bio_url = "https://api.themoviedb.org/3/person/#{actor_id}?api_key=#{ENV['tmdb_api_key']}"
+    @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
+    @name = @bio_results[:name]
+    @bio = @bio_results[:biography]
+    @birthday = @bio_results[:birthday]
+    @profile_path = @bio_results[:profile_path]
+
+    @credits_url = "https://api.themoviedb.org/3/person/#{actor_id}/combined_credits?api_key=#{ENV['tmdb_api_key']}"
+    @credits_results = JSON.parse(open(@credits_url).read, symbolize_names: true)
+    @movie_credits = @credits_results[:cast].select { |cast| cast[:media_type] == "movie" }
+    @tv_credits = @credits_results[:cast].select { |cast| cast[:media_type] == "tv" }
+
+    @director_credits = @credits_results[:crew].select { |crew| crew[:job] == "Director" }
+    @editor_credits = @credits_results[:crew].select { |crew| crew[:job] == "Editor" }
+    @writer_credits = @credits_results[:crew ].select { |crew| crew[:job] == "Writer" }
+    @screenplay_credits = @credits_results[:crew].select { |crew| crew[:job] == "Screenplay" }
+    @producer_credits = @credits_results[:crew].select { |crew| crew[:job] == "Producer" }
+
+  end
+
+  def tmdb_handler_actor_credit(credit_id)
+    @credit_url = "https://api.themoviedb.org/3/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
+    @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
+    @character = @credit_results[:media][:character]
+    @show_id = @credit_results[:media][:id]
+    if @credit_results[:media][:episodes].present?
+      @air_date = @credit_results[:media][:episodes].first[:air_date]
+      @show_name = @credit_results[:media][:episodes].first[:name]
+      @season_number = @credit_results[:media][:episodes].first[:season_number]
+      @episode_number = @credit_results[:media][:episodes].first[:episode_number]
+      @episode_overview = @credit_results[:media][:episodes].first[:overview]
+      @still_image = @credit_results[:media][:episodes].first[:still_path]
+      @episode_url = "https://api.themoviedb.org/3/tv/#{@episode_id}/season/#{@season_number}/episode/#{@episode_number}?api_key=#{ENV['tmdb_api_key']}"
+    else
+      @seasons = @credit_results[:media][:seasons]
+    end
+  end
+
+  def tmdb_handler_tv_more(show_id)
+    @show_url = "https://api.themoviedb.org/3/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @show_results = JSON.parse(open(@show_url).read, symbolize_names: true)
+    @first_air_date = @show_results[:first_air_date]
+    @last_air_date = @show_results[:last_air_date]
+    @show_id = show_id
+    @show_name = @show_results[:name]
+    @backdrop_path = @show_results[:backdrop_path]
+    @poster_path = @show_results[:poster_path]
+    @number_of_episodes = @show_results[:number_of_episodes]
+    @number_of_seasons = @show_results[:number_of_seasons]
+    @overview = @show_results[:overview]
+    @seasons = @show_results[:seasons]
+    @show_cast = @show_results[:credits][:cast]
+  end
+
+  def tmdb_handler_tv_season(show_id, season_number)
+    @season_url = "https://api.themoviedb.org/3/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @season_results = JSON.parse(open(@season_url).read, symbolize_names: true)
+    tmdb_handler_tv_more(show_id)
+    @episodes = @season_results[:episodes]
+    @season_cast = @season_results[:credits][:cast]
   end
 
   def tmdb_handler_two_actor_search(name_one, name_two)

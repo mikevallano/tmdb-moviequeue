@@ -11,7 +11,7 @@ class TmdbController < ApplicationController
     end
   end
 
-  def more
+  def movie_more
     if params[:movie_id]
       @movie_id = params[:movie_id]
       tmdb_handler_movie_info(@movie_id)
@@ -30,6 +30,31 @@ class TmdbController < ApplicationController
       end
       tmdb_handler_actor_search(@name, @page)
     end
+  end
+
+  def actor_more
+    @actor_id = params[:actor_id]
+    tmdb_handler_actor_more(@actor_id)
+  end
+
+  def actor_credit
+    @credit_id = params[:credit_id]
+    @actor_id = params[:actor_id]
+    tmdb_handler_actor_credit(@credit_id)
+  end
+
+  def tv_more
+    @show_id = params[:show_id]
+    @actor_id = params[:actor_id]
+    tmdb_handler_tv_more(@show_id)
+  end
+
+  def tv_season
+    @season_number = params[:season_number]
+    @show_id = params[:show_id]
+    @show_name = params[:show_name]
+    @actor_id = params[:actor_id]
+    tmdb_handler_tv_season(@show_id, @season_number)
   end
 
   def two_actor_search

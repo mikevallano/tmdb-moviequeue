@@ -1,0 +1,64 @@
+<h1>Name: <%= @name %></h1>
+
+<h2>Birthday: <%= @birthday %></h2>
+
+<h2>Bio:</h2> <p><%= @bio %></p>
+
+<%= image_tag "http://image.tmdb.org/t/p/w150#{@profile_path}" %>
+
+<h3>Movie Credits (<%= @movie_credits.size %>)</h3>
+<ul>
+<% @movie_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %>
+    <%= ", Character: #{credit[:character]}" if credit[:character].present? %></li>
+<% end %>
+</ul>
+
+<h3>TV Credits (<%= @tv_credits.size %>)</h3>
+<ul>
+  <!-- need to link "more info" to the credit_id, then link the name of the show to the show_id -->
+<% @tv_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:name]}", tv_more_path(show_id: credit[:id], actor_id: @actor_id) %>,
+    <%= link_to "more info", actor_credit_path(actor_id: @actor_id, credit_id: credit[:credit_id]) %>
+     <%= ", Character: #{credit[:character]}" if credit[:character].present? %></li>
+<% end %>
+</ul>
+
+<h3>Director Credits (<%= @director_credits.size %>)</h3>
+
+<ul>
+<% @director_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+<% end %>
+</ul>
+
+<h3>Producer Credits (<%= @producer_credits.size %>)</h3>
+
+<ul>
+<% @producer_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+<% end %>
+</ul>
+
+<h3>Editor Credits (<%= @editor_credits.size %>)</h3>
+
+<ul>
+<% @editor_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+<% end %>
+</ul>
+
+<h3>Writer Credits (<%= @writer_credits.size %>)</h3>
+
+<ul>
+<% @writer_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+<% end %>
+</ul>
+
+<h3>Screenplay Credits (<%= @screenplay_credits.size %>)</h3>
+<ul>
+<% @screenplay_credits.each do |credit| %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+<% end %>
+</ul>

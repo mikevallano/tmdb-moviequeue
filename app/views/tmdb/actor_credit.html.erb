@@ -1,0 +1,19 @@
+<p><%= link_to "Back to actor results", actor_more_path(actor_id: @actor_id) %> </p>
+
+<h2>Credit info</h2>
+
+<h3>Show: <%= @show_name%></h3>
+<h3>Character: <%= @character %>
+  <% if @credit_results[:media][:episodes].present? %>
+    <h3>Air date: <%= @air_date %> </h3>
+    <h3>Episode name: <%= @episode_name %> </h3>
+    <h3><%= link_to "Season: #{@season_number}", tv_season_path(season_number: @season_number, show_id: @show_id, actor_id: @actor_id) %>, Episode: <%= @episode_number %>  </h3>
+    <h3>Episode overview:</h3> <p><%= @episode_overview %> </p>
+    <%= image_tag "http://image.tmdb.org/t/p/w150#{@still_image}" %>
+  <% else %>
+    <% @seasons.each do |season| %>
+    <li>Season: <%= season[:season_number] %></li>
+    <li>Air date: <%= season[:air_date] %></li>
+    <li><%= image_tag "http://image.tmdb.org/t/p/w150#{season[:poster_path]}" %></li>
+    <% end %>
+  <% end %>

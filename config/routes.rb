@@ -23,10 +23,14 @@ Rails.application.routes.draw do
   get 'genres/:genre', to: 'movies#index', as: :genre
 
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
-  get 'tmdb/more', to: 'tmdb#more', as: :more_info
+  get 'tmdb/movie_more', to: 'tmdb#movie_more', as: :movie_more
   get 'tmdb/actor_search', to: 'tmdb#actor_search', as: :actor_search
+  get 'tmdb/actor_more', to: 'tmdb#actor_more', as: :actor_more
+  get 'tmdb/actor_credit', to: 'tmdb#actor_credit', as: :actor_credit
   get 'tmdb/two_actor_search', to: 'tmdb#two_actor_search', as: :two_actor_search
   get 'tmdb/director_search', to: 'tmdb#director_search', as: :director_search
+  get 'tmdb/tv_more', to: 'tmdb#tv_more', as: :tv_more
+  get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
 
   resources :invites, only: [:create]
 

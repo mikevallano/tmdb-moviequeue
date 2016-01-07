@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 24 Dec 2015 15:50:23 GMT
+      - Thu, 07 Jan 2016 18:17:24 GMT
       Etag:
       - 72b32a1f754ba1c09b3695e0cb6cde7f
       Server:
@@ -35,7 +35,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '31'
       X-Ratelimit-Reset:
-      - '1450972229'
+      - '1452190650'
       Content-Length:
       - '57'
       Connection:
@@ -44,5 +44,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"page":1,"results":[],"total_results":0,"total_pages":1}'
     http_version: 
-  recorded_at: Thu, 24 Dec 2015 15:50:22 GMT
+  recorded_at: Thu, 07 Jan 2016 18:17:23 GMT
 recorded_with: VCR 2.9.3
