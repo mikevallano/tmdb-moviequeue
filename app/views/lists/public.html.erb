@@ -1,0 +1,9 @@
+<h1>Check out public lists</h1>
+
+<ul>
+<% @lists.each do |list| %>
+  <li>List name: <%= link_to "#{list.name}", user_list_path(user_id: list.owner.slug, id: list.slug) %></li>
+  <li>Movies in list: <%= list.movies.size %></li>
+  <li>List owner: <%= list.owner.username %></li>
+<% end %>
+</ul>

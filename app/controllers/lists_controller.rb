@@ -3,8 +3,10 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
   before_action :restrict_list_access, only: [:show, :edit, :update, :destroy]
 
-  # GET /lists
-  # GET /lists.json
+  def public
+    @lists = List.public_lists.paginate(:page => params[:page])
+  end
+
   def index
     @owner = User.friendly.find(params[:user_id])
     unless @owner == current_user
@@ -13,8 +15,6 @@ class ListsController < ApplicationController
     @lists = current_user.all_lists
   end
 
-  # GET /lists/1
-  # GET /lists/1.json
   def show
     if request.path != user_list_path(@list.owner, @list)
       return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
@@ -22,17 +22,13 @@ class ListsController < ApplicationController
     @movies = @list.movies.paginate(:page => params[:page])
   end
 
-  # GET /lists/new
   def new
     @list = List.new
   end
 
-  # GET /lists/1/edit
   def edit
   end
 
-  # POST /lists
-  # POST /lists.json
   def create
     @list = List.new(list_params)
 
@@ -47,8 +43,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /lists/1
-  # PATCH/PUT /lists/1.json
   def update
     respond_to do |format|
       if @list.update(list_params)
@@ -61,8 +55,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # DELETE /lists/1
-  # DELETE /lists/1.json
   def destroy
     @list.destroy
     respond_to do |format|
@@ -72,13 +64,11 @@ class ListsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_list
       @owner = User.friendly.find(params[:user_id])
       @list = List.find_by(owner: @owner, slug: params[:id] )
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
       params.require(:list).permit(:owner_id, :name, :is_public)
     end

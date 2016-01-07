@@ -4,6 +4,7 @@ class List < ActiveRecord::Base
 
   scope :by_user, lambda { |user| where(:owner_id => user.id) }
   scope :main_lists, lambda { where(:is_main => true) }
+  scope :public_lists, lambda { where(:is_public => true) }
 
   validates_presence_of :name
   validates :name, :uniqueness => { :scope => :owner_id }

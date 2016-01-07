@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
+  get 'lists/public', to: 'lists#public', as: :public_lists
+
   resources :users, only: [:show], as: :user do
     resources :lists
   end
