@@ -104,6 +104,32 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
+    scenario "users clicks 'more info' and the page shows similar movies" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+
+      expect(page).to have_content("Similar Movies")
+      expect(page).to have_content("The Revenant")
+
+    end
+
+    scenario "users clicks 'more info' on a similar movie and is taken to that movie's more info page" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+
+      VCR.use_cassette("similar_movies_more_info") do
+        click_link("More info", match: :first)
+      end
+      expect(page).to have_content("The Revenant")
+
+    end
+
     scenario "movie is added to the database if a user adds it to their list" do
 
       sign_up_with(email, username, "password")
