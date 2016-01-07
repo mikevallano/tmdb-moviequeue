@@ -10,6 +10,7 @@ FactoryGirl.define do
     trailer "h2tY82z3xXU"
     vote_average 7.5
     popularity 1.5
+    mpaa_rating "R"
 
     factory :invalid_movie do
       tmdb_id nil

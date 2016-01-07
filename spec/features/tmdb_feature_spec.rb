@@ -178,7 +178,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
-  scenario "movie has director and director_id after being added to the database" do
+    scenario "movie has director and director_id after being added to the database" do
 
       sign_up_with(email, username, "password")
       visit(api_search_path)
@@ -192,6 +192,22 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
       expect(Movie.last.director).to eq("Joel Coen")
       expect(Movie.last.director_id).to eq(1223)
+
+    end
+
+    scenario "movie has mpaa_rating after being added to the database" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+
+      api_movie_more_info
+
+      all('#new_listing option')[0].select_option
+      VCR.use_cassette('tmdb_add_movie') do
+        click_button("add movie to list")
+      end
+      expect(Movie.last.mpaa_rating).to eq("R")
 
     end
 

@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 20:20:20 GMT
+      - Thu, 07 Jan 2016 21:35:44 GMT
       Etag:
       - W/"7810ad1734f0e5d6107f0bde6ef7b0f9"
       Server:
@@ -37,17 +37,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '212'
+      - '4736'
       X-Memc-Expires:
-      - '28588'
+      - '24064'
       X-Memc-Key:
       - ef9ce80f591f53fd49812fe478b97c6a
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '39'
+      - '28'
       X-Ratelimit-Reset:
-      - '1452198030'
+      - '1452202544'
       Content-Length:
       - '1324'
       Connection:
@@ -84,5 +84,5 @@ http_interactions:
         for Marge.","season_number":19,"still_path":"/yXPpE8RmOqpAA9KHFQTV19pAAWw.jpg"}],"seasons":[]},"media_type":"tv","id":"5256c32c19c2956ff601d1f7","person":{"name":"Steve
         Buscemi","id":884}}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 20:20:20 GMT
+  recorded_at: Thu, 07 Jan 2016 21:35:43 GMT
 recorded_with: VCR 2.9.3

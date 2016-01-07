@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 19:59:49 GMT
+      - Thu, 07 Jan 2016 21:35:40 GMT
       Etag:
       - '"9b7076a6a87553366b6be8ed9f6d7809"'
       Server:
@@ -35,17 +35,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '11851'
+      - '17602'
       X-Memc-Expires:
-      - '16949'
+      - '11198'
       X-Memc-Key:
       - 7982397048fe5e63fc1e264608f433e0
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '39'
+      - '32'
       X-Ratelimit-Reset:
-      - '1452196799'
+      - '1452202544'
       Content-Length:
       - '1020'
       Connection:
@@ -65,7 +65,7 @@ http_interactions:
         with his wife Jo Andres.","birthday":"1957-12-13","deathday":"","homepage":"","id":884,"imdb_id":"nm0000114","name":"Steve
         Buscemi","place_of_birth":"New York City, New York, USA","popularity":7.988104,"profile_path":"/7sDzFRScCv85usSwPG01BTac7UY.jpg"}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 19:59:49 GMT
+  recorded_at: Thu, 07 Jan 2016 21:35:39 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/person/884/combined_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
@@ -91,7 +91,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 19:59:49 GMT
+      - Thu, 07 Jan 2016 21:35:41 GMT
       Etag:
       - W/"0a355b631b0e8914c419733b895ed2da"
       Server:
@@ -103,17 +103,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '20647'
+      - '26399'
       X-Memc-Expires:
-      - '8153'
+      - '2401'
       X-Memc-Key:
       - 2347e9599610526e73675ea69e7e795b
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '38'
+      - '31'
       X-Ratelimit-Reset:
-      - '1452196799'
+      - '1452202544'
       Content-Length:
       - '9730'
       Connection:
@@ -361,5 +361,5 @@ http_interactions:
         Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg","media_type":"tv"},{"credit_id":"525854a3760ee346610887cd","department":"Directing","episode_count":6,"first_air_date":"2009-06-08","id":18053,"job":"Director","name":"Nurse
         Jackie","original_name":"Nurse Jackie","poster_path":"/47j0d1oxnCxAUTzqVTKjWkHqkjF.jpg","media_type":"tv"},{"credit_id":"54e1e596bcca015433000150","department":"Directing","episode_count":1,"first_air_date":"2011-01-21","id":33922,"job":"Director","name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg","media_type":"tv"}],"id":884}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 19:59:49 GMT
+  recorded_at: Thu, 07 Jan 2016 21:35:40 GMT
 recorded_with: VCR 2.9.3

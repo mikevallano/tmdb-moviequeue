@@ -11,16 +11,27 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_info(id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar"
+    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
-    @similar = @result[:similar][:results]
+    @title = @result[:title]
+    @release_date = @result[:release_date]
+    @vote_average = @result[:vote_average]
+    @genre_list = @result[:genres]
+    @overview = @result[:overview]
+    @cast = @result[:credits][:cast]
+    @youtube_trailers = @result[:trailers][:youtube]
+    @trailer_url = @result[:trailers][:youtube][0][:source] if @youtube_trailers.present?
+    @mpaa_rating = @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
+
     @crew = @result[:credits][:crew]
-    @crew.find do |i|
-      if i[:department] == "Directing"
-        @director = i[:name]
-        @director_id = i[:id]
+    @crew.find do |crew|
+      if crew[:department] == "Directing"
+        @director = crew[:name]
+        @director_id = crew[:id]
       end
     end
+
+    @similar = @result[:similar][:results]
   end
 
   def tmdb_handler_add_movie(id)
@@ -28,10 +39,10 @@ module TmdbHandler
     @genres = @result[:genres].map { |genre| genre[:name]}
     @actors = @result[:credits][:cast].map { |cast| cast[:name] }
     @crew = @result[:credits][:crew]
-    @crew.find do |i|
-      if i[:department] == "Directing"
-        @director = i[:name]
-        @director_id = i[:id]
+    @crew.find do |crew|
+      if crew[:department] == "Directing"
+        @director = crew[:name]
+        @director_id = crew[:id]
       end
     end
     @trailer = @result[:trailers][:youtube][0][:source] if @result[:trailers][:youtube].present?
@@ -40,7 +51,8 @@ module TmdbHandler
       genres: @genres, actors: @actors, adult: @result[:adult], backdrop_path: @result[:backdrop_path],
       poster_path: @result[:poster_path], release_date: @result[:release_date],
       overview: @result[:overview], trailer: @trailer, director: @director, director_id: @director_id,
-      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime])
+      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime],
+      mpaa_rating: @mpaa_rating)
   end
 
   def tmdb_handler_actor_search(name, page)

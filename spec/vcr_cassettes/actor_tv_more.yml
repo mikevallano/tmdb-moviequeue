@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 20:16:40 GMT
+      - Thu, 07 Jan 2016 21:35:43 GMT
       Etag:
       - W/"752e280766b8a2289a2b203bede02f53"
       Server:
@@ -37,17 +37,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '24756'
+      - '699'
       X-Memc-Expires:
-      - '4044'
+      - '28101'
       X-Memc-Key:
       - d391e9bdd381f9f0679bbfc749059ac8
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '39'
+      - '29'
       X-Ratelimit-Reset:
-      - '1452197810'
+      - '1452202544'
       Content-Length:
       - '2239'
       Connection:
@@ -72,5 +72,5 @@ http_interactions:
         Simpson","credit_id":"5256bdc319c2956ff60015ba","id":5586,"name":"Yeardley
         Smith","profile_path":"/g2LYM8XqkFiPsupUgky6PNuIenL.jpg","order":3}],"crew":[]}}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 20:16:39 GMT
+  recorded_at: Thu, 07 Jan 2016 21:35:42 GMT
 recorded_with: VCR 2.9.3
