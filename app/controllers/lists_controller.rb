@@ -16,16 +16,14 @@ class ListsController < ApplicationController
   end
 
   def show
-    if current_user.all_lists.include?(@list)
-      if request.path != user_list_path(@list.owner, @list)
-        return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
-      end
-      @movies = @list.movies.paginate(:page => params[:page])
-    else
-      @movies = @list.movies.paginate(:page => params[:page])
-      render :public_show
+    if request.path != user_list_path(@list.owner, @list)
+      return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
     end
 
+    unless current_user.all_lists.include?(@list)
+      render :public_show
+    end
+    @movies = @list.movies.paginate(:page => params[:page])
   end
 
   def new
