@@ -163,6 +163,33 @@ module TmdbHandler
     end
   end
 
+  def tmdb_handler_two_movie_search(movie_one, movie_two)
+    tmdb_handler_search(movie_one)
+      if @results.present?
+        @movie_one_id = @results.first[:id]
+      else
+        redirect_to :two_movie_search, notice: "No results for the first movie. Try again" and return
+      end
+    tmdb_handler_search(movie_two)
+      if @results.present?
+        @movie_two_id = @results.first[:id]
+      else
+        redirect_to :two_movie_search, notice: "No results for the second movie. Try again" and return
+      end
+
+    tmdb_handler_movie_info(@movie_one_id)
+      @movie_one = @result
+      @movie_one_cast = @cast
+      @movie_one_cast_names = @cast.map { |cast| cast[:name] }
+    tmdb_handler_movie_info(@movie_two_id)
+      @movie_two = @result
+      @movie_two_cast = @cast
+      @movie_two_cast_names = @cast.map { |cast| cast[:name] }
+
+    @common_actors = @movie_one_cast_names & @movie_two_cast_names
+
+  end
+
   def tmdb_handler_director_search(id)
     @director_url = "https://api.themoviedb.org/3/person/#{id}/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188"
     @result = JSON.parse(open(@director_url).read, symbolize_names: true)

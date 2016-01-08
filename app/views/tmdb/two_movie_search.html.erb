@@ -1,0 +1,27 @@
+<h1>Find which actors have been in two movies.</h1>
+
+<% if !@movie_one.present? && !@movie_two.present? %>
+
+  <%= form_tag '/tmdb/two_movie_search', method: :get do %>
+    <%= label_tag :movie_one, "Enter Movie Title: " %>
+    <%= text_field_tag :movie_one %>
+    <%= label_tag :movie_two, "Enter Other Movie Title: " %>
+    <%= text_field_tag :movie_two %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+<% else %>
+
+  <% if !@common_actors.present? %>
+      <h2>Hmm. No common actors found for those two movies. Check spelling to be sure.</h2>
+    <% else %>
+      <h2>These two movies have the following similar actors:</h2>
+    <% end %>
+  <h3>Number of common actors (<%= @common_actors.size %>)</h3>
+  <p>Common Actors: <%= raw @common_actors.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %></p>
+  <p>Movie one: <%= link_to "#{@movie_one[:title]}", movie_more_path(movie_id: @movie_one_id) %>,
+    Movie Two: <%= link_to "#{@movie_two[:title]}", movie_more_path(movie_id: @movie_two_id) %></p>
+  </br>
+  <p><%= link_to "Search again", two_movie_search_path %> </p>
+
+<% end %>

@@ -66,6 +66,14 @@ class TmdbController < ApplicationController
     end
   end
 
+  def two_movie_search
+    if params[:movie_one] && params[:movie_two]
+      @movie_one = params[:movie_one]
+      @movie_two = params[:movie_two]
+      tmdb_handler_two_movie_search(@movie_one, @movie_two)
+    end
+  end
+
   def director_search
     if params[:director_id]
       @director_id = params[:director_id]

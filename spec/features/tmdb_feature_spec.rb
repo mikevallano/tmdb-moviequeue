@@ -83,6 +83,45 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
+    scenario "two movies search returns common actors in both movies" do
+
+      sign_up_with(email, username, "password")
+      visit(two_movie_search_path)
+      VCR.use_cassette('tmdb_two_movie_search') do
+        fill_in "Enter Movie Title", with: 'Fargo'
+        fill_in "Enter Other Movie Title", with: 'The Big Lebowski'
+        click_button 'Search'
+      end
+      expect(page).to have_content("Steve Buscemi")
+
+    end
+
+    scenario "two movies search indicates first movie not found if search is bad" do
+
+      sign_up_with(email, username, "password")
+      visit(two_movie_search_path)
+      VCR.use_cassette('tmdb_two_movie_search_bad_first') do
+        fill_in "Enter Movie Title", with: '*sdlfkjsdflkjsdf'
+        fill_in "Enter Other Movie Title", with: 'The Big Lebowski'
+        click_button 'Search'
+      end
+      expect(page).to have_content("No results for the first movie")
+
+    end
+
+    scenario "two movies search indicates second movie not found if search is bad" do
+
+      sign_up_with(email, username, "password")
+      visit(two_movie_search_path)
+      VCR.use_cassette('tmdb_two_movie_search_bad_second') do
+        fill_in "Enter Movie Title", with: 'Fargo'
+        fill_in "Enter Other Movie Title", with: '*sdlfkjsdflkjsdf'
+        click_button 'Search'
+      end
+      expect(page).to have_content("No results for the second movie")
+
+    end
+
     scenario "users searches a movie not found and the page indicates movie not found" do
 
       sign_up_with(email, username, "password")

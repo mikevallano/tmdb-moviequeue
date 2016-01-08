@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get 'tmdb/director_search', to: 'tmdb#director_search', as: :director_search
   get 'tmdb/tv_more', to: 'tmdb#tv_more', as: :tv_more
   get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
+  get 'tmdb/two_movie_search', to: 'tmdb#two_movie_search', as: :two_movie_search
 
   resources :invites, only: [:create]
 
