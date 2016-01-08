@@ -5,7 +5,7 @@
 
 <h3>Movies on this list:</h3>
 
-  <% @list.movies.each do |movie| %>
+  <% @movies.each do |movie| %>
    <div>
        <%= image_tag "http://image.tmdb.org/t/p/w150#{movie.poster_path}" %>
       <h3><%= movie.title %></h3>
@@ -27,3 +27,5 @@
         </p>
       <% end %>
   <% end %>
+
+  <p><%= will_paginate @movies %></p>

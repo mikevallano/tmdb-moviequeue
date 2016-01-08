@@ -7,6 +7,7 @@ RSpec.describe ListsController, type: :controller do
   let(:user2) { FactoryGirl.create(:user) }
   let(:list) { FactoryGirl.create(:list, :owner => user) }
   let(:list2) { FactoryGirl.create(:list, :owner => user2) }
+  let(:public_list) { FactoryGirl.create(:list, :owner => user, :is_public => true) }
   let(:invalid_list) { FactoryGirl.create(:invalid_list) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
@@ -24,6 +25,22 @@ RSpec.describe ListsController, type: :controller do
       it "renders the index template" do
         get :index, { user_id: user.to_param }
         expect(response).to render_template(:index)
+      end
+    end
+
+    describe "GET #public" do
+      before(:each) do
+        public_list
+        current_user2
+      end
+      it "assigns all public lists as @lists" do
+        get :public
+        expect(assigns(:lists)).to eq([public_list])
+      end
+
+      it "renders the public template" do
+        get :public
+        expect(response).to render_template(:public)
       end
     end
 
@@ -221,6 +238,23 @@ RSpec.describe ListsController, type: :controller do
         get :index, { user_id: user2.to_param }
         expect(assigns(:lists)).to eq([list])
         expect(assigns(:lists)).not_to include(list2)
+      end
+    end
+
+    describe "GET #show when the list is public" do
+
+      it "shows the public_show template if current_user.all_lists doesn't include list" do
+        public_list
+        current_user2
+        get :show, { :id => public_list.to_param, :user_id => user.to_param }
+        expect(response).to render_template(:public_show)
+      end
+
+      it "renders the show template if current_user.all_lists does include list" do
+        public_list
+        current_user
+        get :show, { :id => public_list.to_param, :user_id => user.to_param }
+        expect(response).to render_template(:show)
       end
     end
 

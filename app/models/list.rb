@@ -2,6 +2,8 @@ class List < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:history, :scoped], :scope => :owner
 
+  self.per_page = 20
+
   scope :by_user, lambda { |user| where(:owner_id => user.id) }
   scope :main_lists, lambda { where(:is_main => true) }
   scope :public_lists, lambda { where(:is_public => true) }

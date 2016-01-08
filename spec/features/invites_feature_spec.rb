@@ -61,7 +61,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
         expect(page).to have_content("success")
 
-        click_link "Lists"
+        click_link("My Lists")
         expect(page).to (have_content(list.name))
         expect(User.last.all_lists).to include list
 
@@ -95,7 +95,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
         sign_in_user(user2)
         visit(user_list_path(user1, Invite.last.list))
 
-        click_link "Lists"
+        click_link("My Lists")
         expect(page).to (have_content(list.name))
         expect(user2.all_lists).to include list
 

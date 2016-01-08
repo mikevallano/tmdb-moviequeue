@@ -42,7 +42,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
       VCR.use_cassette('tmdb_add_movie') do
         click_button("add movie to list")
       end
-      click_link("Lists")
+      click_link("My Lists")
       click_link("Show")
       click_link("Remove from this list")
       expect(page).to have_content("Movie was removed from list.")
@@ -56,7 +56,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
       listing
 
       sign_in_user(user)
-      click_link "Lists"
+      click_link("My Lists")
       click_link "Show"
       fill_in "new priority", with: '9'
       click_button "Prioritize"
