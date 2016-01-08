@@ -57,8 +57,6 @@ RSpec.feature "Genres feature spec", :type => :feature do
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end
-        Movie.destroy_all
-        Listing.destroy_all
       end
 
     end #signed in user context

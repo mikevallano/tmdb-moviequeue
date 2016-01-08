@@ -30,6 +30,7 @@ RSpec.feature "Directors feature spec", :type => :feature do
         VCR.use_cassette('tmdb_add_movie') do
           click_button("add movie to list")
         end
+
         visit(movie_path(Movie.last))
         VCR.use_cassette('tmdb_director_search') do
           click_link("Joel Coen")

@@ -55,9 +55,37 @@ RSpec.feature "Movies feature spec", :type => :feature do
       VCR.use_cassette('tmdb_add_movie') do
         click_button("add movie to list")
       end
-      visit(movie_path(Movie.last))
+      VCR.use_cassette('movie_show_page') do
+        visit(movie_path(Movie.last))
+      end
       url = URI.parse(current_url)
       expect("#{url}").to include("#{Movie.last.slug}")
+
+    end
+
+    scenario "movie show page shows link to similar movies" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+
+      api_movie_more_info
+
+      all('#new_listing option')[0].select_option
+      VCR.use_cassette('tmdb_add_movie') do
+        click_button("add movie to list")
+      end
+      VCR.use_cassette('movie_show_page') do
+        visit(movie_path(Movie.last))
+      end
+      expect(page).to have_content("Similar movies")
+      VCR.use_cassette('tmdb_movie_more') do
+        click_link("Similar movies")
+      end
+      VCR.use_cassette("similar_movies_more_info") do
+        click_link("More info", match: :first)
+      end
+      expect(page).to have_content("The Revenant")
 
     end
 

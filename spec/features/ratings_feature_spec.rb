@@ -6,7 +6,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
     let(:user) { FactoryGirl.create(:user) }
     let(:user2) { FactoryGirl.create(:user) }
-    let(:movie) { FactoryGirl.create(:movie) }
+    let(:movie) { FactoryGirl.create(:movie, tmdb_id: 275) }
     let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
     let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
     let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
@@ -20,7 +20,9 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "movies"
-        click_link "Show"
+          VCR.use_cassette('movie_show_page') do
+            click_link "Show"
+          end
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
 
