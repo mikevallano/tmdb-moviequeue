@@ -1,0 +1,57 @@
+<% if !@discover_results.present? %>
+
+<h1>Search like a mofo.</h1>
+
+  <%= form_tag '/tmdb/discover_search', method: :get do %>
+    <%= label_tag :actor, "Enter Actor Name: " %>
+    <%= text_field_tag :actor %></br>
+    <%= label_tag :actor2, "Enter Other Actor Name: " %>
+    <%= text_field_tag :actor2 %></br>
+    <%= label_tag :mpaa_rating, "Enter MPAA rating: " %>
+    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), :include_blank => true %></br>
+    <%= label_tag :year, "Enter a Year: " %>
+    <%= text_field_tag :year %>
+    <%= label_tag :year_select %>
+    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), :include_blank => true %></br>
+    <%= label_tag :genre, "Pick a genre: " %>
+    <%= select_tag :genre, options_for_select(Movie::GENRES), :include_blank => true %></br>
+    <%= label_tag :sort_by, "Sort by: " %>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true %></br>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+<% else %>
+
+  <% if !@discover_results.present? %>
+      <h2>Hmm. No movies found with those two in it. Check spelling to be sure.</h2>
+    <% else %>
+      <h2>Here are the movies those two have been in together:</h2>
+    <% end %>
+  <br>
+  <p><%= link_to "Search again", discover_search_path %> </p>
+
+   <% @discover_results.each do |result| %>
+    <% @tmdb_id = result[:id] %>
+     <div>
+         <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" if result[:poster_path].present? %>
+        <h3><%= result[:title] %></h3>
+        <p><%= result[:release_date] %></p>
+        <p><%= result[:vote_average] %></p>
+        <p><%= result[:overview] %></p>
+        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
+          <p>On List</p>
+        <% else %>
+          <p>Add this movie to a list:</p>
+          <p>
+          <%= form_for(Listing.new) do |f| %>
+            <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "add movie to list" %>
+          <% end %>
+          </p>
+        <% end %>
+        <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+    <% end %>
+
+<% end %>

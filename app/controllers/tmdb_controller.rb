@@ -82,4 +82,38 @@ class TmdbController < ApplicationController
     end
   end
 
+  def discover_search
+    passed_params = [ params[:sort_by], params[:year], params[:genre], params[:actor],
+    params[:actor2], params[:company], params[:mpaa_rating], params[:year_select], params[:sort_by] ]
+    if passed_params.any?
+      if params[:year_select].present?
+        if params[:year_select] == "exact"
+          @year = params[:year]
+        elsif params[:year_select] == "after"
+          @after_year = "#{params[:year]}-01-01"
+        elsif params[:year_select] == "before"
+          @before_year = "#{params[:year]}-01-01"
+        end
+      else
+        @year = params[:year] if params[:year].present?
+        @after_year = nil
+        @befor_year = nil
+      end
+      # @year = params[:year] if params[:year].present?
+      @genre = params[:genre] if params[:genre].present?
+      @actor = params[:actor] if params[:actor].present?
+      @actor2 = params[:actor2] if params[:actor2].present?
+      @company = params[:company] if params[:company].present?
+      @mpaa_rating = params[:mpaa_rating] if params[:mpaa_rating].present?
+      # @after_year = "#{params[:after_year]}-01-01" if params[:after_year].present?
+      # @before_year = "#{params[:before_year]}-01-01" if params[:before_year].present?
+      if params[:sort_by].present?
+        @sort_by = params[:sort_by]
+      else
+        @sort_by = "revenue"
+      end
+      tmdb_handler_discover_search(@year, @genre, @actor, @actor2, @company, @mpaa_rating, @after_year, @before_year, @sort_by)
+    end
+  end
+
 end

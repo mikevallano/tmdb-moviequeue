@@ -202,4 +202,48 @@ module TmdbHandler
     @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
   end
 
+  def tmdb_handler_discover_search(year, genre, actor, actor2, company, mpaa_rating, after_year, before_year, sort_by)
+    if actor.present?
+      @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
+      @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
+      @actor1_id = @actor1_search_result.first[:id] if @actor1_search_result.present?
+    end
+    if actor2.present?
+      @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{actor2}&api_key=#{ENV['tmdb_api_key']}"
+      @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
+      @actor2_id = @actor2_search_result.first[:id] if @actor2_search_result.present?
+    end
+
+    if @actor1_id.present?
+      @people = @actor1_id
+    elsif @actor2_id.present?
+      @people = @actor2_id
+    elsif @actor1_id.present? && @actor2_id.present?
+      @people = "#{@actor1_id}, #{@actor2_id}"
+    else
+      @people = ''
+    end
+    #add logic to handle not-found actors
+    #add logic to rescue errors
+    #add pagination
+    #release year breaks the query if it's blank
+    years = [year, after_year, before_year].compact
+    if years == year
+      @year = "primary_release_year=#{years}"
+    elsif years == after_year
+      @year = "release_date.gte=#{years}"
+    elsif years = before_year
+      @year = "release_date.lte=#{years}"
+    else
+      @year = "release_date.gte=1800-01-01"
+    end
+
+    # if year.present?
+      @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&api_key=#{ENV['tmdb_api_key']}"
+    # else
+    #   @discover_url = "https://api.themoviedb.org/3/discover/movie?with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&api_key=#{ENV['tmdb_api_key']}"
+    # end
+    @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
+  end
+
 end
