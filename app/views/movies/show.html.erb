@@ -17,7 +17,7 @@
 
 <p>
   <strong>Actors:</strong>
-  <%= raw @movie.actors.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %>
+  <%= raw @movie.actors.map { |a| link_to a, actor_search_path(actor: a) }.join(', ') %>
 </p>
 
 <p>

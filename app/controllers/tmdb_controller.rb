@@ -31,10 +31,28 @@ class TmdbController < ApplicationController
       if params[:sort_by].present?
         @sort_by = params[:sort_by]
       else
-        @sort_by = "revenue"
+        @sort_by = "popularity"
       end
-      # tmdb_handler_actor_search(@name, @page)
       tmdb_handler_discover_search(nil, nil, nil, nil, @actor, nil, nil, nil, @sort_by, @page)
+    end
+  end
+
+  def two_actor_search
+    if params[:actor] && params[:actor2]
+      @actor = params[:actor]
+      @actor2 = params[:actor2]
+      if params[:page]
+        @page = params[:page]
+      else
+        @page = 1
+      end
+      if params[:sort_by].present?
+        @sort_by = params[:sort_by]
+      else
+        @sort_by = "popularity"
+      end
+      # tmdb_handler_two_actor_search(@name_one, @name_two)
+      tmdb_handler_discover_search(nil, nil, nil, nil, @actor, @actor2, nil, nil, @sort_by, @page)
     end
   end
 
@@ -62,14 +80,6 @@ class TmdbController < ApplicationController
     @show_name = params[:show_name]
     @actor_id = params[:actor_id]
     tmdb_handler_tv_season(@show_id, @season_number)
-  end
-
-  def two_actor_search
-    if params[:name_one] && params[:name_two]
-      @name_one = params[:name_one]
-      @name_two = params[:name_two]
-      tmdb_handler_two_actor_search(@name_one, @name_two)
-    end
   end
 
   def two_movie_search

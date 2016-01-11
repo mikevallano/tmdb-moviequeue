@@ -11,7 +11,7 @@
   <% if episode[:guest_stars].present? %>
     </br>Guest Stars:
     <% episode[:guest_stars].each do |guest| %>
-      <li><%= link_to "#{guest[:name]}", actor_search_path(name: "#{guest[:name]}") %> </li>
+      <li><%= link_to "#{guest[:name]}", actor_search_path(actor: "#{guest[:name]}") %> </li>
       <li><%= image_tag "http://image.tmdb.org/t/p/w150#{guest[:profile_path]}" if guest[:profile_path].present? %></li>
     <% end %>
   <% end %>
@@ -21,7 +21,7 @@
 <h3>Season Cast:</h3>
 <ul>
 <% @season_cast.each do |actor| %>
-  <li>Actor: <%= link_to "#{actor[:name]}", actor_search_path(name: "#{actor[:name]}")  %></li>
+  <li>Actor: <%= link_to "#{actor[:name]}", actor_search_path(actor: "#{actor[:name]}")  %></li>
   <li>Character: <%= actor[:character] %></li>
   <li><%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" %></li>
 <% end %>

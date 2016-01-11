@@ -55,31 +55,6 @@ module TmdbHandler
       mpaa_rating: @mpaa_rating)
   end
 
-  def tmdb_handler_actor_search(name, page)
-    @page = page.to_i
-    @search_url = "https://api.themoviedb.org/3/search/person?query=#{name}&api_key=#{ENV['tmdb_api_key']}"
-     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
-     @actor_search_result = @tmdb_response[:results]
-    if @actor_search_result.present?
-      @actor_id = @actor_search_result.first[:id]
-      @search_id_url = "https://api.themoviedb.org/3/discover/movie?with_cast=#{@actor_id}&page=#{@page}&sort_by=popularity.desc&api_key=#{ENV['tmdb_api_key']}"
-      @been_in = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:results]
-      @total_pages = JSON.parse(open(@search_id_url).read, symbolize_names: true)[:total_pages]
-      if @page > 1
-        @previous_page = @page - 1
-      end
-      unless @page >= @total_pages
-        @next_page = @page + 1
-      end
-    else
-      @been_in = []
-    end
-    rescue
-      unless @tmdb_response.present?
-        @been_in = []
-      end
-  end
-
   def tmdb_handler_actor_more(actor_id)
     @bio_url = "https://api.themoviedb.org/3/person/#{actor_id}?api_key=#{ENV['tmdb_api_key']}"
     @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
@@ -142,27 +117,6 @@ module TmdbHandler
     @season_cast = @season_results[:credits][:cast]
   end
 
-  def tmdb_handler_two_actor_search(name_one, name_two)
-    @search_url1 = "https://api.themoviedb.org/3/search/person?query=#{name_one}&api_key=#{ENV['tmdb_api_key']}"
-    @search_url2 = "https://api.themoviedb.org/3/search/person?query=#{name_two}&api_key=#{ENV['tmdb_api_key']}"
-    @tmdb_response1 = JSON.parse(open(@search_url1).read, symbolize_names: true)
-    @tmdb_response2 = JSON.parse(open(@search_url2).read, symbolize_names: true)
-    @actor1_search_result = @tmdb_response1[:results]
-    @actor2_search_result = @tmdb_response2[:results]
-    if @actor1_search_result.present? && @actor2_search_result.present?
-      @id1 = @actor1_search_result.first[:id]
-      @id2 = @actor2_search_result.first[:id]
-      @search_ids_url = "https://api.themoviedb.org/3/discover/movie?with_people=#{@id1},#{@id2}&sort_by=revenue.desc&api_key=#{ENV['tmdb_api_key']}"
-      @been_in = JSON.parse(open(@search_ids_url).read, symbolize_names: true)[:results]
-    else
-      @been_in = []
-    end
-  rescue
-    unless @tmdb_response1.present? && @tmdb_response2.present?
-      @been_in = []
-    end
-  end
-
   def tmdb_handler_two_movie_search(movie_one, movie_two)
     tmdb_handler_search(movie_one)
       if @results.present?
@@ -202,7 +156,8 @@ module TmdbHandler
     @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
   end
 
-  def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2, company, mpaa_rating, sort_by, page)
+  def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
+    company, mpaa_rating, sort_by, page)
     @page = page.to_i
     if actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
@@ -215,19 +170,15 @@ module TmdbHandler
       @actor2_id = @actor2_search_result.first[:id] if @actor2_search_result.present?
     end
 
-    if @actor1_id.present?
+    if @actor1_id.present? && @actor2_id.present?
+      @people = "#{@actor1_id}, #{@actor2_id}"
+    elsif @actor1_id.present?
       @people = @actor1_id
     elsif @actor2_id.present?
-      @people = @actor2_id
-    elsif @actor1_id.present? && @actor2_id.present?
-      @people = "#{@actor1_id}, #{@actor2_id}"
+      @people = @actor_2_id
     else
       @people = ''
     end
-    #add logic to handle not-found actors
-    #add logic to rescue errors
-    #add pagination
-    #allow year to be between years?
     years = [exact_year, after_year, before_year].compact
     if years.any?
       years = years.first
@@ -243,7 +194,6 @@ module TmdbHandler
     end
 
     @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
-    puts "discover url: #{@discover_url}"
     @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
     @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]
 
@@ -253,6 +203,19 @@ module TmdbHandler
     unless @page >= @total_pages
       @next_page = @page + 1
     end
+
+    rescue
+    if actor.present?
+      unless @actor1_search_result.present?
+        @discover_results = []
+      end
+    end
+    if actor2.present?
+      unless @actor2_search_result.present?
+        @discover_results = []
+      end
+    end
+
   end #discover search
 
 end

@@ -1,49 +1,61 @@
 
-<% if !@name_one.present? && !@name_two.present? %>
+<% if !@actor.present? && !@actor2.present? %>
 
 <h1>Find which movies two actors have been in together.</h1>
 
   <%= form_tag '/tmdb/two_actor_search', method: :get do %>
-    <%= label_tag :name_one, "Enter Actor Name: " %>
-    <%= text_field_tag :name_one %>
-    <%= label_tag :name_two, "Enter Other Actor Name: " %>
-    <%= text_field_tag :name_two %>
+    <%= label_tag :actor, "Enter Actor Name: " %>
+    <%= text_field_tag :actor %>
+    <%= label_tag :actor2, "Enter Other Actor Name: " %>
+    <%= text_field_tag :actor2 %>
     <%= submit_tag "Search" %>
   <% end %>
 
 <% else %>
 
-  <% if !@been_in.present? %>
+  <% if !@discover_results.present? %>
       <h2>Hmm. No movies found with those two in it. Check spelling to be sure.</h2>
     <% else %>
-      <h2>Here are the movies those two have been in together:</h2>
-    <% end %>
-  <br>
-  <p><%= link_to "Search again", two_actor_search_path %> </p>
+      <h2><%= "Those two actors have been in #{@discover_results.size} movies together:" %></h2>
+      <br>
 
-   <% @been_in.each do |result| %>
-    <% @tmdb_id = result[:id] %>
-     <div>
-         <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
-        <h3><%= result[:title] %></h3>
-        <p><%= result[:release_date] %></p>
-        <p><%= result[:vote_average] %></p>
-        <p><%= result[:overview] %></p>
-        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
-          <p>On List</p>
-        <% else %>
-          <p>Add this movie to a list:</p>
-          <p>
-          <%= form_for(Listing.new) do |f| %>
-            <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
-            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
-            <%= hidden_field_tag :user_id, current_user.id %>
-            <%= f.submit "add movie to list" %>
+     <% @discover_results.each do |result| %>
+      <% @tmdb_id = result[:id] %>
+       <div>
+           <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+          <h3><%= result[:title] %></h3>
+          <p><%= result[:release_date] %></p>
+          <p><%= result[:vote_average] %></p>
+          <p><%= result[:overview] %></p>
+          <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
+            <p>On List</p>
+          <% else %>
+            <p>Add this movie to a list:</p>
+            <p>
+            <%= form_for(Listing.new) do |f| %>
+              <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+              <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= f.submit "add movie to list" %>
+            <% end %>
+            </p>
           <% end %>
-          </p>
-        <% end %>
-        <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+          <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+      <% end %>
+
+      <%= "Page #{@page} of #{@total_pages}" %></br>
+
+      <% if @previous_page.present? %>
+        <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %>
+      <% end %>
+
+      <% if @next_page.present? %>
+        <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
+      <% end %>
+
     <% end %>
+
+    <p><%= link_to "Search again", two_actor_search_path %> </p>
 
 <% end %>
 

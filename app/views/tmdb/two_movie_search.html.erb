@@ -17,10 +17,9 @@
     <% else %>
       <h2>These two movies have the following similar actors:</h2>
     <% end %>
-  <h3>Number of common actors (<%= @common_actors.size %>)</h3>
-  <p>Common Actors: <%= raw @common_actors.map { |a| link_to a, actor_search_path(name: a) }.join(', ') %></p>
-  <p>Movie one: <%= link_to "#{@movie_one[:title]}", movie_more_path(movie_id: @movie_one_id) %>,
-    Movie Two: <%= link_to "#{@movie_two[:title]}", movie_more_path(movie_id: @movie_two_id) %></p>
+  <h3>Number of common actors in <%= link_to "#{@movie_one[:title]}", movie_more_path(movie_id: @movie_one_id) %>,
+    and <%= link_to "#{@movie_two[:title]}", movie_more_path(movie_id: @movie_two_id) %>: <%= @common_actors.size %></h3>
+  <p>Common Actors: <%= raw @common_actors.map { |a| link_to a, actor_search_path(actor: a) }.join(', ') %></p>
   </br>
   <p><%= link_to "Search again", two_movie_search_path %> </p>
 

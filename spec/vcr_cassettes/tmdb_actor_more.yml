@@ -25,9 +25,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 21:35:40 GMT
+      - Mon, 11 Jan 2016 22:11:11 GMT
       Etag:
-      - '"9b7076a6a87553366b6be8ed9f6d7809"'
+      - '"175fecb75305c692c550570434a17dcc"'
       Server:
       - openresty
       Status:
@@ -35,17 +35,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '17602'
+      - '15230'
       X-Memc-Expires:
-      - '11198'
+      - '13570'
       X-Memc-Key:
       - 7982397048fe5e63fc1e264608f433e0
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '32'
+      - '39'
       X-Ratelimit-Reset:
-      - '1452202544'
+      - '1452550281'
       Content-Length:
       - '1020'
       Connection:
@@ -63,9 +63,9 @@ http_interactions:
         Lounge between his friend Vince Vaughn, screenwriter Scott Rosenberg and a
         local man, who allegedly instigated the brawl.\n\nBuscemi has one son, Lucian,
         with his wife Jo Andres.","birthday":"1957-12-13","deathday":"","homepage":"","id":884,"imdb_id":"nm0000114","name":"Steve
-        Buscemi","place_of_birth":"New York City, New York, USA","popularity":7.988104,"profile_path":"/7sDzFRScCv85usSwPG01BTac7UY.jpg"}'
+        Buscemi","place_of_birth":"New York City, New York, USA","popularity":6.248929,"profile_path":"/7sDzFRScCv85usSwPG01BTac7UY.jpg"}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 21:35:39 GMT
+  recorded_at: Mon, 11 Jan 2016 22:11:10 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/person/884/combined_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
@@ -91,9 +91,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 07 Jan 2016 21:35:41 GMT
+      - Mon, 11 Jan 2016 22:11:12 GMT
       Etag:
-      - W/"0a355b631b0e8914c419733b895ed2da"
+      - W/"ba5ed8f027cbedbba0b42ce964ce4b9c"
       Server:
       - openresty
       Status:
@@ -103,26 +103,26 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '26399'
+      - '18280'
       X-Memc-Expires:
-      - '2401'
+      - '10520'
       X-Memc-Key:
       - 2347e9599610526e73675ea69e7e795b
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '31'
+      - '38'
       X-Ratelimit-Reset:
-      - '1452202544'
-      Content-Length:
-      - '9730'
+      - '1452550281'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
     body:
       encoding: ASCII-8BIT
       string: '{"cast":[{"adult":false,"character":"Rockhound","credit_id":"52fe4216c3a36847f800317f","id":95,"original_title":"Armageddon","poster_path":"/coINnuCzcw5FMHBty8hcudMOBnO.jpg","release_date":"1998-06-30","title":"Armageddon","media_type":"movie"},{"adult":false,"character":"Theodore
         Donald Kerabatsos","credit_id":"52fe421ac3a36847f800413d","id":115,"original_title":"The
-        Big Lebowski","poster_path":"/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","release_date":"1998-03-06","title":"The
+        Big Lebowski","poster_path":"/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","release_date":"1998-02-15","title":"The
         Big Lebowski","media_type":"movie"},{"adult":false,"character":"Carl Showalter","credit_id":"52fe4230c3a36847f800af1b","id":275,"original_title":"Fargo","poster_path":"/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","release_date":"1996-04-05","title":"Fargo","media_type":"movie"},{"adult":false,"character":"Chet","credit_id":"52fe4233c3a36847f800b97d","id":290,"original_title":"Barton
         Fink","poster_path":"/dAsGm1jsQIJTe0oX081eXUDyFWY.jpg","release_date":"1991-08-01","title":"Barton
         Fink","media_type":"movie"},{"adult":false,"character":"Mink","credit_id":"52fe423cc3a36847f800e79f","id":379,"original_title":"Miller''s
@@ -269,7 +269,7 @@ http_interactions:
         the Road","poster_path":"/uORuwLgdDFkA4BuU9b9nuhTkuy.jpg","release_date":"2012-05-22","title":"On
         the Road","media_type":"movie"},{"adult":false,"character":"Bill Blago","credit_id":"52fe4909c3a368484e117701","id":75622,"original_title":"Rampart","poster_path":"/ykEi3o0phggVEb7aPfGOPO3UDc9.jpg","release_date":"2011-12-10","title":"Rampart","media_type":"movie"},{"adult":false,"character":"Wayne
         (voice)","credit_id":"52fe493ec3a368484e1216af","id":76492,"original_title":"Hotel
-        Transylvania","poster_path":"/9qugesYpAWHUpdrw2w8URSGkAPt.jpg","release_date":"2012-09-27","title":"Hotel
+        Transylvania","poster_path":"/9qugesYpAWHUpdrw2w8URSGkAPt.jpg","release_date":"2012-09-20","title":"Hotel
         Transylvania","media_type":"movie"},{"adult":false,"character":"Worker","credit_id":"52fe49e89251416c750d7539","id":97640,"original_title":"Sleepwalk","poster_path":"/rPCC5vkZudLLSTvTrf6gOwaqr3x.jpg","release_date":"1986-09-09","title":"Sleepwalk","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe4a83c3a368484e157c77","id":122825,"original_title":"Minnesota
         Nice","poster_path":"/xF7FR027EVRrEjBnyDHNWpw9rsg.jpg","release_date":"2003-04-01","title":"Minnesota
         Nice","media_type":"movie"},{"adult":false,"character":"Anton Marvelton","credit_id":"52fe4aacc3a368484e161039","id":124459,"original_title":"The
@@ -303,7 +303,7 @@ http_interactions:
         Good Job: Stories of the FDNY","poster_path":"/9xVUft4tDujE9ElVt04zK0ifeCy.jpg","release_date":"2014-09-08","title":"A
         Good Job: Stories of the FDNY","media_type":"movie"},{"adult":false,"character":"Wayne
         (voice)","credit_id":"546c8f06925141305f0013ea","id":159824,"original_title":"Hotel
-        Transylvania 2","poster_path":"/t4PLWexbe4wbNydCOBv18cYexup.jpg","release_date":"2015-09-25","title":"Hotel
+        Transylvania 2","poster_path":"/t4PLWexbe4wbNydCOBv18cYexup.jpg","release_date":"2015-09-21","title":"Hotel
         Transylvania 2","media_type":"movie"},{"adult":false,"character":"Eddy","credit_id":"52fe4710c3a368484e0b2e71","id":65572,"original_title":"Heart
         of Midnight","poster_path":"/y34KZCdyVQSKrXsdbetykP10r1D.jpg","release_date":"1988-11-10","title":"Heart
         of Midnight","media_type":"movie"},{"adult":false,"character":"Jimmy","credit_id":"52fe4e78c3a36847f82920a9","id":238215,"original_title":"The
@@ -361,5 +361,5 @@ http_interactions:
         Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg","media_type":"tv"},{"credit_id":"525854a3760ee346610887cd","department":"Directing","episode_count":6,"first_air_date":"2009-06-08","id":18053,"job":"Director","name":"Nurse
         Jackie","original_name":"Nurse Jackie","poster_path":"/47j0d1oxnCxAUTzqVTKjWkHqkjF.jpg","media_type":"tv"},{"credit_id":"54e1e596bcca015433000150","department":"Directing","episode_count":1,"first_air_date":"2011-01-21","id":33922,"job":"Director","name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg","media_type":"tv"}],"id":884}'
     http_version: 
-  recorded_at: Thu, 07 Jan 2016 21:35:40 GMT
+  recorded_at: Mon, 11 Jan 2016 22:11:10 GMT
 recorded_with: VCR 2.9.3

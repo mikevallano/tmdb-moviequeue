@@ -13,7 +13,7 @@
 
 
   <p><%= link_to "Or see what movies two actors have been in together!", two_actor_search_path %></p>
-  <p><%= link_to "Or search two movies to see similar actors", two_movie_search_path %></p>
+  <p><%= link_to "Or search two movies to see common actors", two_movie_search_path %></p>
 
 <% else %>
 
@@ -21,7 +21,7 @@
       <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
     <% else %>
       <h2>Here are the movies that actor has been in:</h2>
-      <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor_id) %></p>
+      <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
     <% end %>
   <p><%= link_to "Search again", actor_search_path %> </p>
 
