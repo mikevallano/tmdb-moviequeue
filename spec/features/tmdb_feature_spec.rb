@@ -169,6 +169,21 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
+    scenario 'movie more info page shows production companies and links to a discover search' do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+
+      expect(page).to have_content("PolyGram Filmed Entertainment")
+      VCR.use_cassette("tmdb_production_company_search") do
+        click_link("PolyGram Filmed Entertainment")
+      end
+      expect(page).to have_content("Where the Money is")
+
+    end
+
     scenario "movie is added to the database if a user adds it to their list" do
 
       sign_up_with(email, username, "password")

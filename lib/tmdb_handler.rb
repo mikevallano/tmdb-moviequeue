@@ -31,6 +31,8 @@ module TmdbHandler
       end
     end
 
+    @production_companies = @result[:production_companies]
+
     @similar = @result[:similar][:results]
   end
 
