@@ -1,11 +1,13 @@
 
-<% if !@name.present? %>
+<% if !@actor.present? %>
 
   <h1>Search the TMDB Database for an actor</h1>
 
   <%= form_tag '/tmdb/actor_search', method: :get do %>
-    <%= label_tag :name, "Enter Actor Name: " %>
-    <%= text_field_tag :name %>
+    <%= label_tag :actor, "Enter Actor Name: " %>
+    <%= text_field_tag :actor %></br>
+    <%= label_tag :sort_by, "Sort by: " %>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true %></br>
     <%= submit_tag "Search" %>
   <% end %>
 
@@ -15,7 +17,7 @@
 
 <% else %>
 
-  <% if !@been_in.present? %>
+  <% if !@discover_results.present? %>
       <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
     <% else %>
       <h2>Here are the movies that actor has been in:</h2>
@@ -23,7 +25,7 @@
     <% end %>
   <p><%= link_to "Search again", actor_search_path %> </p>
 
-   <% @been_in.each do |result| %>
+   <% @discover_results.each do |result| %>
     <% @tmdb_id = result[:id] %>
      <div>
          <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
@@ -31,7 +33,7 @@
         <p><%= result[:release_date] %></p>
         <p><%= result[:vote_average] %></p>
         <p><%= result[:overview] %></p>
-        <p><%= link_to "More info", "/tmdb/more?movie_id=#{result[:id]}" %></p>
+        <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
         <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
           <p>On List</p>
         <% else %>
@@ -50,11 +52,11 @@
     <%= "Page #{@page} of #{@total_pages}" %></br>
 
     <% if @previous_page.present? %>
-      <%= link_to "Previous page", actor_search_path(name: "#{@name}", page: "#{@previous_page}") %>
+      <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %>
     <% end %>
 
     <% if @next_page.present? %>
-      <%= link_to "Next page", actor_search_path(name: "#{@name}", page: "#{@next_page}") %>
+      <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
     <% end %>
 
 <% end %>

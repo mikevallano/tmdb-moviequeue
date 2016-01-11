@@ -202,7 +202,8 @@ module TmdbHandler
     @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
   end
 
-  def tmdb_handler_discover_search(year, genre, actor, actor2, company, mpaa_rating, after_year, before_year, sort_by)
+  def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2, company, mpaa_rating, sort_by, page)
+    @page = page.to_i
     if actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
@@ -226,24 +227,32 @@ module TmdbHandler
     #add logic to handle not-found actors
     #add logic to rescue errors
     #add pagination
-    #release year breaks the query if it's blank
-    years = [year, after_year, before_year].compact
-    if years == year
-      @year = "primary_release_year=#{years}"
-    elsif years == after_year
-      @year = "release_date.gte=#{years}"
-    elsif years = before_year
-      @year = "release_date.lte=#{years}"
+    #allow year to be between years?
+    years = [exact_year, after_year, before_year].compact
+    if years.any?
+      years = years.first
+      if years == exact_year
+        @year_search = "primary_release_year=#{years}"
+      elsif years == after_year
+        @year_search = "release_date.gte=#{years}"
+      else
+        @year_search = "release_date.lte=#{years}"
+      end
     else
-      @year = "release_date.gte=1800-01-01"
+      @year_search = "release_date.gte=1800-01-01"
     end
 
-    # if year.present?
-      @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&api_key=#{ENV['tmdb_api_key']}"
-    # else
-    #   @discover_url = "https://api.themoviedb.org/3/discover/movie?with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&api_key=#{ENV['tmdb_api_key']}"
-    # end
+    @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
+    puts "discover url: #{@discover_url}"
     @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
-  end
+    @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]
+
+    if @page > 1
+      @previous_page = @page - 1
+    end
+    unless @page >= @total_pages
+      @next_page = @page + 1
+    end
+  end #discover search
 
 end
