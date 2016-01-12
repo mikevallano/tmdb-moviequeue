@@ -1,9 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Screenings Show Page for <%= @movie.title %></h1>
+<p>This page shows a specific screening's info.</p>
 
 <p>
   <strong>Movie:</strong>
-  <%= @screening.movie.title %>
+  <%= link_to "#{@screening.movie.title}", movie_path(@movie) %>
 </p>
 
 <p>
