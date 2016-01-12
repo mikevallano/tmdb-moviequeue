@@ -29,6 +29,20 @@
           <p><%= result[:vote_average] %></p>
           <p><%= result[:overview] %></p>
           <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+
+        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
+          <p>On List(s): <%= raw Movie.find_by(tmdb_id: result[:id]).lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
+        <% else %>
+          <p>Add this movie to a list:</p>
+          <p>
+          <%= form_for(Listing.new) do |f| %>
+            <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "add movie to list" %>
+          <% end %>
+          </p>
+        <% end %>
       <% end %>
 
 <% end %>

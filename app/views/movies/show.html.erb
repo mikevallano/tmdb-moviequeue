@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @movie.title %>
-</p>
 
-<p>
-  <strong>Trailer:</strong>
-  <%= @movie.trailer %>
-</p>
+ <h1>Movie Show page for: <%= @movie.title %></h1>
+
+<%= image_tag "http://image.tmdb.org/t/p/w780#{@movie.backdrop_path}" %><br>
+<%= image_tag "http://image.tmdb.org/t/p/w150#{@movie.poster_path}" %>
+
+</br>
+<p><strong>Trailer:</strong></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
 
 <p>
   <strong>Genres:</strong>
@@ -31,16 +31,6 @@
 </p>
 
 <p>
-  <strong>backdrop_path:</strong>
-  <%= @movie.backdrop_path %>
-</p>
-
-<p>
-  <strong>poster_path:</strong>
-  <%= @movie.poster_path %>
-</p>
-
-<p>
   <strong>overview:</strong>
   <%= @movie.overview %>
 </p>
@@ -60,10 +50,17 @@
   <%= @movie.runtime %>
 </p>
 
-<p>
-  <strong>adult?:</strong>
-  <%= @movie.adult %>
+<p>Tags: <%= raw @movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
+<p>Tags to delete: <%= raw @movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, @movie.id), method: :delete }.join(', ') %></p>
+<p> <%= form_tag('/taggings') do %>
+      <%= label_tag(:tag_list, "Add tags:") %>
+      <%= text_field_tag(:tag_list) %>
+      <%= hidden_field_tag(:movie_id, "#{@movie.id}") %>
+      <%= submit_tag("add tags") %>
+    <% end %>
 </p>
+
+<p>On List(s): <%= raw @movie.lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
 
 <p>
   <% if current_user.reviewed_movies.include?(@movie) %>
@@ -94,6 +91,6 @@
   <% end %>
 </p>
 
-<p><%= link_to "Similar movies", movie_more_path(movie_id: @movie.tmdb_id) %>
+<p><%= link_to "Similar movies", movie_more_path(movie_id: @movie.tmdb_id) %></p>
 
 <%= link_to 'Back', movies_path %>

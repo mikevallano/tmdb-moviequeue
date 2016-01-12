@@ -1,74 +1,59 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @list.name %>
-</p>
+<h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Movies</th>
-      <th>On List</th>
-      <th>Tags</th>
-      <th></th>
-      <th>Priority</th>
-      <th></th>
-      <th>Rating</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= link_to "#{movie.title}", movie_path(movie.slug)  %></td>
-        <td><%= link_to 'Remove from this list', delete_listing_path(@list.id, movie.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, tag_path(t, :list_id => "#{@list.id}") }.join(', ') %></td>
-        <td>
-          <%= form_tag('/taggings') do %>
-            <%= label_tag(:tag_list, "tags:") %>
+ <% @movies.each do |movie| %>
+   <div>
+      <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
+      <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
+      <p><%= movie.release_date %></p>
+      <p><%= movie.vote_average %></p>
+      <p><%= movie.overview %></p>
+      <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+      <p>Tags: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
+      <p>Tags to delete: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></p>
+      <p> <%= form_tag('/taggings') do %>
+            <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
             <%= hidden_field_tag(:movie_id, "#{movie.id}") %>
             <%= submit_tag("add tags") %>
           <% end %>
-        </td>
+      </p>
 
-        <td>Priority: <%= movie.listings.find_by(list_id: @list.id).priority %></td>
-        <td><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
-          <%= label_tag(:priority, "new priority:") %>
-          <%= number_field_tag(:priority) %>
-          <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
-          <%= submit_tag("Prioritize") %>
-        <% end %>
-        </td>
+      <p>Priority: <%= movie.listings.find_by(list_id: @list.id).priority %></p>
+      <p><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
+        <%= label_tag(:priority, "new priority:") %>
+        <%= number_field_tag(:priority) %>
+        <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
+        <%= submit_tag("Prioritize") %>
+      <% end %>
+      </p>
 
-        <% if current_user.rated_movies.include?(movie) %>
-          <td>My Rating: <%= movie.ratings.by_user(current_user).first.value %></td>
-        <% else %>
-          <td><%= link_to "Rate this movie", new_movie_rating_path(movie) %></td>
-        <% end %>
-
-
-        <% if current_user.reviewed_movies.include?(movie) %>
-          <td>My Review: <%= movie.reviews.by_user(current_user).first.body %></td>
-        <% else %>
-          <td><%= link_to "Review this movie", new_movie_review_path(movie) %></td>
-        <% end %>
-
-        <% if movie.times_seen_by(current_user) > 0 %>
-          <td>Been watched.</td>
-          <td><%= link_to "View my screenings", movie_screenings_path(movie) %></td>
-        <% else %>
-          <td><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post %></td>
-          <td><%= link_to "Add a screening", new_movie_screening_path(movie) %><td>
-        <% end %>
-
-      </tr>
+      <% if current_user.rated_movies.include?(movie) %>
+        <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>
+      <% else %>
+        <p><%= link_to "Rate this movie", new_movie_rating_path(movie) %></p>
       <% end %>
 
-  </tbody>
-</table>
+      <% if current_user.reviewed_movies.include?(movie) %>
+        <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
+      <% else %>
+        <p><%= link_to "Review this movie", new_movie_review_path(movie) %></p>
+      <% end %>
+
+      <% if movie.times_seen_by(current_user) > 0 %>
+        <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
+        <p><%= link_to "View my screenings", movie_screenings_path(movie) %></p>
+      <% else %>
+        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post %></p>
+        <p><%= link_to "Add a screening", new_movie_screening_path(movie) %><p>
+      <% end %>
+
+      <p><%= link_to "Movie show page", movie_path(movie) %></p>
+    </br>
+  <% end %>
+</div>
 
 <p><%= will_paginate @movies %></p>
 

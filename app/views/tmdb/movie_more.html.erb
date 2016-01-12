@@ -1,15 +1,22 @@
 <h1>Movie: <%= @title %></h1>
 
+  <%= image_tag "http://image.tmdb.org/t/p/w780#{@result[:backdrop_path]}" %><br>
   <%= image_tag "http://image.tmdb.org/t/p/w150#{@result[:poster_path]}" %>
 
-  <p>Add this movie to a list:</p>
-  <p><%= form_for(Listing.new) do |f| %>
-        <%= f.collection_select :list_id, current_user.lists, :id, :name %>
-        <%= hidden_field_tag :tmdb_id, @movie_id %>
-        <%= hidden_field_tag :user_id, current_user.id %>
-        <%= f.submit "add movie to list" %>
-      <% end %>
-  </p>
+  <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: @tmdb_id)) %>
+    <p>On List(s): <%= raw Movie.find_by(tmdb_id: @tmdb_id).lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
+  <% else %>
+    <p>Add this movie to a list:</p>
+    <p>
+    <%= form_for(Listing.new) do |f| %>
+      <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+      <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+      <%= hidden_field_tag :user_id, current_user.id %>
+      <%= f.submit "add movie to list" %>
+    <% end %>
+    </p>
+  <% end %>
+
   <p>Release Date: <%= @release_date %></p>
   <p>Rated: <%= @mpaa_rating %></p>
   <p>TMDB Vote Average: <%= @vote_average %></p>

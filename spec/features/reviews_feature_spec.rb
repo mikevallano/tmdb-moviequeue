@@ -20,7 +20,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "movies"
-        click_link "Show"
+        click_link "Movie show page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
@@ -35,7 +35,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "movies"
-        click_link "Show"
+        click_link "Movie show page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
@@ -52,7 +52,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "movies"
-        click_link "Show"
+        click_link "Movie show page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
         click_button 'Create Review'
@@ -61,13 +61,13 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         listing2
         sign_in_user(user2)
         click_link "movies"
-        click_link "Show"
+        click_link "Movie show page"
         expect(page).not_to have_content("OMG")
         click_link "Sign Out"
 
         sign_in_user(user)
         click_link "movies"
-        click_link "Show"
+        click_link "Movie show page"
         expect(page).to have_content("OMG")
 
 

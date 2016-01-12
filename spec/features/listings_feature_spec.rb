@@ -44,7 +44,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
       end
       click_link("My Lists")
       click_link("Show")
-      click_link("Remove from this list")
+      click_link("Remove from #{List.find(Listing.last.list_id).name}")
       expect(page).to have_content("Movie was removed from list.")
 
     end
