@@ -19,7 +19,12 @@
     <% end %>
   <h3>Number of common actors in <%= link_to "#{@movie_one[:title]}", movie_more_path(movie_id: @movie_one_id) %>,
     and <%= link_to "#{@movie_two[:title]}", movie_more_path(movie_id: @movie_two_id) %>: <%= @common_actors.size %></h3>
-  <p>Common Actors: <%= raw @common_actors.map { |a| link_to a, actor_search_path(actor: a) }.join(', ') %></p>
+
+  <p>Common Actors:</strong>
+  <% @common_actors.each do |actor| %>
+    <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+  <% end %>
+  </p>
   </br>
   <p><%= link_to "Search again", two_movie_search_path %> </p>
 

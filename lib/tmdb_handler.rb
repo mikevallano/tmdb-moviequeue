@@ -14,6 +14,7 @@ module TmdbHandler
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     @tmdb_id = @result[:id]
+    @movie = Movie.find_by(tmdb_id: @tmdb_id)
     @title = @result[:title]
     @release_date = @result[:release_date]
     @vote_average = @result[:vote_average]

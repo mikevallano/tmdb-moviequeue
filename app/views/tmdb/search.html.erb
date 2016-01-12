@@ -31,7 +31,11 @@
           <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
 
         <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
-          <p>On List(s): <%= raw Movie.find_by(tmdb_id: result[:id]).lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
+          <p>On List(s):
+          <% Movie.find_by(tmdb_id: result[:id]).lists.by_user(current_user).each do |list| %>
+            <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+          <% end %>
+          </p>
         <% else %>
           <p>Add this movie to a list:</p>
           <p>

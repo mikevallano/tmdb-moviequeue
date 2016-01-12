@@ -31,7 +31,11 @@
           <% end %>
       </p>
 
-      <p>On List(s): <%= raw movie.lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
+      <p>On List(s):
+        <% movie.lists.by_user(current_user).each do |list| %>
+          <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+        <% end %>
+      </p>
 
       <% if current_user.rated_movies.include?(movie) %>
         <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>

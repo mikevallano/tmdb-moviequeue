@@ -1,6 +1,10 @@
 <h2>Show name: <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h2>
 <h2>Season number: <%= @season_number %></h2>
-<p>Seasons: <%= raw @seasons.map {|season| link_to season[:season_number], tv_season_path(show_id: @show_id, season_number: season[:season_number], show_name: @show_name) }.join(', ')  %></p>
+<p>Seasons:
+  <% @seasons.each do |season| %>
+   <%= link_to "#{season[:season_number]}", tv_season_path(show_id: @show_id, season_number: season[:season_number], show_name: @show_name) %>
+  <% end %>
+</p>
 
 <ul>
 <% @episodes.each do |episode| %>

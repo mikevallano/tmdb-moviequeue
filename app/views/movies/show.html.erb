@@ -12,12 +12,16 @@
 
 <p>
   <strong>Genres:</strong>
-  <%= raw @movie.genres.map { |g| link_to g, genre_path(genre: g) }.join(', ') %></p>
+  <% @movie.genres.each do |genre| %>
+    <%= link_to "#{genre}", genre_path(genre) %>
+  <% end %>
 </p>
 
 <p>
   <strong>Actors:</strong>
-  <%= raw @movie.actors.map { |a| link_to a, actor_search_path(actor: a) }.join(', ') %>
+  <% @movie.actors.each do |actor| %>
+    <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+  <% end %>
 </p>
 
 <p>
@@ -64,7 +68,11 @@
     <% end %>
 </p>
 
-<p>On List(s): <%= raw @movie.lists.by_user(current_user).map { |l| link_to l.name, user_list_path(current_user, l.slug) }.join(', ') %> </p>
+<p>On List(s):
+  <% @movie.lists.by_user(current_user).each do |list| %>
+    <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+  <% end %>
+</p>
 
 <p>
   <% if current_user.reviewed_movies.include?(@movie) %>
