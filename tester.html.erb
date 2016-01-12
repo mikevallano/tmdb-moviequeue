@@ -1,0 +1,10 @@
+<% if current_user.present? %>
+  <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_list_path(current_user, current_user.lists.first ) %>.</p>
+  <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
+  <p>You can find your current lists and add to them <%= link_to "here", user_lists_path(current_user) %>.</p>
+  <p>You can browse movies in a variety of ways, and add them to your <%= link_to "lists", user_lists_path(current_user) %>.</p>
+  <p>You can also check out what <%= link_to "lists other users", public_lists_path %> have created.</p>
+  <p><%= link_to "Search by movie title", api_search_path %> </p>
+  <p><%= link_to "Search by actor", actor_search_path %> </p>
+  <p><%= link_to "Search by all sorts of things", discover_search_path %> </p>
+<% end %>

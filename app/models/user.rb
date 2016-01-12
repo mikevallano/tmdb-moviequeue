@@ -47,15 +47,16 @@ class User < ActiveRecord::Base
   end
 
   def lists_except_movie(movie)
-    all_lists = []
+    except_lists = []
     self.lists.each do |list|
-      all_lists << list
+      except_lists << list
     end
     self.member_lists.each do |list|
-      all_lists << list
+      except_lists << list
     end
     movie_lists = Movie.find(movie.id).lists.by_user(self)
-    lists_except_movie = (all_lists - movie_lists)
+    lists_except_movie = (except_lists - movie_lists)
+    except_list = []
   end
 
   def all_movies

@@ -10,6 +10,7 @@
       <p><%= movie.release_date %></p>
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
+
       <% if @list.present? %>
         <p>Tags:
           <% movie.tags.by_user_or_list(@list).each do |tag| %>
@@ -21,7 +22,7 @@
         <% movie.tag_list(current_user).each do |tag| %>
           <%= link_to "#{tag.name}", tag_path(tag.name) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
         <% end %>
-      <% end %>
+      <% end %><!--  #if @list.present? -->
 
       <p> <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "Add tags:") %>
@@ -36,6 +37,14 @@
           <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
         <% end %>
       </p>
+
+      <p>Add to another list:</p>
+      <%= form_for(Listing.new) do |f| %>
+        <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
+        <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+        <%= hidden_field_tag :user_id, current_user.id %>
+        <%= f.submit "add movie to list" %>
+      <% end %>
 
       <% if current_user.rated_movies.include?(movie) %>
         <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>
