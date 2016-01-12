@@ -11,11 +11,16 @@
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
       <% if @list.present? %>
-        <p>Tags: <%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, tag_path(t, :list_id => "#{@list.id}") }.join(', ') %></p>
-        <p>Tags to delete: <%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, delete_tagging_path(@list.id, movie.id), method: :delete  }.join(', ') %>
+        <p>Tags:
+          <% movie.tags.by_user_or_list(@list).each do |tag| %>
+            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+          <% end %>
+          </p>
       <% else %>
-        <p>Tags: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
-        <p>Tags to delete: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></p>
+        <p>Tags:
+        <% movie.tag_list(current_user).each do |tag| %>
+          <%= link_to "#{tag.name}", tag_path(tag.name) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+        <% end %>
       <% end %>
 
       <p> <%= form_tag('/taggings') do %>

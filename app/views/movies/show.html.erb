@@ -50,8 +50,12 @@
   <%= @movie.runtime %>
 </p>
 
-<p>Tags: <%= raw @movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
-<p>Tags to delete: <%= raw @movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, @movie.id), method: :delete }.join(', ') %></p>
+<p>Tags:
+<% @movie.tag_list(current_user).each do |tag| %>
+  <%= link_to "#{tag.name}", tag_path(tag.name) %><%= link_to "(x)", delete_tagging_path(tag.id, @movie.id), method: :delete  %>
+<% end %>
+</p>
+
 <p> <%= form_tag('/taggings') do %>
       <%= label_tag(:tag_list, "Add tags:") %>
       <%= text_field_tag(:tag_list) %>

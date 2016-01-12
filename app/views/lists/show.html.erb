@@ -11,8 +11,12 @@
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
       <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), method: :delete, data: { confirm: 'Are you sure?' } %></p>
-      <p>Tags: <%= raw movie.tag_list(@list).map { |t| link_to t.name, tag_path(t.name, list_id: @list.id) }.join(', ') %></p>
-      <p>Tags to delete: <%= raw movie.tag_list(@list).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></p>
+
+      <p>Tags:
+        <% movie.tags.by_user_or_list(@list).each do |tag| %>
+          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+        <% end %>
+      </p>
       <p> <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
