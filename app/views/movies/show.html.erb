@@ -80,7 +80,7 @@
     <%= @movie.reviews.by_user(current_user).first.body %>,
     <%= link_to "show", movie_review_path(@movie, @movie.reviews.by_user(current_user).first) %>
   <% else %>
-    <%= link_to "Review this movie", new_movie_review_path(@movie) %></td>
+    <%= link_to "Review this movie", new_movie_review_path(@movie), id: "new_review_link_movie_show" %></td>
   <% end %>
 </p>
 
