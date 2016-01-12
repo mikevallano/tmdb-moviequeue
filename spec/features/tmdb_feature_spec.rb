@@ -46,7 +46,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       expect(page).to have_content("Page 1 of 6")
       expect(page).not_to have_content("Previous page")
       VCR.use_cassette('tmdb_actor_next_page') do
-        click_link("Next page")
+        click_link "Next page"
       end
       expect(page).to have_content("Page 2 of 6")
       expect(page).to have_content("Previous page")
@@ -90,7 +90,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       VCR.use_cassette('tmdb_two_movie_search') do
         fill_in "Enter Movie Title", with: 'Fargo'
         fill_in "Enter Other Movie Title", with: 'The Big Lebowski'
-        click_button 'Search'
+        click_button "Search"
       end
       expect(page).to have_content("Steve Buscemi")
 
@@ -103,7 +103,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       VCR.use_cassette('tmdb_two_movie_search_bad_first') do
         fill_in "Enter Movie Title", with: '*sdlfkjsdflkjsdf'
         fill_in "Enter Other Movie Title", with: 'The Big Lebowski'
-        click_button 'Search'
+        click_button "Search"
       end
       expect(page).to have_content("No results for the first movie")
 
@@ -116,7 +116,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       VCR.use_cassette('tmdb_two_movie_search_bad_second') do
         fill_in "Enter Movie Title", with: 'Fargo'
         fill_in "Enter Other Movie Title", with: '*sdlfkjsdflkjsdf'
-        click_button 'Search'
+        click_button "Search"
       end
       expect(page).to have_content("No results for the second movie")
 
@@ -163,7 +163,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       api_movie_more_info
 
       VCR.use_cassette("similar_movies_more_info") do
-        click_link("More info", match: :first)
+        click_link "More info", match: :first
       end
       expect(page).to have_content("The Revenant")
 
@@ -178,7 +178,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       expect(page).to have_content("PolyGram Filmed Entertainment")
       VCR.use_cassette("tmdb_production_company_search") do
-        click_link("PolyGram Filmed Entertainment")
+        click_link "PolyGram Filmed Entertainment"
       end
       expect(page).to have_content("Where the Money is")
 
@@ -194,7 +194,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
       expect(Movie.last.title).to eq("Fargo")
 
@@ -210,7 +210,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
       expect(Movie.last.genres).to include("Crime")
 
@@ -226,7 +226,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
       expect(Movie.last.actors).to include("Steve Buscemi")
 
@@ -242,7 +242,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
       expect(Movie.last.director).to eq("Joel Coen")
       expect(Movie.last.director_id).to eq(1223)
@@ -259,7 +259,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
       expect(Movie.last.mpaa_rating).to eq("R")
 

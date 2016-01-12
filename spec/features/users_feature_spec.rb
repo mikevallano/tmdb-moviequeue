@@ -15,13 +15,13 @@ RSpec.feature "Users feature spec", :type => :feature do
     scenario 'user is sent a confirmation email after signing up' do
       visit root_path
 
-      click_link 'Sign Up'
+      click_link "sign_up_nav_link"
 
       fill_in "Email", with: email
       fill_in "Username", with: username
       fill_in "Password", with: "password"
       fill_in "Password confirmation", with: "password"
-      click_link_or_button 'Sign up'
+      click_link_or_button "Sign up"
 
       expect(last_email).to have_content("To: #{email}")
     end
@@ -29,13 +29,13 @@ RSpec.feature "Users feature spec", :type => :feature do
     scenario "user can't log in until confirmed" do
       visit root_path
 
-      click_link 'Sign Up'
+      click_link "sign_up_nav_link"
 
       fill_in "Email", with: email
       fill_in "Username", with: username
       fill_in "Password", with: "password"
       fill_in "Password confirmation", with: "password"
-      click_link_or_button 'Sign up'
+      click_link_or_button "Sign up"
 
       visit user_lists_path(User.last)
       expect(page).to have_content("Sign in with email or username")
@@ -45,35 +45,35 @@ RSpec.feature "Users feature spec", :type => :feature do
 
     scenario "existing users can sign in with email" do
       visit root_path
-      click_link 'Sign In'
+      click_link "sign_in_nav_link"
       fill_in 'Sign in with email or username', with: existing_user.email
       fill_in 'Password', with: existing_user.password
-      click_button 'Log in'
+      click_button "Log in"
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("Signed in as: #{@email}")
     end
 
     scenario "existing user can sign in with username" do
       visit root_path
-      click_link 'Sign In'
+      click_link "sign_in_nav_link"
       fill_in 'Sign in with email or username', with: existing_user.username
       fill_in 'Password', with: existing_user.password
-      click_button 'Log in'
+      click_button "Log in"
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("Signed in as: #{@email}")
     end
 
     scenario "user can sign out" do
       sign_in_user(existing_user)
-      click_link "Sign Out"
+      click_link "sign_out_nav_link"
       expect(page).to have_content("Signed out successfully")
     end
 
     scenario "user can reset their password" do
 
       sign_in_user(existing_user)
-      click_link "Sign Out"
-      click_link "Sign In"
+      click_link "sign_out_nav_link"
+      click_link "sign_in_nav_link"
       click_link "Forgot your password?"
       fill_in "Email", with: existing_user.email
       click_link_or_button "Send me reset password instructions"

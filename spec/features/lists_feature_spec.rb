@@ -20,21 +20,21 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "users can create lists" do
 
         sign_in_user(user)
-        click_link "My Lists"
+        click_link "my_lists_nav_link"
         click_link "New List"
         fill_in 'Name', with: 'test list one'
-        expect { click_button 'Create List' }.to change(List, :count).by(1)
+        expect { click_button "Create List" }.to change(List, :count).by(1)
         expect(page).to have_content("List was successfully created")
-        click_link "Sign Out"
+        click_link "sign_out_nav_link"
 
       end
 
       scenario "user can edit their own list" do
         sign_in_user(user)
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         click_link "New List"
         fill_in 'Name', with: 'test list one'
-        click_button 'Create List'
+        click_button "Create List"
         @list = List.last
         visit(edit_user_list_path(user, @list))
         expect(page).to have_content("Editing List")
@@ -45,22 +45,22 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
        scenario "user can delete their own list" do
         sign_in_user(user)
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         click_link "New List"
         fill_in 'Name', with: 'test list one'
-        click_button 'Create List'
-        click_link("My Lists")
+        click_button "Create List"
+        click_link "my_lists_nav_link"
         click_link "Destroy"
         expect(page).to have_content("destroyed")
       end
 
       scenario 'user can mark a list as public' do
         sign_in_user(user)
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         click_link "New List"
         fill_in 'Name', with: 'test list one'
         check 'list_is_public'
-        click_button 'Create List'
+        click_button "Create List"
         expect(List.last.is_public).to be true
 
       end
@@ -76,7 +76,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           end
           visit user_list_path(user, list)
           expect(page).to have_content("Next")
-          click_link("Next")
+          click_link "Next"
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end
@@ -89,12 +89,12 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario  "user's can't view or edit another user's list (without being a member)" do
 
         sign_in_user(user)
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         click_link "New List"
         fill_in 'Name', with: 'test list one'
-        click_button 'Create List'
+        click_button "Create List"
         @list = List.last
-        click_link "Sign Out"
+        click_link "sign_out_nav_link"
         sign_in_user(user2)
 
         visit(user_list_path(user, @list))
@@ -117,7 +117,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario 'user can view public lists' do
 
         sign_in_user(user2)
-        click_link("All Lists")
+        click_link "public_lists_nav_link"
         expect(page).to have_content(public_list.name)
 
       end
@@ -125,8 +125,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user sees public_show page if user's all_lists doesn't include list" do
 
         sign_in_user(user2)
-        click_link("All Lists")
-        click_link("#{public_list.name}")
+        click_link "public_lists_nav_link"
+        click_link "#{public_list.name}"
         expect(page).to have_content("Add this movie to a list")
         expect(page).not_to have_content("Priority")
 
@@ -135,8 +135,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user sees standard list show page if user's all_lists does include list" do
 
         sign_in_user(public_list.owner)
-        click_link("All Lists")
-        click_link("#{public_list.name}")
+        click_link "public_lists_nav_link"
+        click_link "#{public_list.name}"
         expect(page).not_to have_content("Add this movie to a list")
         expect(page).to have_content("Priority")
 
@@ -151,12 +151,12 @@ RSpec.feature "Lists feature spec", :type => :feature do
             FactoryGirl.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id)
             counter += 1
           end
-          click_link "Sign Out"
+          click_link "sign_out_nav_link"
           sign_in_user(user2)
-          click_link("All Lists")
-          click_link("#{public_list.name}")
+          click_link "public_lists_nav_link"
+          click_link "#{public_list.name}"
           expect(page).to have_content("Next")
-          click_link("Next")
+          click_link "Next"
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end
@@ -166,11 +166,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
         it "should paginate the lists on the all lists page" do
           sign_in_user(user)
           30.times { FactoryGirl.create(:list, is_public: true, owner: user) }
-          click_link "Sign Out"
+          click_link "sign_out_nav_link"
           sign_in_user(user2)
-          click_link("All Lists")
+          click_link "public_lists_nav_link"
           expect(page).to have_content("Next")
-          click_link("Next")
+          click_link "Next"
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end

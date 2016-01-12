@@ -16,7 +16,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
       sign_in_user(user1)
       visit(user_list_path(user1, list))
       fill_in "Email", with: receiver_email
-      expect { click_button 'Send invite' }.to change(Invite, :count).by(1)
+      expect { click_button "Send invite" }.to change(Invite, :count).by(1)
       expect(page).to have_content("sent")
 
     end
@@ -50,18 +50,18 @@ RSpec.feature "Invites feature spec", :type => :feature do
         fill_in "Username", with: username
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "password"
-        click_link_or_button 'Sign up'
+        click_link_or_button "Sign up"
         open_email(receiver_email)
         current_email.click_link "Confirm my account"
         # visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
         # visit new_user_session_path
         fill_in 'Sign in with email or username', with: username
         fill_in 'Password', with: "password"
-        click_button 'Log in'
+        click_button "Log in"
 
         expect(page).to have_content("success")
 
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         expect(page).to (have_content(list.name))
         expect(User.last.all_lists).to include list
 
@@ -90,12 +90,12 @@ RSpec.feature "Invites feature spec", :type => :feature do
         visit(user_list_path(user1, list))
         fill_in "Email", with: user2.email
         click_button "Send invite"
-        click_link "Sign Out"
+        click_link "sign_out_nav_link"
 
         sign_in_user(user2)
         visit(user_list_path(user1, Invite.last.list))
 
-        click_link("My Lists")
+        click_link "my_lists_nav_link"
         expect(page).to (have_content(list.name))
         expect(user2.all_lists).to include list
 

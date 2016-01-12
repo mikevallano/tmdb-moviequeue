@@ -19,10 +19,10 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
 
-        expect { click_link_or_button "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
+        expect { click_link "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
         expect(page).to have_content("successfully")
         expect(page).to have_content("been watched")
 
@@ -32,8 +32,8 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "add a screening"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
@@ -44,8 +44,8 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "add a screening"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
@@ -66,7 +66,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        expect { click_link_or_button "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
+        expect { click_link "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
 
       end
 
@@ -92,7 +92,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link("Add a screening")
+        click_link "Add a screening"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
         click_link "view my screenings"
@@ -109,7 +109,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link("View my screenings")
+        click_link "View my screenings"
         expect(page).to have_content("it was great")
 
       end

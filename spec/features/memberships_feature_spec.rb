@@ -34,7 +34,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users can see their own lists that have members" do
 
       sign_in_user(user1)
-      click_link("My Lists")
+      click_link "my_lists_nav_link"
       expect(page).to have_content("awesome 90s")
       visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
@@ -44,7 +44,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users can see others' lists they're a member of" do
 
       sign_in_user(user2)
-      click_link("My Lists")
+      click_link "my_lists_nav_link"
       expect(page).to have_content("awesome 90s")
       visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
@@ -65,7 +65,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
       sign_in_user(user2)
       visit(user_list_path(user1, list))
-      click_link(tag1.name, match: :first)
+      click_link tag1.name, match: :first
       expect(page).to have_content(movie1.title)
 
     end

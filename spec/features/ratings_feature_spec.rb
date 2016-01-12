@@ -19,14 +19,14 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
+        click_link "my_movies_nav_link"
           VCR.use_cassette('movie_show_page') do
-            click_link "Movie show page"
+            click_link "movie_show_page"
           end
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
 
-        expect { click_button 'Create Rating' }.to change(Rating.by_user(user), :count).by(1)
+        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
         expect(page).to have_content("successfully")
         expect(page).to have_content("9")
 
@@ -36,12 +36,12 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
 
-        expect { click_button 'Create Rating' }.to change(Rating.by_user(user), :count).by(1)
+        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
         expect(page).to have_content("successfully")
         expect(page).to have_content("9")
 
@@ -56,23 +56,23 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
-        click_button 'Create Rating'
-        click_link "Sign Out"
+        click_button "Create Rating"
+        click_link "sign_out_nav_link"
 
         listing2
         sign_in_user(user2)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         expect(page).not_to have_content("9")
-        click_link "Sign Out"
+        click_link "sign_out_nav_link"
 
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         expect(page).to have_content("9")
 
 
@@ -93,7 +93,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         click_link "Rate this movie"
         fill_in 'Value', with: "9"
 
-        expect { click_button 'Create Rating' }.to change(Rating.by_user(user), :count).by(1)
+        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
         expect(page).to have_content("successfully")
         expect(page).to have_content("9")
 

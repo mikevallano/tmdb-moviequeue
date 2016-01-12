@@ -29,10 +29,10 @@ RSpec.feature "Genres feature spec", :type => :feature do
         api_movie_more_info
         all('#new_listing option')[0].select_option
         VCR.use_cassette('tmdb_add_movie') do
-          click_button("add movie to list")
+          click_button "add movie to list"
         end
         visit(movie_path(Movie.last))
-        click_link("Crime")
+        click_link "Crime"
         expect(page).to have_content("Fargo")
 
       end #genres are links
@@ -51,9 +51,9 @@ RSpec.feature "Genres feature spec", :type => :feature do
             counter += 1
           end
           visit(movie_path(Movie.last))
-          click_link("Crime", match: :first)
+          click_link "Crime", match: :first
           expect(page).to have_content("Next")
-          click_link("Next")
+          click_link "Next"
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end

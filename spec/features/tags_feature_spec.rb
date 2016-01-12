@@ -20,11 +20,11 @@ RSpec.feature "Tags feature spec", :type => :feature do
         api_movie_more_info
         all('#new_listing option')[0].select_option
         VCR.use_cassette('tmdb_add_movie') do
-          click_button("add movie to list")
+          click_button "add movie to list"
         end
-        click_link("movies")
+        click_link "my_movies_nav_link"
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button("add tags", match: :first)
+        click_button "add tags", match: :first
         expect(page).to have_content("added")
         expect(page).to have_content("dark-comedy")
         expect(page).to have_content("spooky")
@@ -39,12 +39,12 @@ RSpec.feature "Tags feature spec", :type => :feature do
       api_movie_more_info
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button("add movie to list")
+        click_button "add movie to list"
       end
-      click_link("movies")
+      click_link "my_movies_nav_link"
       fill_in "tag_list", with: "dark comedy, spooky"
-      click_button("add tags", match: :first)
-      click_link("spooky", match: :first)
+      click_button "add tags", match: :first
+      click_link "spooky", match: :first
       expect(page).to have_content("Fargo")
 
     end #user can tag movie
@@ -64,9 +64,9 @@ RSpec.feature "Tags feature spec", :type => :feature do
           counter += 1
         end
         visit movies_path
-        click_link("hilarious", match: :first)
+        click_link "hilarious", match: :first
         expect(page).to have_content("Next")
-        click_link("Next")
+        click_link "Next"
         expect(page).to have_content("Previous")
         expect(page).not_to have_link("Next")
       end

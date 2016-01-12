@@ -19,12 +19,12 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
-        expect { click_button 'Create Review' }.to change(Review.by_user(user), :count).by(1)
+        expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
         expect(page).to have_content("successfully")
         expect(page).to have_content("OMG. best. movie. eva.")
 
@@ -34,12 +34,12 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
-        expect { click_button 'Create Review' }.to change(Review.by_user(user), :count).by(1)
+        expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
         visit(new_movie_review_path(movie))
         expect(page).to have_content("You've already reviewed this movie")
         url = URI.parse(current_url)
@@ -51,23 +51,23 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         click_link "Review this movie"
         fill_in 'Body', with: "OMG. best. movie. eva."
-        click_button 'Create Review'
-        click_link "Sign Out"
+        click_button "Create Review"
+        click_link "sign_out_nav_link"
 
         listing2
         sign_in_user(user2)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         expect(page).not_to have_content("OMG")
-        click_link "Sign Out"
+        click_link "sign_out_nav_link"
 
         sign_in_user(user)
-        click_link "movies"
-        click_link "Movie show page"
+        click_link "my_movies_nav_link"
+        click_link "movie_show_page"
         expect(page).to have_content("OMG")
 
 
