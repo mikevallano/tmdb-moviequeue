@@ -10,8 +10,14 @@
       <p><%= movie.release_date %></p>
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
-      <p>Tags: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
-      <p>Tags to delete: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></p>
+      <% if @list.present? %>
+        <p>Tags: <%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, tag_path(t, :list_id => "#{@list.id}") }.join(', ') %></p>
+        <p>Tags to delete: <%= raw movie.tags.by_user_or_list(@list).map(&:name).map { |t| link_to t, delete_tagging_path(@list.id, movie.id), method: :delete  }.join(', ') %>
+      <% else %>
+        <p>Tags: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, tag_path(t.name) }.join(', ') %></p>
+        <p>Tags to delete: <%= raw movie.tag_list(current_user).map { |t| link_to t.name, delete_tagging_path(t.id, movie.id), method: :delete }.join(', ') %></p>
+      <% end %>
+
       <p> <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>

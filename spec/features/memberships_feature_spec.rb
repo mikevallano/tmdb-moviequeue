@@ -65,7 +65,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
       sign_in_user(user2)
       visit(user_list_path(user1, list))
-      click_link(tag1.name)
+      click_link(tag1.name, match: :first)
       expect(page).to have_content(movie1.title)
 
     end
