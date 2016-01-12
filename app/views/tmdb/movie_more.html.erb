@@ -3,23 +3,40 @@
   <%= image_tag "http://image.tmdb.org/t/p/w780#{@result[:backdrop_path]}" %><br>
   <%= image_tag "http://image.tmdb.org/t/p/w150#{@result[:poster_path]}" %>
 
+<% if @movie.present? %>
+
   <% if current_user.all_movies.include?(@movie) %>
+
     <p>On List(s):
     <% @movie.lists.by_user(current_user).each do |list| %>
       <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
-    <% end %>
+    <% end %> <!-- #list loop -->
     </p>
+
   <% else %>
-    <p>Add this movie to a list:</p>
-    <p>
+    <p>This movie is not on your lists. Add it to a list:</p>
+  <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
+  <%= form_for(Listing.new) do |f| %>
+    <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
+    <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+    <%= hidden_field_tag :user_id, current_user.id %>
+    <%= f.submit "add movie to list" %>
+  <% end %>
+
+  </p>
+
+<% else %> <!-- #if @movie.present? -->
+
+  <p>This movie is not on your lists. Add it to a list:</p>
     <%= form_for(Listing.new) do |f| %>
       <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
       <%= hidden_field_tag :tmdb_id, @tmdb_id %>
       <%= hidden_field_tag :user_id, current_user.id %>
       <%= f.submit "add movie to list" %>
     <% end %>
-    </p>
-  <% end %>
+
+<% end %> <!-- #if @movie present -->
 
   <p>Release Date: <%= @release_date %></p>
   <p>Rated: <%= @mpaa_rating %></p>

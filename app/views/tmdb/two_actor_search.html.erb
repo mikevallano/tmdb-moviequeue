@@ -21,27 +21,52 @@
 
      <% @discover_results.each do |result| %>
       <% @tmdb_id = result[:id] %>
+      <% @movie = Movie.find_by(tmdb_id: @tmdb_id) %>
        <div>
            <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
           <h3><%= result[:title] %></h3>
           <p><%= result[:release_date] %></p>
           <p><%= result[:vote_average] %></p>
           <p><%= result[:overview] %></p>
-          <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
-            <p>On List</p>
-          <% else %>
-            <p>Add this movie to a list:</p>
-            <p>
+
+          <% if @movie.present? %>
+
+            <% if current_user.all_movies.include?(@movie) %>
+
+              <p>On List(s):
+              <% @movie.lists.by_user(current_user).each do |list| %>
+                <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+              <% end %> <!-- #list loop -->
+              </p>
+
+            <% else %>
+              <p>This movie is not on your lists. Add it to a list:</p>
+            <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
             <%= form_for(Listing.new) do |f| %>
-              <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+              <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
               <%= hidden_field_tag :tmdb_id, @tmdb_id %>
               <%= hidden_field_tag :user_id, current_user.id %>
               <%= f.submit "add movie to list" %>
             <% end %>
+
             </p>
-          <% end %>
+
+          <% else %> <!-- #if @movie.present? -->
+
+            <p>This movie is not on your lists. Add it to a list:</p>
+              <%= form_for(Listing.new) do |f| %>
+                <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+                <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+                <%= hidden_field_tag :user_id, current_user.id %>
+                <%= f.submit "add movie to list" %>
+              <% end %>
+
+          <% end %> <!-- #if @movie present -->
+
           <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
-      <% end %>
+
+      <% end %> <!-- #results loop -->
 
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
