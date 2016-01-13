@@ -16,32 +16,16 @@ RSpec.feature "Listings feature spec", :type => :feature do
 
     scenario "users can add a movie to their list" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie #method in features_helper
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info #method in features_helper
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add_to_list_button_movie_more"
-      end
       expect(page).to have_content("added to your list")
 
     end
 
      scenario "users can remove a movie from their list" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie #method in features_helper
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info #method in features_helper
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add_to_list_button_movie_more"
-      end
       click_link "my_lists_nav_link"
       click_link "show_list_link_list_index"
       click_link "remove_movie_link_list_show"

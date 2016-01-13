@@ -15,20 +15,14 @@ RSpec.feature "Actors feature spec", :type => :feature do
       visit(api_search_path)
       api_search_for_movie
       api_movie_more_info
+
       expect(page).to have_content("Steve Buscemi")
 
     end #movies have actors
 
     scenario "movie show page shows actors, which links to actor search" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
+      api_search_then_add_movie_to_list
 
       visit(movie_path(Movie.last))
       VCR.use_cassette('tmdb_actor_search') do
@@ -39,10 +33,9 @@ RSpec.feature "Actors feature spec", :type => :feature do
     end #actors are links
 
     scenario 'actor search page links to actor more info search' do
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+
+      api_search_for_movie_then_movie_more
+
       VCR.use_cassette('tmdb_actor_search') do
         click_link "Steve Buscemi"
       end
@@ -55,10 +48,9 @@ RSpec.feature "Actors feature spec", :type => :feature do
     end #actor more info search
 
     scenario 'actor more info page links movies to movie_more_info path' do
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+
+      api_search_for_movie_then_movie_more
+
       VCR.use_cassette('tmdb_actor_search') do
         click_link "Steve Buscemi"
       end
@@ -73,10 +65,9 @@ RSpec.feature "Actors feature spec", :type => :feature do
     end #actor movie more
 
     scenario 'actor more info page links tv shows to the tv show page' do
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+
+      api_search_for_movie_then_movie_more
+
       VCR.use_cassette('tmdb_actor_search') do
         click_link "Steve Buscemi"
       end
@@ -92,10 +83,9 @@ RSpec.feature "Actors feature spec", :type => :feature do
     end #actor tv more
 
     scenario 'actor more info page links tv credits to credit url' do
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+
+      api_search_for_movie_then_movie_more
+
       VCR.use_cassette('tmdb_actor_search') do
         click_link "Steve Buscemi"
       end
@@ -112,10 +102,9 @@ RSpec.feature "Actors feature spec", :type => :feature do
     end #actor tv credit
 
     scenario 'tv credit page links to main show page' do
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+
+      api_search_for_movie_then_movie_more
+
       VCR.use_cassette('tmdb_actor_search') do
         click_link "Steve Buscemi"
       end

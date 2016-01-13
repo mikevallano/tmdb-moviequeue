@@ -14,14 +14,8 @@ RSpec.feature "Tags feature spec", :type => :feature do
 
       scenario "users can tag a movie" do
 
-        sign_up_with(email, username, "password")
-        visit(api_search_path)
-        api_search_for_movie
-        api_movie_more_info
-        all('#new_listing option')[0].select_option
-        VCR.use_cassette('tmdb_add_movie') do
-          click_button "add movie to list"
-        end
+        api_search_then_add_movie_to_list
+
         click_link "my_movies_nav_link"
         fill_in "tag_list", with: "dark comedy, spooky"
         click_button "add tags", match: :first
@@ -33,14 +27,8 @@ RSpec.feature "Tags feature spec", :type => :feature do
 
     scenario "users can click a tag to see movies with that tag" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
+      api_search_then_add_movie_to_list
+
       click_link "my_movies_nav_link"
       fill_in "tag_list", with: "dark comedy, spooky"
       click_button "add tags", match: :first

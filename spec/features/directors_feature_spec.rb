@@ -22,14 +22,7 @@ RSpec.feature "Directors feature spec", :type => :feature do
 
       scenario "movie show page shows director, which links to director search" do
 
-        sign_up_with(email, username, "password")
-        visit(api_search_path)
-        api_search_for_movie
-        api_movie_more_info
-        all('#new_listing option')[0].select_option
-        VCR.use_cassette('tmdb_add_movie') do
-          click_button "add movie to list"
-        end
+        api_search_then_add_movie_to_list
 
         visit(movie_path(Movie.last))
         VCR.use_cassette('tmdb_director_search') do

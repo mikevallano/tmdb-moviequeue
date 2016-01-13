@@ -11,16 +11,8 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
     scenario "users can add a movie to their list" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(page).to have_content("added to your list")
 
     end
@@ -45,19 +37,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
     scenario "users can visit the movie show page, which has a slugged url" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
+      visit(movie_path(Movie.last))
 
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
-      VCR.use_cassette('movie_show_page') do
-        visit(movie_path(Movie.last))
-      end
       url = URI.parse(current_url)
       expect("#{url}").to include("#{Movie.last.slug}")
 
@@ -65,19 +48,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
     scenario "movie show page shows link to similar movies" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
+      visit(movie_path(Movie.last))
 
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
-      VCR.use_cassette('movie_show_page') do
-        visit(movie_path(Movie.last))
-      end
       expect(page).to have_content("Similar movies")
       VCR.use_cassette('tmdb_movie_more') do
         click_link "Similar movies"
