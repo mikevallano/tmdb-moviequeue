@@ -22,7 +22,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_lists_nav_link"
         click_link "new_list_link_list_index"
-        fill_in 'Name', with: 'test list one'
+        fill_in "list_name", with: "test list one"
         expect { click_button "submit_list_button" }.to change(List, :count).by(1)
         expect(page).to have_content("test list one")
         click_link "sign_out_nav_link"
@@ -30,25 +30,17 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "user can edit their own list" do
-        sign_in_user(user)
-        click_link "my_lists_nav_link"
-        click_link "new_list_link_list_index"
-        fill_in 'Name', with: 'test list one'
-        click_button "submit_list_button"
+        sign_in_and_create_list
         @list = List.last
         visit(edit_user_list_path(user, @list))
         expect(page).to have_content("Editing List")
-        fill_in 'Name', with: 'test list update'
+        fill_in "list_name", with: 'test list update'
         click_button "submit_list_button"
         expect(page).to have_content("updated")
       end
 
        scenario "user can delete their own list" do
-        sign_in_user(user)
-        click_link "my_lists_nav_link"
-        click_link "new_list_link_list_index"
-        fill_in 'Name', with: 'test list one'
-        click_button "submit_list_button"
+        sign_in_and_create_list
         click_link "my_lists_nav_link"
         click_link "destroy_list_link_list_index"
         expect(page).to have_content("destroyed")
@@ -58,7 +50,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_lists_nav_link"
         click_link "new_list_link_list_index"
-        fill_in 'Name', with: 'test list one'
+        fill_in "list_name", with: "test list one"
         check 'list_is_public'
         click_button "submit_list_button"
         expect(List.last.is_public).to be true
@@ -88,11 +80,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario  "user's can't view or edit another user's list (without being a member)" do
 
-        sign_in_user(user)
-        click_link "my_lists_nav_link"
-        click_link "new_list_link_list_index"
-        fill_in 'Name', with: 'test list one'
-        click_button "submit_list_button"
+        sign_in_and_create_list
         @list = List.last
         click_link "sign_out_nav_link"
         sign_in_user(user2)

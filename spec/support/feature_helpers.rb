@@ -99,4 +99,19 @@ module FeatureHelpers
       api_movie_more_info
   end
 
+  def sign_in_and_create_list
+    sign_in_user(user)
+    click_link "my_lists_nav_link"
+    click_link "new_list_link_list_index"
+    fill_in "list_name", with: "test list one"
+    click_button "submit_list_button"
+  end
+
+  def sign_in_and_send_invite
+      sign_in_user(user1)
+      visit(user_list_path(user1, list))
+      fill_in "invite_email", with: receiver_email
+      click_button "send_invite_button_list_show"
+  end
+
 end

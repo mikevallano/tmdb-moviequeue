@@ -15,8 +15,8 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
       sign_in_user(user1)
       visit(user_list_path(user1, list))
-      fill_in "Email", with: receiver_email
-      expect { click_button "Send invite" }.to change(Invite, :count).by(1)
+      fill_in "invite_email", with: receiver_email
+      expect { click_button "send_invite_button_list_show" }.to change(Invite, :count).by(1)
       expect(page).to have_content("sent")
 
     end
@@ -25,39 +25,32 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
       scenario "invite mailer sends correct info and link" do
 
-        sign_in_user(user1)
-        visit(user_list_path(user1, list))
-        fill_in "Email", with: receiver_email
-        click_button "Send invite"
+        sign_in_and_send_invite
 
         open_email(receiver_email)
         expect(current_email).to have_content("Sign up here!")
-
 
       end
 
       scenario "user can receive an invite, then sign up and be a member of that list" do
 
-        sign_in_user(user1)
-        visit(user_list_path(user1, list))
-        fill_in "Email", with: receiver_email
-        click_button "Send invite"
+        sign_in_and_send_invite
 
         open_email(receiver_email)
         current_email.click_link "Sign up here!"
 
         #email field is already populated with reciever_email
-        fill_in "Username", with: username
-        fill_in "Password", with: "password"
-        fill_in "Password confirmation", with: "password"
-        click_link_or_button "Sign up"
+        fill_in "user_username", with: username
+        fill_in "user_password", with: "password"
+        fill_in "user_password_confirmation", with: "password"
+        click_button "sign_up_button_new_registration"
         open_email(receiver_email)
         current_email.click_link "Confirm my account"
         # visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
         # visit new_user_session_path
-        fill_in 'Sign in with email or username', with: username
-        fill_in 'Password', with: "password"
-        click_button "Log in"
+        fill_in "user_login", with: username
+        fill_in "user_password", with: "password"
+        click_button "log_in_button_new_session"
 
         expect(page).to have_content("success")
 
@@ -75,8 +68,8 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
         sign_in_user(user1)
         visit(user_list_path(user1, list))
-        fill_in "Email", with: user2.email
-        click_button "Send invite"
+        fill_in "invite_email", with: user2.email
+        click_button "send_invite_button_list_show"
 
         open_email(user2.email)
         expect(current_email).to have_content("Check out the list here")
@@ -88,8 +81,8 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
         sign_in_user(user1)
         visit(user_list_path(user1, list))
-        fill_in "Email", with: user2.email
-        click_button "Send invite"
+        fill_in "invite_email", with: user2.email
+        click_button "send_invite_button_list_show"
         click_link "sign_out_nav_link"
 
         sign_in_user(user2)
