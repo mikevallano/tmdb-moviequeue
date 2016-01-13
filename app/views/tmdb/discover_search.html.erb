@@ -31,29 +31,7 @@
   <br>
   <p><%= link_to "Search again", discover_search_path %> </p>
 
-   <% @discover_results.each do |result| %>
-    <% @tmdb_id = result[:id] %>
-     <div>
-         <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" if result[:poster_path].present? %>
-        <h3><%= result[:title] %></h3>
-        <p><%= result[:release_date] %></p>
-        <p><%= result[:vote_average] %></p>
-        <p><%= result[:overview] %></p>
-        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
-          <p>On List</p>
-        <% else %>
-          <p>Add this movie to a list:</p>
-          <p>
-          <%= form_for(Listing.new) do |f| %>
-            <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
-            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
-            <%= hidden_field_tag :user_id, current_user.id %>
-            <%= f.submit "add movie to list" %>
-          <% end %>
-          </p>
-        <% end %>
-        <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
-    <% end %>
+  <%= render 'search_results' %>
 
     <%= "Page #{@page} of #{@total_pages}" %></br>
 

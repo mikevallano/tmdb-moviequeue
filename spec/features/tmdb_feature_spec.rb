@@ -12,7 +12,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       sign_up_with(email, username, "password")
       visit(api_search_path)
-      expect(page).to have_content("Search the TMDB Database")
+      expect(page).to have_selector("#search_by_title_header")
 
     end
 

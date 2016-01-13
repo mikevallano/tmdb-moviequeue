@@ -1,13 +1,17 @@
 <h1>Movie: <%= @title %></h1>
 
-  <%= image_tag "http://image.tmdb.org/t/p/w780#{@result[:backdrop_path]}" %><br>
-  <%= image_tag "http://image.tmdb.org/t/p/w150#{@result[:poster_path]}" %>
+  <%= image_tag "http://image.tmdb.org/t/p/w780#{@backdrop_path}" if @backdrop_path.present? %><br>
+  <%= image_tag "http://image.tmdb.org/t/p/w150#{@poster_path}" if @poster_path.present? %>
+
+<!-- TODO: Refactor the shit out of this: -->
+<% @lists_except_movie = current_user.lists_except_movie(@movie) %>
 
 <% if @movie.present? %>
 
   <% if current_user.all_movies.include?(@movie) %>
 
     <p>On List(s):
+    <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
     <% @movie.lists.by_user(current_user).each do |list| %>
       <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
     <% end %> <!-- #list loop -->
@@ -15,14 +19,8 @@
 
   <% else %>
     <p>This movie is not on your lists. Add it to a list:</p>
-  <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
 
-  <%= form_for(Listing.new) do |f| %>
-    <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
-    <%= hidden_field_tag :tmdb_id, @tmdb_id %>
-    <%= hidden_field_tag :user_id, current_user.id %>
-    <%= f.submit "add movie to list" %>
-  <% end %>
+  <% end %> <!-- if current_user.all_movies.include?(@movie) -->
 
   </p>
 
@@ -30,7 +28,7 @@
 
   <p>This movie is not on your lists. Add it to a list:</p>
     <%= form_for(Listing.new) do |f| %>
-      <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+      <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
       <%= hidden_field_tag :tmdb_id, @tmdb_id %>
       <%= hidden_field_tag :user_id, current_user.id %>
       <%= f.submit "add movie to list" %>
@@ -65,7 +63,7 @@
     <a href="https://www.youtube.com/results?search_query=<%= @title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
   <% end %>
 
-  <h2>Similar Movies:</h2>
+  <h2>Similar Movies: (maybe this should just be a different page?)</h2>
    <% @similar.each do |result| %>
    <div>
        <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>

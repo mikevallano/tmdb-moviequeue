@@ -22,7 +22,7 @@
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
             <%= hidden_field_tag(:movie_id, "#{movie.id}") %>
-            <%= submit_tag("add tags", :id=>"add_tags_button_list_show") %>
+            <%= submit_tag "add tags", id: "add_tags_button_list_show" %>
           <% end %>
       </p>
 
@@ -31,7 +31,7 @@
         <%= label_tag(:priority, "new priority:") %>
         <%= number_field_tag(:priority) %>
         <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
-        <%= submit_tag("Prioritize", :id=>"add_priority_button_list_show") %>
+        <%= submit_tag "Prioritize", id: "add_priority_button_list_show" %>
       <% end %>
       </p>
 

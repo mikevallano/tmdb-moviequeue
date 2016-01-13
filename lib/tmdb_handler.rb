@@ -3,14 +3,14 @@ module TmdbHandler
   def tmdb_handler_search(query)
     @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
-    @results = @tmdb_response[:results]
+    @discover_results = @tmdb_response[:results]
     rescue
       unless @tmdb_response.present?
-        @results = []
+        @discover_results = []
       end
   end
 
-  def tmdb_handler_movie_info(id)
+  def tmdb_handler_movie_more(id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     @tmdb_id = @result[:id]
@@ -22,8 +22,14 @@ module TmdbHandler
     @overview = @result[:overview]
     @cast = @result[:credits][:cast]
     @youtube_trailers = @result[:trailers][:youtube]
+    @backdrop_path = @result[:backdrop_path]
+    @poster_path = @result[:poster_path]
     @trailer_url = @result[:trailers][:youtube][0][:source] if @youtube_trailers.present?
-    @mpaa_rating = @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
+    if @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.present?
+      @mpaa_rating = @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
+    else
+      @mpaa_rating = "NR"
+    end
 
     @crew = @result[:credits][:crew]
     @crew.find do |crew|
@@ -39,7 +45,7 @@ module TmdbHandler
   end
 
   def tmdb_handler_add_movie(id)
-    tmdb_handler_movie_info(id)
+    tmdb_handler_movie_more(id)
     @genres = @result[:genres].map { |genre| genre[:name]}
     @actors = @result[:credits][:cast].map { |cast| cast[:name] }
     @crew = @result[:credits][:crew]
@@ -123,23 +129,23 @@ module TmdbHandler
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
     tmdb_handler_search(movie_one)
-      if @results.present?
-        @movie_one_id = @results.first[:id]
+      if @discover_results.present?
+        @movie_one_id = @discover_results.first[:id]
       else
         redirect_to :two_movie_search, notice: "No results for the first movie. Try again" and return
       end
     tmdb_handler_search(movie_two)
-      if @results.present?
-        @movie_two_id = @results.first[:id]
+      if @discover_results.present?
+        @movie_two_id = @discover_results.first[:id]
       else
         redirect_to :two_movie_search, notice: "No results for the second movie. Try again" and return
       end
 
-    tmdb_handler_movie_info(@movie_one_id)
+    tmdb_handler_movie_more(@movie_one_id)
       @movie_one = @result
       @movie_one_cast = @cast
       @movie_one_cast_names = @cast.map { |cast| cast[:name] }
-    tmdb_handler_movie_info(@movie_two_id)
+    tmdb_handler_movie_more(@movie_two_id)
       @movie_two = @result
       @movie_two_cast = @cast
       @movie_two_cast_names = @cast.map { |cast| cast[:name] }
