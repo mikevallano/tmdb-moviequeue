@@ -25,6 +25,7 @@
 
      <% @results.each do |result| %>
        <div>
+        <% @tmdb_id = result[:id] %>
         <% @movie = Movie.find_by(tmdb_id: result[:id]) %>
           <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
           <h3><%= result[:title] %></h3>

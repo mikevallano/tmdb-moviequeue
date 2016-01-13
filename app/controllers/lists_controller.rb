@@ -24,7 +24,11 @@ class ListsController < ApplicationController
       @movies = @list.movies.paginate(:page => params[:page])
       render :public_show
     end
-    @movies = @list.movies.paginate(:page => params[:page])
+    # @movies = @list.movies.paginate(:page => params[:page])
+    @movies = @list.movies.sort_by { |movie| movie.priority(@list) }.reverse.paginate(:page => params[:page])
+    # @movies = @list.movies.sort_by { |movie| movie.runtime }.reverse.paginate(:page => params[:page])
+    # @movies = @list.movies.sort_by { |movie| movie.vote_average }.reverse.paginate(:page => params[:page])
+    # @movies = @list.movies.sort_by { |movie| movie.release_date }.reverse.paginate(:page => params[:page])
   end
 
   def new

@@ -56,7 +56,6 @@ class User < ActiveRecord::Base
     end
     movie_lists = Movie.find(movie.id).lists.by_user(self)
     lists_except_movie = (except_lists - movie_lists)
-    except_list = []
   end
 
   def all_movies

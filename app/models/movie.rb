@@ -40,6 +40,10 @@ class Movie < ActiveRecord::Base
     Movie.where("genres && ARRAY[?]::varchar[]", genre)
   end
 
+  def priority(list)
+    listings.find_by(list_id: list.id).priority
+  end
+
   GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
   ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
   ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],

@@ -7,9 +7,10 @@
    <div>
       <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
       <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
-      <p><%= movie.release_date %></p>
-      <p><%= movie.vote_average %></p>
-      <p><%= movie.overview %></p>
+      <p>Release date: <%= movie.release_date %></p>
+      <p>Vote average: <%= movie.vote_average %></p>
+      <p>Overview: <%= movie.overview %></p>
+      <p>Runtime: <%= movie.runtime %></p>
       <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_list_show", method: :delete, data: { confirm: 'Are you sure?' } %></p>
 
       <p>Tags:
@@ -25,7 +26,7 @@
           <% end %>
       </p>
 
-      <p>Priority: <%= movie.listings.find_by(list_id: @list.id).priority %></p>
+      <p>Priority: <%= movie.priority(@list) %></p>
       <p><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
         <%= label_tag(:priority, "new priority:") %>
         <%= number_field_tag(:priority) %>

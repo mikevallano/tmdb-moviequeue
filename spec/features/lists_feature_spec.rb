@@ -75,6 +75,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
             counter += 1
           end
           visit user_list_path(user, list)
+          save_and_open_page
           expect(page).to have_content("Next")
           click_link "Next"
           expect(page).to have_content("Previous")
