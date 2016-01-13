@@ -27,6 +27,7 @@ group :development, :test do
   gem 'capybara-email'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
+  gem 'growl'
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 2.0'
   gem 'spring'
