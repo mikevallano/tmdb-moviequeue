@@ -34,7 +34,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "add a screening"
+        click_link "add_screening_link_movie_show"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
 
@@ -46,10 +46,10 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "add a screening"
+        click_link "add_screening_link_movie_show"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
-        click_link "view my screenings"
+        click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
       end #view screening scenario
@@ -95,7 +95,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "Add a screening"
         fill_in "Notes", with: "epic notes"
         expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
-        click_link "view my screenings"
+        click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
       end

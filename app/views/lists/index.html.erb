@@ -16,9 +16,9 @@
       <tr>
         <td><%= list.owner.username %></td>
         <td><%= list.name %></td>
-        <td><%= link_to 'Show', user_list_path(list.owner, list) %></td>
-        <td><%= link_to 'Edit', edit_user_list_path(list.owner, list) %></td>
-        <td><%= link_to 'Destroy', user_list_path(list.owner, list), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', user_list_path(list.owner, list), id: "show_list_link_list_index" %></td>
+        <td><%= link_to 'Edit', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index" %></td>
+        <td><%= link_to 'Destroy', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New List', new_user_list_path(current_user) %>
+<%= link_to 'New List', new_user_list_path(current_user), id: "new_list_link_list_index" %>

@@ -21,7 +21,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "Review this movie"
+        click_link "new_review_link_movie_show"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
         expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
@@ -36,7 +36,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "Review this movie"
+        click_link "new_review_link_movie_show"
         fill_in 'Body', with: "OMG. best. movie. eva."
 
         expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
@@ -53,7 +53,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "Review this movie"
+        click_link "new_review_link_movie_show"
         fill_in 'Body', with: "OMG. best. movie. eva."
         click_button "Create Review"
         click_link "sign_out_nav_link"
@@ -85,7 +85,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link "Review this movie"
+        click_link "new_review_link_list_show"
         fill_in 'Body', with: "Epic win!"
         click_button "Create Review"
         expect(page).to have_content("success")

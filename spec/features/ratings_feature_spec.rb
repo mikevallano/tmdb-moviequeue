@@ -23,7 +23,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
           VCR.use_cassette('movie_show_page') do
             click_link "movie_show_page"
           end
-        click_link "Rate this movie"
+        click_link "new_rating_link_movie_show"
         fill_in 'Value', with: "9"
 
         expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
@@ -38,7 +38,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "Rate this movie"
+        click_link "new_rating_link_movie_show"
         fill_in 'Value', with: "9"
 
         expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
@@ -58,7 +58,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "Rate this movie"
+        click_link "new_rating_link_movie_show"
         fill_in 'Value', with: "9"
         click_button "Create Rating"
         click_link "sign_out_nav_link"
@@ -109,7 +109,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         visit(user_list_path(user, list))
 
-        expect(page).to_not have_content("Rate this movie")
+        expect(page).to_not have_content("new_rating_link_list_show")
         expect(page).to have_content("My Rating")
         expect(page).to have_content("2")
 

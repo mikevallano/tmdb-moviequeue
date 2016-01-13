@@ -10,18 +10,18 @@
       <p><%= movie.release_date %></p>
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
-      <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+      <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_list_show", method: :delete, data: { confirm: 'Are you sure?' } %></p>
 
       <p>Tags:
         <% movie.tags.by_user_or_list(@list).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_list_show", method: :delete  %>
         <% end %>
       </p>
       <p> <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
             <%= hidden_field_tag(:movie_id, "#{movie.id}") %>
-            <%= submit_tag("add tags") %>
+            <%= submit_tag("add tags", :id=>"add_tags_button_list_show") %>
           <% end %>
       </p>
 
@@ -30,39 +30,39 @@
         <%= label_tag(:priority, "new priority:") %>
         <%= number_field_tag(:priority) %>
         <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
-        <%= submit_tag("Prioritize") %>
+        <%= submit_tag("Prioritize", :id=>"add_priority_button_list_show") %>
       <% end %>
       </p>
 
       <% if current_user.rated_movies.include?(movie) %>
         <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>
       <% else %>
-        <p><%= link_to "Rate this movie", new_movie_rating_path(movie) %></p>
+        <p><%= link_to "Rate this movie", new_movie_rating_path(movie), id: "new_rating_link_list_show" %></p>
       <% end %>
 
       <% if current_user.reviewed_movies.include?(movie) %>
         <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
       <% else %>
-        <p><%= link_to "Review this movie", new_movie_review_path(movie) %></p>
+        <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_list_show" %></p>
       <% end %>
 
       <% if movie.times_seen_by(current_user) > 0 %>
         <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
-        <p><%= link_to "View my screenings", movie_screenings_path(movie) %></p>
+        <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_list_show" %></p>
       <% else %>
-        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post %></p>
-        <p><%= link_to "Add a screening", new_movie_screening_path(movie) %><p>
+        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), id: "mark_watched_link_list_show", :method => :post %></p>
+        <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_list_show" %><p>
       <% end %>
 
-      <p><%= link_to "Movie show page", movie_path(movie) %></p>
+      <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_list_show" %></p>
     </br>
   <% end %>
 </div>
 
 <p><%= will_paginate @movies %></p>
 
-<%= link_to 'Edit', edit_user_list_path(@list.owner, @list) %> |
-<%= link_to 'Back', user_lists_path(current_user) %>
+<%= link_to 'Edit', edit_user_list_path(@list.owner, @list), id: "edit_list_link_list_show" %> |
+<%= link_to 'Back', user_lists_path(current_user), id: "lists_index_link_list_show" %>
 
 <p>Invite a user to this list!</p>
 <%= form_for(Invite.new) do |f| %>

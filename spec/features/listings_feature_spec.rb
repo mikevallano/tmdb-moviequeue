@@ -43,8 +43,8 @@ RSpec.feature "Listings feature spec", :type => :feature do
         click_button "add movie to list"
       end
       click_link "my_lists_nav_link"
-      click_link "Show"
-      click_link "Remove from #{List.find(Listing.last.list_id).name}"
+      click_link "show_list_link_list_index"
+      click_link "remove_movie_link_list_show"
       expect(page).to have_content("Movie was removed from list.")
 
     end
@@ -57,9 +57,9 @@ RSpec.feature "Listings feature spec", :type => :feature do
 
       sign_in_user(user)
       click_link "my_lists_nav_link"
-      click_link "Show"
+      click_link "show_list_link_list_index"
       fill_in "new priority", with: '9'
-      click_button "Prioritize"
+      click_button "add_priority_button_list_show"
       expect(page).to have_content("Priority added.")
       expect(page).to have_content('9')
 

@@ -89,20 +89,20 @@
     <strong>My Rating</strong>
     <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first) %>
   <% else %>
-    <%= link_to "Rate this movie", new_movie_rating_path(@movie) %>
+    <%= link_to "Rate this movie", new_movie_rating_path(@movie), id: "new_rating_link_movie_show"  %>
   <% end %>
 </p>
 
 <p>
   <% if @movie.times_seen_by(current_user) > 0 %>
   <strong>Movie has been watched.</strong><br>
-  <strong> <%= link_to "view my screenings", movie_screenings_path(@movie) %></strong>
+  <strong> <%= link_to "view my screenings", movie_screenings_path(@movie), id: "view_screenings_link_movie_show" %></strong>
   <% else %>
-    <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id, user_id: current_user.id }, movie_id: @movie.id), :method => :post %><br>
-    <%= link_to "add a screening", new_movie_screening_path(@movie) %>
+    <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id, user_id: current_user.id }, movie_id: @movie.id), :method => :post, id: "mark_watched_link_movie_show" %><br>
+    <%= link_to "add a screening", new_movie_screening_path(@movie), id: "add_screening_link_movie_show" %>
   <% end %>
 </p>
 
-<p><%= link_to "Similar movies", movie_more_path(movie_id: @movie.tmdb_id) %></p>
+<p><%= link_to "Similar movies", movie_more_path(movie_id: @movie.tmdb_id), id: "similar_movies_link_movie_show" %></p>
 
 <%= link_to 'Back', movies_path %>
