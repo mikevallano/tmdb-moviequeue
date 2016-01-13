@@ -5,10 +5,10 @@
 
   <%= form_tag '/tmdb/actor_search', method: :get do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor %></br>
+    <%= text_field_tag :actor, nil, id: "actor_name_actor_search" %></br>
     <%= label_tag :sort_by, "Sort by: " %>
     <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true %></br>
-    <%= submit_tag "Search" %>
+    <%= submit_tag "Search", id: "submit_button_actor_search" %>
   <% end %>
 
 

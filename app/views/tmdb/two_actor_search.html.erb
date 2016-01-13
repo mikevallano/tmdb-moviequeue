@@ -5,10 +5,10 @@
 
   <%= form_tag '/tmdb/two_actor_search', method: :get do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor %>
+    <%= text_field_tag :actor, nil, id: "actor1_field_two_actor_search" %>
     <%= label_tag :actor2, "Enter Other Actor Name: " %>
-    <%= text_field_tag :actor2 %>
-    <%= submit_tag "Search" %>
+    <%= text_field_tag :actor2, nil, id: "actor2_field_two_actor_search" %>
+    <%= submit_tag "Search", id: "search_button_two_actor_search" %>
   <% end %>
 
 <% else %>

@@ -134,21 +134,15 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "users clicks 'more info' and sees more info returned from API" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_for_movie_then_movie_more
 
-      api_movie_more_info
       expect(page).to have_content("you betcha")
 
     end
 
     scenario "users clicks 'more info' and the page shows similar movies" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+      api_search_for_movie_then_movie_more
 
       expect(page).to have_content("Similar Movies")
       expect(page).to have_content("The Revenant")
@@ -157,10 +151,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "users clicks 'more info' on a similar movie and is taken to that movie's more info page" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+      api_search_for_movie_then_movie_more
 
       VCR.use_cassette("similar_movies_more_info") do
         click_link "More info", match: :first
@@ -171,10 +162,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario 'movie more info page shows production companies and links to a discover search' do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
-      api_movie_more_info
+      api_search_for_movie_then_movie_more
 
       expect(page).to have_content("PolyGram Filmed Entertainment")
       VCR.use_cassette("tmdb_production_company_search") do
@@ -186,64 +174,32 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie is added to the database if a user adds it to their list" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(Movie.last.title).to eq("Fargo")
 
     end
 
     scenario "movie has genres after being added to the database" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(Movie.last.genres).to include("Crime")
 
     end
 
     scenario "movie has actors after being added to the database" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(Movie.last.actors).to include("Steve Buscemi")
 
     end
 
     scenario "movie has director and director_id after being added to the database" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(Movie.last.director).to eq("Joel Coen")
       expect(Movie.last.director_id).to eq(1223)
 
@@ -251,16 +207,8 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie has mpaa_rating after being added to the database" do
 
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+      api_search_then_add_movie_to_list
 
-      api_movie_more_info
-
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
-      end
       expect(Movie.last.mpaa_rating).to eq("R")
 
     end

@@ -24,7 +24,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
+        click_button "add_to_list_button_movie_more"
       end
       expect(page).to have_content("added to your list")
 
@@ -40,7 +40,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
 
       all('#new_listing option')[0].select_option
       VCR.use_cassette('tmdb_add_movie') do
-        click_button "add movie to list"
+        click_button "add_to_list_button_movie_more"
       end
       click_link "my_lists_nav_link"
       click_link "show_list_link_list_index"
