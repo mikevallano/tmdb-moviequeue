@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
   def index
     @per_page = 20
     if params["tag"]
+      @tag = params["tag"]
       if params[:list_id]
         @list = List.find(params[:list_id])
         @movies = @list.movies.tagged_with(params['tag'], @list).paginate(:page => params[:page], :per_page => @per_page)

@@ -73,6 +73,13 @@
     <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
   <% end %>
 </p>
+<p>Add to another list?</p>
+<%= form_for(Listing.new) do |f| %>
+  <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
+  <%= hidden_field_tag :tmdb_id, @movie.tmdb_id %>
+  <%= hidden_field_tag :user_id, current_user.id %>
+  <%= f.submit "add movie to list" %>
+<% end %>
 
 <p>
   <% if current_user.reviewed_movies.include?(@movie) %>

@@ -2,6 +2,14 @@
 
 <h1>Movies index page/My movies</h1>
 <p>This page shows current user's movies, which include movies on any/all lists.</p>
+<% if @tag.present? %>
+  <% if @list.present? %>
+  <h3>Here are the movies tagged with: <%= "'#{@tag}' on #{@list.name}" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_and_list_movies_index" %></h3>
+  <% else %>
+  <h3>Here are the movies tagged with: <%= "'#{@tag}'" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_movies_index" %></h3>
+  <% end %>
+<% end %>
+
 
  <% @movies.each do |movie| %>
    <div>
@@ -41,7 +49,7 @@
       <p>Add to another list:</p>
       <%= form_for(Listing.new) do |f| %>
         <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
-        <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+        <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= f.submit "add movie to list" %>
       <% end %>
@@ -66,7 +74,7 @@
         <p><%= link_to "Add a screening", new_movie_screening_path(movie) %><p>
       <% end %>
 
-      <p><%= link_to "zipper", movie_path(movie), id: "movie_show_page" %></p>
+      <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
 
     </br>
   <% end %>
