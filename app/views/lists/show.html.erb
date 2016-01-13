@@ -15,7 +15,7 @@
 
       <p>Tags:
         <% movie.tags.by_user_or_list(@list).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_list_show", method: :delete  %>
+          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_list_show" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_list_show", method: :delete  %>
         <% end %>
       </p>
       <p> <%= form_tag('/taggings') do %>
@@ -76,6 +76,6 @@
     <%= f.text_field :email %>
   </div>
   <div class="actions">
-    <%= f.submit "Send invite" %>
+    <%= f.submit "Send invite", id: "send_invite_button_list_show" %>
   </div>
 <% end %>

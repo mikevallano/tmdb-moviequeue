@@ -21,10 +21,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
+        click_link "new_list_link_list_index"
         fill_in 'Name', with: 'test list one'
-        expect { click_button "Create List" }.to change(List, :count).by(1)
-        expect(page).to have_content("List was successfully created")
+        expect { click_button "submit_list_button" }.to change(List, :count).by(1)
+        expect(page).to have_content("test list one")
         click_link "sign_out_nav_link"
 
       end
@@ -32,35 +32,35 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can edit their own list" do
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
+        click_link "new_list_link_list_index"
         fill_in 'Name', with: 'test list one'
-        click_button "Create List"
+        click_button "submit_list_button"
         @list = List.last
         visit(edit_user_list_path(user, @list))
         expect(page).to have_content("Editing List")
         fill_in 'Name', with: 'test list update'
-        click_button "Update"
+        click_button "submit_list_button"
         expect(page).to have_content("updated")
       end
 
        scenario "user can delete their own list" do
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
+        click_link "new_list_link_list_index"
         fill_in 'Name', with: 'test list one'
-        click_button "Create List"
+        click_button "submit_list_button"
         click_link "my_lists_nav_link"
-        click_link "Destroy"
+        click_link "destroy_list_link_list_index"
         expect(page).to have_content("destroyed")
       end
 
       scenario 'user can mark a list as public' do
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
+        click_link "new_list_link_list_index"
         fill_in 'Name', with: 'test list one'
         check 'list_is_public'
-        click_button "Create List"
+        click_button "submit_list_button"
         expect(List.last.is_public).to be true
 
       end
@@ -90,9 +90,9 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
+        click_link "new_list_link_list_index"
         fill_in 'Name', with: 'test list one'
-        click_button "Create List"
+        click_button "submit_list_button"
         @list = List.last
         click_link "sign_out_nav_link"
         sign_in_user(user2)
@@ -127,8 +127,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(user2)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).to have_content("Add this movie to a list")
-        expect(page).not_to have_content("Priority")
+        expect(page).to have_selector("#add_movie_to_list_public_list_show")
+        expect(page).not_to have_selector("#add_priority_button_list_show")
 
       end
 
@@ -137,8 +137,9 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(public_list.owner)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).not_to have_content("Add this movie to a list")
-        expect(page).to have_content("Priority")
+        expect(page).not_to have_selector("#add_movie_to_list_public_list_show")
+        expect(page).to have_selector("#add_priority_button_list_show")
+        expect(page).to have_selector("#new_rating_link_list_show")
 
       end
 
