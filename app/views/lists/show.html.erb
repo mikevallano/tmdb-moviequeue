@@ -29,25 +29,25 @@
       <p>Priority: <%= movie.priority(@list) %></p>
       <p><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
         <%= label_tag(:priority, "new priority:") %>
-        <%= number_field_tag(:priority) %>
+        <%= number_field_tag :priority, nil, id: "priority_number_field_list_show" %>
         <%= hidden_field_tag(:user_id, "#{current_user.id}") %>
         <%= submit_tag "Prioritize", id: "add_priority_button_list_show" %>
       <% end %>
       </p>
 
       <% if current_user.rated_movies.include?(movie) %>
-        <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>
+        <p>My Rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_list_show" %></p>
       <% else %>
         <p><%= link_to "Rate this movie", new_movie_rating_path(movie), id: "new_rating_link_list_show" %></p>
       <% end %>
 
       <% if current_user.reviewed_movies.include?(movie) %>
-        <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
+        <p>My Review: <%= movie.reviews.by_user(current_user).first.body %><%= link_to "view", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_list_show" %></p>
       <% else %>
         <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_list_show" %></p>
       <% end %>
 
-      <% if movie.times_seen_by(current_user) > 0 %>
+      <% if current_user.screened_movies.include?(movie) %>
         <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
         <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_list_show" %></p>
       <% else %>
