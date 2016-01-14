@@ -40,7 +40,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).to have_content("updated")
       end
 
-       scenario "user can delete their own list" do
+      scenario "user can delete their own list" do
         sign_in_and_create_list
         click_link "my_lists_nav_link"
         expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
@@ -88,6 +88,41 @@ RSpec.feature "Lists feature spec", :type => :feature do
           expect(page).not_to have_link("Next")
         end
       end
+
+    scenario "users can add a movie to their list" do
+
+      api_search_then_add_movie_to_list
+
+      expect(page).to have_content("added to your list")
+
+    end
+
+    scenario "users can remove a movie from their list from the list show page" do
+
+      api_search_then_add_movie_to_list
+
+      click_link "my_lists_nav_link"
+      click_link "show_list_link_list_index"
+      click_link "remove_movie_link_list_show"
+      expect(page).to have_content("Movie was removed from list.")
+
+    end
+
+    scenario "user can update a listing's priority" do
+
+      list
+      movie
+      listing
+
+      sign_in_user(user)
+      click_link "my_lists_nav_link"
+      click_link "show_list_link_list_index"
+      fill_in "new priority", with: '9'
+      click_button "add_priority_button_list_show"
+      expect(page).to have_content("Priority added.")
+      expect(page).to have_content('9')
+
+    end
 
     end #signed in user context
 

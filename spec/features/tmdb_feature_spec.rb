@@ -213,6 +213,154 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end
 
+    scenario "movies have genres on the more info page" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+      expect(page).to have_content("Crime")
+
+    end #movies have genres
+
+    #actor searches
+    scenario "movies have actors on the more info page" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+
+      expect(page).to have_content("Steve Buscemi")
+
+    end #movies have actors
+
+    scenario "movie show page shows actors, which links to actor search" do
+
+      api_search_then_add_movie_to_list
+
+      visit(movie_path(Movie.last))
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      expect(page).to have_content("Fargo")
+
+    end #actors are links
+
+    scenario 'actor search page links to actor more info search' do
+
+      api_search_for_movie_then_movie_more
+
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      VCR.use_cassette('tmdb_actor_more') do
+        click_link "Get a full list of credits and bio"
+      end
+      expect(page).to have_content("Steve Buscemi")
+      expect(page).to have_content("Birthday")
+
+    end #actor more info search
+
+    scenario 'actor more info page links movies to movie_more_info path' do
+
+      api_search_for_movie_then_movie_more
+
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      VCR.use_cassette('tmdb_actor_more') do
+        click_link "Get a full list of credits and bio"
+      end
+      VCR.use_cassette('actor_more_movie_link') do
+        click_link "Fargo"
+      end
+      expect(current_url).to eq(movie_more_url(movie_id: 275))
+
+    end #actor movie more
+
+    scenario 'actor more info page links tv shows to the tv show page' do
+
+      api_search_for_movie_then_movie_more
+
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      VCR.use_cassette('tmdb_actor_more') do
+        click_link "Get a full list of credits and bio"
+      end
+      VCR.use_cassette('actor_tv_more') do
+        click_link "The Simpsons"
+      end
+      expect(current_url).to eq(tv_more_url(actor_id: 884, show_id: 456))
+      expect(page).to have_content("The Simpsons")
+
+    end #actor tv more
+
+    scenario 'actor more info page links tv credits to credit url' do
+
+      api_search_for_movie_then_movie_more
+
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      VCR.use_cassette('tmdb_actor_more') do
+        click_link "Get a full list of credits and bio"
+      end
+      VCR.use_cassette('actor_tv_credit') do
+        click_link "more info", match: :first
+      end
+      expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "5256c32c19c2956ff601d1f7", show_name: "The Simpsons"))
+      expect(page).to have_content("Episode overview")
+      expect(page).to have_content("The Simpsons")
+
+    end #actor tv credit
+
+    scenario 'tv credit page links to main show page' do
+
+      api_search_for_movie_then_movie_more
+
+      VCR.use_cassette('tmdb_actor_search') do
+        click_link "Steve Buscemi"
+      end
+      VCR.use_cassette('tmdb_actor_more') do
+        click_link "Get a full list of credits and bio"
+      end
+      VCR.use_cassette('actor_tv_credit') do
+        click_link "more info", match: :first
+      end
+      VCR.use_cassette('tv_main_page') do
+        click_link "The Simpsons"
+      end
+      expect(page).to have_content("The Simpsons")
+      expect(current_url).to eq(tv_more_url(show_id: 456))
+
+    end #actor tv main page
+
+    #directors
+
+    scenario "movies have directors on the more info page" do
+
+      sign_up_with(email, username, "password")
+      visit(api_search_path)
+      api_search_for_movie
+      api_movie_more_info
+      expect(page).to have_content("Joel Coen")
+
+    end #movies have directors
+
+    scenario "movie show page shows director, which links to director search" do
+
+      api_search_then_add_movie_to_list
+
+      visit(movie_path(Movie.last))
+      VCR.use_cassette('tmdb_director_search') do
+        click_link "Joel Coen"
+      end
+      expect(page).to have_content("Fargo")
+
+    end #directors are links
+
   end
 
 end #final

@@ -30,7 +30,7 @@
 guard :rspec, cmd: "rspec" do
   require "guard/rspec/dsl"
   watch('spec/spec_helper.rb')                        { "spec" }
-  watch('spec/support/.*')                            { "spec" }
+  watch(%r{/spec\/support\/.*/})                       { "spec" }
   watch('config/routes.rb')                           { "spec/features" }
   watch('app/views/layouts')                          { "spec/features" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
