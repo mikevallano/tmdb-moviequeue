@@ -174,7 +174,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie is added to the database if a user adds it to their list" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       expect(Movie.last.title).to eq("Fargo")
 
@@ -182,7 +182,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie has genres after being added to the database" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       expect(Movie.last.genres).to include("Crime")
 
@@ -190,7 +190,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie has actors after being added to the database" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       expect(Movie.last.actors).to include("Steve Buscemi")
 
@@ -198,7 +198,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie has director and director_id after being added to the database" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       expect(Movie.last.director).to eq("Joel Coen")
       expect(Movie.last.director_id).to eq(1223)
@@ -207,7 +207,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie has mpaa_rating after being added to the database" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       expect(Movie.last.mpaa_rating).to eq("R")
 
@@ -237,7 +237,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie show page shows actors, which links to actor search" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       visit(movie_path(Movie.last))
       VCR.use_cassette('tmdb_actor_search') do
@@ -351,7 +351,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     scenario "movie show page shows director, which links to director search" do
 
-      api_search_then_add_movie_to_list
+      sign_up_api_search_then_add_movie_to_list
 
       visit(movie_path(Movie.last))
       VCR.use_cassette('tmdb_director_search') do

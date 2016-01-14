@@ -78,25 +78,25 @@ module FeatureHelpers
     end
   end
 
-  def api_search_then_add_movie_to_list
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+  def sign_up_api_search_then_add_movie_to_list
+    sign_up_with(email, username, "password")
+    visit(api_search_path)
+    api_search_for_movie
 
-      api_movie_more_info
+    api_movie_more_info
 
-      all('#new_listing option')[0].select_option
-      VCR.use_cassette('tmdb_add_movie') do
-        click_button "add_to_list_button_movie_more"
-      end
+    all('#new_listing option')[0].select_option
+    VCR.use_cassette('tmdb_add_movie') do
+      click_button "add_to_list_button_movie_more"
+    end
   end
 
   def api_search_for_movie_then_movie_more
-      sign_up_with(email, username, "password")
-      visit(api_search_path)
-      api_search_for_movie
+    sign_up_with(email, username, "password")
+    visit(api_search_path)
+    api_search_for_movie
 
-      api_movie_more_info
+    api_movie_more_info
   end
 
   def sign_in_and_create_list
@@ -108,10 +108,10 @@ module FeatureHelpers
   end
 
   def sign_in_and_send_invite
-      sign_in_user(user1)
-      visit(user_list_path(user1, list))
-      fill_in "invite_email", with: receiver_email
-      click_button "send_invite_button_list_show"
+    sign_in_user(user1)
+    visit(user_list_path(user1, list))
+    fill_in "invite_email", with: receiver_email
+    click_button "send_invite_button_list_show"
   end
 
 end
