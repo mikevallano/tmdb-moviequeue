@@ -17,11 +17,11 @@ RSpec.feature "Users feature spec", :type => :feature do
 
       click_link "sign_up_nav_link"
 
-      fill_in "Email", with: email
-      fill_in "Username", with: username
-      fill_in "Password", with: "password"
-      fill_in "Password confirmation", with: "password"
-      click_link_or_button "Sign up"
+      fill_in "user_email", with: email
+      fill_in "user_username", with: username
+      fill_in "user_password", with: "password"
+      fill_in "user_password_confirmation", with: "password"
+      click_button "sign_up_button_new_registration"
 
       expect(last_email).to have_content("To: #{email}")
     end
@@ -31,14 +31,14 @@ RSpec.feature "Users feature spec", :type => :feature do
 
       click_link "sign_up_nav_link"
 
-      fill_in "Email", with: email
-      fill_in "Username", with: username
-      fill_in "Password", with: "password"
-      fill_in "Password confirmation", with: "password"
-      click_link_or_button "Sign up"
+      fill_in "user_email", with: email
+      fill_in "user_username", with: username
+      fill_in "user_password", with: "password"
+      fill_in "user_password_confirmation", with: "password"
+      click_button "sign_up_button_new_registration"
 
       visit user_lists_path(User.last)
-      expect(page).to have_content("Sign in with email or username")
+      expect(page).to have_selector("#user_login")
       url = URI.parse(current_url)
       expect("#{url}").to include("sign_in")
     end
@@ -46,9 +46,9 @@ RSpec.feature "Users feature spec", :type => :feature do
     scenario "existing users can sign in with email" do
       visit root_path
       click_link "sign_in_nav_link"
-      fill_in 'Sign in with email or username', with: existing_user.email
-      fill_in 'Password', with: existing_user.password
-      click_button "Log in"
+      fill_in "user_login", with: existing_user.email
+      fill_in "user_password", with: existing_user.password
+      click_button "log_in_button_new_session"
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("Signed in as: #{@email}")
     end
@@ -56,9 +56,9 @@ RSpec.feature "Users feature spec", :type => :feature do
     scenario "existing user can sign in with username" do
       visit root_path
       click_link "sign_in_nav_link"
-      fill_in 'Sign in with email or username', with: existing_user.username
-      fill_in 'Password', with: existing_user.password
-      click_button "Log in"
+      fill_in "user_login", with: existing_user.username
+      fill_in "user_password", with: existing_user.password
+      click_button "log_in_button_new_session"
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("Signed in as: #{@email}")
     end
@@ -85,21 +85,6 @@ RSpec.feature "Users feature spec", :type => :feature do
       fill_in "Confirm new password", with: "password1"
       click_link_or_button "Change my password"
       expect(page).to have_content("Your password has been changed successfully.")
-    end
-
-    scenario "user has a default list after signing up" do
-      sign_up_with(email, username, "password")
-      expect(@current_user.lists.count).to eq(1)
-    end
-
-    scenario "user has a default list with is_main=true after signing up" do
-      sign_up_with(email, username, "password")
-      expect(@current_user.lists.first.is_main).to eq(true)
-    end
-
-    scenario "user's default list with is_public=false after signing up" do
-      sign_up_with(email, username, "password")
-      expect(@current_user.lists.first.is_public).to eq(false)
     end
 
     scenario 'user can visit their profile page' do

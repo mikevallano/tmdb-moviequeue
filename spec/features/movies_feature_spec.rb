@@ -13,7 +13,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       api_search_then_add_movie_to_list
 
-      expect(page).to have_content("added to your list")
+      expect(page).to have_content(Movie.last.title)
 
     end
 
@@ -52,12 +52,12 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       visit(movie_path(Movie.last))
 
-      expect(page).to have_content("Similar movies")
+      expect(page).to have_selector("#similar_movies_link_movie_show")
       VCR.use_cassette('tmdb_movie_more') do
-        click_link "Similar movies"
+        click_link "similar_movies_link_movie_show"
       end
       VCR.use_cassette("similar_movies_more_info") do
-        click_link "More info", match: :first
+        click_link "movie_more_link_movie_more_similar_movies", match: :first
       end
       expect(page).to have_content("The Revenant")
 

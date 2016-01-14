@@ -5,6 +5,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
   feature "User can create a new list" do
 
     let(:user) { FactoryGirl.create(:user) }
+    let(:email) { FFaker::Internet.email }
+    let(:username) { FFaker::Internet.user_name }
     let(:user2) { FactoryGirl.create(:user) }
     let(:movie) { FactoryGirl.create(:movie) }
     let(:movie2) { FactoryGirl.create(:movie) }
@@ -33,7 +35,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_and_create_list
         @list = List.last
         visit(edit_user_list_path(user, @list))
-        expect(page).to have_content("Editing List")
         fill_in "list_name", with: 'test list update'
         click_button "submit_list_button"
         expect(page).to have_content("updated")
@@ -42,8 +43,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
        scenario "user can delete their own list" do
         sign_in_and_create_list
         click_link "my_lists_nav_link"
-        click_link "destroy_list_link_list_index"
-        expect(page).to have_content("destroyed")
+        expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
       end
 
       scenario 'user can mark a list as public' do
@@ -51,10 +51,25 @@ RSpec.feature "Lists feature spec", :type => :feature do
         click_link "my_lists_nav_link"
         click_link "new_list_link_list_index"
         fill_in "list_name", with: "test list one"
-        check 'list_is_public'
+        check "list_is_public"
         click_button "submit_list_button"
         expect(List.last.is_public).to be true
 
+      end
+
+      scenario "user has a default list after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.count).to eq(1)
+      end
+
+      scenario "user has a default list with is_main=true after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.first.is_main).to eq(true)
+      end
+
+      scenario "user's default list with is_public=false after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.first.is_public).to eq(false)
       end
 
       describe "pagination" do
@@ -68,7 +83,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           end
           visit user_list_path(user, list)
           expect(page).to have_content("Next")
-          click_link "Next"
+          click_link "Next" #this will show movies 20-30
           expect(page).to have_content("Previous")
           expect(page).not_to have_link("Next")
         end

@@ -24,10 +24,9 @@ RSpec.feature "Ratings feature spec", :type => :feature do
             click_link "movie_show_page"
           end
         click_link "new_rating_link_movie_show"
-        fill_in 'Value', with: "9"
+        fill_in "rating_value", with: "9"
 
-        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
-        expect(page).to have_content("successfully")
+        expect { click_button "rating_submit_button_rating_form" }.to change(Rating.by_user(user), :count).by(1)
         expect(page).to have_content("9")
 
       end #end create rating scenario
@@ -39,11 +38,9 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "new_rating_link_movie_show"
-        fill_in 'Value', with: "9"
+        fill_in "rating_value", with: "9"
 
-        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
-        expect(page).to have_content("successfully")
-        expect(page).to have_content("9")
+        click_button "rating_submit_button_rating_form"
 
         visit(new_movie_rating_path(movie))
         expect(page).to have_content("You've already rated this movie")
@@ -59,8 +56,8 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "new_rating_link_movie_show"
-        fill_in 'Value', with: "9"
-        click_button "Create Rating"
+        fill_in "rating_value", with: "9"
+        click_button "rating_submit_button_rating_form"
         click_link "sign_out_nav_link"
 
         listing2
@@ -90,11 +87,10 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link "Rate this movie"
-        fill_in 'Value', with: "9"
+        click_link "new_rating_link_list_show"
+        fill_in "rating_value", with: "9"
 
-        expect { click_button "Create Rating" }.to change(Rating.by_user(user), :count).by(1)
-        expect(page).to have_content("successfully")
+        expect { click_button "rating_submit_button_rating_form" }.to change(Rating.by_user(user), :count).by(1)
         expect(page).to have_content("9")
 
       end #end create rating scenario

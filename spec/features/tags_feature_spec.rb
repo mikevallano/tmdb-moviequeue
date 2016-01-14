@@ -12,26 +12,25 @@ RSpec.feature "Tags feature spec", :type => :feature do
 
     context "with signed in user" do
 
-      scenario "users can tag a movie" do
+      scenario "users can tag a movie from movies index page" do
 
         api_search_then_add_movie_to_list
 
         click_link "my_movies_nav_link"
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add tags", match: :first
-        expect(page).to have_content("added")
+        click_button "add_tags_button_movies_index", match: :first
         expect(page).to have_content("dark-comedy")
         expect(page).to have_content("spooky")
 
       end #user can tag movie
 
-    scenario "users can click a tag to see movies with that tag" do
+    scenario "users can click a tag (from movies index) to see movies with that tag" do
 
       api_search_then_add_movie_to_list
 
       click_link "my_movies_nav_link"
       fill_in "tag_list", with: "dark comedy, spooky"
-      click_button "add tags", match: :first
+      click_button "add_tags_button_movies_index", match: :first
       click_link "spooky", match: :first
       expect(page).to have_content("Fargo")
 

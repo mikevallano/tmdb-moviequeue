@@ -28,7 +28,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
         sign_in_and_send_invite
 
         open_email(receiver_email)
-        expect(current_email).to have_content("Sign up here!")
+        expect(current_email).to have_content("Sign up")
 
       end
 
@@ -37,7 +37,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
         sign_in_and_send_invite
 
         open_email(receiver_email)
-        current_email.click_link "Sign up here!"
+        current_email.click_link "sign_up_link_invite_mailer"
 
         #email field is already populated with reciever_email
         fill_in "user_username", with: username
@@ -72,7 +72,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
         click_button "send_invite_button_list_show"
 
         open_email(user2.email)
-        expect(current_email).to have_content("Check out the list here")
+        expect(current_email).to have_content("Check out the list")
         expect(last_email.body.encoded).to include user_list_path(user1, Invite.last.list)
 
       end

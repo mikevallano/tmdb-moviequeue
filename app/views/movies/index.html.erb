@@ -22,13 +22,13 @@
       <% if @list.present? %>
         <p>Tags:
           <% movie.tags.by_user_or_list(@list).each do |tag| %>
-            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "link_to_tag_movies_index_on_list" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_movies_index_on_list", method: :delete  %>
           <% end %>
           </p>
       <% else %>
         <p>Tags:
         <% movie.tag_list(current_user).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+          <%= link_to "#{tag.name}", tag_path(tag.name), id: "link_to_tag_movies_index" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_movies_index", method: :delete  %>
         <% end %>
       <% end %><!--  #if @list.present? -->
 
@@ -36,7 +36,7 @@
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
             <%= hidden_field_tag(:movie_id, "#{movie.id}") %>
-            <%= submit_tag("add tags") %>
+            <%= submit_tag "add tags", id: "add_tags_button_movies_index" %>
           <% end %>
       </p>
 

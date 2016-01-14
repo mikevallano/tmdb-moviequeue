@@ -22,9 +22,8 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
 
-        expect { click_link "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
-        expect(page).to have_content("successfully")
-        expect(page).to have_content("been watched")
+        expect { click_link "mark_watched_link_movie_show" }.to change(Screening.by_user(user), :count).by(1)
+        expect(page).not_to have_selector("#mark_watched_link_movie_show")
 
       end #end mark movie as watched scenario
 
@@ -36,7 +35,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "movie_show_page"
         click_link "add_screening_link_movie_show"
         fill_in "Notes", with: "epic notes"
-        expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
+        expect { click_link_or_button "screening_submit_button_screening_form" }.to change(Screening.by_user(user), :count).by(1)
 
       end #create screening scenario
 
@@ -47,8 +46,8 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "add_screening_link_movie_show"
-        fill_in "Notes", with: "epic notes"
-        expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
+        fill_in "screening_notes", with: "epic notes"
+        expect { click_link_or_button "screening_submit_button_screening_form" }.to change(Screening.by_user(user), :count).by(1)
         click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
@@ -66,7 +65,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        expect { click_link "Mark as watched" }.to change(Screening.by_user(user), :count).by(1)
+        expect { click_link "mark_watched_link_list_show" }.to change(Screening.by_user(user), :count).by(1)
 
       end
 
@@ -80,7 +79,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         sign_in_user(user)
         visit(user_list_path(user, list))
         expect(page).to have_content("you've seen this movie")
-        expect(page).not_to have_content("Mark as watched")
+        expect(page).not_to have_selector("#mark_watched_link_list_show")
 
       end
 
@@ -92,9 +91,9 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link "Add a screening"
-        fill_in "Notes", with: "epic notes"
-        expect { click_link_or_button "Create Screening" }.to change(Screening.by_user(user), :count).by(1)
+        click_link "add_screening_link_list_show"
+        fill_in "screening_notes", with: "epic notes"
+        expect { click_link_or_button "screening_submit_button_screening_form" }.to change(Screening.by_user(user), :count).by(1)
         click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
@@ -109,7 +108,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        click_link "View my screenings"
+        click_link "view_screenings_link_list_show"
         expect(page).to have_content("it was great")
 
       end
