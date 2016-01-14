@@ -94,6 +94,45 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect { click_link "remove_tag_link_movie_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
         end
 
+        scenario "movie not yet rated shows link to rate movie" do
+          visit(movie_path(Movie.last))
+          expect(page).not_to have_selector("#show_rating_link_movie_show")
+          expect(page).to have_selector("#new_rating_link_movie_show")
+        end
+
+        scenario "movie rated by user shows link to the rating show path" do
+          FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
+          visit(movie_path(Movie.last))
+          expect(page).to have_selector("#show_rating_link_movie_show")
+          expect(page).not_to have_selector("#new_rating_link_movie_show")
+        end
+
+        scenario "movie not yet reviewed shows link to review the movie" do
+          visit(movie_path(Movie.last))
+          expect(page).not_to have_selector("#show_review_link_movie_show")
+          expect(page).to have_selector("#new_review_link_movie_show")
+        end
+
+        scenario "movie reviewed by user shows link to the rating show path" do
+          FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+          visit(movie_path(Movie.last))
+          expect(page).to have_selector("#show_review_link_movie_show")
+          expect(page).not_to have_selector("#new_review_link_movie_show")
+        end
+
+        scenario "if user has not watched the movie, there is a link to mark as watched" do
+          visit(movie_path(Movie.last))
+          expect(page).to have_selector("#mark_watched_link_movie_show")
+          expect(page).not_to have_selector("#view_screenings_link_movie_show")
+        end
+
+        scenario "if the movie has been watched, there is no link to mark as watched" do
+          FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+          visit(movie_path(Movie.last))
+          expect(page).not_to have_selector("#mark_watched_link_movie_show")
+          expect(page).to have_selector("#view_screenings_link_movie_show")
+        end
+
       end #movie is on a list
 
     end #movie show page
@@ -133,6 +172,15 @@ RSpec.feature "Movies feature spec", :type => :feature do
           click_link "spooky", match: :first
           expect(page).to have_content("Fargo")
         end #user can tag movie
+
+        scenario "user can remove tags" do
+          sign_up_api_search_then_add_movie_to_list
+          click_link "my_movies_nav_link"
+          fill_in "tag_list", with: "dark comedy, spooky"
+          click_button "add_tags_button_movies_index", match: :first
+          click_link "my_movies_nav_link"
+          expect { click_link "remove_tag_link_movies_index", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+        end
 
         scenario "movies index paginates the movies by tag" do
           sign_in_user(user)
@@ -176,6 +224,52 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).to have_content("Previous")
         expect(page).not_to have_link("Next")
       end #paginate by genre
+
+      context "rating, reviews, marking watched" do
+        before(:each) do
+          sign_up_api_search_then_add_movie_to_list
+        end
+
+        scenario "movie not yet rated shows link to rate movie" do
+          click_link "my_movies_nav_link"
+          expect(page).not_to have_selector("#show_rating_link_movies_index")
+          expect(page).to have_selector("#new_rating_link_movies_index")
+        end
+
+        scenario "movie rated by user shows link to the rating show path" do
+          FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
+          click_link "my_movies_nav_link"
+          expect(page).to have_selector("#show_rating_link_movies_index")
+          expect(page).not_to have_selector("#new_rating_link_movies_index")
+        end
+
+        scenario "movie not yet reviewed shows link to review the movie" do
+          click_link "my_movies_nav_link"
+          expect(page).not_to have_selector("#show_review_link_movies_index")
+          expect(page).to have_selector("#new_review_link_movies_index")
+        end
+
+        scenario "movie reviewed by user shows link to the rating show path" do
+          FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+          click_link "my_movies_nav_link"
+          expect(page).to have_selector("#show_review_link_movies_index")
+          expect(page).not_to have_selector("#new_review_link_movies_index")
+        end
+
+        scenario "if user has not watched the movie, there is a link to mark as watched" do
+          click_link "my_movies_nav_link"
+          expect(page).to have_selector("#mark_watched_link_movies_index")
+          expect(page).not_to have_selector("#view_screenings_link_movies_index")
+        end
+
+        scenario "if the movie has been watched, there is no link to mark as watched" do
+          FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+          click_link "my_movies_nav_link"
+          expect(page).not_to have_selector("#mark_watched_link_movies_index")
+          expect(page).to have_selector("#view_screenings_link_movies_index")
+        end
+
+      end #rating, reviews, marking watched
 
     end # index page functionality
 
