@@ -15,12 +15,12 @@
     <%= link_to 'Home', root_path, id: "home_page_nav_link" %>
     <%= "Signed in as: #{current_user.email}" %>
     <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete, id: "sign_out_nav_link" %>
-    <%= link_to 'movies', movies_path, id: "my_movies_nav_link" %>
-    <%= link_to 'Find a movie', api_search_path, id: "movie_search_nav_link" %>
-    <%= link_to 'Search by actor', actor_search_path, id: "actor_search_nav_link" %>
+    <%= link_to 'My movies', movies_path, id: "my_movies_nav_link" %>
     <%= link_to 'My Lists', user_lists_path(current_user), id: "my_lists_nav_link" %>
-    <%= link_to 'All Lists', public_lists_path, id: "public_lists_nav_link" %>
-    <%= link_to 'Discover movies', discover_search_path, id: "discover_search_nav_link" %>
+    <%= link_to 'Public Lists', public_lists_path, id: "public_lists_nav_link" %>
+    <%= link_to 'Search by title', api_search_path, id: "movie_search_nav_link" %>
+    <%= link_to 'Search by actor', actor_search_path, id: "actor_search_nav_link" %>
+    <%= link_to 'Search like crazy', discover_search_path, id: "discover_search_nav_link" %>
 
   <% else %>
     <%= link_to "Sign In", new_user_session_path, id: "sign_in_nav_link" %>

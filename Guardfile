@@ -30,12 +30,13 @@
 guard :rspec, cmd: "rspec" do
   require "guard/rspec/dsl"
   watch('spec/spec_helper.rb')                        { "spec" }
+  watch('spec/support/.*')                            { "spec" }
   watch('config/routes.rb')                           { "spec/features" }
   watch('app/views/layouts')                          { "spec/features" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
-  watch(%r{^app/(.*)(\.erb|\.haml|\.slim)$})          { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
-  watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch(%r{^app/controllers/(.+)_(controller)\.rb$})  { |m| ["spec/routing/#{m[1]}_routing_spec.rb", "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb", "spec/acceptance/#{m[1]}_spec.rb"] }
+  watch(%r{lib/.*})                                   { "spec/features" }
+  watch(%r{^app/views/(.+)/})                         { |m| "spec/features/#{m[1]}_feature_spec.rb" }
+
 end

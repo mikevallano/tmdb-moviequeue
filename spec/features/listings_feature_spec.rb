@@ -22,7 +22,7 @@ RSpec.feature "Listings feature spec", :type => :feature do
 
     end
 
-     scenario "users can remove a movie from their list" do
+     scenario "users can remove a movie from their list from the list show page" do
 
       api_search_then_add_movie_to_list
 
