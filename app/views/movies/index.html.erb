@@ -68,11 +68,11 @@
         <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_movies_index" %></p>
       <% end %>
 
-      <% if movie.times_seen_by(current_user) > 0 %>
+      <% if current_user.screened_movies.include?(movie) %>
         <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
         <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_index" %></p>
       <% else %>
-        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post, id: "mark_watched_link_movies_index" %></p>
+        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_index" %></p>
         <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_index" %><p>
       <% end %>
 

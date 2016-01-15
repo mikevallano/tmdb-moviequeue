@@ -2,6 +2,7 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_url
 
   # GET /screenings
   # GET /screenings.json
@@ -26,14 +27,14 @@ class ScreeningsController < ApplicationController
   # POST /screenings
   # POST /screenings.json
   def create
-    @screening = Screening.new(screening_params)
+    @screening = current_user.screenings.new(screening_params)
     unless params[:date_watched].present?
       @screening.date_watched = DateTime.now.to_date
     end
 
     respond_to do |format|
       if @screening.save
-        format.html { redirect_to movie_path(@movie), notice: 'Screening was successfully created.' }
+        format.html { redirect_to @redirect_url, notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
       else
         format.html { render :new }
@@ -80,4 +81,20 @@ class ScreeningsController < ApplicationController
     def screening_params
       params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes)
     end
+
+    def redirect_url
+      @page = params[:page] if params[:page].present?
+      if params[:list_id].present?
+        @list = current_user.lists.find(params[:list_id])
+        @redirect_url = user_list_path(current_user, @list, page: @page)
+      elsif params[:from].present? && params[:from] == "movie"
+        @movie = current_user.movies.find(params[:movie_id])
+        @redirect_url = movie_path(@movie)
+      elsif params[:from].present? && params[:from] == "movies_index"
+        @redirect_url = movies_path(page: @page)
+      else
+        @redirect_url = movie_screenings_path(@movie)
+      end
+    end
+
 end
