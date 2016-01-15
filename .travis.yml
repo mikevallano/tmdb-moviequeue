@@ -3,3 +3,5 @@ rvm:
  - "2.2.2"
 services:
  - postgresql
+addons:
+ postgresql: "9.3"
