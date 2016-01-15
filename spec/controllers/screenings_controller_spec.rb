@@ -64,9 +64,9 @@ RSpec.describe ScreeningsController, type: :controller do
           expect(assigns(:screening)).to be_persisted
         end
 
-        it "redirects to the movie" do
+        it "redirects to screenings index" do
           post :create, { :screening => valid_attributes, movie_id: movie.id }
-          expect(response).to redirect_to(movie_url(movie))
+          expect(response).to redirect_to(movie_screenings_path(movie))
         end
       end
 
@@ -108,11 +108,6 @@ RSpec.describe ScreeningsController, type: :controller do
         it "assigns the screening as @screening" do
           put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
           expect(assigns(:screening)).to eq(screening)
-        end
-
-        it "re-renders the 'edit' template" do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
-          expect(response).to render_template("edit")
         end
       end
     end

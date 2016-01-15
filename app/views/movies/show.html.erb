@@ -104,11 +104,11 @@
   </p>
 
   <p>
-    <% if @movie.times_seen_by(current_user) > 0 %>
+    <% if current_user.screened_movies.include?(@movie) %>
     <strong>Movie has been watched.</strong><br>
     <strong> <%= link_to "view my screenings", movie_screenings_path(@movie), id: "view_screenings_link_movie_show" %></strong>
     <% else %>
-      <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id, user_id: current_user.id }, movie_id: @movie.id), :method => :post, id: "mark_watched_link_movie_show" %><br>
+      <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id }, movie_id: @movie.id, from: "movie_show"), :method => :post, id: "mark_watched_link_movie_show" %><br>
       <%= link_to "Add a screening", new_movie_screening_path(@movie), id: "add_screening_link_movie_show" %>
     <% end %>
   </p>

@@ -7,7 +7,7 @@ FactoryGirl.define do
     notes { FFaker::HipsterIpsum.sentence }
 
     factory :invalid_screening do
-      user nil
+      movie nil
     end
   end
 

@@ -126,6 +126,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
           visit(movie_path(Movie.last))
           expect(page).to have_selector("#mark_watched_link_movie_show")
           expect(page).not_to have_selector("#view_screenings_link_movie_show")
+          click_link("mark_watched_link_movie_show") #mark movie as watched
+          expect(current_url).to eq(movie_url(Movie.last)) #return to movie show page
+          expect(page).not_to have_selector("#mark_watched_link_movie_show") #no link to mark as watched
+          expect(page).to have_selector("#view_screenings_link_movie_show") #link to view screenings
         end
 
         scenario "if the movie has been watched, there is no link to mark as watched" do
@@ -284,10 +288,13 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#new_review_link_movies_index")
         end
 
-        scenario "if user has not watched the movie, there is a link to mark as watched" do
+        scenario "link to mark as watched if not watched, link marks as watched and returns user" do
           click_link "my_movies_nav_link"
-          expect(page).to have_selector("#mark_watched_link_movies_index")
           expect(page).not_to have_selector("#view_screenings_link_movies_index")
+          click_link("mark_watched_link_movies_index") #mark movie as watched
+          expect(current_url).to eq(movies_url) #return to movies index page
+          expect(page).not_to have_selector("#show_review_link_movies_index") #no link to mark as watched
+          expect(page).to have_selector("#view_screenings_link_movies_index") #link to view screenings
         end
 
         scenario "if the movie has been watched, there is no link to mark as watched" do

@@ -84,10 +84,10 @@ class ScreeningsController < ApplicationController
 
     def redirect_url
       @page = params[:page] if params[:page].present?
-      if params[:list_id].present?
+      if params[:from].present? && params[:from] == "list_show"
         @list = current_user.lists.find(params[:list_id])
         @redirect_url = user_list_path(current_user, @list, page: @page)
-      elsif params[:from].present? && params[:from] == "movie"
+      elsif params[:from].present? && params[:from] == "movie_show"
         @movie = current_user.movies.find(params[:movie_id])
         @redirect_url = movie_path(@movie)
       elsif params[:from].present? && params[:from] == "movies_index"
