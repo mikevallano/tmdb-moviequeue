@@ -48,7 +48,6 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "add_screening_link_movie_show"
         fill_in "screening_notes", with: "epic notes"
         expect { click_link_or_button "screening_submit_button_screening_form" }.to change(Screening.by_user(user), :count).by(1)
-        click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
       end #view screening scenario
@@ -94,7 +93,6 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         click_link "add_screening_link_list_show"
         fill_in "screening_notes", with: "epic notes"
         expect { click_link_or_button "screening_submit_button_screening_form" }.to change(Screening.by_user(user), :count).by(1)
-        click_link "view_screenings_link_movie_show"
         expect(page).to have_content("epic notes")
 
       end
