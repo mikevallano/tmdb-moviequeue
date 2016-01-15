@@ -21,7 +21,7 @@ class ListsController < ApplicationController
     end
 
     unless current_user.all_lists.include?(@list)
-      @movies = @list.movies.paginate(:page => params[:page])
+      @movies = @list.movies.paginate(:page => params[:page], per_page: 20)
       render :public_show
     end
     # @movies = @list.movies.paginate(:page => params[:page])

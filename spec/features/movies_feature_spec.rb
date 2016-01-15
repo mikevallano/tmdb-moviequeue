@@ -68,11 +68,11 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
         end
 
-        scenario "users can add tags to a movie from the movie show page" do
+        scenario "users can add tags to a movie from the movie show page and are returned to the movie show page" do
           visit(movie_path(Movie.last))
           fill_in "tag_list", with: "dark comedy, spooky"
           click_button "add_tags_button_movie_show", match: :first
-          visit(movie_path(Movie.last))
+          expect(current_url).to eq(movie_url(Movie.last))
           expect(page).to have_content("dark-comedy")
           expect(page).to have_content("spooky")
         end #user can tag movie
@@ -86,12 +86,14 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).to have_content("Fargo")
         end
 
-        scenario "user can remove tags" do
+        scenario "user can remove tags and are returned to the movie show page" do
           visit(movie_path(Movie.last))
           fill_in "tag_list", with: "dark comedy, spooky"
           click_button "add_tags_button_movie_show", match: :first
-          visit(movie_path(Movie.last))
+          expect(current_url).to eq(movie_url(Movie.last))
           expect { click_link "remove_tag_link_movie_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+          click_link "remove_tag_link_movie_show", match: :first
+          expect(current_url).to eq(movie_url(Movie.last))
         end
 
         scenario "movie not yet rated shows link to rate movie" do
@@ -164,6 +166,30 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).to have_content("spooky")
         end #user can tag movie
 
+        scenario "users are returned to the movies index after tag is added" do
+          sign_up_api_search_then_add_movie_to_list
+          click_link "my_movies_nav_link"
+          fill_in "tag_list", with: "dark comedy, spooky"
+          click_button "add_tags_button_movies_index", match: :first
+          expect(current_url).to eq(movies_url)
+        end #user can tag movie
+
+        scenario "users are returned to the paginated page after a tag is added" do
+          sign_in_user(user)
+          30.times { FactoryGirl.create(:movie) }
+          counter = Movie.first.id
+          30.times do
+            FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+            counter += 1
+          end
+          click_link "my_movies_nav_link"
+          click_link "Next"
+          fill_in "tag_list", match: :first, with: "dark comedy, spooky"
+          click_button "add_tags_button_movies_index", match: :first
+          expect(page).to have_content("dark-comedy")
+          expect(page).to have_content("spooky")
+        end
+
         scenario "users can click a tag (from movies index) to see movies with that tag" do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
@@ -173,13 +199,15 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).to have_content("Fargo")
         end #user can tag movie
 
-        scenario "user can remove tags" do
+        scenario "user can remove tags and are returned to the movies index" do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
           fill_in "tag_list", with: "dark comedy, spooky"
           click_button "add_tags_button_movies_index", match: :first
           click_link "my_movies_nav_link"
           expect { click_link "remove_tag_link_movies_index", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+          click_link "remove_tag_link_movies_index"
+          expect(current_url).to eq(movies_url)
         end
 
         scenario "movies index paginates the movies by tag" do

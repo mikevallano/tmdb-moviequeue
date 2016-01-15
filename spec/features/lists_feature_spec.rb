@@ -124,10 +124,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
         click_link "my_lists_nav_link"
       end
 
-      scenario "users can add tags to a movie from the list show page" do
+      scenario "users can add tags to a movie from the list show page and are returned to the page" do
         click_link "show_list_link_list_index"
         fill_in "tag_list", with: "dark comedy, spooky"
         click_button "add_tags_button_list_show", match: :first
+        expect(current_url).to eq(user_list_url(@current_user, List.last))
         expect(page).to have_content("dark-comedy")
         expect(page).to have_content("spooky")
       end #user can tag movie
@@ -140,13 +141,13 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).to have_content("Fargo")
       end
 
-      scenario "user can remove tags" do
+      scenario "user can remove tags and be returned to the list page" do
         click_link "show_list_link_list_index"
         fill_in "tag_list", with: "dark comedy, spooky"
         click_button "add_tags_button_list_show", match: :first
-        click_link "my_lists_nav_link"
-        click_link "show_list_link_list_index"
         expect { click_link "remove_tag_link_list_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+        click_link "remove_tag_link_list_show"
+        expect(current_url).to eq(user_list_url(@current_user, List.last))
       end
 
       scenario "user can update a listing's priority" do

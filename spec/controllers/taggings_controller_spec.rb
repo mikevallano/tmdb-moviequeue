@@ -35,7 +35,7 @@ RSpec.describe TaggingsController, type: :controller do
       end
     end
 
-    describe "GET #destroy" do
+    describe "DELETE #destroy" do
       it "destroys the requested tagging" do
         current_user
         tagging
@@ -45,12 +45,12 @@ RSpec.describe TaggingsController, type: :controller do
           }.to change(Tagging, :count).by(-1)
       end
 
-      it "redirects to movies path after deleting" do
+      it "redirects to redirect_url after delete" do
         current_user
         tagging
 
         delete :destroy, { :tag_id => tagging.tag_id, movie_id: tagging.movie_id }
-        expect(response).to redirect_to(movie_path(tagging.movie_id))
+        expect(response).to redirect_to(movies_url) #redirects to movies_url by default
       end
     end
 
