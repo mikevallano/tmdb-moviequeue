@@ -19,30 +19,31 @@
       <p><%= movie.vote_average %></p>
       <p><%= movie.overview %></p>
 
-      <% if @list.present? %>
+      <% if @list.present? %> <!-- #will show member tags if @list.present? -->
         <p>Tags:
           <% movie.tags.by_user_or_list(@list).each do |tag| %>
-            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_movies_index_on_list" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_movies_index_on_list", method: :delete  %>
           <% end %>
           </p>
       <% else %>
         <p>Tags:
         <% movie.tag_list(current_user).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name) %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), method: :delete  %>
+          <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_index" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_index", method: :delete  %>
         <% end %>
       <% end %><!--  #if @list.present? -->
 
       <p> <%= form_tag('/taggings') do %>
             <%= label_tag(:tag_list, "Add tags:") %>
             <%= text_field_tag(:tag_list) %>
-            <%= hidden_field_tag(:movie_id, "#{movie.id}") %>
-            <%= submit_tag("add tags") %>
+            <%= hidden_field_tag(:movie_id, movie.id) %>
+            <%= hidden_field_tag(:page, params[:page]) %>
+            <%= submit_tag "add tags", id: "add_tags_button_movies_index" %>
           <% end %>
       </p>
 
       <p>On List(s):
         <% movie.lists.by_user(current_user).each do |list| %>
-          <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+          <%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "list_show_link_on_list_movies_index" %>
         <% end %>
       </p>
 
@@ -51,27 +52,28 @@
         <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
-        <%= f.submit "add movie to list" %>
+        <%= f.submit "add movie to list", id: "add_to_list_button_movies_index" %>
       <% end %>
 
       <% if current_user.rated_movies.include?(movie) %>
-        <p>My Rating: <%= movie.ratings.by_user(current_user).first.value %></p>
+      <p><%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_index" %></p>
       <% else %>
-        <p><%= link_to "Rate this movie", new_movie_rating_path(movie) %></p>
+        <p><%= link_to "Rate this movie", new_movie_rating_path(movie), id: "new_rating_link_movies_index" %></p>
       <% end %>
 
       <% if current_user.reviewed_movies.include?(movie) %>
         <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
+        <%= link_to "show", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_index" %>
       <% else %>
-        <p><%= link_to "Review this movie", new_movie_review_path(movie) %></p>
+        <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_movies_index" %></p>
       <% end %>
 
       <% if movie.times_seen_by(current_user) > 0 %>
         <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
-        <p><%= link_to "View my screenings", movie_screenings_path(movie) %></p>
+        <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_index" %></p>
       <% else %>
-        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post %></p>
-        <p><%= link_to "Add a screening", new_movie_screening_path(movie) %><p>
+        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id, user_id: current_user.id }, movie_id: movie.id), :method => :post, id: "mark_watched_link_movies_index" %></p>
+        <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_index" %><p>
       <% end %>
 
       <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>

@@ -14,7 +14,7 @@ class TmdbController < ApplicationController
   def movie_more
     if params[:movie_id]
       @movie_id = params[:movie_id]
-      tmdb_handler_movie_info(@movie_id)
+      tmdb_handler_movie_more(@movie_id)
     else
       redirect_to api_search_path
     end

@@ -1,0 +1,46 @@
+    <% @discover_results.each do |result| %>
+     <div>
+      <% @tmdb_id = result[:id] %>
+      <% @movie = Movie.find_by(tmdb_id: result[:id]) %>
+      <!-- TODO: Refactor the shit out of this: -->
+      <% @lists_except_movie = current_user.lists_except_movie(@movie) %>
+
+        <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" if result[:poster_path].present? %>
+        <h3><%= result[:title] %></h3>
+        <p>Release date: <%= result[:release_date] %></p>
+        <p>Vote average: <%= result[:vote_average] %></p>
+        <p>Overview: <%= result[:overview] %></p>
+        <p><%= link_to "More info", movie_more_path(movie_id: @tmdb_id), id: "movie_more_link_search_results" %></p>
+
+      <% if @movie.present? %>
+
+        <% if current_user.all_movies.include?(@movie) %>
+
+          <p>On List(s):
+          <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
+          <% @movie.lists.by_user(current_user).each do |list| %>
+            <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+          <% end %> <!-- #list loop -->
+          </p>
+          <p>Add it to another list?</p>
+
+        <% else %>
+
+        <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
+      <% else %> <!-- #if @movie.present? -->
+
+        <p>This movie is not on your lists. Add to a list:</p>
+
+      <% end %> <!-- #if @movie present -->
+
+      <%= form_for(Listing.new) do |f| %>
+        <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
+        <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+        <%= hidden_field_tag :user_id, current_user.id %>
+        <%= f.submit "add movie to list", id: "add_movie_to_list_search_results" %>
+      <% end %>
+        </br>
+        <hr>
+      </div>
+    <% end %> <!-- #results loop -->

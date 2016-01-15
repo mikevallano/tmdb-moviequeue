@@ -1,14 +1,13 @@
 <h1>MovieQueue Homepage</h1>
+<h2>This is not tested (as of 1/14) because this will likely change significantly</h2>
 
 <% if current_user.present? %>
-  <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_lists_path(current_user) %>.</p>
+  <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_lists_path(current_user), id: "list_index_link_homepage" %>. You can browse movies and add them to your list.</p>
   <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
-  <p>You can find your current lists and add to them <%= link_to "here", user_lists_path(current_user) %>.</p>
-  <p>You can browse movies in a variety of ways, and add them to your <%= link_to "lists", user_lists_path(current_user) %>.</p>
-  <p>You can also check out what <%= link_to "lists other users", public_lists_path %> have created.</p>
-  <p><%= link_to "Search by movie title", api_search_path %> </p>
-  <p><%= link_to "Search by actor", actor_search_path %> </p>
-  <p><%= link_to "Search by all sorts of things", discover_search_path %> </p>
+  <p>You can also check out what <%= link_to "lists other users", public_lists_path, id: "public_lists_link_homepage" %> have created.</p>
+  <p><%= link_to "Search by movie title", api_search_path, id: "movie_title_search_link_homepage" %> </p>
+  <p><%= link_to "Search by actor", actor_search_path, id: "actor_search_link_homepage" %> </p>
+  <p><%= link_to "Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage" %> </p>
 <% end %>
 
 

@@ -22,10 +22,9 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "new_review_link_movie_show"
-        fill_in 'Body', with: "OMG. best. movie. eva."
+        fill_in "review_body", with: "OMG. best. movie. eva."
 
-        expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
-        expect(page).to have_content("successfully")
+        expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
         expect(page).to have_content("OMG. best. movie. eva.")
 
       end #end create review scenario
@@ -37,9 +36,9 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "new_review_link_movie_show"
-        fill_in 'Body', with: "OMG. best. movie. eva."
+        fill_in "review_body", with: "OMG. best. movie. eva."
 
-        expect { click_button "Create Review" }.to change(Review.by_user(user), :count).by(1)
+        expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
         visit(new_movie_review_path(movie))
         expect(page).to have_content("You've already reviewed this movie")
         url = URI.parse(current_url)
@@ -54,8 +53,8 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
         click_link "new_review_link_movie_show"
-        fill_in 'Body', with: "OMG. best. movie. eva."
-        click_button "Create Review"
+        fill_in "review_body", with: "OMG. best. movie. eva."
+        click_button "review_submit_button_review_form"
         click_link "sign_out_nav_link"
 
         listing2
@@ -86,9 +85,9 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         sign_in_user(user)
         visit(user_list_path(user, list))
         click_link "new_review_link_list_show"
-        fill_in 'Body', with: "Epic win!"
-        click_button "Create Review"
-        expect(page).to have_content("success")
+        fill_in "review_body", with: "Epic win!"
+        click_button "review_submit_button_review_form"
+        expect(page).to have_content("Epic win!")
 
       end
 
@@ -101,9 +100,8 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         sign_in_user(user)
         visit(user_list_path(user, list))
-        expect(page).not_to have_content("Review this movie")
-        expect(page).to have_content("My Review")
-        expect(page).to have_content("an epic win")
+        expect(page).not_to have_selector("#new_review_link_list_show")
+        expect(page).to have_content(Review.last.body)
 
 
       end

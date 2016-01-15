@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.feature "Lists feature spec", :type => :feature do
 
-  feature "User can create a new list" do
+  feature "List views" do
 
     let(:user) { FactoryGirl.create(:user) }
+    let(:email) { FFaker::Internet.email }
+    let(:username) { FFaker::Internet.user_name }
     let(:user2) { FactoryGirl.create(:user) }
     let(:movie) { FactoryGirl.create(:movie) }
     let(:movie2) { FactoryGirl.create(:movie) }
@@ -15,84 +17,193 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
     let(:public_listing) { FactoryGirl.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
 
-    context "with signed in user" do
+
+    describe "crud actions for lists" do
 
       scenario "users can create lists" do
-
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
-        fill_in 'Name', with: 'test list one'
-        expect { click_button "Create List" }.to change(List, :count).by(1)
-        expect(page).to have_content("List was successfully created")
-        click_link "sign_out_nav_link"
+        click_link "new_list_link_list_index"
+        fill_in "list_name", with: "test list one"
+        expect { click_button "submit_list_button" }.to change(List, :count).by(1)
+        expect(page).to have_content("test list one")
+      end
 
+      scenario "users can view lists page" do
+        sign_in_and_create_list
+        click_link "my_lists_nav_link"
+        click_link "show_list_link_list_index"
+        expect(page).to have_content(List.last.name)
       end
 
       scenario "user can edit their own list" do
-        sign_in_user(user)
-        click_link "my_lists_nav_link"
-        click_link "New List"
-        fill_in 'Name', with: 'test list one'
-        click_button "Create List"
+        sign_in_and_create_list
         @list = List.last
         visit(edit_user_list_path(user, @list))
-        expect(page).to have_content("Editing List")
-        fill_in 'Name', with: 'test list update'
-        click_button "Update"
-        expect(page).to have_content("updated")
+        fill_in "list_name", with: "test list update"
+        click_button "submit_list_button"
+        expect(page).to have_content("test list update")
       end
 
-       scenario "user can delete their own list" do
-        sign_in_user(user)
+      scenario "user can delete their own list" do
+        sign_in_and_create_list
         click_link "my_lists_nav_link"
-        click_link "New List"
-        fill_in 'Name', with: 'test list one'
-        click_button "Create List"
-        click_link "my_lists_nav_link"
-        click_link "Destroy"
-        expect(page).to have_content("destroyed")
+        expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
       end
 
-      scenario 'user can mark a list as public' do
+      scenario "user can mark a list as public" do
         sign_in_user(user)
         click_link "my_lists_nav_link"
-        click_link "New List"
-        fill_in 'Name', with: 'test list one'
-        check 'list_is_public'
-        click_button "Create List"
+        click_link "new_list_link_list_index"
+        fill_in "list_name", with: "test list one"
+        check "list_is_public"
+        click_button "submit_list_button"
         expect(List.last.is_public).to be true
-
       end
 
-      describe "pagination" do
-        it "should paginate the movies" do
-          sign_in_user(user)
-          30.times { FactoryGirl.create(:movie) }
-          counter = Movie.first.id
-          30.times do
-            FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
-            counter += 1
-          end
-          visit user_list_path(user, list)
-          expect(page).to have_content("Next")
-          click_link "Next"
-          expect(page).to have_content("Previous")
-          expect(page).not_to have_link("Next")
+    end #crud action
+
+    describe "user has a list after signing up" do
+
+      scenario "user has a default list after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.count).to eq(1)
+      end
+
+      scenario "user has a default list with is_main=true after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.first.is_main).to eq(true)
+      end
+
+      scenario "user's default list with is_public=false after signing up" do
+        sign_up_with(email, username, "password")
+        expect(@current_user.lists.first.is_public).to eq(false)
+      end
+
+    end #list after signing up
+
+    describe "list show page paginates movies" do
+      scenario "list show page paginates movies" do
+        sign_in_user(user)
+        30.times { FactoryGirl.create(:movie) }
+        counter = Movie.first.id
+        30.times do
+          FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+          counter += 1
         end
+        visit user_list_path(user, list)
+        expect(page).to have_content("Next")
+        click_link "Next" #this will show movies 20-30
+        expect(page).to have_content("Previous")
+        expect(page).not_to have_link("Next")
+      end
+    end
+
+    describe "movie management" do
+
+      scenario "users can add a movie to their list" do
+        sign_up_api_search_then_add_movie_to_list
+        expect(page).to have_content("added to your list")
       end
 
-    end #signed in user context
+      scenario "users can remove a movie from their list from the list show page" do
+        sign_up_api_search_then_add_movie_to_list
 
-    context "user trying to access other users' lists" do
+        click_link "my_lists_nav_link"
+        click_link "show_list_link_list_index"
+        click_link "remove_movie_link_list_show"
+        expect(page).to have_content("Movie was removed from list.")
+      end
+
+    end #movie management
+
+    describe "list show page functionality" do
+
+      before(:each) do
+        sign_up_api_search_then_add_movie_to_list
+        click_link "my_lists_nav_link"
+      end
+
+      scenario "users can add tags to a movie from the list show page and are returned to the page" do
+        click_link "show_list_link_list_index"
+        fill_in "tag_list", with: "dark comedy, spooky"
+        click_button "add_tags_button_list_show", match: :first
+        expect(current_url).to eq(user_list_url(@current_user, List.last))
+        expect(page).to have_content("dark-comedy")
+        expect(page).to have_content("spooky")
+      end #user can tag movie
+
+      scenario "user can click a tag to see movies with that tag" do
+        click_link "show_list_link_list_index"
+        fill_in "tag_list", with: "dark comedy, spooky"
+        click_button "add_tags_button_list_show", match: :first
+        click_link "spooky", match: :first
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "user can remove tags and be returned to the list page" do
+        click_link "show_list_link_list_index"
+        fill_in "tag_list", with: "dark comedy, spooky"
+        click_button "add_tags_button_list_show", match: :first
+        expect { click_link "remove_tag_link_list_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+        click_link "remove_tag_link_list_show"
+        expect(current_url).to eq(user_list_url(@current_user, List.last))
+      end
+
+      scenario "user can update a listing's priority" do
+        click_link "show_list_link_list_index"
+        fill_in "priority_number_field_list_show", with: '9'
+        click_button "add_priority_button_list_show"
+        expect(page).to have_content("Priority added.")
+        expect(page).to have_content('9')
+      end
+
+      scenario "movie not yet rated shows link to rate movie" do
+        click_link "show_list_link_list_index"
+        expect(page).not_to have_selector("#show_rating_link_list_show")
+        expect(page).to have_selector("#new_rating_link_list_show")
+      end
+
+      scenario "movie rated by user shows link to the rating show path" do
+        FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
+        click_link "show_list_link_list_index"
+        expect(page).to have_selector("#show_rating_link_list_show")
+        expect(page).not_to have_selector("#new_rating_link_list_show")
+      end
+
+      scenario "movie not yet reviewed shows link to review the movie" do
+        click_link "show_list_link_list_index"
+        expect(page).not_to have_selector("#show_review_link_list_show")
+        expect(page).to have_selector("#new_review_link_list_show")
+      end
+
+      scenario "movie reviewed by user shows link to the rating show path" do
+        FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+        click_link "show_list_link_list_index"
+        expect(page).to have_selector("#show_review_link_list_show")
+        expect(page).not_to have_selector("#new_review_link_list_show")
+      end
+
+      scenario "if user has not watched the movie, there is a link to mark as watched" do
+        click_link "show_list_link_list_index"
+        expect(page).to have_selector("#mark_watched_link_list_show")
+        expect(page).not_to have_selector("#view_screenings_link_list_show")
+      end
+
+      scenario "if the movie has been watched, there is no link to mark as watched" do
+        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+        click_link "show_list_link_list_index"
+        expect(page).not_to have_selector("#mark_watched_link_list_show")
+        expect(page).to have_selector("#view_screenings_link_list_show")
+      end
+
+    end #list show page functionality
+
+
+    describe "user trying to access other users' lists" do
 
       scenario  "user's can't view or edit another user's list (without being a member)" do
-
-        sign_in_user(user)
-        click_link "my_lists_nav_link"
-        click_link "New List"
-        fill_in 'Name', with: 'test list one'
-        click_button "Create List"
+        sign_in_and_create_list
         @list = List.last
         click_link "sign_out_nav_link"
         sign_in_user(user2)
@@ -102,44 +213,38 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
         visit(edit_user_list_path(user, @list))
         expect(page).to have_content("That's not your list")
-
       end
 
     end #trying to access other users' lists
 
-    context 'public lists' do
+    describe "public lists" do
 
       before(:each) do
         public_list
         public_listing
       end
 
-      scenario 'user can view public lists' do
-
+      scenario "user can view public lists" do
         sign_in_user(user2)
         click_link "public_lists_nav_link"
         expect(page).to have_content(public_list.name)
-
       end
 
       scenario "user sees public_show page if user's all_lists doesn't include list" do
-
         sign_in_user(user2)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).to have_content("Add this movie to a list")
-        expect(page).not_to have_content("Priority")
-
+        expect(page).to have_selector("#add_movie_to_list_public_list_show")
+        expect(page).not_to have_selector("#add_priority_button_list_show")
       end
 
       scenario "user sees standard list show page if user's all_lists does include list" do
-
         sign_in_user(public_list.owner)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).not_to have_content("Add this movie to a list")
-        expect(page).to have_content("Priority")
-
+        expect(page).not_to have_selector("#add_movie_to_list_public_list_show")
+        expect(page).to have_selector("#add_priority_button_list_show")
+        expect(page).to have_selector("#new_rating_link_list_show")
       end
 
       describe "public show page pagination" do

@@ -5,7 +5,7 @@
     </head>
     <body>
       <h2>Someone wants you to share their list with you.</h2>
-      <p><%= link_to "Sign up here!", new_user_registration_url(:token => @invite.token) %>
+      <p><%= link_to "Sign up here!", new_user_registration_url(:token => @invite.token), id: "sign_up_link_invite_mailer" %>
 
     </body>
 

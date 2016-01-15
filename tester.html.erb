@@ -1,10 +1,205 @@
-<% if current_user.present? %>
-  <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_list_path(current_user, current_user.lists.first ) %>.</p>
-  <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
-  <p>You can find your current lists and add to them <%= link_to "here", user_lists_path(current_user) %>.</p>
-  <p>You can browse movies in a variety of ways, and add them to your <%= link_to "lists", user_lists_path(current_user) %>.</p>
-  <p>You can also check out what <%= link_to "lists other users", public_lists_path %> have created.</p>
-  <p><%= link_to "Search by movie title", api_search_path %> </p>
-  <p><%= link_to "Search by actor", actor_search_path %> </p>
-  <p><%= link_to "Search by all sorts of things", discover_search_path %> </p>
-<% end %>
+<% if !@movie_title.present? %>
+
+  <h1>Search for a movie by movie title:</h1>
+
+  <%= form_tag '/tmdb/search', method: :get do %>
+    <%= label_tag :movie_title, "Enter Title: " %>
+    <%= text_field_tag :movie_title %>
+    <%= submit_tag "Search" %>
+  <% end %>
+</br>
+
+<% else %>
+
+  <% if !@results.present? %>
+    <h2>Darn it. No movie found for that search.</h2>
+  <% else %>
+    <h2>Here are the matching movies from TMDB</h2>
+  <% end %>
+<br>
+  <%= form_tag '/tmdb/search', method: :get do %>
+    <%= label_tag :movie_title, "Enter Title: " %>
+    <%= text_field_tag :movie_title %> <%= submit_tag "Search Again" %>
+  <% end %>
+</br>
+
+    <% @results.each do |result| %>
+     <div>
+      <% @tmdb_id = result[:id] %>
+      <% @movie = Movie.find_by(tmdb_id: result[:id]) %>
+      <!-- TODO: Refactor the shit out of this: -->
+      <% @lists_except_movie =  current_user.lists_except_movie(@movie) %>
+
+        <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+        <h3><%= result[:title] %></h3>
+        <p>Release date: <%= result[:release_date] %></p>
+        <p>Vote average: <%= result[:vote_average] %></p>
+        <p>Overview: <%= result[:overview] %></p>
+        <p><%= link_to "More info", movie_more_path(movie_id: @tmdb_id) %></p>
+
+      <% if @movie.present? %>
+
+        <% if current_user.all_movies.include?(@movie) %>
+
+          <p>On List(s):
+          <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
+          <% @movie.lists.by_user(current_user).each do |list| %>
+            <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+          <% end %> <!-- #list loop -->
+          </p>
+          <p>Add it to another list?</p>
+
+        <% else %>
+
+        <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
+      <% else %> <!-- #if @movie.present? -->
+
+        <p>This movie is not on your lists. Add to a list:</p>
+
+      <% end %> <!-- #if @movie present -->
+
+      <%= form_for(Listing.new) do |f| %>
+        <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
+        <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+        <%= hidden_field_tag :user_id, current_user.id %>
+        <%= f.submit "add movie to list" %>
+      <% end %>
+        </br>
+        <hr>
+      </div>
+    <% end %> <!-- #results loop -->
+
+<% end %> <!-- #initial if @movie_title.present? -->
+
+
+
+
+<!-- actor_search results: -->
+
+  <% @discover_results.each do |result| %>
+
+    <% @tmdb_id = result[:id] %>
+    <% @movie = Movie.find_by(tmdb_id: @tmdb_id) %>
+    <!-- TODO: Refactor the shit out of this: -->
+    <% @lists_except_movie =  current_user.lists_except_movie(@movie) %>
+     <div>
+     <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+    <h3><%= link_to "#{result[:title]}", movie_more_path(movie_id: @tmdb_id) %></h3>
+    <p>Release date: <%= result[:release_date] %></p>
+    <p>Vote average: <%= result[:vote_average] %></p>
+    <p>Overview: <%= result[:overview] %></p>
+    <p><%= link_to "More info", movie_more_path(movie_id: @tmdb_id) %></p>
+
+    <% if @movie.present? %>
+
+      <% if current_user.all_movies.include?(@movie) %>
+
+        <p>On List(s):
+        <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
+        <% @movie.lists.by_user(current_user).each do |list| %>
+          <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+        <% end %> <!-- #list loop -->
+        </p>
+        <p>Add it to another list?</p>
+
+      <% else %>
+
+      <p>This movie is not on your lists. Add to a list:</p>
+
+      <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
+    <% else %> <!-- #if @movie.present? -->
+
+      <p>This movie is not on your lists. Add to a list:</p>
+
+    <% end %> <!-- #if @movie present -->
+
+    <%= form_for(Listing.new) do |f| %>
+      <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
+      <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+      <%= hidden_field_tag :user_id, current_user.id %>
+      <%= f.submit "add movie to list" %>
+    <% end %>
+      </br>
+      <hr>
+    </div>
+  <% end %> <!-- #results loop -->
+
+
+  <!-- discover search results -->
+
+     <% @discover_results.each do |result| %>
+    <% @tmdb_id = result[:id] %>
+     <div>
+         <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" if result[:poster_path].present? %>
+        <h3><%= result[:title] %></h3>
+        <p><%= result[:release_date] %></p>
+        <p><%= result[:vote_average] %></p>
+        <p><%= result[:overview] %></p>
+        <% if current_user.all_movies.include?(Movie.find_by(tmdb_id: result[:id])) %>
+          <p>On List</p>
+        <% else %>
+          <p>Add this movie to a list:</p>
+          <p>
+          <%= form_for(Listing.new) do |f| %>
+            <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+            <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
+            <%= f.submit "add movie to list" %>
+          <% end %>
+          </p>
+        <% end %>
+        <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+    <% end %>
+
+    <!-- two actor search -->
+
+         <% @discover_results.each do |result| %>
+      <% @tmdb_id = result[:id] %>
+      <% @movie = Movie.find_by(tmdb_id: @tmdb_id) %>
+       <div>
+           <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
+          <h3><%= result[:title] %></h3>
+          <p><%= result[:release_date] %></p>
+          <p><%= result[:vote_average] %></p>
+          <p><%= result[:overview] %></p>
+
+          <% if @movie.present? %>
+
+            <% if current_user.all_movies.include?(@movie) %>
+
+              <p>On List(s):
+              <% @movie.lists.by_user(current_user).each do |list| %>
+                <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
+              <% end %> <!-- #list loop -->
+              </p>
+
+            <% else %>
+              <p>This movie is not on your lists. Add it to a list:</p>
+            <% end %> <!-- # if current_user.all_movies.include?(@movie) -->
+
+            <%= form_for(Listing.new) do |f| %>
+              <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
+              <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+              <%= hidden_field_tag :user_id, current_user.id %>
+              <%= f.submit "add movie to list" %>
+            <% end %>
+
+            </p>
+
+          <% else %> <!-- #if @movie.present? -->
+
+            <p>This movie is not on your lists. Add it to a list:</p>
+              <%= form_for(Listing.new) do |f| %>
+                <%= f.collection_select :list_id, current_user.all_lists, :id, :name %>
+                <%= hidden_field_tag :tmdb_id, @tmdb_id %>
+                <%= hidden_field_tag :user_id, current_user.id %>
+                <%= f.submit "add movie to list" %>
+              <% end %>
+
+          <% end %> <!-- #if @movie present -->
+
+          <p><%= link_to "More info", movie_more_path(movie_id: "#{result[:id]}") %></p>
+
+      <% end %> <!-- #results loop -->

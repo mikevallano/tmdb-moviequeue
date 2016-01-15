@@ -46,16 +46,20 @@ class User < ActiveRecord::Base
     (self.lists | self.member_lists).uniq
   end
 
-  def lists_except_movie(movie)
-    except_lists = []
-    self.lists.each do |list|
-      except_lists << list
+  def lists_except_movie(movie = nil)
+    if movie.present?
+      except_lists = []
+      self.lists.each do |list|
+        except_lists << list
+      end
+      self.member_lists.each do |list|
+        except_lists << list
+      end
+      movie_lists = Movie.find(movie.id).lists.by_user(self)
+      lists_except_movie = (except_lists - movie_lists)
+    else
+      all_lists
     end
-    self.member_lists.each do |list|
-      except_lists << list
-    end
-    movie_lists = Movie.find(movie.id).lists.by_user(self)
-    lists_except_movie = (except_lists - movie_lists)
   end
 
   def all_movies
