@@ -17,7 +17,7 @@ RSpec.describe ListingsController, type: :controller do
     describe "GET #create" do
       it "creates a new listing" do
         expect {
-          post :create, :listing => { movie_id: movie.id }, tmdb_id: tmdb_id
+          post :create, :listing => { movie_id: movie.id, list_id: list.id }, tmdb_id: tmdb_id, user_id: user.id
         }.to change(Listing, :count).by(1)
       end
     end
@@ -82,6 +82,7 @@ RSpec.describe ListingsController, type: :controller do
 
   describe "user access" do
     before :each do
+      user
       current_user
       listing
       list
