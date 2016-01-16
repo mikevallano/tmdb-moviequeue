@@ -238,7 +238,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(user2)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).to have_selector("#add_movie_to_list_public_list_show")
+        expect(page).to have_selector("#add_movie_to_list_search_results")
         expect(page).not_to have_selector("#add_priority_button_list_show")
       end
 
