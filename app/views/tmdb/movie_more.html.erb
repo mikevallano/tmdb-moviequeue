@@ -1,67 +1,6 @@
 <h1>Movie: <%= @title %></h1>
 
-  <%= image_tag "http://image.tmdb.org/t/p/w780#{@backdrop_path}" if @backdrop_path.present? %><br>
-  <%= image_tag "http://image.tmdb.org/t/p/w150#{@poster_path}" if @poster_path.present? %>
-
-<!-- TODO: Refactor the shit out of this: -->
-<% @lists_except_movie = current_user.lists_except_movie(@movie) %>
-
-<% if @movie.present? %>
-
-  <% if current_user.all_movies.include?(@movie) %>
-
-    <p>On List(s):
-    <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
-    <% @movie.lists.by_user(current_user).each do |list| %>
-      <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
-    <% end %> <!-- #list loop -->
-    </p>
-
-  <% else %>
-    <p>This movie is not on your lists. Add it to a list:</p>
-
-  <% end %> <!-- if current_user.all_movies.include?(@movie) -->
-
-  </p>
-
-<% else %> <!-- #if @movie.present? -->
-
-  <p>This movie is not on your lists. Add it to a list:</p>
-    <%= form_for(Listing.new) do |f| %>
-      <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
-      <%= hidden_field_tag :tmdb_id, @tmdb_id %>
-      <%= hidden_field_tag :user_id, current_user.id %>
-      <%= f.submit "add movie to list", id: "add_to_list_button_movie_more" %>
-    <% end %>
-
-<% end %> <!-- #if @movie present -->
-
-  <p>Release Date: <%= @release_date %></p>
-  <p>Rated: <%= @mpaa_rating %></p>
-  <p>TMDB Vote Average: <%= @vote_average %></p>
-  <p>Genres:
-  <% @genre_list.each do |genre| %>
-    <%= link_to "#{genre[:name]}", genre_path(genre: genre[:name]) %>
-  <% end %>
-  </p>
-  <p>Overview: <%= @overview %></p>
-  <p>Actors:
-  <% @cast.each do |actor| %>
-    <%= link_to "#{actor[:name]}", actor_search_path(actor: actor[:name]) %>
-  <% end %>
-  </p>
-  <p>Director: <%= link_to "#{@director}", director_search_path(director_id: @director_id, name: @director) %></p>
-  <p>Production Companies:
-  <% @production_companies.each do |company| %>
-    <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
-  <% end %>
-  </p>
-  <p>Trailer:</p>
-  <% if @youtube_trailers.present? %>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @trailer_url %>" frameborder="0" allowfullscreen></iframe>
-  <% else %>
-    <a href="https://www.youtube.com/results?search_query=<%= @title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
-  <% end %>
+<%= render "movies/movie_show" %>
 
   <h2>Similar Movies: (maybe this should just be a different page?)</h2>
    <% @similar.each do |result| %>

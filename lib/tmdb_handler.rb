@@ -19,8 +19,9 @@ module TmdbHandler
     @release_date = @result[:release_date]
     @vote_average = @result[:vote_average]
     @genre_list = @result[:genres]
+    @genres = @result[:genres].map { |genre| genre[:name] }
     @overview = @result[:overview]
-    @cast = @result[:credits][:cast]
+    @actors = @result[:credits][:cast].map { |cast| cast[:name] }
     @youtube_trailers = @result[:trailers][:youtube]
     @backdrop_path = @result[:backdrop_path]
     @poster_path = @result[:poster_path]
@@ -143,14 +144,12 @@ module TmdbHandler
 
     tmdb_handler_movie_more(@movie_one_id)
       @movie_one = @result
-      @movie_one_cast = @cast
-      @movie_one_cast_names = @cast.map { |cast| cast[:name] }
+      @movie_one_actors = @actors
     tmdb_handler_movie_more(@movie_two_id)
       @movie_two = @result
-      @movie_two_cast = @cast
-      @movie_two_cast_names = @cast.map { |cast| cast[:name] }
+      @movie_two_actors = @actors
 
-    @common_actors = @movie_one_cast_names & @movie_two_cast_names
+    @common_actors = @movie_one_actors & @movie_two_actors
 
   end
 

@@ -24,6 +24,23 @@ class MoviesController < ApplicationController
     if request.path != movie_path(@movie)
       return redirect_to @movie, :status => :moved_permanently
     end
-  end
+
+    @title = @movie.title
+    @tmdb_id = @movie.tmdb_id
+    @release_date = @movie.release_date
+    @vote_average = @movie.vote_average
+    @genres = @movie.genres
+    @overview = @movie.overview
+    @actors = @movie.actors
+    @youtube_trailers = @movie.trailer
+    @backdrop_path = @movie.backdrop_path
+    @poster_path = @movie.poster_path
+    @youtube_trailers = @movie.trailer
+    @trailer_url = @movie.trailer
+    @mpaa_rating = @movie.mpaa_rating
+    @director = @movie.director
+    @director_id = @movie.director_id
+
+  end #show
 
 end

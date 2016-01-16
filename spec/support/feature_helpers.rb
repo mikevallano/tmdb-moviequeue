@@ -87,7 +87,7 @@ module FeatureHelpers
 
     all('#new_listing option')[0].select_option
     VCR.use_cassette('tmdb_add_movie') do
-      click_button "add_to_list_button_movie_more"
+      click_button "add_to_list_button_movie_show_partial"
     end
     #user is returned to the list page after adding a movie to the list
     expect(current_url).to eq(user_list_url(@current_user, List.last))

@@ -1,100 +1,144 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Movies index page/My movies</h1>
-<p>This page shows current user's movies, which include movies on any/all lists.</p>
-<% if @tag.present? %>
-  <% if @list.present? %>
-  <h3>Here are the movies tagged with: <%= "'#{@tag}' on #{@list.name}" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_and_list_movies_index" %></h3>
-  <% else %>
-  <h3>Here are the movies tagged with: <%= "'#{@tag}'" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_movies_index" %></h3>
+
+ <h1>Movie Show page for: <%= @movie.title %></h1>
+
+<%= image_tag "http://image.tmdb.org/t/p/w780#{@movie.backdrop_path}" %><br>
+<%= image_tag "http://image.tmdb.org/t/p/w150#{@movie.poster_path}" %>
+
+</br>
+<p><strong>Trailer:</strong></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
+
+<p>
+  <strong>Genres:</strong>
+  <% @movie.genres.each do |genre| %>
+    <%= link_to "#{genre}", genre_path(genre), id: "genre_link_movie_show" %>
   <% end %>
+</p>
+
+<p>
+  <strong>Actors:</strong>
+  <% @movie.actors.each do |actor| %>
+    <%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_show" %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Director:</strong>
+  <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director), id: "director_link_movie_show" %>
+</p>
+
+<p>
+  <strong>release date:</strong>
+  <%= @movie.release_date %>
+</p>
+
+<p>
+  <strong>overview:</strong>
+  <%= @movie.overview %>
+</p>
+
+<p>
+  <strong>vote average:</strong>
+  <%= @movie.vote_average %>
+</p>
+
+<p>
+  <strong>popularity:</strong>
+  <%= @movie.popularity %>
+</p>
+
+<p>
+  <strong>runtime:</strong>
+  <%= @movie.runtime %>
+</p>
+
+<% if current_user.movies.include?(@movie) %>
+
+  <p>Tags:
+  <% @movie.tag_list(current_user).each do |tag| %>
+    <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movie_show" %><%= link_to "(x)", delete_tagging_path(tag.id, @movie.id, from: "movie"), id: "remove_tag_link_movie_show", method: :delete  %>
+  <% end %>
+  </p>
+
+  <p> <%= form_tag('/taggings') do %>
+        <%= label_tag(:tag_list, "Add tags:") %>
+        <%= text_field_tag(:tag_list) %>
+        <%= hidden_field_tag(:movie_id, @movie.id) %>
+        <%= hidden_field_tag(:from, "movie") %>
+        <%= submit_tag "add tags", id: "add_tags_button_movie_show" %>
+      <% end %>
+  </p>
+
+  <p>On List(s):
+    <% @movie.lists.by_user(current_user).each do |list| %>
+      <%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "list_show_link_on_list_movie_show" %>
+    <% end %>
+  </p>
+  <p>Add to another list?</p>
+  <%= form_for(Listing.new) do |f| %>
+    <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
+    <%= hidden_field_tag :tmdb_id, @movie.tmdb_id %>
+    <%= hidden_field_tag :user_id, current_user.id %>
+    <%= f.submit "add movie to list", id: "add_to_another_list_button_movie_show" %>
+  <% end %>
+
+  <p>
+    <% if current_user.reviewed_movies.include?(@movie) %>
+      <strong>My Review:</strong>
+      <%= @movie.reviews.by_user(current_user).first.body %>,
+      <%= link_to "show", movie_review_path(@movie, @movie.reviews.by_user(current_user).first), id: "show_review_link_movie_show" %>
+    <% else %>
+      <%= link_to "Review this movie", new_movie_review_path(@movie), id: "new_review_link_movie_show" %></td>
+    <% end %>
+  </p>
+
+  <p>
+    <% if current_user.rated_movies.include?(@movie) %>
+      <strong id="existing_rating">My Rating</strong>
+      <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movie_show" %>
+  </p>
+    <% else %>
+    <p>
+      <%= form_for([@movie, Rating.new]) do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :movie_id, value: @movie.id %>
+        <%= hidden_field_tag :from, "movie_show" %>
+        <%= f.label "Rate this movie" %><br>
+        <%= f.number_field :value, id: "rating_value_field" %>
+        <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
+      <% end %>
+
+    <% end %> <!-- #if movie has been rated -->
+   </p>
+
+  <p>
+    <% if current_user.screened_movies.include?(@movie) %>
+    <strong>Movie has been watched.</strong><br>
+    <strong> <%= link_to "view my screenings", movie_screenings_path(@movie), id: "view_screenings_link_movie_show" %></strong>
+  </p>
+    <% else %>
+    <p>
+      <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id }, movie_id: @movie.id, from: "movie_show"), :method => :post, id: "mark_watched_link_movie_show" %><br>
+      <%= link_to "Add a screening", new_movie_screening_path(@movie), id: "add_screening_link_movie_show" %>
+    <% end %>
+    </p>
+
+<% else %>
+
+  <p>Add to a list:</p>
+  <%= form_for(Listing.new) do |f| %>
+    <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
+    <%= hidden_field_tag :tmdb_id, @movie.tmdb_id %>
+    <%= hidden_field_tag :user_id, current_user.id %>
+    <%= f.submit "add movie to list", id: "add_to_list_button_movie_show" %>
+  <% end %>
+  </br>
+
 <% end %>
 
 
- <% @movies.each do |movie| %>
-   <div>
-      <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
-      <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
-      <p><%= movie.release_date %></p>
-      <p><%= movie.vote_average %></p>
-      <p><%= movie.overview %></p>
+<p><%= link_to "Similar movies", movie_more_path(movie_id: @movie.tmdb_id), id: "similar_movies_link_movie_show" %></p>
 
-      <% if @list.present? %> <!-- #will show member tags if @list.present? -->
-        <p>Tags:
-          <% movie.tags.by_user_or_list(@list).each do |tag| %>
-            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_movies_index_on_list" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id), id: "remove_tag_link_movies_index_on_list", method: :delete  %>
-          <% end %>
-          </p>
-      <% else %>
-        <p>Tags:
-        <% movie.tag_list(current_user).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_index" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_index", method: :delete  %>
-        <% end %>
-      <% end %><!--  #if @list.present? -->
-
-      <p> <%= form_tag('/taggings') do %>
-            <%= label_tag(:tag_list, "Add tags:") %>
-            <%= text_field_tag(:tag_list) %>
-            <%= hidden_field_tag(:movie_id, movie.id) %>
-            <%= hidden_field_tag(:page, params[:page]) %>
-            <%= submit_tag "add tags", id: "add_tags_button_movies_index" %>
-          <% end %>
-      </p>
-
-      <p>On List(s):
-        <% movie.lists.by_user(current_user).each do |list| %>
-          <%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "list_show_link_on_list_movies_index" %>
-        <% end %>
-      </p>
-
-      <p>Add to another list:
-      <%= form_for(Listing.new) do |f| %>
-        <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
-        <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
-        <%= hidden_field_tag :user_id, current_user.id %>
-        <%= f.submit "add movie to list", id: "add_to_list_button_movies_index" %>
-      <% end %>
-      </p>
-      </br>
-
-      <% if current_user.rated_movies.include?(movie) %>
-      <p>My rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_index" %></p>
-      <% else %>
-        <div id="rating_form_movies_index">
-          <%= form_for([movie, Rating.new]) do |f| %>
-            <%= f.hidden_field :user_id, value: current_user.id %>
-            <%= f.hidden_field :movie_id, value: movie.id %>
-            <%= hidden_field_tag :from, "movies_index" %>
-            <%= hidden_field_tag :page, params[:page] %>
-            <%= f.label "Rate this movie" %><br>
-            <%= f.number_field :value, id: "rating_value_field" %>
-            <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
-          <% end %>
-        </div>
-
-      <% end %> <!-- #if movie has been rated -->
-
-      <% if current_user.reviewed_movies.include?(movie) %>
-        <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
-        <%= link_to "show", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_index" %>
-      <% else %>
-        <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_movies_index" %></p>
-      <% end %>
-
-      <% if current_user.screened_movies.include?(movie) %>
-        <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
-        <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_index" %></p>
-      <% else %>
-        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_index" %></p>
-        <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_index" %><p>
-      <% end %>
-
-      <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
-
-    </br>
-  <% end %>
-</div>
-
-<p><%= will_paginate @movies %></p>
-
-<br>
+<%= link_to 'Back', movies_path %>
