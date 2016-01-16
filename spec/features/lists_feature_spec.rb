@@ -111,7 +111,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
         click_link "my_lists_nav_link"
         click_link "show_list_link_list_index"
-        click_link "remove_movie_link_list_show"
+        click_link "remove_movie_link_movies_partial"
         expect(page).to have_content("Movie was removed from list.")
       end
 
@@ -127,7 +127,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "users can add tags to a movie from the list show page and are returned to the page" do
         click_link "show_list_link_list_index"
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add_tags_button_list_show", match: :first
+        click_button "add_tags_button_movies_partial", match: :first
         expect(current_url).to eq(user_list_url(@current_user, List.last))
         expect(page).to have_content("dark-comedy")
         expect(page).to have_content("spooky")
@@ -136,7 +136,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can click a tag to see movies with that tag" do
         click_link "show_list_link_list_index"
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add_tags_button_list_show", match: :first
+        click_button "add_tags_button_movies_partial", match: :first
         click_link "spooky", match: :first
         expect(page).to have_content("Fargo")
       end
@@ -144,23 +144,23 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can remove tags and be returned to the list page" do
         click_link "show_list_link_list_index"
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add_tags_button_list_show", match: :first
-        expect { click_link "remove_tag_link_list_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
-        click_link "remove_tag_link_list_show"
+        click_button "add_tags_button_movies_partial", match: :first
+        expect { click_link "remove_tag_link_movies_partial_on_list", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+        click_link "remove_tag_link_movies_partial_on_list"
         expect(current_url).to eq(user_list_url(@current_user, List.last))
       end
 
       scenario "user can update a listing's priority" do
         click_link "show_list_link_list_index"
-        fill_in "priority_number_field_list_show", with: '9'
-        click_button "add_priority_button_list_show"
+        fill_in "priority_number_field_movies_partial", with: '9'
+        click_button "add_priority_button_movies_partial"
         expect(page).to have_content("Priority added.")
         expect(page).to have_content('9')
       end
 
       scenario "movie not yet rated shows field to submit new rating, which returns to the list page" do
         click_link "show_list_link_list_index"
-        expect(page).not_to have_selector("#show_rating_link_list_show")
+        expect(page).not_to have_selector("#show_rating_link_movies_partial")
         expect(page).to have_selector("#rating_submit_button_rating_form")
         fill_in "rating_value_field", with: '5'
         click_button "rating_submit_button_rating_form"
@@ -171,34 +171,34 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "movie rated by user shows link to the rating show path" do
         FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
         click_link "show_list_link_list_index"
-        expect(page).to have_selector("#show_rating_link_list_show")
-        expect(page).not_to have_selector("#new_rating_link_list_show")
+        expect(page).to have_selector("#show_rating_link_movies_partial")
+        expect(page).not_to have_selector("#new_rating_link_movies_partial")
       end
 
       scenario "movie not yet reviewed shows link to review the movie" do
         click_link "show_list_link_list_index"
-        expect(page).not_to have_selector("#show_review_link_list_show")
-        expect(page).to have_selector("#new_review_link_list_show")
+        expect(page).not_to have_selector("#show_review_link_movies_partial")
+        expect(page).to have_selector("#new_review_link_movies_partial")
       end
 
       scenario "movie reviewed by user shows link to the rating show path" do
         FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         click_link "show_list_link_list_index"
-        expect(page).to have_selector("#show_review_link_list_show")
-        expect(page).not_to have_selector("#new_review_link_list_show")
+        expect(page).to have_selector("#show_review_link_movies_partial")
+        expect(page).not_to have_selector("#new_review_link_movies_partial")
       end
 
       scenario "if user has not watched the movie, there is a link to mark as watched" do
         click_link "show_list_link_list_index"
-        expect(page).to have_selector("#mark_watched_link_list_show")
-        expect(page).not_to have_selector("#view_screenings_link_list_show")
+        expect(page).to have_selector("#mark_watched_link_movies_partial")
+        expect(page).not_to have_selector("#view_screenings_link_movies_partial")
       end
 
       scenario "if the movie has been watched, there is no link to mark as watched" do
         FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         click_link "show_list_link_list_index"
-        expect(page).not_to have_selector("#mark_watched_link_list_show")
-        expect(page).to have_selector("#view_screenings_link_list_show")
+        expect(page).not_to have_selector("#mark_watched_link_movies_partial")
+        expect(page).to have_selector("#view_screenings_link_movies_partial")
       end
 
     end #list show page functionality
@@ -246,8 +246,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(public_list.owner)
         click_link "public_lists_nav_link"
         click_link "#{public_list.name}"
-        expect(page).not_to have_selector("#add_movie_to_list_public_list_show")
-        expect(page).to have_selector("#add_priority_button_list_show")
+        expect(page).not_to have_selector("#add_movie_to_list_public_movies_partial")
+        expect(page).to have_selector("#add_priority_button_movies_partial")
         expect(page).to have_selector("#rating_submit_button_rating_form")
       end
 

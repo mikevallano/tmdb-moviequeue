@@ -169,7 +169,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_index", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           expect(page).to have_content("dark-comedy")
           expect(page).to have_content("spooky")
         end #user can tag movie
@@ -178,7 +178,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_index", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           expect(current_url).to eq(movies_url)
         end #user can tag movie
 
@@ -193,7 +193,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           click_link "my_movies_nav_link"
           click_link "Next"
           fill_in "tag_list", match: :first, with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_index", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           expect(page).to have_content("dark-comedy")
           expect(page).to have_content("spooky")
         end
@@ -202,7 +202,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_index", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           click_link "spooky", match: :first
           expect(page).to have_content("Fargo")
         end #user can tag movie
@@ -211,10 +211,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
           click_link "my_movies_nav_link"
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_index", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           click_link "my_movies_nav_link"
-          expect { click_link "remove_tag_link_movies_index", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
-          click_link "remove_tag_link_movies_index"
+          expect { click_link "remove_tag_link_movies_partial", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
+          click_link "remove_tag_link_movies_partial"
           expect(current_url).to eq(movies_url)
         end
 
@@ -268,7 +268,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
         scenario "movie not yet rated shows field to rate movie, and returns to movies index after submit" do
           click_link "my_movies_nav_link"
-          expect(page).not_to have_selector("#show_rating_link_movies_index")
+          expect(page).not_to have_selector("#show_rating_link_movies_partial")
           expect(page).to have_selector("#rating_submit_button_rating_form")
           fill_in "rating_value_field", with: '5'
           click_button "rating_submit_button_rating_form"
@@ -279,37 +279,37 @@ RSpec.feature "Movies feature spec", :type => :feature do
         scenario "movie rated by user shows link to the rating show path" do
           FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
           click_link "my_movies_nav_link"
-          expect(page).to have_selector("#show_rating_link_movies_index")
-          expect(page).not_to have_selector("#new_rating_link_movies_index")
+          expect(page).to have_selector("#show_rating_link_movies_partial")
+          expect(page).not_to have_selector("#new_rating_link_movies_partial")
         end
 
         scenario "movie not yet reviewed shows link to review the movie" do
           click_link "my_movies_nav_link"
-          expect(page).not_to have_selector("#show_review_link_movies_index")
-          expect(page).to have_selector("#new_review_link_movies_index")
+          expect(page).not_to have_selector("#show_review_link_movies_partial")
+          expect(page).to have_selector("#new_review_link_movies_partial")
         end
 
         scenario "movie reviewed by user shows link to the rating show path" do
           FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
           click_link "my_movies_nav_link"
-          expect(page).to have_selector("#show_review_link_movies_index")
-          expect(page).not_to have_selector("#new_review_link_movies_index")
+          expect(page).to have_selector("#show_review_link_movies_partial")
+          expect(page).not_to have_selector("#new_review_link_movies_partial")
         end
 
         scenario "link to mark as watched if not watched, link marks as watched and returns user" do
           click_link "my_movies_nav_link"
-          expect(page).not_to have_selector("#view_screenings_link_movies_index")
-          click_link("mark_watched_link_movies_index") #mark movie as watched
+          expect(page).not_to have_selector("#view_screenings_link_movies_partial")
+          click_link("mark_watched_link_movies_partial") #mark movie as watched
           expect(current_url).to eq(movies_url) #return to movies index page
-          expect(page).not_to have_selector("#show_review_link_movies_index") #no link to mark as watched
-          expect(page).to have_selector("#view_screenings_link_movies_index") #link to view screenings
+          expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
+          expect(page).to have_selector("#view_screenings_link_movies_partial") #link to view screenings
         end
 
         scenario "if the movie has been watched, there is no link to mark as watched" do
           FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
           click_link "my_movies_nav_link"
-          expect(page).not_to have_selector("#mark_watched_link_movies_index")
-          expect(page).to have_selector("#view_screenings_link_movies_index")
+          expect(page).not_to have_selector("#mark_watched_link_movies_partial")
+          expect(page).to have_selector("#view_screenings_link_movies_partial")
         end
 
       end #rating, reviews, marking watched

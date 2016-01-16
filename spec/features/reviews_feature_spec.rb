@@ -74,39 +74,6 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
     end #end from movie show page
 
-    context 'from the list show page' do
-
-      scenario 'can add a review from the list show page' do
-
-        listing
-        list
-        movie
-
-        sign_in_user(user)
-        visit(user_list_path(user, list))
-        click_link "new_review_link_list_show"
-        fill_in "review_body", with: "Epic win!"
-        click_button "review_submit_button_review_form"
-        expect(page).to have_content("Epic win!")
-
-      end
-
-      scenario 'user sees existing review on the list show page' do
-
-        listing
-        list
-        movie
-        review
-
-        sign_in_user(user)
-        visit(user_list_path(user, list))
-        expect(page).not_to have_selector("#new_review_link_list_show")
-        expect(page).to have_content(Review.last.body)
-
-
-      end
-
-    end #from list show page
 
   end # feature end
 
