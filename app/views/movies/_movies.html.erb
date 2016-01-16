@@ -2,9 +2,9 @@
    <div>
       <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
       <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
-      <p><%= movie.release_date %></p>
-      <p><%= movie.vote_average %></p>
-      <p><%= movie.overview %></p>
+      <p>Release Date: <%= movie.release_date %></p>
+      <p>Vote average: <%= movie.vote_average %></p>
+      <p>Overview: <%= movie.overview %></p>
 
       <% if @list.present? %> <!-- #will show member tags if @list.present? -->
         <p>Tags:
