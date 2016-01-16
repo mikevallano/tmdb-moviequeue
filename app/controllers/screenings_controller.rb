@@ -2,7 +2,7 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_url
+  before_action :redirect_url, only: :create
 
   # GET /screenings
   # GET /screenings.json

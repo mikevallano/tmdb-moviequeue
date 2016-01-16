@@ -3,6 +3,7 @@ class RatingsController < ApplicationController
   before_action :set_movie
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
   before_action :restrict_ratings_access, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_url, only: :create
 
 
   def index
@@ -28,7 +29,7 @@ class RatingsController < ApplicationController
 
     respond_to do |format|
       if @rating.save
-        format.html { redirect_to movie_path(@movie), notice: 'Rating was successfully created.' }
+        format.html { redirect_to @redirect_url, notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else
         format.html { render :new }
@@ -77,4 +78,20 @@ class RatingsController < ApplicationController
         redirect_to movie_path(@movie), notice: "That's not your rating"
       end
     end
+
+    def redirect_url
+      @page = params[:page] if params[:page].present?
+      if params[:from].present? && params[:from] == "list_show"
+        @list = current_user.lists.find(params[:list_id])
+        @redirect_url = user_list_path(current_user, @list, page: @page)
+      elsif params[:from].present? && params[:from] == "movie_show"
+        @movie = Movie.friendly.find(params[:movie_id])
+        @redirect_url = movie_path(@movie)
+      elsif params[:from].present? && params[:from] == "movies_index"
+        @redirect_url = movies_path(page: @page)
+      else
+        @redirect_url = movie_path(@movie)
+      end
+    end
+
 end

@@ -47,19 +47,32 @@
         <% end %>
       </p>
 
-      <p>Add to another list:</p>
+      <p>Add to another list:
       <%= form_for(Listing.new) do |f| %>
         <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= f.submit "add movie to list", id: "add_to_list_button_movies_index" %>
       <% end %>
+      </p>
+      </br>
 
       <% if current_user.rated_movies.include?(movie) %>
-      <p><%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_index" %></p>
+      <p>My rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_index" %></p>
       <% else %>
-        <p><%= link_to "Rate this movie", new_movie_rating_path(movie), id: "new_rating_link_movies_index" %></p>
-      <% end %>
+        <div id="rating_form_movies_index">
+          <%= form_for([movie, Rating.new]) do |f| %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :movie_id, value: movie.id %>
+            <%= hidden_field_tag :from, "movies_index" %>
+            <%= hidden_field_tag :page, params[:page] %>
+            <%= f.label "Rate this movie" %><br>
+            <%= f.number_field :value, id: "rating_value_field" %>
+            <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
+          <% end %>
+        </div>
+
+      <% end %> <!-- #if movie has been rated -->
 
       <% if current_user.reviewed_movies.include?(movie) %>
         <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>

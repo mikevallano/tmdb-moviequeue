@@ -96,22 +96,34 @@
 
   <p>
     <% if current_user.rated_movies.include?(@movie) %>
-      <strong>My Rating</strong>
+      <strong id="existing_rating">My Rating</strong>
       <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movie_show" %>
-    <% else %>
-      <%= link_to "Rate this movie", new_movie_rating_path(@movie), id: "new_rating_link_movie_show"  %>
-    <% end %>
   </p>
+    <% else %>
+    <p>
+      <%= form_for([@movie, Rating.new]) do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :movie_id, value: @movie.id %>
+        <%= hidden_field_tag :from, "movie_show" %>
+        <%= f.label "Rate this movie" %><br>
+        <%= f.number_field :value, id: "rating_value_field" %>
+        <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
+      <% end %>
+
+    <% end %> <!-- #if movie has been rated -->
+   </p>
 
   <p>
     <% if current_user.screened_movies.include?(@movie) %>
     <strong>Movie has been watched.</strong><br>
     <strong> <%= link_to "view my screenings", movie_screenings_path(@movie), id: "view_screenings_link_movie_show" %></strong>
+  </p>
     <% else %>
+    <p>
       <%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: @movie.id }, movie_id: @movie.id, from: "movie_show"), :method => :post, id: "mark_watched_link_movie_show" %><br>
       <%= link_to "Add a screening", new_movie_screening_path(@movie), id: "add_screening_link_movie_show" %>
     <% end %>
-  </p>
+    </p>
 
 <% else %>
 

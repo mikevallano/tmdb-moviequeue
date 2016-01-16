@@ -59,7 +59,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).not_to have_selector("#add_tags_button_movie_show")
         expect(page).not_to have_selector("#list_show_link_on_list_movie_show")
         expect(page).not_to have_selector("#new_review_link_movie_show")
-        expect(page).not_to have_selector("#new_rating_link_movie_show")
+        expect(page).not_to have_selector("#rating_submit_button_rating_form")
         expect(page).not_to have_selector("#mark_watched_link_movie_show")
       end #does not show links if not on a list
 
@@ -96,10 +96,14 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(current_url).to eq(movie_url(Movie.last))
         end
 
-        scenario "movie not yet rated shows link to rate movie" do
+        scenario "movie not yet rated shows field to rate movie, and returns user back after review is submitted" do
           visit(movie_path(Movie.last))
           expect(page).not_to have_selector("#show_rating_link_movie_show")
-          expect(page).to have_selector("#new_rating_link_movie_show")
+          expect(page).to have_selector("#rating_submit_button_rating_form")
+          fill_in "rating_value_field", with: '5'
+          click_button "rating_submit_button_rating_form"
+          expect(page).to have_content('5')
+          expect(current_url).to eq(movie_url(Movie.last))
         end
 
         scenario "movie rated by user shows link to the rating show path" do
@@ -262,10 +266,14 @@ RSpec.feature "Movies feature spec", :type => :feature do
           sign_up_api_search_then_add_movie_to_list
         end
 
-        scenario "movie not yet rated shows link to rate movie" do
+        scenario "movie not yet rated shows field to rate movie, and returns to movies index after submit" do
           click_link "my_movies_nav_link"
           expect(page).not_to have_selector("#show_rating_link_movies_index")
-          expect(page).to have_selector("#new_rating_link_movies_index")
+          expect(page).to have_selector("#rating_submit_button_rating_form")
+          fill_in "rating_value_field", with: '5'
+          click_button "rating_submit_button_rating_form"
+          expect(page).to have_content('5')
+          expect(current_url).to eq(movies_url)
         end
 
         scenario "movie rated by user shows link to the rating show path" do

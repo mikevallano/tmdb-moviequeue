@@ -158,10 +158,14 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).to have_content('9')
       end
 
-      scenario "movie not yet rated shows link to rate movie" do
+      scenario "movie not yet rated shows field to submit new rating, which returns to the list page" do
         click_link "show_list_link_list_index"
         expect(page).not_to have_selector("#show_rating_link_list_show")
-        expect(page).to have_selector("#new_rating_link_list_show")
+        expect(page).to have_selector("#rating_submit_button_rating_form")
+        fill_in "rating_value_field", with: '5'
+        click_button "rating_submit_button_rating_form"
+        expect(page).to have_content('5')
+        expect(current_url).to eq(user_list_url(@current_user, List.last))
       end
 
       scenario "movie rated by user shows link to the rating show path" do
@@ -244,7 +248,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         click_link "#{public_list.name}"
         expect(page).not_to have_selector("#add_movie_to_list_public_list_show")
         expect(page).to have_selector("#add_priority_button_list_show")
-        expect(page).to have_selector("#new_rating_link_list_show")
+        expect(page).to have_selector("#rating_submit_button_rating_form")
       end
 
       describe "public show page pagination" do

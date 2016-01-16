@@ -15,31 +15,13 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
     context "From the movies show page" do
 
-      scenario "users can create a rating" do
-
-        listing
-        sign_in_user(user)
-        click_link "my_movies_nav_link"
-          VCR.use_cassette('movie_show_page') do
-            click_link "movie_show_page"
-          end
-        click_link "new_rating_link_movie_show"
-        fill_in "rating_value", with: "9"
-
-        expect { click_button "rating_submit_button_rating_form" }.to change(Rating.by_user(user), :count).by(1)
-        expect(page).to have_content("9")
-
-      end #end create rating scenario
-
       scenario "users can only rate a movie once" do
 
         listing
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "new_rating_link_movie_show"
-        fill_in "rating_value", with: "9"
-
+        fill_in "rating_value_field", with: "5"
         click_button "rating_submit_button_rating_form"
 
         visit(new_movie_rating_path(movie))
@@ -55,8 +37,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        click_link "new_rating_link_movie_show"
-        fill_in "rating_value", with: "9"
+        fill_in "rating_value_field", with: "5"
         click_button "rating_submit_button_rating_form"
         click_link "sign_out_nav_link"
 
@@ -64,55 +45,18 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user2)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        expect(page).not_to have_content("9")
+        expect(page).not_to have_selector("#existing_rating")
         click_link "sign_out_nav_link"
 
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        expect(page).to have_content("9")
+        expect(page).to have_selector("#existing_rating")
 
 
       end #only current user's rating
 
     end # movies show page context
-
-    context 'from the list show page' do
-
-      scenario "users can create a rating" do
-
-        list
-        listing
-        movie
-
-        sign_in_user(user)
-        visit(user_list_path(user, list))
-        click_link "new_rating_link_list_show"
-        fill_in "rating_value", with: "9"
-
-        expect { click_button "rating_submit_button_rating_form" }.to change(Rating.by_user(user), :count).by(1)
-        expect(page).to have_content("9")
-
-      end #end create rating scenario
-
-      scenario "users can see their existing rating" do
-
-        list
-        movie
-        listing
-        rating
-
-        sign_in_user(user)
-        visit(user_list_path(user, list))
-
-        expect(page).to_not have_content("new_rating_link_list_show")
-        expect(page).to have_content("My Rating")
-        expect(page).to have_content("2")
-
-      end #end see existing rating
-
-
-    end #list show page context
 
   end #feature
 
