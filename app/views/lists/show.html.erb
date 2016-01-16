@@ -3,75 +3,7 @@
 <h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
 
 
- <% @movies.each do |movie| %>
-   <div>
-      <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
-      <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
-      <p>Release date: <%= movie.release_date %></p>
-      <p>Vote average: <%= movie.vote_average %></p>
-      <p>Overview: <%= movie.overview %></p>
-      <p>Runtime: <%= movie.runtime %></p>
-      <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_list_show", method: :delete, data: { confirm: 'Are you sure?' } %></p>
-
-      <p>Tags:
-        <% movie.tags.by_user_or_list(@list).each do |tag| %>
-          <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_list_show" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]), id: "remove_tag_link_list_show", method: :delete  %>
-        <% end %>
-      </p>
-      <p> <%= form_tag('/taggings') do %>
-            <%= label_tag(:tag_list, "Add tags:") %>
-            <%= text_field_tag(:tag_list) %>
-            <%= hidden_field_tag(:movie_id, movie.id) %>
-            <%= hidden_field_tag(:list_id, @list.id) %>
-            <%= hidden_field_tag(:page, params[:page]) %>
-            <%= submit_tag "add tags", id: "add_tags_button_list_show" %>
-          <% end %>
-      </p>
-
-      <p>Priority: <%= movie.priority(@list) %></p>
-      <p><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
-        <%= label_tag(:priority, "new priority:") %>
-        <%= number_field_tag :priority, nil, id: "priority_number_field_list_show" %>
-        <%= hidden_field_tag(:user_id, current_user.id) %>
-        <%= hidden_field_tag(:page, params[:page]) %>
-        <%= submit_tag "Prioritize", id: "add_priority_button_list_show" %>
-      <% end %>
-      </p>
-
-      <% if current_user.screened_movies.include?(movie) %>
-        <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
-        <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_list_show" %></p>
-      <% else %>
-        <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "list_show", list_id: @list.id, page: params[:page]), id: "mark_watched_link_list_show", :method => :post %></p>
-        <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_list_show" %><p>
-      <% end %>
-
-      <% if current_user.rated_movies.include?(movie) %>
-        <p>My Rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_list_show" %></p>
-      <% else %>
-        <%= form_for([movie, Rating.new]) do |f| %>
-          <%= f.hidden_field :user_id, value: current_user.id %>
-          <%= f.hidden_field :movie_id, value: movie.id %>
-          <%= hidden_field_tag :from, "list_show" %>
-          <%= hidden_field_tag :list_id, @list.id %>
-          <%= hidden_field_tag :page, params[:page] %>
-          <%= f.label "Rate this movie" %><br>
-          <%= f.number_field :value, id: "rating_value_field" %>
-          <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
-        <% end %>
-
-      <% end %> <!-- #if movie has been rated -->
-
-      <% if current_user.reviewed_movies.include?(movie) %>
-        <p>My Review: <%= movie.reviews.by_user(current_user).first.body %><%= link_to "view", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_list_show" %></p>
-      <% else %>
-        <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_list_show" %></p>
-      <% end %>
-
-      <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_list_show" %></p>
-    </br>
-  <% end %>
-</div>
+<%= render 'movies/movies' %>
 
 <p><%= will_paginate @movies %></p>
 

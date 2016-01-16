@@ -16,6 +16,7 @@ rubberduck.txt
 tester.rb
 tester2.rb
 tester.html.erb
+tester2.html.erb
 
 # Ignore application configuration
 /config/application.yml
