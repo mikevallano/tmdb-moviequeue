@@ -21,11 +21,14 @@ class ListingsController < ApplicationController
       @listing.priority = 5
     end
 
-    @list = List.friendly.find(@listing.list.id)
     @user = User.friendly.find(@user_id)
+    @movies = current_user.all_movies
     respond_to do |format|
       if @listing.save
-        format.html { redirect_to user_list_path(@user, @list), notice: 'added to your list.' }
+        @movies = current_user.all_movies
+        movie = @movie
+        format.js {}
+        format.html { redirect_to user_list_path(@user, List.friendly.find(@listing.list.id)), notice: 'added to your list.' }
         format.json { render :show, status: :created, location: @listing }
       else
         format.html { render :new }

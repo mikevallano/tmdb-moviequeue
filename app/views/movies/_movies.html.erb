@@ -10,39 +10,13 @@
         <%= render 'movies/movie_tag', movie: movie %>
       </div>
 
-      <p>On List(s):
-        <% movie.lists.by_user(current_user).each do |list| %>
-          <%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "show_list_link_on_list_movies_partial" %>
-        <% end %> <!-- # list loop -->
-      </p>
-
-      <% if @list.present? %> <!-- #if @list.present, show remove from list and priority -->
-        <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, data: { confirm: 'Are you sure?' } %></p>
-
-        <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority(@list) %></p>
-
-        <p><%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
-            <%= label_tag(:priority, "new priority:") %>
-            <%= number_field_tag :priority, nil, id: "priority_number_field_movies_partial" %>
-            <%= hidden_field_tag(:user_id, current_user.id) %>
-            <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial" %>
-          <% end %> <!-- #update priority form -->
-        </p>
-      <% end %> <!-- #if @list.present, show remove from list and priority -->
-
-      <p>Add to another list:
-      <%= form_for(Listing.new) do |f| %>
-        <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name %>
-        <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
-        <%= hidden_field_tag :user_id, current_user.id %>
-        <%= f.submit "add movie to list", id: "add_to_list_button_movies_partial" %>
-      <% end %> <!-- # add to list form -->
-      </p>
+      <div id="if_movie_listed_<%= "#{movie.id}" %>">
+        <%= render 'movies/movie_list', movie: movie %>
+      </div>
 
       <div id="if_movie_rated_<%= "#{movie.id}" %>">
         <%= render 'movies/movie_rating', movie: movie %>
-
-      </div> <!-- #if movie has been rated -->
+      </div>
 
       <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
 
