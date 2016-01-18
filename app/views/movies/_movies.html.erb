@@ -1,5 +1,5 @@
 <% @movies.each do |movie| %>
-   <div id="movies_partial">
+   <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
       <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
       <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
       <p>Release Date: <%= movie.release_date %></p>
@@ -12,6 +12,14 @@
 
       <div id="if_movie_listed_<%= "#{movie.id}" %>">
         <%= render 'movies/movie_list', movie: movie %>
+      </div>
+
+      <div id="if_list_remove_<%= "#{movie.id}" %>">
+        <%= render 'movies/movie_list_remove', movie: movie %>
+      </div>
+
+      <div id="if_list_priority_<%= "#{movie.id}" %>">
+        <%= render 'movies/movie_list_priority', movie: movie %>
       </div>
 
       <div id="if_movie_rated_<%= "#{movie.id}" %>">

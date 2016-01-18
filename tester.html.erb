@@ -1,38 +1,7 @@
-<h3>Movies on this list:</h3>
+OG:
 
-  <% @movies.each do |movie| %>
-   <div>
-      <% @lists_except_movie = current_user.lists_except_movie(movie) %>
-       <%= image_tag "http://image.tmdb.org/t/p/w150#{movie.poster_path}" %>
-      <h3><%= movie.title %></h3>
-      <p><%= movie.release_date %></p>
-      <p><%= movie.vote_average %></p>
-      <p><%= movie.overview %></p>
-      <p><%= link_to "More info", movie_path(movie), id: "movie_more_link_public_list" %></p>
+<%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
 
-      <% if current_user.all_movies.include?(movie) %>
+<%= form_tag( { :controller => :listings, :action => :update, :method => :patch }, { remote: true } ) do %>
 
-        <p>On List(s):
-        <!--  TODO  this needs to be fixed to show lists by current user's all_lists -->
-        <% movie.lists.by_user(current_user).each do |list| %>
-          <%= link_to "#{list.name}", user_list_path(current_user, list.slug) %>
-        <% end %> <!-- #list loop -->
-        </p>
-         <p>Add it to another list?</p>
-
-      <% else %>
-
-        <p>This movie is not on your lists. Add to a list:</p>
-
-      <% end %>
-
-        <%= form_for(Listing.new) do |f| %>
-          <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
-          <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
-          <%= hidden_field_tag :user_id, current_user.id %>
-          <%= f.submit "add movie to list", id: "add_movie_to_list_public_list_show" %>
-        <% end %>
-        </br>
-        <hr>
-    </div>
-  <% end %>
+<%= form_tag( { :controller => :listings, :action => :update, :method => :patch, list_id: @list.id, movie_id: movie.id }, { remote: true } ) do %>

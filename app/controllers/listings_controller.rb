@@ -40,8 +40,12 @@ class ListingsController < ApplicationController
   def update
     @listing = current_user.listings.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
     @priority = params[:priority]
+    @movies = @movies = current_user.all_movies
+    @movie = Movie.friendly.find(params[:movie_id])
+    @list = List.friendly.find(params[:list_id])
     respond_to do |format|
       if @listing.update_attributes(:priority => @priority)
+        format.js {}
         format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Priority added.' }
         format.json { render :show, status: :ok, location: @listing }
       else

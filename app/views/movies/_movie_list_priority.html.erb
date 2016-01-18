@@ -1,0 +1,11 @@
+      <% if @list.present? %> <!-- #if @list.present-->
+        <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority(@list) %></p>
+
+        <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { remote: true, method: :patch } ) do %>
+            <%= label_tag(:priority, "new priority:") %>
+            <%= number_field_tag :priority, nil, id: "priority_number_field_movies_partial" %>
+            <%= hidden_field_tag(:user_id, current_user.id) %>
+            <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial" %>
+          <% end %> <!-- #update priority form -->
+        </p>
+      <% end %> <!-- #if @list.present -->

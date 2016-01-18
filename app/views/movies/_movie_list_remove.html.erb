@@ -1,0 +1,4 @@
+<% if @list.present? %> <!-- #if @list.present, show remove from list and priority -->
+    <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+
+<% end %>
