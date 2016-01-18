@@ -1,0 +1,23 @@
+      <% if @list.present? %> <!-- #will show member tags if @list.present? -->
+        <p>Tags:
+          <% movie.tags.by_user_or_list(@list).each do |tag| %>
+            <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_movies_partial" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]), id: "remove_tag_link_movies_partial_on_list", method: :delete, remote: true  %>
+          <% end %>
+          </p>
+      <% else %>
+        <p>Tags:
+        <% movie.tags.by_user_or_list(current_user).each do |tag| %>
+          <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_partial" %><%= link_to "(x)", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_partial", method: :delete, remote: true  %>
+        <% end %> <!-- # tag loop -->
+
+      <% end %> <!-- #will show member tags if @list.present? -->
+
+      <p> <%= form_tag( { :controller => :taggings, :action => :create }, { remote: true } ) do %>
+            <%= label_tag(:tag_list, "Add tags:") %>
+            <%= text_field_tag(:tag_list) %>
+            <%= hidden_field_tag(:movie_id, movie.id) %>
+            <%= hidden_field_tag(:list_id, @list.id) if @list.present? %>
+            <%= hidden_field_tag(:page, params[:page]) %>
+            <%= submit_tag "add tags", id: "add_tags_button_movies_partial" %>
+          <% end %> <!-- # tag form loop -->
+      </p>
