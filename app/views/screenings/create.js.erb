@@ -1,1 +1,1 @@
-$("#if_movie_seen_<%= @movie.id %>").html("<%= j(render :partial => 'movies/movie_screening', :locals => {:movie => @movie}) %>");
+$("#movie_seen_<%= @movie.id %>").html("<%= j(render :partial => 'movies/movie_screening', :locals => {:movie => @movie}) %>");

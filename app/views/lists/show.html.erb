@@ -3,7 +3,17 @@
 <h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
 
 
-<%= render 'movies/movies' %>
+<div id ="list_show_loop">
+
+  <% @movies.each do |movie| %>
+
+    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+      <%= render partial: 'movies/movie', object: movie %>
+    </div>
+
+  <% end %> <!-- movies loop -->
+
+</div>
 
 <p><%= will_paginate @movies %></p>
 

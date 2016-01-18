@@ -1,0 +1,44 @@
+  <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
+
+  <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
+
+  <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+  <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
+
+  <p><strong>Actors:</strong> <% movie.actors.first(5).each do |actor| %>
+      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+    <% end %>
+
+  <p><strong>Overview:</strong> <%= movie.overview %></p>
+
+  <div id="movie_tagged_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_tag', movie: movie %>
+  </div>
+
+  <div id="movie_listed_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_list', movie: movie %>
+  </div>
+
+  <div id="list_remove_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_list_remove', movie: movie %>
+  </div>
+
+  <div id="list_priority_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_list_priority', movie: movie %>
+  </div>
+
+  <div id="movie_seen_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_screening', movie: movie %>
+  </div>
+
+  <div id="movie_rated_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_rating', movie: movie %>
+  </div>
+
+  <div id="movie_reviewed_<%= "#{movie.id}" %>">
+    <%= render 'movies/movie_review', movie: movie %>
+  </div>
+
+  <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
+  </br>
+  <hr>

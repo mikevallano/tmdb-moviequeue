@@ -13,7 +13,13 @@
 
 <div id ="movies_index_loop">
 
-  <%= render "movies" %>
+  <% @movies.each do |movie| %>
+
+    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+      <%= render partial: 'movies/movie', object: movie %>
+    </div>
+
+  <% end %>
 
 </div>
 
