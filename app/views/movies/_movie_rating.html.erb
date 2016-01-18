@@ -1,6 +1,6 @@
       <% if current_user.rated_movies.include?(movie) %> <!-- #if movie has been rated -->
 
-        <p>My rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %></p>
+        <p><strong>My rating:</strong> <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %></p>
 
       <% else %> <!-- #if movie has been rated -->
 

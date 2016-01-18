@@ -2,10 +2,12 @@
    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
       <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
       <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
-      <p>Release Date: <%= movie.release_date %></p>
-      <p>Vote average: <%= movie.vote_average %></p>
-      <p>Actors: <%= movie.actors %></p>
-      <p>Overview: <%= movie.overview %></p>
+      <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+      <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
+      <p><strong>Actors:</strong> <% movie.actors.first(5).each do |actor| %>
+          <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+        <% end %>
+      <p><strong>Overview:</strong> <%= movie.overview %></p>
 
       <div id="if_movie_tagged_<%= "#{movie.id}" %>">
         <%= render 'movies/movie_tag', movie: movie %>

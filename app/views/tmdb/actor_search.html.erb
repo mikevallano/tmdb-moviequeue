@@ -20,7 +20,7 @@
   <% if !@discover_results.present? %>
       <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
     <% else %>
-      <h2>Here are the movies that actor has been in:</h2>
+      <h2>Here are the movies that <%= @actor %> has been in:</h2>
       <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
     <% end %>
   <p><%= link_to "Search again", actor_search_path %> </p>

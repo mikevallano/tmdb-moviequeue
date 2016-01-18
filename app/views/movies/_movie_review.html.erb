@@ -1,7 +1,8 @@
   <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
 
-    <p>My Review: <%= movie.reviews.by_user(current_user).first.body %></p>
+    <p><strong>My Review:</strong> <%= movie.reviews.by_user(current_user).first.body %>:
     <%= link_to "show", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_partial" %>
+    </p>
 
   <% else %> <!-- #if movie has been reviewed -->
 

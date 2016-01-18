@@ -1,15 +1,11 @@
-      <% if current_user.screened_movies.include?(movie) %> <!-- #if movie has been seen -->
+  <% if current_user.screened_movies.include?(movie) %> <!-- #if movie has been seen -->
 
-        <p>Times you've seen this movie: <%= movie.times_seen_by(current_user) %></p>
-        <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_partial" %></p>
+    <p><strong>Times you've seen this movie:</strong> <%= movie.times_seen_by(current_user) %></p>
+    <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_partial" %></p>
 
-      <% else %> <!-- #if movie has been seen -->
+  <% else %> <!-- #if movie has been seen -->
 
-        <% if @list.present? %> <!--  #if @list.present?, send params to return user back to list -->
-          <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "list_show", list_id: @list.id, page: params[:page]), id: "mark_watched_link_movies_partial", :method => :post, remote: true %></p>
-        <% else %>  <!--  #if @list.present?, send params to return user back to list -->
-          <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
-        <% end %> <!--  #if @list.present?, send params to return user back to list -->
+  <p><%= link_to "Mark as watched", movie_screenings_path(:screening => { movie_id: movie.id }, movie_id: movie.id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
 
-        <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_partial" %><p>
-      <% end %> <!-- #if movie has been seen -->
+    <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_partial" %><p>
+  <% end %> <!-- #if movie has been seen -->
