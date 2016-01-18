@@ -11,7 +11,11 @@
 <% end %>
 
 
-<%= render 'movies' %>
+<div id ="movies_index_loop">
+
+  <%= render "movies" %>
+
+</div>
 
 <p><%= will_paginate @movies %></p>
 

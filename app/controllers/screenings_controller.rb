@@ -32,10 +32,16 @@ class ScreeningsController < ApplicationController
       @screening.date_watched = DateTime.now.to_date
     end
 
+    @movies = current_user.all_movies
+    @movie = Movie.friendly.find(params[:movie_id])
+
     respond_to do |format|
       if @screening.save
+        @movies = current_user.all_movies
+        movie = @movie
         format.html { redirect_to @redirect_url, notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
+        format.js {}
       else
         format.html { render :new }
         format.json { render json: @screening.errors, status: :unprocessable_entity }

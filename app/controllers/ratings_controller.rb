@@ -26,9 +26,15 @@ class RatingsController < ApplicationController
 
   def create
     @rating = Rating.new(rating_params)
+    @frompage = params[:from] if params[:from].present?
+    @movies = current_user.all_movies
+    @movie = Movie.friendly.find(params[:movie_id])
 
     respond_to do |format|
       if @rating.save
+        @movies = current_user.all_movies
+        movie = @movie
+        format.js {}
         format.html { redirect_to @redirect_url, notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else
@@ -80,6 +86,7 @@ class RatingsController < ApplicationController
     end
 
     def redirect_url
+      @frompage = params[:from] if params[:from].present?
       @page = params[:page] if params[:page].present?
       if params[:from].present? && params[:from] == "list_show"
         @list = current_user.lists.find(params[:list_id])

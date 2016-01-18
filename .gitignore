@@ -17,6 +17,7 @@ tester.rb
 tester2.rb
 tester.html.erb
 tester2.html.erb
+tester.js.erb
 
 # Ignore application configuration
 /config/application.yml
