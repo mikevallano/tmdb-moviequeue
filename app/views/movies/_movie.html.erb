@@ -11,6 +11,12 @@
 
   <p><strong>Overview:</strong> <%= movie.overview %></p>
 
+  <!-- note: these are in individual partials for two reasons:
+  1. it cleans up the view a bit
+  2. the individual partial is updated via AJAX
+  however, the entire modal partial can be updated via AJAX instead,
+  so these partials aren't necessary. if you don't find them helpful, let me know -->
+
   <div id="movie_tagged_<%= "#{movie.id}" %>">
     <%= render 'movies/movie_tag', movie: movie %>
   </div>
