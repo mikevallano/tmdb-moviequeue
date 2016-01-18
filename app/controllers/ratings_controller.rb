@@ -32,8 +32,6 @@ class RatingsController < ApplicationController
 
     respond_to do |format|
       if @rating.save
-        @movies = current_user.all_movies
-        movie = @movie
         format.js {}
         format.html { redirect_to @redirect_url, notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }

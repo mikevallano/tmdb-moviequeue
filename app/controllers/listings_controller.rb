@@ -25,8 +25,6 @@ class ListingsController < ApplicationController
     @movies = current_user.all_movies
     respond_to do |format|
       if @listing.save
-        @movies = current_user.all_movies
-        movie = @movie
         format.js {}
         format.html { redirect_to user_list_path(@user, List.friendly.find(@listing.list.id)), notice: 'added to your list.' }
         format.json { render :show, status: :created, location: @listing }

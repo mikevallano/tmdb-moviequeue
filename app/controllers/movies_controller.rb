@@ -25,6 +25,7 @@ class MoviesController < ApplicationController
       return redirect_to @movie, :status => :moved_permanently
     end
 
+    #consistent variables to share partials between movie_show and api_more_info
     @title = @movie.title
     @tmdb_id = @movie.tmdb_id
     @release_date = @movie.release_date

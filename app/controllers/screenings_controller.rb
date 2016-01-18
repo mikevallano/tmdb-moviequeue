@@ -4,28 +4,20 @@ class ScreeningsController < ApplicationController
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
   before_action :redirect_url, only: :create
 
-  # GET /screenings
-  # GET /screenings.json
   def index
     @screenings = @movie.screenings.by_user(current_user)
   end
 
-  # GET /screenings/1
-  # GET /screenings/1.json
   def show
   end
 
-  # GET /screenings/new
   def new
     @screening = @movie.screenings.by_user(current_user).new
   end
 
-  # GET /screenings/1/edit
   def edit
   end
 
-  # POST /screenings
-  # POST /screenings.json
   def create
     @screening = current_user.screenings.new(screening_params)
     unless params[:date_watched].present?
@@ -37,8 +29,6 @@ class ScreeningsController < ApplicationController
 
     respond_to do |format|
       if @screening.save
-        @movies = current_user.all_movies
-        movie = @movie
         format.html { redirect_to @redirect_url, notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
         format.js {}
@@ -49,8 +39,6 @@ class ScreeningsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /screenings/1
-  # PATCH/PUT /screenings/1.json
   def update
     respond_to do |format|
       if @screening.update(screening_params)
@@ -63,8 +51,6 @@ class ScreeningsController < ApplicationController
     end
   end
 
-  # DELETE /screenings/1
-  # DELETE /screenings/1.json
   def destroy
     @screening.destroy
     respond_to do |format|
@@ -74,7 +60,7 @@ class ScreeningsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_screening
       @screening = @movie.screenings.by_user(current_user).find(params[:id])
     end
@@ -83,7 +69,6 @@ class ScreeningsController < ApplicationController
       @movie = Movie.friendly.find(params[:movie_id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def screening_params
       params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes)
     end
