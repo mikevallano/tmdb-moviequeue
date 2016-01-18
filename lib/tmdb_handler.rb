@@ -4,9 +4,11 @@ module TmdbHandler
     @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @discover_results = @tmdb_response[:results]
+    @movies = @discover_results
     rescue
       unless @tmdb_response.present?
         @discover_results = []
+        @movies = @discover_results
       end
   end
 

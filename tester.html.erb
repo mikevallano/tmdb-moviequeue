@@ -1,3 +1,5 @@
+search results: <%= render 'search_results' %>
+
 OG:
 
 <%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
