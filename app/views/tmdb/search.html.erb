@@ -11,26 +11,30 @@
 
 <% else %>
 
-  <% if !@discover_results.present? %>
+  <% if !@movies.present? %>
+
     <h2>Darn it. No movie found for that search.</h2>
   <% else %>
     <h2>Here are the matching movies from TMDB</h2>
-  <% end %>
-<br>
-  <%= form_tag '/tmdb/search', method: :get do %>
-    <%= label_tag :movie_title, "Enter Title: " %>
-    <%= text_field_tag :movie_title %>
-    <%= submit_tag "Search Again", id: "search_by_title_again_button" %>
-  <% end %>
-</br>
 
-   <% @movies.each do |movie| %>
+    <br>
+      <%= form_tag '/tmdb/search', method: :get do %>
+        <%= label_tag :movie_title, "Enter Title: " %>
+        <%= text_field_tag :movie_title %>
+        <%= submit_tag "Search Again", id: "search_by_title_again_button" %>
+      <% end %>
+    </br>
 
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
-    </div>
+    <div id ="actor_search_loop">
 
-  <% end %>
+      <% @movies.each do |movie| %>
+        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+          <%= render partial: 'movies/movie', object: movie %>
+        </div>
+      <% end %> <!-- # movies loop -->
 
+    </div> <!-- #actor search loop -->
+
+  <% end %> <!-- # if @movies.present? -->
 
 <% end %> <!-- #initial if @movie_title.present? -->

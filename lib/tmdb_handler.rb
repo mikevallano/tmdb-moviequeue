@@ -281,12 +281,12 @@ module TmdbHandler
     rescue
     if actor.present?
       unless @actor1_search_result.present?
-        @discover_results = []
+        @movies = []
       end
     end
     if actor2.present?
       unless @actor2_search_result.present?
-        @discover_results = []
+        @movies = []
       end
     end
 

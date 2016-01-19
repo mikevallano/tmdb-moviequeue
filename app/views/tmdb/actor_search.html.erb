@@ -17,36 +17,40 @@
 
 <% else %>
 
-  <% if !@discover_results.present? %>
-      <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
-    <% else %>
-      <h2>Here are the movies that <%= @actor %> has been in:</h2>
-      <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
+  <% if !@movies.present? %>
+    <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
+
+  <% else %> <!-- #if @movies.present? -->
+    <h2>Here are the movies that <%= @actor %> has been in:</h2>
+    <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
+
+    <p><%= link_to "Search again", actor_search_path %> </p>
+
+    <div id ="movies_actor_search_loop">
+
+      <% @movies.each do |movie| %>
+
+        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+          <%= render partial: 'movies/movie', object: movie %>
+        </div>
+
+      <% end %> <!-- # movies loop -->
+
+    </div> <!-- movies_actor_search_loop -->
+
+    <%= "Page #{@page} of #{@total_pages}" %></br>
+
+    <% if @previous_page.present? %>
+      <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %>
     <% end %>
-  <p><%= link_to "Search again", actor_search_path %> </p>
 
-  <div id ="movies_actor_search_loop">
-
-    <% @movies.each do |movie| %>
-
-      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-        <%= render partial: 'movies/movie', object: movie %>
-      </div>
-
+    <% if @next_page.present? %>
+      <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
     <% end %>
 
-  </div>
+  <% end %> <!-- #if @movies.present? -->
 
-  <%= "Page #{@page} of #{@total_pages}" %></br>
 
-  <% if @previous_page.present? %>
-    <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %>
-  <% end %>
-
-  <% if @next_page.present? %>
-    <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
-  <% end %>
-
-<% end %>
+<% end %> <!-- # if @actor.present? -->
 
 

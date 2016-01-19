@@ -13,10 +13,11 @@
 
 <% else %>
 
-  <% if !@discover_results.present? %>
+    <% if !@movies.present? %>
       <h2>Hmm. No movies found with those two in it. Check spelling to be sure.</h2>
+
     <% else %>
-      <h2><%= "Those two actors have been in #{@discover_results.size} movies together:" %></h2>
+      <h2><%= "Those two actors have been in #{@movies.size} movies together:" %></h2>
       <br>
 
       <div id ="two_actor_search_loop">
@@ -29,7 +30,7 @@
 
         <% end %>
 
-      </div>
+      </div> <!-- # two actor search loop -->
 
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
@@ -41,7 +42,7 @@
         <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
       <% end %>
 
-    <% end %>
+    <% end %> <!-- # if @movies.present -->
 
     <p><%= link_to "Search again", two_actor_search_path %> </p>
 
