@@ -27,7 +27,6 @@ class RatingsController < ApplicationController
   def create
     @rating = Rating.new(rating_params)
     @frompage = params[:from] if params[:from].present?
-    @movies = current_user.all_movies
     @movie = Movie.friendly.find(params[:movie_id])
 
     respond_to do |format|

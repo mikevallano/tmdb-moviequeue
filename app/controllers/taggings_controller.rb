@@ -6,7 +6,6 @@ class TaggingsController < ApplicationController
     @tag_names = params[:tag_list]
     @movie_id = params[:movie_id]
 
-    @movies = current_user.all_movies
     @movie = Movie.friendly.find(@movie_id)
 
     Tagging.create_taggings(@tag_names, @movie_id, current_user)
@@ -21,7 +20,6 @@ class TaggingsController < ApplicationController
     @from = params[:from] #account for page number too
     @tagging = current_user.taggings.find_by("tag_id = ? AND movie_id = ?", params[:tag_id], params[:movie_id])
     @movie_id = params[:movie_id]
-    @movies = current_user.all_movies
     @movie = Movie.friendly.find(@movie_id)
     respond_to do |format|
       if @tagging.destroy

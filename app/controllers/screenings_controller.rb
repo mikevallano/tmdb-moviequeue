@@ -24,7 +24,6 @@ class ScreeningsController < ApplicationController
       @screening.date_watched = DateTime.now.to_date
     end
 
-    @movies = current_user.all_movies
     @movie = Movie.friendly.find(params[:movie_id])
 
     respond_to do |format|

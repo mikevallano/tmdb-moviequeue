@@ -22,7 +22,6 @@ class ListingsController < ApplicationController
     end
 
     @user = User.friendly.find(@user_id)
-    @movies = current_user.all_movies
     respond_to do |format|
       if @listing.save
         format.js {}
