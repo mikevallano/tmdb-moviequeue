@@ -1,12 +1,16 @@
 <h1>List Name: <%= @list.name %></h1>
 <br>
 
+  <div id ="public_search_loop">
+
     <% @movies.each do |movie| %>
 
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
-    </div>
+      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+        <%= render partial: 'movies/movie', object: movie %>
+      </div>
 
-  <% end %>
+    <% end %>
+
+  </div>
 
   <p><%= will_paginate @movies %></p>

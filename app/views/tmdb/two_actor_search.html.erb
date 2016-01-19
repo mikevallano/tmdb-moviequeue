@@ -19,13 +19,17 @@
       <h2><%= "Those two actors have been in #{@discover_results.size} movies together:" %></h2>
       <br>
 
-    <% @movies.each do |movie| %>
+      <div id ="two_actor_search_loop">
 
-      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-        <%= render partial: 'movies/movie', object: movie %>
+        <% @movies.each do |movie| %>
+
+          <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+            <%= render partial: 'movies/movie', object: movie %>
+          </div>
+
+        <% end %>
+
       </div>
-
-    <% end %>
 
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
