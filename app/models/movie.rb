@@ -19,6 +19,8 @@ class Movie < ActiveRecord::Base
   has_many :ratings
 
   has_many :screenings
+  has_many :viewers, :through => :screenings,
+  :source => :user
 
   def in_db
     true
