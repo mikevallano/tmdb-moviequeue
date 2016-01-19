@@ -25,7 +25,17 @@
     <% end %>
   <p><%= link_to "Search again", actor_search_path %> </p>
 
-  <%= render 'search_results' %>
+  <div id ="movies_index_loop">
+
+    <% @movies.each do |movie| %>
+
+      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+        <%= render partial: 'movies/movie', object: movie %>
+      </div>
+
+    <% end %>
+
+  </div>
 
   <%= "Page #{@page} of #{@total_pages}" %></br>
 

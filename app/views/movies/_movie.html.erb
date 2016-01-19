@@ -1,14 +1,18 @@
-  <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
 
-  <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" %>
+   <!-- TODO: Refactor the shit out of this: -->
+    <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
+  <% if movie.in_db %>
+    <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
+  <% else %>
+    <h3><%= link_to "#{movie.title}", movie_more_path(movie_id: movie.tmdb_id) %></h3>
+  <% end %>
+
+
+  <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
 
   <p><strong>Release Date:</strong> <%= movie.release_date %></p>
   <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
-
-  <p><strong>Actors:</strong> <% movie.actors.first(5).each do |actor| %>
-      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
-    <% end %>
-
   <p><strong>Overview:</strong> <%= movie.overview %></p>
 
   <!-- note: these are in individual partials for two reasons:
@@ -17,34 +21,48 @@
   however, the entire modal partial can be updated via AJAX instead,
   so these partials aren't necessary. if you don't find them helpful, let me know -->
 
-  <div id="movie_tagged_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_tag', movie: movie %>
-  </div>
+  <% if movie.in_db %>
 
-  <div id="movie_listed_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_list', movie: movie %>
-  </div>
+    <p><strong>Actors:</strong> <% movie.actors.first(5).each do |actor| %>
+      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+    <% end %>
+    </p>
 
-  <div id="list_remove_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_list_remove', movie: movie %>
-  </div>
+    <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_tag', movie: movie %>
+    </div>
 
-  <div id="list_priority_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_list_priority', movie: movie %>
-  </div>
+    <div id="movie_listed_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list', movie: movie %>
+    </div>
 
-  <div id="movie_seen_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_screening', movie: movie %>
-  </div>
+    <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list_remove', movie: movie %>
+    </div>
 
-  <div id="movie_rated_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_rating', movie: movie %>
-  </div>
+    <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list_priority', movie: movie %>
+    </div>
 
-  <div id="movie_reviewed_<%= "#{movie.id}" %>">
-    <%= render 'movies/movie_review', movie: movie %>
-  </div>
+    <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_screening', movie: movie %>
+    </div>
 
-  <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
+    <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_rating', movie: movie %>
+    </div>
+
+    <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_review', movie: movie %>
+    </div>
+
+    <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
+
+  <% else %>
+    <div id="movie_add_to_list_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_add_to_list', movie: movie %>
+    </div>
+    <p><%= link_to "More info", movie_more_path(movie_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
+  <% end %>
   </br>
   <hr>

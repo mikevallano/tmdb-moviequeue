@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def lists_except_movie(movie = nil)
-    if movie.present?
+    if movie.present? && Movie.exists?(tmdb_id: movie.tmdb_id)
       except_lists = []
       self.lists.each do |list|
         except_lists << list
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
       self.member_lists.each do |list|
         except_lists << list
       end
-      movie_lists = Movie.find(movie.id).lists.by_user(self)
+      movie_lists = Movie.find_by(tmdb_id: movie.tmdb_id).lists.by_user(self)
       lists_except_movie = (except_lists - movie_lists)
     else
       all_lists

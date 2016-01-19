@@ -1,9 +1,28 @@
-search results: <%= render 'search_results' %>
+<p id="notice"><%= notice %></p>
 
-OG:
+<h1>Movies index page/My movies</h1>
+<p>This page shows current user's movies, which include movies on any/all lists.</p>
+<% if @tag.present? %>
+  <% if @list.present? %>
+  <h3>Here are the movies tagged with: <%= "'#{@tag}' on #{@list.name}" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_and_list_movies_index" %></h3>
+  <% else %>
+  <h3>Here are the movies tagged with: <%= "'#{@tag}'" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_movies_index" %></h3>
+  <% end %>
+<% end %>
 
-<%= form_tag(update_listing_path(list_id: @list.id, movie_id: movie.id), :method => :patch) do %>
 
-<%= form_tag( { :controller => :listings, :action => :update, :method => :patch }, { remote: true } ) do %>
+<div id ="movies_index_loop">
 
-<%= form_tag( { :controller => :listings, :action => :update, :method => :patch, list_id: @list.id, movie_id: movie.id }, { remote: true } ) do %>
+  <% @movies.each do |movie| %>
+
+    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+      <%= render partial: 'movies/movie', object: movie %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<p><%= will_paginate @movies %></p>
+
+<br>

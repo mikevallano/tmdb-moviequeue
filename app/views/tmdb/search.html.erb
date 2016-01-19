@@ -24,7 +24,13 @@
   <% end %>
 </br>
 
-  <%= render 'search_results' %>
+   <% @movies.each do |movie| %>
+
+    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+      <%= render partial: 'movies/movie', object: movie %>
+    </div>
+
+  <% end %>
 
 
 <% end %> <!-- #initial if @movie_title.present? -->

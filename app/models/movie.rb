@@ -20,6 +20,10 @@ class Movie < ActiveRecord::Base
 
   has_many :screenings
 
+  def in_db
+    true
+  end
+
   def times_seen_by(user)
     Screening.where(user_id: user.id, movie_id: self.id).count
   end

@@ -1,1 +1,8 @@
-$("#movie_listed_<%= @movie.id %>").html("<%= j(render :partial => 'movies/movie_list', :locals => {:movie => @movie}) %>");
+var from = "<%= @from %>";
+if (from == 'first_list') {
+  console.log("from page " + from);
+  $("#movies_partial_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>");
+}
+else {
+  $("#movie_listed_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_list', :locals => {:movie => @movie}) %>");
+}

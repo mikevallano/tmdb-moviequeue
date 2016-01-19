@@ -21,6 +21,7 @@ class ListingsController < ApplicationController
       @listing.priority = 5
     end
 
+    @from = params[:from]
     @user = User.friendly.find(@user_id)
     respond_to do |format|
       if @listing.save
