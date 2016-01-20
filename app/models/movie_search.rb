@@ -17,10 +17,9 @@ class MovieSearch
     @movies = []
     json.each do |result|
       @tmdb_id = result[:id]
-      @movie_in_db = Movie.find_by(tmdb_id: @tmdb_id)
-      @in_db = @movie_in_db.present?
+      @in_db = Movie.exists?(tmdb_id: @tmdb_id)
         if @in_db
-          @movies << @movie_in_db
+          @movies << Movie.find_by(tmdb_id: @tmdb_id)
         else
           @title = result[:title]
           @release_date = result[:release_date]

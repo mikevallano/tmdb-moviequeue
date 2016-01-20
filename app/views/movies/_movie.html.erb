@@ -1,8 +1,8 @@
-   <!-- TODO: Refactor the shit out of this: -->
-    <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+  <!-- TODO: Refactor the shit out of this: -->
+  <% @lists_except_movie = current_user.lists_except_movie(movie) %>
 
 
-    <h3><%= link_to "#{movie.title}", movie_more_path(movie_id: movie.tmdb_id) %></h3>
+  <h3><%= link_to "#{movie.title}", movie_more_path(movie_id: movie.tmdb_id) %></h3>
 
 
   <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
@@ -10,12 +10,6 @@
   <p><strong>Release Date:</strong> <%= movie.release_date %></p>
   <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
   <p><strong>Overview:</strong> <%= movie.overview %></p>
-
-  <!-- note: these are in individual partials for two reasons:
-  1. it cleans up the view a bit
-  2. the individual partial is updated via AJAX
-  however, the entire modal partial can be updated via AJAX instead,
-  so these partials aren't necessary. if you don't find them helpful, let me know -->
 
   <% if movie.in_db && current_user.all_movies.include?(movie) %>
 
@@ -43,8 +37,7 @@
       <%= render 'movies/movie_review', movie: movie %>
     </div>
 
-      <% if @list.present? %>
-        <% if current_user.all_lists.include?(@list) %>
+      <% if @list.present? && current_user.all_lists.include?(@list) %>
 
         <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_list_remove', movie: movie %>
@@ -53,16 +46,17 @@
         <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_list_priority', movie: movie %>
         </div>
-        <% end %>
-      <% end %>
+      <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
 
     <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
 
   <% else %>
+
     <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_add_to_first_list', movie: movie %>
     </div>
     <p><%= link_to "More info", movie_more_path(movie_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
+
   <% end %>
   </br>
   <hr>
