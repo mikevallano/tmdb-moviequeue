@@ -2,7 +2,7 @@
   <% @lists_except_movie = current_user.lists_except_movie(movie) %>
 
 
-  <h3><%= link_to "#{movie.title}", movie_more_path(movie_id: movie.tmdb_id) %></h3>
+  <h3><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3>
 
 
   <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
@@ -55,7 +55,7 @@
     <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_add_to_first_list', movie: movie %>
     </div>
-    <p><%= link_to "More info", movie_more_path(movie_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
+    <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
 
   <% end %>
   </br>

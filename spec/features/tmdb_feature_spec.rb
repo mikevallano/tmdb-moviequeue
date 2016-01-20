@@ -337,7 +337,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         VCR.use_cassette("actor_more_movie_link") do
           click_link "Fargo"
         end
-        expect(current_url).to eq(movie_more_url(movie_id: 275))
+        expect(current_url).to eq(movie_more_url(tmdb_id: 275))
       end #actor movie more
 
       scenario "actor more info page links tv shows to the tv show page" do

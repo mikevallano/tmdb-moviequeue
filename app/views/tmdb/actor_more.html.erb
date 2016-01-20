@@ -9,7 +9,7 @@
 <h3>Movie Credits (<%= @movie_credits.size %>)</h3>
 <ul>
 <% @movie_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
     <%= ", Character: #{credit[:character]}" if credit[:character].present? %></li>
 <% end %>
 </ul>
@@ -28,7 +28,7 @@
 
 <ul>
 <% @director_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -36,7 +36,7 @@
 
 <ul>
 <% @producer_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -44,7 +44,7 @@
 
 <ul>
 <% @editor_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
@@ -52,13 +52,13 @@
 
 <ul>
 <% @writer_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
 <h3>Screenplay Credits (<%= @screenplay_credits.size %>)</h3>
 <ul>
 <% @screenplay_credits.each do |credit| %>
-  <li><%= link_to "#{credit[:title]}", movie_more_path(movie_id: "#{credit[:id]}") %></li>
+  <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>

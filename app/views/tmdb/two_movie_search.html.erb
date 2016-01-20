@@ -17,8 +17,8 @@
     <% else %>
       <h2>These two movies have the following similar actors:</h2>
     <% end %>
-  <h3>Number of common actors in <%= link_to "#{@movie_one[:title]}", movie_more_path(movie_id: @movie_one_id) %>,
-    and <%= link_to "#{@movie_two[:title]}", movie_more_path(movie_id: @movie_two_id) %>: <%= @common_actors.size %></h3>
+  <h3>Number of common actors in <%= link_to "#{@movie_one[:title]}", movie_more_path(tmdb_id: @movie_one_id) %>,
+    and <%= link_to "#{@movie_two[:title]}", movie_more_path(tmdb_id: @movie_two_id) %>: <%= @common_actors.size %></h3>
 
   <p>Common Actors:</strong>
   <% @common_actors.each do |actor| %>
