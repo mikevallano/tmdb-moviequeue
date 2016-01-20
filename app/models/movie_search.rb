@@ -24,7 +24,7 @@ class MovieSearch
         else
           @title = result[:title]
           @release_date = result[:release_date]
-          @vote_average = result[:vote_average]
+          @vote_average = result[:vote_average].round(1)
           # @genre_list = @result[:genres]
           # @genres = result[:genres].map { |genre| genre[:name] }
           @overview = result[:overview]

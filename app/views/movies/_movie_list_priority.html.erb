@@ -1,4 +1,4 @@
-<% if @list.present? && @current_user.lists.include?(@list) %> <!-- #if @list.present-->
+
   <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority(@list) %></p>
 
   <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { remote: true, method: :patch } ) do %>
@@ -8,4 +8,3 @@
       <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial" %>
     <% end %> <!-- #update priority form -->
   </p>
-<% end %> <!-- #if @list.present -->

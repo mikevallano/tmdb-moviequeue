@@ -4,5 +4,7 @@ if (from == 'first_list') {
   $("#movies_partial_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>");
 }
 else {
-  $("#movie_listed_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_list', :locals => {:movie => @movie}) %>");
+  $("#movie_on_lists_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_on_lists', :locals => {:movie => @movie}) %>");
+  $("#movie_other_list_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_add_to_another_list', :locals => {:movie => @movie}) %>");
+
 }

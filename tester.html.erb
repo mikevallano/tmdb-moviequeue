@@ -1,28 +1,68 @@
-<p id="notice"><%= notice %></p>
+<!-- movies/movie partial 1/20 -->
+   <!-- TODO: Refactor the shit out of this: -->
+    <% @lists_except_movie = current_user.lists_except_movie(movie) %>
 
-<h1>Movies index page/My movies</h1>
-<p>This page shows current user's movies, which include movies on any/all lists.</p>
-<% if @tag.present? %>
-  <% if @list.present? %>
-  <h3>Here are the movies tagged with: <%= "'#{@tag}' on #{@list.name}" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_and_list_movies_index" %></h3>
+  <% if movie.in_db %>
+    <h3><%= link_to "#{movie.title}", movie_path(movie) %></h3>
   <% else %>
-  <h3>Here are the movies tagged with: <%= "'#{@tag}'" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_movies_index" %></h3>
+    <h3><%= link_to "#{movie.title}", movie_more_path(movie_id: movie.tmdb_id) %></h3>
   <% end %>
-<% end %>
 
 
-<div id ="movies_index_loop">
+  <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
 
-  <% @movies.each do |movie| %>
+  <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+  <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
+  <p><strong>Overview:</strong> <%= movie.overview %></p>
 
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
+  <!-- note: these are in individual partials for two reasons:
+  1. it cleans up the view a bit
+  2. the individual partial is updated via AJAX
+  however, the entire modal partial can be updated via AJAX instead,
+  so these partials aren't necessary. if you don't find them helpful, let me know -->
+
+  <% if movie.in_db %>
+
+    <p><strong>Actors:</strong> <% movie.actors.first(5).each do |actor| %>
+      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+    <% end %>
+    </p>
+
+    <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_tag', movie: movie %>
     </div>
 
+    <div id="movie_listed_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list', movie: movie %>
+    </div>
+
+    <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list_remove', movie: movie %>
+    </div>
+
+    <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_list_priority', movie: movie %>
+    </div>
+
+    <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_screening', movie: movie %>
+    </div>
+
+    <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_rating', movie: movie %>
+    </div>
+
+    <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_review', movie: movie %>
+    </div>
+
+    <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
+
+  <% else %>
+    <div id="movie_add_to_list_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_add_to_list', movie: movie %>
+    </div>
+    <p><%= link_to "More info", movie_more_path(movie_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
   <% end %>
-
-</div>
-
-<p><%= will_paginate @movies %></p>
-
-<br>
+  </br>
+  <hr>

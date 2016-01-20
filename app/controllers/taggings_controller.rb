@@ -41,7 +41,7 @@ private
   def redirect_url
     @page = params[:page] if params[:page].present?
     if params[:list_id].present?
-      @list = current_user.lists.find(params[:list_id])
+      @list = current_user.all_lists.find(params[:list_id])
       @redirect_url = user_list_path(current_user, @list, page: @page)
     elsif params[:from].present? && params[:from] == "movie"
       @movie = current_user.movies.find(params[:movie_id])

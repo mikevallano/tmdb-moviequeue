@@ -1,0 +1,13 @@
+  <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
+  <% if @lists_except_movie.count > 0 %>
+    <p><strong>Add to another list:</strong>
+
+    <%= form_for(Listing.new, remote: true) do |f| %>
+      <%= f.collection_select :list_id, @lists_except_movie, :id, :name %>
+      <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
+      <%= hidden_field_tag :user_id, current_user.id %>
+      <%= f.submit "add movie to list", id: "add_to_list_button_movies_partial" %>
+    <% end %> <!-- # add to list form -->
+    </p>
+  <% end %>
