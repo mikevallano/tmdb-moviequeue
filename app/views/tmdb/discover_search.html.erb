@@ -1,23 +1,23 @@
 <% if !@discover_results.present? %>
 
 <h1>Search by various combos.</h1>
+<h2>All fields are optional. Search by whatever you want.</h2>
+<h3>Searh by top comedies from 2010, movies with Brad Pitt after 2012, or any combo you like!</h3>
 
   <%= form_tag '/tmdb/discover_search', method: :get do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor %></br>
-    <%= label_tag :actor2, "Enter Other Actor Name: " %>
-    <%= text_field_tag :actor2 %></br>
+    <%= text_field_tag :actor, nil, id: "actor_field_discover_search" %></br>
     <%= label_tag :mpaa_rating, "Enter MPAA rating: " %>
-    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), :include_blank => true %></br>
+    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), :include_blank => true, id: "mpaa_field_discover_search" %></br>
     <%= label_tag :year, "Enter a Year: " %>
-    <%= text_field_tag :year %>
+    <%= text_field_tag :year, nil, id: "year_field_discover_search" %>
     <%= label_tag :year_select %>
-    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), :include_blank => true %></br>
+    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), :include_blank => true, id: "year_select_discover_search" %></br>
     <%= label_tag :genre, "Pick a genre: " %>
-    <%= select_tag :genre, options_for_select(Movie::GENRES), :include_blank => true %></br>
+    <%= select_tag :genre, options_for_select(Movie::GENRES), :include_blank => true, id: "genre_field_discover_search" %></br>
     <%= label_tag :sort_by, "Sort by: " %>
-    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true %></br>
-    <%= submit_tag "Search" %>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true, id: "sort_by_discover_search" %></br>
+    <%= submit_tag "Search", id: "search_button_discover_search" %>
   <% end %>
 
 <% else %>

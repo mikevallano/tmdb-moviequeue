@@ -77,40 +77,135 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     describe "search by two movies" do
 
-      scenario "two movies search returns common actors in both movies" do
+      before(:each) do
         sign_up_with(email, username, "password")
+      end
+
+      scenario "two movies search returns common actors in both movies" do
         visit(two_movie_search_path)
         VCR.use_cassette("tmdb_two_movie_search") do
-          fill_in "Enter Movie Title", with: "Fargo"
-          fill_in "Enter Other Movie Title", with: "The Big Lebowski"
-          click_button "Search"
+          fill_in "movie1_field_two_movie_search", with: "Fargo"
+          fill_in "movie2_field_two_movie_search", with: "The Big Lebowski"
+          click_button "search_button_two_movie_search"
         end
         expect(page).to have_content("Steve Buscemi")
       end
 
       scenario "two movies search indicates first movie not found if search is bad" do
-        sign_up_with(email, username, "password")
         visit(two_movie_search_path)
         VCR.use_cassette("tmdb_two_movie_search_bad_first") do
-          fill_in "Enter Movie Title", with: "*sdlfkjsdflkjsdf"
-          fill_in "Enter Other Movie Title", with: "The Big Lebowski"
-          click_button "Search"
+          fill_in "movie1_field_two_movie_search", with: "*sdlfkjsdflkjsdf"
+          fill_in "movie2_field_two_movie_search", with: "The Big Lebowski"
+          click_button "search_button_two_movie_search"
         end
         expect(page).to have_content("No results for the first movie")
       end
 
       scenario "two movies search indicates second movie not found if search is bad" do
-        sign_up_with(email, username, "password")
         visit(two_movie_search_path)
         VCR.use_cassette("tmdb_two_movie_search_bad_second") do
-          fill_in "Enter Movie Title", with: "Fargo"
-          fill_in "Enter Other Movie Title", with: "*sdlfkjsdflkjsdf"
+          fill_in "movie1_field_two_movie_search", with: "Fargo"
+          fill_in "movie2_field_two_movie_search", with: "*sdlfkjsdflkjsdf"
           click_button "Search"
         end
         expect(page).to have_content("No results for the second movie")
       end
 
     end #search by two movies
+
+    describe "discover searches" do
+
+      before(:each) do
+        sign_up_with(email, username, "password")
+      end
+
+      scenario "search by actor returns results" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_search") do
+          fill_in "actor_field_discover_search", with: "Frances McDormand"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by actor and year" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_and_year") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1996"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by actor and specific year" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_and_specific_year") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1996"
+          select "Exact Year", :from => "year_select"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by actor and after year" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_and_after_year") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1995"
+          select "After This Year", :from => "year_select"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Armageddon")
+      end
+
+      scenario "search by actor and before year" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_and_before_year") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1997"
+          select "Before This Year", :from => "year_select"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by actor year and mpaa rating" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_mpaa_rating_and_year") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1997"
+          select "Before This Year", :from => "year_select"
+          select "R", :from => "mpaa_rating"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by actor year and sort by popularity" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_actor_year_and_sort") do
+          fill_in "actor_field_discover_search", with: "Steve Buscemi"
+          fill_in "year_field_discover_search", with: "1996"
+          select "Popularity", :from => "sort_by"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+      scenario "search by genre year and sort" do
+        visit(discover_search_path)
+        VCR.use_cassette("discover_genre_year_sort") do
+          fill_in "year_field_discover_search", with: "1996"
+          select "Crime", :from => "genre"
+          select "Popularity", :from => "sort_by"
+          click_button "search_button_discover_search"
+        end
+        expect(page).to have_content("Fargo")
+      end
+
+    end #discover searches
 
     describe "movie more info results" do
 

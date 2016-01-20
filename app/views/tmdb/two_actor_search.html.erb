@@ -1,13 +1,13 @@
 
 <% if !@actor.present? && !@actor2.present? %>
 
-<h1>Find which movies two actors have been in together.</h1>
+<h1>Enter two actors and see the movies they've been in together.</h1>
 
   <%= form_tag '/tmdb/two_actor_search', method: :get do %>
-    <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor, nil, id: "actor1_field_two_actor_search" %>
-    <%= label_tag :actor2, "Enter Other Actor Name: " %>
-    <%= text_field_tag :actor2, nil, id: "actor2_field_two_actor_search" %>
+    <%= label_tag :actor, "Actor 1 Name: " %>
+    <%= text_field_tag :actor, nil, id: "actor1_field_two_actor_search" %></br>
+    <%= label_tag :actor2, "Actor 2 Name: " %>
+    <%= text_field_tag :actor2, nil, id: "actor2_field_two_actor_search" %></br>
     <%= submit_tag "Search", id: "search_button_two_actor_search" %>
   <% end %>
 
