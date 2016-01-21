@@ -3,16 +3,18 @@ require 'rails_helper'
 RSpec.describe ListingsController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user) }
   let(:current_user) { login_with user }
+  let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
   let(:movie) { FactoryGirl.create(:movie) }
   let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
   let(:tmdb_id) { movie.tmdb_id }
   let(:valid_attributes) { {tmdb_id: tmdb_id} }
-  let(:listing) { FactoryGirl.create(:listing, movie_id: movie.id, list_id: list.id) }
+  let(:listing) { FactoryGirl.create(:listing, movie_id: movie.id, list_id: list.id, user_id: user.id) }
 
 
-  shared_examples_for 'logged in access' do
+  shared_examples_for "logged in access" do
 
     describe "GET #create" do
       it "creates a new listing" do
@@ -45,7 +47,7 @@ RSpec.describe ListingsController, type: :controller do
 
   end #shared example for logged in user
 
-  shared_examples_for 'restricted access when not logged in' do
+  shared_examples_for "restricted access when not logged in" do
 
     describe "POST #create" do
       context "with valid params" do
@@ -80,6 +82,28 @@ RSpec.describe ListingsController, type: :controller do
 
   end #end of user not logged in/shared example
 
+  shared_examples_for "does not let a user update or delete another users listing" do
+
+    it "doesn't let a user update another user's listing" do
+      put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: '2'}
+      expect(response).to redirect_to(user_lists_path(user2))
+      listing.reload
+      expect(listing.priority).not_to eq(2)
+    end
+
+    it "doesn't let a user destroy another user's listing" do
+      expect {
+          delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+        }.to change(Listing, :count).by(0)
+    end
+
+    it "redirects the wrong user trying to update another user's listing" do
+      delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+      expect(response).to redirect_to(user_lists_path(user2))
+    end
+
+  end #shared examples for does not let a user update or delete another users listing
+
   describe "user access" do
     before :each do
       user
@@ -90,7 +114,7 @@ RSpec.describe ListingsController, type: :controller do
       tmdb_id
     end
 
-    it_behaves_like 'logged in access'
+    it_behaves_like "logged in access"
   end
 
   describe "user not logged in" do
@@ -102,7 +126,18 @@ RSpec.describe ListingsController, type: :controller do
       tmdb_id
     end
 
-    it_behaves_like 'restricted access when not logged in'
+    it_behaves_like "restricted access when not logged in"
+  end
+
+  describe "users can not update or destroy other users listings" do
+    before(:each) do
+        current_user2
+        listing
+        list
+        movie
+        tmdb_id
+      end
+    it_behaves_like "does not let a user update or delete another users listing"
   end
 
 

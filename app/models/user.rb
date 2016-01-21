@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   has_many :member_lists, :through => :memberships,
   :source => :list
 
+  has_many :member_listings, through: :member_lists,
+  :source => :listings
+
   has_many :movies, through: :listings
   has_many :member_movies, :through => :member_lists,
   :source => :movies
@@ -44,6 +47,10 @@ class User < ActiveRecord::Base
 
   def all_lists
     (self.lists | self.member_lists).uniq
+  end
+
+  def all_listings
+    (self.listings | self.member_listings)
   end
 
   def lists_except_movie(movie = nil)

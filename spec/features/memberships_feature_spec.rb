@@ -51,6 +51,17 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
     end
 
+    scenario "users update priorities on lists they're a member of" do
+
+      sign_in_user(user2)
+      visit(user_list_path(user1, list))
+      fill_in "priority_number_field_movies_partial", with: '9'
+      click_button "add_priority_button_movies_partial"
+      expect(page).to have_content('9')
+      expect(Listing.last.priority).to eq(9)
+
+    end
+
 
     scenario "users can see other members' tags but not other users' tags" do
 
