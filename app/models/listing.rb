@@ -6,4 +6,10 @@ class Listing < ActiveRecord::Base
   validates_presence_of :movie
 
   enum priority: { top: 5, high: 4, medium: 3, low: 2, bottom: 1 }
+
+  before_create :default_priority
+
+  def default_priority
+    self.priority ||= 3
+  end
 end
