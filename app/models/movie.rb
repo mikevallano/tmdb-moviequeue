@@ -22,12 +22,12 @@ class Movie < ActiveRecord::Base
   has_many :viewers, :through => :screenings,
   :source => :user
 
-  def in_db
+  def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
     true
   end
 
   def times_seen_by(user)
-    Screening.where(user_id: user.id, movie_id: self.id).count
+    screenings.by_user(user).count
   end
 
   def self.by_user(user)
@@ -43,7 +43,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.by_genre(genre)
-    Movie.where("genres && ARRAY[?]::varchar[]", genre)
+    where("genres && ARRAY[?]::varchar[]", genre)
   end
 
   def priority(list)
