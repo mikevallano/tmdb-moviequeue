@@ -36,6 +36,9 @@ class ListsController < ApplicationController
   end
 
   def edit
+    unless @list.owner == current_user
+      redirect_to user_list_path(@list.owner, @list), notice: "Only list owners can edit lists."
+    end
   end
 
   def create

@@ -17,7 +17,6 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
     let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
-
     before(:each) do
       user1
       user2
@@ -30,57 +29,52 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       tagging2
     end
 
-
     scenario "users can see their own lists that have members" do
-
       sign_in_user(user1)
       click_link "my_lists_nav_link"
       expect(page).to have_content("awesome 90s")
       visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
-
     end
 
     scenario "users can see others' lists they're a member of" do
-
       sign_in_user(user2)
       click_link "my_lists_nav_link"
       expect(page).to have_content("awesome 90s")
       visit(user_list_path(user1, list))
       expect(page).to have_content("awesome 90s")
-
     end
 
     scenario "users update priorities on lists they're a member of" do
-
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       fill_in "priority_number_field_movies_partial", with: '9'
       click_button "add_priority_button_movies_partial"
       expect(page).to have_content('9')
       expect(Listing.last.priority).to eq(9)
-
     end
 
-
     scenario "users can see other members' tags but not other users' tags" do
-
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       expect(page).to have_content(tag1.name)
       expect(page).not_to have_content(tag2.name)
-
     end
 
     scenario "users can click other member's tags and see tagged movies" do
-
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       click_link tag1.name, match: :first
       expect(page).to have_content(movie1.title)
-
     end
 
-  end
+    scenario "members can't edit a list unless they are the owner" do
+      sign_in_user(user2)
+      visit(edit_user_list_path(user1, list))
+      expect(current_url).to eq(user_list_url(user1, list))
+      expect(page).to have_content("Only list owners can edit lists")
+    end
 
+
+  end
 end #final
