@@ -12,6 +12,7 @@ class ListingsController < ApplicationController
     end
 
     @movie = Movie.find_by_tmdb_id(@tmdb_id)
+    @listing.movie_id = @movie.id
     @listing.user_id = current_user.id
 
     @from = params[:from]
