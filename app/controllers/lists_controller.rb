@@ -24,8 +24,8 @@ class ListsController < ApplicationController
       @movies = @list.movies.paginate(:page => params[:page], per_page: 20)
       render :public_show
     end
-    # @movies = @list.movies.paginate(:page => params[:page])
-    @movies = @list.movies.sort_by { |movie| movie.priority(@list) }.reverse.paginate(:page => params[:page], per_page: 20)
+    @movies = @list.movies.paginate(:page => params[:page])
+    # @movies = @list.movies.sort_by { |movie| movie.priority(@list) }.reverse.paginate(:page => params[:page], per_page: 20)
     # @movies = @list.movies.sort_by { |movie| movie.runtime }.reverse.paginate(:page => params[:page])
     # @movies = @list.movies.sort_by { |movie| movie.vote_average }.reverse.paginate(:page => params[:page])
     # @movies = @list.movies.sort_by { |movie| movie.release_date }.reverse.paginate(:page => params[:page])
@@ -68,6 +68,9 @@ class ListsController < ApplicationController
   end
 
   def destroy
+    unless @list.owner == current_user
+      redirect_to user_list_path(@list.owner, @list), notice: "Only list owners can delete lists." and return
+    end
     @list.destroy
     respond_to do |format|
       format.html { redirect_to user_lists_url(current_user), notice: 'List was successfully destroyed.' }

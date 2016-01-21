@@ -155,10 +155,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario "user can update a listing's priority" do
         click_link "show_list_link_list_index"
-        fill_in "priority_number_field_movies_partial", with: '9'
+        select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
         expect(page).to have_content("Priority added.")
-        expect(page).to have_content('9')
+        expect(page).to have_content("High")
       end
 
       scenario "movie not yet rated shows field to submit new rating, which returns to the list page" do

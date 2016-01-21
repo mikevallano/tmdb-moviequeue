@@ -17,7 +17,7 @@ class ListingsController < ApplicationController
 
     #TODO: clean this up
     unless params[:priority].present?
-      @listing.priority = 5
+      @listing.priority = "medium"
     end
 
     @from = params[:from]

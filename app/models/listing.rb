@@ -4,4 +4,6 @@ class Listing < ActiveRecord::Base
 
   validates_presence_of :list
   validates_presence_of :movie
+
+  enum priority: { top: 5, high: 4, medium: 3, low: 2, bottom: 1 }
 end
