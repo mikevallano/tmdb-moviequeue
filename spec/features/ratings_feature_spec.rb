@@ -20,7 +20,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "my_movies_nav_link"
-        click_link "movie_show_page"
+        click_link "movie_show_link_movie_partial"
         select "5 stars", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
 
@@ -36,7 +36,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         listing
         sign_in_user(user)
         click_link "my_movies_nav_link"
-        click_link "movie_show_page"
+        click_link "movie_show_link_movie_partial"
         select "5 stars", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
         click_link "sign_out_nav_link"
@@ -44,13 +44,13 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         listing2
         sign_in_user(user2)
         click_link "my_movies_nav_link"
-        click_link "movie_show_page"
+        click_link "movie_show_link_movie_partial"
         expect(page).not_to have_selector("#existing_rating")
         click_link "sign_out_nav_link"
 
         sign_in_user(user)
         click_link "my_movies_nav_link"
-        click_link "movie_show_page"
+        click_link "movie_show_link_movie_partial"
         expect(page).to have_selector("#existing_rating")
 
 
