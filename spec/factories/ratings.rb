@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :rating do
     user
     movie
-    value 8
+    value { "6 stars" }
 
     factory :invalid_rating do
       value nil

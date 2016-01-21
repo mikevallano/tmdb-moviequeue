@@ -15,10 +15,9 @@ RSpec.describe RatingsController, type: :controller do
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
   let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
-  let(:rating) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id) }
+  let(:rating) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id, value: "8 stars") }
   let(:rating2) { FactoryGirl.create(:rating, user_id: user2.id, movie_id: movie.id) }
   let(:invalid_rating) { FactoryGirl.build(:invalid_rating) }
-  let(:valid_attributes) { rating.attributes }
   let(:invalid_attributes) { invalid_rating.attributes }
 
 
@@ -56,18 +55,18 @@ RSpec.describe RatingsController, type: :controller do
       context "with valid params" do
         it "creates a new Rating" do
           expect {
-            post :create, { :rating => valid_attributes, movie_id: movie.id }
+            post :create, { :rating => { user_id: user.id, movie_id: movie.id, value: "9 stars" }, movie_id: movie.id }
           }.to change(Rating, :count).by(1)
         end
 
         it "assigns a newly created rating as @rating" do
-          post :create, { :rating => { user_id: user.id, movie_id: movie2.id, value: 9 }, movie_id: movie2.id }
+          post :create, { :rating => { user_id: user.id, movie_id: movie2.id, value: "9 stars" }, movie_id: movie2.id }
           expect(assigns(:rating)).to be_a(Rating)
           expect(assigns(:rating)).to be_persisted
         end
 
         it "redirects to the movie" do
-          post :create, { :rating => { user_id: user.id, movie_id: movie3.id, value: 9 }, movie_id: movie3.id }
+          post :create, { :rating => { user_id: user.id, movie_id: movie3.id, value: "9 stars" }, movie_id: movie3.id }
           expect(response).to redirect_to(movie_url(movie3))
         end
       end
@@ -87,12 +86,12 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: "2") }
+        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: "2 stars") }
 
         it "updates the requested rating" do
           put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           rating.reload
-          expect(rating.value).to eq(2)
+          expect(rating.value).to eq("2 stars")
         end
 
         it "assigns the requested rating as @rating" do
@@ -167,7 +166,7 @@ RSpec.describe RatingsController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-         post :create, { :rating => valid_attributes, movie_id: movie.id }
+         post :create, { :rating => { user_id: user.id, movie_id: movie.id, value: "9 stars" }, movie_id: movie.id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -182,7 +181,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: '5') }
+        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: "5 stars") }
 
         before(:example) do
           put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
@@ -232,7 +231,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: '5') }
+        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: "5 stars") }
         before(:example) do
           put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
         end
