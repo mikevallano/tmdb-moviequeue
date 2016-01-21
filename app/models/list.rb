@@ -4,7 +4,6 @@ class List < ActiveRecord::Base
 
   self.per_page = 20
 
-  scope :by_user, lambda { |user| where(:owner_id => user.id) }
   scope :main_lists, lambda { where(:is_main => true) }
   scope :public_lists, lambda { where(:is_public => true) }
 
@@ -20,6 +19,10 @@ class List < ActiveRecord::Base
   has_many :members, through: :memberships
 
   has_many :invites
+
+  def self.by_user(user)
+    (where(owner_id: user.id) | joins(:memberships).where(memberships: { member_id: user.id }))
+  end
 
 
   def should_generate_new_friendly_id?
