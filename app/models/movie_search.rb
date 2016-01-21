@@ -24,26 +24,9 @@ class MovieSearch
           @title = result[:title]
           @release_date = result[:release_date]
           @vote_average = result[:vote_average].round(1)
-          # @genre_list = @result[:genres]
-          # @genres = result[:genres].map { |genre| genre[:name] }
           @overview = result[:overview]
-          # @actors = result[:credits][:cast].map { |cast| cast[:name] }
           @backdrop_path = result[:backdrop_path]
           @poster_path = result[:poster_path]
-          # @youtube_trailers = result[:trailers][:youtube]
-          # @trailer = result[:trailers][:youtube][0][:source] if @youtube_trailers.present?
-          # if result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.present?
-          #   @mpaa_rating = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
-          # else
-          #   @mpaa_rating = "NR"
-          # end
-          # @crew = result[:credits][:crew]
-          # @crew.find do |crew|
-          #   if crew[:department] == "Directing"
-          #     @director = crew[:name]
-          #     @director_id = crew[:id]
-          #   end
-          # end
 
           @movie = MovieSearch.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @overview, @backdrop_path, @poster_path)
           @movies << @movie

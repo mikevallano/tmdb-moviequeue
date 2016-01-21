@@ -1,4 +1,4 @@
-<% if !@discover_results.present? %>
+<% if !@movies.present? %>
 
 <h1>Search by various combos.</h1>
 <h2>All fields are optional. Search by whatever you want.</h2>
@@ -22,7 +22,7 @@
 
 <% else %>
 
-  <% if !@discover_results.present? %>
+  <% if !@movies.present? %>
       <h2>Hmm. No matching movies found. Check spelling to be sure.</h2>
     <% else %>
       <h2>Here are the matching movies: for <%= "#{@actor}, #{@actor2}, #{@mpaa_rating}, #{@year_select},

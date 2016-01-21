@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-  <%= image_tag "http://image.tmdb.org/t/p/w780#{@backdrop_path}" if @backdrop_path.present? %><br>
-  <%= image_tag "http://image.tmdb.org/t/p/w150#{@poster_path}" if @poster_path.present? %>
+  <%= image_tag "http://image.tmdb.org/t/p/w780#{@movie.backdrop_path}" if @movie.backdrop_path.present? %><br>
+  <%= image_tag "http://image.tmdb.org/t/p/w150#{@movie.poster_path}" if @movie.poster_path.present? %>
 
   <!-- TODO: Refactor the shit out of this: -->
   <% @lists_except_movie = current_user.lists_except_movie(@movie) %>
 
-<% if @movie.present? %> <!-- # if @movie.present? determines if the movie is already in the database -->
+<% if @movie.in_db %> <!-- # if @movie.present? determines if the movie is already in the database -->
 
   <% if current_user.movies.include?(@movie) %> <!-- #if current_user.movies.include?(@movie) -->
 
@@ -20,7 +20,7 @@
       <%= render "movies/add_to_list_form" %>
 
     <p>Tags:
-    <% @movie.tag_list(current_user).each do |tag| %>
+    <% @movie.tags.by_user_or_list(current_user).each do |tag| %>
       <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movie_show" %><%= link_to "(x)", delete_tagging_path(tag.id, @movie.id, from: "movie"), id: "remove_tag_link_movie_show", method: :delete  %>
     <% end %> <!-- # tags loop -->
     </p>
@@ -79,32 +79,32 @@
 
   <% end %> <!-- #if current_user.movies.include?(@movie) -->
 
-  <% else %> <!-- #if @movie present -->
+<% else %> <!-- #if @movie is in database-->
     <p>This movie is not on your lists. Add it to a list:</p>
     <%= render "movies/add_to_list_form" %>
 
-<% end %> <!-- #if @movie present -->
+<% end %> <!-- #if @movie is in database-->
 
 
-  <p>Release Date: <%= @release_date %></p>
-  <p>Rated: <%= @mpaa_rating %></p>
-  <p>TMDB Vote Average: <%= @vote_average %></p>
+  <p>Release Date: <%= @movie.release_date %></p>
+  <p>Rated: <%= @movie.mpaa_rating %></p>
+  <p>TMDB Vote Average: <%= @movie.vote_average %></p>
 
   <p>Genres:
-    <% @genres.each do |genre| %>
+    <% @movie.genres.each do |genre| %>
       <%= link_to "#{genre}", genre_path(genre), id: "genre_link_movie_show" %>
     <% end %>
   </p>
 
-  <p>Overview: <%= @overview %></p>
+  <p>Overview: <%= @movie.overview %></p>
 
   <p>Actors:
-    <% @actors.each do |actor| %>
+    <% @movie.actors.each do |actor| %>
       <%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_show" %>
     <% end %>
   </p>
 
-  <p>Director: <%= link_to "#{@director}", director_search_path(director_id: @director_id, name: @director) %></p>
+  <p>Director: <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director) %></p>
 
   <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
     <p>Production Companies:
@@ -115,8 +115,8 @@
     <% end %> <!-- # if @production_companies.present? -->
 
   <p>Trailer:</p>
-  <% if @youtube_trailers.present? %> <!-- #if trailer present -->
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @trailer_url %>" frameborder="0" allowfullscreen></iframe>
+  <% if @movie.trailer.present? %> <!-- #if trailer present -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
   <% else %> <!-- #if trailer present -->
-    <a href="https://www.youtube.com/results?search_query=<%= @title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
+    <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
   <% end %> <!-- #if trailer present -->

@@ -7,64 +7,27 @@ module TmdbHandler
     @movies = MovieSearch.parse_results(@discover_results)
     rescue
       unless @tmdb_response.present?
-        @discover_results = []
+        @movies = []
       end
   end
 
   def tmdb_handler_movie_more(id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
-    @tmdb_id = @result[:id]
-    @movie = Movie.find_by(tmdb_id: @tmdb_id)
-    @title = @result[:title]
-    @release_date = @result[:release_date]
-    @vote_average = @result[:vote_average]
-    @genre_list = @result[:genres]
-    @genres = @result[:genres].map { |genre| genre[:name] }
-    @overview = @result[:overview]
-    @actors = @result[:credits][:cast].map { |cast| cast[:name] }
-    @youtube_trailers = @result[:trailers][:youtube]
-    @backdrop_path = @result[:backdrop_path]
-    @poster_path = @result[:poster_path]
-    @trailer_url = @result[:trailers][:youtube][0][:source] if @youtube_trailers.present?
-    if @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.present?
-      @mpaa_rating = @result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
-    else
-      @mpaa_rating = "NR"
-    end
-
-    @crew = @result[:credits][:crew]
-    @crew.find do |crew|
-      if crew[:department] == "Directing"
-        @director = crew[:name]
-        @director_id = crew[:id]
-      end
-    end
+    @movie = MovieMore.parse_result(@result)
 
     @production_companies = @result[:production_companies]
-
     @similar = @result[:similar][:results]
   end
 
   def tmdb_handler_add_movie(id)
     tmdb_handler_movie_more(id)
-    @genres = @result[:genres].map { |genre| genre[:name]}
-    @actors = @result[:credits][:cast].map { |cast| cast[:name] }
-    @crew = @result[:credits][:crew]
-    @crew.find do |crew|
-      if crew[:department] == "Directing"
-        @director = crew[:name]
-        @director_id = crew[:id]
-      end
-    end
-    @trailer = @result[:trailers][:youtube][0][:source] if @result[:trailers][:youtube].present?
 
-    Movie.create(title: @result[:title], tmdb_id: @result[:id], imdb_id: @result[:imdb_id],
-      genres: @genres, actors: @actors, adult: @result[:adult], backdrop_path: @result[:backdrop_path],
-      poster_path: @result[:poster_path], release_date: @result[:release_date],
-      overview: @result[:overview], trailer: @trailer, director: @director, director_id: @director_id,
-      vote_average: @result[:vote_average], popularity: @result[:popularity], runtime: @result[:runtime],
-      mpaa_rating: @mpaa_rating)
+    Movie.create(title: @movie.title, tmdb_id: @movie.tmdb_id, imdb_id: @movie.imdb_id,
+    genres: @movie.genres, actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
+    poster_path: @movie.poster_path, release_date: @movie.release_date, overview: @movie.overview, trailer: @movie.trailer,
+    director: @movie.director, director_id: @movie.director_id, vote_average: @movie.vote_average,
+    popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
   end
 
   def tmdb_handler_actor_more(actor_id)
@@ -131,24 +94,24 @@ module TmdbHandler
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
     tmdb_handler_search(movie_one)
-      if @discover_results.present?
-        @movie_one_id = @discover_results.first[:id]
+      if @movies.present?
+        @movie_one_id = @movies.first.tmdb_id
       else
         redirect_to :two_movie_search, notice: "No results for the first movie. Try again" and return
       end
     tmdb_handler_search(movie_two)
-      if @discover_results.present?
-        @movie_two_id = @discover_results.first[:id]
+      if @movies.present?
+        @movie_two_id = @movies.first.tmdb_id
       else
         redirect_to :two_movie_search, notice: "No results for the second movie. Try again" and return
       end
 
     tmdb_handler_movie_more(@movie_one_id)
-      @movie_one = @result
-      @movie_one_actors = @actors
+      @movie_one = @movie
+      @movie_one_actors = @movie.actors
     tmdb_handler_movie_more(@movie_two_id)
-      @movie_two = @result
-      @movie_two_actors = @actors
+      @movie_two = @movie
+      @movie_two_actors = @movie.actors
 
     @common_actors = @movie_one_actors & @movie_two_actors
 
