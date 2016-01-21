@@ -30,11 +30,11 @@ RSpec.feature "Movies feature spec", :type => :feature do
         sign_up_api_search_then_add_movie_to_list
         visit(movie_path(Movie.last))
         expect(page).to have_selector("#similar_movies_link_movie_show")
-        VCR.use_cassette('tmdb_movie_more') do
+        VCR.use_cassette("tmdb_movie_more_info") do
           click_link "similar_movies_link_movie_show"
         end
         VCR.use_cassette("similar_movies_more_info") do
-          click_link "movie_more_link_movie_more_similar_movies", match: :first
+          click_link "movie_more_link_movie_partial", match: :first
         end
         expect(page).to have_content("The Revenant")
       end

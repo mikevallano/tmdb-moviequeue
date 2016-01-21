@@ -2,13 +2,4 @@
 
 <%= render "movies/movie_show" %>
 
-  <h2>Similar Movies: (maybe this should just be a different page?)</h2>
-   <% @similar.each do |result| %>
-   <div>
-       <%= image_tag "http://image.tmdb.org/t/p/w150#{result[:poster_path]}" %>
-      <h3><%= result[:title] %></h3>
-      <p><%= result[:release_date] %></p>
-      <p><%= result[:vote_average] %></p>
-      <p><%= result[:overview] %></p>
-      <p><%= link_to "More info", movie_more_path(tmdb_id: "#{result[:id]}"), id: "movie_more_link_movie_more_similar_movies" %></p>
-  <% end %>
+<p><%= link_to "Similar movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more" %></p>

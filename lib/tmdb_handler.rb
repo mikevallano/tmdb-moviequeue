@@ -17,8 +17,27 @@ module TmdbHandler
     @movie = MovieMore.parse_result(@result)
 
     @production_companies = @result[:production_companies]
-    @similar = @result[:similar][:results]
+    @similar_movies = @result[:similar][:results]
   end
+
+  def tmdb_handler_similar_movies(tmdb_id, page)
+    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases,similar&page=#{page}"
+    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    @similar_results = @result[:similar][:results]
+    @total_pages = @result[:similar][:total_pages]
+
+    @movie = MovieMore.parse_result(@result)
+    @movies = MovieSearch.parse_results(@similar_results)
+
+    @page = page.to_i
+    if @page > 1
+      @previous_page = @page - 1
+    end
+    unless @page >= @total_pages
+      @next_page = @page + 1
+    end
+
+  end #similar movies
 
   def tmdb_handler_add_movie(id)
     tmdb_handler_movie_more(id)
@@ -131,7 +150,6 @@ module TmdbHandler
 
   def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
     company, mpaa_rating, sort_by, page)
-    @page = page.to_i
     if actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
@@ -171,69 +189,7 @@ module TmdbHandler
     @movies = MovieSearch.parse_results(@discover_results)
     @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]
 
-    if @page > 1
-      @previous_page = @page - 1
-    end
-    unless @page >= @total_pages
-      @next_page = @page + 1
-    end
-
-    rescue
-    if actor.present?
-      unless @actor1_search_result.present?
-        @discover_results = []
-      end
-    end
-    if actor2.present?
-      unless @actor2_search_result.present?
-        @discover_results = []
-      end
-    end
-
-  end #discover search
-
-  def tmdb_handler_discover_search_tester(exact_year, after_year, before_year, genre, actor, actor2,
-    company, mpaa_rating, sort_by, page)
     @page = page.to_i
-    if actor.present?
-      @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
-      @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
-      @actor1_id = @actor1_search_result.first[:id] if @actor1_search_result.present?
-    end
-    if actor2.present?
-      @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{actor2}&api_key=#{ENV['tmdb_api_key']}"
-      @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
-      @actor2_id = @actor2_search_result.first[:id] if @actor2_search_result.present?
-    end
-
-    if @actor1_id.present? && @actor2_id.present?
-      @people = "#{@actor1_id}, #{@actor2_id}"
-    elsif @actor1_id.present?
-      @people = @actor1_id
-    elsif @actor2_id.present?
-      @people = @actor_2_id
-    else
-      @people = ''
-    end
-    years = [exact_year, after_year, before_year].compact
-    if years.any?
-      years = years.first
-      if years == exact_year
-        @year_search = "primary_release_year=#{years}"
-      elsif years == after_year
-        @year_search = "release_date.gte=#{years}"
-      else
-        @year_search = "release_date.lte=#{years}"
-      end
-    else
-      @year_search = "release_date.gte=1800-01-01"
-    end
-
-    @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
-    @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
-    @movies = MovieSearch.parse_results(@discover_results)
-    @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]
-
     if @page > 1
       @previous_page = @page - 1
     end
@@ -244,15 +200,16 @@ module TmdbHandler
     rescue
     if actor.present?
       unless @actor1_search_result.present?
-        @movies = []
+        @discover_results = []
       end
     end
     if actor2.present?
       unless @actor2_search_result.present?
-        @movies = []
+        @discover_results = []
       end
     end
 
   end #discover search
+
 
 end

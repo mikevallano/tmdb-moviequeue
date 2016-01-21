@@ -20,6 +20,18 @@ class TmdbController < ApplicationController
     end
   end
 
+  def similar_movies
+    if params[:tmdb_id]
+      @tmdb_id = params[:tmdb_id]
+      if params[:page]
+        @page = params[:page]
+      else
+        @page = 1
+      end #if page
+      tmdb_handler_similar_movies(@tmdb_id, @page)
+    end #if tmdb_id
+  end #similar movies
+
   def actor_search
     if params[:actor]
       @actor = params[:actor]

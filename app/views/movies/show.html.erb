@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
- <h1>Movie Show page for: <%= @movie.title %></h1>
+ <h1>Movie Show page for: <%= link_to "#{@movie.title}", movie_more_path(@movie.tmdb_id) %></h1>
 
  <%= render "movie_show" %>
 
 
-<p><%= link_to "Similar movies", movie_more_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_show" %></p>
+<p><%= link_to "Similar movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_show" %></p>
 
 <%= link_to 'Back', movies_path %>

@@ -48,14 +48,14 @@
         </div>
       <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
 
-    <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_page" %></p>
+    <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_movie_partial" %></p>
 
   <% else %>
 
     <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_add_to_first_list', movie: movie %>
     </div>
-    <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_search_results" %></p>
+    <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" %></p>
 
   <% end %>
   </br>
