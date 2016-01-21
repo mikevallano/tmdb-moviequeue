@@ -6,8 +6,6 @@ RSpec.describe Rating, type: :model do
   let(:rating) { FactoryGirl.build(:rating) }
   let(:rating2) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id ) }
   let(:rating3) { FactoryGirl.build(:rating, user_id: user.id, movie_id: movie.id) }
-  let(:too_low_rating) { FactoryGirl.build(:rating, value: 0) }
-  let(:too_high_rating) { FactoryGirl.build(:rating, value: 11) }
   let(:invalid_rating) { FactoryGirl.build(:invalid_rating) }
 
   it { is_expected.to validate_presence_of(:value) }
@@ -28,14 +26,6 @@ RSpec.describe Rating, type: :model do
 
     it "is invalid without a value" do
       expect(invalid_rating).not_to be_valid
-    end
-
-    it "is invalid when a rating is too low" do
-      expect(too_low_rating).not_to be_valid
-    end
-
-    it "is invalid when a rating is too high" do
-      expect(too_high_rating).not_to be_valid
     end
 
     it "is does not allow a user to rate a movie more than once" do

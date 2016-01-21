@@ -15,7 +15,7 @@
   <%= f.hidden_field :movie_id, value: @movie.id %>
   <div class="field">
     <%= f.label :value %><br>
-    <%= f.number_field :value %>
+    <%= f.select :value, Rating.values.keys.to_a, id: "rating_value_field" %>
   </div>
   <div class="actions">
     <%= f.submit "Submit", id: "rating_submit_button_rating_form" %>

@@ -21,7 +21,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        fill_in "rating_value_field", with: "5"
+        select "5 stars", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
 
         visit(new_movie_rating_path(movie))
@@ -37,7 +37,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_page"
-        fill_in "rating_value_field", with: "5"
+        select "5 stars", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
         click_link "sign_out_nav_link"
 
