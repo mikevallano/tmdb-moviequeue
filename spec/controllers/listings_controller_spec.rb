@@ -26,9 +26,9 @@ RSpec.describe ListingsController, type: :controller do
 
     describe "PUT #update" do
       it "updates the priority" do
-        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: "high"}
+        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
         listing.reload
-        expect(listing.priority).to eq("high")
+        expect(listing.priority).to eq(4)
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe ListingsController, type: :controller do
 
     describe "PUT #update" do
       before(:example) do
-        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: "high"}
+        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
       end
 
      it { is_expected.to redirect_to new_user_session_path }
@@ -85,10 +85,10 @@ RSpec.describe ListingsController, type: :controller do
   shared_examples_for "does not let a user update or delete another users listing" do
 
     it "doesn't let a user update another user's listing" do
-      put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: "high"}
+      put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
       expect(response).to redirect_to(user_lists_path(user2))
       listing.reload
-      expect(listing.priority).not_to eq("high")
+      expect(listing.priority).not_to eq(4)
     end
 
     it "doesn't let a user destroy another user's listing" do
