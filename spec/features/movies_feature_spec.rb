@@ -100,9 +100,9 @@ RSpec.feature "Movies feature spec", :type => :feature do
           visit(movie_path(Movie.last))
           expect(page).not_to have_selector("#show_rating_link_movie_show")
           expect(page).to have_selector("#rating_submit_button_rating_form")
-          select "5 stars", :from => "rating[value]"
+          select "5", :from => "rating[value]"
           click_button "rating_submit_button_rating_form"
-          expect(page).to have_content("5 stars")
+          expect(page).to have_content("5")
           expect(current_url).to eq(movie_url(Movie.last))
         end
 
@@ -270,9 +270,9 @@ RSpec.feature "Movies feature spec", :type => :feature do
           click_link "my_movies_nav_link"
           expect(page).not_to have_selector("#show_rating_link_movies_partial")
           expect(page).to have_selector("#rating_submit_button_rating_form")
-          select "5 stars", :from => "rating[value]"
+          select "5", :from => "rating[value]"
           click_button "rating_submit_button_rating_form"
-          expect(page).to have_content("5 stars")
+          expect(page).to have_content("5")
           expect(current_url).to eq(movies_url)
         end
 

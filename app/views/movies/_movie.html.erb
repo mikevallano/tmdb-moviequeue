@@ -8,7 +8,7 @@
   <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
 
   <p><strong>Release Date:</strong> <%= movie.release_date %></p>
-  <p><strong>Vote average:</strong> <%= movie.vote_average %></p>
+  <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
   <p><strong>Overview:</strong> <%= movie.overview %></p>
 
   <% if movie.in_db && current_user.all_movies.include?(movie) %>

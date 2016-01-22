@@ -166,7 +166,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         click_link "show_list_link_list_index"
         expect(page).not_to have_selector("#show_rating_link_movies_partial")
         expect(page).to have_selector("#rating_submit_button_rating_form")
-        select "5 stars", :from => "rating[value]"
+        select "5", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
         expect(page).to have_content('5')
         expect(current_url).to eq(user_list_url(@current_user, List.last))

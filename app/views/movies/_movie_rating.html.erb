@@ -13,7 +13,7 @@
         <%= hidden_field_tag :from, "movies_index" if !@list.present? %>
         <%= hidden_field_tag :page, params[:page] %>
         <%= f.label "Rate this movie" %><br>
-        <%= f.select :value, Rating.values.keys.to_a, id: "rating_value_field" %>
+        <%= f.select :value, Rating::VALUES, :prompt => "Out of 10", id: "rating_value_field" %>
         <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
       <% end %> <!-- # rating form -->
     </div>
