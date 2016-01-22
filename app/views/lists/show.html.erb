@@ -3,6 +3,25 @@
 <h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
 
 
+  <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
+    <%= label_tag :sort_by, "Sort by: " %>
+    <%= select_tag :sort_by, options_for_select(Movie::LIST_SORT_OPTIONS, @sort_by), :include_blank => false, id: "list_sort_options" %>
+    <%= submit_tag "Sort", id: "list_sort_button" %>
+  <% end %>
+
+<% if @sort_by == "watched movies" && @list.members.present? %>
+
+  </br>
+  <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
+    <%= label_tag :watched_by, "Watched by who?: " %>
+    <%= select_tag :watched_by, options_from_collection_for_select(@list.members, :id, :username) %>
+    <%= hidden_field_tag(:sort_by, "watched movies") %>
+    <%= submit_tag "Sort", id: "list_sort_watched_by_button" %>
+  <% end %>
+
+<% end %> <!-- # if @sort_by = "watched movies" && @list.members.present? -->
+
+
 <div id ="list_show_loop">
 
   <% @movies.each do |movie| %>

@@ -25,10 +25,47 @@ class ListsController < ApplicationController
       render :public_show
     end
     # @movies = @list.movies.paginate(:page => params[:page])
-    @movies = @list.movies.sort_by { |movie| movie.priority(@list) }.reverse.paginate(:page => params[:page], per_page: 20)
-    # @movies = @list.movies.sort_by { |movie| movie.runtime }.reverse.paginate(:page => params[:page])
-    # @movies = @list.movies.sort_by { |movie| movie.vote_average }.reverse.paginate(:page => params[:page])
-    # @movies = @list.movies.sort_by { |movie| movie.release_date }.reverse.paginate(:page => params[:page])
+
+    [ ["highest priority", "highest priority"], ["title", "title"], ["shortest runtime", "shortest runtime"], ["longest runtime", "longest runtime"], ["newest release", "newest release"], ["vote average", "vote average"], ["recently added to list", "recently added to list"], ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"]  ]
+
+    @sort_by = params[:sort_by]
+    @watched_by = params[:watched_by]
+      if @sort_by.present?
+        case @sort_by
+        when "title"
+          @movies = @list.movies.by_title.paginate(:page => params[:page], per_page: 20)
+        when "shortest runtime"
+          @movies = @list.movies.by_shortest_runtime.paginate(:page => params[:page], per_page: 20)
+        when "longest runtime"
+          @movies = @list.movies.by_longest_runtime.paginate(:page => params[:page], per_page: 20)
+        when "newest release"
+          @movies = @list.movies.by_recent_release_date.paginate(:page => params[:page], per_page: 20)
+        when "vote average"
+          @movies = @list.movies.by_highest_vote_average.paginate(:page => params[:page], per_page: 20)
+        when "recently added to list"
+          @movies = @list.movies.by_recently_added(@list).paginate(:page => params[:page], per_page: 20)
+        when "watched movies"
+          if @watched_by.present?
+            @user = User.find(@watched_by)
+            @movies = @list.movies.by_watched_by_user(@list, @user).paginate(:page => params[:page], per_page: 20)
+          else
+            @movies = @list.movies.by_watched_by_user(@list, current_user).paginate(:page => params[:page], per_page: 20)
+          end
+        when "unwatched movies"
+          @movies = @list.movies.by_unwatched_by_user(@list, current_user).paginate(:page => params[:page], per_page: 20)
+        when "highest priority"
+           @movies = @list.movies.by_highest_priority(@list).paginate(:page => params[:page], per_page: 20)
+        end
+      else
+        @movies = @list.movies.by_highest_priority(@list).paginate(:page => params[:page], per_page: 20)
+      end
+    # @movies = @list.movies.watched_by_user(current_user) #this doesn't sort, but returns only matching movies
+    # could also do params[:user_id] with a dropdown of members
+    # @movies = @list.movies.unwatched_by_user(current_user)
+
+    # @movies = @list.movies.by_watched_by_members(@list).paginate(:page => params[:page]) #not working
+
+
   end
 
   def new

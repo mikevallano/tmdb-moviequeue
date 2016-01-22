@@ -22,6 +22,34 @@ class Movie < ActiveRecord::Base
   has_many :viewers, :through => :screenings,
   :source => :user
 
+  LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"], ["longest runtime", "longest runtime"], ["newest release", "newest release"], ["vote average", "vote average"], ["recently added to list", "recently added to list"], ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"], ["highest priority", "highest priority"] ]
+
+  scope :by_title, -> { order(:title) }
+  scope :by_shortest_runtime, -> { order(:runtime) }
+  scope :by_longest_runtime, -> { order(:runtime).reverse_order }
+  scope :by_recent_release_date, -> { order(:release_date).reverse_order }
+  scope :by_highest_vote_average, -> { order(:vote_average).reverse_order }
+
+  def self.by_highest_priority(list)
+    list.movies.sort_by { |movie| movie.priority(list) }.reverse
+  end
+
+  def self.by_recently_added(list)
+    list.movies.sort_by { |movie| movie.date_added_to_list(list) }.reverse
+  end
+
+  def self.by_watched_by_user(list, user)
+    list.movies.sort_by { |movie| movie.viewers.include?(user) ? 0 : 1  }
+  end
+
+  def self.by_watched_by_members(list)
+    list.movies.sort_by { |movie| movie.viewers.include?(list.members.ids) ? 0 : 1  }
+  end
+
+  def self.by_unwatched_by_user(list, user)
+    list.movies.sort_by { |movie| movie.viewers.include?(user) ? 1 : 0  }
+  end
+
   def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
     true
   end
@@ -30,8 +58,18 @@ class Movie < ActiveRecord::Base
     screenings.by_user(user).count
   end
 
-  def self.by_user(user)
-    joins(:lists).where(lists: { owner_id: user.id }).uniq
+  def self.watched_by_user(user)
+    user.screened_movies.uniq
+  end
+
+  def date_added_to_list(list)
+    Listing.find_by(list_id: list.id, movie_id: self.id).created_at
+  end
+
+  def self.unwatched_by_user(user)
+    user_movies = user.all_movies.uniq
+    seen_movies = user.screened_movies.uniq
+    unseen_movies = (user_movies - seen_movies)
   end
 
   def self.tagged_with(tag_name, userlist)

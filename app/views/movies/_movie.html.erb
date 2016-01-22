@@ -9,6 +9,7 @@
 
   <p><strong>Release Date:</strong> <%= movie.release_date %></p>
   <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
+  <p><strong>Runtime:</strong> <%= movie.runtime if movie.in_db %></p>
   <p><strong>Overview:</strong> <%= movie.overview %></p>
 
   <% if movie.in_db && current_user.all_movies.include?(movie) %>
