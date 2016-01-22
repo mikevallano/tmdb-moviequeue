@@ -50,6 +50,22 @@ class Movie < ActiveRecord::Base
     listings.find_by(list_id: list.id).priority
   end
 
+  def priority_text(list)
+    p = listings.find_by(list_id: list.id).priority
+    case p
+    when 1
+      "Bottom"
+    when 2
+      "Low"
+    when 3
+      "Normal"
+    when 4
+      "High"
+    when 5
+      "Top"
+    end
+  end #priority_text
+
   GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
   ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
   ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],

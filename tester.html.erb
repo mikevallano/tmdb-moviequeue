@@ -1,23 +1,10 @@
-  <% if current_user.rated_movies.include?(movie) %> <!-- #if movie has been rated -->
 
-    <p><strong>My rating:</strong> <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %></p>
+  <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority(@list).titlecase %></p>
 
-  <% else %> <!-- #if movie has been rated -->
-
-    <div>
-      <%= form_for [movie, Rating.new], remote: true do |f| %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-        <%= f.hidden_field :movie_id, value: movie.id %>
-        <%= hidden_field_tag :from, "list_show" if @list.present? %>
-        <%= hidden_field_tag :list_id, @list.id if @list.present? %>
-        <%= hidden_field_tag :from, "movies_index" if !@list.present? %>
-        <%= hidden_field_tag :page, params[:page] %>
-        <%= f.label "Rate this movie" %><br>
- <!--        select_tag :priority, options_for_select(Listing.priorities.keys.map { |p| [p.titlecase, p] }), -->
-        f.input :color, :as => :select, :collection => Wine.colors.keys.to_a
-        <%= f.number_field :value, id: "rating_value_field" %>
-        <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
-      <% end %> <!-- # rating form -->
-    </div>
-
-  <% end %> <!-- #if movie has been rated -->
+  <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { remote: true, method: :patch } ) do %>
+      <%= label_tag(:priority, "new priority:") %>
+      <%= select_tag :priority, options_for_select(Listing.priorities.keys.map { |p| [p.titlecase, p] }), id: "priority_number_field_movies_partial" %>
+      <%= hidden_field_tag(:user_id, current_user.id) %>
+      <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial" %>
+    <% end %> <!-- #update priority form -->
+  </p>

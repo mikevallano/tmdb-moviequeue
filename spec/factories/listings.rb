@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :listing do
     list
     movie
-    priority "medium"
+    priority 3
 
     factory :invalid_listing do
       movie nil

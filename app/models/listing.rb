@@ -4,10 +4,11 @@ class Listing < ActiveRecord::Base
 
   validates_presence_of :list
   validates_presence_of :movie
+  validates :priority, :inclusion => 1..5
 
-  enum priority: { top: 5, high: 4, medium: 3, low: 2, bottom: 1 }
+  PRIORITIES = [ ["Top", 5], ["High", 4], ["Normal", 3], ["Low", 2], ["Bottom", 1] ]
 
-  before_create :default_priority
+  before_save :default_priority
 
   def default_priority
     self.priority ||= 3
