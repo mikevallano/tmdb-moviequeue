@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
   get 'tmdb/movie_more', to: 'tmdb#movie_more', as: :movie_more
   get 'tmdb/similar_movies', to: 'tmdb#similar_movies', as: :similar_movies
+  get 'tmdb/full_cast', to: 'tmdb#full_cast', as: :full_cast
   get 'tmdb/actor_search', to: 'tmdb#actor_search', as: :actor_search
   get 'tmdb/actor_more', to: 'tmdb#actor_more', as: :actor_more
   get 'tmdb/actor_credit', to: 'tmdb#actor_credit', as: :actor_credit

@@ -32,6 +32,13 @@ class TmdbController < ApplicationController
     end #if tmdb_id
   end #similar movies
 
+  def full_cast
+    if params[:tmdb_id]
+      @tmdb_id = params[:tmdb_id]
+      tmdb_handler_full_cast(@tmdb_id)
+    end
+  end #full cast
+
   def actor_search
     if params[:actor]
       @actor = params[:actor]
