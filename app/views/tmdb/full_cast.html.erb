@@ -1,10 +1,25 @@
 <h1>Full Cast:</h1>
 
 <h2>Actors:</h2>
-
 <% @actors.each do |actor| %>
-  <%= image_tag "http://image.tmdb.org/t/p/w185#{actor.profile_path}" if actor.profile_path.present? %><br>
+  <%= image_tag "http://image.tmdb.org/t/p/w45#{actor.profile_path}" if actor.profile_path.present? %><br>
   <p>Name: <%= link_to "#{actor.name}", actor_more_path(actor_id: actor.actor_id) %><p>
   <p>Character: <%= actor.character_name %><p>
+  <hr>
+<% end %>
+
+<h2>Direction:</h2>
+<% @directors.each do |director| %>
+  <%= image_tag "http://image.tmdb.org/t/p/w185#{director.profile_path}" if director.profile_path.present? %><br>
+  <p>Name: <%= link_to "#{director.name}", director_search_path(director_id: director.director_id) %><p>
+  <p>Job: <%= director.job %><p>
+  <hr>
+<% end %>
+
+<h2>Editing:</h2>
+<% @editors.each do |editor| %>
+  <%= image_tag "http://image.tmdb.org/t/p/w185#{director.profile_path}" if editor.profile_path.present? %><br>
+  <p>Name: <%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
+  <p>Job: <%= editor.job %><p>
   <hr>
 <% end %>

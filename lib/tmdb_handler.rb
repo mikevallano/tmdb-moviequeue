@@ -46,7 +46,13 @@ module TmdbHandler
     @cast = @result[:credits][:cast]
     @actors = MovieCast.parse_results(@cast)
     @crew = @result[:credits][:crew]
-    @directors = @crew.select { |crew| crew[:job] == "Director" }
+    @director_credits = @crew.select { |crew| crew[:job] == "Director" }
+    @directors = MovieDirecting.parse_results(@director_credits)
+    @editor_credits = @crew.select { |crew| crew[:job] == "Editor" }
+    @editors = MovieEditing.parse_results(@editor_credits)
+    @writer_credits = @crew.select { |crew| crew[:job] == "Writer" }
+    @screenplay_credits = @crew.select { |crew| crew[:job] == "Screenplay" }
+    @producer_credits = @crew.select { |crew| crew[:job] == "Producer" }
   end #full_cast
 
   def tmdb_handler_add_movie(id)
