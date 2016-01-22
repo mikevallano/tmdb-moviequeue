@@ -51,7 +51,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       select "High", :from => "priority"
       click_button "add_priority_button_movies_partial"
       expect(page).to have_content("High")
-      expect(Listing.last.priority).to eq("high")
+      expect(Listing.last.priority).to eq(4)
     end
 
     scenario "users can see other members' tags but not other users' tags" do

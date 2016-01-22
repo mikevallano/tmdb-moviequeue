@@ -4,7 +4,6 @@ class Listing < ActiveRecord::Base
 
   validates_presence_of :list
   validates_presence_of :movie
-  validates :priority, :inclusion => 1..5
 
   PRIORITIES = [ ["Top", 5], ["High", 4], ["Normal", 3], ["Low", 2], ["Bottom", 1] ]
 
