@@ -18,7 +18,7 @@
 
 <h2>Editing:</h2>
 <% @editors.each do |editor| %>
-  <%= image_tag "http://image.tmdb.org/t/p/w185#{director.profile_path}" if editor.profile_path.present? %><br>
+  <%= image_tag "http://image.tmdb.org/t/p/w185#{editor.profile_path}" if editor.profile_path.present? %><br>
   <p>Name: <%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
   <p>Job: <%= editor.job %><p>
   <hr>

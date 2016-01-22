@@ -256,6 +256,17 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Steve Buscemi")
       end
 
+      scenario "movies have a link to view full cast" do
+        sign_up_with(email, username, "password")
+        visit(api_search_path)
+        api_search_for_movie
+        api_movie_more_info
+        VCR.use_cassette("full_cast") do
+          click_link "full_cast_link_movie_show"
+        end
+        expect(page).to have_content("Steve Buscemi")
+      end
+
       scenario "movies have directors on the more info page" do
         sign_up_with(email, username, "password")
         visit(api_search_path)
