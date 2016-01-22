@@ -9,13 +9,13 @@
     <%= submit_tag "Sort", id: "list_sort_button" %>
   <% end %>
 
-<% if @sort_by == "watched movies" && @list.members.present? %>
+<% if @list.members.present? && @watched_sorts.include?(@sort_by) %>
 
-  </br>
+  <p>Which member for <%= @sort_by %>?
   <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
-    <%= label_tag :watched_by, "Watched by who?: " %>
-    <%= select_tag :watched_by, options_from_collection_for_select(@list.members, :id, :username) %>
-    <%= hidden_field_tag(:sort_by, "watched movies") %>
+    <%= label_tag :member, "By which member?: " %>
+    <%= select_tag :member, options_from_collection_for_select(@list.members, :id, :username) %>
+    <%= hidden_field_tag(:sort_by, @sort_by) %>
     <%= submit_tag "Sort", id: "list_sort_watched_by_button" %>
   <% end %>
 

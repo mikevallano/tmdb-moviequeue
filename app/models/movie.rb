@@ -22,7 +22,7 @@ class Movie < ActiveRecord::Base
   has_many :viewers, :through => :screenings,
   :source => :user
 
-  LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"], ["longest runtime", "longest runtime"], ["newest release", "newest release"], ["vote average", "vote average"], ["recently added to list", "recently added to list"], ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"], ["highest priority", "highest priority"] ]
+  LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"], ["longest runtime", "longest runtime"], ["newest release", "newest release"], ["vote average", "vote average"], ["recently added to list", "recently added to list"], ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"], ["highest priority", "highest priority"], ["only show unwatched", "only show unwatched"], ["only show watched", "only show watched"] ]
 
   scope :by_title, -> { order(:title) }
   scope :by_shortest_runtime, -> { order(:runtime) }
@@ -62,14 +62,14 @@ class Movie < ActiveRecord::Base
     user.screened_movies.uniq
   end
 
-  def date_added_to_list(list)
-    Listing.find_by(list_id: list.id, movie_id: self.id).created_at
-  end
-
   def self.unwatched_by_user(user)
     user_movies = user.all_movies.uniq
     seen_movies = user.screened_movies.uniq
     unseen_movies = (user_movies - seen_movies)
+  end
+
+  def date_added_to_list(list)
+    Listing.find_by(list_id: list.id, movie_id: self.id).created_at
   end
 
   def self.tagged_with(tag_name, userlist)
