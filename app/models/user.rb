@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def all_movies
-    (self.movies | self.member_movies).uniq
+    (self.movies.all + self.member_movies.all + self.screened_movies.all).uniq
   end
 
   def login=(login)

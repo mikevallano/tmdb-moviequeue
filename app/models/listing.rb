@@ -1,6 +1,7 @@
 class Listing < ActiveRecord::Base
   belongs_to :list
   belongs_to :movie
+  belongs_to :user
 
   validates_presence_of :list
   validates_presence_of :movie

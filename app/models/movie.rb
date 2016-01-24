@@ -10,6 +10,11 @@ class Movie < ActiveRecord::Base
 
   has_many :listings
   has_many :lists, through: :listings
+  has_many :users, through: :listings
+
+  def self.by_tag_and_user(tag, user)
+    joins(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
+  end
 
   has_many :taggings
   has_many :tags, through: :taggings

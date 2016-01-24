@@ -4,19 +4,19 @@ class MoviesController < ApplicationController
   def index
     @per_page = 20
     if params["tag"]
-      @tag = params["tag"]
+      @tag = Tag.find_by(name: params["tag"])
       if params[:list_id]
         @list = List.find(params[:list_id])
         @movies = @list.movies.tagged_with(params['tag'], @list).paginate(:page => params[:page], :per_page => @per_page)
-      else
-        @movies = current_user.movies.tagged_with(params["tag"], current_user).paginate(:page => params[:page], :per_page => @per_page)
-      end
+      else #params list_id
+        @movies = Movie.by_tag_and_user(@tag, current_user).paginate(:page => params[:page], :per_page => @per_page)
+      end #params list_id
     else #params tag
       @movies = current_user.all_movies.paginate(:page => params[:page], :per_page => @per_page)
     end #params tag
     if params[:genre]
       @movies = current_user.movies.by_genre(params[:genre]).paginate(:page => params[:page], :per_page => @per_page)
-    end
+    end #params genre
   end
 
   def show
