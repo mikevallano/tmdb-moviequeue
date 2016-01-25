@@ -71,16 +71,10 @@ RSpec.describe ScreeningsController, type: :controller do
       end
 
       context "with invalid params" do
-        it "assigns a newly created but unsaved screening as @screening" do
-          skip "circle back"
-          post :create, { :screening => invalid_attributes, movie_id: movie.id }
-          expect(assigns(:screening)).to be_a_new(Screening)
-        end
-
-        it "re-renders the 'new' template" do
-          skip "circle back"
-          post :create, { :screening => invalid_attributes, movie_id: movie.id }
-          expect(response).to render_template("new")
+        it "if no movie_id is passed, it raises an error" do
+          expect {
+          post :create, { :screening => invalid_attributes, movie_id: nil }
+          }.to raise_error
         end
       end
     end

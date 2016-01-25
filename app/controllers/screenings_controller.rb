@@ -22,7 +22,8 @@ class ScreeningsController < ApplicationController
   end
 
   def create
-    @screening = current_user.screenings.new(movie_id: @movie.id)
+    @screening = current_user.screenings.new(screening_params)
+    @screening.movie_id = @movie.id
 
     respond_to do |format|
       if @screening.save
@@ -59,6 +60,7 @@ class ScreeningsController < ApplicationController
   private
 
     def set_screening
+      :set_movie
       @screening = @movie.screenings.by_user(current_user).find(params[:id])
     end
 

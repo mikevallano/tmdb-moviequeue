@@ -17,7 +17,6 @@ RSpec.feature "Screenings feature spec", :type => :feature do
     context 'from the list show page' do
 
       scenario 'users can create a new screening' do
-        skip "need to update controller"
 
         listing
         list
