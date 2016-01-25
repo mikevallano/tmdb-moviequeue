@@ -1,2 +1,10 @@
 
-    <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  <% if movie.lists.by_user(current_user).count == 1 && !current_user.screened_movies.include?(movie) %>
+    <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, data: { confirm: "If #{movie.title} is removed from this, it won't show up in 'my movies' anymore. You may prefer to adjust priority, rating, and/or add tags instead. If you still want to remove it, click 'ok'." } %></p>
+
+  <% else %>
+
+    <p><%= link_to "Remove from #{@list.name}", delete_listing_path(@list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, data: { confirm: "Are you sure?" } %></p>
+
+  <% end %>
+
