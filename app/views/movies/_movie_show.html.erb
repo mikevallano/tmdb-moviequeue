@@ -29,7 +29,7 @@
      <%= form_tag('/taggings') do %>
       <%= label_tag(:tag_list, "Add tags:") %>
       <%= text_field_tag(:tag_list) %>
-      <%= hidden_field_tag(:movie_id, @movie.id) %>
+      <%= hidden_field_tag(:tmdb_id, @movie.tmdb_id) %>
       <%= hidden_field_tag(:from, "movie") %>
       <%= submit_tag "add tags", id: "add_tags_button_movie_show" %>
     <% end %> <!-- # tag form loop -->

@@ -1,5 +1,5 @@
 class MovieSearch
-  def initialize(title, in_db, tmdb_id, release_date, vote_average, overview, backdrop_path, poster_path)
+  def initialize(title, in_db, tmdb_id, release_date, vote_average, overview, backdrop_path, poster_path, tags, lists)
 
     @title = title
     @in_db = in_db
@@ -9,9 +9,11 @@ class MovieSearch
     @overview = overview
     @backdrop_path = backdrop_path
     @poster_path = poster_path
+    @tags = tags
+    @lists = lists
   end
 
-  attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :overview, :backdrop_path, :poster_path
+  attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :overview, :backdrop_path, :poster_path, :tags, :lists
 
   def self.parse_results(json)
     @movies = []
@@ -27,8 +29,10 @@ class MovieSearch
           @overview = result[:overview]
           @backdrop_path = result[:backdrop_path]
           @poster_path = result[:poster_path]
+          @tags = nil
+          @lists = nil
 
-          @movie = MovieSearch.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @overview, @backdrop_path, @poster_path)
+          @movie = MovieSearch.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @overview, @backdrop_path, @poster_path, @tags, @lists)
           @movies << @movie
         end
     end #loop

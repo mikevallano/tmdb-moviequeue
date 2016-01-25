@@ -9,14 +9,33 @@
 
   <p><strong>Release Date:</strong> <%= movie.release_date %></p>
   <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
-  <p><strong>Runtime:</strong> <%= movie.runtime if movie.in_db %></p>
   <p><strong>Overview:</strong> <%= movie.overview %></p>
-
-  <% if movie.in_db && current_user.all_movies.include?(movie) %>
+  <% if movie.in_db %>
+    <p><strong>Runtime:</strong> <%= movie.runtime %></p>
+  <% end %>
 
     <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_tag', movie: movie %>
     </div>
+
+    <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_screening', movie: movie %>
+    </div>
+
+    <% if current_user.screened_movies.include?(movie) %>
+
+      <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+        <%= render 'movies/movie_rating', movie: movie %>
+      </div>
+
+      <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+        <%= render 'movies/movie_review', movie: movie %>
+      </div>
+
+    <% end %> <!-- # if movie has been watched -->
+
+
+  <% if movie.in_db && movie.lists.by_user(current_user).present? %>
 
     <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_on_lists', movie: movie %>
@@ -24,18 +43,6 @@
 
     <div id="movie_other_list_<%= "#{movie.tmdb_id}" %>">
       <%= render 'movies/movie_add_to_another_list', movie: movie %>
-    </div>
-
-    <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_screening', movie: movie %>
-    </div>
-
-    <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_rating', movie: movie %>
-    </div>
-
-    <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_review', movie: movie %>
     </div>
 
       <% if @list.present? && current_user.all_lists.include?(@list) %>

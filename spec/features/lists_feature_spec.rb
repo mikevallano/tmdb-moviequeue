@@ -173,19 +173,22 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "movie rated by user shows link to the rating show path" do
+        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
         click_link "show_list_link_list_index"
         expect(page).to have_selector("#show_rating_link_movies_partial")
         expect(page).not_to have_selector("#new_rating_link_movies_partial")
       end
 
-      scenario "movie not yet reviewed shows link to review the movie" do
+      scenario "movie wtached but not yet reviewed shows link to review the movie" do
+        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         click_link "show_list_link_list_index"
         expect(page).not_to have_selector("#show_review_link_movies_partial")
         expect(page).to have_selector("#new_review_link_movies_partial")
       end
 
       scenario "movie reviewed by user shows link to the rating show path" do
+        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         click_link "show_list_link_list_index"
         expect(page).to have_selector("#show_review_link_movies_partial")

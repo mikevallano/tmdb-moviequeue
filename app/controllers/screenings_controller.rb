@@ -1,8 +1,11 @@
 class ScreeningsController < ApplicationController
+  include TmdbHandler
+
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
   before_action :redirect_url, only: :create
+
 
   def index
     @screenings = @movie.screenings.by_user(current_user)
@@ -19,12 +22,7 @@ class ScreeningsController < ApplicationController
   end
 
   def create
-    @screening = current_user.screenings.new(screening_params)
-    unless params[:date_watched].present?
-      @screening.date_watched = DateTime.now.to_date
-    end
-
-    @movie = Movie.friendly.find(params[:movie_id])
+    @screening = current_user.screenings.new(movie_id: @movie.id)
 
     respond_to do |format|
       if @screening.save
@@ -65,11 +63,19 @@ class ScreeningsController < ApplicationController
     end
 
     def set_movie
-      @movie = Movie.friendly.find(params[:movie_id])
+      if params[:tmdb_id].present?
+        @tmdb_id = params[:tmdb_id]
+        unless Movie.exists?(tmdb_id: @tmdb_id)
+          tmdb_handler_add_movie(@tmdb_id)
+        end
+        @movie = Movie.find_by(tmdb_id: @tmdb_id)
+      else
+        @movie = Movie.friendly.find(params[:movie_id])
+      end
     end
 
     def screening_params
-      params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes)
+      params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes, :tmdb_id)
     end
 
     def redirect_url
