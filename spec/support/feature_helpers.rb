@@ -83,11 +83,9 @@ module FeatureHelpers
     visit(api_search_path)
     api_search_for_movie
 
-    api_movie_more_info
-
-    all('#new_listing option')[0].select_option
+    select "my queue", :from => "listing[list_id]", match: :first
     VCR.use_cassette('tmdb_add_movie') do
-      click_button "add_to_list_button_movie_show_partial"
+      click_button "add_to_list_button_movies_partial", match: :first
     end
   end
 

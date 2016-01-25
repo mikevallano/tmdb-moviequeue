@@ -1,5 +1,7 @@
 class MovieMore
-  def initialize(title, in_db, tmdb_id, release_date, vote_average, genres, overview, actors, backdrop_path, poster_path, trailer, imdb_id, mpaa_rating, director, director_id, adult, popularity, runtime)
+  def initialize(title, in_db, tmdb_id, release_date, vote_average, genres, overview, actors,
+    backdrop_path, poster_path, trailer, imdb_id, mpaa_rating, director,
+    director_id, adult, popularity, runtime, tags, lists)
 
     @title = title
     @in_db = in_db
@@ -19,10 +21,14 @@ class MovieMore
     @adult = adult
     @popularity = popularity
     @runtime = runtime
+    @tags = tags
+    @lists = lists
 
   end
 
-  attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :genres, :overview, :actors, :backdrop_path, :poster_path, :trailer, :imdb_id, :mpaa_rating, :director, :director_id, :adult, :popularity, :runtime
+  attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :genres, :overview,
+  :actors, :backdrop_path, :poster_path, :trailer, :imdb_id, :mpaa_rating, :director,
+  :director_id, :adult, :popularity, :runtime, :tags, :lists
 
   def self.parse_result(result)
     @tmdb_id = result[:id]
@@ -44,6 +50,8 @@ class MovieMore
         @adult = result[:adult]
         @popularity = result[:popularity]
         @runtime = result[:runtime]
+        @tags = nil
+        @lists = nil
 
         if result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.present?
           @mpaa_rating = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
@@ -59,7 +67,9 @@ class MovieMore
           end
         end
 
-        @movie = MovieMore.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @genres, @overview, @actors, @backdrop_path, @poster_path, @trailer, @imdb_id, @mpaa_rating, @director, @director_id, @adult, @popularity, @runtime)
+        @movie = MovieMore.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @genres,
+          @overview, @actors, @backdrop_path, @poster_path, @trailer, @imdb_id, @mpaa_rating,
+          @director, @director_id, @adult, @popularity, @runtime, @tags, @lists)
       end #if in_db
     @movie
   end

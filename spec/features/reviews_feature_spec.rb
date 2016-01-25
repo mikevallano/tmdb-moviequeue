@@ -12,6 +12,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
     let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
     let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
     let(:review) { FactoryGirl.create(:review, user_id: user.id, movie_id: movie.id, body: "an epic win") }
+    let(:screening) { FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
 
     context "from the movie show page" do
 
@@ -19,9 +20,10 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
+        screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
-        click_link "new_review_link_movie_show"
+        click_link "new_review_link_movies_partial"
         fill_in "review_body", with: "OMG. best. movie. eva."
 
         expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
@@ -33,9 +35,10 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
+        screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
-        click_link "new_review_link_movie_show"
+        click_link "new_review_link_movies_partial"
         fill_in "review_body", with: "OMG. best. movie. eva."
 
         expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
@@ -50,9 +53,10 @@ RSpec.feature "Reviews feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
+        screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
-        click_link "new_review_link_movie_show"
+        click_link "new_review_link_movies_partial"
         fill_in "review_body", with: "OMG. best. movie. eva."
         click_button "review_submit_button_review_form"
         click_link "sign_out_nav_link"

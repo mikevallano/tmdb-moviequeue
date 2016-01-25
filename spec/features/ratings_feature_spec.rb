@@ -12,6 +12,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
     let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
     let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
     let(:rating) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id, value: 2) }
+    let(:screening) { FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
 
     context "From the movies show page" do
 
@@ -19,6 +20,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
+        screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
         select "5", :from => "rating[value]"
@@ -35,6 +37,7 @@ RSpec.feature "Ratings feature spec", :type => :feature do
 
         listing
         sign_in_user(user)
+        screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
         select "5", :from => "rating[value]"
@@ -45,13 +48,13 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         sign_in_user(user2)
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
-        expect(page).not_to have_selector("#existing_rating")
+        expect(page).not_to have_selector("#show_rating_link_movies_partial")
         click_link "sign_out_nav_link"
 
         sign_in_user(user)
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial"
-        expect(page).to have_selector("#existing_rating")
+        expect(page).to have_selector("#show_rating_link_movies_partial")
 
 
       end #only current user's rating

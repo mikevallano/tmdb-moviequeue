@@ -23,6 +23,7 @@ RSpec.feature "Screenings feature spec", :type => :feature do
         movie
 
         sign_in_user(user)
+        screening
         visit(user_list_path(user, list))
         click_link "add_screening_link_movies_partial"
         fill_in "screening_notes", with: "epic notes"

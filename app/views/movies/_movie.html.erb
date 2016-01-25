@@ -32,7 +32,7 @@
         <%= render 'movies/movie_review', movie: movie %>
       </div>
 
-    <% end %> <!-- # if movie has been watched -->
+    <% end %> <!-- # if (current_user.screened_movies.include?(movie)) -->
 
 
   <% if movie.in_db && movie.lists.by_user(current_user).present? %>

@@ -11,6 +11,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
     let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
     let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
     let(:tag) { FactoryGirl.create(:tag, name: "hilarious") }
+    let(:screening) { FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
 
     scenario "users can add a movie to their list" do
       sign_up_api_search_then_add_movie_to_list
@@ -71,76 +72,77 @@ RSpec.feature "Movies feature spec", :type => :feature do
         scenario "users can add tags to a movie from the movie show page and are returned to the movie show page" do
           visit(movie_path(Movie.last))
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movie_show", match: :first
-          expect(current_url).to eq(movie_url(Movie.last))
+          click_button "add_tags_button_movies_partial", match: :first
           expect(page).to have_content("dark-comedy")
           expect(page).to have_content("spooky")
+          # expect(current_url).to eq(movie_url(Movie.last))
         end #user can tag movie
 
         scenario "user can click a tag to see movies with that tag" do
           visit(movie_path(Movie.last))
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movie_show", match: :first
+          click_button "add_tags_button_movies_partial", match: :first
           visit(movie_path(Movie.last))
           click_link "spooky", match: :first
           expect(page).to have_content("Fargo")
         end
 
-        scenario "user can remove tags and are returned to the movie show page" do
+        scenario "user can remove tags from the movie show page" do
           visit(movie_path(Movie.last))
           fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movie_show", match: :first
-          expect(current_url).to eq(movie_url(Movie.last))
-          expect { click_link "remove_tag_link_movie_show", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
-          click_link "remove_tag_link_movie_show", match: :first
-          expect(current_url).to eq(movie_url(Movie.last))
+          click_button "add_tags_button_movies_partial", match: :first
+          visit(movie_path(Movie.last))
+          expect { click_link "remove_tag_link_movies_partial", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
         end
 
-        scenario "movie not yet rated shows field to rate movie, and returns user back after review is submitted" do
+        scenario "movie seen but not yet rated shows field to rate movie" do
+          screening
           visit(movie_path(Movie.last))
-          expect(page).not_to have_selector("#show_rating_link_movie_show")
+          expect(page).not_to have_selector("#show_rating_link_movies_partial")
           expect(page).to have_selector("#rating_submit_button_rating_form")
           select "5", :from => "rating[value]"
           click_button "rating_submit_button_rating_form"
           expect(page).to have_content("5")
-          expect(current_url).to eq(movie_url(Movie.last))
         end
 
         scenario "movie rated by user shows link to the rating show path" do
+          screening
           FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
           visit(movie_path(Movie.last))
-          expect(page).to have_selector("#show_rating_link_movie_show")
+          expect(page).to have_selector("#show_rating_link_movies_partial")
           expect(page).not_to have_selector("#new_rating_link_movie_show")
         end
 
-        scenario "movie not yet reviewed shows link to review the movie" do
+        scenario "movie watched but not yet reviewed shows link to review the movie" do
+          screening
           visit(movie_path(Movie.last))
-          expect(page).not_to have_selector("#show_review_link_movie_show")
-          expect(page).to have_selector("#new_review_link_movie_show")
+          expect(page).not_to have_selector("#show_review_link_movies_partial")
+          expect(page).to have_selector("#new_review_link_movies_partial")
         end
 
         scenario "movie reviewed by user shows link to the rating show path" do
+          screening
           FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
           visit(movie_path(Movie.last))
-          expect(page).to have_selector("#show_review_link_movie_show")
-          expect(page).not_to have_selector("#new_review_link_movie_show")
+          expect(page).to have_selector("#show_review_link_movies_partial")
+          expect(page).not_to have_selector("#new_review_link_movies_partial")
         end
 
         scenario "if user has not watched the movie, there is a link to mark as watched" do
           visit(movie_path(Movie.last))
-          expect(page).to have_selector("#mark_watched_link_movie_show")
-          expect(page).not_to have_selector("#view_screenings_link_movie_show")
-          click_link("mark_watched_link_movie_show") #mark movie as watched
-          expect(current_url).to eq(movie_url(Movie.last)) #return to movie show page
-          expect(page).not_to have_selector("#mark_watched_link_movie_show") #no link to mark as watched
-          expect(page).to have_selector("#view_screenings_link_movie_show") #link to view screenings
+          expect(page).to have_selector("#mark_watched_link_movies_partial")
+          expect(page).not_to have_selector("#view_screenings_link_movies_partial")
+          click_link("mark_watched_link_movies_partial") #mark movie as watched
+          visit(movie_path(Movie.last))
+          expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
+          expect(page).to have_selector("#view_screenings_link_movies_partial") #link to view screenings
         end
 
         scenario "if the movie has been watched, there is no link to mark as watched" do
-          FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+          screening
           visit(movie_path(Movie.last))
-          expect(page).not_to have_selector("#mark_watched_link_movie_show")
-          expect(page).to have_selector("#view_screenings_link_movie_show")
+          expect(page).not_to have_selector("#mark_watched_link_movies_partial")
+          expect(page).to have_selector("#view_screenings_link_movies_partial")
         end
 
       end #movie is on a list
