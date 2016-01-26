@@ -76,9 +76,6 @@ class ListsController < ApplicationController
       else
         @movies = @list.movies.by_highest_priority(@list).paginate(:page => params[:page], per_page: 20)
       end
-    # @movies = @list.movies.watched_by_user(current_user) #this doesn't sort, but returns only matching movies
-    # could also do params[:user_id] with a dropdown of members
-    # @movies = @list.movies.unwatched_by_user(current_user)
 
     # @movies = @list.movies.by_watched_by_members(@list).paginate(:page => params[:page]) #not working
 

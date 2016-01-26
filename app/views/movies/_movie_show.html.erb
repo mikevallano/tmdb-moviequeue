@@ -61,7 +61,7 @@
 
     <% end %> <!-- # if @movie.in_db && @movie.lists.by_user(current_user).present? -->
 
-    <% if current_user.screened_movies.include?(@movie) %>
+    <% if current_user.watched_movies.include?(@movie) %>
 
       <div id="movie_rated_<%= "#{@movie.tmdb_id}" %>">
         <%= render 'movies/movie_rating', movie: @movie %>
@@ -71,7 +71,7 @@
         <%= render 'movies/movie_review', movie: @movie %>
       </div>
 
-    <% end %> <!-- # if (current_user.screened_movies.include?(movie)) -->
+    <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
 
 
   <p>Trailer:</p>

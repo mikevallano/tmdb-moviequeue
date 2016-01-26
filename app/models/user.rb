@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   :source => :movie
 
   has_many :screenings
-  has_many :screened_movies, through: :screenings,
+  has_many :watched_movies, through: :screenings,
   :source => :movie
 
   def all_lists
@@ -70,8 +70,50 @@ class User < ActiveRecord::Base
   end
 
   def all_movies
-    (self.movies.all + self.member_movies.all + self.screened_movies.all).uniq
+    (self.movies.all + self.member_movies.all + self.watched_movies.all).uniq
   end
+
+  def all_movies_by_title
+    self.all_movies.sort_by { |movie| movie.title }
+  end
+
+  def all_movies_by_shortest_runtime
+    self.all_movies.sort_by { |movie| movie.runtime }
+  end
+
+  def all_movies_by_longest_runtime
+    self.all_movies.sort_by { |movie| movie.runtime }.reverse
+  end
+
+  def all_movies_by_recent_release_date
+    self.all_movies.sort_by { |movie| movie.release_date }.reverse
+  end
+
+  def all_movies_by_highest_vote_average
+    self.all_movies.sort_by { |movie| movie.vote_average }.reverse
+  end
+
+  def all_movies_by_recently_watched
+    #
+    # joins(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
+  end
+
+  def all_movies_not_on_a_list
+    on_lists = self.movies.all
+    on_member_lists = self.member_movies
+    not_on_a_list = (self.all_movies - on_lists - on_member_lists).uniq
+  end
+
+  def all_movies_by_unwatched
+    self.all_movies.sort_by { |movie| [ movie.viewers.include?(self) ? 0 : 1, movie.vote_average ]  }
+  end
+
+  def all_movies_by_watched
+    self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 1 : 0  }
+  end
+  #watched movies: current_user.watched_movies
+  #unwatched movies: in Movie.unwatched_by_user(current_user)
+  #movies on member lists current_user.member_movies
 
   def login=(login)
     @login = login

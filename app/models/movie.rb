@@ -27,7 +27,18 @@ class Movie < ActiveRecord::Base
   has_many :viewers, :through => :screenings,
   :source => :user
 
-  LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"], ["longest runtime", "longest runtime"], ["newest release", "newest release"], ["vote average", "vote average"], ["recently added to list", "recently added to list"], ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"], ["highest priority", "highest priority"], ["only show unwatched", "only show unwatched"], ["only show watched", "only show watched"] ]
+  LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"],
+  ["longest runtime", "longest runtime"], ["newest release", "newest release"],
+  ["vote average", "vote average"], ["recently added to list", "recently added to list"],
+  ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"],
+  ["highest priority", "highest priority"], ["only show unwatched", "only show unwatched"],
+  ["only show watched", "only show watched"] ]
+
+  MY_MOVIES_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"],
+  ["longest runtime", "longest runtime"], ["newest release", "newest release"],
+  ["vote average", "vote average"], ["watched movies", "watched movies"], ["recently watched", "recently watched"],
+  ["unwatched movies", "unwatched movies"], ["only show unwatched", "only show unwatched"],
+  ["only show watched", "only show watched"], ["movies not on a list", "movies not on a list"] ]
 
   scope :by_title, -> { order(:title) }
   scope :by_shortest_runtime, -> { order(:runtime) }
@@ -55,6 +66,10 @@ class Movie < ActiveRecord::Base
     list.movies.sort_by { |movie| movie.viewers.include?(user) ? 1 : 0  }
   end
 
+  def self.by_recently_watched_by_user(user)
+    joins(:screenings).where(screenings: { user_id: user.id }).order("screening.date_watched")
+  end
+
   def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
     true
   end
@@ -64,12 +79,12 @@ class Movie < ActiveRecord::Base
   end
 
   def self.watched_by_user(user)
-    user.screened_movies.uniq
+    user.watched_movies.uniq
   end
 
   def self.unwatched_by_user(user)
     user_movies = user.all_movies.uniq
-    seen_movies = user.screened_movies.uniq
+    seen_movies = user.watched_movies.uniq
     unseen_movies = (user_movies - seen_movies)
   end
 

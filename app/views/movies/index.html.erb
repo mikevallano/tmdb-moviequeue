@@ -11,6 +11,12 @@
   <% end %>
 <% end %>
 
+<!-- # sort form -->
+<%= form_tag movies_path, method: :get do %>
+  <%= label_tag :sort_by, "Sort by: " %>
+  <%= select_tag :sort_by, options_for_select(Movie::MY_MOVIES_SORT_OPTIONS, @sort_by), :include_blank => false, id: "list_sort_options" %>
+  <%= submit_tag "Sort", id: "sort_button_movies_index" %>
+<% end %>
 
 <div id ="movies_index_loop">
 

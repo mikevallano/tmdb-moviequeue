@@ -65,7 +65,7 @@
       </p>
 
     <p>
-    <% if current_user.screened_movies.include?(@movie) %> <!-- # if movie has been watched -->
+    <% if current_user.watched_movies.include?(@movie) %> <!-- # if movie has been watched -->
       <p>Movie has been watched.
       <%= link_to "view my screenings", movie_screenings_path(@movie), id: "view_screenings_link_movie_show" %>
       </p>
