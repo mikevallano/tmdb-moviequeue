@@ -20,7 +20,7 @@
       <%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_show" %>
     <% end %>
   </p>
-  <p><%= link_to "Full cast", full_cast_path(tmdb_id: @tmdb_id), id: "full_cast_link_movie_show" %>
+  <p><%= link_to "Full cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
 
   <p><strong>Director:</strong> <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director) %></p>
 
