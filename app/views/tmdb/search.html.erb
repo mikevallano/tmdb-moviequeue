@@ -11,11 +11,12 @@
 
 <% else %>
 
-  <% if !@movies.present? %>
+  <% if @not_found.present? %>
+      <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+      <p><%= link_to "Search again", api_search_path %> </p>
 
-    <h2>Darn it. No movie found for that search.</h2>
-  <% else %>
-    <h2>Here are the matching movies from TMDB</h2>
+  <% else %> <!-- # if @not_found.present? -->
+    <h2>Movies matching '<%= @query %>':</h2>
 
     <br>
       <%= form_tag '/tmdb/search', method: :get do %>
@@ -35,6 +36,6 @@
 
     </div> <!-- #actor search loop -->
 
-  <% end %> <!-- # if @movies.present? -->
+  <% end %> <!-- # if @not_found.present? -->
 
 <% end %> <!-- #initial if @movie_title.present? -->

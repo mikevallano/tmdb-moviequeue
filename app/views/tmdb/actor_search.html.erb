@@ -1,7 +1,7 @@
 
 <% if !@actor.present? %>
 
-  <h1>Search the TMDB Database for an actor</h1>
+  <h1>Search by actor:</h1>
 
   <%= form_tag '/tmdb/actor_search', method: :get do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
@@ -17,11 +17,11 @@
 
 <% else %>
 
-  <% if !@movies.present? %>
-    <h2>Hmm. No actor found for that search. Check your spelling and try again.</h2>
+  <% if @not_found.present? %>
+      <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
 
-  <% else %> <!-- #if @movies.present? -->
-    <h2>Here are the movies that <%= @actor %> has been in:</h2>
+  <% else %> <!-- #if @not_found.present -->
+    <h2>Here are the movies that <%= @actor.titlecase %> has been in:</h2>
     <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
 
     <p><%= link_to "Search again", actor_search_path %> </p>
@@ -48,7 +48,7 @@
       <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
     <% end %>
 
-  <% end %> <!-- #if @movies.present? -->
+  <% end %> <!-- #if @not_found.present? -->
 
 
 <% end %> <!-- # if @actor.present? -->

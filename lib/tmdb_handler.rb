@@ -1,13 +1,18 @@
 module TmdbHandler
 
   def tmdb_handler_search(query)
+    @query = query.titlecase
     @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @discover_results = @tmdb_response[:results]
-    @movies = MovieSearch.parse_results(@discover_results)
+    if !@discover_results.present?
+      @not_found = "No results for '#{@query}'."
+    else
+     @movies = MovieSearch.parse_results(@discover_results)
+   end
     rescue
       unless @tmdb_response.present?
-        @movies = []
+        @not_found = "No results for '#{@query}.'"
       end
   end
 
@@ -56,8 +61,8 @@ module TmdbHandler
     @producer_credits = @crew.select { |crew| crew[:job] == "Producer" }
   end #full_cast
 
-  def tmdb_handler_add_movie(id)
-    tmdb_handler_movie_more(id)
+  def tmdb_handler_add_movie(tmdb_id)
+    tmdb_handler_movie_more(tmdb_id)
 
     Movie.create(title: @movie.title, tmdb_id: @movie.tmdb_id, imdb_id: @movie.imdb_id,
     genres: @movie.genres, actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
@@ -133,23 +138,25 @@ module TmdbHandler
       if @movies.present?
         @movie_one_id = @movies.first.tmdb_id
       else
-        redirect_to :two_movie_search, notice: "No results for the first movie. Try again" and return
+        @not_found
       end
     tmdb_handler_search(movie_two)
       if @movies.present?
         @movie_two_id = @movies.first.tmdb_id
       else
-        redirect_to :two_movie_search, notice: "No results for the second movie. Try again" and return
+        @not_found
       end
 
-    tmdb_handler_movie_more(@movie_one_id)
-      @movie_one = @movie
-      @movie_one_actors = @movie.actors
-    tmdb_handler_movie_more(@movie_two_id)
-      @movie_two = @movie
-      @movie_two_actors = @movie.actors
+    unless @not_found.present?
+      tmdb_handler_movie_more(@movie_one_id)
+        @movie_one = @movie
+        @movie_one_actors = @movie.actors
+      tmdb_handler_movie_more(@movie_two_id)
+        @movie_two = @movie
+        @movie_two_actors = @movie.actors
 
-    @common_actors = @movie_one_actors & @movie_two_actors
+      @common_actors = @movie_one_actors & @movie_two_actors
+    end
 
   end
 
@@ -170,12 +177,12 @@ module TmdbHandler
     if actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
-      @actor1_id = @actor1_search_result.first[:id] if @actor1_search_result.present?
+      @actor1_search_result.present? ? @actor1_id = @actor1_search_result.first[:id] : @not_found = "No results for '#{actor}'."
     end
     if actor2.present?
       @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{actor2}&api_key=#{ENV['tmdb_api_key']}"
       @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
-      @actor2_id = @actor2_search_result.first[:id] if @actor2_search_result.present?
+      @actor2_search_result.present? ? @actor2_id = @actor2_search_result.first[:id] : @not_found = "No results for '#{actor2}'."
     end
 
     if @actor1_id.present? && @actor2_id.present?
@@ -217,12 +224,12 @@ module TmdbHandler
     rescue
     if actor.present?
       unless @actor1_search_result.present?
-        @discover_results = []
+        @not_found = "No results for '#{actor}'."
       end
     end
     if actor2.present?
       unless @actor2_search_result.present?
-        @discover_results = []
+        @not_found = "No results for '#{actor2}'."
       end
     end
 

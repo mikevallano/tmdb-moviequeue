@@ -13,10 +13,10 @@
 
 <% else %>
 
-    <% if !@movies.present? %>
-      <h2>Hmm. No movies found with those two in it. Check spelling to be sure.</h2>
+  <% if @not_found.present? %>
+    <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
 
-    <% else %>
+    <% else %> <!-- # @not_found.present? -->
       <h2><%= "Those two actors have been in #{@movies.size} movies together:" %></h2>
       <br>
 
@@ -42,10 +42,10 @@
         <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
       <% end %>
 
-    <% end %> <!-- # if @movies.present -->
+    <% end %> <!-- # @not_found.present? -->
 
     <p><%= link_to "Search again", two_actor_search_path %> </p>
 
-<% end %>
+<% end %> <!-- # if !@actor.present? && !@actor2.present? -->
 
 

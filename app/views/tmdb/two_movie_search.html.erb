@@ -12,20 +12,23 @@
 
 <% else %>
 
-  <% if !@common_actors.present? %>
-      <h2>Hmm. No common actors found for those two movies. Check spelling to be sure.</h2>
-    <% else %>
-      <h2>These two movies have the following similar actors:</h2>
-    <% end %>
-  <h3>Number of common actors in <%= link_to "#{@movie_one.title}", movie_more_path(tmdb_id: @movie_one.tmdb_id) %>,
-    and <%= link_to "#{@movie_two.title}", movie_more_path(tmdb_id: @movie_two.tmdb_id) %>: <%= @common_actors.size %></h3>
+  <% if @not_found.present? %>
+    <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
 
-  <p>Common Actors:</strong>
-  <% @common_actors.each do |actor| %>
-    <%= link_to "#{actor}", actor_search_path(actor: actor) %>
-  <% end %>
-  </p>
-  </br>
+  <% else %> <!-- # @not_found.present? -->
+      <h2>These two movies have the following similar actors:</h2>
+      <h3>Number of common actors in <%= link_to "#{@movie_one.title}", movie_more_path(tmdb_id: @movie_one.tmdb_id) %>,
+      and <%= link_to "#{@movie_two.title}", movie_more_path(tmdb_id: @movie_two.tmdb_id) %>: <%= @common_actors.size %></h3>
+
+    <p>Common Actors:</strong>
+    <% @common_actors.each do |actor| %>
+      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+    <% end %>
+    </p>
+    </br>
+
+  <% end %> <!-- # @not_found.present? -->
+
   <p><%= link_to "Search again", two_movie_search_path %> </p>
 
-<% end %>
+<% end %> <!-- #if !@movie_one.present? && !@movie_two.present? -->

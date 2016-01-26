@@ -21,7 +21,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         sign_up_with(email, username, "password")
         visit(api_search_path)
         bad_api_search_for_movie
-        expect(page).to have_content("No movie found for that search")
+        expect(page).to have_content("No results")
       end
 
     end #search by title
@@ -52,7 +52,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         sign_up_with(email, username, "password")
         visit(actor_search_path)
         bad_api_actor_search
-        expect(page).to have_content("No actor found for that search")
+        expect(page).to have_content("No results")
       end
 
     end #search by actor
@@ -70,7 +70,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         sign_up_with(email, username, "password")
         visit(two_actor_search_path)
         bad_api_two_actor_search
-        expect(page).to have_content("No movies found with those two in it")
+        expect(page).to have_content("No results")
       end
 
     end #search by two actors
@@ -93,22 +93,26 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "two movies search indicates first movie not found if search is bad" do
         visit(two_movie_search_path)
+        @movie_query1 = "*sdlfkjsdflkjsdf"
+        @movie_query2 = "The Big Lebowski"
         VCR.use_cassette("tmdb_two_movie_search_bad_first") do
-          fill_in "movie1_field_two_movie_search", with: "*sdlfkjsdflkjsdf"
-          fill_in "movie2_field_two_movie_search", with: "The Big Lebowski"
+          fill_in "movie1_field_two_movie_search", with: @movie_query1
+          fill_in "movie2_field_two_movie_search", with: @movie_query2
           click_button "search_button_two_movie_search"
         end
-        expect(page).to have_content("No results for the first movie")
+        expect(page).to have_content("No results for '#{@movie_query1.titlecase}'.")
       end
 
       scenario "two movies search indicates second movie not found if search is bad" do
         visit(two_movie_search_path)
+        @movie_query1 = "Fargo"
+        @movie_query2 = "*sdlfkjsdflkjsdf"
         VCR.use_cassette("tmdb_two_movie_search_bad_second") do
-          fill_in "movie1_field_two_movie_search", with: "Fargo"
-          fill_in "movie2_field_two_movie_search", with: "*sdlfkjsdflkjsdf"
+          fill_in "movie1_field_two_movie_search", with: @movie_query1
+          fill_in "movie2_field_two_movie_search", with: @movie_query2
           click_button "Search"
         end
-        expect(page).to have_content("No results for the second movie")
+        expect(page).to have_content("No results for '#{@movie_query2.titlecase}'.")
       end
 
     end #search by two movies

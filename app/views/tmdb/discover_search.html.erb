@@ -18,39 +18,38 @@
     <%= label_tag :sort_by, "Sort by: " %>
     <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true, id: "sort_by_discover_search" %></br>
     <%= submit_tag "Search", id: "search_button_discover_search" %>
-  <% end %>
+  <% end %> <!-- #search form do -->
 
-<% else %>
+<% else %> <!-- #if !@movies.present? -->
 
-  <% if !@movies.present? %>
-      <h2>Hmm. No matching movies found. Check spelling to be sure.</h2>
-    <% else %>
+  <% if @not_found.present? %>
+      <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+    <% else %><!--  #if @not_found.present? -->
       <h2>Here are the matching movies: for <%= "#{@actor}, #{@actor2}, #{@mpaa_rating}, #{@year_select},
       #{@year}, genre: #{@genre}, sorted by: #{@sort_by}, page: #{@page}" %></h2>
-    <% end %>
-  <br>
-  <p><%= link_to "Search again", discover_search_path %> </p>
+      <br>
+      <p><%= link_to "Search again", discover_search_path %> </p>
 
-    <% @movies.each do |movie| %>
+        <% @movies.each do |movie| %>
 
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
-    </div>
+        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+          <%= render partial: 'movies/movie', object: movie %>
+        </div>
 
-  <% end %>
+      <% end %> <!-- #movies loop -->
 
+      <%= "Page #{@page} of #{@total_pages}" %></br>
 
+      <% if @previous_page.present? %>
+        <%= link_to "Previous page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
+          actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@previous_page}") %>
+      <% end %>
 
-    <%= "Page #{@page} of #{@total_pages}" %></br>
+      <% if @next_page.present? %>
+        <%= link_to "Next page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
+          actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@next_page}") %>
+      <% end %>
 
-    <% if @previous_page.present? %>
-      <%= link_to "Previous page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
-        actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@previous_page}") %>
-    <% end %>
+  <% end %><!--  #if @not_found.present? -->
 
-    <% if @next_page.present? %>
-      <%= link_to "Next page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
-        actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@next_page}") %>
-    <% end %>
-
-<% end %>
+<% end %> <!-- #if !@movies.present? -->
