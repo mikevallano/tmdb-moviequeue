@@ -1,9 +1,9 @@
 class ListsController < ApplicationController
-  include SortingHandler
-
   before_action :authenticate_user!
   before_action :set_list, only: [:show, :edit, :update, :destroy]
   before_action :restrict_list_access, only: [:show, :edit, :update, :destroy]
+
+  include SortingHandler
 
   def public
     @lists = List.public_lists.paginate(:page => params[:page])

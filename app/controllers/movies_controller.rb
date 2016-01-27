@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
-  include SortingHandler
   before_action :authenticate_user!
+  include SortingHandler
 
   def index
     if params["tag"]

@@ -6,7 +6,6 @@ module SortingHandler
     if @member.present?
       @user = User.find(@member)
     end
-    @watched_sorts = ["watched movies", "unwatched movies", "only show unwatched", "only show watched"]
 
     case @sort_by
     when "title"

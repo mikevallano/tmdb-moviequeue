@@ -33,7 +33,8 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       sign_in_user(user1)
       click_link "my_lists_nav_link"
       expect(page).to have_content("awesome 90s")
-      visit(user_list_path(user1, list))
+      # visit(user_list_path(user1, list))
+      click_link "show_list_link_list_index"
       expect(page).to have_content("awesome 90s")
     end
 

@@ -11,7 +11,7 @@
     <%= submit_tag "Sort", id: "list_sort_button" %>
   <% end %>
 
-<% if @list.members.present? && @watched_sorts.include?(@sort_by) %>
+<% if @sort_by.present? && @list.members.present? && @watched_sorts.include?(@sort_by) %>
 
   <p>Which member for <%= @sort_by %>?
   <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
