@@ -94,8 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def all_movies_by_recently_watched
-    #
-    # joins(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
+    self.(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
   end
 
   def all_movies_not_on_a_list
@@ -111,9 +110,6 @@ class User < ActiveRecord::Base
   def all_movies_by_watched
     self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 1 : 0  }
   end
-  #watched movies: current_user.watched_movies
-  #unwatched movies: in Movie.unwatched_by_user(current_user)
-  #movies on member lists current_user.member_movies
 
   def login=(login)
     @login = login
