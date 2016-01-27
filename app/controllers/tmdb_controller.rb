@@ -118,41 +118,17 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
-    @passed_params = [ params[:sort_by], params[:year], params[:genre], params[:actor],
-    params[:actor2], params[:company], params[:mpaa_rating], params[:year_select], params[:sort_by] ]
+    @cleaned_params = params.slice(:sort_by, :date, :genre, :actor, :actor2, :company, :mpaa_rating, :year_select)
+
+    @passed_params = @cleaned_params.select{ |k, v| v.present?}
+    @params_for_view = @passed_params.values.join(', ')
+
     if @passed_params.any?
-      @year_select = params[:year_select]
-      if @year_select.present?
-        if @year_select == "exact"
-          @exact_year = params[:year]
-        elsif @year_select == "after"
-          @after_year = "#{params[:year]}-01-01"
-        elsif @year_select == "before"
-          @before_year = "#{params[:year]}-01-01"
-        end
-      else
-        @exact_year = params[:year] if params[:year].present?
-        @after_year = nil
-        @before_year = nil
-      end
-      @year = params[:year] if params[:year].present?
-      @genre = params[:genre] if params[:genre].present?
-      @actor = params[:actor] if params[:actor].present?
-      @actor2 = params[:actor2] if params[:actor2].present?
-      @company = params[:company] if params[:company].present?
-      @mpaa_rating = params[:mpaa_rating] if params[:mpaa_rating].present?
-      if params[:sort_by].present?
-        @sort_by = params[:sort_by]
-      else
-        @sort_by = "revenue"
-      end
-      if params[:page]
-        @page = params[:page]
-      else
-        @page = 1
-      end
-    tmdb_handler_discover_search(@exact_year, @after_year, @before_year, @genre, @actor, @actor2,
-      @company, @mpaa_rating, @sort_by, @page)
+      @search_query = MovieDiscover.parse_params(@cleaned_params)
+
+      tmdb_handler_discover_search(@search_query.exact_year, @search_query.after_year, @search_query.before_year,
+        @search_query.genre, @search_query.actor, @search_query.actor2, @search_query.company, @search_query.mpaa_rating,
+        @search_query.sort_by, @search_query.page)
     end
   end
 
