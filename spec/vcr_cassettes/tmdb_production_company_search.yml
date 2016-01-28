@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 27 Jan 2016 23:55:22 GMT
+      - Thu, 28 Jan 2016 02:18:43 GMT
       Server:
       - openresty
       Vary:
@@ -33,9 +33,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '39'
+      - '36'
       X-Ratelimit-Reset:
-      - '1453938932'
+      - '1453947530'
       Content-Length:
       - '1034'
       Connection:
@@ -91,7 +91,7 @@ http_interactions:
         b3B1bGFyaXR5IjoxOS44NTUyfV0sInRvdGFsX3Jlc3VsdHMiOjEsInRvdGFs
         X3BhZ2VzIjoxfQ==
     http_version: 
-  recorded_at: Wed, 27 Jan 2016 23:55:21 GMT
+  recorded_at: Thu, 28 Jan 2016 02:18:43 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=R&certification_country=US&page=&primary_release_year=1996&sort_by=release_date.desc&with_companies=1382&with_genres=80&with_people=884
@@ -117,7 +117,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 27 Jan 2016 23:55:22 GMT
+      - Thu, 28 Jan 2016 02:18:44 GMT
       Etag:
       - 8d6dc35e506fc23349dd10ee68dabb64
       Server:
@@ -125,9 +125,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '38'
+      - '35'
       X-Ratelimit-Reset:
-      - '1453938932'
+      - '1453947530'
       Content-Length:
       - '940'
       Connection:
@@ -144,7 +144,7 @@ http_interactions:
         think her small-time investigative skills will give the crooks a run for their
         ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.021512,"vote_count":765,"video":false,"vote_average":7.46}],"total_results":1,"total_pages":1}'
     http_version: 
-  recorded_at: Wed, 27 Jan 2016 23:55:22 GMT
+  recorded_at: Thu, 28 Jan 2016 02:18:43 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=R&certification_country=US&page=&primary_release_year=1996&sort_by=release_date.desc&with_companies=1382&with_genres=80&with_people=884
@@ -170,7 +170,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 27 Jan 2016 23:55:22 GMT
+      - Thu, 28 Jan 2016 02:18:44 GMT
       Etag:
       - 8d6dc35e506fc23349dd10ee68dabb64
       Server:
@@ -178,9 +178,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '37'
+      - '34'
       X-Ratelimit-Reset:
-      - '1453938932'
+      - '1453947530'
       Content-Length:
       - '940'
       Connection:
@@ -197,5 +197,5 @@ http_interactions:
         think her small-time investigative skills will give the crooks a run for their
         ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.021512,"vote_count":765,"video":false,"vote_average":7.46}],"total_results":1,"total_pages":1}'
     http_version: 
-  recorded_at: Wed, 27 Jan 2016 23:55:22 GMT
+  recorded_at: Thu, 28 Jan 2016 02:18:43 GMT
 recorded_with: VCR 2.9.3

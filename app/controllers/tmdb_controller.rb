@@ -118,18 +118,30 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
+    if params[:date].present?
+      unless params[:date][:year].present?
+        params[:date] = ""
+      end
+    end
+
+    #cleaned_params prohibits users from passing unwanted params
     @cleaned_params = params.slice(:sort_by, :date, :genre, :actor, :actor2, :company, :mpaa_rating, :year_select)
 
     @passed_params = @cleaned_params.select{ |k, v| v.present?}
+
+    #to show what params were searched in the view
     @params_for_view = @passed_params.values.join(', ')
 
     if @passed_params.any?
+      # use the MovieDiscover class to parse the params
       @search_query = MovieDiscover.parse_params(@cleaned_params)
 
+      #use the instance of MovieDiscover class to pass the data to the tmdb_handler
       tmdb_handler_discover_search(@search_query.exact_year, @search_query.after_year, @search_query.before_year,
         @search_query.genre, @search_query.actor, @search_query.actor2, @search_query.company, @search_query.mpaa_rating,
         @search_query.sort_by, @search_query.page)
     end
-  end
 
-end
+  end #discover search
+
+end #final
