@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Mon, 11 Jan 2016 22:10:57 GMT
+      - Thu, 28 Jan 2016 16:12:32 GMT
       Etag:
       - 72b32a1f754ba1c09b3695e0cb6cde7f
       Server:
@@ -33,9 +33,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '23'
+      - '21'
       X-Ratelimit-Reset:
-      - '1452550259'
+      - '1453997554'
       Content-Length:
       - '57'
       Connection:
@@ -44,5 +44,58 @@ http_interactions:
       encoding: UTF-8
       string: '{"page":1,"results":[],"total_results":0,"total_pages":1}'
     http_version: 
-  recorded_at: Mon, 11 Jan 2016 22:10:56 GMT
+  recorded_at: Thu, 28 Jan 2016 16:12:31 GMT
+- request:
+    method: get
+    uri: http://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=The%20Big%20Lebowski
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 28 Jan 2016 16:12:32 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '20'
+      X-Ratelimit-Reset:
+      - '1453997554'
+      Content-Length:
+      - '607'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"poster_path":"\/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","adult":false,"overview":"Jeffrey
+        \"The Dude\" Lebowski, a Los Angeles slacker who only wants to bowl and drink
+        white Russians, is mistaken for another Jeffrey Lebowski, a wheelchair-bound
+        millionaire, and finds himself dragged into a strange series of events involving
+        nihilists, adult film producers, ferrets, errant toes, and large sums of money.","release_date":"1998-02-15","genre_ids":[35,80],"id":115,"original_title":"The
+        Big Lebowski","original_language":"en","title":"The Big Lebowski","backdrop_path":"\/okbbgki0sUFgDHWSInMIQgC86Pc.jpg","popularity":3.826709,"vote_count":1233,"video":false,"vote_average":7.52},{"poster_path":null,"adult":false,"overview":"This
+        summer, see your favorite Coen Brothers'' cult classic in a whole new way.
+        Kind of.","release_date":"2011-03-29","genre_ids":[],"id":249110,"original_title":"The
+        Big Lebowski 2","original_language":"en","title":"The Big Lebowski 2","backdrop_path":null,"popularity":1.001764,"vote_count":1,"video":false,"vote_average":0}],"total_results":2,"total_pages":1}'
+    http_version: 
+  recorded_at: Thu, 28 Jan 2016 16:12:31 GMT
 recorded_with: VCR 2.9.3

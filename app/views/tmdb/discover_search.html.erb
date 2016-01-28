@@ -2,7 +2,6 @@
 
 <h1>Search by various combos.</h1>
 <h2>All fields are optional. Search by whatever you want.</h2>
-<h3>Searh by top comedies from 2010, movies with Brad Pitt after 2012, or any combo you like!</h3>
 
   <%= form_tag '/tmdb/discover_search', method: :get do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
@@ -10,7 +9,7 @@
     <%= label_tag :mpaa_rating, "Enter MPAA rating: " %>
     <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), :include_blank => true, id: "mpaa_field_discover_search" %></br>
     <%= label_tag :year, "Enter a Year: " %>
-    <%= text_field_tag :year, nil, id: "year_field_discover_search" %>
+    <%= select_year(0, {:prompt => "", :start_year => DateTime.now.year, :end_year => DateTime.now.year - 100}, {:field_name => :year, :prefix => :year, :id => "year_field_discover_search" }) %>
     <%= label_tag :year_select %>
     <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), :include_blank => true, id: "year_select_discover_search" %></br>
     <%= label_tag :genre, "Pick a genre: " %>
@@ -25,8 +24,7 @@
   <% if @not_found.present? %>
       <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
     <% else %><!--  #if @not_found.present? -->
-      <h2>Here are the matching movies: for <%= "#{@actor}, #{@actor2}, #{@mpaa_rating}, #{@year_select},
-      #{@year}, genre: #{@genre}, sorted by: #{@sort_by}, page: #{@page}" %></h2>
+      <h2>Here are the matching movies for: <%= "#{@params_for_view}" %></h2>
       <br>
       <p><%= link_to "Search again", discover_search_path %> </p>
 

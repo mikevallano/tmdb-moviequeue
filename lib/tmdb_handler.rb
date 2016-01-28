@@ -200,12 +200,12 @@ module TmdbHandler
       if years == exact_year
         @year_search = "primary_release_year=#{years}"
       elsif years == after_year
-        @year_search = "release_date.gte=#{years}"
+        @year_search = "primary_release_date.gte=#{years}"
       else
-        @year_search = "release_date.lte=#{years}"
+        @year_search = "primary_release_date.lte=#{years}"
       end
     else
-      @year_search = "release_date.gte=1800-01-01"
+      @year_search = "primary_release_date.gte=1800-01-01"
     end
 
     @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
