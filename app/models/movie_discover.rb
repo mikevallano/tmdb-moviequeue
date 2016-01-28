@@ -28,7 +28,7 @@ class MovieDiscover
       if @year_select == "exact"
         @exact_year = @year
       elsif @year_select == "after"
-        @after_year = "#{@year}-01-01"
+        @after_year = "#{@year}-12-31"
       elsif @year_select == "before"
         @before_year = "#{@year}-01-01"
       end

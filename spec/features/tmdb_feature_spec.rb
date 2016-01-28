@@ -154,7 +154,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
       scenario "search by actor and after year" do
-        # skip "weird VCR issues"
+        skip "weird VCR issues"
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_and_after_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
@@ -162,6 +162,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "After This Year", :from => "year_select"
           click_button "search_button_discover_search"
         end
+        save_and_open_page
         expect(page).to have_content("Armageddon")
       end
 
