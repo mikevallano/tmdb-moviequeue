@@ -1,1 +1,52 @@
 @import "colors";
+
+
+
+
+article.tile-cover-pic {
+  float: left;
+  margin: 0px 10px 10px 0px;
+  width: 150px;
+  height: 225px;
+  overflow: hidden;
+  img {
+    width: 100%; 
+  } /* img */
+} /* article.tile-cover-pic */
+
+.modal {
+  color: black; 
+  .modal-pic {
+    width: 150px; 
+  } /* .modal-pic */
+} /* .modal */
+
+
+
+
+.row {
+  margin: 10px 0px; 
+} /* .row */
+
+.tile-container {
+  max-width: 800px;
+  // min-width: 640px;
+} /* .tile-container */
+
+
+
+
+/* MEDIA QUERIES */
+
+// 2 movies = 320px
+// 3 movies = 480pm
+// 4 movies = 640px
+// 5 movies = 800px
+
+@media screen and (max-width: 670px) {
+
+  // .tile-container {
+  //   max-width: 320px;
+  // } /* .tile-container */
+
+} /* 670px */

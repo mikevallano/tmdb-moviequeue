@@ -19,21 +19,30 @@
 <% end %>
 
 <div id ="movies_index_loop">
+  <div class="row tile-container">  
+    <% @movies.each do |movie| %>
+      <article class="tile-cover-pic">    
+        <!-- MODAL TRIGGER -->
+        <p><a href="#" data-toggle="modal" data-target="#myModal_<%= movie.tmdb_id %>">
+        <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %></a></p>
 
-  <% @movies.each do |movie| %>
+        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+          <%= render partial: 'movies/movie', object: movie %>
+        </div>
+      </article> <!-- tile-cover-pic -->
+    <% end %><!-- movies.each -->
+  </div> <!-- row tile container-->
+  <div class="row tile-container">
+     <center>
+      <div class="pagination">
+        <p><%= will_paginate @movies %></p>
+      </div><!-- pagination -->
+    </center>
+  </div> <!-- row tile-container -->
+    
+</div><!-- movies_index_loop -->
 
-  <!-- MODAL TRIGGER -->
-    <p><a href="#" data-toggle="modal" data-target="#myModal_<%= movie.id %>">
-    <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %></a></p>
 
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
-    </div>
 
-  <% end %>
-
-</div>
-
-<p><%= will_paginate @movies %></p>
 
 <br>

@@ -2,15 +2,79 @@
   <% @lists_except_movie = current_user.lists_except_movie(movie) %>
 
   <!-- MODAL -->
-  <div class="modal fade" id="myModal_<%= movie.id %>" tabindex="-1" role="dialog">
+  <div class="modal fade" id="myModal_<%= movie.tmdb_id %>" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title"><h3><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3></h4>
       </div><!-- header -->
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+      <div class="modal-pic">
+        <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}", class: "modal-pic" if movie.poster_path.present? %>
+
+      </div> <!-- modal-pic -->
+
+      <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+      <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
+      <p><strong>Overview:</strong> <%= movie.overview %></p>
+      <% if movie.in_db %>
+        <p><strong>Runtime:</strong> <%= movie.runtime %></p>
+      <% end %>
+
+        <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_tag', movie: movie %>
+        </div>
+
+        <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_screening', movie: movie %>
+        </div>
+
+        <% if current_user.watched_movies.include?(movie) %>
+
+          <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+            <%= render 'movies/movie_rating', movie: movie %>
+          </div>
+
+          <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+            <%= render 'movies/movie_review', movie: movie %>
+          </div>
+
+        <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
+
+
+      <% if movie.in_db && movie.lists.by_user(current_user).present? %>
+
+        <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_on_lists', movie: movie %>
+        </div>
+
+        <div id="movie_other_list_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_add_to_another_list', movie: movie %>
+        </div>
+
+          <% if @list.present? && current_user.all_lists.include?(@list) %>
+
+            <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
+              <%= render 'movies/movie_list_remove', movie: movie %>
+            </div>
+
+            <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
+              <%= render 'movies/movie_list_priority', movie: movie %>
+            </div>
+          <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
+
+        <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_movie_partial" %></p>
+
+      <% else %><!-- movie.in_db && movie.lists.by_user -->
+
+        <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_add_to_first_list', movie: movie %>
+        </div>
+        <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" %></p>
+
+      <% end %><!-- movie.in_db && movie.lists.by_user -->
+
       </div><!-- body -->
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -22,72 +86,3 @@
 
 
 <!-- ######################## -->
-
-
-
-  <h3><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3>
-
-
-  <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %>
-
-  <p><strong>Release Date:</strong> <%= movie.release_date %></p>
-  <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
-  <p><strong>Overview:</strong> <%= movie.overview %></p>
-  <% if movie.in_db %>
-    <p><strong>Runtime:</strong> <%= movie.runtime %></p>
-  <% end %>
-
-    <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_tag', movie: movie %>
-    </div>
-
-    <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_screening', movie: movie %>
-    </div>
-
-    <% if current_user.watched_movies.include?(movie) %>
-
-      <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
-        <%= render 'movies/movie_rating', movie: movie %>
-      </div>
-
-      <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
-        <%= render 'movies/movie_review', movie: movie %>
-      </div>
-
-    <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
-
-
-  <% if movie.in_db && movie.lists.by_user(current_user).present? %>
-
-    <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_on_lists', movie: movie %>
-    </div>
-
-    <div id="movie_other_list_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_add_to_another_list', movie: movie %>
-    </div>
-
-      <% if @list.present? && current_user.all_lists.include?(@list) %>
-
-        <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
-          <%= render 'movies/movie_list_remove', movie: movie %>
-        </div>
-
-        <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
-          <%= render 'movies/movie_list_priority', movie: movie %>
-        </div>
-      <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
-
-    <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_movie_partial" %></p>
-
-  <% else %>
-
-    <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
-      <%= render 'movies/movie_add_to_first_list', movie: movie %>
-    </div>
-    <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" %></p>
-
-  <% end %>
-  </br>
-  <hr>
