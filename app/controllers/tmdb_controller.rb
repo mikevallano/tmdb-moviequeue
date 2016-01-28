@@ -129,7 +129,7 @@ class TmdbController < ApplicationController
 
     @passed_params = @cleaned_params.select{ |k, v| v.present?}
 
-    #to show what params were searched in the view
+    #to show users what they searched for. needs to be redone. this is just temporary
     @params_for_view = @passed_params.values.join(', ')
 
     if @passed_params.any?

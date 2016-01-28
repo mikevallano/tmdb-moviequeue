@@ -154,7 +154,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
       scenario "search by actor and after year" do
-        skip "weird VCR issues"
+        # skip "weird VCR issues"
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_and_after_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
