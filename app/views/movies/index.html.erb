@@ -1,7 +1,7 @@
 <% content_for(:title, "My Movies") %>
 <p id="notice"><%= notice %></p>
 
-<h1>Movies index page/My movies</h1>
+<h1>Movies Index (My movies)</h1>
 <p>This page shows current user's movies, which include movies on any/all lists.</p>
 <% if @tag.present? %>
   <% if @list.present? %>
@@ -21,6 +21,10 @@
 <div id ="movies_index_loop">
 
   <% @movies.each do |movie| %>
+
+  <!-- MODAL TRIGGER -->
+    <p><a href="#" data-toggle="modal" data-target="#myModal_<%= movie.id %>">
+    <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %></a></p>
 
     <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
       <%= render partial: 'movies/movie', object: movie %>
