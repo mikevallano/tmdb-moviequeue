@@ -7,6 +7,7 @@ RSpec.describe Listing, type: :model do
 
   it { is_expected.to validate_presence_of(:list) }
   it { is_expected.to validate_presence_of(:movie) }
+  it { is_expected.to validate_presence_of(:user) }
 
   context "with a valid factory" do
     it "has a valid factory" do
@@ -15,6 +16,7 @@ RSpec.describe Listing, type: :model do
 
     it { is_expected.to belong_to(:movie) }
     it { is_expected.to belong_to(:list) }
+    it { is_expected.to belong_to(:user) }
 
     it "has a default priority of 3" do
       expect(listing1.priority).to eq(3)
