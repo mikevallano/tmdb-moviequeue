@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Users feature spec", :type => :feature do
 
@@ -12,7 +12,21 @@ RSpec.feature "Users feature spec", :type => :feature do
       expect(page).to have_content("#{@email}")
     end
 
-    scenario 'user is sent a confirmation email after signing up' do
+    scenario "user is redirected to awaiting confirmation page after signing up" do
+      visit root_path
+
+      click_link "sign_up_nav_link"
+
+      fill_in "user_email", with: email
+      fill_in "user_username", with: username
+      fill_in "user_password", with: "password"
+      fill_in "user_password_confirmation", with: "password"
+      click_button "sign_up_button_new_registration"
+
+      expect(current_url).to eq(awaiting_confirmation_url)
+    end
+
+    scenario "user is sent a confirmation email after signing up" do
       visit root_path
 
       click_link "sign_up_nav_link"
@@ -26,7 +40,7 @@ RSpec.feature "Users feature spec", :type => :feature do
       expect(last_email).to have_content("To: #{email}")
     end
 
-    scenario "user can't log in until confirmed" do
+    scenario "user can not log in until confirmed" do
       visit root_path
 
       click_link "sign_up_nav_link"
@@ -87,13 +101,13 @@ RSpec.feature "Users feature spec", :type => :feature do
       expect(page).to have_content("Your password has been changed successfully.")
     end
 
-    scenario 'user can visit their profile page' do
+    scenario "user can visit their profile page" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
       expect(page).to have_content(existing_user.email)
     end
 
-    scenario 'user profile page has slugged url' do
+    scenario "user profile page has slugged url" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
       url = URI.parse(current_url)
