@@ -4,4 +4,8 @@ class PagesController < ApplicationController
 
   def about
   end
+
+  #limbo page for users awaiting confirmation email
+  def awaiting_confirmation
+  end
 end
