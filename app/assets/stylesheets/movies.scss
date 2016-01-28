@@ -1,3 +1,52 @@
-// Place all the styles related to the movies controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colors";
+
+
+article.tile-cover-pic {
+  float: left;
+  margin: 0px 10px 10px 0px;
+  width: 125px;
+  height: 185px;
+  overflow: hidden;
+  img {
+    width: 100%;        
+  } /* img */
+} /* article.tile-cover-pic */
+
+.modal {
+  color: black; 
+  img {
+    border: 1px solid #f1f1f1; 
+  } /* img */  
+
+  .watch-info {
+    margin: 0 auto;
+    margin-bottom: 8%;
+    text-align: center;
+    p {
+      color: gray;
+      font-size: 70%;
+      font-style: italic;
+     }  /* p */
+     img {
+       border: 0px solid white; 
+     } /* img */
+   }/* watch-info */
+
+  .watch-link {
+    text-align: center;
+    max-width: 85px;
+    max-height: 30px;
+    margin: 8px 0px;
+  }/* watch-link */
+
+  .imdb-link {
+    max-height: 15px;
+  }/* imdb-link */
+} /* .modal */
+
+
+
+
+
+
+
