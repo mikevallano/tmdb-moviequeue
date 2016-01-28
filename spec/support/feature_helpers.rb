@@ -101,7 +101,7 @@ module FeatureHelpers
     sign_in_user(user)
     click_link "my_lists_nav_link"
     click_link "new_list_link_list_index"
-    fill_in "list_name", with: "test list one"
+    fill_in "list_name_field", with: "test list one"
     click_button "submit_list_button"
   end
 

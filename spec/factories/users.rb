@@ -3,7 +3,8 @@ FactoryGirl.define do
     email { FFaker::Internet.email }
     password 'password'
     password_confirmation 'password'
-    username { FFaker::Internet.user_name }
+    sequence(:username) { |n| "user_name#{n}" }
+    # username { FFaker::Internet.user_name }
     confirmed_at Time.now
 
     factory :invalid_user do

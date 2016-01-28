@@ -8,8 +8,10 @@ RSpec.describe ListingsController, type: :controller do
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
   let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie2) { FactoryGirl.create(:movie) }
   let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
   let(:tmdb_id) { movie.tmdb_id }
+  let(:tmdb_id2) { movie2.tmdb_id }
   let(:valid_attributes) { {tmdb_id: tmdb_id} }
   let(:listing) { FactoryGirl.create(:listing, movie_id: movie.id, list_id: list.id, user_id: user.id) }
 
@@ -19,7 +21,7 @@ RSpec.describe ListingsController, type: :controller do
     describe "GET #create" do
       it "creates a new listing" do
         expect {
-          post :create, :listing => { movie_id: movie.id, list_id: list.id }, tmdb_id: tmdb_id, user_id: user.id
+          post :create, :listing => { movie_id: movie2.id, list_id: list.id, user_id: user.id }, tmdb_id: tmdb_id2
         }.to change(Listing, :count).by(1)
       end
     end

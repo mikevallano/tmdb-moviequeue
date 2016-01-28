@@ -14,7 +14,12 @@
   <%= f.hidden_field :owner_id, value: current_user.id %>
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, id: "list_name_field" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, id: "list_description_field" %>
   </div>
 
     <div class="field">

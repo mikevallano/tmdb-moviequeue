@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
   include TmdbHandler
 
   def create
-    @listing = Listing.new(listing_params)
+    @listing = current_user.listings.new(listing_params)
     @tmdb_id = params[:tmdb_id]
 
     unless Movie.exists?(tmdb_id: @tmdb_id)
@@ -23,7 +23,7 @@ class ListingsController < ApplicationController
         format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'added to your list.' }
         format.json { render :show, status: :created, location: @listing }
       else
-        format.html { render :new }
+        format.html { redirect_to movie_path(@movie), notice: 'error.' }
         format.json { render json: @listing.errors, status: :unprocessable_entity }
       end
     end
@@ -65,7 +65,7 @@ class ListingsController < ApplicationController
   private
 
   def listing_params
-    params.require(:listing).permit(:list_id, :movie_id, :priority)
+    params.require(:listing).permit(:list_id, :movie_id, :priority, :user_id)
   end
 
 end

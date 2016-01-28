@@ -7,14 +7,18 @@ RSpec.describe List, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).scoped_to(:owner_id) }
 
+  it { is_expected.to belong_to(:owner) }
+  it { is_expected.to have_many(:listings) }
+  it { is_expected.to have_many(:movies) }
+
   context "with a valid factory" do
     it "has a valid factory" do
       expect(list).to be_valid
     end
 
-    it { is_expected.to belong_to(:owner) }
-    it { is_expected.to have_many(:listings) }
-    it { is_expected.to have_many(:movies) }
+    it "is responds to description" do
+      expect(list).to respond_to(:description)
+    end
 
     it "has a default false is_main field" do
       expect(list.is_main).to be false
