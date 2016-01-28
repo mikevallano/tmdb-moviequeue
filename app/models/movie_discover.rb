@@ -56,7 +56,7 @@ class MovieDiscover
       @page = 1
     end #pagination
 
-    @search_query = MovieDiscover.new(@exact_year, @after_year, @before_year, @genre, @actor, @actor2,
+    MovieDiscover.new(@exact_year, @after_year, @before_year, @genre, @actor, @actor2,
       @company, @mpaa_rating, @sort_by, @page)
 
   end #parase params
