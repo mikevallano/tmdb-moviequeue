@@ -12,4 +12,15 @@
  *
  *= require_tree .
  *= require_self
+ *= layouts
+ *= listings
+ *= lists
+ *= movies
+ *= pages
+ *= ratings
+ *= reviews
+ *= scaffolds
+ *= screenings
+ *= tmdb
+ *= users
  */
