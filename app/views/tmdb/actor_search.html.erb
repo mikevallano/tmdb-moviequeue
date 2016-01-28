@@ -27,14 +27,22 @@
     <p><%= link_to "Search again", actor_search_path %> </p>
 
     <div id ="movies_actor_search_loop">
-
+       
+    <div class="row tile-container">  
       <% @movies.each do |movie| %>
+      <article class="tile-cover-pic">    
+          <!-- MODAL TRIGGER -->
+          <p><a href="#" data-toggle="modal" data-target="#myModal_<%= movie.tmdb_id %>">
+          <%= image_tag "http://image.tmdb.org/t/p/w154#{movie.poster_path}" if movie.poster_path.present? %></a></p>
 
-        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-          <%= render partial: 'movies/movie', object: movie %>
-        </div>
+          <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
+            <%= render partial: 'movies/movie', object: movie %>
+          </div>
+        </article> <!-- tile-cover-pic -->
 
       <% end %> <!-- # movies loop -->
+    </div> <!-- row  -->
+
 
     </div> <!-- movies_actor_search_loop -->
 

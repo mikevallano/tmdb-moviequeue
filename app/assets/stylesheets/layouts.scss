@@ -1,0 +1,29 @@
+@import "colors";
+
+
+.row {
+  margin: 10px 0px; 
+} /* .row */
+
+.tile-container {
+  max-width: 800px;
+  // min-width: 640px;
+} /* .tile-container */
+
+
+
+
+/* MEDIA QUERIES */
+
+// 2 movies = 320px
+// 3 movies = 480pm
+// 4 movies = 640px
+// 5 movies = 800px
+
+@media screen and (max-width: 670px) {
+
+  // .tile-container {
+  //   max-width: 320px;
+  // } /* .tile-container */
+
+} /* 670px */
