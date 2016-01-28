@@ -264,9 +264,9 @@ RSpec.feature "Lists feature spec", :type => :feature do
         it "should paginate the movies on a public list" do
           sign_in_user(user)
           30.times { FactoryGirl.create(:movie) }
-          counter = Movie.first.id
+          counter = (Movie.first.id + 1)
           30.times do
-            FactoryGirl.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id)
+            FactoryGirl.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id, user_id: user.id)
             counter += 1
           end
           click_link "sign_out_nav_link"
