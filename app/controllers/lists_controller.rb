@@ -92,7 +92,7 @@ class ListsController < ApplicationController
     end
 
     def list_params
-      params.require(:list).permit(:owner_id, :name, :is_public)
+      params.require(:list).permit(:owner_id, :name, :is_public, :description)
     end
 
     def restrict_list_access

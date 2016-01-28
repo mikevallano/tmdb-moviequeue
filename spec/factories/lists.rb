@@ -4,6 +4,7 @@ FactoryGirl.define do
     name { FFaker::HipsterIpsum.words(3).join(' ') }
     is_main false
     is_public false
+    description { FFaker::HipsterIpsum.phrase }
 
     factory :invalid_list do
       name nil

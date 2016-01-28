@@ -2,13 +2,14 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Lists</h1>
+<h1>My lists:</h1>
 
 <table>
   <thead>
     <tr>
       <th>Owner</th>
       <th>Name</th>
+      <th>Description</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= list.owner.username %></td>
         <td><%= list.name %></td>
+        <td><%= list.description %></td>
         <td><%= link_to 'Show', user_list_path(list.owner, list), id: "show_list_link_list_index" %></td>
         <td><%= link_to 'Edit', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index" %></td>
         <td><%= link_to 'Destroy', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %></td>

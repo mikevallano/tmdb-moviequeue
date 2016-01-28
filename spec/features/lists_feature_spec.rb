@@ -24,7 +24,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_user(user)
         click_link "my_lists_nav_link"
         click_link "new_list_link_list_index"
-        fill_in "list_name", with: "test list one"
+        fill_in "list_name_field", with: "test list one"
         expect { click_button "submit_list_button" }.to change(List, :count).by(1)
         expect(page).to have_content("test list one")
       end
@@ -40,7 +40,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         sign_in_and_create_list
         @list = List.last
         visit(edit_user_list_path(user, @list))
-        fill_in "list_name", with: "test list update"
+        fill_in "list_name_field", with: "test list update"
         click_button "submit_list_button"
         expect(page).to have_content("test list update")
       end
@@ -51,14 +51,45 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
       end
 
+      scenario "listings are destroyed when list is deleted" do
+        sign_in_user(user)
+        list
+        FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id)
+        expect(user.movies).to include(movie)
+        click_link "my_lists_nav_link"
+        click_link "destroy_list_link_list_index"
+        expect(user.movies).not_to include(movie)
+      end
+
+      scenario "memberships are destroyed when list is deleted" do
+        sign_in_user(user)
+        list
+        FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id)
+        expect(user2.member_lists).to include(list)
+        click_link "my_lists_nav_link"
+        click_link "destroy_list_link_list_index"
+        expect(user2.member_lists).not_to include(list)
+      end
+
       scenario "user can mark a list as public" do
         sign_in_user(user)
         click_link "my_lists_nav_link"
         click_link "new_list_link_list_index"
-        fill_in "list_name", with: "test list one"
+        fill_in "list_name_field", with: "test list one"
         check "list_is_public"
         click_button "submit_list_button"
         expect(List.last.is_public).to be true
+      end
+
+      scenario "lists can have descriptions" do
+        sign_in_user(user)
+        click_link "my_lists_nav_link"
+        click_link "new_list_link_list_index"
+        fill_in "list_name_field", with: "test list one"
+        fill_in "list_description_field", with: "description tester"
+        click_button "submit_list_button"
+        visit(user_list_path(user, List.last))
+        expect(page).to have_content("description tester")
       end
 
     end #crud action

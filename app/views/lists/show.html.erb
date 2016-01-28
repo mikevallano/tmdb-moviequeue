@@ -4,6 +4,11 @@
 
 <h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
 
+<% if @list.description.present? %>
+  <h3>List description:</h3>
+  <p><%= @list.description %></p>
+<% end %> <!-- #if description.present -->
+
 
   <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
     <%= label_tag :sort_by, "Sort by: " %>
