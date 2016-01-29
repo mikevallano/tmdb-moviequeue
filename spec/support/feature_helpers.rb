@@ -1,4 +1,5 @@
 module FeatureHelpers
+
   def sign_up_with(email, username, password)
     visit root_path
 
@@ -34,11 +35,14 @@ module FeatureHelpers
     end
   end
 
+  def sign_up_api_search_then_add_movie_to_list
+    sign_up_with(email, username, "password")
+    visit(api_search_path)
+    api_search_for_movie
 
-  def bad_api_search_for_movie
-    VCR.use_cassette('tmdb_bad_movie_search') do
-      fill_in "movie_title", with: 'zasdlkjfasdlkjf'
-      click_button "search_by_title_button"
+    select "my queue", :from => "listing[list_id]", match: :first
+    VCR.use_cassette('tmdb_add_movie') do
+      click_button "add_to_list_button_movies_partial", match: :first
     end
   end
 
@@ -48,7 +52,30 @@ module FeatureHelpers
     end
   end
 
-  def api_actor_search
+  def api_search_for_movie_then_movie_more
+    sign_up_with(email, username, "password")
+    visit(api_search_path)
+    api_search_for_movie
+
+    api_movie_more_info
+  end
+
+  def sign_in_and_create_list
+    sign_in_user(user)
+    click_link "my_lists_nav_link"
+    click_link "new_list_link_list_index"
+    fill_in "list_name_field", with: "test list one"
+    click_button "submit_list_button"
+  end
+
+  def sign_in_and_send_invite
+    sign_in_user(user1)
+    visit(user_list_path(user1, list))
+    fill_in "invite_email", with: receiver_email
+    click_button "send_invite_button_list_show"
+  end
+
+    def api_actor_search
     VCR.use_cassette('tmdb_actor_search') do
       fill_in "actor_name_actor_search", with: 'Steve Buscemi'
       click_button "submit_button_actor_search"
@@ -78,38 +105,11 @@ module FeatureHelpers
     end
   end
 
-  def sign_up_api_search_then_add_movie_to_list
-    sign_up_with(email, username, "password")
-    visit(api_search_path)
-    api_search_for_movie
-
-    select "my queue", :from => "listing[list_id]", match: :first
-    VCR.use_cassette('tmdb_add_movie') do
-      click_button "add_to_list_button_movies_partial", match: :first
+  def bad_api_search_for_movie
+    VCR.use_cassette('tmdb_bad_movie_search') do
+      fill_in "movie_title", with: 'zasdlkjfasdlkjf'
+      click_button "search_by_title_button"
     end
-  end
-
-  def api_search_for_movie_then_movie_more
-    sign_up_with(email, username, "password")
-    visit(api_search_path)
-    api_search_for_movie
-
-    api_movie_more_info
-  end
-
-  def sign_in_and_create_list
-    sign_in_user(user)
-    click_link "my_lists_nav_link"
-    click_link "new_list_link_list_index"
-    fill_in "list_name_field", with: "test list one"
-    click_button "submit_list_button"
-  end
-
-  def sign_in_and_send_invite
-    sign_in_user(user1)
-    visit(user_list_path(user1, list))
-    fill_in "invite_email", with: receiver_email
-    click_button "send_invite_button_list_show"
   end
 
 end

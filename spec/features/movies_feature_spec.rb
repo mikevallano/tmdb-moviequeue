@@ -326,6 +326,95 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       end #rating, reviews, marking watched
 
+      context "sorting" do
+        before(:each) do
+          sign_up_api_search_then_add_movie_to_list
+          visit(api_search_path)
+          VCR.use_cassette('tmdb_search_no_country') do
+            fill_in "movie_title", with: "no country for old men"
+            click_button "search_by_title_button"
+          end
+          select "my queue", :from => "listing[list_id]", match: :first
+          VCR.use_cassette('tmdb_add_movie_no_country') do
+            click_button "add_to_list_button_movies_partial", match: :first
+          end
+          @current_user.watched_movies << Movie.find_by(title: "No Country for Old Men")
+          click_link "my_movies_nav_link"
+        end #before context
+
+        scenario "sort by title" do
+          select "title", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by shortest runtime" do
+          select "shortest runtime", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by longest runtime" do
+          select "longest runtime", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by newest release" do
+          select "newest release", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by vote average" do
+          select "vote average", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by watched movies" do
+          select "watched movies", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by unwatched movies" do
+          select "unwatched movies", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by only show unwatched" do
+          select "only show unwatched", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page).not_to have_content("No Country for Old Men")
+          expect(page).to have_content("Fargo")
+        end
+
+        scenario "sort by only show watched" do
+          select "only show watched", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page).to have_content("No Country for Old Men")
+          expect(page).not_to have_content("Fargo")
+        end
+
+        scenario "sort by not on a list" do
+          select "movies not on a list", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page).not_to have_content("Fargo")
+          expect(page).not_to have_content("No Country for Old Men")
+        end
+
+        scenario "sort by recently watched" do
+          select "recently watched", :from => "sort_by"
+          click_button "sort_button_movies_index"
+          expect(page).to have_content("No Country for Old Men")
+          expect(page).not_to have_content("Fargo")
+        end #sort by title
+
+
+      end #sorting context
+
     end # index page functionality
 
   end #feature do

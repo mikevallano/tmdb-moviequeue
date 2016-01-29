@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=no%20country%20for%20old%20men
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Fri, 29 Jan 2016 17:09:13 GMT
+      Etag:
+      - 6081594975a764c8e3a691fa2b3a321d
+      Server:
+      - openresty
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Reset:
+      - '1454087363'
+      Content-Length:
+      - '711'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"page":1,"results":[{"poster_path":"\/6o0UWX2naW7HK45PDNYmoMIk5qs.jpg","adult":false,"overview":"Llewelyn
+        Moss stumbles upon dead bodies, $2 million and a hoard of heroin in a Texas
+        desert, but methodical killer Anton Chigurh comes looking for it, with local
+        sheriff Ed Tom Bell hot on his trail. The roles of prey and predator blur
+        as the violent pursuit of money and justice collide.","release_date":"2007-11-08","genre_ids":[80,18,53],"id":6977,"original_title":"No
+        Country for Old Men","original_language":"en","title":"No Country for Old
+        Men","backdrop_path":"\/7hx7ANh11TbbvHLDXUuywYkg5rK.jpg","popularity":4.892123,"vote_count":1058,"video":false,"vote_average":7.46}],"total_results":1,"total_pages":1}'
+    http_version: 
+  recorded_at: Fri, 29 Jan 2016 17:09:12 GMT
+recorded_with: VCR 2.9.3

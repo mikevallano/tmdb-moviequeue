@@ -104,11 +104,11 @@ class User < ActiveRecord::Base
   end
 
   def all_movies_by_unwatched
-    self.all_movies.sort_by { |movie| [ movie.viewers.include?(self) ? 0 : 1, movie.vote_average ]  }
+    self.all_movies.sort_by { |movie| [ movie.viewers.include?(self) ? 1 : 0, movie.vote_average ]  }
   end
 
   def all_movies_by_watched
-    self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 1 : 0  }
+    self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 0 : 1  }
   end
 
   def login=(login)
