@@ -23,8 +23,8 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial", match: :first
-        select "5", :from => "rating[value]"
-        click_button "rating_submit_button_rating_form"
+        select "5", :from => "rating[value]", match: :first
+        click_button "rating_submit_button_rating_form", match: :first
 
         visit(new_movie_rating_path(movie))
         expect(page).to have_content("You've already rated this movie")
@@ -40,8 +40,8 @@ RSpec.feature "Ratings feature spec", :type => :feature do
         screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial", match: :first
-        select "5", :from => "rating[value]"
-        click_button "rating_submit_button_rating_form"
+        select "5", :from => "rating[value]", match: :first
+        click_button "rating_submit_button_rating_form", match: :first
         click_link "sign_out_nav_link"
 
         listing2

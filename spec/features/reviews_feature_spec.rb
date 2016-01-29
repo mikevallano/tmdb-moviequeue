@@ -23,7 +23,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial", match: :first
-        click_link "new_review_link_movies_partial"
+        click_link "new_review_link_movies_partial", match: :first
         fill_in "review_body", with: "OMG. best. movie. eva."
 
         expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
@@ -38,7 +38,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial", match: :first
-        click_link "new_review_link_movies_partial"
+        click_link "new_review_link_movies_partial", match: :first
         fill_in "review_body", with: "OMG. best. movie. eva."
 
         expect { click_button "review_submit_button_review_form" }.to change(Review.by_user(user), :count).by(1)
@@ -56,7 +56,7 @@ RSpec.feature "Reviews feature spec", :type => :feature do
         screening
         click_link "my_movies_nav_link"
         click_link "movie_show_link_movie_partial", match: :first
-        click_link "new_review_link_movies_partial"
+        click_link "new_review_link_movies_partial", match: :first
         fill_in "review_body", with: "OMG. best. movie. eva."
         click_button "review_submit_button_review_form"
         click_link "sign_out_nav_link"

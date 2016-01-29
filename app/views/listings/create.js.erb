@@ -1,7 +1,7 @@
 var from = "<%= @from %>";
 if (from == 'first_list') {
   console.log("from page " + from);
-  $("#movies_partial_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>");
+  $("#movie_modal_innard_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_modal_innard', :locals => {:movie => @movie}) %>");
 }
 else {
   $("#movie_on_lists_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_on_lists', :locals => {:movie => @movie}) %>");

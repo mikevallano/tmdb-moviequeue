@@ -1,11 +1,16 @@
   <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
 
     <p><strong>Times you've seen this movie:</strong> <%= movie.times_seen_by(current_user) %></p>
-    <p><%= link_to "View my screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_partial" %></p>
+    <p><%= link_to "View screenings", movie_screenings_path(movie), id: "view_screenings_link_movies_partial" %> | <%= link_to "Add screening", new_movie_screening_path(movie), id: "add_screening_link_movies_partial" %></p>
 
-    <% if movie.in_db %>
-      <p><%= link_to "Add a screening", new_movie_screening_path(movie), id: "add_screening_link_movies_partial" %><p>
-    <% end %> <!-- # if movie.in_db -->
+    <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_rating', movie: movie %>
+    </div>
+
+    </br>
+    <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+      <%= render 'movies/movie_review', movie: movie %>
+    </div>
 
   <% else %> <!-- #if movie has been seen -->
 

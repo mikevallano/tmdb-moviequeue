@@ -1,3 +1,6 @@
+          <!-- TODO: Refactor the shit out of this: -->
+          <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
           <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_tag', movie: movie %>
           </div>
@@ -5,19 +8,6 @@
           <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_screening', movie: movie %>
           </div>
-
-          <% if current_user.watched_movies.include?(movie) %>
-
-            <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
-              <%= render 'movies/movie_rating', movie: movie %>
-            </div>
-
-            <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
-              <%= render 'movies/movie_review', movie: movie %>
-            </div>
-
-          <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
-
 
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
 
