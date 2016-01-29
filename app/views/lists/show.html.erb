@@ -29,19 +29,17 @@
 <% end %> <!-- # if @sort_by = "watched movies" && @list.members.present? -->
 
 
-<div id ="list_show_loop">
+  <div id ="list_show_loop">
+    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+  </div>
 
-  <% @movies.each do |movie| %>
-
-    <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-      <%= render partial: 'movies/movie', object: movie %>
-    </div>
-
-  <% end %> <!-- movies loop -->
-
-</div>
-
-<p><%= will_paginate @movies %></p>
+  <div class="row tile-container">
+     <center>
+      <div class="pagination">
+        <p><%= will_paginate @movies %></p>
+      </div><!-- pagination -->
+    </center>
+  </div>
 
 <%= link_to 'Edit', edit_user_list_path(@list.owner, @list), id: "edit_list_link_list_show" %> |
 <%= link_to 'Back', user_lists_path(current_user), id: "lists_index_link_list_show" %>

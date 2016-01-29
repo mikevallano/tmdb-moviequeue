@@ -2,15 +2,13 @@
 <br>
 
   <div id ="public_search_loop">
-
-    <% @movies.each do |movie| %>
-
-      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-        <%= render partial: 'movies/movie', object: movie %>
-      </div>
-
-    <% end %>
-
+    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
   </div>
 
-  <p><%= will_paginate @movies %></p>
+  <div class="row tile-container">
+   <center>
+    <div class="pagination">
+      <p><%= will_paginate @movies %></p>
+    </div><!-- pagination -->
+  </center>
+</div>
