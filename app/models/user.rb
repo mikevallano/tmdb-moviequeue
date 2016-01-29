@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def all_movies_by_recently_watched
-    self.(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
+    self.watched_movies.order('screenings.date_watched').reverse.uniq
   end
 
   def all_movies_not_on_a_list
