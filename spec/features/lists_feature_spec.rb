@@ -239,6 +239,101 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).to have_selector("#view_screenings_link_movies_partial")
       end
 
+      context "sorting" do
+        before(:each) do
+          visit(api_search_path)
+          VCR.use_cassette('tmdb_search_no_country') do
+            fill_in "movie_title", with: "no country for old men"
+            click_button "search_by_title_button"
+          end
+          select "my queue", :from => "listing[list_id]", match: :first
+          VCR.use_cassette('tmdb_add_movie_no_country') do
+            click_button "add_to_list_button_movies_partial", match: :first
+          end
+          @current_user.watched_movies << Movie.find_by(title: "No Country for Old Men")
+          click_link "my_lists_nav_link"
+          click_link "show_list_link_list_index"
+        end #before context
+
+        scenario "sort by title" do
+          select "title", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by shortest runtime" do
+          select "shortest runtime", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by longest runtime" do
+          select "longest runtime", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+
+        scenario "sort by highest priority" do
+          @listing = Listing.find_by(list_id: List.last.id, movie_id: Movie.find_by(title: "No Country for Old Men").id)
+          @listing.priority = 5
+          @listing.save
+          select "highest priority", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by newest release" do
+          select "newest release", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by vote average" do
+          @no_country = Movie.find_by(title: "No Country for Old Men")
+          @no_country.vote_average = 9.0
+          @no_country.save
+          select "vote average", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by watched movies" do
+          select "watched movies", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+        end
+
+        scenario "sort by unwatched movies" do
+          select "unwatched movies", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+        end
+
+        scenario "sort by only show unwatched" do
+          select "only show unwatched", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page).not_to have_content("No Country for Old Men")
+          expect(page).to have_content("Fargo")
+        end
+
+        scenario "sort by only show watched" do
+          select "only show watched", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page).to have_content("No Country for Old Men")
+          expect(page).not_to have_content("Fargo")
+        end
+
+        scenario "sort by recently watched" do
+          select "recently watched", :from => "sort_by"
+          click_button "list_sort_button"
+          expect(page).to have_content("No Country for Old Men")
+          expect(page).not_to have_content("Fargo")
+        end #sort by title
+
+
+      end #sorting context
+
     end #list show page functionality
 
 

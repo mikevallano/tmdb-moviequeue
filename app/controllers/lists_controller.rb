@@ -30,6 +30,7 @@ class ListsController < ApplicationController
     @sort_by = params[:sort_by]
     @member = params[:member]
     if @sort_by.present?
+      #module in lib directory
       list_sort_handler(@sort_by, @member)
     else #sort_by present?
       @movies = @list.movies.by_highest_priority(@list).paginate(:page => params[:page], per_page: 20)

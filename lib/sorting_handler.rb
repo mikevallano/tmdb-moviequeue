@@ -7,6 +7,10 @@ module SortingHandler
       @user = User.find(@member)
     end
 
+    #this determines which params will show the sub-sort by list member
+    @watched_sorts = ["watched movies", "unwatched movies", "only show unwatched",
+      "only show watched", "recently watched"]
+
     case @sort_by
     when "title"
       @movies = @list.movies.by_title
@@ -45,7 +49,13 @@ module SortingHandler
         @movies = @list.movies.watched_by_user(current_user)
       end
     when "highest priority"
-       @movies = @list.movies.by_highest_priority(@list)
+      @movies = @list.movies.by_highest_priority(@list)
+    when "recently watched"
+      if @member.present?
+        @movies = @list.movies.by_recently_watched_by_user(@user)
+      else
+        @movies = @list.movies.by_recently_watched_by_user(current_user)
+      end
     end #case
     @movies = @movies.paginate(:page => params[:page], per_page: 20)
   end #list sort handler

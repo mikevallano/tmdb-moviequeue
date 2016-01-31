@@ -31,8 +31,8 @@ class Movie < ActiveRecord::Base
   ["longest runtime", "longest runtime"], ["newest release", "newest release"],
   ["vote average", "vote average"], ["recently added to list", "recently added to list"],
   ["watched movies", "watched movies"], ["unwatched movies", "unwatched movies"],
-  ["highest priority", "highest priority"], ["only show unwatched", "only show unwatched"],
-  ["only show watched", "only show watched"] ]
+  ["recently watched", "recently watched"], ["highest priority", "highest priority"],
+  ["only show unwatched", "only show unwatched"], ["only show watched", "only show watched"] ]
 
   MY_MOVIES_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"],
   ["longest runtime", "longest runtime"], ["newest release", "newest release"],
@@ -67,7 +67,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.by_recently_watched_by_user(user)
-    joins(:screenings).where(screenings: { user_id: user.id }).order("screening.date_watched")
+    joins(:screenings).where(screenings: { user_id: user.id }).order("screenings.date_watched").reverse
   end
 
   def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
