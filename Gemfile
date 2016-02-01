@@ -17,6 +17,7 @@ gem 'figaro'
 gem 'friendly_id'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
+gem 'coveralls', require: false
 
 group :development, :test do
   gem 'pry'
