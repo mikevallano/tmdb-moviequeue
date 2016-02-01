@@ -7,8 +7,7 @@ class User < ActiveRecord::Base
   friendly_id :username, :use => :history
 
   validates :username, :presence => true, :uniqueness => true
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
-  validate :validate_username
+  validates_format_of :username, with: /\A[a-zA-Z0-9_\.]*\z/
 
   has_many :lists, :foreign_key => "owner_id"
   has_many :listings, through: :lists
