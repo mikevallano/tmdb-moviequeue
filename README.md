@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/mikevallano/tmdb-moviequeue.svg?branch=master)](https://travis-ci.org/mikevallano/tmdb-moviequeue)
 
 
-{<img src="https://codeclimate.com/repos/569845b9db5b6272b5007c10/badges/b2de63ec687c3ee83fd3/gpa.svg" />}[https://codeclimate.com/repos/569845b9db5b6272b5007c10/feed]
+[![Code Climate](https://codeclimate.com/github/mikevallano/tmdb-moviequeue/badges/gpa.svg)](https://codeclimate.com/github/mikevallano/tmdb-moviequeue)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
