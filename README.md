@@ -5,6 +5,8 @@
 
 [![Code Climate](https://codeclimate.com/github/mikevallano/tmdb-moviequeue/badges/gpa.svg)](https://codeclimate.com/github/mikevallano/tmdb-moviequeue)
 
+[![Coverage Status](https://coveralls.io/repos/github/mikevallano/tmdb-moviequeue/badge.svg?branch=master)](https://coveralls.io/github/mikevallano/tmdb-moviequeue?branch=master)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
