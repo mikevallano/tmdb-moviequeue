@@ -234,7 +234,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           click_link "similar_movies_link_movie_more"
         end
         expect(page).to have_content("The Revenant")
-        # TODO: VCR cassette to cick next page and expect to have_content 'previous page'
+        expect(page).not_to have_content("Previous page")
+        VCR.use_cassette("tmdb_similar_movies_paginate") do
+          click_link "Next page"
+        end
+        expect(page).to have_content("Previous page")
       end
 
       scenario "more info page shows production companies and links to a discover search" do
