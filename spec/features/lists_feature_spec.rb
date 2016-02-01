@@ -273,7 +273,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
           expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
         end
 
-
         scenario "sort by highest priority" do
           @listing = Listing.find_by(list_id: List.last.id, movie_id: Movie.find_by(title: "No Country for Old Men").id)
           @listing.priority = 5
@@ -329,7 +328,70 @@ RSpec.feature "Lists feature spec", :type => :feature do
           click_button "list_sort_button"
           expect(page).to have_content("No Country for Old Men")
           expect(page).not_to have_content("Fargo")
-        end #sort by title
+        end
+
+        context "sub-sort by member" do
+          before(:each) do
+            Membership.create(list_id: List.last.id, member_id: @current_user.id)
+            Membership.create(list_id: List.last.id, member_id: user2.id)
+            user2.watched_movies << Movie.find_by(title: "Fargo")
+          end
+
+          scenario "sub-sort by list member for watched movies" do
+            select "watched movies", :from => "sort_by"
+            click_button "list_sort_button"
+            select "#{@current_user.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+            select "#{user2.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+          end
+
+          scenario "sort by unwatched movies" do
+            select "unwatched movies", :from => "sort_by"
+            click_button "list_sort_button"
+            select "#{@current_user.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+            select "#{user2.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          end
+
+          scenario "sort by only show unwatched" do
+            select "only show unwatched", :from => "sort_by"
+            click_button "list_sort_button"
+            select "#{@current_user.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            select "#{user2.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page).to have_content("No Country for Old Men")
+            expect(page).not_to have_content("Fargo")
+          end
+
+          scenario "sort by only show watched" do
+            select "only show watched", :from => "sort_by"
+            click_button "list_sort_button"
+            select "#{@current_user.username}", :from => "member"
+            expect(page).to have_content("No Country for Old Men")
+            expect(page).not_to have_content("Fargo")
+            select "#{user2.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page).not_to have_content("No Country for Old Men")
+            expect(page).to have_content("Fargo")
+          end
+
+          scenario "sort by recently watched" do
+            select "recently watched", :from => "sort_by"
+            click_button "list_sort_button"
+            select "#{@current_user.username}", :from => "member"
+            click_button "list_sort_watched_by_button"
+            expect(page).to have_content("No Country for Old Men")
+            expect(page).not_to have_content("Fargo")
+          end
+
+        end #sub-sort by member
 
 
       end #sorting context
