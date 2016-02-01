@@ -8,8 +8,8 @@ module TmdbHandler
     if !@discover_results.present?
       @not_found = "No results for '#{@query}'."
     else
-     @movies = MovieSearch.parse_results(@discover_results)
-   end
+      @movies = MovieSearch.parse_results(@discover_results)
+    end
     rescue
       unless @tmdb_response.present?
         @not_found = "No results for '#{@query}.'"

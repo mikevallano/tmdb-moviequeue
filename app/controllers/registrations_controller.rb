@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource({})
     set_minimum_password_length
 
-     if params[:token].present?
+    if params[:token].present?
       @token = params[:token]
       @invite = Invite.find_by_token(@token)
       resource.email = @invite.email
@@ -164,7 +164,7 @@ class RegistrationsController < Devise::RegistrationsController
     'devise.registrations'
   end
 
-   def add_queue
+  def add_queue
     if resource.persisted?
       resource.lists.create(name: "my queue", is_main: true)
     end

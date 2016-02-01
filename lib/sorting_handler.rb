@@ -34,8 +34,8 @@ module SortingHandler
       if @member.present?
         @movies = @list.movies.by_unwatched_by_user(@list, @user)
       else
-      @movies = @list.movies.by_unwatched_by_user(@list, current_user)
-    end
+        @movies = @list.movies.by_unwatched_by_user(@list, current_user)
+      end
     when "only show unwatched"
       if @member.present?
         @movies = @list.movies.unwatched_by_user(@user)

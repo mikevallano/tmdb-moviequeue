@@ -8,18 +8,18 @@ class InvitesController < ApplicationController
 
     if @invite.to_existing_user?
         respond_to do |format|
-        if @invite.save
-          #round out the invites TODO: add these methods to user.rb instead:
-          @invitee.memberships << Membership.new(member_id: @invitee.id, list_id: @invite.list_id)
-          @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
-          ExistingInviteMailer.existing_invite_mailer(@invite).deliver_now
+          if @invite.save
+            #round out the invites TODO: add these methods to user.rb instead:
+            @invitee.memberships << Membership.new(member_id: @invitee.id, list_id: @invite.list_id)
+            @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
+            ExistingInviteMailer.existing_invite_mailer(@invite).deliver_now
 
-          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
-        else
-          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
-          format.json { render json: @invite.errors, status: :unprocessable_entity }
-        end
-      end #end respond_to
+            format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
+          else
+            format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
+            format.json { render json: @invite.errors, status: :unprocessable_entity }
+          end
+        end #end respond_to
 
     else #exising user?
 
