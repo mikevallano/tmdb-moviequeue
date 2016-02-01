@@ -123,7 +123,6 @@ class TmdbController < ApplicationController
         params[:date] = ""
       end
     end
-
     #cleaned_params prohibits users from passing unwanted params
     @cleaned_params = params.slice(:sort_by, :date, :genre, :actor, :actor2, :company, :mpaa_rating, :year_select)
 

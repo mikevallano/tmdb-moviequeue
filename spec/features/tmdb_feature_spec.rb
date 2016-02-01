@@ -154,16 +154,13 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
       scenario "search by actor and after year" do
-        skip "weird VCR issues"
+        skip "weird API call issues. breaking at line 179 in tmdb_handler"
         visit(discover_search_path)
-        VCR.use_cassette("discover_actor_and_after_year") do
-          fill_in "actor_field_discover_search", with: "Steve Buscemi"
-          select "1995", :from => "date[year]"
-          select "After This Year", :from => "year_select"
-          click_button "search_button_discover_search"
-        end
-        save_and_open_page
-        expect(page).to have_content("Armageddon")
+        fill_in "actor_field_discover_search", with: "ben affleck"
+        select "2005", :from => "date[year]"
+        select "After This Year", :from => "year_select"
+        click_button "search_button_discover_search"
+        expect(page).to have_content("Argo")
       end
 
       scenario "search by actor and before year" do

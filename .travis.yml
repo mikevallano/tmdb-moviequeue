@@ -16,17 +16,16 @@
 #   - bundle exec rake test
 
 
-####### Mike's Original Code
 
 language: ruby
 rvm:
- - "2.2.2"
+ - 2.2.2
 services:
  - postgresql
 addons:
  postgresql: "9.3"
 before_script:
-  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database tmdb-moviequeue_test;'
 script:
   - bundle exec rake db:setup
   - bundle exec rake test
