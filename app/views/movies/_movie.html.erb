@@ -12,7 +12,7 @@
       <div class="modal-body">
         <div class="row">
         <div class="col-sm-3">
-          <%= link_to image_tag("http://image.tmdb.org/t/p/w154#{movie.poster_path}"), movie_path(movie), id: "movie_show_link_movie_partial" if movie.poster_path.present? %>
+          <%= link_to image_for(movie), movie_path(movie), id: "movie_show_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
           <!-- link to youtube trailer -->
