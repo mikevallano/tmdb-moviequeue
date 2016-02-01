@@ -24,8 +24,8 @@ services:
  - postgresql
 addons:
  postgresql: "9.3"
-  code_climate:
-    repo_token: ENV["code_climate_repo_token"]
+ code_climate:
+  repo_token: ENV["code_climate_repo_token"]
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
