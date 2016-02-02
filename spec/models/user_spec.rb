@@ -1,8 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:invalid_user) { FactoryGirl.build(:invalid_user) }
+  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
+  let(:list2) { FactoryGirl.create(:list, owner_id: user.id) }
+  let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie2) { FactoryGirl.create(:movie) }
+  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, user_id: user.id, movie_id: movie.id ) }
+  let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, user_id: user.id, movie_id: movie2.id ) }
 
   it { is_expected.to validate_uniqueness_of(:username) }
   it { is_expected.to validate_presence_of(:username) }
@@ -24,16 +30,31 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_many(:watched_movies) }
 
   context "with a valid factory" do
+    before(:each) do
+      user
+      movie
+      list
+      listing
+    end
+
     it "has a valid factory" do
       expect(user).to be_valid
     end
 
     it "responds to all_lists" do
-      expect(user).to respond_to(:all_listings)
+      expect(user.all_lists).to include(list)
+    end
+
+    it "responds to all_listings" do
+      expect(user.all_listings).to include(listing)
     end
 
     it "responds to lists_except_movie" do
-      expect(user).to respond_to(:lists_except_movie)
+      movie2
+      list2
+      listing2
+      expect(user.lists_except_movie(movie)).not_to include(list)
+      expect(user.lists_except_movie(movie)).to include(list2)
     end
 
     it "responds to all_movies" do
