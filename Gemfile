@@ -18,6 +18,7 @@ gem 'friendly_id'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
 gem 'coveralls', require: false
+gem 'rack-mini-profiler'
 
 group :development, :test do
   gem 'pry'
