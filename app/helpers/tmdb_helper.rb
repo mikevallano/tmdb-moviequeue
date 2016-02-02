@@ -1,2 +1,0 @@
-module TmdbHelper
-end
