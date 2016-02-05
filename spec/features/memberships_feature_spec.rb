@@ -49,6 +49,9 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users update priorities on lists they're a member of" do
       sign_in_user(user2)
       visit(user_list_path(user1, list))
+      page.execute_script("$(#movies_partial_<%= @movie.tmdb_id %>).html(<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>)")
+      page.execute_script("$(#myModal_<%= @movie.tmdb_id %>).modal('show')")
+      # click_link "modal_link_#{movie1.tmdb_id}"
       select "High", :from => "priority"
       click_button "add_priority_button_movies_partial"
       expect(page).to have_content("High")

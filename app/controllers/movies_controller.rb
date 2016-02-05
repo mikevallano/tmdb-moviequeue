@@ -1,6 +1,7 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!
   include SortingHandler
+  include TmdbHandler
 
   def index
     if params["tag"]
@@ -39,7 +40,12 @@ class MoviesController < ApplicationController
   end #show
 
   def modal
-    @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
+    @tmdb_id = params[:tmdb_id]
+    if Movie.exists?(tmdb_id: @tmdb_id)
+      @movie = Movie.find_by(tmdb_id: @tmdb_id)
+    else
+      tmdb_handler_movie_more(@tmdb_id)
+    end
     respond_to :js
   end
 

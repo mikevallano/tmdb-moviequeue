@@ -3,7 +3,7 @@
     <% @movies.each do |movie| %>
       <article class="tile-cover-pic">
         <!-- MODAL TRIGGER -->
-        <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link" %></p>
+        <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
 
         <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
 
