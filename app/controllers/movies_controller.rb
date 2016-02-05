@@ -38,4 +38,9 @@ class MoviesController < ApplicationController
 
   end #show
 
+  def modal
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
+    respond_to :js
+  end
+
 end

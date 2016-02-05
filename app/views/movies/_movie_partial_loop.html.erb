@@ -3,12 +3,12 @@
     <% @movies.each do |movie| %>
       <article class="tile-cover-pic">
         <!-- MODAL TRIGGER -->
-        <p><a href="#" data-toggle="modal" data-target="#myModal_<%= movie.tmdb_id %>">
-        <%= image_for(movie)  %></a></p>
-                     
+        <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link" %></p>
+
         <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-          <%= render partial: 'movies/movie', object: movie %>
+
         </div>
+
       </article> <!-- tile-cover-pic -->
     <% end %><!-- movies.each -->
   </div> <!-- row tile container-->

@@ -1,0 +1,2 @@
+$("#movies_partial_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>");
+$("#myModal_<%= @movie.tmdb_id %>").modal('show');

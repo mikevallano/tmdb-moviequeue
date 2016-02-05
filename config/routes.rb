@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
 
   resources :screenings, only: :create
+
+  get 'movies/modal', to: 'movies#modal', as: :movie_modal
   resources :movies, only: [:index, :show] do
     resources :reviews
     resources :ratings
