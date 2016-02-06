@@ -15,17 +15,8 @@
           <%= link_to image_for(movie), movie_path(movie), id: "movie_show_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
-          <!-- link to youtube trailer -->
-            <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank"><%= image_tag 'trailer.png', class: "watch-link" %></a>
-            <br>
-
-           <!--  links to amazon and netflix -->
-            <div>
-              <a href="http://www.netflix.com/search/<%= movie.title %>" target="_blank" alt="Search Netflix"><%= image_tag 'netflix.png', class: "watch-link" %></a>
-              <br>
-              <a href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= movie.title %>" target="_blank" title="Search Amazon"><%= image_tag 'amazon.jpg', class: "watch-link" %></a>
-            </div><!--  links to amazon and netflix -->
-            </div><!-- watch-info -->
+            <%= render "movies/movie_watch_info", movie: movie %>
+          </div><!-- watch-info -->
         </div> <!-- col-sm-3 -->
 
         <div class="col-sm-9">
