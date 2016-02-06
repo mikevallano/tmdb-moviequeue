@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-  <%= image_tag "http://image.tmdb.org/t/p/w780#{@movie.backdrop_path}" if @movie.backdrop_path.present? %><br>
-  <%= image_tag "http://image.tmdb.org/t/p/w150#{@movie.poster_path}" if @movie.poster_path.present? %>
+<div class="backdrop-container">
+   <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %>
+</div> <!-- backdrop-container -->
+  
+
+<div id="gradient-box">
+  <h1><%= @movie.title %></h1>
 
   <p><strong>Release Date:</strong> <%= @movie.release_date %></p>
   <p><strong>Rated:</strong> <%= @movie.mpaa_rating %></p>
@@ -23,6 +28,10 @@
   <p><%= link_to "Full cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
 
   <p><strong>Director:</strong> <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director) %></p>
+
+
+   
+
 
   <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
     <p><strong>Production Companies:</strong>
@@ -80,3 +89,5 @@
   <% else %> <!-- #if trailer present -->
     <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
   <% end %> <!-- #if trailer present -->
+
+  </div><!-- gradient-box -->
