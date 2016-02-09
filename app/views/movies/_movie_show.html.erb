@@ -28,9 +28,13 @@
   <div class="movie-bottom-details">
 
     <div class="col-xs-3">
+      <div class="sidebar">
       <%= link_to image_for(@movie), movie_more_path(tmdb_id: @movie.tmdb_id), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
 
       <p class="sidebar-button"><%= link_to " Find Similar Movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more", class: "fa fa-ticket" %></p>
+         
+      </div> <!-- sidebar -->
+      
     </div><!-- col-xs-3 -->
      
     <div class="col-xs-9">
