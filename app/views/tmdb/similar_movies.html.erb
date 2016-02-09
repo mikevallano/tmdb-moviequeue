@@ -1,3 +1,4 @@
+<% content_for(:title, "Similar to #{@movie.title}") %>
 <h1>Movies similar to <%= link_to "#{@movie.title}", movie_more_path(tmdb_id: @movie.tmdb_id) %></h1>
 
     <div id ="similar_movies_loop">

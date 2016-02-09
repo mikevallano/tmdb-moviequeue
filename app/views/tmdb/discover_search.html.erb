@@ -1,4 +1,6 @@
 <% if !@movies.present? %>
+<% content_for(:title, "Search for Movies") %>
+
 
 <h1>Search by various combos.</h1>
 <h2>All fields are optional. Search by whatever you want.</h2>
@@ -24,6 +26,7 @@
   <% if @not_found.present? %>
       <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
     <% else %><!--  #if @not_found.present? -->
+      <% content_for(:title, "Search Results") %>
       <h2>Here are the matching movies for: <%= "#{@params_for_view}" %></h2>
       <br>
       <p><%= link_to "Search again", discover_search_path %> </p>
