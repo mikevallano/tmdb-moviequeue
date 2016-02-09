@@ -17,7 +17,7 @@
 
         <div class="col-sm-9">
           
-        <h3 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3>
+        <h1 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h1>
         <p><%= movie.release_date %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %>
         <% if current_user.rated_movies.include?(movie) %>
         | My Rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>

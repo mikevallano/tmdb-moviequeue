@@ -1,13 +1,40 @@
 <p id="notice"><%= notice %></p>
 
+<article class="movie-show">
 <div class="row">
+  <div class="col-xs-12">
      
-<div id="movie-splash-container">
+  <div id="movie-splash-container">
 
-  <div class="backdrop-image">
-    <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %> 
-  </div> <!-- backdrop-image -->
-  <div id="gradient-box">
+
+    <div class="backdrop-image">
+      <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %> 
+    </div> <!-- backdrop-image -->
+    <div id="gradient-box">
+
+      <div class="watch-info-show">
+       Watch Now: 
+          <%= render "movies/movie_watch_info", movie: @movie %>
+        </div><!-- watch-info -->
+
+    </div><!-- gradient-box --> 
+    
+  </div><!-- movie-splash-container --> 
+</div> <!-- col-xs-12 -->
+</div> <!-- row -->
+
+
+<div class="row">
+  <div class="movie-bottom-details">
+
+    <div class="col-xs-3">
+      <%= link_to image_for(@movie), movie_more_path(tmdb_id: @movie.tmdb_id), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
+
+      <p class="sidebar-button"><%= link_to " Find Similar Movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more", class: "fa fa-ticket" %></p>
+    </div><!-- col-xs-3 -->
+     
+    <div class="col-xs-9">
+
     <h1><%= @movie.title %></h1>
     <p>
     <%= @movie.release_date %> | <%= @movie.mpaa_rating %> | TMDB: <%= @movie.vote_average %>
@@ -23,29 +50,17 @@
     <% end %>
     </p>
 
-    <p><% @movie.actors.first(5).each do |actor| %>
-      <%= link_to "#{actor}, ", actor_search_path(actor: actor), id: "actor_link_movie_show" %>
+    <p> 
+    <% @movie.actors.first(4).each do |actor| %>
+      <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_show" %></span>
     <% end %>
-    Director: <%= link_to "#{@movie.director}", director_search_path(director_id: @movie.director_id, name: @movie.director) %>, 
-     <%= link_to "Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
+    <span class="tag-link"><%= link_to "#{@movie.director} (director)", director_search_path(director_id: @movie.director_id, name: @movie.director) %></span> 
+    <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
      </p>
+
      <p><%= @movie.overview %></p>
 
-     <div class="watch-info-show">
-     Watch Now: 
-        <%= render "movies/movie_watch_info", movie: @movie %>
-      </div><!-- watch-info -->
-
-  </div><!-- gradient-box --> 
-  
-</div><!-- movie-splash-container --> 
-</div> <!-- row -->
-
-
-<div class="row">
-  <div class="movie-bottom-details">
      
-    <div class="col-xs-6">
       
     <h2>Your Viewing Info</h2>
       <!-- TODO: Refactor the shit out of this: -->
@@ -89,9 +104,7 @@
 
         <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
 
-    </div> <!-- col-xs-6 -->
 
-    <div class="col-xs-6">
       <% if @movie.trailer.present? %> <!-- #if trailer present -->
         <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
       <% else %> <!-- #if trailer present -->
@@ -105,8 +118,10 @@
         <% end %> <!-- # production companies loop -->
         </p>
       <% end %> <!-- # if @production_companies.present? -->
-    </div> <!-- col-xs-6 -->
+    </div> <!-- col-xs-9 -->
 
   </div> <!-- movie-bottom-details -->
 </div> <!-- row -->
+
+</article>
 

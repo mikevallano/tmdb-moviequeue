@@ -39,17 +39,38 @@ pre {
 }
 
 // a {
-//   color: #000;
+//   color: $link-color;
 
 //   &:visited {
-//     color: #666;
+//     color: $link-color;
 //   }
 
 //   &:hover {
-//     color: #fff;
-//     background-color: #000;
+//     color: $link-hover-color;
+//     background-color: transparent;
+//     text-decoration: none;
 //   }
 // }
+
+.tag-link {
+  a {
+    color: $light-blue;
+    border: 1px solid $dark-blue;
+    padding: 1px 4px;
+    border-radius: 3px;
+
+    &:visited {
+      color: $light-blue;
+    }
+
+    &:hover {
+      color: $light-blue;
+      background-color: darken($dark-blue, 10%);
+      text-decoration: none;
+    }
+  } 
+} /* .tag-link */
+
 
 div {
   &.field, &.actions {
