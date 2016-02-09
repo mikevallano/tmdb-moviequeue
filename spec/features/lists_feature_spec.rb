@@ -10,7 +10,14 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:user2) { FactoryGirl.create(:user) }
     let(:movie) { FactoryGirl.create(:movie) }
     let(:movie2) { FactoryGirl.create(:movie) }
+    let(:fargo) { FactoryGirl.create(:movie, title: "Fargo", runtime: 90,
+      vote_average: 8, release_date: Date.today - 8000) }
+    let(:no_country) { FactoryGirl.create(:movie, title: "No Country for Old Men", runtime: 100,
+      vote_average: 9, release_date: Date.today - 6000) }
+    let(:fargo_listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: fargo.id) }
+    let(:no_country_listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: no_country.id) }
     let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
+    let(:list1) { FactoryGirl.create(:list, name: "my queue", owner_id: user.id) }
     let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
     let(:public_list) { FactoryGirl.create(:list, :owner => user, :is_public => true) }
     let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
@@ -132,12 +139,28 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
-      scenario "users can add a movie to their list" do
-        sign_up_api_search_then_add_movie_to_list
-        expect(page).to have_content("added to your list")
+      scenario "users can add a movie to their list and mark it as watched", js: true do
+        list1
+        sign_in_user(user)
+        visit(api_search_path)
+        VCR.use_cassette('tmdb_search', :match_requests_on => [:body]) do
+          fill_in "movie_title", with: 'fargo'
+          click_button "search_by_title_button"
+        end
+        click_link("modal_link_275")
+        select "my queue", :from => "listing[list_id]", match: :first
+        VCR.use_cassette('tmdb_add_movie', :match_requests_on => [:body]) do
+          click_button "add_to_list_button_movies_partial", match: :first
+        end
+        click_link("show_list_link_on_list_movies_partial")
+        find("#modal_link_275")
+        find("#modal_link_275").click
+        find("#mark_watched_link_movies_partial").click
+        expect(page).to have_content("seen")
       end
 
       scenario "users can remove a movie from their list from the list show page" do
+        skip "need to pass @list to partial"
         sign_up_api_search_then_add_movie_to_list
 
         click_link "my_lists_nav_link"
@@ -151,212 +174,198 @@ RSpec.feature "Lists feature spec", :type => :feature do
     describe "list show page functionality" do
 
       before(:each) do
-        sign_up_api_search_then_add_movie_to_list
-        click_link "my_lists_nav_link"
+        listing
+        sign_in_user(user)
+        visit(user_list_path(user, list))
       end
 
-      scenario "users can add tags to a movie from the list show page and are returned to the page" do
-        skip "issues with ajax"
-        click_link "show_list_link_list_index"
+      scenario "users can add tags to a movie from the list show page", js: true do
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add_tags_button_movies_partial", match: :first
-        expect(current_url).to eq(user_list_url(@current_user, List.last))
+        click_button "add_tags_button_movies_partial"
         expect(page).to have_content("dark-comedy")
         expect(page).to have_content("spooky")
       end #user can tag movie
 
-      scenario "user can click a tag to see movies with that tag" do
-        skip "issues with ajax"
-        click_link "show_list_link_list_index"
+      scenario "user can click a tag to see movies with that tag", js: true do
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         fill_in "tag_list", with: "dark comedy, spooky"
-        click_button "add_tags_button_movies_partial", match: :first
-        click_link "spooky", match: :first
-        expect(page).to have_content("Fargo")
+        click_button "add_tags_button_movies_partial"
+        click_link "spooky"
+        expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
       end
 
-      scenario "user can remove tags and be returned to the list page" do
-        skip "issues with ajax"
-        click_link "show_list_link_list_index"
-        fill_in "tag_list", with: "dark comedy, spooky"
+      scenario "user can remove tags", js: true do
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
+        fill_in "tag_list", with: "dark comedy"
         click_button "add_tags_button_movies_partial", match: :first
-        expect { click_link "remove_tag_link_movies_partial_on_list", match: :first }.to change(Tagging.by_user(@current_user), :count).by(-1)
-        click_link "remove_tag_link_movies_partial_on_list"
-        expect(current_url).to eq(user_list_url(@current_user, List.last))
+        expect(page).to have_content("dark-comedy")
+        find("#remove_tag_link_movies_partial")
+        find("#remove_tag_link_movies_partial").click
+        expect(page).not_to have_content("dark-comedy")
       end
 
-      scenario "user can update a listing's priority" do
-        click_link "show_list_link_list_index"
+      scenario "user can update a listing's priority", js: true do
+        skip "need to pass @list in modal"
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
-        expect(page).to have_content("Priority added.")
         expect(page).to have_content("High")
       end
 
-      scenario "movie not yet rated shows field to submit new rating, which returns to the list page" do
-        skip "issues with ajax"
-        click_link "show_list_link_list_index"
+      scenario "movie watched but not yet rated allows rating, after which shows rating and a link to it", js: true do
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         expect(page).not_to have_selector("#show_rating_link_movies_partial")
-        expect(page).to have_selector("#rating_submit_button_rating_form")
+        find("#mark_watched_link_movies_partial").click
         select "5", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
         expect(page).to have_content('5')
-        expect(current_url).to eq(user_list_url(@current_user, List.last))
-      end
-
-      scenario "movie rated by user shows link to the rating show path" do
-        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
-        click_link "show_list_link_list_index"
         expect(page).to have_selector("#show_rating_link_movies_partial")
-        expect(page).not_to have_selector("#new_rating_link_movies_partial")
       end
 
-      scenario "movie wtached but not yet reviewed shows link to review the movie" do
+      scenario "movie watched but not yet reviewed shows link to review the movie", js: true do
         FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        click_link "show_list_link_list_index"
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         expect(page).not_to have_selector("#show_review_link_movies_partial")
         expect(page).to have_selector("#new_review_link_movies_partial")
       end
 
-      scenario "movie reviewed by user shows link to the rating show path" do
+      scenario "movie reviewed by user shows link to the rating show path", js: true do
         FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        click_link "show_list_link_list_index"
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
         expect(page).to have_selector("#show_review_link_movies_partial")
         expect(page).not_to have_selector("#new_review_link_movies_partial")
       end
 
-      scenario "if user has not watched the movie, there is a link to mark as watched" do
-        click_link "show_list_link_list_index"
-        expect(page).to have_selector("#mark_watched_link_movies_partial")
-        expect(page).not_to have_selector("#view_screenings_link_movies_partial")
-      end
-
-      scenario "if the movie has been watched, there is no link to mark as watched" do
-        FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        click_link "show_list_link_list_index"
-        expect(page).not_to have_selector("#mark_watched_link_movies_partial")
+      scenario "modal shows if the movie has been watched or not, and has link to mark as watched", js: true do
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
+        find("#mark_watched_link_movies_partial").click
+        expect(page).to have_content("seen")
         expect(page).to have_selector("#view_screenings_link_movies_partial")
+        expect(page).not_to have_selector("#mark_watched_link_movies_partial")
       end
 
       context "sorting" do
         before(:each) do
-          visit(api_search_path)
-          VCR.use_cassette('tmdb_search_no_country') do
-            fill_in "movie_title", with: "no country for old men"
-            click_button "search_by_title_button"
-          end
-          select "my queue", :from => "listing[list_id]", match: :first
-          VCR.use_cassette('tmdb_add_movie_no_country') do
-            click_button "add_to_list_button_movies_partial", match: :first
-          end
-          @current_user.watched_movies << Movie.find_by(title: "No Country for Old Men")
-          click_link "my_lists_nav_link"
-          click_link "show_list_link_list_index"
+        fargo_listing
+        no_country_listing
+        visit(user_list_path(user, list))
         end #before context
 
         scenario "sort by title" do
           select "title", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+          expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
         end
 
         scenario "sort by shortest runtime" do
           select "shortest runtime", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+          expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
         end
 
         scenario "sort by longest runtime" do
           select "longest runtime", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by highest priority" do
-          @listing = Listing.find_by(list_id: List.last.id, movie_id: Movie.find_by(title: "No Country for Old Men").id)
+          @listing = Listing.find_by(list_id: list.id, movie_id: no_country.id)
           @listing.priority = 5
           @listing.save
           select "highest priority", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by newest release" do
           select "newest release", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by vote average" do
-          @no_country = Movie.find_by(title: "No Country for Old Men")
-          @no_country.vote_average = 9.0
-          @no_country.save
           select "vote average", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by watched movies" do
+          user.watched_movies << no_country
           select "watched movies", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by unwatched movies" do
+          user.watched_movies << no_country
           select "unwatched movies", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+          expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
         end
 
         scenario "sort by only show unwatched" do
+          user.watched_movies << no_country
           select "only show unwatched", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page).not_to have_content("No Country for Old Men")
-          expect(page).to have_content("Fargo")
+          expect(page).not_to have_selector("#modal_link_#{no_country.tmdb_id}")
+          expect(page).to have_selector("#modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by only show watched" do
+          user.watched_movies << no_country
           select "only show watched", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page).to have_content("No Country for Old Men")
-          expect(page).not_to have_content("Fargo")
+          expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
+          expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
         end
 
         scenario "sort by recently watched" do
+          user.watched_movies << no_country
           select "recently watched", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page).to have_content("No Country for Old Men")
-          expect(page).not_to have_content("Fargo")
+          expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
+          expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
         end
 
         context "sub-sort by member" do
           before(:each) do
-            Membership.create(list_id: List.last.id, member_id: @current_user.id)
+            Membership.create(list_id: List.last.id, member_id: user.id)
             Membership.create(list_id: List.last.id, member_id: user2.id)
-            user2.watched_movies << Movie.find_by(title: "Fargo")
+            user.watched_movies << no_country
+            user2.watched_movies << fargo
           end
 
           scenario "sub-sort by list member for watched movies" do
             select "watched movies", :from => "sort_by"
             click_button "list_sort_button"
-            select "#{@current_user.username}", :from => "member"
+            select "#{user.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
             select "#{user2.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+            expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
           end
 
           scenario "sort by unwatched movies" do
             select "unwatched movies", :from => "sort_by"
             click_button "list_sort_button"
-            select "#{@current_user.username}", :from => "member"
+            select "#{user.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page.body.index("Fargo")).to be < page.body.index("No Country for Old Men")
+            expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
             select "#{user2.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page.body.index("No Country for Old Men")).to be < page.body.index("Fargo")
+            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
           end
 
           scenario "sort by only show unwatched" do
@@ -366,20 +375,20 @@ RSpec.feature "Lists feature spec", :type => :feature do
             click_button "list_sort_watched_by_button"
             select "#{user2.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page).to have_content("No Country for Old Men")
-            expect(page).not_to have_content("Fargo")
+            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
+            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
           end
 
           scenario "sort by only show watched" do
             select "only show watched", :from => "sort_by"
             click_button "list_sort_button"
             select "#{@current_user.username}", :from => "member"
-            expect(page).to have_content("No Country for Old Men")
-            expect(page).not_to have_content("Fargo")
+            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
+            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
             select "#{user2.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page).not_to have_content("No Country for Old Men")
-            expect(page).to have_content("Fargo")
+            expect(page).not_to have_selector("#modal_link_#{no_country.tmdb_id}")
+            expect(page).to have_selector("#modal_link_#{fargo.tmdb_id}")
           end
 
           scenario "sort by recently watched" do
@@ -387,8 +396,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
             click_button "list_sort_button"
             select "#{@current_user.username}", :from => "member"
             click_button "list_sort_watched_by_button"
-            expect(page).to have_content("No Country for Old Men")
-            expect(page).not_to have_content("Fargo")
+            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
+            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
           end
 
         end #sub-sort by member
