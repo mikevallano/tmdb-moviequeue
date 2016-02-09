@@ -1,6 +1,412 @@
 ---
 http_interactions:
 - request:
+    method: post
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/elements
+    body:
+      encoding: UTF-8
+      string: '{"using":"xpath","value":".//*[self::input | self::textarea][not(./@type
+        = ''submit'' or ./@type = ''image'' or ./@type = ''radio'' or ./@type = ''checkbox''
+        or ./@type = ''hidden'' or ./@type = ''file'')][(((./@id = ''movie_title''
+        or ./@name = ''movie_title'') or ./@placeholder = ''movie_title'') or ./@id
+        = //label[normalize-space(string(.)) = ''movie_title'']/@for)] | .//label[normalize-space(string(.))
+        = ''movie_title'']//.//*[self::input | self::textarea][not(./@type = ''submit''
+        or ./@type = ''image'' or ./@type = ''radio'' or ./@type = ''checkbox'' or
+        ./@type = ''hidden'' or ./@type = ''file'')]"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '577'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '227'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"findElements","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":[{"ELEMENT":"{2dcabf97-c44c-1545-9c07-ca8e3e6ba778}","element-6066-11e4-a52e-4f735466cecf":"{2dcabf97-c44c-1545-9c07-ca8e3e6ba778}"}]}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/displayed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '104'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"isElementDisplayed","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":true}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/enabled
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '102'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"isElementEnabled","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":true}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/name
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '106'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"getElementTagName","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":"input"}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/attribute/type
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '107'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"getElementAttribute","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":"text"}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/attribute/readonly
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '105'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"getElementAttribute","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":null}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/execute
+    body:
+      encoding: UTF-8
+      string: '{"script":"arguments[0].value = ''''","args":[{"ELEMENT":"{2dcabf97-c44c-1545-9c07-ca8e3e6ba778}","element-6066-11e4-a52e-4f735466cecf":"{2dcabf97-c44c-1545-9c07-ca8e3e6ba778}"}]}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '177'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '99'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"executeScript","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":null}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7B2dcabf97-c44c-1545-9c07-ca8e3e6ba778%7D/value
+    body:
+      encoding: UTF-8
+      string: '{"value":["fargo"]}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '19'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '101'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"sendKeysToElement","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":""}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/elements
+    body:
+      encoding: UTF-8
+      string: '{"using":"xpath","value":".//input[./@type = ''submit'' or ./@type
+        = ''reset'' or ./@type = ''image'' or ./@type = ''button''][((./@id = ''search_by_title_button''
+        or ./@value = ''search_by_title_button'') or ./@title = ''search_by_title_button'')]
+        | .//input[./@type = ''image''][./@alt = ''search_by_title_button''] | .//button[(((./@id
+        = ''search_by_title_button'' or ./@value = ''search_by_title_button'') or
+        normalize-space(string(.)) = ''search_by_title_button'') or ./@title = ''search_by_title_button'')]
+        | .//input[./@type = ''image''][./@alt = ''search_by_title_button'']"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '553'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '227'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"findElements","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":[{"ELEMENT":"{aec4529a-d141-7249-a2ca-8a65b88ee86a}","element-6066-11e4-a52e-4f735466cecf":"{aec4529a-d141-7249-a2ca-8a65b88ee86a}"}]}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7Baec4529a-d141-7249-a2ca-8a65b88ee86a%7D/displayed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '104'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"isElementDisplayed","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":true}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7Baec4529a-d141-7249-a2ca-8a65b88ee86a%7D/enabled
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '102'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"isElementEnabled","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":true}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
     method: get
     uri: http://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=fargo
     body:
@@ -25,7 +431,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 28 Jan 2016 16:12:24 GMT
+      - Mon, 08 Feb 2016 21:28:24 GMT
       Server:
       - openresty
       Vary:
@@ -35,14 +441,14 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '39'
       X-Ratelimit-Reset:
-      - '1453997551'
+      - '1454966914'
       Content-Length:
-      - '2942'
+      - '2945'
       Connection:
       - keep-alive
     body:
       encoding: ASCII-8BIT
-      string: '{"page":1,"results":[{"poster_path":"\/b8cCEKv4q8iIatnfFO8dDDwxws1.jpg","adult":false,"overview":"Jerry,
+      string: '{"page":1,"results":[{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
         a small-town Minnesota car salesman is bursting at the seams with debt...
         but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
         a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
@@ -50,7 +456,7 @@ http_interactions:
         Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
         pregnant - investigator who''ll stop at nothing to get her man. And if you
         think her small-time investigative skills will give the crooks a run for their
-        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.204986,"vote_count":765,"video":false,"vote_average":7.46},{"poster_path":"\/dxlAmp300kiLnK3pppTfa0TjdS9.jpg","adult":false,"overview":"The
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.62338,"vote_count":784,"video":false,"vote_average":7.48},{"poster_path":"\/dxlAmp300kiLnK3pppTfa0TjdS9.jpg","adult":false,"overview":"The
         brother (House Peters Jr.) of rancher Bill Martin (Bill Elliott) is killed
         in a stampede started by cattleman. Bill returns to the Fargo country to take
         his brother''s place and is welcomed by law-abiding cattleman MacKenzie (Jack
@@ -63,7 +469,7 @@ http_interactions:
         in court that the wire is dangerous to their herds but lose the case. Austin
         orders his men to seize Bill, bale him in strands of the wire, and throw him
         on the stage of the town hall during a fall festival. Bill doesn''t take kindly
-        to this and it precipitates open war.","release_date":"1952-09-07","genre_ids":[37,28],"id":252276,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":null,"popularity":1.000215,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/8J50s6QyEBY6t8cr1HlUDdYVbWx.jpg","adult":false,"overview":"In
+        to this and it precipitates open war.","release_date":"1952-09-07","genre_ids":[37,28],"id":252276,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":null,"popularity":1.000228,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/8J50s6QyEBY6t8cr1HlUDdYVbWx.jpg","adult":false,"overview":"In
         the 1840s, Ramsey MacKay, the driver for the struggling Wells Fargo mail and
         freight company, will secure an important contract if he delivers fresh oysters
         to Buffalo from New York City. When he rescues Justine Pryor and her mother,
@@ -71,17 +477,17 @@ http_interactions:
         him down and gives the ladies an exhilirating ride into Buffalo. He arrives
         in time to obtain the contract and is then sent by company president Henry
         Wells to St. Louis to establish a branch office.","release_date":"1937-12-31","genre_ids":[36,37],"id":111997,"original_title":"Wells
-        Fargo","original_language":"en","title":"Wells Fargo","backdrop_path":null,"popularity":1.000231,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/crgw3gxHKgpVZLfNEwZgtz8u9Pm.jpg","adult":false,"overview":"When
+        Fargo","original_language":"en","title":"Wells Fargo","backdrop_path":null,"popularity":1.00038,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/crgw3gxHKgpVZLfNEwZgtz8u9Pm.jpg","adult":false,"overview":"When
         Mort loses his and Ken''s money at poker, Goss gets him to rob the stage.
         He is captured, identified by his palomino horse. Ken tries to clear him by
         robbing a stage while riding a palomino, but he also gets caught.","release_date":"1933-11-20","genre_ids":[37],"id":285635,"original_title":"Fargo
-        Express","original_language":"en","title":"Fargo Express","backdrop_path":null,"popularity":1.000216,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/p5ls7eHKtQpEvzqOuD54oREbjuz.jpg","adult":false,"overview":"The
+        Express","original_language":"en","title":"Fargo Express","backdrop_path":null,"popularity":1.000144,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/p5ls7eHKtQpEvzqOuD54oREbjuz.jpg","adult":false,"overview":"The
         Fargo Kid is mistaken for a killer and is hired to kill another man...","release_date":"1940-12-06","genre_ids":[37],"id":38704,"original_title":"The
-        Fargo Kid","original_language":"en","title":"The Fargo Kid","backdrop_path":null,"popularity":1.000216,"vote_count":0,"video":false,"vote_average":0},{"poster_path":null,"adult":false,"overview":"Rocky
+        Fargo Kid","original_language":"en","title":"The Fargo Kid","backdrop_path":null,"popularity":1.000332,"vote_count":0,"video":false,"vote_average":0},{"poster_path":null,"adult":false,"overview":"Rocky
         Lane, Special Investigator for Wells Fargo, shows up just in time to save
         the stage from being robbed. Unable to find the mastermind, or even the outlaws
         who rob the stage, Rocky goes undercover as an outlaw.","release_date":"1951-05-15","genre_ids":[],"id":333173,"original_title":"Wells
-        Fargo Gunmaster","original_language":"en","title":"Wells Fargo Gunmaster","backdrop_path":null,"popularity":1.000144,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/5T9RTdbbuu6H5MyDMAkzlE5E56z.jpg","adult":false,"overview":"In
+        Fargo Gunmaster","original_language":"en","title":"Wells Fargo Gunmaster","backdrop_path":null,"popularity":1.000143,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/5T9RTdbbuu6H5MyDMAkzlE5E56z.jpg","adult":false,"overview":"In
         1871, professional gambler John Devlin elopes with Sandra \"Sandy\" Poli,
         daughter of Marko Poli, an immigrant who has risen to railroad tycoon. Sandy,
         knowing that the railroad is to be extended into Dakota, plans to use their
@@ -94,7 +500,7 @@ http_interactions:
         aboard the \"River Bird'', Sandy and John meet Captain Bounce, an irascible
         old seafarer. Two of Bendender''s henchmen, Slagin and Carp, board the boat
         and relieve John of his $20,000 at gunpoint. Captain Bounce, chasing the robber''s
-        dinghy..","release_date":"1945-12-25","genre_ids":[35,37],"id":58455,"original_title":"Dakota","original_language":"en","title":"Dakota","backdrop_path":null,"popularity":1.091495,"vote_count":3,"video":false,"vote_average":2.17},{"poster_path":null,"adult":false,"overview":"April
+        dinghy..","release_date":"1945-12-25","genre_ids":[35,37],"id":58455,"original_title":"Dakota","original_language":"en","title":"Dakota","backdrop_path":null,"popularity":1.087684,"vote_count":3,"video":false,"vote_average":2.17},{"poster_path":null,"adult":false,"overview":"April
         26, 2015 - From Fargo, ND, Jack White''s final live performance before taking
         a break for \"a long period of time\" - an indefinite hiatus. It was also
         the final show of 5 acoustic performances from the 5 states he''s never performed
@@ -105,7 +511,42 @@ http_interactions:
         \"Carolina Drama\", \"Same Boy You''ve Always Known\", and \"You''ve Got Her
         In Your Pocket\".","release_date":"","genre_ids":[],"id":337946,"original_title":"Jack
         White - Live from the Fargo Theatre","original_language":"en","title":"Jack
-        White - Live from the Fargo Theatre","backdrop_path":null,"popularity":1.00038,"vote_count":0,"video":false,"vote_average":0}],"total_results":8,"total_pages":1}'
+        White - Live from the Fargo Theatre","backdrop_path":null,"popularity":1,"vote_count":0,"video":false,"vote_average":0}],"total_results":8,"total_pages":1}'
     http_version: 
-  recorded_at: Thu, 28 Jan 2016 16:12:24 GMT
+  recorded_at: Mon, 08 Feb 2016 21:28:24 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:7055/hub/session/df64913b-07d5-c647-9d28-01304ec5452f/element/%7Baec4529a-d141-7249-a2ca-8a65b88ee86a%7D/click
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Accept:
+      - application/json
+      Content-Length:
+      - '2'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Connection:
+      - close
+      Content-Length:
+      - '98'
+      Server:
+      - httpd.js
+      Date:
+      - Mon, 08 Feb 2016 21:28:25 GMT
+    body:
+      encoding: UTF-8
+      string: '{"name":"clickElement","sessionId":"df64913b-07d5-c647-9d28-01304ec5452f","status":0,"value":"ok"}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 21:28:25 GMT
 recorded_with: VCR 2.9.3
