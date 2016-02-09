@@ -5,41 +5,32 @@
   <% @lists_except_movie = current_user.lists_except_movie(movie) %>
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><h3><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3></h4>
-      </div><!-- header -->
       <div class="modal-body">
         <div class="row">
         <div class="col-sm-3">
           <%= link_to image_for(movie), movie_path(movie), id: "movie_show_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
-          <!-- link to youtube trailer -->
-            <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank"><%= image_tag 'trailer.png', class: "watch-link" %></a>
-            <br>
-
-           <!--  links to amazon and netflix -->
-            <div>
-              <a href="http://www.netflix.com/search/<%= movie.title %>" target="_blank" alt="Search Netflix"><%= image_tag 'netflix.png', class: "watch-link" %></a>
-              <br>
-              <a href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= movie.title %>" target="_blank" title="Search Amazon"><%= image_tag 'amazon.jpg', class: "watch-link" %></a>
-            </div><!--  links to amazon and netflix -->
-            </div><!-- watch-info -->
+            <%= render "movies/movie_watch_info", movie: movie %>
+          </div><!-- watch-info -->
         </div> <!-- col-sm-3 -->
 
         <div class="col-sm-9">
-        <p><strong>Release Date:</strong> <%= movie.release_date %></p>
-        <p><strong>Average Rating:</strong> <%= movie.vote_average %></p>
-        <p><strong>Overview:</strong> <%= movie.overview %></p>
+          
+        <h3 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h3>
+        <p><%= movie.release_date %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %>
+        <% if current_user.rated_movies.include?(movie) %>
+        | My Rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
+        <% end %><!-- if user rating -->
         <% if movie.in_db %>
-          <p><strong>Runtime:</strong> <%= movie.runtime %></p>
-        <% end %>
+           | <%= movie.runtime %> min
+        <% end %><!-- runtime -->
+        </p>
+        <p><%= truncate(movie.overview, length: 160, separator: ' ') %> <%= link_to "more", movie_more_path(tmdb_id: movie.tmdb_id) %></p>
 
         <div id="movie_modal_innard_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_modal_innard', movie: movie %>
-        </div>
-
+        </div><!-- movie_modal_innard -->
 
         </div> <!-- col-sm-9 -->
         </div><!-- row -->
