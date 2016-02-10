@@ -15,11 +15,9 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:tag1) { FactoryGirl.create(:tag) }
     let(:tag2) { FactoryGirl.create(:tag, name: FFaker::DizzleIpsum.words(2).join(' ')) }
     let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
-    let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
+    let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user2.id) }
 
     before(:each) do
-      user1
-      user2
       movie1
       list
       listing1
@@ -47,7 +45,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     end
 
     scenario "users update priorities on lists they're a member of", js: true do
-      skip "selenium issues"
+      skip "priority not currently working"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       # page.execute_script("$(#movies_partial_<%= @movie.tmdb_id %>).html(<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>)")
@@ -65,14 +63,18 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       # expect(Listing.last.priority).to eq(4)
     end
 
-    scenario "users can see other members' tags but not other users' tags" do
+    scenario "users can see other members' tags but not other users' tags", js: true do
+      skip "need to pass @list"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
+      find("#modal_link_#{movie1.tmdb_id}").click
+      wait_for_ajax
       expect(page).to have_content(tag1.name)
       expect(page).not_to have_content(tag2.name)
     end
 
-    scenario "users can click other member's tags and see tagged movies" do
+    scenario "users can click other member's tags and see tagged movies", js: true do
+      skip "need to pass @list"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       click_link tag1.name, match: :first
