@@ -163,6 +163,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           find("#modal_link_#{movie.tmdb_id}").click
           fill_in "tag_list", with: "dark comedy, spooky"
           click_button "add_tags_button_movies_partial"
+          wait_for_ajax
           expect(page).to have_content("dark-comedy")
           expect(page).to have_content("spooky")
         end #user can tag movie
@@ -171,7 +172,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
           find("#modal_link_#{movie.tmdb_id}").click
           fill_in "tag_list", with: "dark comedy, spooky"
           click_button "add_tags_button_movies_partial"
+          wait_for_ajax
           click_link "spooky"
+          wait_for_ajax
+          binding.pry
           expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
         end
 
@@ -179,9 +183,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
           find("#modal_link_#{movie.tmdb_id}").click
           fill_in "tag_list", with: "dark comedy"
           click_button "add_tags_button_movies_partial", match: :first
+          wait_for_ajax
           expect(page).to have_content("dark-comedy")
-          find("#remove_tag_link_movies_partial")
           find("#remove_tag_link_movies_partial").click
+          wait_for_ajax
           expect(page).not_to have_content("dark-comedy")
         end
 

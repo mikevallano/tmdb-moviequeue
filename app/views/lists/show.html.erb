@@ -30,7 +30,7 @@
 
 
   <div id ="list_show_loop">
-    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+    <%= render partial: 'movies/movie_partial_loop', object: @movies, :locals => { :list => @list } %>
   </div>
 
   <div class="row tile-container">
