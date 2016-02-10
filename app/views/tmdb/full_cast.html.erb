@@ -1,25 +1,55 @@
-<h1>Full Cast:</h1>
+<% content_for(:title, "Full Cast") %>
 
-<h2>Actors:</h2>
-<% @actors.each do |actor| %>
-  <%= image_tag "http://image.tmdb.org/t/p/w45#{actor.profile_path}" if actor.profile_path.present? %><br>
-  <p>Name: <%= link_to "#{actor.name}", actor_more_path(actor_id: actor.actor_id) %><p>
-  <p>Character: <%= actor.character_name %><p>
-  <hr>
-<% end %>
+<div class="full-cast">
+   
+  <h1>Full Cast</h1>
 
-<h2>Direction:</h2>
-<% @directors.each do |director| %>
-  <%= image_tag "http://image.tmdb.org/t/p/w185#{director.profile_path}" if director.profile_path.present? %><br>
-  <p>Name: <%= link_to "#{director.name}", director_search_path(director_id: director.director_id) %><p>
-  <p>Job: <%= director.job %><p>
-  <hr>
-<% end %>
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Actors:</h2>
 
-<h2>Editing:</h2>
-<% @editors.each do |editor| %>
-  <%= image_tag "http://image.tmdb.org/t/p/w185#{editor.profile_path}" if editor.profile_path.present? %><br>
-  <p>Name: <%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
-  <p>Job: <%= editor.job %><p>
-  <hr>
-<% end %>
+      <% @actors.each do |actor| %>
+      <div class="headshot-container">
+      <%= headshot_for(actor) %>
+        <div class="name-block">
+          <p class="actor"><%= link_to "#{actor.name}", actor_more_path(actor_id: actor.actor_id) %><p>
+          <p>As <%= actor.character_name %><p>
+        </div> <!-- name-block -->
+      </div> <!-- headshot-container -->
+      <% end %><!-- actors each do -->
+    </div> <!-- col-sm-8 -->
+
+    <div class="col-sm-4">
+      <div class="row">
+        <h2>Directors:</h2>
+
+        <% @directors.each do |director| %>
+        <div class="headshot-container">
+        <%= headshot_for(director) %>
+          <div class="name-block">
+            <p class="actor"><%= link_to "#{director.name}", director_search_path(director_id: director.director_id) %><p>
+            <p><%= director.job %><p>
+          </div> <!-- name-block -->
+        </div> <!-- headshot-container -->
+        <% end %><!-- directors each do -->
+      </div> <!-- row -->
+
+      <div class="row">
+        <h2>Editors:</h2>
+
+        <% @editors.each do |editor| %>
+        <div class="headshot-container">
+        <%= headshot_for(editor) %>
+          <div class="name-block">
+            <p class="actor"><%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
+            <p><%= editor.job %><p>
+          </div> <!-- name-block -->
+        </div> <!-- headshot-container -->
+        <% end %><!-- editors each do -->
+      </div> <!-- row -->
+
+    </div> <!-- col-sm-4 -->
+      
+  </div> <!-- row -->
+
+</div> <!-- full-cast -->
