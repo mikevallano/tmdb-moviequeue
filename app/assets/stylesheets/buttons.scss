@@ -48,6 +48,29 @@
   *:first-child + html .pagination {
     overflow: hidden; }
 
+
+button.close {
+  color: white; 
+  text-shadow: none;
+  border: none;
+} /* button.close */
+  
+
+/* MODAL FOOTER BUTTONS */
+.modal-footer {
+  .btn { 
+    a {
+      color: black;
+
+      &:visited {
+        color: black;
+      }
+
+    } /* a */
+  } /* .btn */
+} /* .modal-footer */
+
+
 /* MOVIE SHOW PAGE SIDEBAR */
 .sidebar-button {
   a {
@@ -68,5 +91,5 @@
       background-color: $dark-gray;
       text-decoration: none;
     }
-  } 
-} /* .tag-link */
+  } /* a */
+} /* .sidebar-button */

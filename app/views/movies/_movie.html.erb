@@ -16,7 +16,7 @@
         </div> <!-- col-sm-3 -->
 
         <div class="col-sm-9">
-          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h1>
         <p><%= movie.release_date %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %>
         <% if current_user.rated_movies.include?(movie) %>
@@ -37,6 +37,8 @@
       </div><!-- body -->
 
       <div class="modal-footer">
+        <p class="btn btn-default"><%= link_to "Movie Details", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_show_link_movie_partial" %></p>
+        <p class="btn btn-default"><%= link_to "Mark as Watched", screenings_path(:screening => { notes: nil }, tmdb_id: movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>  <!-- modal-footer -->
 
