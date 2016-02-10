@@ -12,11 +12,6 @@
     </div> <!-- backdrop-image -->
     <div id="gradient-box">
 
-      <div class="watch-info-show">
-       Watch Now: 
-          <%= render "movies/movie_watch_info", movie: @movie %>
-        </div><!-- watch-info -->
-
     </div><!-- gradient-box --> 
     
   </div><!-- movie-splash-container --> 
@@ -31,7 +26,7 @@
       <div class="sidebar">
       <%= link_to image_for(@movie), movie_more_path(tmdb_id: @movie.tmdb_id), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
 
-      <p class="sidebar-button"><%= link_to " Find Similar Movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more", class: "fa fa-ticket" %></p>
+      <%= render "movies/movie_watch_info", movie: @movie %>
          
       </div> <!-- sidebar -->
       

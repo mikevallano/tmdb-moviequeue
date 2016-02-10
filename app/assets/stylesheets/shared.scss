@@ -38,19 +38,20 @@ pre {
   font-size: 11px;
 }
 
-// a {
-//   color: $link-color;
+/* appears in modal */
+a {
+  color: $light-blue;
 
-//   &:visited {
-//     color: $link-color;
-//   }
+  &:visited {
+    color: $light-blue;
+  }
 
-//   &:hover {
-//     color: $link-hover-color;
-//     background-color: transparent;
-//     text-decoration: none;
-//   }
-// }
+  &:hover {
+    color: $dark-blue;
+    background-color: transparent;
+    text-decoration: none;
+  }
+}
 
 .tag-link {
   a {
