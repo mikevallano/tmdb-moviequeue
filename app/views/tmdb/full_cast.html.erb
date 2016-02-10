@@ -10,7 +10,7 @@
 
       <% @actors.each do |actor| %>
       <div class="headshot-container">
-      <%= headshot_for(actor) %>
+      <%= link_to headshot_for(actor), actor_more_path(actor_id: actor.actor_id) %>
         <div class="name-block">
           <p class="actor"><%= link_to "#{actor.name}", actor_more_path(actor_id: actor.actor_id) %><p>
           <p>As <%= actor.character_name %><p>
@@ -25,7 +25,7 @@
 
         <% @directors.each do |director| %>
         <div class="headshot-container">
-        <%= headshot_for(director) %>
+        <%= link_to headshot_for(director), director_search_path(director_id: director.director_id) %>
           <div class="name-block">
             <p class="actor"><%= link_to "#{director.name}", director_search_path(director_id: director.director_id) %><p>
             <p><%= director.job %><p>
@@ -39,7 +39,7 @@
 
         <% @editors.each do |editor| %>
         <div class="headshot-container">
-        <%= headshot_for(editor) %>
+        <%= link_to headshot_for(editor), director_search_path(director_id: editor.editor_id) %>
           <div class="name-block">
             <p class="actor"><%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
             <p><%= editor.job %><p>

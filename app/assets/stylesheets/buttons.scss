@@ -55,6 +55,26 @@ button.close {
   border: none;
 } /* button.close */
   
+.button-main {
+  a {
+    color: $light-blue;
+    border: 1px solid $dark-blue;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    &:visited {
+      color: $light-blue;
+    }
+
+    &:hover {
+      color: $light-blue;
+      background-color: darken($dark-blue, 10%);
+      text-decoration: none;
+    }
+  } /* a */
+} /* .button-main */
+
+
 
 /* MODAL FOOTER BUTTONS */
 .modal-footer {

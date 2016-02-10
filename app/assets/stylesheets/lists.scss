@@ -1,3 +1,41 @@
 // Place all the styles related to the lists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "colors";
+@import "fonts";
+
+article#list {
+  border: 1px solid $dark-blue;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  // background-color: yellow; 
+  img {
+    width: 50px;
+    float: left;
+    margin-right: -20px; 
+    -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.9);
+    -moz-box-shadow: 3px 3px 3px rgba(0,0,0,0.9);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.9);
+  } /* img */
+  h2 {
+    margin: 0px; 
+  } /* h2 */
+  ul {
+    list-style: none; 
+  } /* ul */
+    
+} /* article#list */
+
+@media screen and (max-width: 670px) {
+
+  article#list {
+    img {
+      width: 50px;
+      float: left;
+      margin-right: -50px; 
+    } /* img */
+      
+  } /* article#list */
+
+} /* 670px */
