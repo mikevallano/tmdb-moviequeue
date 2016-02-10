@@ -12,13 +12,11 @@
               <%= render 'movies/movie_tag', movie: movie %>
             </div>
           </div><!-- well -->
-        
+
 
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
         <div class="well well-sm">
-           
-        
-          
+
           <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_on_lists', movie: movie %>
           </div>
@@ -40,11 +38,14 @@
 
           <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_movie_partial" %></p>
 
+        </div> <!-- well well-sm -->
+
         <% else %><!-- movie.in_db && movie.lists.by_user -->
+        <div class="well well-sm">
 
           <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_add_to_first_list', movie: movie %>
           </div>
           <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" %></p>
-      </div> <!-- well well-sm -->
+        </div> <!-- well well-sm -->
         <% end %><!-- movie.in_db && movie.lists.by_user -->

@@ -40,6 +40,7 @@ class MoviesController < ApplicationController
   end #show
 
   def modal
+    @list = List.find(params[:list_id]) if params[:list_id].present?
     @tmdb_id = params[:tmdb_id]
     if Movie.exists?(tmdb_id: @tmdb_id)
       @movie = Movie.find_by(tmdb_id: @tmdb_id)
