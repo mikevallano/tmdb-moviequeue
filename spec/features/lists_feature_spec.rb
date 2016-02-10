@@ -19,9 +19,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
     let(:list1) { FactoryGirl.create(:list, name: "my queue", owner_id: user.id) }
     let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
+    let(:list3) { FactoryGirl.create(:list, owner_id: user.id) }
     let(:public_list) { FactoryGirl.create(:list, :owner => user, :is_public => true) }
     let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
     let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
+    let(:listing3) { FactoryGirl.create(:listing, list_id: list3.id, movie_id: movie.id) }
     let(:public_listing) { FactoryGirl.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
 
 
@@ -159,13 +161,15 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).to have_content("seen")
       end
 
-      scenario "users can remove a movie from their list from the list show page" do
-        skip "need to pass @list to partial"
-        sign_up_api_search_then_add_movie_to_list
-
-        click_link "my_lists_nav_link"
-        click_link "show_list_link_list_index"
-        click_link "remove_movie_link_movies_partial"
+      scenario "users can remove a movie from their list from the list show page", js: true do
+        listing
+        listing3
+        sign_in_user(user)
+        visit(user_list_path(user, list))
+        find("#modal_link_#{movie.tmdb_id}")
+        find("#modal_link_#{movie.tmdb_id}").click
+        find("#remove_movie_link_movies_partial").click
+        page.driver.browser.switch_to.alert.accept
         expect(page).to have_content("Movie was removed from list.")
       end
 
@@ -177,10 +181,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
         listing
         sign_in_user(user)
         visit(user_list_path(user, list))
+        find("#modal_link_#{movie.tmdb_id}")
       end
 
       scenario "users can add tags to a movie from the list show page", js: true do
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         fill_in "tag_list", with: "dark comedy, spooky"
         click_button "add_tags_button_movies_partial"
@@ -189,7 +193,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end #user can tag movie
 
       scenario "user can click a tag to see movies with that tag", js: true do
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         fill_in "tag_list", with: "dark comedy, spooky"
         click_button "add_tags_button_movies_partial"
@@ -198,39 +201,37 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "user can remove tags", js: true do
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         fill_in "tag_list", with: "dark comedy"
         click_button "add_tags_button_movies_partial", match: :first
+        wait_for_ajax
         expect(page).to have_content("dark-comedy")
-        find("#remove_tag_link_movies_partial")
         find("#remove_tag_link_movies_partial").click
+        wait_for_ajax
         expect(page).not_to have_content("dark-comedy")
       end
 
       scenario "user can update a listing's priority", js: true do
-        skip "need to pass @list in modal"
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
+        wait_for_ajax
         expect(page).to have_content("High")
       end
 
       scenario "movie watched but not yet rated allows rating, after which shows rating and a link to it", js: true do
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         expect(page).not_to have_selector("#show_rating_link_movies_partial")
         find("#mark_watched_link_movies_partial").click
         select "5", :from => "rating[value]"
         click_button "rating_submit_button_rating_form"
+        wait_for_ajax
         expect(page).to have_content('5')
         expect(page).to have_selector("#show_rating_link_movies_partial")
       end
 
       scenario "movie watched but not yet reviewed shows link to review the movie", js: true do
         FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         expect(page).not_to have_selector("#show_review_link_movies_partial")
         expect(page).to have_selector("#new_review_link_movies_partial")
@@ -239,16 +240,16 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "movie reviewed by user shows link to the rating show path", js: true do
         FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
         FactoryGirl.create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-        find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         expect(page).to have_selector("#show_review_link_movies_partial")
         expect(page).not_to have_selector("#new_review_link_movies_partial")
       end
 
       scenario "modal shows if the movie has been watched or not, and has link to mark as watched", js: true do
-        find("#modal_link_#{movie.tmdb_id}")
+        skip "waiting to sort out design"
         find("#modal_link_#{movie.tmdb_id}").click
-        find("#mark_watched_link_movies_partial").click
+        find("#mark_watched_link_movies_partial", match: :first).click
+        wait_for_ajax
         expect(page).to have_content("seen")
         expect(page).to have_selector("#view_screenings_link_movies_partial")
         expect(page).not_to have_selector("#mark_watched_link_movies_partial")

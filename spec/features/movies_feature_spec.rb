@@ -175,7 +175,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
           wait_for_ajax
           click_link "spooky"
           wait_for_ajax
-          binding.pry
           expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
         end
 
@@ -290,10 +289,10 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#new_review_link_movies_partial")
         end
 
-        scenario "link to mark as watched if not watched, link marks as watched and returns user", js: true do
+        scenario "link to mark as watched if not watched, link marks as watched", js: true do
           find("#modal_link_#{movie.tmdb_id}").click
           expect(page).not_to have_selector("#view_screenings_link_movies_partial")
-          click_link("mark_watched_link_movies_partial") #mark movie as watched
+          click_link "mark_watched_link_movies_partial", match: :first
           expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
           expect(page).to have_selector("#view_screenings_link_movies_partial") #link to view screenings
         end
