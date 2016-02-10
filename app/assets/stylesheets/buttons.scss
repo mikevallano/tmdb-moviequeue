@@ -1,3 +1,6 @@
+@import "colors";
+@import "fonts";
+
 .pagination {
   cursor: default;
   /* self-clearing method: */ }
@@ -44,3 +47,26 @@
     height: 1%; }
   *:first-child + html .pagination {
     overflow: hidden; }
+
+/* MOVIE SHOW PAGE SIDEBAR */
+.sidebar-button {
+  a {
+    width: 100%;
+    display: block;
+    color: $light-gray;
+    border: 1px solid $dark-gray;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+
+    &:visited {
+      color: $light-gray;
+    }
+
+    &:hover {
+      color: $light-gray;
+      background-color: $dark-gray;
+      text-decoration: none;
+    }
+  } 
+} /* .tag-link */

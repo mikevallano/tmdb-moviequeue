@@ -1,5 +1,6 @@
-
 <% if !@actor.present? %>
+<% content_for(:title, "Actor Search") %>
+
 
   <h1>Search by actor:</h1>
 
@@ -21,6 +22,8 @@
       <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
 
   <% else %> <!-- #if @not_found.present -->
+    <% content_for(:title, @actor.titlecase) %>
+
     <h2>Here are the movies that <%= @actor.titlecase %> has been in:</h2>
     <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
 

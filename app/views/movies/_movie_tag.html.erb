@@ -1,23 +1,22 @@
-
+  <p class="fa fa-tags"><strong> Tags:</strong>
   <% if movie.tags.present? %>
-    <p><strong>Tags:</strong>
     <% if @list.present? && current_user.all_lists.include?(@list) %> <!-- # shared list logic -->
       <% movie.tags.by_user_or_list(@list).each do |tag| %>
         <%= link_to "#{tag.name}", tag_path(tag.name, list_id: @list.id), id: "tag_link_movies_partial" %>
-        <%= link_to "(x)", delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]), id: "remove_tag_link_movies_partial_on_list", method: :delete, remote: true  %>
+        <%= link_to "", delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]), id: "remove_tag_link_movies_partial_on_list", method: :delete, remote: true, class: "fa fa-times-circle"  %>
       <% end %> <!-- #tag loop -->
 
     <% else %><!-- # shared list logic -->
       <% movie.tags.by_user_or_list(current_user).each do |tag| %>
         <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_partial" %>
-        <%= link_to "(x)", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_partial", method: :delete, remote: true  %>
+        <%= link_to "", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_partial", method: :delete, remote: true, class: "fa fa-times-circle" %>   
         <% end %> <!-- #tag loop -->
 
     <% end %><!-- # shared list logic -->
   <% end %> <!-- # if tags.present? -->
 
     <%= form_tag( { :controller => :taggings, :action => :create }, { remote: true } ) do %>
-      <%= label_tag(:tag_list, "Add tags:") %>
+      <%= label_tag(:tag_list, "") %>
       <%= text_field_tag(:tag_list) %>
       <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
       <%= hidden_field_tag(:list_id, @list.id) if @list.present? && current_user.all_lists.include?(@list) %>

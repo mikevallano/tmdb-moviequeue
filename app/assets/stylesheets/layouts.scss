@@ -1,8 +1,10 @@
 @import "colors";
+@import "fonts";
 
 
 .row {
   margin: 10px 0px; 
+  // clear: both;
 } /* .row */
 
 .tile-container {
@@ -20,8 +22,8 @@
 
 @media screen and (max-width: 670px) {
 
-  // .tile-container {
-  //   max-width: 320px;
-  // } /* .tile-container */
+  .tile-container {
+    max-width: 320px;
+  } /* .tile-container */
 
 } /* 670px */

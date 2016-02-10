@@ -1,5 +1,5 @@
-<h1>Movie: <%= @movie.title %></h1>
+<% content_for(:title, @movie.title) %>
+
+<h4>movie_more.html.erb</h4>
 
 <%= render "movies/movie_show" %>
-
-<p><%= link_to "Similar movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more" %></p>

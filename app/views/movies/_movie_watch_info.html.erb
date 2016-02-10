@@ -1,0 +1,8 @@
+<!-- link to youtube trailer -->
+  <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank"><%= image_tag 'trailer.png', class: "watch-link" %></a>
+
+<!--  link to netflix -->
+  <a href="http://www.netflix.com/search/<%= movie.title %>" target="_blank" alt="Search Netflix"><%= image_tag 'netflix.png', class: "watch-link" %></a>
+
+<!--  link to amazon -->
+  <a href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= movie.title %>" target="_blank" title="Search Amazon"><%= image_tag 'amazon.jpg', class: "watch-link" %></a>
