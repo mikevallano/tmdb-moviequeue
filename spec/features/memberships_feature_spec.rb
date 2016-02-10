@@ -15,7 +15,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:tag1) { FactoryGirl.create(:tag) }
     let(:tag2) { FactoryGirl.create(:tag, name: FFaker::DizzleIpsum.words(2).join(' ')) }
     let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
-    let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user2.id) }
+    let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
     before(:each) do
       movie1
@@ -45,26 +45,18 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     end
 
     scenario "users update priorities on lists they're a member of", js: true do
-      skip "priority not currently working"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
-      # page.execute_script("$(#movies_partial_<%= @movie.tmdb_id %>).html(<%= j(render :partial => 'movies/movie', :locals => {:movie => @movie}) %>)")
-      # page.execute_script("$(#myModal_<%= @movie.tmdb_id %>).modal('show')")
-      # find("image.tmdb.org/t/p/w154/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg").click
-      # find("img[alt='Azex4xnsqa08tdmhrb1gdlo6goi']").click
-      # find("#modal_link_13").click
-      # find("modal_link").click
-      expect(current_url).to eq(user_list_url(user1, list))
-
-
-      # select "High", :from => "priority"
-      # click_button "add_priority_button_movies_partial"
-      # expect(page).to have_content("High")
-      # expect(Listing.last.priority).to eq(4)
+      find("#modal_link_#{movie1.tmdb_id}").click
+      wait_for_ajax
+      select "High", :from => "priority"
+      click_button "add_priority_button_movies_partial"
+      wait_for_ajax
+      expect(page).to have_content("High")
+      expect(Listing.last.priority).to eq(4)
     end
 
     scenario "users can see other members' tags but not other users' tags", js: true do
-      skip "need to pass @list"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
       find("#modal_link_#{movie1.tmdb_id}").click
@@ -74,11 +66,12 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     end
 
     scenario "users can click other member's tags and see tagged movies", js: true do
-      skip "need to pass @list"
       sign_in_user(user2)
       visit(user_list_path(user1, list))
-      click_link tag1.name, match: :first
-      expect(page).to have_content(movie1.title)
+      find("#modal_link_#{movie1.tmdb_id}").click
+      wait_for_ajax
+      click_link "#{tag1.name}"
+      expect(page).to have_selector("#modal_link_#{movie1.tmdb_id}")
     end
 
     scenario "members can't edit a list unless they are the owner" do
