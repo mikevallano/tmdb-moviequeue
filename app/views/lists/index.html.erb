@@ -1,33 +1,46 @@
 <% content_for(:title, "My Lists") %>
 
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <h1>My Movie Lists</h1>
 
-<h1>My lists:</h1>
+  <div class="pull-right">
+     <p class="button-main"><%= link_to ' New List', new_user_list_path(current_user), id: "new_list_link_list_index", class: "fa fa-plus" %></p>
+  </div> <!-- pull-right -->
+</div> <!-- row -->
+  
+<div class="row">
+  <% @lists.each do |list| %>
+    <article id="list"> 
+    <div class="row">
+      
+    <div class="col-xs-3">
+      <a href="<%= user_list_path(list.owner, list) %>">
+        <% list.listings.last(6).each do |listing| %>
+          <%= image_for(listing.movie) %>
+        <% end %><!-- list.listing.each -->
+      </a>
+    </div> <!-- col-xs-3 -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Owner</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="col-xs-6">
+      <h2><%= link_to list.name.titlecase, user_list_path(list.owner, list), id: "show_list_link_list_index" %></h2>
+      <p>by <%= list.owner.username %></p>
+      <p><%= list.description %></p>
+    </div> <!-- col-xs-6 -->
 
-  <tbody>
-    <% @lists.each do |list| %>
-      <tr>
-        <td><%= list.owner.username %></td>
-        <td><%= list.name %></td>
-        <td><%= list.description %></td>
-        <td><%= link_to 'Show', user_list_path(list.owner, list), id: "show_list_link_list_index" %></td>
-        <td><%= link_to 'Edit', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index" %></td>
-        <td><%= link_to 'Destroy', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="col-xs-3">
+      <ul>
+        <li><%= link_to " Show Movies", user_list_path(list.owner, list), id: "show_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
+        <li><%= link_to ' Edit Details', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index", class: "fa fa-chevron-circle-right" %></li> 
+        <li><%= link_to ' Delete List', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." }, class: "fa fa-chevron-circle-right" %></li>
+        </ul> 
+    </div> <!-- col-xs-3 -->
 
-<br>
+    </div> <!-- row -->
+    </article>
+  <% end %><!-- @lists.each -->
+</div> <!-- row -->
 
-<%= link_to 'New List', new_user_list_path(current_user), id: "new_list_link_list_index" %>
+      
+
+
