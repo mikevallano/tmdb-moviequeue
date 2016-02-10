@@ -12,25 +12,30 @@ article.tile-cover-pic {
   } /* img */
 } /* article.tile-cover-pic */
 
+.modal-content {
+   background-color: $primary-background-color;
+} /* .modal-dialog */
+  
 .modal {
-  color: black; 
   img {
-    border: 1px solid #f1f1f1; 
+    border: 1px solid #000; 
   } /* img */  
+  h1 {
+    line-height: 99%;
+    margin-bottom: 10px; 
+  } /* h1 */
+    
 
+  /* modal button links */
   .watch-info {
-    margin: 0 auto;
-    margin-bottom: 8%;
-    text-align: center;
-    p {
-      color: gray;
-      font-size: 70%;
-      font-style: italic;
-     }  /* p */
-     img {
-       border: 0px solid white; 
-     } /* img */
-   }/* watch-info */
+    margin-top: 10px;
+    a {
+      font-size: 93%;
+      line-height: 120%;
+      padding: 8% 2%;
+    }/* a */
+  } /* .watch-info */
+    
 
   .watch-link {
     text-align: center;
@@ -43,6 +48,12 @@ article.tile-cover-pic {
     max-height: 15px;
   }/* imdb-link */
 } /* .modal */
+
+.well {
+  background-color: lighten($primary-background-color, 10%); 
+  border: 0px;
+} /* .well */
+
 
 /* MOVIE SHOW PAGE */
 
@@ -80,27 +91,7 @@ article.tile-cover-pic {
     background: -moz-linear-gradient(bottom, rgba(0,0,0,0), rgba(0,0,0,0.5)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.5)); /* Standard syntax (must be last) */
     
-  } /* gradient-box */
-
-  .watch-info-show {
-    color: black;
-    background-color: white;
-    border-radius: 10px 0px 0px 0px;
-    padding: 5px 15px;
-    display: inline-block;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    -moz-box-shadow:    -5px 5px 5px rgba(0,0,0,0.5);
-    -webkit-box-shadow: -5px 5px 5px rgba(0,0,0,0.5);
-    box-shadow:         -5px 5px 5px rgba(0,0,0,0.5);
-    img {
-       height: 20px;
-       margin: 0 10px; 
-     } /* img */
-        
-  } /* .watch-info-show */
-    
+  } /* gradient-box */    
 
    .backdrop-image {
     width: 100%;

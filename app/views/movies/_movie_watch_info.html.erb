@@ -1,8 +1,11 @@
-<!-- link to youtube trailer -->
-  <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank"><%= image_tag 'trailer.png', class: "watch-link" %></a>
+<!-- similar movies -->
+<p class="sidebar-button"><%= link_to " Find Similar Movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more", class: "fa fa-search" %></p>
 
 <!--  link to netflix -->
-  <a href="http://www.netflix.com/search/<%= movie.title %>" target="_blank" alt="Search Netflix"><%= image_tag 'netflix.png', class: "watch-link" %></a>
+<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="http://www.netflix.com/search/<%= @movie.title %>" target="_blank" alt="Search Netflix"> Watch on Netflix</a></p>
 
 <!--  link to amazon -->
-  <a href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= movie.title %>" target="_blank" title="Search Amazon"><%= image_tag 'amazon.jpg', class: "watch-link" %></a>
+<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= @movie.title %>" target="_blank" title="Search Amazon"> Watch on Amazon</a></p>
+
+<!-- link to youtube -->
+<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie" target="_blank"> Watch on YouTube</a></p>
