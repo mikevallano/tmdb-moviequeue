@@ -143,9 +143,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
-      scenario "dealing with favicon issue" do
+      scenario "dealing with favicon issue", js: true do
         #TODO: resolve favicon issue
-        expect{sign_in_user(user)}.to raise_error( ActionController::RoutingError)
+        visit(root_path)
+        wait_for_ajax
+        expect{visit(root_path)}.to raise_error( ActionController::RoutingError)
       end
 
       scenario "users can add a movie to their list and mark it as watched", js: true do
@@ -253,13 +255,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "modal shows if the movie has been watched or not, and has link to mark as watched", js: true do
-        skip "waiting to sort out design"
         find("#modal_link_#{movie.tmdb_id}").click
         find("#mark_watched_link_movies_partial", match: :first).click
         wait_for_ajax
         expect(page).to have_content("seen")
         expect(page).to have_selector("#view_screenings_link_movies_partial")
-        expect(page).not_to have_selector("#mark_watched_link_movies_partial")
       end
 
       context "sorting" do
