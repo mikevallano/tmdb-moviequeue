@@ -1,8 +1,10 @@
 <% content_for(:title, "Editing #{@list.name}") %>
 
-<h1>Editing List</h1>
+<h1>Editing: <%= @list.name %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', user_list_path(@list.owner_id, @list.id) %> |
-<%= link_to 'Back', user_lists_path(current_user) %>
+<p class="button-main">
+  <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list.id) %>
+  <%= link_to ' Cancel', user_lists_path(current_user) %>
+</p>
