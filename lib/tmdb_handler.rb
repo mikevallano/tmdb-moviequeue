@@ -47,6 +47,7 @@ module TmdbHandler
   def tmdb_handler_full_cast(tmdb_id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    tmdb_handler_movie_more(tmdb_id)
     @credits = @result[:credits]
     @cast = @result[:credits][:cast]
     @actors = MovieCast.parse_results(@cast)
