@@ -9,14 +9,14 @@
     display: block;
     float: left;
     margin-right: 1px; 
-    background-color: #222;}
+    background-color: transparent;}
   .pagination .disabled {
-    color: #999999;
+    color: transparent;
     /*border: 1px solid #dddddd;*/ }
   .pagination .current {
     font-style: normal;
     font-weight: bold;
-    background: #2e6ab1;
+    background: $light-blue;
     color: white;
     /*border: 1px solid #2e6ab1;*/ }
   .pagination a {
@@ -24,7 +24,7 @@
     color: white;
     /*border: 1px solid #9aafe5;*/ }
     .pagination a:hover, .pagination a:focus {
-      color: gray;
+      color: $dark-blue;
       /*border-color: #000033;*/ }
   .pagination .page_info {
     background: #2e6ab1;
