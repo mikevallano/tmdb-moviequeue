@@ -23,11 +23,7 @@ class MoviesController < ApplicationController
     @sort_by = params[:sort_by]
     if @sort_by.present?
       movies_index_sort_handler(@sort_by)
-    else
-      @movies = current_user.all_movies.paginate(:page => params[:page], per_page: 20)
     end #if @sort_by.present?
-
-    # @movies = @movies.paginate(:page => params[:page], per_page: 20)
 
   end #index
 
