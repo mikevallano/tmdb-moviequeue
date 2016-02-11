@@ -1,8 +1,9 @@
 <% content_for(:title, @list.name) %>
-
-<p id="notice"><%= notice %></p>
-
+<div class="row">
+   
+<h1><%= @list.name %></h1>
 <h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
+
 
 <% if @list.description.present? %>
   <h3>List description:</h3>
@@ -28,6 +29,7 @@
 
 <% end %> <!-- # if @sort_by = "watched movies" && @list.members.present? -->
 
+</div> <!-- row -->
 
   <div id ="list_show_loop">
     <%= render partial: 'movies/movie_partial_loop', object: @movies, :locals => { :list => @list } %>
@@ -41,6 +43,8 @@
     </center>
   </div>
 
+<hr>
+<h1>PUT THIS IN A SIDEBAR</h1>
 <%= link_to 'Edit', edit_user_list_path(@list.owner, @list), id: "edit_list_link_list_show" %> |
 <%= link_to 'Back', user_lists_path(current_user), id: "lists_index_link_list_show" %>
 
