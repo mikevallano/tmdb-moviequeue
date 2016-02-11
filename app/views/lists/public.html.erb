@@ -1,19 +1,16 @@
 <% content_for(:title, "Public Lists") %>
 
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <h1>Public Movie Lists</h1>
+  <h2>This page shows all users' lists that are marked as public.</h2>
 
-<h1>Public lists page: This page shows all users' lists marked as public.</h1>
 
-<% @lists.each do |list| %>
-  <p><strong>List name: </strong><%= link_to "#{list.name}", user_list_path(user_id: list.owner.slug, id: list.slug) %>, <strong>Owner: </strong><%= list.owner.username %></p>
-  <ul>
-    <li>Movies in list: <%= list.movies.size %></li>
-    <li>List owner: <%= list.owner.username %></li>
-    <li>Movies in list:
-      <% list.movies.first(5).each do |movie| %>
-      <%= link_to "#{movie.title}", movie_path(movie) %>
-    <% end %>...<%= link_to "see all", user_list_path(user_id: list.owner.slug, id: list.slug) %></li>
-  </ul>
+  <div class="pull-right">
+     <p class="button-main"><%= link_to ' New List', new_user_list_path(current_user), id: "new_list_link_list_index", class: "fa fa-plus" %></p>
+  </div> <!-- pull-right -->
+</div> <!-- row -->
 
-<% end %>
+  <%= render "lists/list" %>
 
 <p><%= will_paginate @lists %></p>

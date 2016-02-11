@@ -1,0 +1,32 @@
+
+<div class="row">
+  <% @lists.each do |list| %>
+    <article id="list">
+    <div class="row">
+
+    <div class="col-xs-3">
+      <a href="<%= user_list_path(list.owner, list) %>">
+        <% list.movies.last(5).each do |movie| %>
+          <%= image_for(movie) %>
+        <% end %><!-- list.movies.each -->
+      </a>
+    </div> <!-- col-xs-3 -->
+
+    <div class="col-xs-6">
+      <h2><%= link_to list.name.titlecase, user_list_path(list.owner, list), id: "show_list_link_list_index" %> <span class="count">(<%= pluralize(list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(list) %>"><icon></span></h2>
+      <p>by <%= list.owner.username %></p>
+      <p><%= list.description %></p>
+    </div> <!-- col-xs-6 -->
+
+    <div class="col-xs-3">
+      <ul>
+        <li><%= link_to " Show Movies", user_list_path(list.owner, list), id: "show_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
+        <li><%= link_to ' Edit Details', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
+        <li><%= link_to ' Delete List', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." }, class: "fa fa-chevron-circle-right" %></li>
+        </ul>
+    </div> <!-- col-xs-3 -->
+
+    </div> <!-- row -->
+    </article>
+  <% end %><!-- @lists.each -->
+</div> <!-- row -->
