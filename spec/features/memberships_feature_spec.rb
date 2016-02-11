@@ -8,7 +8,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:user2) { FactoryGirl.create(:user) }
     let(:user3) { FactoryGirl.create(:user) }
     let(:movie1) { FactoryGirl.create(:movie) }
-    let(:list) { FactoryGirl.create(:list, name: "awesome 90s", owner_id: user1.id) }
+    let(:list) { FactoryGirl.create(:list, owner_id: user1.id) }
     let(:listing1) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie1.id) }
     let(:membership1) { FactoryGirl.create(:membership, list_id: list.id, member_id: user1.id) }
     let(:membership2) { FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id) }
@@ -30,18 +30,18 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     scenario "users can see their own lists that have members" do
       sign_in_user(user1)
       click_link "my_lists_nav_link"
-      expect(page).to have_content("awesome 90s")
+      expect(page).to have_content("#{list.name.titlecase}")
       # visit(user_list_path(user1, list))
-      click_link "show_list_link_list_index"
-      expect(page).to have_content("awesome 90s")
+      click_link "show_list_link_list_index", match: :first
+      expect(page).to have_content("#{list.name}")
     end
 
     scenario "users can see others' lists they're a member of" do
       sign_in_user(user2)
       click_link "my_lists_nav_link"
-      expect(page).to have_content("awesome 90s")
+      expect(page).to have_content("#{list.name.titlecase}")
       visit(user_list_path(user1, list))
-      expect(page).to have_content("awesome 90s")
+      expect(page).to have_content("#{list.name}")
     end
 
     scenario "users update priorities on lists they're a member of", js: true do
