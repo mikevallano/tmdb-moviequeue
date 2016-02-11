@@ -1,4 +1,5 @@
 <% content_for(:title, current_user.email) %>
 
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>Profile page for <%= current_user.username %></h1>
+<p>Email: <%= current_user.email %></p>
+<p><%= link_to "Change your password/update info", edit_user_registration_path %></p>
