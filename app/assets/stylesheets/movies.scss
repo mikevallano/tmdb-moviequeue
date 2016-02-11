@@ -1,6 +1,10 @@
 @import "colors";
 @import "fonts";
 
+.tile-container {
+  max-width: 800px;
+} /* .tile-container */
+
 article.tile-cover-pic {
   float: left;
   margin: 0px 10px 10px 0px;
@@ -122,6 +126,21 @@ article.tile-cover-pic {
 } /* .movie-bottom-details */
 
 
+
+/* MEDIA QUERIES */
+
+// 2 movies = 320px
+// 3 movies = 480pm
+// 4 movies = 640px
+// 5 movies = 800px
+
+@media screen and (max-width: 670px) {
+
+  .tile-container {
+    max-width: 320px;
+  } /* .tile-container */
+
+} /* 670px */
 
 
 
