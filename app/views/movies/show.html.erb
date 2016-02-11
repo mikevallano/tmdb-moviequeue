@@ -1,7 +1,5 @@
 <% content_for(:title, @movie.title) %>
 
-<p id="notice"><%= notice %></p>
-
  <%= render "movie_show" %>
 
 <p><%= link_to "Similar movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_show" %></p>
