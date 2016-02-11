@@ -1,47 +1,53 @@
-<h1><%= @name %></h1>
+<h1>Name: <%= @person_bio.name %></h1>
 
-<h2>Director Credits (<%= @director_credits.size %>)</h2>
+<h2>Birthday: <%= @person_bio.birthday %></h2>
+
+<h2>Bio:</h2> <p><%= @person_bio.bio %></p>
+
+<%= image_tag "http://image.tmdb.org/t/p/w150#{@person_bio.profile_path}" %>
+
+<h2>Director Credits (<%= @person_credits.directing.size %>)</h2>
 
 <ul>
-<% @director_credits.each do |credit| %>
+<% @person_credits.directing.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
-<h2>Producer Credits (<%= @producer_credits.size %>)</h2>
+<h2>Producer Credits (<%= @person_credits.producer.size %>)</h2>
 
 <ul>
-<% @producer_credits.each do |credit| %>
+<% @person_credits.producer.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
-<h2>Editor Credits (<%= @editor_credits.size %>)</h2>
+<h2>Editor Credits (<%= @person_credits.editing.size %>)</h2>
 
 <ul>
-<% @editor_credits.each do |credit| %>
+<% @person_credits.editing.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
-<h2>Writer Credits (<%= @writer_credits.size %>)</h2>
+<h2>Writer Credits (<%= @person_credits.writing.size %>)</h2>
 
 <ul>
-<% @writer_credits.each do |credit| %>
+<% @person_credits.writing.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
-<h2>Screenplay Credits (<%= @screenplay_credits.size %>)</h2>
+<h2>Screenplay Credits (<%= @person_credits.screenplay.size %>)</h2>
 <ul>
-<% @screenplay_credits.each do |credit| %>
+<% @person_credits.screenplay.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
 
-<h2>Actor Credits (<%= @actor_credits.size %>)</h2>
+<h2>Actor Credits (<%= @person_credits.actor.size %>)</h2>
 <ul>
-<% @actor_credits.each do |credit| %>
+<% @person_credits.actor.each do |credit| %>
   <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
 <% end %>
 </ul>
