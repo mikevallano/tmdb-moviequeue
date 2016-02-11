@@ -143,6 +143,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
+      scenario "dealing with favicon issue" do
+        #TODO: resolve favicon issue
+        expect{sign_in_user(user)}.to raise_error( ActionController::RoutingError)
+      end
+
       scenario "users can add a movie to their list and mark it as watched", js: true do
         list1
         sign_in_user(user)
