@@ -72,7 +72,30 @@ button.close {
       text-decoration: none;
     }
   } /* a */
+    
 } /* .button-main */
+
+.button-large {
+  a {
+    font-size: 30px;
+    color: white;
+    border: 1px solid $dark-blue;
+    padding: 8px 30px;
+    border-radius: 5px;
+    background-color: $light-blue;
+
+    &:visited {
+      color: white;
+    }
+
+    &:hover {
+      color: white;
+      background-color: darken($dark-blue, 10%);
+      text-decoration: none;
+    }
+  } /* a */
+    
+} /* .button-large */
 
 
 
