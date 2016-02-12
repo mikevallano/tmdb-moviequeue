@@ -7,13 +7,52 @@
 
     <% if current_user.present? %>
 
-      <h2>USER IS LOGGED IN</h2>
-      <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_lists_path(current_user), id: "list_index_link_homepage" %>. You can browse movies and add them to your list.</p>
+      <% if !@movie_title.present? %>
+      <% content_for(:title, "Search by Title") %>
+
+        <h2 id="search_by_title_header">Hey <%= current_user.username.titlecase %>! Search for a Movie by its Title:</h2>
+        <%= form_tag '/tmdb/search', method: :get do %>
+          <%= text_field_tag :movie_title %>
+          <%= submit_tag " Search", id: "search_by_title_button" %>
+        <% end %>
+      </br>
+
+      <% else %>
+
+        <% if @not_found.present? %>
+            <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+            <p><%= link_to "Search again", api_search_path %> </p>
+
+        <% else %> <!-- # if @not_found.present? -->
+        <% content_for(:title, "Results for #{@query}") %>
+          <h2>Movies matching '<%= @query %>':</h2>
+
+          <br>
+            <%= form_tag '/tmdb/search', method: :get do %>
+              <%= label_tag :movie_title, "Enter Title: " %>
+              <%= text_field_tag :movie_title %>
+              <%= submit_tag "Search Again", id: "search_by_title_again_button" %>
+            <% end %>
+          </br>
+
+          <div id ="movies_search_loop">
+            <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+          </div> <!-- movies_search_loop -->
+
+        <% end %> <!-- # if @not_found.present? -->
+
+      <% end %> <!-- #initial if @movie_title.present? -->
+
+
+      <hr>
+
+
+      <p>As a MovieQueue user, you start with an empty list called <%= link_to "My Queue", user_lists_path(current_user), id: "list_index_link_homepage" %>. You can browse movies and add them to your list.</p>
       <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
       <p>You can also check out what <%= link_to "lists other users", public_lists_path, id: "public_lists_link_homepage" %> have created.</p>
-      <p><%= link_to "Search by movie title", api_search_path, id: "movie_title_search_link_homepage" %> </p>
-      <p><%= link_to "Search by actor", actor_search_path, id: "actor_search_link_homepage" %> </p>
-      <p><%= link_to "Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage" %> </p>
+      <p><%= link_to " Search by movie title", api_search_path, id: "movie_title_search_link_homepage", class: "fa fa-chevron-circle-right" %> </p>
+      <p><%= link_to " Search by actor", actor_search_path, id: "actor_search_link_homepage", class: "fa fa-chevron-circle-right" %> </p>
+      <p><%= link_to " Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage", class: "fa fa-chevron-circle-right" %> </p>
 
     <% else %>
 
