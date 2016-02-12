@@ -79,7 +79,7 @@ div {
     margin-bottom: 10px;
     label {
       font-family: $header-family;
-      font-size: .9em; 
+      // font-size: .9em; 
     } /* label */ 
   }/* field actions */
 }/* div */
@@ -95,6 +95,28 @@ input[type="submit"] {
     text-decoration: none;
   }/* hover */
 }/* input */
+
+.share-container {
+  border: 1px solid $dark-blue;
+  border-radius: 5px;
+  padding: 2%;
+  width: 30%;
+  min-width: 250px;
+  float: right;
+} /* .share-container */
+
+.form-container {
+  width: 60%;
+  max-width: 900px;
+  min-width: 300px;
+  float: left;
+  margin-right: 20px; 
+} /* .form-container */
+
+  
+
+
+/* NOTICES & ALERTS */
 
 #notice {
   color: $green;
@@ -134,3 +156,21 @@ input[type="submit"] {
     list-style: square;
   }
 }
+
+
+
+@media screen and (max-width: 900px) {
+  .share-container {
+    margin-top: 20px;
+    width: 100%;
+    min-width: 250px;
+    clear: both;
+  } /* .share-container */
+
+  .form-container {
+    width: 100%;
+    float: left;
+    margin-right: 20px; 
+  } /* .form-container */
+
+} /* 670px */
