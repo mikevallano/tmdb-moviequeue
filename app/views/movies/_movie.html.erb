@@ -11,6 +11,7 @@
           <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
+            <%= render 'movies/movie_screening', movie: movie %>
             <%= render "movies/movie_watch_info", movie: movie %>
           </div><!-- watch-info -->
         </div> <!-- col-sm-3 -->
@@ -24,9 +25,11 @@
 
         <p><% @movie.actors.first(3).each do |actor| %>
             <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_modal" %></span>
-          <% end %></p>
+          <% end %>
+          <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
+          </p>
 
-        <p><strong>Overview: </strong><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to "more", movie_more_path(tmdb_id: movie.tmdb_id) %></p>
+        <p><strong>Overview: </strong><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to " Full Details", movie_more_path(tmdb_id: movie.tmdb_id), class: "fa fa-chevron-circle-right" %>
 
         <div id="movie_modal_innard_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_modal_innard', movie: movie %>
