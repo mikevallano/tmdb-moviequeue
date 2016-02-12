@@ -4,8 +4,9 @@
 <h1>Editing: <%= @list.name %></h1>
   <div class="pull-right">
     <p class="button-main">
-      <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list.id) %>
+      <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list) %>
     </p>
+
   </div> <!-- pull-right -->
 </div> <!-- row -->
   
