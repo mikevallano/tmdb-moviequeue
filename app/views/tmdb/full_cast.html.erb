@@ -12,8 +12,8 @@
       <div class="headshot-container">
       <%= link_to headshot_for(actor), actor_more_path(actor_id: actor.actor_id) %>
         <div class="name-block">
-          <p class="actor"><%= link_to "#{actor.name}", actor_more_path(actor_id: actor.actor_id) %><p>
-          <p>As <%= actor.character_name %><p>
+        <p class="actor"><%= link_to truncate(actor.name, length: 18 ), actor_more_path(actor_id: actor.actor_id) %></p>
+          <p>As <%= truncate(actor.character_name, length: 18, separator: " ") %><p>
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->
       <% end %><!-- actors each do -->
@@ -27,7 +27,7 @@
         <div class="headshot-container">
         <%= link_to headshot_for(director), director_search_path(director_id: director.director_id) %>
           <div class="name-block">
-            <p class="actor"><%= link_to "#{director.name}", director_search_path(director_id: director.director_id) %><p>
+          <p class="actor"><%= link_to truncate(director.name, length: 18 ), director_search_path(director_id: director.director_id) %></p>
             <p><%= director.job %><p>
           </div> <!-- name-block -->
         </div> <!-- headshot-container -->
@@ -41,7 +41,7 @@
         <div class="headshot-container">
         <%= link_to headshot_for(editor), director_search_path(director_id: editor.editor_id) %>
           <div class="name-block">
-            <p class="actor"><%= link_to "#{editor.name}", director_search_path(director_id: editor.editor_id) %><p>
+            <p class="actor"><%= link_to truncate(editor.name, length: 18 ), director_search_path(director_id: editor.editor_id) %></p>
             <p><%= editor.job %><p>
           </div> <!-- name-block -->
         </div> <!-- headshot-container -->
