@@ -1,23 +1,36 @@
-<h2>Show name: <%= @show_name %></h2>
-<h2><%= image_tag  "http://image.tmdb.org/t/p/w150#{@poster_path}" %></h2>
-<h2>First air date: <%= @first_air_date %> </h2>
-<h2>Last air date: <%= @last_air_date %> </h2>
-<h2>Overview:</h2> <p><%= @overview %></p>
-<h2>Number of Episodes: <%= @number_of_episodes %> </h2>
-<h2>Number of Seasons: <%= @number_of_seasons %></h2>
+<article id="profile">
+  <div class="row">
+    <div class="summary-box">
+      <%= image_tag "http://image.tmdb.org/t/p/w185#{@poster_path}" %>
+      <div class="contents">
+        <h1><%= @show_name %></h1>
+        <p class="stats">TV Series | Aired: <%= @first_air_date %> to <%= @last_air_date %> | Seasons: <%= @number_of_seasons %> | Episodes: <%= @number_of_episodes %> </p>
+        <p class="bio"><%= @overview %></p>
+      </div> <!-- contents -->
+    </div> <!-- summary-box -->
+  </div> <!-- row -->
 
-<ul>
-<% @seasons.each do |season| %>
-  <li>Season number: <%= link_to "Season: #{season[:season_number]}",
-  tv_season_path(season_number: "#{season[:season_number]}", show_id: @show_id, show_name: @show_name) %></li>
-<% end %>
-</ul>
+  <div class="row">
+    <div class="tv-credits">
+    <h3>Seasons:</h3>
+    <p>
+    <% @seasons.each do |season| %>
+      <%= link_to "Season #{season[:season_number]}",
+      tv_season_path(season_number: "#{season[:season_number]}", show_id: @show_id, show_name: @show_name) %>
+    <% end %>
+    </p>
 
-<h3>Show Cast:</h3>
-<ul>
-<% @show_cast.each do |actor| %>
-  <li>Actor: <%= link_to "#{actor[:name]}", actor_search_path(actor: "#{actor[:name]}")  %></li>
-  <li>Character: <%= actor[:character] %></li>
-  <li><%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" if actor[:profile_path].present? %></li>
-<% end %>
-</ul>
+    <h3>Show Cast:</h3>
+    <% @show_cast.each do |actor| %>
+      <div class="headshot-container">
+      <%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" if actor[:profile_path].present? %>
+        <div class="name-block">
+        <p class="actor"><%= link_to "#{actor[:name]}", actor_search_path(actor: "#{actor[:name]}")  %></p>
+          <p>As <%= actor[:character] %><p>
+        </div> <!-- name-block -->
+      </div> <!-- headshot-container -->
+      <% end %><!-- actors each do -->
+
+    </div> <!-- credits -->
+  </div> <!-- row -->
+</article>
