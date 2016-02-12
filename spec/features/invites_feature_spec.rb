@@ -14,18 +14,23 @@ RSpec.feature "Invites feature spec", :type => :feature do
     scenario "users can send invite" do
 
       sign_in_user(user1)
-      visit(user_list_path(user1, list))
+      visit(edit_user_list_path(user1, list))
       fill_in "invite_email", with: receiver_email
-      expect { click_button "send_invite_button_list_show" }.to change(Invite, :count).by(1)
+      expect { click_button "send_invite_button_list_edit" }.to change(Invite, :count).by(1)
       expect(page).to have_content("sent")
 
     end
 
     context "sending invites to non-existing users" do
 
-      scenario "invite mailer sends correct info and link" do
+      before(:each) do
+        sign_in_user(user1)
+        visit(edit_user_list_path(user1, list))
+        fill_in "invite_email", with: receiver_email
+        click_button "send_invite_button_list_edit"
+      end
 
-        sign_in_and_send_invite
+      scenario "invite mailer sends correct info and link" do
 
         open_email(receiver_email)
         expect(current_email).to have_content("Sign up")
@@ -33,8 +38,6 @@ RSpec.feature "Invites feature spec", :type => :feature do
       end
 
       scenario "user can receive an invite, then sign up and be a member of that list" do
-
-        sign_in_and_send_invite
 
         open_email(receiver_email)
         current_email.click_link "sign_up_link_invite_mailer"
@@ -67,9 +70,9 @@ RSpec.feature "Invites feature spec", :type => :feature do
       scenario "invite mailer sends correct info and link" do
 
         sign_in_user(user1)
-        visit(user_list_path(user1, list))
+        visit(edit_user_list_path(user1, list))
         fill_in "invite_email", with: user2.email
-        click_button "send_invite_button_list_show"
+        click_button "send_invite_button_list_edit"
 
         open_email(user2.email)
         expect(current_email).to have_content("Check out the list")
@@ -80,16 +83,14 @@ RSpec.feature "Invites feature spec", :type => :feature do
       scenario "user can receive an invite, then sign up and be a member of that list" do
 
         sign_in_user(user1)
-        visit(user_list_path(user1, list))
+        visit(edit_user_list_path(user1, list))
         fill_in "invite_email", with: user2.email
-        click_button "send_invite_button_list_show"
+        click_button "send_invite_button_list_edit"
         click_link "sign_out_nav_link"
 
         sign_in_user(user2)
         visit(user_list_path(user1, Invite.last.list))
 
-        click_link "my_lists_nav_link"
-        expect(page).to (have_content(list.name.titlecase))
         expect(user2.all_lists).to include list
 
       end

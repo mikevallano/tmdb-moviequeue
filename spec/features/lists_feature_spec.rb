@@ -143,17 +143,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
-      scenario "dealing with favicon issue", js: true do
-        #TODO: resolve favicon issue
-        visit(root_path)
-        wait_for_ajax
-        expect{visit(root_path)}.to raise_error( ActionController::RoutingError)
-      end
-
       scenario "users can add a movie to their list and mark it as watched", js: true do
         list1
-        sign_in_user(user)
         page.driver.browser.manage.window.resize_to(1280,800)
+        sign_in_user(user)
         visit(api_search_path)
         VCR.use_cassette('tmdb_search', :match_requests_on => [:body]) do
           fill_in "movie_title", with: 'fargo'

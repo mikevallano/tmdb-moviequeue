@@ -93,48 +93,56 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_content("dark-comedy")
         end
 
-        scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
-          skip "needs to have js on the actual page"
-          screening
-          visit(movie_path(movie))
-          expect(page).not_to have_selector("#show_rating_link_movies_partial")
-          expect(page).to have_selector("#rating_submit_button_rating_form")
-          select "5", :from => "rating[value]", match: :first
-          click_button "rating_submit_button_rating_form", match: :first
-          expect(page).to have_content("5")
-          expect(page).to have_selector("#show_rating_link_movies_partial")
-          expect(page).not_to have_selector("#new_rating_link_movie_show")
-        end
+        # scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
+        #   skip "needs to have js on the actual page"
+        #   screening
+        #   visit(movie_path(movie))
+        #   expect(page).not_to have_selector("#show_rating_link_movies_partial")
+        #   expect(page).to have_selector("#rating_submit_button_rating_form")
+        #   select "5", :from => "rating[value]", match: :first
+        #   click_button "rating_submit_button_rating_form", match: :first
+        #   expect(page).to have_content("5")
+        #   expect(page).to have_selector("#show_rating_link_movies_partial")
+        #   expect(page).not_to have_selector("#new_rating_link_movie_show")
+        # end
 
-        scenario "movie watched but not yet reviewed shows link to review the movie" do
-          screening
-          visit(movie_path(movie))
-          expect(page).not_to have_selector("#show_review_link_movies_partial")
-          expect(page).to have_selector("#new_review_link_movies_partial")
-        end
-
-        scenario "movie reviewed by user shows link to the review show path" do
-          screening
-          review
-          visit(movie_path(movie))
-          expect(page).to have_selector("#show_review_link_movies_partial")
-          expect(page).not_to have_selector("#new_review_link_movies_partial")
-        end
-
-        scenario "unwatched movie has a link to mark as watched", js: true do
-          skip "get design ironed out"
-          visit(movie_path(movie))
-          expect(page).to have_selector("#mark_watched_link_movies_partial")
-          expect(page).not_to have_selector("#add_screening_link_movies_partial")
-          find("#mark_watched_link_movies_partial")
-          click_link("mark_watched_link_movies_partial") #mark movie as watched
-          expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
-          expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
-        end
+        # scenario "unwatched movie has a link to mark as watched", js: true do
+        #   skip "get design ironed out"
+        #   visit(movie_path(movie))
+        #   expect(page).to have_selector("#mark_watched_link_movies_partial")
+        #   expect(page).not_to have_selector("#add_screening_link_movies_partial")
+        #   find("#mark_watched_link_movies_partial")
+        #   click_link("mark_watched_link_movies_partial") #mark movie as watched
+        #   expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
+        #   expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
+        # end
 
       end #movie is on a list
 
     end #movie show page
+
+    describe "without js" do
+
+      before(:each) do
+        sign_in_user(user)
+        listing
+      end
+
+      scenario "movie watched but not yet reviewed shows link to review the movie" do
+        screening
+        visit(movie_path(movie))
+        expect(page).not_to have_selector("#show_review_link_movies_partial")
+        expect(page).to have_selector("#new_review_link_movies_partial")
+      end
+
+      scenario "movie reviewed by user shows link to the review show path" do
+        screening
+        review
+        visit(movie_path(movie))
+        expect(page).to have_selector("#show_review_link_movies_partial")
+        expect(page).not_to have_selector("#new_review_link_movies_partial")
+      end
+    end #without js
 
     describe "movies index functionality" do
 
@@ -192,31 +200,31 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_content("dark-comedy")
         end
 
-        scenario "movies index paginates the movies by tag", js: true do
-          skip "flickering"
-          30.times { FactoryGirl.create(:movie) }
-          counter = (Movie.first.id + 1)
-          30.times do
-            FactoryGirl.create(:listing, list_id: list.id, movie_id: counter)
-            counter += 1
-          end
-          counter = Movie.first.id
-          30.times do
-            FactoryGirl.create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
-            counter += 1
-          end
-          visit root_path
-          visit movies_path
-          @movie = Movie.first
-          find("#modal_link_#{@movie.tmdb_id}")
-          find("#modal_link_#{@movie.tmdb_id}").click
-          click_link "hilarious"
-          find(".pagination", match: :first)
-          click_link "Next"
-          find(".pagination", match: :first)
-          expect(page).to have_content("Previous")
-          expect(page).not_to have_link("Next")
-        end
+        # scenario "movies index paginates the movies by tag", js: true do
+        #   skip "flickering"
+        #   30.times { FactoryGirl.create(:movie) }
+        #   counter = (Movie.first.id + 1)
+        #   30.times do
+        #     FactoryGirl.create(:listing, list_id: list.id, movie_id: counter)
+        #     counter += 1
+        #   end
+        #   counter = Movie.first.id
+        #   30.times do
+        #     FactoryGirl.create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
+        #     counter += 1
+        #   end
+        #   visit root_path
+        #   visit movies_path
+        #   @movie = Movie.first
+        #   find("#modal_link_#{@movie.tmdb_id}")
+        #   find("#modal_link_#{@movie.tmdb_id}").click
+        #   click_link "hilarious"
+        #   find(".pagination", match: :first)
+        #   click_link "Next"
+        #   find(".pagination", match: :first)
+        #   expect(page).to have_content("Previous")
+        #   expect(page).not_to have_link("Next")
+        # end
 
       end #tagging context
 
