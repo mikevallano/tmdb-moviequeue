@@ -69,14 +69,7 @@ module FeatureHelpers
     click_button "submit_list_button"
   end
 
-  def sign_in_and_send_invite
-    sign_in_user(user1)
-    visit(user_list_path(user1, list))
-    fill_in "invite_email", with: receiver_email
-    click_button "send_invite_button_list_show"
-  end
-
-    def api_actor_search
+  def api_actor_search
     VCR.use_cassette('tmdb_actor_search') do
       fill_in "actor_name_actor_search", with: 'Steve Buscemi'
       click_button "submit_button_actor_search"
