@@ -143,13 +143,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
-      scenario "dealing with favicon issue", js: true do
-        #TODO: resolve favicon issue
-        visit(root_path)
-        wait_for_ajax
-        expect{visit(root_path)}.to raise_error( ActionController::RoutingError)
-      end
-
       scenario "users can add a movie to their list and mark it as watched", js: true do
         list1
         page.driver.browser.manage.window.resize_to(1280,800)
