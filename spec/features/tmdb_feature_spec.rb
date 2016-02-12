@@ -362,7 +362,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           click_link "Get a full list of credits and bio"
         end
         VCR.use_cassette("actor_tv_credit") do
-          click_link "more info", match: :first
+          click_link "credit_link_actor_more", match: :first
         end
         expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "5256c32c19c2956ff601d1f7", show_name: "The Simpsons"))
         expect(page).to have_content("Episode overview")
@@ -374,7 +374,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           click_link "Get a full list of credits and bio"
         end
         VCR.use_cassette("actor_tv_credit") do
-          click_link "more info", match: :first
+          click_link "credit_link_actor_more", match: :first
         end
         VCR.use_cassette("tv_main_page") do
           click_link "The Simpsons"
