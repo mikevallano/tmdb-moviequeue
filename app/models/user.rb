@@ -110,6 +110,10 @@ class User < ActiveRecord::Base
     self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 0 : 1  }
   end
 
+  def movies_by_genre(genre)
+    (self.movies.by_genre(genre) | self.member_movies.by_genre(genre))
+  end
+
   def login=(login)
     @login = login
   end

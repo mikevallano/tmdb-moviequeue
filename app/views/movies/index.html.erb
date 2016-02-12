@@ -12,12 +12,18 @@
     <% end %><!-- list present -->
   <% end %><!-- tag present -->
 
+  <% if @genre.present? %>
+    <h3>Here are your movies with the genre: <%= "'#{@genre}'" %>. <%= link_to "Show all movies", movies_path, id: "movies_index_link_with_tag_movies_index" %></h3>
+  <% end %><!-- # if genre present -->
+
   <!-- # sort form -->
+  <% unless @tag.present? || @genre.present? %> <!-- # hide sort form if already sorted by tag or genre -->
     <%= form_tag movies_path, method: :get do %>
       <%= label_tag :sort_by, "Sort by: " %>
       <%= select_tag :sort_by, options_for_select(Movie::MY_MOVIES_SORT_OPTIONS, @sort_by), :include_blank => false, id: "list_sort_options" %>
       <%= submit_tag "Sort", id: "sort_button_movies_index" %>
     <% end %>
+  <% end %>
 </div> <!-- row -->
 
 
