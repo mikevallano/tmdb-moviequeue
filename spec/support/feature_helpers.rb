@@ -23,6 +23,7 @@ module FeatureHelpers
     visit root_path
     click_link "sign_in_nav_link"
     fill_in "user_login", with: user.email
+    find("#user_password")
     fill_in "user_password", with: user.password
     click_button "log_in_button_new_session"
     @current_user = User.find_by_email(user.email)

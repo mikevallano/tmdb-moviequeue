@@ -443,14 +443,14 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can view public lists" do
         sign_in_user(user2)
         click_link "public_lists_nav_link"
-        expect(page).to have_content(public_list.name)
+        expect(page).to have_content(public_list.name.titlecase)
       end
 
       scenario "user sees public_show page if user's all_lists doesn't include list" do
         skip "now using partial. should rewrite"
         sign_in_user(user2)
         click_link "public_lists_nav_link"
-        click_link "#{public_list.name}"
+        click_link "#{public_list.name.titlecase}"
         expect(page).to have_selector("#add_to_list_button_movies_partial")
         expect(page).not_to have_selector("#add_priority_button_movies_partial")
       end
@@ -459,7 +459,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         skip "now using partial. should rewrite"
         sign_in_user(public_list.owner)
         click_link "public_lists_nav_link"
-        click_link "#{public_list.name}"
+        click_link "#{public_list.name.titlecase}"
         expect(page).not_to have_selector("#add_to_list_button_movies_partial")
         expect(page).to have_selector("#add_priority_button_movies_partial")
         expect(page).to have_selector("#rating_submit_button_rating_form")
@@ -477,7 +477,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           click_link "sign_out_nav_link"
           sign_in_user(user2)
           click_link "public_lists_nav_link"
-          click_link "#{public_list.name}"
+          click_link "#{public_list.name.titlecase}"
           expect(page).to have_content("Next")
           click_link "Next"
           expect(page).to have_content("Previous")
