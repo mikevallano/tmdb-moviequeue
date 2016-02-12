@@ -3,9 +3,8 @@
 
   <h1 id="search_by_title_header">Search for a movie by movie title:</h1>
 
-  <%= form_tag '/tmdb/search', method: :get do %>
-    <%= label_tag :movie_title, "Enter Title: " %>
-    <%= text_field_tag :movie_title %>
+  <%= form_tag '/tmdb/search', { class: 'form-class', id: 'actor-search', role: 'form', method: :get } do %>
+    <%= text_field_tag :movie_title, nil, class: 'form-control', id: "movie_field_movie_search", placeholder: "Enter movie title"  %>
     <%= submit_tag "Search", id: "search_by_title_button" %>
   <% end %>
 </br>
