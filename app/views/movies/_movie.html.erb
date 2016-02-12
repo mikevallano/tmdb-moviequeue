@@ -18,15 +18,15 @@
         <div class="col-sm-9">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h1>
-        <p><%= movie.release_date %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %>
-        <% if current_user.rated_movies.include?(movie) %>
-        | My Rating: <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
-        <% end %><!-- if user rating -->
-        <% if movie.in_db %>
-           | <%= movie.runtime %> min
-        <% end %><!-- runtime -->
+
+        <p><%= movie.release_date.stamp("2001") %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %> | <%= movie.runtime %> min
         </p>
-        <p><%= truncate(movie.overview, length: 160, separator: ' ') %> <%= link_to "more", movie_more_path(tmdb_id: movie.tmdb_id) %></p>
+
+        <p><% @movie.actors.first(3).each do |actor| %>
+            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_modal" %></span>
+          <% end %></p>
+
+        <p><strong>Overview: </strong><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to "more", movie_more_path(tmdb_id: movie.tmdb_id) %></p>
 
         <div id="movie_modal_innard_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_modal_innard', movie: movie %>
@@ -38,7 +38,6 @@
 
       <div class="modal-footer">
         <p class="btn btn-default"><%= link_to "Movie Details", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_show_link_movie_partial" %></p>
-        <p class="btn btn-default"><%= link_to "Mark as Watched", screenings_path(:screening => { notes: nil }, tmdb_id: movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>  <!-- modal-footer -->
 

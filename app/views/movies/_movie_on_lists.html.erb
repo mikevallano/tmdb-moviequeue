@@ -1,6 +1,6 @@
 
-  <p><strong>On List(s):</strong>
+  <p><strong>On Lists:</strong>
     <% movie.lists.by_user(current_user).each do |list| %>
-      <%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "show_list_link_on_list_movies_partial" %>
+      <span class="tag-link"><%= link_to "#{list.name}", user_list_path(current_user, list.slug), id: "show_list_link_on_list_movies_partial" %></span>
     <% end %> <!-- # list loop -->
   </p>

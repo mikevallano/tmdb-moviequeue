@@ -1,1 +1,3 @@
 $("#movie_seen_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_screening', :locals => {:movie => @movie}) %>");
+$("#movie_rated_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_rating', :locals => {:movie => @movie}) %>");
+$("#movie_reviewed_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_review', :locals => {:movie => @movie}) %>");

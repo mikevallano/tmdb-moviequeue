@@ -19,6 +19,7 @@ gem 'rails_12factor', group: :production
 gem 'will_paginate'
 gem 'coveralls', require: false
 gem 'rack-mini-profiler'
+gem 'stamp'
 
 group :development, :test do
   gem 'pry'

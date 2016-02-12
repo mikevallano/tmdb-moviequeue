@@ -17,7 +17,7 @@ Things to note:
 
 * Rails version: 4.2.3
 
-* PostgreSQL v9.3
+* PostgreSQL v9.3.4
 
 * No special database setup instructions. $ rake db:setup should do it.
 

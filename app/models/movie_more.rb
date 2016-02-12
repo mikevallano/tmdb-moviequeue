@@ -37,7 +37,7 @@ class MovieMore
         @movie = Movie.find_by(tmdb_id: @tmdb_id)
       else
         @title = result[:title]
-        @release_date = result[:release_date]
+        @release_date = Date.parse(result[:release_date])
         @vote_average = result[:vote_average].round(1)
         @genres = result[:genres].map { |genre| genre[:name] }
         @overview = result[:overview]

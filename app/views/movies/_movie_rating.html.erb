@@ -1,3 +1,5 @@
+<% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
+
   <% if current_user.rated_movies.include?(movie) %> <!-- #if movie has been rated -->
 
     <p><strong>My rating:</strong> <%= link_to "#{movie.ratings.by_user(current_user).first.value}", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %></p>
@@ -13,9 +15,11 @@
         <%= hidden_field_tag :from, "movies_index" if !@list.present? %>
         <%= hidden_field_tag :page, params[:page] %>
         <%= f.label "Rate this movie" %><br>
-        <%= f.select :value, Rating::VALUES, :prompt => "Out of 10", id: "rating_value_field" %>
+        <%= f.select(:value, Rating::VALUES, { prompt: "Out of 10" }, { class: "form-control", id: "rating_value_field" }) %>
         <%= f.submit "Rate it", id: "rating_submit_button_rating_form" %>
       <% end %> <!-- # rating form -->
     </div>
 
   <% end %> <!-- #if movie has been rated -->
+
+<% end %> <!-- #if movie has been seen -->

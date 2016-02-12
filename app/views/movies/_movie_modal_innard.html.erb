@@ -1,18 +1,13 @@
           <!-- TODO: Refactor the shit out of this: -->
           <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
           <div class="well well-sm">
-          <strong>Your Viewing Info:</strong>
-          <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
-            <%= render 'movies/movie_screening', movie: movie %>
-          </div><!-- movie_seen -->
+
+            <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
+              <%= render 'movies/movie_screening', movie: movie %>
+            </div><!-- movie_seen -->
 
           </div><!-- well -->
-          <div class="well well-sm">
-            <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
-              <%= render 'movies/movie_tag', movie: movie %>
-            </div>
-          </div><!-- well -->
-
 
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
         <div class="well well-sm">
@@ -36,8 +31,6 @@
               </div>
             <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
 
-          <p><%= link_to "Movie show page", movie_path(movie), id: "movie_show_link_movie_partial" %></p>
-
         </div> <!-- well well-sm -->
 
         <% else %><!-- movie.in_db && movie.lists.by_user -->
@@ -46,6 +39,19 @@
           <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_add_to_first_list', movie: movie %>
           </div>
-          <p><%= link_to "More info", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" %></p>
         </div> <!-- well well-sm -->
         <% end %><!-- movie.in_db && movie.lists.by_user -->
+
+        <div class="well well-sm">
+          <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
+            <%= render 'movies/movie_tag', movie: movie %>
+          </div>
+        </div><!-- well -->
+
+        <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_rating', movie: movie %>
+        </div>
+        </br>
+        <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
+          <%= render 'movies/movie_review', movie: movie %>
+        </div>
