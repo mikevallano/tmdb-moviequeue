@@ -8,7 +8,7 @@
       <div class="modal-body">
         <div class="row">
         <div class="col-sm-3">
-          <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_show_link_movie_partial" if movie.poster_path.present? %>
+          <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
             <%= render "movies/movie_watch_info", movie: movie %>

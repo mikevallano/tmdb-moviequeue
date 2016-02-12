@@ -16,12 +16,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         visit(api_search_path)
       end
 
-      scenario "users searches for a movie by title and the API returns results", js: true do
+      scenario "users searches for a movie by title and the API returns results" do
         api_search_for_movie
-        find("#modal_link_275")
-        find("#modal_link_275").click
-        expect(page).to have_content("1996-04-05")
-        expect(page).to have_content("Fargo")
+        expect(page).to have_selector("#modal_link_275")
       end
 
       scenario "users searches a movie not found and the page indicates movie not found" do
@@ -221,6 +218,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
     describe "movie more info results" do
 
       before(:each) do
+        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(api_search_path)
         api_search_for_movie
@@ -289,6 +287,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       before(:each) do
         list
+        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(api_search_path)
         api_search_for_movie
@@ -334,7 +333,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           click_link "Get a full list of credits and bio"
         end
         expect(page).to have_content("Steve Buscemi")
-        expect(page).to have_content("Birthday")
+        expect(page).to have_content("Born")
       end #actor more info search
 
       scenario "actor more info page links movies to movie_more_info path" do
