@@ -131,7 +131,8 @@ button.close {
 
     &:hover {
       color: $light-gray;
-      background-color: $dark-gray;
+      background-color: $green;
+      border: 1px solid darken($green, 20%);
       text-decoration: none;
     }
   } /* a */

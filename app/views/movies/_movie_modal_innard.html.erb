@@ -1,14 +1,6 @@
           <!-- TODO: Refactor the shit out of this: -->
           <% @lists_except_movie = current_user.lists_except_movie(movie) %>
 
-          <div class="well well-sm">
-
-            <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
-              <%= render 'movies/movie_screening', movie: movie %>
-            </div><!-- movie_seen -->
-
-          </div><!-- well -->
-
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
         <div class="well well-sm">
 
