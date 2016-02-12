@@ -69,10 +69,10 @@
         </div>
 
         <div id="movie_seen_<%= "#{@movie.tmdb_id}" %>">
-          <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
-            <p><strong>You've seen this movie <%= pluralize(movie.times_seen_by(current_user), "time") %>.</strong> | <%= link_to "Add/view screenings", movie_screenings_path(movie), id: "add_screening_link_movies_partial" %></p>
+          <% if current_user.watched_movies.include?(@movie) %> <!-- #if movie has been seen -->
+            <p><strong>You've seen this movie <%= pluralize(@movie.times_seen_by(current_user), "time") %>.</strong> | <%= link_to "Add/view screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></p>
           <% else %> <!-- #if movie has been seen -->
-            <p><%= link_to "Mark as watched", screenings_path(:screening => { notes: nil }, tmdb_id: movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
+            <p><%= link_to "Mark as watched", screenings_path(:screening => { notes: nil }, tmdb_id: @movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
           <% end %> <!-- #if movie has been seen -->
         </div><!-- movie_seen -->
 
