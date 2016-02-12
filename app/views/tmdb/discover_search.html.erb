@@ -39,13 +39,11 @@
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
       <% if @previous_page.present? %>
-        <%= link_to "Previous page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
-          actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@previous_page}") %>
+        <%= link_to "Previous page", discover_search_path(sort_by: @sort_by, date: @date, genre: @genre, actor: @actor, actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, year_select: @year_select, page: "#{@previous_page}") %>
       <% end %>
 
       <% if @next_page.present? %>
-        <%= link_to "Next page", discover_search_path(year: @year, year_select: @year_select, genre: @genre, actor: @actor,
-          actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, sort_by: @sort_by, page: "#{@next_page}") %>
+        <%= link_to "Next page", discover_search_path(sort_by: @sort_by, date: @date, genre: @genre, actor: @actor, actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, year_select: @year_select, page: "#{@next_page}") %>
       <% end %>
 
   <% end %><!--  #if @not_found.present? -->

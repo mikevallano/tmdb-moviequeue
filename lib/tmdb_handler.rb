@@ -174,6 +174,7 @@ module TmdbHandler
 
   def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
     company, mpaa_rating, sort_by, page)
+
     if actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
