@@ -56,6 +56,12 @@ article#profile {
     overflow: auto;
     background-color: $dark-blue;
     margin-bottom: 2%;
+    .stats {
+      text-transform: uppercase;
+      font-size: .9em;
+      color: $light-blue; 
+    } /* .stats */
+      
     .contents {
       padding: 0% 3% 3% 3%; 
     } /* .contents */
@@ -75,8 +81,17 @@ article#profile {
     h3 {
       display: block;
       border-bottom: 1px solid; 
-     } /* h3 */
+     } /* h3 */   
+     // img {
+     //  width: 50px;
+     // } /* img */       
   } /* .credits */
+  .tv-credits {
+    h3 {
+    display: block;
+    border-bottom: 1px solid; 
+  } /* h3 */
+ } /* .tv-credits */
 } /* article#profile */
 
 
