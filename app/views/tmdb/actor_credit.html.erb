@@ -1,9 +1,9 @@
 <article id="profile">
   <div class="row">
 
-<h1><%= @actor_id %> as <%= @character %> on <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h1>
+<h1><%= @character %> on <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h1>
 <div class="pull-right">
-   <p class="button-main"><%= link_to "Back to actor results", actor_more_path(actor_id: @actor_id) %> </p>
+   <p class="button-main"><%= link_to "Back to Actor Profile", actor_more_path(actor_id: @actor_id) %> </p>
 </div> <!-- pull-right -->
 
 <h2>Credit info</h2>
