@@ -43,22 +43,3 @@
     </center>
   </div>
 
-<hr>
-<h1>PUT THIS IN A SIDEBAR</h1>
-<%= link_to 'Edit', edit_user_list_path(@list.owner, @list), id: "edit_list_link_list_show" %> |
-<%= link_to 'Back', user_lists_path(current_user), id: "lists_index_link_list_show" %>
-
-<p>Invite a user to this list!</p>
-<%= form_for(Invite.new) do |f| %>
-
-  <%= f.hidden_field :sender_id, value: current_user.id %>
-  <%= f.hidden_field :list_id, value: @list.id %>
-
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Send invite", id: "send_invite_button_list_show" %>
-  </div>
-<% end %>
