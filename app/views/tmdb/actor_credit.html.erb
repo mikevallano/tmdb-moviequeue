@@ -1,19 +1,35 @@
-<p><%= link_to "Back to actor results", actor_more_path(actor_id: @actor_id) %> </p>
+<article id="profile">
+  <div class="row">
+
+<h1><%= @actor_id %> as <%= @character %> on <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h1>
+<div class="pull-right">
+   <p class="button-main"><%= link_to "Back to actor results", actor_more_path(actor_id: @actor_id) %> </p>
+</div> <!-- pull-right -->
 
 <h2>Credit info</h2>
-
-<h3>Show: <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h3>
-<h3>Character: <%= @character %></h3>
+</div><!-- row -->
+<div class="row">
+<div class="credits">
+   
   <% if @credit_results[:media][:episodes].present? %>
     <h3>Air date: <%= @air_date %> </h3>
     <h3>Episode name: <%= @episode_name %> </h3>
     <h3><%= link_to "Season: #{@season_number}", tv_season_path(season_number: @season_number, show_id: @show_id, actor_id: @actor_id) %>, Episode: <%= @episode_number %>  </h3>
     <h3>Episode overview:</h3> <p><%= @episode_overview %> </p>
-    <%= image_tag "http://image.tmdb.org/t/p/w150#{@still_image}" %>
+    <%= image_tag "http://image.tmdb.org/t/p/w92#{@still_image}" %>
   <% else %>
+  <table class="table">
     <% @seasons.each do |season| %>
-    <li>Season: <%= season[:season_number] %></li>
-    <li>Air date: <%= season[:air_date] %></li>
-    <li><%= image_tag "http://image.tmdb.org/t/p/w150#{season[:poster_path]}" %></li>
+    <tr>
+    <td><%= image_tag "http://image.tmdb.org/t/p/w92#{season[:poster_path]}" %></td>
+    <td>Season: <%= season[:season_number] %></td>
+    <td>Air date: <%= season[:air_date] %></td>
+    
+    </tr>
     <% end %>
+    </table>
   <% end %>
+</div> <!-- credits -->
+
+  </div><!-- row -->
+  </article>
