@@ -5,7 +5,7 @@
 @import "colors";
 @import "fonts";
 
-article#home {
+article#page {
   .fa {
     color: $light-blue; 
   } /* .fa */
@@ -22,13 +22,17 @@ article#home {
       left:0;
       z-index: -1;
    } /* .jumbotron */
+   .sign-in-links {
+     font-size: .7em; 
+   } /* .sign-in-links */
+     
    .well {
      background-color: rgba(0,0,0,0.9); 
      margin: 0 auto;
      margin-top: 100px;
      width: 60%;
      max-width: 800px;
-     padding: 5% 5% 2% 5%;
+     padding: 2% 5% 2% 5%;
      border-radius: 10px;
      .button-holder {
        margin: 0 auto;

@@ -1,35 +1,31 @@
-<article id="home">
-<div class="jumbotron">
-   
-<div class="well">
-   
-  
-<h1><span class="fa fa-step-forward"></span> MovieQueue</h1>
-<h2>Track the movies you've seen, list and tag the ones you plan to watch, and share lists with friends.</h2>
+<article id="page">
+  <div class="jumbotron">
+    <div class="well">
 
-<% if current_user.present? %>
-<h2>USER IS LOGGED IN</h2>
-  <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_lists_path(current_user), id: "list_index_link_homepage" %>. You can browse movies and add them to your list.</p>
-  <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
-  <p>You can also check out what <%= link_to "lists other users", public_lists_path, id: "public_lists_link_homepage" %> have created.</p>
-  <p><%= link_to "Search by movie title", api_search_path, id: "movie_title_search_link_homepage" %> </p>
-  <p><%= link_to "Search by actor", actor_search_path, id: "actor_search_link_homepage" %> </p>
-  <p><%= link_to "Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage" %> </p>
-<% else %>
-<div class="button-holder">
-   
+    <h1><span class="fa fa-step-forward"></span> MovieQueue</h1>
+    <h2>Track the movies you've seen, list and tag the ones you plan to watch, and share lists with friends.</h2>
 
-  <p class="button-large"><%= link_to "Sign In", new_user_session_path, id: "sign_in_nav_link" %></p>
-  <p class="button-main"><%= link_to "Sign Up", new_user_registration_path, id: "sign_up_nav_link" %></p>
-</div> <!-- button holder -->
+    <% if current_user.present? %>
 
+      <h2>USER IS LOGGED IN</h2>
+      <p>As a MovieQueue user, you started with an initial <%= link_to "list", user_lists_path(current_user), id: "list_index_link_homepage" %>. You can browse movies and add them to your list.</p>
+      <p>You can create as many lists as you'd like (all-time faves, 80s action movies, movies starring William H. Macy...whatever you'd like).</p>
+      <p>You can also check out what <%= link_to "lists other users", public_lists_path, id: "public_lists_link_homepage" %> have created.</p>
+      <p><%= link_to "Search by movie title", api_search_path, id: "movie_title_search_link_homepage" %> </p>
+      <p><%= link_to "Search by actor", actor_search_path, id: "actor_search_link_homepage" %> </p>
+      <p><%= link_to "Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage" %> </p>
 
-<% end %><!-- current_user? -->
+    <% else %>
 
-</div> <!-- well -->
+      <div class="button-holder">
+        <p class="button-large"><%= link_to "Sign In", new_user_session_path, id: "sign_in_nav_link" %></p>
+        <p class="button-main"><%= link_to "Sign Up", new_user_registration_path, id: "sign_up_nav_link" %></p>
+      </div> <!-- button holder -->
 
-</div> <!-- jumbotron -->
+    <% end %><!-- current_user? -->
 
+    </div> <!-- well -->
+  </div> <!-- jumbotron -->
 </article>
 
 
