@@ -10,4 +10,10 @@
 .shover {
   height: 50px; 
 } /* .shover */
-  
+
+.navbar-brand {
+  font-family: $header-family; 
+  .logo-color {
+    color: $light-blue; 
+  } /* .logo-color */  
+} /* .navbar-brand */
