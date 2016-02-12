@@ -152,8 +152,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario "users can add a movie to their list and mark it as watched", js: true do
         list1
-        sign_in_user(user)
         page.driver.browser.manage.window.resize_to(1280,800)
+        sign_in_user(user)
         visit(api_search_path)
         VCR.use_cassette('tmdb_search', :match_requests_on => [:body]) do
           fill_in "movie_title", with: 'fargo'
