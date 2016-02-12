@@ -48,7 +48,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
       end
 
       scenario "movie show page has genres that are links that filter movies" do
-        skip "need to fix genres"
         sign_in_user(user)
         listing
         visit(movie_path(movie))
@@ -200,38 +199,39 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_content("dark-comedy")
         end
 
-        # scenario "movies index paginates the movies by tag", js: true do
-        #   skip "flickering"
-        #   30.times { FactoryGirl.create(:movie) }
-        #   counter = (Movie.first.id + 1)
-        #   30.times do
-        #     FactoryGirl.create(:listing, list_id: list.id, movie_id: counter)
-        #     counter += 1
-        #   end
-        #   counter = Movie.first.id
-        #   30.times do
-        #     FactoryGirl.create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
-        #     counter += 1
-        #   end
-        #   visit root_path
-        #   visit movies_path
-        #   @movie = Movie.first
-        #   find("#modal_link_#{@movie.tmdb_id}")
-        #   find("#modal_link_#{@movie.tmdb_id}").click
-        #   click_link "hilarious"
-        #   find(".pagination", match: :first)
-        #   click_link "Next"
-        #   find(".pagination", match: :first)
-        #   expect(page).to have_content("Previous")
-        #   expect(page).not_to have_link("Next")
-        # end
-
       end #tagging context
 
       context "pagingation" do
 
+        scenario "movies index paginates the movies by tag" do
+          sign_in_user(user)
+          movie
+          30.times { FactoryGirl.create(:movie) }
+          counter = (Movie.first.id + 1)
+          30.times do
+            FactoryGirl.create(:listing, list_id: list.id, movie_id: counter)
+            counter += 1
+          end
+          counter = Movie.first.id
+          30.times do
+            FactoryGirl.create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
+            counter += 1
+          end
+          # visit root_path
+          # visit movies_path
+          # @movie = Movie.first
+          # find("#modal_link_#{@movie.tmdb_id}")
+          # find("#modal_link_#{@movie.tmdb_id}").click
+          # click_link "hilarious"
+          visit('/tags/hilarious')
+          find(".pagination", match: :first)
+          click_link "Next"
+          find(".pagination", match: :first)
+          expect(page).to have_content("Previous")
+          expect(page).not_to have_link("Next")
+        end
+
         scenario "movies index paginates the movies by genre" do
-          skip "need to sort out genres"
           sign_in_user(user)
           30.times do
             @movie = FactoryGirl.create(:movie)
