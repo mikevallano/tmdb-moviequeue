@@ -1,12 +1,10 @@
 <% content_for(:title, @list.name) %>
 <div class="row">
    
-<h1><%= @list.name %></h1>
-<h2>List show page for <%= @list.name %>, owned by <%= @list.owner.username %></h2>
-
+<h1><%= @list.name %> <span class="count">(<%= pluralize(@list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(@list) %>"><icon></span></h1>
+<p>by <%= @list.owner.username %></p>
 
 <% if @list.description.present? %>
-  <h3>List description:</h3>
   <p><%= @list.description %></p>
 <% end %> <!-- #if description.present -->
 

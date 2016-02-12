@@ -43,11 +43,12 @@ article#list {
     list-style-type: none; 
     padding: 0;
   } /* ul */
-  .count {
-    font-size: 60%;
-    color: $light-blue; 
-  } /* .count */
 } /* article#list */
+
+.count {
+  font-size: 60%;
+  color: $light-blue; 
+} /* .count */
 
 @media screen and (max-width: 975px) {
   article#list {

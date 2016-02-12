@@ -1,31 +1,43 @@
 <% content_for(:title, "Editing #{@list.name}") %>
 
+<div class="row">
 <h1>Editing: <%= @list.name %></h1>
+  <div class="pull-right">
+    <p class="button-main">
+      <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list) %>
+    </p>
 
-<%= render 'form' %>
+  </div> <!-- pull-right -->
+</div> <!-- row -->
+  
+<div class="row">
+  <div class="form-container">
+     <%= render 'form' %>
+    <p class="button-main">
+      <%= link_to 'Cancel', user_lists_path(current_user) %>
+    </p>
+  </div> <!-- form-container -->
 
-<p class="button-main">
-  <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list.id) %>
-  <%= link_to ' Cancel', user_lists_path(current_user) %>
-</p>
+    <div class="share-container">
+       <h2>Invite a User to Share this List!</h2>
+       <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thang.</p>
+
+        <%= form_for(Invite.new) do |f| %>
+
+          <%= f.hidden_field :sender_id, value: current_user.id %>
+          <%= f.hidden_field :list_id, value: @list.id %>
+
+          <div class="field">
+            <%= f.label :email %><br>
+            <%= f.text_field :email, class: "form-control" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Send invite", id: "send_invite_button_list_show" %>
+          </div>
+        <% end %><!-- form_for -->
+    </div> <!-- share-container -->  
+     
+</div> <!-- row -->
 
 
-<hr>
-<h1>PUT THIS IN A SIDEBAR</h1>
-<%= link_to 'Edit', edit_user_list_path(@list.owner, @list), id: "edit_list_link_list_show" %> |
-<%= link_to 'Back', user_lists_path(current_user), id: "lists_index_link_list_show" %>
-
-<p>Invite a user to this list!</p>
-<%= form_for(Invite.new) do |f| %>
-
-  <%= f.hidden_field :sender_id, value: current_user.id %>
-  <%= f.hidden_field :list_id, value: @list.id %>
-
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Send invite", id: "send_invite_button_list_show" %>
-  </div>
-<% end %>
