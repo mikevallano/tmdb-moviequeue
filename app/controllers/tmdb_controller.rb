@@ -113,7 +113,7 @@ class TmdbController < ApplicationController
     if params[:director_id]
       @director_id = params[:director_id]
       @name = params[:name]
-      tmdb_handler_director_search(@director_id)
+      tmdb_handler_person_detail_search(@director_id)
     end
   end
 

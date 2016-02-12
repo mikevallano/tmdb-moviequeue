@@ -92,6 +92,17 @@ module TmdbHandler
     @producer_credits = @credits_results[:crew].select { |crew| crew[:job] == "Producer" }
   end
 
+  def tmdb_handler_person_detail_search(person_id)
+    @bio_url = "https://api.themoviedb.org/3/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
+    @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
+    @person_bio = MoviePersonBio.parse_result(@bio_results)
+
+    @credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
+    @credits_results = JSON.parse(open(@credits_url).read, symbolize_names: true)
+
+    @person_credits = MoviePersonCredits.parse_result(@credits_results)
+  end
+
   def tmdb_handler_actor_credit(credit_id)
     @credit_url = "https://api.themoviedb.org/3/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
     @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
@@ -159,18 +170,6 @@ module TmdbHandler
       @common_actors = @movie_one_actors & @movie_two_actors
     end
 
-  end
-
-  def tmdb_handler_director_search(id)
-    @director_url = "https://api.themoviedb.org/3/person/#{id}/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188"
-    @result = JSON.parse(open(@director_url).read, symbolize_names: true)
-
-    @actor_credits = @result[:cast]
-    @director_credits = @result[:crew].select { |crew| crew[:job] == "Director" }
-    @editor_credits = @result[:crew].select { |crew| crew[:job] == "Editor" }
-    @writer_credits = @result[:crew ].select { |crew| crew[:job] == "Writer" }
-    @screenplay_credits = @result[:crew].select { |crew| crew[:job] == "Screenplay" }
-    @producer_credits = @result[:crew].select { |crew| crew[:job] == "Producer" }
   end
 
   def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
