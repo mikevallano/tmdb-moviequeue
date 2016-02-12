@@ -25,7 +25,7 @@
       <% @tv_credits.each do |credit| %>
         <li><%= link_to "#{credit[:name]}", tv_more_path(show_id: credit[:id], actor_id: @actor_id) %> |
         <%= link_to "Appearance Details", actor_credit_path(actor_id: @actor_id, credit_id: credit[:credit_id],
-        show_name: "#{credit[:name]}", id: "credit_link_actor_more") %>
+        show_name: "#{credit[:name]}") %>
         <%= ": Character: #{credit[:character]}" if credit[:character].present? %></li>
       <% end %>
     </ul>
