@@ -9,7 +9,7 @@
     <% else %><!-- # shared list logic -->
       <% movie.tags.by_user_or_list(current_user).each do |tag| %>
         <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_partial" %>
-        <%= link_to "", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_partial", method: :delete, remote: true, class: "fa fa-times-circle" %>   
+        <%= link_to "", delete_tagging_path(tag.id, movie.id, page: params[:page]), id: "remove_tag_link_movies_partial", method: :delete, remote: true, class: "fa fa-times-circle" %>
         <% end %> <!-- #tag loop -->
 
     <% end %><!-- # shared list logic -->
@@ -17,7 +17,7 @@
 
     <%= form_tag( { :controller => :taggings, :action => :create }, { remote: true } ) do %>
       <%= label_tag(:tag_list, "") %>
-      <%= text_field_tag(:tag_list) %>
+      <%= text_field_tag :tag_list, nil, class: 'form-control', id: "tag-list-modal", placeholder: "Separate by commas" %>
       <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
       <%= hidden_field_tag(:list_id, @list.id) if @list.present? && current_user.all_lists.include?(@list) %>
       <%= hidden_field_tag(:page, params[:page]) %>
