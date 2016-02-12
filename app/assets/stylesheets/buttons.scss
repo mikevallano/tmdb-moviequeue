@@ -79,10 +79,10 @@ button.close {
   a {
     font-size: 30px;
     color: white;
-    border: 1px solid black;
+    border: 1px solid $dark-blue;
     padding: 8px 30px;
     border-radius: 5px;
-    background-color: $yellow;
+    background-color: $light-blue;
 
     &:visited {
       color: white;
@@ -90,7 +90,7 @@ button.close {
 
     &:hover {
       color: white;
-      background-color: darken($yellow, 10%);
+      background-color: darken($dark-blue, 10%);
       text-decoration: none;
     }
   } /* a */

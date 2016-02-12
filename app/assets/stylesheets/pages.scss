@@ -28,21 +28,42 @@ article#home {
      margin-top: 100px;
      width: 60%;
      max-width: 800px;
-     min-width: 300px;
      padding: 5% 5% 2% 5%;
      border-radius: 10px;
      .button-holder {
        margin: 0 auto;
        text-align: center; 
        .button-large {
-         margin: 50px 0px 40px 0px; 
+         margin: 40px 0px 40px 0px; 
+         a {
+          border: 1px solid darken($yellow, 10%);
+          background-color: darken($yellow, 10%);
+          &:hover {
+            background-color: $yellow;
+          }/* hover */
+        } /* a */
        } /* .button-large */
-         
      } /* .button-holder */
-       
    } /* .well */
-     
-     
-   
 } /* article#home */
   
+@media screen and (max-width: 1000px) {
+  article#home {
+    .well {
+       width: 70%; 
+     } /* .well */ 
+  } /* article#home */
+  
+} /* 1000px */
+
+@media screen and (max-width: 670px) {
+  article#home {
+    .well {
+       width: 100%; 
+     } /* .well */
+        
+  } /* article#home */
+    
+  
+
+} /* 670px */
