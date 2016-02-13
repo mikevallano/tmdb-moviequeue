@@ -1,4 +1,7 @@
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
+<div class="well well-sm">
+   
+
 
   <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
 
@@ -12,5 +15,8 @@
     <p><%= link_to "Review this movie", new_movie_review_path(movie), id: "new_review_link_movies_partial" %></p>
 
   <% end %> <!-- #if movie has been reviewed -->
+
+  </div> <!-- well well-sm -->
+
 
 <% end %>
