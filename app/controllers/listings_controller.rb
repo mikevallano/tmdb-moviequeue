@@ -55,8 +55,10 @@ class ListingsController < ApplicationController
     unless current_user.all_listings.include?(@listing)
       redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
     end
+    @movie = Movie.find(params[:movie_id])
     @listing.destroy
     respond_to do |format|
+      format.js {}
       format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Movie was removed from list.' }
       format.json { head :no_content }
     end

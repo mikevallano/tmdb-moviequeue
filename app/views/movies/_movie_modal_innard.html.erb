@@ -14,10 +14,6 @@
 
             <% if @list.present? && current_user.all_lists.include?(@list) %>
 
-              <div id="list_remove_<%= "#{movie.tmdb_id}" %>">
-                <%= render 'movies/movie_list_remove', movie: movie %>
-              </div>
-
               <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
                 <%= render 'movies/movie_list_priority', movie: movie %>
               </div>

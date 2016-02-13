@@ -1,9 +1,9 @@
 
   <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority_text(@list) %></p>
 
-  <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { remote: true, method: :patch } ) do %>
+  <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { class: "form-class", id: "modal-priority", remote: true, method: :patch } ) do %>
       <%= label_tag(:priority, "New priority:") %>
-      <%= select_tag :priority, options_for_select(Listing::PRIORITIES, 3), :include_blank => false, id: "priority_number_field_movies_partial" %></br>
+      <%= select_tag :priority, options_for_select(Listing::PRIORITIES, 3), { class: "form-control", :include_blank => false, id: "priority_number_field_movies_partial" } %></br>
       <%= hidden_field_tag(:user_id, current_user.id) %>
       <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial" %>
     <% end %> <!-- #update priority form -->

@@ -9,7 +9,7 @@
   <% else %> <!-- #if movie has been rated -->
 
     <div>
-      <%= form_for [movie, Rating.new], remote: true do |f| %>
+      <%= form_for [movie, Rating.new], class: "form-class", id: "modal-rating", remote: true do |f| %>
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :movie_id, value: movie.id %>
         <%= hidden_field_tag :from, "list_show" if @list.present? %>

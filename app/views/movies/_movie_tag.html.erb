@@ -15,7 +15,7 @@
     <% end %><!-- # shared list logic -->
   <% end %> <!-- # if tags.present? -->
 
-    <%= form_tag( { :controller => :taggings, :action => :create }, { remote: true } ) do %>
+    <%= form_tag( { :controller => :taggings, :action => :create }, { class: "form-class", id: "tag-form-modal", remote: true } ) do %>
       <%= text_field_tag :tag_list, nil, class: 'form-control', id: "tag-list-modal", placeholder: "Separate by commas" %>
       <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
       <%= hidden_field_tag(:list_id, @list.id) if @list.present? && current_user.all_lists.include?(@list) %>
