@@ -71,7 +71,7 @@
 
         <div id="movie_show_seen_<%= "#{@movie.tmdb_id}" %>">
           <%= render "movies/movie_show_screening", movie: @movie %>
-        </div><!-- movie_seen -->
+        </div><!-- movie_show_seen -->
 
         <% if @movie.in_db && @movie.lists.by_user(current_user).present? %>
 

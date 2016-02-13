@@ -18,7 +18,7 @@
         <%= hidden_field_tag :page, params[:page] %>
         <%= f.label "Rate this movie" %><br>
         <%= f.select(:value, Rating::VALUES, { prompt: "Out of 10" }, { class: "form-control", id: "rating_value_field" }) %>
-        <%= f.submit "Submit", id: "rating_submit_button_rating_form", class: "form-control-submit" %>
+        <%= f.submit "Rate", id: "rating_submit_button_rating_form", class: "form-control-submit" %>
       <% end %> <!-- # rating form -->
     </div>
 

@@ -14,8 +14,8 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
   <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= f.label :body, "Your Review:" %><br>
+    <%= f.text_area :body,  cols: 40, rows: 7 %>
   </div>
   <div class="actions">
     <%= f.submit "Submit", id: "review_submit_button_review_form" %>
