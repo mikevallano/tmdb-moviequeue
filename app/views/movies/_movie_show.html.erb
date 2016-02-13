@@ -24,7 +24,7 @@
     <div class="col-xs-3">
       <div class="sidebar">
       <%= link_to image_for(@movie), movie_more_path(tmdb_id: @movie.tmdb_id), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
-      
+
       <%= render 'movies/movie_screening', movie: @movie %>
       <%= render "movies/movie_watch_info", movie: @movie %>
 
@@ -69,12 +69,8 @@
           <%= render "movies/movie_tag", movie: @movie %>
         </div>
 
-        <div id="movie_seen_<%= "#{@movie.tmdb_id}" %>">
-          <% if current_user.watched_movies.include?(@movie) %> <!-- #if movie has been seen -->
-            <p><strong>You've seen this movie <%= pluralize(@movie.times_seen_by(current_user), "time") %>.</strong> | <%= link_to "Add/view screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></p>
-          <% else %> <!-- #if movie has been seen -->
-            <p><%= link_to "Mark as watched", screenings_path(:screening => { notes: nil }, tmdb_id: @movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></p>
-          <% end %> <!-- #if movie has been seen -->
+        <div id="movie_show_seen_<%= "#{@movie.tmdb_id}" %>">
+          <%= render "movies/movie_show_screening", movie: @movie %>
         </div><!-- movie_seen -->
 
         <% if @movie.in_db && @movie.lists.by_user(current_user).present? %>
