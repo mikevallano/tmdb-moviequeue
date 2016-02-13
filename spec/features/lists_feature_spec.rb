@@ -165,7 +165,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario "users can remove a movie from their list from the list show page", js: true do
         listing
-        listing3
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
@@ -173,7 +172,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
         find("#modal_link_#{movie.tmdb_id}").click
         find("#remove_movie_link_movies_partial").click
         page.driver.browser.switch_to.alert.accept
-        expect(page).to have_content("Movie was removed from list.")
+        wait_for_ajax
+        expect(page).not_to have_selector("#remove_movie_link_movies_partial")
       end
 
       scenario "user can update a listing's priority", js: true do
