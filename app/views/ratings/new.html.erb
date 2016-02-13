@@ -1,6 +1,5 @@
-<h1>New Rating Page for <%= @movie.title %></h1>
-<p>This page allows a user to rate a movie.</p>
+<h1>New Rating for <%= @movie.title %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', movie_ratings_path(@movie) %>
+<p class="button-main"><%= link_to 'Back', movie_path(@movie) %></p>

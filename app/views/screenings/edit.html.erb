@@ -1,8 +1,10 @@
 <% content_for(:title, "Editing") %>
 
-<h1>Editing Screening</h1>
+<h1>Editing Your <%= @screening.date_watched %> Screening</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', movie_screening_path(@movie, @screening) %> |
-<%= link_to 'Back', movie_screenings_path(@movie) %>
+<p class="button-main">
+  <%= link_to 'Back To Screenings', movie_screenings_path(@movie) %>
+  <%= link_to 'Back To ' + @movie.title, movie_path(@movie) %>
+</p>

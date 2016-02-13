@@ -1,19 +1,20 @@
 <% if !@movie_title.present? %>
 <% content_for(:title, "Search by Title") %>
 
-  <h1 id="search_by_title_header">Search for a movie by movie title:</h1>
+  <h1 id="search_by_title_header">Search for a Movie by Title:</h1>
 
   <%= form_tag '/tmdb/search', { class: "form-class", id: "movie-title-search", role: "form", method: :get } do %>
-    <%= text_field_tag :movie_title, nil, class: "form-control", id: "movie_field_movie_search", placeholder: "Enter movie title"  %>
-    <%= submit_tag "Search", id: "search_by_title_button" %>
+    <%= text_field_tag :movie_title, nil, class: "form-control search-form", id: "movie_field_movie_search", placeholder: "Enter Movie Title"  %>
+    <%= submit_tag "Search", id: "search_by_title_button", class: "form-control-submit search-form-submit" %>
   <% end %>
 </br>
 
 <% else %>
 
   <% if @not_found.present? %>
-      <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
-      <p><%= link_to "Search again", api_search_path %> </p>
+      <h2>Hmm. <%= @not_found %></h2>
+      <p>Check your spelling and try again.</p>
+      <p class="button-main"><%= link_to "Search Again", api_search_path %> </p>
 
   <% else %> <!-- # if @not_found.present? -->
   <% content_for(:title, "Results for #{@query}") %>
@@ -21,8 +22,8 @@
 
     <br>
       <%= form_tag '/tmdb/search', { class: "form-class", id: "movie-title-search-again", role: "form", method: :get } do %>
-        <%= text_field_tag :movie_title, nil, class: "form-control", id: "movie_field_movie_search_again", placeholder: "Enter movie title"  %>
-        <%= submit_tag "Search Again", id: "search_by_title_again_button" %>
+        <%= text_field_tag :movie_title, nil, class: "form-control search-form", id: "movie_field_movie_search_again", placeholder: "Enter movie title"  %>
+        <%= submit_tag "Search Again", id: "search_by_title_again_button", class: "form-control-submit search-form-submit" %>
       <% end %>
     </br>
 

@@ -14,7 +14,7 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
   <div class="field">
-    <%= f.label :date_watched %><br>
+    <%= f.label :date_watched, "Date Watched" %><br>
     <%= f.date_select :date_watched %>
   </div>
   <div class="field">
@@ -26,6 +26,6 @@
     <%= f.text_area :notes %>
   </div>
   <div class="actions">
-    <%= f.submit "Submit", id: "screening_submit_button_screening_form" %>
+    <%= f.submit "Save", id: "screening_submit_button_screening_form" %>
   </div>
 <% end %>

@@ -1,5 +1,6 @@
+<h1>Your Rating for <%= @movie.title %></h1>
 
-<h2>You rated <%= link_to "#{@rating.movie.title}", movie_path(@rating.movie) %> <%= @rating.value %> out of 10.</h2>
+<h2>You gave <%= @rating.movie.title %> a <%= @rating.value %> out of 10.</h2>
 
-<p>You can <%= link_to 'edit your rating', edit_movie_rating_path(@movie, @rating) %>, or go <%= link_to "back to the movie page" %>.
+<p class="button-main"><%= link_to 'Edit Rating', edit_movie_rating_path(@movie, @rating) %>  <%= link_to "Back to #{@movie.title}", @movie %>
 </p>

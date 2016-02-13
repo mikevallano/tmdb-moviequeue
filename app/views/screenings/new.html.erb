@@ -4,4 +4,7 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', movie_screenings_path(@movie) %>
+<p class="button-main">
+  <%= link_to 'See All Screenings', movie_screenings_path(@movie) %>
+  <%= link_to 'Back To ' + @movie.title, movie_path(@movie) %>
+</p>
