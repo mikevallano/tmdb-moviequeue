@@ -77,7 +77,7 @@ module TmdbHandler
     @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
     @name = @bio_results[:name]
     @bio = @bio_results[:biography]
-    @birthday = Date.parse(@bio_results[:birthday])
+    @birthday = Date.parse(@bio_results[:birthday]) if @bio_results[:birthday].present?
     @profile_path = @bio_results[:profile_path]
 
     @credits_url = "https://api.themoviedb.org/3/person/#{actor_id}/combined_credits?api_key=#{ENV['tmdb_api_key']}"
