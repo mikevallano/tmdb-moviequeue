@@ -1,6 +1,6 @@
 <% content_for(:title, @list.name) %>
 <div class="row">
-   
+
 <h1><%= @list.name %> <span class="count">(<%= pluralize(@list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(@list) %>"><icon></span></h1>
 <p>by <%= @list.owner.username %></p>
 
@@ -9,9 +9,9 @@
 <% end %> <!-- #if description.present -->
 
 
-  <%= form_tag user_list_path(@list.owner, @list), method: :get do %>
+  <%= form_tag user_list_path(@list.owner, @list), { class: "form-class", id: "list-show-sort", role: "form", method: :get } do %>
     <%= label_tag :sort_by, "Sort by: " %>
-    <%= select_tag :sort_by, options_for_select(Movie::LIST_SORT_OPTIONS, @sort_by), :include_blank => false, id: "list_sort_options" %>
+    <%= select_tag :sort_by, options_for_select(Movie::LIST_SORT_OPTIONS, @sort_by), { class: "form-control", :include_blank => false, id: "list_sort_options" }%>
     <%= submit_tag "Sort", id: "list_sort_button" %>
   <% end %>
 

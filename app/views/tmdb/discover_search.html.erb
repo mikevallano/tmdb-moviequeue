@@ -1,23 +1,23 @@
-<% if !@movies.present? %>
 <% content_for(:title, "Search for Movies") %>
+
+<% if !@movies.present? %>
 
 
 <h1>Search by various combos.</h1>
 <h2>All fields are optional. Search by whatever you want.</h2>
 
-  <%= form_tag '/tmdb/discover_search', method: :get do %>
+  <%= form_tag '/tmdb/discover_search', { class: 'form-class', id: 'discover-search', role: 'form', method: :get } do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor, nil, id: "actor_field_discover_search" %></br>
-    <%= label_tag :mpaa_rating, "Enter MPAA rating: " %>
-    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), :include_blank => true, id: "mpaa_field_discover_search" %></br>
-    <%= label_tag :year, "Enter a Year: " %>
-    <%= select_year(0, {:prompt => "", :start_year => DateTime.now.year, :end_year => DateTime.now.year - 100}, {:field_name => :year, :prefix => :year, :id => "year_field_discover_search" }) %>
-    <%= label_tag :year_select %>
-    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), :include_blank => true, id: "year_select_discover_search" %></br>
+    <%= text_field_tag :actor, nil, class: 'form-control', id: "actor_field_discover_search", placeholder: "Enter actor name" %></br>
     <%= label_tag :genre, "Pick a genre: " %>
-    <%= select_tag :genre, options_for_select(Movie::GENRES), :include_blank => true, id: "genre_field_discover_search" %></br>
+    <%= select_tag :genre, options_for_select(Movie::GENRES), { class: "form-control", id: "genre_field_discover_search", :include_blank => "Pick a genre" } %></br>
+    <%= label_tag :year, "Enter a Year: " %>
+    <%= select_year(0, {:prompt => "Enter a year", :start_year => DateTime.now.year, :end_year => DateTime.now.year - 100}, {:field_name => :year, :prefix => :year, :id => "year_field_discover_search", class: "form-control" }) %>
+    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), { class: "form-control", id: "year_select_discover_search", :include_blank => "Year select" } %></br>
+    <%= label_tag :mpaa_rating, "Enter MPAA rating: " %>
+    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), { class: "form-control", id: "mpaa_field_discover_search", :include_blank => "Pick a rating" } %></br>
     <%= label_tag :sort_by, "Sort by: " %>
-    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), :include_blank => true, id: "sort_by_discover_search" %></br>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control", id: "sort_by_discover_search", :include_blank => "Sort by" } %></br>
     <%= submit_tag "Search", id: "search_button_discover_search" %>
   <% end %> <!-- #search form do -->
 
@@ -27,7 +27,7 @@
       <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
     <% else %><!--  #if @not_found.present? -->
       <% content_for(:title, "Search Results") %>
-      <h2>Here are the matching movies for: <%= "#{@params_for_view}" %></h2>
+      <h2>Here are the results for: <%= "#{@params_for_view}" %></h2>
       <br>
       <p><%= link_to "Search again", discover_search_path %> </p>
 

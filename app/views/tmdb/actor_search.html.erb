@@ -4,9 +4,9 @@
 
   <h1>Search by actor:</h1>
 
-  <%= form_tag '/tmdb/actor_search', { class: 'form-class', id: 'actor-search', role: 'form', method: :get } do %>
+  <%= form_tag '/tmdb/actor_search', { class: "form-class", id: "actor-search", role: "form", method: :get } do %>
     <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor, nil, class: 'form-control', id: "actor_name_actor_search", placeholder: "Enter actor name" %></br>
+    <%= text_field_tag :actor, nil, class: "form-control", id: "actor_name_actor_search", placeholder: "Enter actor name" %></br>
     <%= label_tag :sort_by, "Sort by: " %>
     <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control", :include_blank => true } %></br>
     <%= submit_tag "Search", id: "submit_button_actor_search" %>

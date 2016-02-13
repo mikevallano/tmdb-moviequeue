@@ -143,7 +143,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
     describe "movie management" do
 
-      scenario "users can add a movie to their list and mark it as watched", js: true do
+      scenario "users can add a movie to their list", js: true do
         list1
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
@@ -157,11 +157,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
         VCR.use_cassette('tmdb_add_movie', :match_requests_on => [:body]) do
           click_button "add_to_list_button_movies_partial", match: :first
         end
+        wait_for_ajax
         click_link("show_list_link_on_list_movies_partial")
-        find("#modal_link_275")
-        find("#modal_link_275").click
-        find("#mark_watched_link_movies_partial").click
-        expect(page).to have_content("seen")
+        wait_for_ajax
+        expect(page).to have_selector("#modal_link_275")
       end
 
       scenario "users can remove a movie from their list from the list show page", js: true do
