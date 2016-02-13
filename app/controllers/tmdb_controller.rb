@@ -128,10 +128,12 @@ class TmdbController < ApplicationController
 
     @passed_params = @cleaned_params.select{ |k, v| v.present?}
 
-    #to show users what they searched for. needs to be redone. this is just temporary
-    @params_for_view = @passed_params.values.join(', ')
+    @discover_view_params = @passed_params.slice(:actor, :genre, :date, :year_select, :mpaa_rating, :sort_by)
 
     if @passed_params.any?
+      #parse passed params to show user what they searched for
+      @params_for_view = discover_show_search_params(@discover_view_params)
+
       # use the MovieDiscover class to parse the params
       @search_query = MovieDiscover.parse_params(@cleaned_params)
 
@@ -152,5 +154,29 @@ class TmdbController < ApplicationController
     end
 
   end #discover search
+
+  def discover_show_search_params(show_params)
+    #TODO: Clean this up
+    @keys = show_params.keys
+    @actor_display = show_params[:actor].titlecase if @keys.include?("actor")
+    if @keys.include?("genre")
+      @genre_id = show_params[:genre].to_i
+      @genres = Movie::GENRES.to_h
+      @genre_selected = @genres.key(@genre_id)
+      @genre_display = "#{@genre_selected} movies"
+    end
+
+    @rating_display = "Rating: #{show_params[:mpaa_rating]}" if @keys.include?("mpaa_rating")
+    if show_params[:year_select] == "exact" || !show_params[:year_select].present?
+      @year_select_display = "From"
+    else
+      @year_select_display = show_params[:year_select]
+    end
+    @year_show = show_params[:date][:year] if @keys.include?("date")
+    @year_display = "#{@year_select_display} #{@year_show}" if @year_show.present?
+    @sort_display = "Sorted by #{show_params[:sort_by]}" if @keys.include?("sort_by")
+
+    "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
+  end
 
 end #final
