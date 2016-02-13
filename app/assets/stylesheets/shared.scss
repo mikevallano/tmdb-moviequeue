@@ -73,62 +73,10 @@ a {
   } 
 } /* .tag-link */
 
-/* FORMS */
-
-div {
-  &.field, &.actions {
-    margin-bottom: 10px;
-    label {
-      font-family: $header-family;
-      // font-size: .9em; 
-    } /* label */ 
-  }/* field actions */
-}/* div */
-input[type="submit"] {
-  color: $light-blue;
-  border: 1px solid $dark-blue;
-  padding: 5px 20px;
-  border-radius: 5px;
-  background-color: transparent;
-  &:hover {
-    color: $light-blue;
-    background-color: darken($dark-blue, 10%);
-    text-decoration: none;
-  }/* hover */
-}/* input */
-
-.share-container {
-  border: 1px solid $dark-blue;
-  border-radius: 5px;
-  padding: 2%;
-  width: 30%;
-  min-width: 250px;
-  float: right;
-} /* .share-container */
-
-.form-container {
-  width: 60%;
-  max-width: 900px;
-  min-width: 300px;
-  float: left;
-  margin-right: 20px; 
-} /* .form-container */
-
-.form-control {
-  width: 75%;
-  float: left;
-  margin-right: 3px;      
-} /* .form-control */
-
-.form-control-submit {
-  text-align: center;
-  height: 35px;
-  width: 20%;
-  padding: 0; 
-} /* .submit */
-
-
-  
+.well {
+  background-color: lighten($primary-background-color, 10%); 
+  border: 0px;
+} /* .well */
 
 
 /* NOTICES & ALERTS */

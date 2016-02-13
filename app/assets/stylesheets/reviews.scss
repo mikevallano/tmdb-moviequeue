@@ -1,3 +1,22 @@
-// Place all the styles related to the reviews controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colors";
+@import "fonts";
+
+article#review {
+  p {
+     font-size: 120%;
+     line-height: 150%;
+     // margin-bottom: 10%; 
+   } /* p */
+   .quote-marks {
+     font-size: 300%;
+     vertical-align: -15px;
+     color: $dark-blue;
+     font-family: $header-family; 
+   } /* .quote-marks */
+     
+   .button-main {
+     font-size: 100%; 
+     margin-top: 10%;
+   } /* .button-main */
+      
+} /* article#review */
