@@ -36,7 +36,7 @@
 
     <h1><%= @movie.title %></h1>
     <p>
-    <%= @movie.release_date.stamp("2/21/2001") %> | <%= @movie.mpaa_rating %> | TMDB: <%= @movie.vote_average %>
+    <%= @movie.release_date.stamp("2/21/2001") if @movie.release_date.present? %> | <%= @movie.mpaa_rating %> | TMDB: <%= @movie.vote_average %>
     <% if current_user.rated_movies.include?(@movie) %>
       | My Rating: <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
     <% end %><!-- if user rating -->

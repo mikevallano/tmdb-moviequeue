@@ -16,7 +16,7 @@ class MoviePersonBio
     @id = result[:id]
     @name = result[:name]
     @bio = result[:biography]
-    @birthday = Date.parse(result[:birthday])
+    @birthday = Date.parse(result[:birthday]) if @result[:birthday].present?
     @profile_path = result[:profile_path]
 
     MoviePersonBio.new(@id, @name, @bio, @birthday, @profile_path)
