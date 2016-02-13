@@ -3,7 +3,7 @@
 <h1>Screenings Index Page for <%= link_to "#{@movie.title}", movie_path(@movie) %></h1>
 <p>This page shows a user's screening history for a given movie.</p>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Movie</th>
@@ -23,7 +23,7 @@
         <td><%= screening.notes %></td>
         <td><%= link_to 'Show', movie_screening_path(@movie, screening) %></td>
         <td><%= link_to 'Edit', edit_movie_screening_path(@movie, screening) %></td>
-        <td><%= link_to 'Destroy', movie_screening_path(@movie, screening), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', movie_screening_path(@movie, screening), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

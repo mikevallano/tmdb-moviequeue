@@ -1,13 +1,14 @@
-
-<p>
-  <strong>Movie:</strong>
-  <%= link_to "#{@review.movie.title}", movie_path(@review.movie) %>
+<article id="review">
+  
+  <h1>My Review of <%= @review.movie.title %></h1>
+  <p>
+    <strong><%= link_to "#{@review.movie.title}", movie_path(@review.movie) %>:</strong> 
 </p>
+    <p><span class="quote-marks">“</span><%= @review.body %><span class="quote-marks">”</span></p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @review.body %>
-</p>
+  <p class="button-main">
+    <%= link_to 'Edit Review', edit_movie_review_path(@movie, @review) %> 
+    <%= link_to 'Back to ' + @review.movie.title, movie_path(@movie) %>
+  </p>
 
-<%= link_to 'Edit', edit_movie_review_path(@movie, @review) %> |
-<%= link_to 'Back', movie_reviews_path(@movie) %>
+</article>

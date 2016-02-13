@@ -1,6 +1,7 @@
-<h1>Editing Review</h1>
+<h1>Edit Your Review of <%= @movie.title %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', movie_review_path(@movie, @review) %> |
-<%= link_to 'Back', movie_reviews_path(@movie) %>
+<p class="button-main">
+  <%= link_to 'Cancel Changes', movie_review_path(@movie, @review) %> 
+</p>
