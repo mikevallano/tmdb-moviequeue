@@ -20,7 +20,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h1>
 
-        <p><%= movie.release_date.stamp("2001") %> | <%= movie.mpaa_rating %> | TMDB: <%= movie.vote_average %> | <%= movie.runtime %> min
+        <p><%= movie.release_date.stamp("2001") %> | <%= movie.mpaa_rating %> | <%= movie.vote_average %> <icon class="fa fa-star"></icon> | <%= movie.runtime %> min
         </p>
 
         <p><% @movie.actors.first(3).each do |actor| %>
