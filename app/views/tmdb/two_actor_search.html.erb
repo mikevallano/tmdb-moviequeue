@@ -1,19 +1,24 @@
 <% content_for(:title, "Search by Actors") %>
 
+<h1>Find Common Movies Between 2 Actors</h1>
+
+
 <% if !@actor.present? && !@actor2.present? %>
 
-<h1>Enter two actors and see the movies they've been in together.</h1>
+<p>Enter two actors and see the movies they've been in together.</p>
 
   <%= form_tag '/tmdb/two_actor_search', { class: "form-class", id: "two-actor-search", role: "form", method: :get } do %>
-    <%= text_field_tag :actor, nil, class: "form-control", id: "actor1_field_two_actor_search", placeholder: "Enter actor name" %></br>
-    <%= text_field_tag :actor2, nil, class: "form-control", id: "actor2_field_two_actor_search", placeholder: "Enter other actor name" %></br>
-    <%= submit_tag "Search", id: "search_button_two_actor_search" %>
+    <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor1_field_two_actor_search", placeholder: "Enter Actor One's Name" %>
+    <%= text_field_tag :actor2, nil, class: "form-control search-form", id: "actor2_field_two_actor_search", placeholder: "Enter Actor Two's Name" %>
+    <%= submit_tag "Search", id: "search_button_two_actor_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 
 <% else %>
 
   <% if @not_found.present? %>
-    <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+    <h2>Hmm. <%= @not_found %></h2>
+    <p> Check your spelling and try again.</p>
+    <p class="button-main"><%= link_to "Search Again", two_actor_search_path %></p>
 
     <% else %> <!-- # @not_found.present? -->
       <h2><%= "Those two actors have been in #{@movies.size} movies together:" %></h2>

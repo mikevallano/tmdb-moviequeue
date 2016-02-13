@@ -1,25 +1,25 @@
+  <h1>Search by Actor</h1>
+
+
 <% if !@actor.present? %>
 <% content_for(:title, "Actor Search") %>
 
 
-  <h1>Search by actor:</h1>
 
   <%= form_tag '/tmdb/actor_search', { class: "form-class", id: "actor-search", role: "form", method: :get } do %>
-    <%= label_tag :actor, "Enter Actor Name: " %>
-    <%= text_field_tag :actor, nil, class: "form-control", id: "actor_name_actor_search", placeholder: "Enter actor name" %></br>
-    <%= label_tag :sort_by, "Sort by: " %>
-    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control", :include_blank => true } %></br>
-    <%= submit_tag "Search", id: "submit_button_actor_search" %>
+    <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor_name_actor_search", placeholder: "Enter Actor Name" %>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), {:prompt => "Sort by...", class: "form-control search-form", :include_blank => true } %>
+    <%= submit_tag "Search", id: "submit_button_actor_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 
 
-  <p><%= link_to "Or see what movies two actors have been in together!", two_actor_search_path %></p>
-  <p><%= link_to "Or search two movies to see common actors", two_movie_search_path %></p>
 
 <% else %>
 
   <% if @not_found.present? %>
-      <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+      <h2>Hmm. <%= @not_found %></h2>
+      <p>Check your spelling and try again.</p>
+      <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_nav_link" %></p>
 
   <% else %> <!-- #if @not_found.present -->
     <% content_for(:title, @actor.titlecase) %>

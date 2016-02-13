@@ -41,7 +41,7 @@ input[type="submit"] {
 } /* .form-container */
 
 .form-control {
-  width: 75%;
+  width: 70%;
   float: left;
   margin-right: 3px;
   height: 35px; 
@@ -53,7 +53,31 @@ input[type="submit"] {
 .form-control-submit {
   text-align: center;
   height: 35px;
-  width: 20%;
-  padding: 0; 
+  width: auto;
+  // padding: 0; 
 } /* .submit */
+
+
+/* SEARCH FORM PAGES ONLY */
+.search-form {
+  width: 40%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+} /* .search-form */
+
+.search-form-submit {
+  height: 35px;
+  width: auto;
+} /* .submit */
+
+
+@media screen and (max-width: 600px) {
+
+  .search-form {
+    width: 100%;
+    margin-bottom: 2%;
+  } /* .search-form */
+
+} /* 600px */
+
 

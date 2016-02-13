@@ -1,32 +1,36 @@
+<h1>Find Common Actors Between 2 Movies</h1>
+
 <% if !@movie_one.present? && !@movie_two.present? %>
 
-<h1>Enter two movies and see which actors have been in both movies.</h1>
+<p>Enter two movies and see which actors have been in both movies.</p>
 
   <%= form_tag '/tmdb/two_movie_search', { class: "form-class", id: "two-movie-search", role: "form", method: :get } do %>
-    <%= text_field_tag :movie_one, nil, class: "form-control", id: "movie1_field_two_movie_search", placeholder: "Enter movie title" %></br>
-    <%= text_field_tag :movie_two, nil, class: "form-control", id: "movie2_field_two_movie_search", placeholder: "Enter other movie title" %></br>
-    <%= submit_tag "Search", id: "search_button_two_movie_search" %>
+    <%= text_field_tag :movie_one, nil, class: "form-control search-form", id: "movie1_field_two_movie_search", placeholder: "Enter First Movie Title" %>
+
+    <%= text_field_tag :movie_two, nil, class: "form-control search-form", id: "movie2_field_two_movie_search", placeholder: "Enter Second Movie Title" %>
+
+    <%= submit_tag "Search", id: "search_button_two_movie_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 
 <% else %>
 
   <% if @not_found.present? %>
-    <h2>Hmm. <%= @not_found %> Check spelling to be sure.</h2>
+    <h2>Hmm. <%= @not_found %></h2>
+    <p> Check your spelling and try again.</p>
+    <p class="button-main"><%= link_to "Search Again", two_movie_search_path %></p>
 
   <% else %> <!-- # @not_found.present? -->
-      <h2>These two movies have the following similar actors:</h2>
-      <h3>Number of common actors in <%= link_to "#{@movie_one.title}", movie_more_path(tmdb_id: @movie_one.tmdb_id) %>,
-      and <%= link_to "#{@movie_two.title}", movie_more_path(tmdb_id: @movie_two.tmdb_id) %>: <%= @common_actors.size %></h3>
+      <h2><%= link_to "#{@movie_one.title}", movie_more_path(tmdb_id: @movie_one.tmdb_id) %> and <%= link_to "#{@movie_two.title}", movie_more_path(tmdb_id: @movie_two.tmdb_id) %> have <%= pluralize(@common_actors.size, "actor") %> in common:</h2>
 
-    <p>Common Actors:</strong>
+    <ul>
     <% @common_actors.each do |actor| %>
-      <%= link_to "#{actor}", actor_search_path(actor: actor) %>
+      <li><%= link_to "#{actor}", actor_search_path(actor: actor) %></li>
     <% end %>
-    </p>
+    </ul>
     </br>
 
   <% end %> <!-- # @not_found.present? -->
 
-  <p><%= link_to "Search again", two_movie_search_path %> </p>
+  <p class="button-main"><%= link_to "Search Again", two_movie_search_path %> </p>
 
 <% end %> <!-- #if !@movie_one.present? && !@movie_two.present? -->
