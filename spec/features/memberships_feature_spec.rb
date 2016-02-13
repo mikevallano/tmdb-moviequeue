@@ -17,76 +17,99 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
     let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
-    before(:each) do
-      movie1
-      list
-      listing1
-      membership1
-      membership2
-      tagging1
-      tagging2
-    end
 
-    scenario "users can see their own lists that have members" do
-      sign_in_user(user1)
-      click_link "my_lists_nav_link"
-      expect(page).to have_content("#{list.name.titlecase}")
-      # visit(user_list_path(user1, list))
-      click_link "show_list_link_list_index", match: :first
-      expect(page).to have_content("#{list.name}")
-    end
+    context "without JS" do
+      before(:each) do
+        movie1
+        list
+        listing1
+        membership1
+        membership2
+        tagging1
+        tagging2
+      end
 
-    scenario "users can see others' lists they're a member of" do
-      sign_in_user(user2)
-      click_link "my_lists_nav_link"
-      expect(page).to have_content("#{list.name.titlecase}")
-      visit(user_list_path(user1, list))
-      expect(page).to have_content("#{list.name}")
-    end
+      scenario "users can see their own lists that have members" do
+        sign_in_user(user1)
+        click_link "my_lists_nav_link"
+        expect(page).to have_content("#{list.name.titlecase}")
+        # visit(user_list_path(user1, list))
+        click_link "show_list_link_list_index", match: :first
+        expect(page).to have_content("#{list.name}")
+      end
 
-    scenario "users update priorities on lists they're a member of", js: true do
-      sign_in_user(user2)
-      visit(user_list_path(user1, list))
-      find("#modal_link_#{movie1.tmdb_id}").click
-      wait_for_ajax
-      select "High", :from => "priority"
-      click_button "add_priority_button_movies_partial"
-      wait_for_ajax
-      expect(page).to have_content("High")
-      expect(Listing.last.priority).to eq(4)
-    end
+      scenario "users can see others' lists they're a member of" do
+        sign_in_user(user2)
+        click_link "my_lists_nav_link"
+        expect(page).to have_content("#{list.name.titlecase}")
+        visit(user_list_path(user1, list))
+        expect(page).to have_content("#{list.name}")
+      end
 
-    scenario "users can see other members' tags but not other users' tags", js: true do
-      sign_in_user(user2)
-      visit(user_list_path(user1, list))
-      find("#modal_link_#{movie1.tmdb_id}").click
-      wait_for_ajax
-      expect(page).to have_content(tag1.name)
-      expect(page).not_to have_content(tag2.name)
-    end
+      scenario "members can't edit a list unless they are the owner" do
+        sign_in_user(user2)
+        visit(edit_user_list_path(user1, list))
+        expect(current_url).to eq(user_list_url(user1, list))
+        expect(page).to have_content("Only list owners can edit lists")
+      end
 
-    scenario "users can click other member's tags and see tagged movies", js: true do
-      sign_in_user(user2)
-      visit(user_list_path(user1, list))
-      find("#modal_link_#{movie1.tmdb_id}").click
-      wait_for_ajax
-      click_link "#{tag1.name}"
-      expect(page).to have_selector("#modal_link_#{movie1.tmdb_id}")
-    end
+      scenario "members can't delete a list unless they are the owner" do
+        sign_in_user(user2)
+        visit(user_lists_path(user2))
+        click_link "destroy_list_link_list_index"
+        expect(page).to have_content("Only list owners can delete lists.")
+      end
 
-    scenario "members can't edit a list unless they are the owner" do
-      sign_in_user(user2)
-      visit(edit_user_list_path(user1, list))
-      expect(current_url).to eq(user_list_url(user1, list))
-      expect(page).to have_content("Only list owners can edit lists")
-    end
+    end #without JS
 
-    scenario "members can't delete a list unless they are the owner" do
-      sign_in_user(user2)
-      visit(user_lists_path(user2))
-      click_link "destroy_list_link_list_index"
-      expect(page).to have_content("Only list owners can delete lists.")
-    end
+    context "with JS" do
+
+      before(:each) do
+        movie1
+        list
+        listing1
+        membership1
+        membership2
+        tagging1
+        tagging2
+      end
+
+      scenario "users update priorities on lists they're a member of", js: true do
+        page.driver.browser.manage.window.resize_to(1280,800)
+        sign_in_user(user2)
+        visit(user_list_path(user1, list))
+        find("#modal_link_#{movie1.tmdb_id}").click
+        wait_for_ajax
+        select "High", :from => "priority"
+        click_button "add_priority_button_movies_partial"
+        wait_for_ajax
+        expect(page).to have_content("High")
+        expect(Listing.last.priority).to eq(4)
+      end
+
+      scenario "users can see other members' tags but not other users' tags", js: true do
+        page.driver.browser.manage.window.resize_to(1280,800)
+        sign_in_user(user2)
+        visit(user_list_path(user1, list))
+        find("#modal_link_#{movie1.tmdb_id}").click
+        wait_for_ajax
+        expect(page).to have_content(tag1.name)
+        expect(page).not_to have_content(tag2.name)
+      end
+
+      scenario "users can click other member's tags and see tagged movies", js: true do
+        page.driver.browser.manage.window.resize_to(1280,800)
+        sign_in_user(user2)
+        wait_for_ajax
+        visit(user_list_path(user1, list))
+        find("#modal_link_#{movie1.tmdb_id}").click
+        wait_for_ajax
+        click_link "#{tag1.name}"
+        wait_for_ajax
+        expect(page).to have_selector("#modal_link_#{movie1.tmdb_id}")
+      end
+
+    end #with JS
 
   end
 end #final
