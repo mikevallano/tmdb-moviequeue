@@ -2,11 +2,9 @@
 
 <h1>Enter two movies and see which actors have been in both movies.</h1>
 
-  <%= form_tag '/tmdb/two_movie_search', method: :get do %>
-    <%= label_tag :movie_one, "Movie title 1: " %>
-    <%= text_field_tag :movie_one, nil, id: "movie1_field_two_movie_search" %></br>
-    <%= label_tag :movie_two, "Movie title 2: " %>
-    <%= text_field_tag :movie_two, nil, id: "movie2_field_two_movie_search" %></br></br>
+  <%= form_tag '/tmdb/two_movie_search', { class: "form-class", id: "two-movie-search", role: "form", method: :get } do %>
+    <%= text_field_tag :movie_one, nil, class: "form-control", id: "movie1_field_two_movie_search", placeholder: "Enter movie title" %></br>
+    <%= text_field_tag :movie_two, nil, class: "form-control", id: "movie2_field_two_movie_search", placeholder: "Enter other movie title" %></br>
     <%= submit_tag "Search", id: "search_button_two_movie_search" %>
   <% end %>
 
