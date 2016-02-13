@@ -42,9 +42,14 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search Options <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><%= link_to 'By Title', api_search_path, id: "movie_search_nav_link" %></li>
-            <li><%= link_to 'By Actor', actor_search_path, id: "actor_search_nav_link" %></li>
-            <li><%= link_to 'By Anything!!!', discover_search_path, id: "discover_search_nav_link" %></li>
+            <li><%= link_to "Search by Title", api_search_path, id: "movie_search_nav_link" %></li>
+            <li><%= link_to "Search by Actor", actor_search_path, id: "actor_search_nav_link" %></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to "Advanced Search", discover_search_path, id: "discover_search_nav_link" %></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to "Common Movies Between 2 Actors", two_actor_search_path %></li>
+            <li><%= link_to "Common Actors Between 2 Movies", two_movie_search_path %></li>
+            
           </ul><!-- Search dropdown items -->
         </li><!-- Search dropdown button -->
 

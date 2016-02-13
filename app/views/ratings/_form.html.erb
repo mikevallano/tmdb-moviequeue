@@ -18,6 +18,6 @@
     <%= f.select :value, Rating.values.keys.to_a, id: "rating_value_field" %>
   </div>
   <div class="actions">
-    <%= f.submit "Submit", id: "rating_submit_button_rating_form" %>
+    <%= f.submit "Submit", id: "rating_submit_button_rating_form", class: "form-control-submit" %>
   </div>
 <% end %>
