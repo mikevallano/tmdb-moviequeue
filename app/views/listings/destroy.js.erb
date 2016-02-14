@@ -1,1 +1,2 @@
 $("#movie_modal_innard_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_modal_innard', :locals => {:movie => @movie}) %>");
+$("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_show_list_manage', :locals => {:movie => @movie}) %>");

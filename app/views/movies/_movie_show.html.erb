@@ -70,24 +70,8 @@
           </div>
         </div> <!-- col-xs-6 -->
 
-        <div class="col-xs-6">
-           <% if @movie.in_db && @movie.lists.by_user(current_user).present? %>
-
-            <div id="movie_on_lists_<%= "#{@movie.tmdb_id}" %>">
-              <%= render 'movies/movie_on_lists', movie: @movie %>
-            </div>
-
-            <div id="movie_other_list_<%= "#{@movie.tmdb_id}" %>">
-              <%= render 'movies/movie_add_to_another_list', movie: @movie %>
-            </div>
-
-          <% else %> <!-- # if @movie.in_db && @movie.lists.by_user(current_user).present? -->
-
-            <div id="movie_add_to_first_list_<%= "#{@movie.tmdb_id}" %>">
-             <%= render 'movies/movie_add_to_first_list', movie: @movie %>
-            </div>
-
-          <% end %> <!-- # if @movie.in_db && @movie.lists.by_user(current_user).present? -->
+        <div id="movie_show_listings_<%= "#{@movie.tmdb_id}" %>"class="col-xs-6">
+            <%= render "movies/movie_show_list_manage", movie: @movie %>
         </div> <!-- col-xs-6 -->
       </div> <!-- row -->
 
