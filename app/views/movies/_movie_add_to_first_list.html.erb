@@ -1,4 +1,4 @@
-<p class="fa fa-list-ul"><strong> Lists:</strong>
+<p class="fa fa-list-ul"><span class="pseudo-header"> Lists:</span>
       <%= form_for(Listing.new, class: "form-class", id: "modal-add-to-first-list", remote: true) do |f| %>
         <%= f.collection_select :list_id, @lists_except_movie, :id, :name, { prompt: "Add to a list" }, {class: "form-control"} %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>

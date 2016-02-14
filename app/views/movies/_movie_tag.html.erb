@@ -1,4 +1,4 @@
-  <p class="fa fa-tags"><strong> Tags:</strong>
+  <p class="fa fa-tags"><span class="pseudo-header"> Tags:</span>
   <% if movie.tags.present? %>
     <% if @list.present? && current_user.all_lists.include?(@list) %> <!-- # shared list logic -->
       <% movie.tags.by_user_or_list(@list).each do |tag| %>

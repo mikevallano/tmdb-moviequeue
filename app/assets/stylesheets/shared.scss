@@ -73,11 +73,19 @@ a {
   } 
 } /* .tag-link */
 
+
+/* BOOTSTRAP AND FONT AWESOME */
+
 .well {
   background-color: lighten($primary-background-color, 10%); 
   border: 0px;
   overflow: auto;
 } /* .well */
+
+.fa {
+  line-height: 1.2; 
+} /* .fa */
+
 
 
 /* NOTICES & ALERTS */
@@ -121,7 +129,14 @@ a {
   }
 }
 
+.pseudo-header {
+  font-family: $header-family;
+  font-weight: bold;
+  text-transform: uppercase; 
+} /* .pseudo-header */
+  
 
+/* MEDIA QUERIES */
 
 @media screen and (max-width: 900px) {
   .share-container {
