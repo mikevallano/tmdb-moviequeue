@@ -64,37 +64,53 @@ article.tile-cover-pic {
 
     &:visited {
       color: $link-color;
-    }
+    }/* visited */
 
     &:hover {
       color: $link-hover-color;
       background-color: transparent;
       text-decoration: none;
-    }
+    }/* hover */
   }/* a */ 
 
+  .button-main {
+    a {
+      color: $light-blue;
+
+      &:visited {
+        color: $light-blue;
+      }/* visited */
+
+      &:hover {
+        color: $light-blue;
+        background-color: darken($dark-blue, 10%);
+        text-decoration: none;
+      } /* hover */
+    }/* a */
+  } /* .button-main */
+      
   .sidebar-button {
-  a {
-    width: 100%;
-    display: block;
-    color: $light-gray;
-    border: 1px solid $dark-gray;
-    padding: 5%;
-    border-radius: 5px;
-    text-align: center;
-
-    &:visited {
+    a {
+      width: 100%;
+      display: block;
       color: $light-gray;
-    }
+      border: 1px solid $dark-gray;
+      padding: 5%;
+      border-radius: 5px;
+      text-align: center;
 
-    &:hover {
-      color: $light-gray;
-      background-color: $green;
-      border: 1px solid darken($green, 20%);
-      text-decoration: none;
-    }
-  } /* a */
-} /* .sidebar-button */
+      &:visited {
+        color: $light-gray;
+      }
+
+      &:hover {
+        color: $light-gray;
+        background-color: $green;
+        border: 1px solid darken($green, 20%);
+        text-decoration: none;
+      }
+    } /* a */
+  } /* .sidebar-button */
 } /* .movie-show */
 
 

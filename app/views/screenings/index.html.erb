@@ -27,4 +27,7 @@
 
 <br>
 
-<p class="button-main"><%= link_to '+ New Screening', new_movie_screening_path(@movie) %></p>
+<p class="button-main">
+  <%= link_to '+ New Screening', new_movie_screening_path(@movie) %> 
+  <%= link_to "Back to " + @movie.title, movie_path(@movie) %>
+</p>
