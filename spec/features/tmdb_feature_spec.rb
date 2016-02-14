@@ -124,29 +124,32 @@ RSpec.feature "TMDB feature spec", :type => :feature do
     describe "discover searches" do
 
       before(:each) do
+        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
       end
 
-      scenario "search by actor returns results" do
+      scenario "search by actor returns results", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_search") do
           fill_in "actor_field_discover_search", with: "Frances McDormand"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by actor and year" do
+      scenario "search by actor and year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_and_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
           select "1996", :from => "date[year]"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by actor and specific year" do
+      scenario "search by actor and specific year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_and_specific_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
@@ -154,21 +157,23 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "Exact Year", :from => "year_select"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by actor and after year" do
-        skip "weird API call issues. breaking at line 179 in tmdb_handler"
-        visit(discover_search_path)
-        fill_in "actor_field_discover_search", with: "ben affleck"
-        select "2005", :from => "date[year]"
-        select "After This Year", :from => "year_select"
-        click_button "search_button_discover_search"
-        # expect(page).to have_content("Argo")
-        expect(page).to have_selector("#modal_link_68734")
-      end
+      # scenario "search by actor and after year", js: true do
+      #   skip "weird API call issues. breaking at line 179 in tmdb_handler"
+      #   visit(discover_search_path)
+      #   fill_in "actor_field_discover_search", with: "ben affleck"
+      #   select "2005", :from => "date[year]"
+      #   select "After This Year", :from => "year_select"
+      #   click_button "search_button_discover_search"
+      #   # expect(page).to have_content("Argo")
+      #   wait_for_ajax
+      #   expect(page).to have_selector("#modal_link_68734")
+      # end
 
-      scenario "search by actor and before year" do
+      scenario "search by actor and before year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_and_before_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
@@ -176,10 +181,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "Before This Year", :from => "year_select"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by actor year and mpaa rating" do
+      scenario "search by actor year and mpaa rating", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_mpaa_rating_and_year") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
@@ -188,10 +194,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "R", :from => "mpaa_rating"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by actor year and sort by popularity" do
+      scenario "search by actor year and sort by popularity", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_actor_year_and_sort") do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
@@ -199,10 +206,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "Popularity", :from => "sort_by"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
-      scenario "search by genre year and sort" do
+      scenario "search by genre year and sort", js: true do
         visit(discover_search_path)
         VCR.use_cassette("discover_genre_year_sort") do
           select "1996", :from => "date[year]"
@@ -210,6 +218,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           select "Popularity", :from => "sort_by"
           click_button "search_button_discover_search"
         end
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
