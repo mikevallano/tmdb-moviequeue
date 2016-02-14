@@ -76,6 +76,7 @@ a {
 .well {
   background-color: lighten($primary-background-color, 10%); 
   border: 0px;
+  overflow: auto;
 } /* .well */
 
 

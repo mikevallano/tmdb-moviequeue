@@ -14,6 +14,7 @@
 
     <% end %><!-- # shared list logic -->
   <% end %> <!-- # if tags.present? -->
+  </p>
 
     <%= form_tag( { :controller => :taggings, :action => :create }, { class: "form-class", id: "tag-form-modal", remote: true } ) do %>
       <%= text_field_tag :tag_list, nil, { placeholder: "Separate by commas", class: 'form-control', id: "tag-list-modal" } %>
@@ -22,5 +23,5 @@
       <%= hidden_field_tag(:page, params[:page]) %>
       <%= submit_tag "+ Add", id: "add_tags_button_movies_partial", class: "form-control-submit" %>
     <% end %> <!-- # tag form loop -->
-  </p>
+
 
