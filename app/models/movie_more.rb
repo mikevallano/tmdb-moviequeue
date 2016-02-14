@@ -74,6 +74,10 @@ class MovieMore
     @movie
   end
 
+    def times_seen_by(user)
+      0
+    end
+
 end
 
 
