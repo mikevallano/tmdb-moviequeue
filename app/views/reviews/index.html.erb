@@ -1,11 +1,11 @@
 <h1>Listing Reviews</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Movie</th>
       <th>Body</th>
-      <th colspan="3"></th>
+      <th colspan="3">Manage Reviews</th>
     </tr>
   </thead>
 
@@ -16,7 +16,7 @@
         <td><%= review.body %></td>
         <td><%= link_to 'Show', movie_review_path(@movie, review) %></td>
         <td><%= link_to 'Edit', edit_movie_review_path(@movie, review) %></td>
-        <td><%= link_to 'Destroy', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,5 @@
 
 <br>
 
-<%= link_to 'New Review', new_movie_review_path(@movie) %>
+<p class="button-main"><%= link_to 'New Review', new_movie_review_path(@movie) %>
+</p>
