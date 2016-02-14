@@ -1,14 +1,12 @@
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
 
-<div class="well well-sm">
-
   <% if current_user.rated_movies.include?(movie) %> <!-- #if movie has been rated -->
 
     <p><strong>My Rating:</strong> <%= movie.ratings.by_user(current_user).first.value %>/10 <%= link_to " ", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial", class: "fa fa-pencil" %></p>
 
   <% else %> <!-- #if movie has been rated -->
 
-    <div>
+    <div class="rating-form">
       <%= form_for [movie, Rating.new], class: "form-class", id: "modal-rating", remote: true do |f| %>
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :movie_id, value: movie.id %>
@@ -23,6 +21,5 @@
     </div>
 
   <% end %> <!-- #if movie has been rated -->
-  </div><!-- wel well-sm -->
 
 <% end %> <!-- #if movie has been seen -->

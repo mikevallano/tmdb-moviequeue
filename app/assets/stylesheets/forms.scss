@@ -57,6 +57,11 @@ input[type="submit"] {
   // padding: 0; 
 } /* .submit */
 
+.rating-form {
+  margin-bottom: 10px; 
+} /* .rating-form */
+
+
 
 /* SEARCH FORM PAGES ONLY */
 .search-form {
@@ -69,6 +74,14 @@ input[type="submit"] {
   height: 35px;
   width: auto;
 } /* .submit */
+
+/* MOVIE INDEX PAGE ONLY */
+.index-sort-dropdown {
+  width: 30%;
+  min-width: 200px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+} /* .index-sort-dropdown */
 
 
 @media screen and (max-width: 600px) {
