@@ -15,13 +15,14 @@ article#page {
    } /* h1 */
    .jumbotron {
       // background: url('/assets/tv-inside.jpg') no-repeat center center;
-      background: image-url("tv-inside.jpg") no-repeat center center fixed; 
+      background: image-url("tv-inside.jpg") no-repeat center center ; 
       position: fixed;
       width: 100%;
       height: 100%; /*same height as jumbotron */
       top:0;
       left:0;
       z-index: -1;
+      overflow: scroll;
    } /* .jumbotron */
    .sign-in-links {
      font-size: .7em; 
