@@ -9,8 +9,8 @@
 
       <h2 id="search_by_title_header">Hey <%= current_user.username.titlecase %>! Search for a Movie by its Title:</h2>
         <%= form_tag '/tmdb/search', method: :get do %>
-          <%= text_field_tag :movie_title %>
-          <%= submit_tag " Search", id: "search_by_title_button" %>
+          <%= text_field_tag :movie_title, nil, { placeholder: "Enter a Movie Title", class: 'form-control'} %>
+          <%= submit_tag "Search", id: "search_by_title_button", class: "form-control-submit" %>
         <% end %><!-- form_tag -->
 
       <hr>

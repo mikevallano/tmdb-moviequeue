@@ -29,7 +29,7 @@
           <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
           </p>
 
-        <p><strong>Overview: </strong><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to " Full Details", movie_more_path(tmdb_id: movie.tmdb_id), class: "fa fa-chevron-circle-right" %>
+        <p><span class="pseudo-header">Overview: </span><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to " Full Details", movie_more_path(tmdb_id: movie.tmdb_id), class: "fa fa-chevron-circle-right" %>
 
         <div id="movie_modal_innard_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_modal_innard', movie: movie %>

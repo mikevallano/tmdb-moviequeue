@@ -62,7 +62,6 @@ input[type="submit"] {
 } /* .rating-form */
 
 
-
 /* SEARCH FORM PAGES ONLY */
 .search-form {
   width: 40%;
@@ -75,6 +74,8 @@ input[type="submit"] {
   width: auto;
 } /* .submit */
 
+
+
 /* MOVIE INDEX PAGE ONLY */
 .index-sort-dropdown {
   width: 30%;
@@ -82,6 +83,22 @@ input[type="submit"] {
   margin-right: 10px;
   margin-bottom: 10px;
 } /* .index-sort-dropdown */
+
+
+
+/* HOME PAGE SIGN IN & UP PAGES ONLY */
+.pages-form {
+  width: 100%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: $light-gray;
+  color: black;
+} /* .pages-form */
+
+.pages-form-submit {
+  height: 35px;
+  width: auto;
+} /* .pages-form-submit */
 
 
 @media screen and (max-width: 600px) {

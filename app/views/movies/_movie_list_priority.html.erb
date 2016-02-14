@@ -1,5 +1,5 @@
 
-  <p>Priority on <%= "#{@list.name}" %>: <%= movie.priority_text(@list) %></p>
+  <p class="fa fa-tasks"><span class="pseudo-header"> Priority on <%= "#{@list.name}" %>:</span> <%= movie.priority_text(@list) %></p>
 
   <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { class: "form-class", id: "modal-priority", remote: true, method: :patch } ) do %>
       <%= select_tag :priority, options_for_select(Listing::PRIORITIES, 3), { class: "form-control", :include_blank => false, id: "priority_number_field_movies_partial" } %>

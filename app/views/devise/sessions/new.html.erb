@@ -10,12 +10,12 @@
 
         <div class="field">
           <%= f.label :login, "Sign in with Email or Username" %><br />
-          <%= f.text_field :login, autofocus: true, class: "form-control" %>
+          <%= f.text_field :login, autofocus: true, class: "form-control pages-form" %>
         </div>
 
         <div class="field">
           <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control pages-form" %>
         </div>
 
         <% if devise_mapping.rememberable? -%>
