@@ -14,7 +14,6 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
   <div class="field">
-    <%= f.label :value %><br>
     <%= f.select(:value, Rating::VALUES, { prompt: "Out of 10" }, { class: "form-control", id: "rating_value_field_rating_form" }) %>
   </div>
   <div class="actions">
