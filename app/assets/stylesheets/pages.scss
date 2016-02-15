@@ -33,9 +33,27 @@ article#page {
      margin: 0 auto;
      margin-top: 70px;
      width: 60%;
-     max-width: 800px;
+     max-width: 600px;
      padding: 2% 5% 2% 5%;
      border-radius: 10px;
+     .search-bar {
+       width: 350px;
+       overflow: auto; 
+       margin: 0 auto;
+       .form-control {
+         background-color: white;
+         width: 250px; 
+         float: left;
+       } /* .form-control */
+       .home-submit {
+         float: left;
+         font-size: 15px; 
+         padding: 2px 10px;
+         height: 35px;
+         width: auto;
+       } /* .form-control-submit */
+     } /* .search-bar */
+       
      .button-holder {
        margin: 0 auto;
        text-align: center; 
@@ -54,20 +72,36 @@ article#page {
 } /* article#home */
   
 @media screen and (max-width: 1000px) {
-  article#home {
+  article#page {
     .well {
-       width: 70%; 
+       width: 70%;
      } /* .well */ 
-  } /* article#home */
+  } /* article#page */
   
 } /* 1000px */
 
 @media screen and (max-width: 670px) {
-  article#home {
+  .jumbotron {
+    padding: 2%; 
+  } /* .jumbotron */
+    
+  article#page {
     .well {
-       width: 100%; 
+       width: 100%;
      } /* .well */
-        
-  } /* article#home */
+  } /* article#page */
+} /* 670px */
 
+@media screen and (max-width: 520px) {
+  article#page {
+    .well {
+      .search-bar {
+        width: 275px;
+      .form-control {
+        width: 200px; 
+      } /* .form-control */
+     } /* .search-bar */ 
+    } /* .well */
+                      
+  } /* article#page */
 } /* 670px */

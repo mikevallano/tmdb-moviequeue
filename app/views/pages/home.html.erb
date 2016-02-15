@@ -1,15 +1,21 @@
 <article id="page">
   <div class="jumbotron">
     <div class="well">
+      <div class="row">
+        <h1><span class="fa fa-step-forward"></span> MovieQueue</h1>
+        <h2>Find movies. Track what you watch. Share lists.</h2>
+      </div> <!-- row -->
 
-    <h1><span class="fa fa-step-forward"></span> MovieQueue</h1>
-    <h2>Find movies. Track what you watch. Share lists.</h2>
-    <% if current_user.present? %>
-
-        <%= form_tag '/tmdb/search', { class: "form-class", id: "home-page-search", role: "form", method: :get } do %>
+      <div class="row">
+      <div class="search-bar">
+        
+        <% if current_user.present? %>
+          <%= form_tag '/tmdb/search', { class: "form-class", id: "home-page-search", role: "form", method: :get } do %>
           <%= text_field_tag :movie_title, nil, { placeholder: "Enter a Movie Title", class: "form-control", id: "homepage-search-field" } %>
-          <%= submit_tag " Search", id: "search_by_title_button", class: "form-control-submit" %>
-        <% end %><!-- form_tag -->
+          <%= submit_tag "Search", id: "search_by_title_button", class: "home-submit" %>
+          <% end %><!-- form_tag -->
+          </div> <!-- search-bar -->
+        </div> <!-- row -->
 
       <hr>
 
