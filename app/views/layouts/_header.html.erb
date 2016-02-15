@@ -35,6 +35,10 @@
             <li><%= link_to 'My Lists', user_lists_path(current_user), id: "my_lists_nav_link" %></li>
             <li><%= link_to 'Public Lists', public_lists_path, id: "public_lists_nav_link" %></li>
             <li role="separator" class="divider"></li>
+            <% current_user.lists.each do |list| %>
+              <li><a href="/users/<%= current_user.username %>/lists/<%= list.slug %>"><%= list.name %></a></li>
+            <% end %><!-- lists.each -->
+            <li role="separator" class="divider"></li>
             <li><%= link_to ' New List', new_user_list_path(current_user), class: "fa fa-plus" %></li>
           </ul> <!-- dropdown items -->
         </li><!-- dropdown button -->
