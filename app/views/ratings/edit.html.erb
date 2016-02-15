@@ -2,5 +2,4 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', movie_rating_path(@movie, @rating) %> |
-<%= link_to 'Back', movie_ratings_path(@movie) %>
+<p class="button-main"><%= link_to "Back to Rating", movie_rating_path(@movie, @rating) %>  <%= link_to "Back to #{@movie.title}", @movie %>
