@@ -172,15 +172,104 @@ article.tile-cover-pic {
 // 4 movies = 640px
 // 5 movies = 800px
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 990px) {
+  #gradient-box {
+     height: 0px; 
+     width: 0px;
+     visibility: hidden;
+   } /* gradient-box */
+   #movie-splash-container {
+     height: 300px;
+     overflow: hidden;
+     // max-height: 200px;
+   } /* #movie-splash-container */
+
+   article.movie-show {
+     .col-xs-6 {
+        clear: both;
+        margin-bottom: 5%;
+        width: 100%;
+        .form-control {
+           width: 75%; 
+         } /* .form-control */
+      } /* .col-xs-6 */
+   } /* article.movie-show */
+}/* 990px */
+
+@media screen and (max-width: 600px) {
 
   .tile-container {
     max-width: 320px;
   } /* .tile-container */
 
-} /* 670px */
+   .backdrop-image, #movie-splash-container, #gradient-box {
+     height: 0px; 
+     visibility: hidden;
+     float: left;
+   } /* .backdrop-image */
+
+  .backdrop-image {
+    // width: 100%;
+    // height: 300px;
+    // float: right;
+    img {
+      height: 300px; 
+    } /* img */
+  } /* .backdrop-image */
+
+article.movie-show {
+  .col-xs-3 {
+    clear: both;
+    width: 100%; 
+    .sidebar {
+      float: left;
+      max-width: 100%; 
+      img {
+        width: 45%; 
+      } /* img */
+      .mobile {
+        float: right; 
+      } /* .mobile */
+    } /* .sidebar */
+  } /* .col-xs-3 */
+
+ .col-xs-9 {
+   clear: both;
+   width: 100%;
+   .col-xs-6 {
+      .form-control {
+         width: 50%; 
+       } /* .form-control */
+       .form-control-submit {
+         width: 20%;
+       } /* .form-control-submit */   
+    } /* .col-xs-6 */ 
+ } /* .col-xs-9 */
+ }/* article.movie-show */
+} /* 600px */
 
 
+@media screen and (max-width: 400px) {
 
+  article.movie-show {
+  .col-xs-3 {
+    clear: both;
+    width: 100%; 
+    .sidebar {
+      // float: left;
+      width: 100%; 
+      img {
+        width: 50%;
+        float: left; 
+      } /* img */
+      .mobile {
+        max-width: 45%;
+        float: right; 
+      } /* .mobile */
+    } /* .sidebar */
+  } /* .col-xs-3 */
+  }/* article.movie-show */
+
+}/* 400px */
 
 

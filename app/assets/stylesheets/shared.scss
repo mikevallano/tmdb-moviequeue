@@ -153,3 +153,12 @@ a {
   } /* .form-container */
 
 } /* 900px */
+
+@media screen and (max-width: 360px) {
+  .col-xs-3 {
+    width: 100%;
+    clear: both;
+    margin-bottom: 10px; 
+  } /* .col-xs-3 */
+    
+} /* 360px */
