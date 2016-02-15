@@ -16,6 +16,19 @@ module TmdbHandler
       end
   end
 
+  def tmdb_handler_movie_autocomplete(query)
+    @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
+    @autocomplete_results = @tmdb_response[:results].map{ |result| result[:title]}
+  end
+
+  def tmdb_handler_person_autocomplete(query)
+    @search_url = "http://api.themoviedb.org/3/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
+    @person_results = @tmdb_response[:results].select{ |result| result[:media_type] == "person"}
+    @autocomplete_results = @person_results.map{ |result| result[:name] }
+  end
+
   def tmdb_handler_movie_more(id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)

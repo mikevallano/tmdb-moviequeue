@@ -15,5 +15,20 @@ $(document).ready(function() {
     // });
 
 
+// autocomplete
+
+
+    $( "#movie_field_movie_search" ).autocomplete({
+      minLength: 3,
+      source: $('#movie_field_movie_search').data('autocomplete-source')
+    });
+
+    $( "#actor_name_actor_search" ).autocomplete({
+      minLength: 3,
+      source: $('#actor_name_actor_search').data('autocomplete-source')
+    });
+
+
+
 // the final closer
 });
