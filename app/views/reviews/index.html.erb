@@ -8,7 +8,7 @@
 <% @reviews.each do |review| %>
   <article id="review">
 
-  <h2>On <%= review.created_at %>, <%= review.user.username.titlecase %> said:</h2>
+  <h2>On <%= review.created_at.stamp("12/25/2001") %>, <%= review.user.username.titlecase %> said:</h2>
   <p>
     <span class="quote-marks">“</span>
       <%= review.body %>
