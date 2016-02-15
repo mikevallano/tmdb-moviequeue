@@ -32,6 +32,13 @@ input[type="submit"] {
   float: right;
 } /* .share-container */
 
+.form-label {
+  margin-bottom: 2px;
+  clear: both;
+  width: 100%;
+} /* .form-label */
+
+
 .form-container {
   width: 60%;
   max-width: 900px;
@@ -73,6 +80,16 @@ input[type="submit"] {
   height: 35px;
   width: auto;
 } /* .submit */
+
+/* LIST EDIT ONLY */
+.edit-form, .edit-form-submit {
+  margin-bottom: 15px;
+  clear: both; 
+} /* .edit-form */
+
+.edit-form-submit {
+   float: left;
+} /* .edit-form-submit */
 
 
 

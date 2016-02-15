@@ -5,37 +5,35 @@
   <div class="pull-right">
     <p class="button-main">
       <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list) %>
+      <%= link_to 'Cancel', user_lists_path(current_user) %>
     </p>
-
   </div> <!-- pull-right -->
 </div> <!-- row -->
 
 <div class="row">
+    
   <div class="form-container">
-     <%= render 'form' %>
-    <p class="button-main">
-      <%= link_to 'Cancel', user_lists_path(current_user) %>
-    </p>
+    <%= render 'form' %>
   </div> <!-- form-container -->
 
     <div class="share-container">
-       <h2>Invite a User to Share this List!</h2>
-       <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thang.</p>
+     <h2>Invite a User to Share this List!</h2>
+     <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thang.</p>
 
-        <%= form_for(Invite.new) do |f| %>
+      <%= form_for(Invite.new) do |f| %>
 
-          <%= f.hidden_field :sender_id, value: current_user.id %>
-          <%= f.hidden_field :list_id, value: @list.id %>
+        <%= f.hidden_field :sender_id, value: current_user.id %>
+        <%= f.hidden_field :list_id, value: @list.id %>
 
-          <div class="field">
-            <%= f.label :email %><br>
-            <%= f.text_field :email, class: "form-control" %>
-          </div>
+        <div class="field">
+          <%= f.label :email %><br>
+          <%= f.text_field :email, class: "form-control edit-form" %>
+        </div>
 
-          <div class="actions">
-            <%= f.submit "Send invite", id: "send_invite_button_list_edit" %>
-          </div>
-        <% end %><!-- form_for -->
+        <div class="actions">
+          <%= f.submit "Send invite", id: "send_invite_button_list_edit" %>
+        </div>
+      <% end %><!-- form_for -->
     </div> <!-- share-container -->
 
 </div> <!-- row -->

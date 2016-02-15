@@ -14,22 +14,22 @@
 
   <%= f.hidden_field :owner_id, value: current_user.id %>
   <div class="field">
-    <%= f.label :name, "List Name" %><br>
-    <%= f.text_field :name, id: "list_name_field", class: "form-control" %>
+    <%= f.label :name, "List Name", class: "form-label" %>
+    <%= f.text_field :name, id: "list_name_field", class: "form-control edit-form" %>
   </div>
 
   <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description, id: "list_description_field", placeholder: "Use this space to describe the kinds of movies you store in this list.", class: "form-control" %>
+    <%= f.label :description, class: "form-label" %>
+    <%= f.text_area :description, id: "list_description_field", placeholder: "Use this space to describe the kinds of movies you store in this list.", class: "form-control edit-form" %>
   </div>
 
     <div class="field">
-      <%= f.label "Make public?" %>  
-      <%= f.check_box :is_public, class: "form-control" %> 
+      <%= f.label "Make public?", class: "form-label" %>  
+      <%= f.check_box :is_public, class: "form-control edit-form" %> 
     </div>
 
   <div class="actions">
-    <%= f.submit "Save", id: "submit_list_button" %>
+    <%= f.submit "Save", id: "submit_list_button", class: "form-control-submit edit-form-submit" %>
   </div>
 <% end %>
 
