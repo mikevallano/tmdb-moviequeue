@@ -5,7 +5,7 @@
   <h1>Full cast for <%= link_to "#{@movie.title}", movie_more_path(tmdb_id: @movie.tmdb_id) %></h1>
 
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-xs-8">
       <h2>Actors:</h2>
 
       <% @actors.each do |actor| %>
@@ -17,9 +17,9 @@
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->
       <% end %><!-- actors each do -->
-    </div> <!-- col-sm-8 -->
+    </div> <!-- col-xs-8 -->
 
-    <div class="col-sm-4">
+    <div class="col-xs-4">
       <div class="row">
         <h2>Directors:</h2>
 
@@ -48,7 +48,7 @@
         <% end %><!-- editors each do -->
       </div> <!-- row -->
 
-    </div> <!-- col-sm-4 -->
+    </div> <!-- col-xs-4 -->
 
   </div> <!-- row -->
 

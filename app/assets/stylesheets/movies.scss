@@ -1,6 +1,8 @@
 @import "colors";
 @import "fonts";
 
+/* MOVIE INDEX PAGE */
+
 .tile-container {
   max-width: 800px;
 } /* .tile-container */
@@ -16,13 +18,16 @@ article.tile-cover-pic {
   } /* img */
 } /* article.tile-cover-pic */
 
+
+/* MODAL  */
 .modal-content {
    background-color: $primary-background-color;
 } /* .modal-dialog */
   
 .modal {
   img {
-    border: 1px solid #000; 
+    border: 1px solid #000;
+    // width: 200px;
   } /* img */  
   h1 {
     line-height: 99%;
@@ -31,7 +36,6 @@ article.tile-cover-pic {
   .modal-spacer {
     margin-top: 5%; 
   } /* .modal-spacer */
-    
     
   /* modal button links */
   .watch-info {
@@ -61,6 +65,14 @@ article.tile-cover-pic {
 /* MOVIE SHOW PAGE */
 
 .movie-show {
+
+  .well {
+    h2 {
+       margin-left: 3%; 
+     } /* h2 */
+        
+  } /* .well */
+    
   a {
     color: $link-color;
 
@@ -174,6 +186,31 @@ article.tile-cover-pic {
 
 @media screen and (max-width: 990px) {
 
+  .modal {
+    .col-xs-3 {
+      // height: auto;
+      // overflow: auto;
+      clear: both;
+      width: 100%;
+      margin-bottom: 20px;
+      img {
+         float: left;
+         width: 45%; 
+       } /* img */
+      .watch-info {
+        width: 45%;
+         float: right;
+      } /* .watch-info */
+    } /* .col-xs-3 */
+
+    .col-xs-9 {
+      clear: both; 
+      width: 100%;
+    } /* .col-xs-9 */
+      
+  } /* .modal */
+    
+
   article.movie-show {
     #gradient-box {
        height: 0px; 
@@ -253,6 +290,28 @@ article.tile-cover-pic {
 
 @media screen and (max-width: 400px) {
 
+  .modal {
+    .col-xs-3 {
+      clear: both;
+      margin-bottom: 10px;
+      img {
+         clear: both;
+         width: 100%; 
+       } /* img */
+      .watch-info {
+        width: 100%;
+         clear: both;
+         p {
+           font-size: 20px; 
+         } /* p */
+      } /* .watch-info */
+    } /* .col-xs-3 */
+    .col-xs-9 {
+      clear: both; 
+      width: 100%;
+    } /* .col-xs-9 */
+  } /* .modal */
+
   article.movie-show {
   .col-xs-3 {
     clear: both;
@@ -270,6 +329,19 @@ article.tile-cover-pic {
       } /* .mobile */
     } /* .sidebar */
   } /* .col-xs-3 */
+  .col-xs-9 {
+   clear: both;
+   width: 100%;
+   .col-xs-6 {
+    width: 100%;
+      .form-control {
+         width: 180px; 
+       } /* .form-control */
+       .form-control-submit {
+         width: auto;
+       } /* .form-control-submit */   
+    } /* .col-xs-6 */ 
+   } /* .col-xs-9 */
   }/* article.movie-show */
 
 }/* 400px */
