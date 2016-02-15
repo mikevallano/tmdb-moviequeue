@@ -1,3 +1,4 @@
+<h2>You've Seen this <%= pluralize(@movie.times_seen_by(current_user), "Time") %>.</h2>
 <% if current_user.watched_movies.include?(@movie) %> <!-- #if movie has been seen -->
   <p class="button-main"><%= link_to "Add / Manage Screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></p>
 <% else %> <!-- #if movie has been seen -->

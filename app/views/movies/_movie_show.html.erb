@@ -99,8 +99,12 @@
       <!-- RATINGS AND REVIEWS -->
       <div class="row">
         <div class="well well-sm">
-        <h2>You've Seen this Movie <%= pluralize(@movie.times_seen_by(current_user), "Time") %>.</h2>
+        
           <div class="col-xs-6">
+
+          <div id="movie_show_seen_<%= "#{@movie.tmdb_id}" %>">
+              <%= render "movies/movie_show_screening", movie: @movie %>
+            </div><!-- movie_show_seen -->
 
             <% if current_user.watched_movies.include?(@movie) %>
               <div id="movie_rated_<%= "#{@movie.tmdb_id}" %>">
@@ -108,9 +112,7 @@
               </div>
             <% end %> <!-- # if (current_user.watched_movies.include?(movie)) -->
 
-            <div id="movie_show_seen_<%= "#{@movie.tmdb_id}" %>">
-              <%= render "movies/movie_show_screening", movie: @movie %>
-            </div><!-- movie_show_seen -->
+            
 
           </div> <!-- col-xs-6 -->
 
