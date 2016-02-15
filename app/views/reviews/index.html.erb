@@ -5,7 +5,7 @@
   <%= link_to '+ Write a Review', new_movie_review_path(@movie) %>
 </p>
 
-<% @reviews.order("created_at DESC").each do |review| %>
+<% @reviews.each do |review| %>
   <article id="review">
 
   <h2>On <%= review.created_at %>, <%= review.user.username.titlecase %> said:</h2>

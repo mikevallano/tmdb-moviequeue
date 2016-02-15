@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
 
 
   def index
-    @reviews = @movie.reviews
+    @reviews = @movie.reviews.order("created_at DESC")
   end
 
   def show

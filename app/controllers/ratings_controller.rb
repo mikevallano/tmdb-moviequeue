@@ -7,7 +7,7 @@ class RatingsController < ApplicationController
 
 
   def index
-    @ratings = @movie.ratings
+    @ratings = @movie.ratings.order("created_at DESC")
   end
 
   def show
