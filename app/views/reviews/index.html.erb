@@ -1,28 +1,26 @@
-<h1>Listing Reviews</h1>
+<h1>Reviews for <%= @movie.title %></h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Movie</th>
-      <th>Body</th>
-      <th colspan="3">Manage Reviews</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= review.movie.title %></td>
-        <td><%= review.body %></td>
-        <td><%= link_to 'Show', movie_review_path(@movie, review) %></td>
-        <td><%= link_to 'Edit', edit_movie_review_path(@movie, review) %></td>
-        <td><%= link_to 'Delete', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<p class="button-main"><%= link_to 'New Review', new_movie_review_path(@movie) %>
+<p class="button-main">
+  <%= link_to 'Back to ' + @movie.title, movie_path(@movie) %>
+  <%= link_to '+ Write a Review', new_movie_review_path(@movie) %>
 </p>
+
+<% @reviews.each do |review| %>
+  <article id="review">
+
+  <h2>On <%= review.created_at %>, <%= review.user.username.titlecase %> said:</h2>
+  <p>
+    <span class="quote-marks">“</span>
+      <%= review.body %>
+    <span class="quote-marks">”</span>
+  </p>
+
+    <% if current_user == review.user %>
+      <p class="button-main">
+        <%= link_to 'Edit Review', edit_movie_review_path(@movie, review) %>
+        <%= link_to 'Delete', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </p>
+    <% end %><!-- if current_user == review.user -->
+
+  </article>
+<% end %><!-- reviews.each -->
