@@ -1,2 +1,4 @@
 
 $("#movie_rated_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_rating', :locals => {:movie => @movie}) %>");
+$("#movie_show_rated_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_rating', :locals => {:movie => @movie}) %>");
+

@@ -2,3 +2,5 @@ $("#movie_seen_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/mo
 $("#movie_rated_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_rating', :locals => {:movie => @movie}) %>");
 $("#movie_reviewed_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_review', :locals => {:movie => @movie}) %>");
 $("#movie_show_seen_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_show_screening', :locals => {:movie => @movie}) %>");
+$("#movie_show_rated_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_rating', :locals => {:movie => @movie}) %>");
+$("#movie_show_reviewed_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_review', :locals => {:movie => @movie}) %>");
