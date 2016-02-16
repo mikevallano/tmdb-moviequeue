@@ -3,7 +3,7 @@ class InvitesController < ApplicationController
 
   def create
     @invite = Invite.new(invite_params)
-    @invite.email = params[:email].strip
+    @invite.email = @invite.email.strip
     @invite[:token] = @invite.generate_token
     @invitee = @invite.find_invitee
 
