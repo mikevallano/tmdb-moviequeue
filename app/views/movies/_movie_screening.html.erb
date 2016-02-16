@@ -2,7 +2,7 @@
 
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
 
-  <p class="sidebar-button"><%= link_to " Seen it! Add a Screening", movie_screenings_path(movie), id: "add_screening_link_movies_partial", class: "fa fa-check-square-o" %></p>
+  <p class="sidebar-button"><%= link_to " Watched. Add/View Screenings", movie_screenings_path(movie), id: "add_screening_link_movies_partial", class: "fa fa-check-square-o" %></p>
 
 <% else %> <!-- #if movie has been seen -->
 

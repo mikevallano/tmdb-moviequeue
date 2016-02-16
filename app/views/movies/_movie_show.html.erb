@@ -36,10 +36,10 @@
       <div class="col-xs-9">
         <div class="row">
           <div class="col-xs-12">
-           
+
             <h1><%= @movie.title %></h1>
             <p>
-            <%= @movie.release_date.stamp("2/21/2001") if @movie.release_date.present? %> | <%= @movie.mpaa_rating %> | TMDB: <%= @movie.vote_average %>
+            <%= @movie.release_date.stamp("2001") if @movie.release_date.present? %> | <%= @movie.mpaa_rating %> | <%= "#{@movie.vote_average} /10"%> <icon class="fa fa-star"></icon>
             <% if current_user.rated_movies.include?(@movie) %>
               | My Rating: <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
             <% end %><!-- if user rating -->
@@ -49,6 +49,7 @@
             |
             <% @movie.genres.each do |genre| %>
               <%= link_to "#{genre}", genre_path(genre), id: "genre_link_movie_show" %>
+              <%= "," unless genre == @movie.genres.last %>
             <% end %>
             </p>
 
@@ -85,7 +86,7 @@
         <!-- TRAILER & PRODUCTION COMPANIES -->
         <div class="row">
           <div class="col-xs-12">
-      
+
             <% if @movie.trailer.present? %> <!-- #if trailer present -->
               <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
               <% else %> <!-- #if trailer present -->
