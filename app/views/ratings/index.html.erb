@@ -19,7 +19,7 @@
     <% @ratings.each do |rating| %>
       <tr>
         <td><%= rating.user.username %></td>
-        <td><%= rating.created_at %></td>
+        <td><%= rating.created_at.stamp("01-31-2001") %></td>
         <td><%= rating.value %></td>
         <td>
         <% if current_user == rating.user %>
