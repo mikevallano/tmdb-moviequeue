@@ -33,9 +33,9 @@ article.tile-cover-pic {
     line-height: 99%;
     margin-bottom: 10px; 
   } /* h1 */
-  .modal-spacer {
+  .partial-spacer {
     margin-top: 5%; 
-  } /* .modal-spacer */
+  } /* .partial-spacer */
     
   /* modal button links */
   .watch-info {
@@ -65,13 +65,6 @@ article.tile-cover-pic {
 /* MOVIE SHOW PAGE */
 
 .movie-show {
-
-  .well {
-    h2 {
-       margin-left: 15px; 
-     } /* h2 */
-        
-  } /* .well */
     
   a {
     color: $link-color;
@@ -125,6 +118,24 @@ article.tile-cover-pic {
       }
     } /* a */
   } /* .sidebar-button */
+
+  .partial-spacer {
+    margin: 25px 0px;
+  } /* .partial-spacer */
+  .screening-link {
+    font-family: $body-family;
+    font-size: 12px; 
+    a {
+      color: $light-blue;
+      &:visited {
+        color: $light-blue;
+      }
+      &:hover {
+        color: lighten($dark-blue, 10%);
+      }
+    } /* a */
+  } /* .screening-link */
+    
 } /* .movie-show */
 
 
