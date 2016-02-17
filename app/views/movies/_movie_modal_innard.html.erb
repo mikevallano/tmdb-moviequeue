@@ -5,6 +5,12 @@
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
 
         <div class="partial-spacer">
+          <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
+            <%= render 'movies/movie_tag', movie: movie %>
+          </div>
+        </div><!-- partial-spacer -->
+
+        <div class="partial-spacer">
           <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_on_lists', movie: movie %>
           </div>
@@ -32,12 +38,6 @@
         </div> <!-- partial-spacer -->
 
         <% end %><!-- movie.in_db && movie.lists.by_user -->
-
-        <div class="partial-spacer">
-          <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
-            <%= render 'movies/movie_tag', movie: movie %>
-          </div>
-        </div><!-- partial-spacer -->
 
         <div class="partial-spacer">
           <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
