@@ -1,6 +1,7 @@
 <% content_for(:title, "Editing") %>
 
-<h1>Editing Your <%= @screening.date_watched %> Screening</h1>
+<h1>Edit Your Screening</h1>
+<h2>Your <%= @screening.date_watched.stamp("12-31-2016") %> Screening of <%= @movie.title %></h2>
 
 <%= render 'form' %>
 
