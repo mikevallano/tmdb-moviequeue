@@ -32,7 +32,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Lists <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <% current_user.lists.order("name").each do |list| %>
-              <li><a href="/users/<%= current_user.slug %>/lists/<%= list.slug %>"><%= list.name %></a></li>
+              <li><%= link_to "#{list.name}", user_list_path(list.owner, list) %></li>
             <% end %><!-- lists.each -->
             <li role="separator" class="divider"></li>
             <li><%= link_to 'Manage My Lists', user_lists_path(current_user), id: "my_lists_nav_link" %></li>

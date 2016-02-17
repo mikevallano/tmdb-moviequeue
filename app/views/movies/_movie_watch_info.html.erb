@@ -5,7 +5,7 @@
 <p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="http://www.netflix.com/search/<%= @movie.title %>" target="_blank" alt="Search Netflix"> Watch on Netflix</a></p>
 
 <!--  link to amazon -->
-<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= @movie.title %>" target="_blank" title="Search Amazon"> Watch on Amazon</a></p>
+<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= @movie.title %> <%= @movie.release_date.stamp('2001') %>" target="_blank" title="Search Amazon"> Watch on Amazon</a></p>
 
 <!-- link to youtube -->
-<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie" target="_blank"> Watch on YouTube</a></p>
+<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie <%= @movie.release_date.stamp('2001') %>" target="_blank"> Watch on YouTube</a></p>
