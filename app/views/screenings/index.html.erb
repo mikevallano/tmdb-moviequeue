@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @screenings.each do |screening| %>
+    <% @screenings.order("date_watched DESC").each do |screening| %>
       <tr>
         <td><%= screening.date_watched %></td>
         <td><%= screening.location_watched %></td>

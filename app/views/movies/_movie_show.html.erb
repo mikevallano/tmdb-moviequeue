@@ -39,7 +39,7 @@
 
             <h1><%= @movie.title %></h1>
             <p>
-            <%= @movie.release_date.stamp("2001") if @movie.release_date.present? %> | <%= @movie.mpaa_rating %> | <%= "#{@movie.vote_average} /10"%> <icon class="fa fa-star"></icon>
+            <%= @movie.release_date.stamp("2-21-2001") if @movie.release_date.present? %> | <%= @movie.mpaa_rating %> | <icon class="fa fa-star"></icon> <%= "#{@movie.vote_average} /10"%> 
             <% if current_user.rated_movies.include?(@movie) %>
               | My Rating: <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
             <% end %><!-- if user rating -->
@@ -67,7 +67,7 @@
         </div> <!-- row -->
 
 
-        <!-- TAGS AND LISTS -->
+        <!-- LISTS AND TAGS -->
         <div class="row">
           <!-- TODO: Refactor the shit out of this: -->
           <% @lists_except_movie = current_user.lists_except_movie(@movie) %>
@@ -79,7 +79,7 @@
 
           <div id="movie_show_listings_<%= "#{@movie.tmdb_id}" %>"class="col-xs-6">
               <%= render "movies/movie_show_list_manage", movie: @movie %>
-          </div> <!-- col-xs-6 -->
+          </div> 
         </div> <!-- row -->
 
 
