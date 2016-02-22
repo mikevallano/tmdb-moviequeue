@@ -7,6 +7,7 @@ class TaggingsController < ApplicationController
 
   def create
     @tag_names = params[:tag_list]
+    @list = List.find(params[:list_id]) if params[:list_id].present?
 
     Tagging.create_taggings(@tag_names, @movie.id, current_user)
 
@@ -18,6 +19,7 @@ class TaggingsController < ApplicationController
 
   def destroy
     @from = params[:from] #account for page number too
+    @list = List.find(params[:list_id]) if params[:list_id].present?
     @tagging = current_user.taggings.find_by("tag_id = ? AND movie_id = ?", params[:tag_id], params[:movie_id])
     respond_to do |format|
       if @tagging.destroy
