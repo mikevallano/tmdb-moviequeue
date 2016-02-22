@@ -1,0 +1,13 @@
+<h3>Editor Credits (<%= @person_movie_credits.editing.size + @person_tv_credits.editing.size %>)</h3>
+  <p>Movies (<%= @person_movie_credits.editing.size %>)</p>
+    <ul>
+      <% @person_movie_credits.editing.each do |credit| %>
+        <%= render "movie_credit_loop", credit: credit %>
+      <% end %>
+    </ul>
+  <p>TV (<%= @person_tv_credits.editing.size %>)</p>
+    <ul>
+      <% @person_tv_credits.editing.each do |credit| %>
+        <%= render "tv_credit_loop", credit: credit %>
+      <% end %>
+    </ul>

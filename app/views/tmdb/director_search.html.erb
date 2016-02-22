@@ -11,47 +11,21 @@
   </div> <!-- row -->
   <div class="row">
     <div class="credits">
-      <h2>Director Credits (<%= @person_credits.directing.size %>)</h2>
-      <ul>
-        <% @person_credits.directing.each do |credit| %>
-          <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
 
-      <h2>Producer Credits (<%= @person_credits.producer.size %>)</h2>
-      <ul>
-        <% @person_credits.producer.each do |credit| %>
-          <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
+      <%= render "director_credits" %>
 
-      <h2>Editor Credits (<%= @person_credits.editing.size %>)</h2>
-      <ul>
-        <% @person_credits.editing.each do |credit| %>
-          <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
+      <%= render "producer_credits" %>
 
-      <h2>Writer Credits (<%= @person_credits.writing.size %>)</h2>
-      <ul>
-        <% @person_credits.writing.each do |credit| %>
-          <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
+      <%= render "editor_credits" %>
 
-      <h2>Screenplay Credits (<%= @person_credits.screenplay.size %>)</h2>
-      <ul>
-        <% @person_credits.screenplay.each do |credit| %>
-          <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
+      <%= render "writer_credits" %>
 
-      <h2>Actor Credits (<%= @person_credits.actor.size %>)</h2>
-      <ul>
-        <% @person_credits.actor.each do |credit| %>
-         <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
-        <% end %>
-      </ul>
+      <%= render "screenplay_credits" %>
+
+      <%= render "movie_credits" %>
+
+      <%= render "tv_credits" %>
+
     </div> <!-- credits -->
   </div> <!-- row -->
 </article>

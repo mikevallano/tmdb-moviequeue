@@ -73,23 +73,8 @@ module TmdbHandler
   end
 
   def tmdb_handler_actor_more(actor_id)
-    @bio_url = "https://api.themoviedb.org/3/person/#{actor_id}?api_key=#{ENV['tmdb_api_key']}"
-    @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
-    @name = @bio_results[:name]
-    @bio = @bio_results[:biography]
-    @birthday = Date.parse(@bio_results[:birthday]) if @bio_results[:birthday].present?
-    @profile_path = @bio_results[:profile_path]
 
-    @credits_url = "https://api.themoviedb.org/3/person/#{actor_id}/combined_credits?api_key=#{ENV['tmdb_api_key']}"
-    @credits_results = JSON.parse(open(@credits_url).read, symbolize_names: true)
-    @movie_credits = @credits_results[:cast].select { |cast| cast[:media_type] == "movie" }
-    @tv_credits = @credits_results[:cast].select { |cast| cast[:media_type] == "tv" }
-
-    @director_credits = @credits_results[:crew].select { |crew| crew[:job] == "Director" }
-    @editor_credits = @credits_results[:crew].select { |crew| crew[:job] == "Editor" }
-    @writer_credits = @credits_results[:crew ].select { |crew| crew[:job] == "Writer" }
-    @screenplay_credits = @credits_results[:crew].select { |crew| crew[:job] == "Screenplay" }
-    @producer_credits = @credits_results[:crew].select { |crew| crew[:job] == "Producer" }
+    tmdb_handler_person_detail_search(actor_id)
   end
 
   def tmdb_handler_person_detail_search(person_id)
@@ -97,10 +82,15 @@ module TmdbHandler
     @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
     @person_bio = MoviePersonBio.parse_result(@bio_results)
 
-    @credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
-    @credits_results = JSON.parse(open(@credits_url).read, symbolize_names: true)
+    @movie_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
+    @movie_credits_results = JSON.parse(open(@movie_credits_url).read, symbolize_names: true)
 
-    @person_credits = MoviePersonCredits.parse_result(@credits_results)
+    @person_movie_credits = MoviePersonCredits.parse_result(@movie_credits_results)
+
+    @tv_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
+    @tv_credits_results = JSON.parse(open(@tv_credits_url).read, symbolize_names: true)
+    @person_tv_credits = TVPersonCredits.parse_result(@tv_credits_results)
+
   end
 
   def tmdb_handler_actor_credit(credit_id)
