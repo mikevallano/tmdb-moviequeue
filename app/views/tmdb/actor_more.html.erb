@@ -16,7 +16,8 @@
     <ul>
       <% @movie_credits.each do |credit| %>
         <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
-        <%= "| Character: #{credit[:character]}" if credit[:character].present? %></li>
+        <%= "| Character: #{credit[:character]}" if credit[:character].present? %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
 
@@ -34,35 +35,40 @@
 
     <ul>
       <% @director_credits.each do |credit| %>
-        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
+        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
 
     <h3>Producer Credits (<%= @producer_credits.size %>)</h3>
     <ul>
       <% @producer_credits.each do |credit| %>
-        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
+        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
 
     <h3>Editor Credits (<%= @editor_credits.size %>)</h3>
     <ul>
       <% @editor_credits.each do |credit| %>
-        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
+        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
 
     <h3>Writer Credits (<%= @writer_credits.size %>)</h3>
     <ul>
       <% @writer_credits.each do |credit| %>
-        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
+        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
 
     <h3>Screenplay Credits (<%= @screenplay_credits.size %>)</h3>
     <ul>
       <% @screenplay_credits.each do |credit| %>
-        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %></li>
+        <li><%= link_to "#{credit[:title]}", movie_more_path(tmdb_id: "#{credit[:id]}") %>
+        <%= " | #{Date.parse(credit[:release_date]).stamp("2001")}" if credit[:release_date].present? %></li>
       <% end %>
     </ul>
     </div> <!-- credits -->
