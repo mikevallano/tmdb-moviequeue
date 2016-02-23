@@ -90,7 +90,7 @@
             <% if @movie.trailer.present? %> <!-- #if trailer present -->
               <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @movie.trailer %>" frameborder="0" allowfullscreen></iframe>
               <% else %> <!-- #if trailer present -->
-              <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank">Watch the Trailer</a>
+              <p class="sidebar-button trailer-button"><a class="fa fa-chevron-circle-right" href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer"> Watch the Trailer</a></p>
             <% end %> <!-- #if trailer present -->
 
             <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
