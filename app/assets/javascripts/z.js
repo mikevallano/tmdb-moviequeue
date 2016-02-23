@@ -6,10 +6,10 @@ ready = function() {
     source: $("#movie_field_movie_search").data("autocomplete-source")
   });
 
-  $( "#homepage-search-field" ).autocomplete({
-    minLength: 4,
-    source: $("#homepage-search-field").data("autocomplete-source")
-  });
+  // $( "#homepage-search-field" ).autocomplete({
+  //   minLength: 4,
+  //   source: $("#homepage-search-field").data("autocomplete-source")
+  // });
 
   $( "#actor_name_actor_search" ).autocomplete({
     minLength: 4,
