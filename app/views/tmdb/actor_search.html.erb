@@ -20,9 +20,9 @@
       <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_nav_link" %></p>
 
   <% else %> <!-- #if @not_found.present -->
-    <% content_for(:title, @actor.titlecase) %>
 
     <h2>Here are the movies that <%= @actor.titlecase %> has been in:</h2>
+
     <p><%= link_to "Get a full list of credits and bio", actor_more_path(actor_id: @actor1_id) %></p>
 
     <p><%= link_to "Search again", actor_search_path %> </p>

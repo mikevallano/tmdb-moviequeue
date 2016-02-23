@@ -47,7 +47,8 @@ Rails.application.routes.draw do
   resources :invites, only: [:create]
 
   root 'pages#home'
-  get 'pages/about'
+  get 'about', to: 'pages#about', as: :about
+  get 'faq', to: 'pages#faq', as: :faq
   get 'pages/awaiting_confirmation', as: :awaiting_confirmation
 
 end
