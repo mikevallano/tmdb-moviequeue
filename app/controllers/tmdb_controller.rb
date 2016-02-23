@@ -6,7 +6,7 @@ class TmdbController < ApplicationController
 
   def search
     if params[:movie_title]
-      @movie_title = params[:movie_title]
+      @movie_title = I18n.transliterate(params[:movie_title])
       tmdb_handler_search(@movie_title)
     end
   end
@@ -59,7 +59,7 @@ class TmdbController < ApplicationController
 
   def actor_search
     if params[:actor]
-      @actor = params[:actor]
+      @actor = I18n.transliterate(params[:actor])
       if params[:page]
         @page = params[:page]
       else
@@ -76,8 +76,8 @@ class TmdbController < ApplicationController
 
   def two_actor_search
     if params[:actor] && params[:actor2]
-      @actor = params[:actor]
-      @actor2 = params[:actor2]
+      @actor = I18n.transliterate(params[:actor])
+      @actor2 = I18n.transliterate(params[:actor2])
       if params[:page]
         @page = params[:page]
       else

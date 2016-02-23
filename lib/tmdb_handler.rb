@@ -100,7 +100,6 @@ module TmdbHandler
   end
 
   def tmdb_handler_actor_more(actor_id)
-
     tmdb_handler_person_detail_search(actor_id)
   end
 

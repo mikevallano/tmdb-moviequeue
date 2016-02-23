@@ -55,9 +55,9 @@
 
             <p>
             <% @movie.actors.first(4).each do |actor| %>
-              <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_show" %></span>
+              <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_show" %></span>
             <% end %>
-            <span class="tag-link"><%= link_to "#{@movie.director} (director)", director_search_path(director_id: @movie.director_id, name: @movie.director) %></span>
+            <span class="tag-link"><%= link_to "#{@movie.director} (director)", director_search_path(director_id: @movie.director_id, name: I18n.transliterate(@movie.director)) %></span>
             <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
              </p>
 

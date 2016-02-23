@@ -25,7 +25,7 @@
 <h3>Season Cast:</h3>
 <ul>
 <% @season_cast.each do |actor| %>
-  <li>Actor: <%= link_to "#{actor[:name]}", actor_search_path(actor: "#{actor[:name]}")  %></li>
+  <li>Actor: <%= link_to "#{actor[:name]}", actor_search_path(actor: I18n.transliterate("#{actor[:name]}"))  %></li>
   <li>Character: <%= actor[:character] %></li>
   <li><%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" %></li>
 <% end %>

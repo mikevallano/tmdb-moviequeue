@@ -23,7 +23,7 @@
         </p>
 
         <p><% @movie.actors.first(3).each do |actor| %>
-            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_modal" %></span>
+            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_modal" %></span>
           <% end %>
           <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
           </p>

@@ -25,7 +25,7 @@
 
     <ul>
     <% @common_actors.each do |actor| %>
-      <li><%= link_to "#{actor}", actor_search_path(actor: actor) %></li>
+      <li><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)) %></li>
     <% end %>
     </ul>
     </br>
