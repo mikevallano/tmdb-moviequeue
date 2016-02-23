@@ -44,8 +44,15 @@ class MovieMore
         @actors = result[:credits][:cast].map { |cast| cast[:name] }
         @backdrop_path = result[:backdrop_path]
         @poster_path = result[:poster_path]
-        @youtube_trailers = result[:trailers][:youtube]
-        @trailer = result[:trailers][:youtube][0][:source] if @youtube_trailers.present?
+        if result[:trailers][:youtube].present?
+          if result[:trailers][:youtube][0][:source].present?
+            @trailer = result[:trailers][:youtube][0][:source]
+          else
+            @trailer = nil
+          end
+        else
+          @trailer = nil
+        end
         @imdb_id = result[:imdb_id]
         @adult = result[:adult]
         @popularity = result[:popularity]
@@ -54,7 +61,11 @@ class MovieMore
         @lists = nil
 
         if result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.present?
-          @mpaa_rating = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
+          if result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification].present?
+            @mpaa_rating = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }.first[:certification]
+          else
+            @mpaa_rating = "NR"
+          end
         else
           @mpaa_rating = "NR"
         end
