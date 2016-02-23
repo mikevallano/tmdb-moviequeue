@@ -69,8 +69,6 @@
 
         <!-- LISTS AND TAGS -->
         <div class="row">
-          <!-- TODO: Refactor the shit out of this: -->
-          <% @lists_except_movie = current_user.lists_except_movie(@movie) %>
           <div class="col-xs-6">
             <div id="movie_tagged_<%= "#{@movie.tmdb_id}" %>">
               <%= render "movies/movie_tag", movie: @movie %>

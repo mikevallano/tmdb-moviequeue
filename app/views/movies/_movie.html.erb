@@ -1,8 +1,7 @@
 
   <!-- MODAL -->
  <div class="modal fade" id="myModal_<%= movie.tmdb_id %>" tabindex="-1" role="dialog">
-      <!-- TODO: Refactor the shit out of this: -->
-  <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
