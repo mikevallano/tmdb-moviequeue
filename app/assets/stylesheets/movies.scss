@@ -119,6 +119,26 @@ article.tile-cover-pic {
     } /* a */
   } /* .sidebar-button */
 
+  .embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+  } /* embed-container  */
+
+  .embed-container iframe,
+  .embed-container object,
+  .embed-container embed {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }/* embed-container extras */
+
   .trailer-button {
     margin: 10px auto;
     width: 200px;
