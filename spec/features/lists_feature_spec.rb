@@ -59,6 +59,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can delete their own list" do
         sign_in_and_create_list
         click_link "my_lists_nav_link"
+        # click_link "edit_list_link_list_index"
         expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
       end
 
