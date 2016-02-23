@@ -48,7 +48,11 @@ class MovieMore
     def self.tmdb_info(result)
         @title = result[:title]
         @release_date = Date.parse(result[:release_date]) if result[:release_date].present?
-        @vote_average = result[:vote_average].round(1)
+        if result[:vote_average].present?
+          @vote_average = result[:vote_average].round(1)
+        else
+          @vote_average = 0
+        end
         @genres = result[:genres].map { |genre| genre[:name] }
         @overview = result[:overview]
         @actors = result[:credits][:cast].map { |cast| cast[:name] }
@@ -66,7 +70,11 @@ class MovieMore
         @imdb_id = result[:imdb_id]
         @adult = result[:adult]
         @popularity = result[:popularity]
-        @runtime = result[:runtime]
+        if result[:runtime].present?
+          @runtime = result[:runtime]
+        else
+          @runtime = 0
+        end
         @tags = nil
         @lists = nil
 

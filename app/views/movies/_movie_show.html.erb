@@ -97,6 +97,7 @@
               <p><strong>Production Companies:</strong>
               <% @production_companies.each do |company| %>
                 <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
+                <%= ", " unless company == @production_companies.last %>
              <% end %> <!-- # each -->
               </p>
             <% end %> <!-- # if @production_companies.present? -->
