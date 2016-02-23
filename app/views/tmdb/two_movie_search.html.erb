@@ -5,9 +5,10 @@
 <p>Enter two movies and see which actors have been in both movies.</p>
 
   <%= form_tag '/tmdb/two_movie_search', { class: "form-class", id: "two-movie-search", role: "form", method: :get } do %>
-    <%= text_field_tag :movie_one, nil, class: "form-control search-form", id: "movie1_field_two_movie_search", placeholder: "Enter First Movie Title" %>
 
-    <%= text_field_tag :movie_two, nil, class: "form-control search-form", id: "movie2_field_two_movie_search", placeholder: "Enter Second Movie Title" %>
+    <%= text_field_tag :movie_one, nil, class: "form-control search-form", id: "movie1_field_two_movie_search", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
+
+    <%= text_field_tag :movie_two, nil, class: "form-control search-form", id: "movie2_field_two_movie_search", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
 
     <%= submit_tag "Search", id: "search_button_two_movie_search", class: "form-control-submit search-form-submit" %>
   <% end %>

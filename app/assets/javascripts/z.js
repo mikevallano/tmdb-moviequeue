@@ -3,12 +3,42 @@ ready = function() {
 
   $( "#movie_field_movie_search" ).autocomplete({
     minLength: 4,
-    source: $('#movie_field_movie_search').data('autocomplete-source')
+    source: $("#movie_field_movie_search").data("autocomplete-source")
+  });
+
+  $( "#homepage-search-field" ).autocomplete({
+    minLength: 4,
+    source: $("#homepage-search-field").data("autocomplete-source")
   });
 
   $( "#actor_name_actor_search" ).autocomplete({
     minLength: 4,
-    source: $('#actor_name_actor_search').data('autocomplete-source')
+    source: $("#actor_name_actor_search").data("autocomplete-source")
+  });
+
+  $( "#actor_field_discover_search" ).autocomplete({
+    minLength: 4,
+    source: $("#actor_field_discover_search").data("autocomplete-source")
+  });
+
+  $( "#actor1_field_two_actor_search" ).autocomplete({
+    minLength: 4,
+    source: $("#actor1_field_two_actor_search").data("autocomplete-source")
+  });
+
+  $( "#actor2_field_two_actor_search" ).autocomplete({
+    minLength: 4,
+    source: $("#actor2_field_two_actor_search").data("autocomplete-source")
+  });
+
+  $( "#movie1_field_two_movie_search" ).autocomplete({
+    minLength: 4,
+    source: $("#movie1_field_two_movie_search").data("autocomplete-source")
+  });
+
+  $( "#movie2_field_two_movie_search" ).autocomplete({
+    minLength: 4,
+    source: $("#movie2_field_two_movie_search").data("autocomplete-source")
   });
 
 };
