@@ -1,8 +1,9 @@
 
 <% if current_user.watched_movies.include?(@movie) %> <!-- #if movie has been seen -->
   <h2>You've Seen this <%= pluralize(@movie.times_seen_by(current_user), "Time") %>.
-  <span class="screening-link"><%= link_to "Add / Manage Screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></span></h2>
+    Last seen on: <%= @movie.most_recent_screening_by(current_user) %>.
+  <span class="screening-link"><%= link_to "Add / Manage Screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></span>
 <% else %> <!-- #if movie has been seen -->
-  <h2>You Haven't Seen this One Yet! 
+  <h2>You Haven't Seen this One Yet!
   <span class="screening-link"><%= link_to "Mark as Watched", screenings_path(:screening => { notes: nil }, tmdb_id: @movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></span></h2>
 <% end %> <!-- #if movie has been seen -->

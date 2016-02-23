@@ -123,7 +123,7 @@
                   <%= render 'movies/movie_review', movie: @movie %>
                 </div>
 
-                <% if current_user.admin? %>
+                <% if current_user.admin? && @movie.in_db %>
                   <p><%= link_to "Update Movie Data", update_tmdb_data_path(tmdb_id: @movie.tmdb_id) %></p>
                 <% end %>
 

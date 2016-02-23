@@ -88,6 +88,10 @@ class Movie < ActiveRecord::Base
     unseen_movies = (user_movies - seen_movies)
   end
 
+  def most_recent_screening_by(user)
+    screenings.by_user(user).sort_by(&:date_watched).last.date_watched.stamp("1/2/2001")
+  end
+
   def date_added_to_list(list)
     Listing.find_by(list_id: list.id, movie_id: self.id).created_at
   end

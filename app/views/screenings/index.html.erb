@@ -15,7 +15,7 @@
   <tbody>
     <% @screenings.order("date_watched DESC").each do |screening| %>
       <tr>
-        <td><%= screening.date_watched %></td>
+        <td><%= screening.date_watched.stamp("1/2/2001") %></td>
         <td><%= screening.location_watched %></td>
         <td><%= screening.notes %></td>
         <td><%= link_to 'Edit', edit_movie_screening_path(@movie, screening) %></td>
@@ -28,6 +28,6 @@
 <br>
 
 <p class="button-main">
-  <%= link_to '+ New Screening', new_movie_screening_path(@movie) %> 
+  <%= link_to '+ New Screening', new_movie_screening_path(@movie) %>
   <%= link_to "Back to " + @movie.title, movie_path(@movie) %>
 </p>
