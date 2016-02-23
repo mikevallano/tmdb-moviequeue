@@ -56,8 +56,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       scenario "members can't delete a list unless they are the owner" do
         sign_in_user(user2)
         visit(user_lists_path(user2))
-        click_link "destroy_list_link_list_index"
-        expect(page).to have_content("Only list owners can delete lists.")
+        expect(page).not_to have_selector("#destroy_list_link_list_index")
       end
 
     end #without JS

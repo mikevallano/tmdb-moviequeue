@@ -362,7 +362,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         VCR.use_cassette("actor_tv_more") do
           click_link "The Simpsons"
         end
-        expect(current_url).to eq(tv_more_url(actor_id: 884, show_id: 456))
         expect(page).to have_content("The Simpsons")
       end #actor tv more
 
@@ -373,24 +372,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         VCR.use_cassette("actor_tv_credit") do
           click_link "Appearance Details", match: :first
         end
-        expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "5256c32c19c2956ff601d1f7", show_name: "The Simpsons"))
-        expect(page).to have_content("Episode overview")
-        expect(page).to have_content("The Simpsons")
+        expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "56ad478dc3a3681c34006885", show_name: "Horace and Pete"))
+        expect(page).to have_content("Horace")
       end #actor tv credit
-
-      scenario "tv credit page links to main show page" do
-        VCR.use_cassette("tmdb_actor_more") do
-          click_link "Get a full list of credits and bio"
-        end
-        VCR.use_cassette("actor_tv_credit") do
-          click_link "Appearance Details", match: :first
-        end
-        VCR.use_cassette("tv_main_page") do
-          click_link "The Simpsons"
-        end
-        expect(page).to have_content("The Simpsons")
-        expect(current_url).to eq(tv_more_url(show_id: 456))
-      end #actor tv main page
 
     end #actor searches
 
