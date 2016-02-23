@@ -1,2 +1,2 @@
 <li><%= link_to "#{credit.title}", movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
-  <%= " | #{credit.date}" %></li>
+  <%= " | #{credit.date}" if credit.date != "Date unavailable" %></li>

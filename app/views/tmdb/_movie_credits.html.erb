@@ -1,8 +1,8 @@
 <h3>Movie Credits (<%= @person_movie_credits.actor.size %>)</h3>
 <ul>
   <% @person_movie_credits.actor.each do |credit| %>
-    <li><%= link_to "#{credit.title}", movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
-    <%= "| Character: #{credit.character}" if credit.character.present? %>
-    <%= " | #{credit.date}" %></li>
+    <li><%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
+    <%= " | #{credit.date} " if credit.date != "Date unavailable" %>
+    <%= "| As #{credit.character}" if credit.character.present? %></li>
   <% end %>
 </ul>
