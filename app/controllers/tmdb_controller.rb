@@ -20,6 +20,14 @@ class TmdbController < ApplicationController
     end
   end
 
+  def update_tmdb_data
+    if params[:tmdb_id]
+      @tmdb_id = params[:tmdb_id]
+      tmdb_handler_update_movie(@tmdb_id)
+    end
+    redirect_to movie_more_path(tmdb_id: @tmdb_id)
+  end
+
   def similar_movies
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]

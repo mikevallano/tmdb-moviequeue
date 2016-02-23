@@ -72,6 +72,20 @@ module TmdbHandler
     popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
   end
 
+  def tmdb_handler_update_movie(tmdb_id)
+    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    @movie_to_update = Movie.find_by(tmdb_id: tmdb_id)
+    @movie = MovieMore.tmdb_info(@result)
+
+    @movie_to_update.update_attributes(title: @movie.title, imdb_id: @movie.imdb_id, genres: @movie.genres,
+      actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
+      poster_path: @movie.poster_path, release_date: @movie.release_date, overview: @movie.overview,
+      trailer: @movie.trailer, director: @movie.director, director_id: @movie.director_id,
+      vote_average: @movie.vote_average, popularity: @movie.popularity, runtime: @movie.runtime,
+      mpaa_rating: @movie.mpaa_rating)
+  end
+
   def tmdb_handler_actor_more(actor_id)
 
     tmdb_handler_person_detail_search(actor_id)

@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
   has_many :watched_movies, through: :screenings,
   :source => :movie
 
+  def admin?
+    admins = %w(roscoe mikevallano anne)
+    admins.include?(self.username)
+  end
+
   def all_lists
     (self.lists | self.member_lists).uniq
   end
