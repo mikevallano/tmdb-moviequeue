@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
   get 'tmdb/two_movie_search', to: 'tmdb#two_movie_search', as: :two_movie_search
   get 'tmdb/discover_search', to: 'tmdb#discover_search', as: :discover_search
+  get 'tmdb/movie_autocomplete', to: 'tmdb#movie_autocomplete', as: :movie_autocomplete
+  get 'tmdb/person_autocomplete', to: 'tmdb#person_autocomplete', as: :person_autocomplete
 
   resources :invites, only: [:create]
 

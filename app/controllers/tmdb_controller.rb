@@ -11,6 +11,16 @@ class TmdbController < ApplicationController
     end
   end
 
+  def movie_autocomplete
+    tmdb_handler_movie_autocomplete(params[:term])
+    render json: @autocomplete_results
+  end
+
+  def person_autocomplete
+    tmdb_handler_person_autocomplete(params[:term])
+    render json: @autocomplete_results
+  end
+
   def movie_more
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
