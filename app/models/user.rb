@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def all_lists_by_name
+    self.all_lists.sort_by { |list| list.name.downcase }
+  end
+
   def all_movies
     (self.movies.all + self.member_movies.all + self.watched_movies.all).uniq
   end

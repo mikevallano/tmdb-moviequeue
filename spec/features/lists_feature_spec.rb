@@ -59,8 +59,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "user can delete their own list" do
         sign_in_and_create_list
         click_link "my_lists_nav_link"
-        # click_link "edit_list_link_list_index"
-        expect { click_link "destroy_list_link_list_index" }.to change(List, :count).by(-1)
+        click_link "edit_list_link_list_index"
+        expect { click_link "destroy_list_link_list_show" }.to change(List, :count).by(-1)
       end
 
       scenario "listings are destroyed when list is deleted" do
@@ -69,7 +69,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
         FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id)
         expect(user.movies).to include(movie)
         click_link "my_lists_nav_link"
-        click_link "destroy_list_link_list_index"
+        click_link "edit_list_link_list_index"
+        click_link "destroy_list_link_list_show"
         expect(user.movies).not_to include(movie)
       end
 
@@ -79,7 +80,8 @@ RSpec.feature "Lists feature spec", :type => :feature do
         FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id)
         expect(user2.member_lists).to include(list)
         click_link "my_lists_nav_link"
-        click_link "destroy_list_link_list_index"
+        click_link "edit_list_link_list_index"
+        click_link "destroy_list_link_list_show"
         expect(user2.member_lists).not_to include(list)
       end
 

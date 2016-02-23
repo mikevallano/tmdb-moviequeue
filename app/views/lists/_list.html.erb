@@ -24,7 +24,6 @@
         <li><%= link_to " Show Movies", user_list_path(list.owner, list), id: "show_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
         <% if current_user == list.owner %> <!-- only list owners can edit or delete a list -->
           <li><%= link_to ' Manage List', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
-          <li><%= link_to ' Delete List', user_list_path(list.owner, list), id: "destroy_list_link_list_index", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." }, class: "fa fa-chevron-circle-right" %></li>
         <% end %><!-- if current_user == list.owner  -->
         </ul>
     </div> <!-- list-mgt-links -->
