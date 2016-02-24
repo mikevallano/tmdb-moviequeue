@@ -8,11 +8,12 @@ RSpec.feature "Movies feature spec", :type => :feature do
     let(:username) { FFaker::Internet.user_name }
     let(:user) { FactoryGirl.create(:user) }
     let(:user2) { FactoryGirl.create(:user) }
+    let(:anne) { FactoryGirl.create(:user, username: "anne") }
     let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
     let(:movie) { FactoryGirl.create(:movie, title: "Fargo", genres: ["Crime"]) }
     let(:movie2) { FactoryGirl.create(:movie) }
     let(:fargo) { FactoryGirl.create(:movie, title: "Fargo", runtime: 90,
-      vote_average: 8, release_date: Date.today - 8000) }
+      vote_average: 8, release_date: Date.today - 8000, tmdb_id: 275) }
     let(:no_country) { FactoryGirl.create(:movie, title: "No Country for Old Men", runtime: 100,
       vote_average: 9, release_date: Date.today - 6000) }
     let(:fargo_listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: fargo.id) }
@@ -52,6 +53,17 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).not_to have_selector("#rating_submit_button_rating_form")
         expect(page).not_to have_selector("#mark_watched_link_movie_show")
       end #does not show links if not on a list
+
+      scenario "update movie button retrieves latest info from API" do
+        sign_in_user(anne) #anne is an "admin"
+        fargo
+        visit(movie_path(fargo))
+        expect(fargo.runtime).to eq(90)
+        VCR.use_cassette('update_movie') do
+          click_link("update_movie_link_movie_show")
+        end
+        expect(page).to have_content("98 min")
+      end
 
       context "the movie on the show page is on one of the user's lists" do
         before(:each) do
@@ -93,8 +105,8 @@ RSpec.feature "Movies feature spec", :type => :feature do
           visit(movie_path(movie))
           expect(page).to have_selector("#mark_watched_link_movies_partial")
           expect(page).not_to have_selector("#add_screening_link_movies_partial")
-          find("#mark_watched_link_movies_partial")
-          click_link("mark_watched_link_movies_partial") #mark movie as watched
+          find "#mark_watched_link_movies_partial", match: :first
+          click_link "mark_watched_link_movies_partial", match: :first #mark movie as watched
           wait_for_ajax
           expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
           expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings

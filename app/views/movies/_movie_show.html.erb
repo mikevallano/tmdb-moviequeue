@@ -122,7 +122,7 @@
                 </div>
 
                 <% if current_user.admin? && @movie.in_db %>
-                  <p><%= link_to "Update Movie Data", update_tmdb_data_path(tmdb_id: @movie.tmdb_id) %></p>
+                  <p><%= link_to "Update Movie Data", update_tmdb_data_path(tmdb_id: @movie.tmdb_id), id: "update_movie_link_movie_show" %></p>
                 <% end %>
 
               </div> <!-- col-xs-12 -->
