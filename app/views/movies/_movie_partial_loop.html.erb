@@ -4,7 +4,6 @@
       <article class="tile-cover-pic">
         <!-- MODAL TRIGGER -->
 
-        <!-- #TODO clean this up. It passes the list_id if @list.present -->
         <% if @list.present? %>
           <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list.id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
         <% else %>

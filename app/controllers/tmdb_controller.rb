@@ -174,7 +174,6 @@ class TmdbController < ApplicationController
   end #discover search
 
   def discover_show_search_params(show_params)
-    #TODO: Clean this up
     @keys = show_params.keys
     @actor_display = show_params[:actor].titlecase if @keys.include?("actor")
     if @keys.include?("genre")
@@ -192,7 +191,12 @@ class TmdbController < ApplicationController
     end
     @year_show = show_params[:date][:year] if @keys.include?("date")
     @year_display = "#{@year_select_display} #{@year_show}" if @year_show.present?
-    @sort_display = "Sorted by #{show_params[:sort_by]}" if @keys.include?("sort_by")
+    if @keys.include?("sort_by")
+      @sort_selected = show_params[:sort_by]
+      @sort_options = Movie::SORT_BY.to_h
+      @sort_key = @sort_options.key(@sort_selected)
+      @sort_display = "sorted by #{@sort_key}" if @keys.include?("sort_by")
+    end
 
     "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
   end
