@@ -26,7 +26,7 @@ class TaggingsController < ApplicationController
         format.html { redirect_to movie_path(@movie), notice: 'Tag was removed.' }
         format.json { head :no_content }
       else
-        redirect_to @redirect_url, notice: "tag not removed"
+        redirect_to redirect_to movie_path(@movie), notice: "tag not removed"
       end
     end
   end
