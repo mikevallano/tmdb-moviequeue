@@ -19,14 +19,14 @@ module TmdbHandler
   def tmdb_handler_movie_autocomplete(query)
     @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
-    @autocomplete_results = @tmdb_response[:results].map{ |result| result[:title] }
+    @autocomplete_results = @tmdb_response[:results].map{ |result| result[:title] }.uniq
   end
 
   def tmdb_handler_person_autocomplete(query)
     @search_url = "http://api.themoviedb.org/3/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @person_results = @tmdb_response[:results].select{ |result| result[:media_type] == "person"}
-    @autocomplete_results = @person_results.map{ |result| result[:name] }
+    @autocomplete_results = @person_results.map{ |result| result[:name] }.uniq
   end
 
   def tmdb_handler_movie_more(id)
