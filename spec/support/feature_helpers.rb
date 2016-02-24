@@ -30,7 +30,7 @@ module FeatureHelpers
   end
 
   def api_search_for_movie
-    VCR.use_cassette('fill_in_title_search') do
+    VCR.use_cassette('fill_in_title_search', :record => :new_episodes) do
       fill_in "movie_title", with: 'fargo'
     end
      VCR.use_cassette('tmdb_search') do

@@ -32,21 +32,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect("#{url}").to include("#{movie.slug}")
       end
 
-      scenario "movie show page shows link to similar movies" do
-        skip "wait until show page is designed"
-        sign_in_user(user)
-        visit(movie_path(movie))
-        expect(page).to have_selector("#similar_movies_link_movie_show")
-        VCR.use_cassette("tmdb_movie_more_info") do
-          click_link "similar_movies_link_movie_show"
-        end
-        VCR.use_cassette("similar_movies_more_info") do
-          click_link "movie_more_link_movie_partial", match: :first
-        end
-        save_and_open_page
-        expect(page).to have_content("The Revenant")
-      end
-
       scenario "movie show page has genres that are links that filter movies" do
         sign_in_user(user)
         listing
@@ -92,29 +77,28 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_content("dark-comedy")
         end
 
-        # scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
-        #   skip "needs to have js on the actual page"
-        #   screening
-        #   visit(movie_path(movie))
-        #   expect(page).not_to have_selector("#show_rating_link_movies_partial")
-        #   expect(page).to have_selector("#rating_submit_button_rating_form")
-        #   select "5", :from => "rating[value]", match: :first
-        #   click_button "rating_submit_button_rating_form", match: :first
-        #   expect(page).to have_content("5")
-        #   expect(page).to have_selector("#show_rating_link_movies_partial")
-        #   expect(page).not_to have_selector("#new_rating_link_movie_show")
-        # end
+        scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
+          screening
+          visit(movie_path(movie))
+          expect(page).not_to have_selector("#show_rating_link_movies_partial")
+          expect(page).to have_selector("#rating_submit_button_rating_form")
+          select "5", :from => "rating[value]"
+          click_button "rating_submit_button_rating_form"
+          expect(page).to have_content("5")
+          expect(page).to have_selector("#show_rating_link_movies_partial")
+          expect(page).not_to have_selector("#new_rating_link_movie_show")
+        end
 
-        # scenario "unwatched movie has a link to mark as watched", js: true do
-        #   skip "get design ironed out"
-        #   visit(movie_path(movie))
-        #   expect(page).to have_selector("#mark_watched_link_movies_partial")
-        #   expect(page).not_to have_selector("#add_screening_link_movies_partial")
-        #   find("#mark_watched_link_movies_partial")
-        #   click_link("mark_watched_link_movies_partial") #mark movie as watched
-        #   expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
-        #   expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
-        # end
+        scenario "unwatched movie has a link to mark as watched", js: true do
+          visit(movie_path(movie))
+          expect(page).to have_selector("#mark_watched_link_movies_partial")
+          expect(page).not_to have_selector("#add_screening_link_movies_partial")
+          find("#mark_watched_link_movies_partial")
+          click_link("mark_watched_link_movies_partial") #mark movie as watched
+          wait_for_ajax
+          expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
+          expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
+        end
 
       end #movie is on a list
 

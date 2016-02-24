@@ -230,4 +230,108 @@ http_interactions:
         Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.136349,"vote_count":13,"video":false,"vote_average":5.74}],"total_results":4,"total_pages":1}'
     http_version: 
   recorded_at: Wed, 24 Feb 2016 16:48:13 GMT
+- request:
+    method: get
+    uri: http://api.themoviedb.org/3/search/multi?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Steve%20Buscemi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 24 Feb 2016 17:18:07 GMT
+      Etag:
+      - W/"3b9d0ffc2272c1649492cba46dd6fc6d"
+      Server:
+      - openresty
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '2040'
+      X-Memc-Expires:
+      - '19560'
+      X-Memc-Key:
+      - d1c79833d9b171f45b0b5dd29529c8c3
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '37'
+      X-Ratelimit-Reset:
+      - '1456334289'
+      Content-Length:
+      - '1048'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJwYWdlIjoxLCJyZXN1bHRzIjpbeyJhZHVsdCI6ZmFsc2UsImlkIjo4ODQs
+        Imtub3duX2ZvciI6W3siYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9wYXRoIjoi
+        L210ZTYzcUphVm5veGtrWGJIa2RGdWpCbkJnZC5qcGciLCJnZW5yZV9pZHMi
+        Ols4MCw1M10sImlkIjo2ODAsIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJv
+        cmlnaW5hbF90aXRsZSI6IlB1bHAgRmljdGlvbiIsIm92ZXJ2aWV3IjoiQSBi
+        dXJnZXItbG92aW5nIGhpdCBtYW4sIGhpcyBwaGlsb3NvcGhpY2FsIHBhcnRu
+        ZXIsIGEgZHJ1Zy1hZGRsZWQgZ2FuZ3N0ZXIncyBtb2xsIGFuZCBhIHdhc2hl
+        ZC11cCBib3hlciBjb252ZXJnZSBpbiB0aGlzIHNwcmF3bGluZywgY29tZWRp
+        YyBjcmltZSBjYXBlci4gVGhlaXIgYWR2ZW50dXJlcyB1bmZ1cmwgaW4gdGhy
+        ZWUgc3RvcmllcyB0aGF0IGluZ2VuaW91c2x5IHRyaXAgYmFjayBhbmQgZm9y
+        dGggaW4gdGltZS4iLCJyZWxlYXNlX2RhdGUiOiIxOTk0LTEwLTE0IiwicG9z
+        dGVyX3BhdGgiOiIvZE0ydzM2NE1TY3NqRmY4cGZNYmFXVWNXclIuanBnIiwi
+        cG9wdWxhcml0eSI6My45ODIyNjEsInRpdGxlIjoiUHVscCBGaWN0aW9uIiwi
+        dmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjguMCwidm90ZV9jb3VudCI6
+        NDAxMiwibWVkaWFfdHlwZSI6Im1vdmllIn0seyJhZHVsdCI6ZmFsc2UsImJh
+        Y2tkcm9wX3BhdGgiOiIvZUtCVVllU2dHVnZ6dE8yTVp4RDVZTWN6Nmt2Lmpw
+        ZyIsImdlbnJlX2lkcyI6WzE0LDE2LDEwNzUxLDM1XSwiaWQiOjU4NSwib3Jp
+        Z2luYWxfbGFuZ3VhZ2UiOiJlbiIsIm9yaWdpbmFsX3RpdGxlIjoiTW9uc3Rl
+        cnMsIEluYy4iLCJvdmVydmlldyI6IkphbWVzIFN1bGxpdmFuIGFuZCBNaWtl
+        IFdhem93c2tpIGFyZSBtb25zdGVycywgdGhleSBlYXJuIHRoZWlyIGxpdmlu
+        ZyBzY2FyaW5nIGNoaWxkcmVuIGFuZCBhcmUgdGhlIGJlc3QgaW4gdGhlIGJ1
+        c2luZXNzLi4uIGV2ZW4gdGhvdWdoIHRoZXkncmUgbW9yZSBhZnJhaWQgb2Yg
+        dGhlIGNoaWxkcmVuIHRoYW4gdGhleSBhcmUgb2YgdGhlbS4gV2hlbiBhIGNo
+        aWxkIGFjY2lkZW50YWxseSBlbnRlcnMgdGhlaXIgd29ybGQsIEphbWVzIGFu
+        ZCBNaWtlIHN1ZGRlbmx5IGZpbmQgdGhhdCBraWRzIGFyZSBub3QgdG8gYmUg
+        YWZyYWlkIG9mIGFuZCB0aGV5IHVuY292ZXIgYSBjb25zcGlyYWN5IHRoYXQg
+        Y291bGQgdGhyZWF0ZW4gYWxsIGNoaWxkcmVuIGFjcm9zcyB0aGUgd29ybGQu
+        IiwicmVsZWFzZV9kYXRlIjoiMjAwMS0xMS0wMSIsInBvc3Rlcl9wYXRoIjoi
+        LzkzWTlCR3g4Ymx6bVpPUFNvaXZrRmZhaWZxVS5qcGciLCJwb3B1bGFyaXR5
+        Ijo0Ljk3NzY3MywidGl0bGUiOiJNb25zdGVycywgSW5jLiIsInZpZGVvIjpm
+        YWxzZSwidm90ZV9hdmVyYWdlIjo3LjMsInZvdGVfY291bnQiOjMyODAsIm1l
+        ZGlhX3R5cGUiOiJtb3ZpZSJ9LHsiYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9w
+        YXRoIjoiLzVtRENLS1M3TThhVVpLZFNobkNhN2xMYnptSC5qcGciLCJnZW5y
+        ZV9pZHMiOlsxNiwxMDc1MV0sImlkIjo2MjIxMSwib3JpZ2luYWxfbGFuZ3Vh
+        Z2UiOiJlbiIsIm9yaWdpbmFsX3RpdGxlIjoiTW9uc3RlcnMgVW5pdmVyc2l0
+        eSIsIm92ZXJ2aWV3IjoiQSBsb29rIGF0IHRoZSByZWxhdGlvbnNoaXAgYmV0
+        d2VlbiBNaWtlIGFuZCBTdWxsZXkgZHVyaW5nIHRoZWlyIGRheXMgYXQgTW9u
+        c3RlcnMgVW5pdmVyc2l0eSDigJQgd2hlbiB0aGV5IHdlcmVuJ3QgbmVjZXNz
+        YXJpbHkgdGhlIGJlc3Qgb2YgZnJpZW5kcy4iLCJyZWxlYXNlX2RhdGUiOiIy
+        MDEzLTA2LTIwIiwicG9zdGVyX3BhdGgiOiIvYTA1eFFVOWh1WTNQNXV1ckxj
+        R0dIbXNmMlZoLmpwZyIsInBvcHVsYXJpdHkiOjMuMTkzNTU1LCJ0aXRsZSI6
+        Ik1vbnN0ZXJzIFVuaXZlcnNpdHkiLCJ2aWRlbyI6ZmFsc2UsInZvdGVfYXZl
+        cmFnZSI6Ny4wLCJ2b3RlX2NvdW50IjoxODM0LCJtZWRpYV90eXBlIjoibW92
+        aWUifV0sIm5hbWUiOiJTdGV2ZSBCdXNjZW1pIiwicG9wdWxhcml0eSI6MTAu
+        ODk2MDU1LCJwcm9maWxlX3BhdGgiOiIvZTE5R2ZPV3pNTk4xaGk3QjlDaTYy
+        aE12dFhzLmpwZyIsIm1lZGlhX3R5cGUiOiJwZXJzb24ifV0sInRvdGFsX3Bh
+        Z2VzIjoxLCJ0b3RhbF9yZXN1bHRzIjoxfQ==
+    http_version: 
+  recorded_at: Wed, 24 Feb 2016 17:18:05 GMT
 recorded_with: VCR 2.9.3

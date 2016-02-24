@@ -167,18 +167,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_selector("#modal_link_275")
       end
 
-      # scenario "search by actor and after year", js: true do
-      #   skip "weird API call issues. breaking at line 179 in tmdb_handler"
-      #   visit(discover_search_path)
-      #   fill_in "actor_field_discover_search", with: "ben affleck"
-      #   select "2005", :from => "date[year]"
-      #   select "After This Year", :from => "year_select"
-      #   click_button "search_button_discover_search"
-      #   # expect(page).to have_content("Argo")
-      #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_68734")
-      # end
-
       scenario "search by actor and before year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi") do
@@ -241,7 +229,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       before(:each) do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
-        wait_for_ajax
         visit(api_search_path)
         api_search_for_movie
         find("#modal_link_275").click
