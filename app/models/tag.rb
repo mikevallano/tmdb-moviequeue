@@ -1,6 +1,6 @@
 class Tag < ActiveRecord::Base
 
-  validates :name, :uniqueness => :true, :presence => true, length: { maximum: 20 }
+  validates :name, :uniqueness => :true, :presence => true, length: { maximum: 25 }
 
   has_many :taggings
   has_many :movies, through: :taggings

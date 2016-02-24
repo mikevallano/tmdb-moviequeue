@@ -7,7 +7,7 @@ FactoryGirl.define do
     end
 
     factory :tag_too_long do
-      name { SecureRandom.urlsafe_base64(21) }
+      name { SecureRandom.urlsafe_base64(26) }
     end
   end
 
