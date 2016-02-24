@@ -25,7 +25,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
     let(:listing3) { FactoryGirl.create(:listing, list_id: list3.id, movie_id: movie.id) }
     let(:public_listing) { FactoryGirl.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
-    let(:list_name) { FFaker::HipsterIpsum.words(3).join(' ') }
+    let(:list_name) { FFaker::HipsterIpsum.words(1).join(' ') }
     let(:list_description) { FFaker::HipsterIpsum.phrase }
 
 

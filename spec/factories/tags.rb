@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :tag do
-    name { FFaker::HipsterIpsum.words(1) }
+    sequence(:name) { |n| "tag name#{n}" }
 
     factory :invalid_tag do
       name nil

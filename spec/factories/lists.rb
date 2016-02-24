@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :list do
     owner_id 1
-    name { FFaker::DizzleIpsum.words(1).join(' ') }
+    sequence(:name) { |n| "list name#{n}" }
     is_main false
     is_public false
     description { FFaker::HipsterIpsum.phrase }
