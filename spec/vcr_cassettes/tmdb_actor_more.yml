@@ -25,9 +25,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:12:41 GMT
+      - Wed, 24 Feb 2016 16:49:15 GMT
       Etag:
-      - '"87c570696fc6285dac96f23fbe7c1ade"'
+      - '"faa1f0536726b7c493badd61505030a4"'
       Server:
       - openresty
       Status:
@@ -35,17 +35,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '25336'
+      - '23261'
       X-Memc-Expires:
-      - '3464'
+      - '5539'
       X-Memc-Key:
       - 7982397048fe5e63fc1e264608f433e0
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '36'
+      - '38'
       X-Ratelimit-Reset:
-      - '1456247570'
+      - '1456332563'
       Content-Length:
       - '1021'
       Connection:
@@ -63,9 +63,9 @@ http_interactions:
         Lounge between his friend Vince Vaughn, screenwriter Scott Rosenberg and a
         local man, who allegedly instigated the brawl.\n\nBuscemi has one son, Lucian,
         with his wife Jo Andres.","birthday":"1957-12-13","deathday":"","homepage":"","id":884,"imdb_id":"nm0000114","name":"Steve
-        Buscemi","place_of_birth":"New York City, New York, USA","popularity":12.391826,"profile_path":"/e19GfOWzMNN1hi7B9Ci62hMvtXs.jpg"}'
+        Buscemi","place_of_birth":"New York City, New York, USA","popularity":10.896055,"profile_path":"/e19GfOWzMNN1hi7B9Ci62hMvtXs.jpg"}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:12:40 GMT
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/person/884/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
@@ -91,7 +91,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:12:42 GMT
+      - Wed, 24 Feb 2016 16:49:15 GMT
       Etag:
       - W/"03841d613a6d4dd3c529d09a8e37a4df"
       Server:
@@ -103,17 +103,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '27435'
+      - '24498'
       X-Memc-Expires:
-      - '1365'
+      - '4302'
       X-Memc-Key:
       - e40d38e5b39de5d3837b07dc19a1e236
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '35'
+      - '37'
       X-Ratelimit-Reset:
-      - '1456247570'
+      - '1456332563'
       Content-Length:
       - '7954'
       Connection:
@@ -324,7 +324,7 @@ http_interactions:
         Lounge","poster_path":"/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","release_date":"1996-10-11","title":"Trees
         Lounge"}],"id":884}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:12:40 GMT
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/person/884/tv_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
@@ -350,7 +350,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:12:42 GMT
+      - Wed, 24 Feb 2016 16:49:15 GMT
       Etag:
       - W/"1663965ff9259c8bf10331d01fb2ce6b"
       Server:
@@ -362,17 +362,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '7102'
+      - '18347'
       X-Memc-Expires:
-      - '21698'
+      - '10453'
       X-Memc-Key:
       - 7299abfbd1ad12ffb651934d05d25e30
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '34'
+      - '36'
       X-Ratelimit-Reset:
-      - '1456247570'
+      - '1456332563'
       Content-Length:
       - '1861'
       Connection:
@@ -406,5 +406,5 @@ http_interactions:
         Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg"},{"credit_id":"525854a3760ee346610887cd","department":"Directing","episode_count":6,"first_air_date":"2009-06-08","id":18053,"job":"Director","name":"Nurse
         Jackie","original_name":"Nurse Jackie","poster_path":"/47j0d1oxnCxAUTzqVTKjWkHqkjF.jpg"},{"credit_id":"54e1e596bcca015433000150","department":"Directing","episode_count":1,"first_air_date":"2011-01-21","id":33922,"job":"Director","name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg"}],"id":884}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:12:41 GMT
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
 recorded_with: VCR 2.9.3

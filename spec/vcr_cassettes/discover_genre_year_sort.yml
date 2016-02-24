@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:27:24 GMT
+      - Wed, 24 Feb 2016 16:48:26 GMT
       Server:
       - openresty
       Vary:
@@ -33,11 +33,11 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '37'
+      - '36'
       X-Ratelimit-Reset:
-      - '1456248450'
+      - '1456332511'
       Content-Length:
-      - '1037'
+      - '1039'
       Connection:
       - keep-alive
     body:
@@ -57,7 +57,7 @@ http_interactions:
         cyI6WzUzLDgwXSwiaWQiOjY4MCwibWVkaWFfdHlwZSI6Im1vdmllIiwib3Jp
         Z2luYWxfbGFuZ3VhZ2UiOiJlbiIsInRpdGxlIjoiUHVscCBGaWN0aW9uIiwi
         YmFja2Ryb3BfcGF0aCI6IlwvbXRlNjNxSmFWbm94a2tYYkhrZEZ1akJuQmdk
-        LmpwZyIsInBvcHVsYXJpdHkiOjQuOTgyMjYxLCJ2b3RlX2NvdW50Ijo0MDEx
+        LmpwZyIsInBvcHVsYXJpdHkiOjQuMjE4MDAyLCJ2b3RlX2NvdW50Ijo0MDEy
         LCJ2aWRlbyI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6Ny45NX0seyJwb3N0ZXJf
         cGF0aCI6IlwvOTNZOUJHeDhibHptWk9QU29pdmtGZmFpZnFVLmpwZyIsImFk
         dWx0IjpmYWxzZSwib3ZlcnZpZXciOiJKYW1lcyBTdWxsaXZhbiBhbmQgTWlr
@@ -74,24 +74,24 @@ http_interactions:
         MzVdLCJpZCI6NTg1LCJtZWRpYV90eXBlIjoibW92aWUiLCJvcmlnaW5hbF9s
         YW5ndWFnZSI6ImVuIiwidGl0bGUiOiJNb25zdGVycywgSW5jLiIsImJhY2tk
         cm9wX3BhdGgiOiJcL2VLQlVZZVNnR1Z2enRPMk1aeEQ1WU1jejZrdi5qcGci
-        LCJwb3B1bGFyaXR5Ijo0LjQ2MjU2LCJ2b3RlX2NvdW50IjozMjc3LCJ2aWRl
-        byI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6Ny4yNn0seyJwb3N0ZXJfcGF0aCI6
-        IlwvYTA1eFFVOWh1WTNQNXV1ckxjR0dIbXNmMlZoLmpwZyIsImFkdWx0Ijpm
-        YWxzZSwib3ZlcnZpZXciOiJBIGxvb2sgYXQgdGhlIHJlbGF0aW9uc2hpcCBi
-        ZXR3ZWVuIE1pa2UgYW5kIFN1bGxleSBkdXJpbmcgdGhlaXIgZGF5cyBhdCBN
-        b25zdGVycyBVbml2ZXJzaXR5IOKAlCB3aGVuIHRoZXkgd2VyZW4ndCBuZWNl
-        c3NhcmlseSB0aGUgYmVzdCBvZiBmcmllbmRzLiIsInJlbGVhc2VfZGF0ZSI6
-        IjIwMTMtMDYtMjAiLCJvcmlnaW5hbF90aXRsZSI6Ik1vbnN0ZXJzIFVuaXZl
-        cnNpdHkiLCJnZW5yZV9pZHMiOlsxNiwxMDc1MV0sImlkIjo2MjIxMSwibWVk
-        aWFfdHlwZSI6Im1vdmllIiwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJlbiIsInRp
-        dGxlIjoiTW9uc3RlcnMgVW5pdmVyc2l0eSIsImJhY2tkcm9wX3BhdGgiOiJc
-        LzVtRENLS1M3TThhVVpLZFNobkNhN2xMYnptSC5qcGciLCJwb3B1bGFyaXR5
-        IjozLjQyNTM5NSwidm90ZV9jb3VudCI6MTgzMiwidmlkZW8iOmZhbHNlLCJ2
-        b3RlX2F2ZXJhZ2UiOjcuMDN9XSwibmFtZSI6IlN0ZXZlIEJ1c2NlbWkiLCJw
-        b3B1bGFyaXR5IjoxMy4zOTE4MjZ9XSwidG90YWxfcmVzdWx0cyI6MSwidG90
-        YWxfcGFnZXMiOjF9
+        LCJwb3B1bGFyaXR5Ijo0Ljk3NzY3Mywidm90ZV9jb3VudCI6MzI4MCwidmlk
+        ZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjcuMjZ9LHsicG9zdGVyX3BhdGgi
+        OiJcL2EwNXhRVTlodVkzUDV1dXJMY0dHSG1zZjJWaC5qcGciLCJhZHVsdCI6
+        ZmFsc2UsIm92ZXJ2aWV3IjoiQSBsb29rIGF0IHRoZSByZWxhdGlvbnNoaXAg
+        YmV0d2VlbiBNaWtlIGFuZCBTdWxsZXkgZHVyaW5nIHRoZWlyIGRheXMgYXQg
+        TW9uc3RlcnMgVW5pdmVyc2l0eSDigJQgd2hlbiB0aGV5IHdlcmVuJ3QgbmVj
+        ZXNzYXJpbHkgdGhlIGJlc3Qgb2YgZnJpZW5kcy4iLCJyZWxlYXNlX2RhdGUi
+        OiIyMDEzLTA2LTIwIiwib3JpZ2luYWxfdGl0bGUiOiJNb25zdGVycyBVbml2
+        ZXJzaXR5IiwiZ2VucmVfaWRzIjpbMTYsMTA3NTFdLCJpZCI6NjIyMTEsIm1l
+        ZGlhX3R5cGUiOiJtb3ZpZSIsIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJ0
+        aXRsZSI6Ik1vbnN0ZXJzIFVuaXZlcnNpdHkiLCJiYWNrZHJvcF9wYXRoIjoi
+        XC81bURDS0tTN004YVVaS2RTaG5DYTdsTGJ6bUguanBnIiwicG9wdWxhcml0
+        eSI6My4xOTM1NTUsInZvdGVfY291bnQiOjE4MzQsInZpZGVvIjpmYWxzZSwi
+        dm90ZV9hdmVyYWdlIjo3LjAyfV0sIm5hbWUiOiJTdGV2ZSBCdXNjZW1pIiwi
+        cG9wdWxhcml0eSI6MTEuODk2MDU1fV0sInRvdGFsX3Jlc3VsdHMiOjEsInRv
+        dGFsX3BhZ2VzIjoxfQ==
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:22 GMT
+  recorded_at: Wed, 24 Feb 2016 16:48:25 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=R&certification_country=US&page=&primary_release_year=1996&sort_by=popularity.desc&with_companies=&with_genres=80&with_people=884
@@ -117,62 +117,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:27:24 GMT
+      - Wed, 24 Feb 2016 16:48:26 GMT
       Etag:
-      - 3df1d4b96d8976ff5986393e8767f5b2
-      Server:
-      - openresty
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '36'
-      X-Ratelimit-Reset:
-      - '1456248450'
-      Content-Length:
-      - '939'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: '{"page":1,"results":[{"poster_path":"\/b8cCEKv4q8iIatnfFO8dDDwxws1.jpg","adult":false,"overview":"Jerry,
-        a small-town Minnesota car salesman is bursting at the seams with debt...
-        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
-        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
-        to be a snap and nobody''s going to get hurt... until people start dying.
-        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
-        pregnant - investigator who''ll stop at nothing to get her man. And if you
-        think her small-time investigative skills will give the crooks a run for their
-        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.763493,"vote_count":804,"video":false,"vote_average":7.5}],"total_results":1,"total_pages":1}'
-    http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:23 GMT
-- request:
-    method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=R&certification_country=US&page=&primary_release_year=1996&sort_by=popularity.desc&with_companies=&with_genres=80&with_people=884
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=21600
-      Content-Type:
-      - application/json;charset=utf-8
-      Date:
-      - Tue, 23 Feb 2016 17:27:25 GMT
-      Etag:
-      - 3df1d4b96d8976ff5986393e8767f5b2
+      - 74bba22728b6185eec06286af6bec36d
       Server:
       - openresty
       X-Ratelimit-Limit:
@@ -180,9 +127,9 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '35'
       X-Ratelimit-Reset:
-      - '1456248450'
+      - '1456332511'
       Content-Length:
-      - '939'
+      - '938'
       Connection:
       - keep-alive
     body:
@@ -195,7 +142,60 @@ http_interactions:
         Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
         pregnant - investigator who''ll stop at nothing to get her man. And if you
         think her small-time investigative skills will give the crooks a run for their
-        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.763493,"vote_count":804,"video":false,"vote_average":7.5}],"total_results":1,"total_pages":1}'
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.47021,"vote_count":806,"video":false,"vote_average":7.5}],"total_results":1,"total_pages":1}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:23 GMT
+  recorded_at: Wed, 24 Feb 2016 16:48:25 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=R&certification_country=US&page=&primary_release_year=1996&sort_by=popularity.desc&with_companies=&with_genres=80&with_people=884
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 24 Feb 2016 16:48:26 GMT
+      Etag:
+      - 74bba22728b6185eec06286af6bec36d
+      Server:
+      - openresty
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '34'
+      X-Ratelimit-Reset:
+      - '1456332511'
+      Content-Length:
+      - '938'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"page":1,"results":[{"poster_path":"\/b8cCEKv4q8iIatnfFO8dDDwxws1.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.47021,"vote_count":806,"video":false,"vote_average":7.5}],"total_results":1,"total_pages":1}'
+    http_version: 
+  recorded_at: Wed, 24 Feb 2016 16:48:25 GMT
 recorded_with: VCR 2.9.3

@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:27:05 GMT
+      - Wed, 24 Feb 2016 16:48:09 GMT
       Server:
       - openresty
       Vary:
@@ -33,11 +33,11 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '33'
+      - '39'
       X-Ratelimit-Reset:
-      - '1456248426'
+      - '1456332499'
       Content-Length:
-      - '1037'
+      - '1039'
       Connection:
       - keep-alive
     body:
@@ -57,7 +57,7 @@ http_interactions:
         cyI6WzUzLDgwXSwiaWQiOjY4MCwibWVkaWFfdHlwZSI6Im1vdmllIiwib3Jp
         Z2luYWxfbGFuZ3VhZ2UiOiJlbiIsInRpdGxlIjoiUHVscCBGaWN0aW9uIiwi
         YmFja2Ryb3BfcGF0aCI6IlwvbXRlNjNxSmFWbm94a2tYYkhrZEZ1akJuQmdk
-        LmpwZyIsInBvcHVsYXJpdHkiOjQuOTgyMjYxLCJ2b3RlX2NvdW50Ijo0MDEx
+        LmpwZyIsInBvcHVsYXJpdHkiOjQuMjE4MDAyLCJ2b3RlX2NvdW50Ijo0MDEy
         LCJ2aWRlbyI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6Ny45NX0seyJwb3N0ZXJf
         cGF0aCI6IlwvOTNZOUJHeDhibHptWk9QU29pdmtGZmFpZnFVLmpwZyIsImFk
         dWx0IjpmYWxzZSwib3ZlcnZpZXciOiJKYW1lcyBTdWxsaXZhbiBhbmQgTWlr
@@ -74,24 +74,24 @@ http_interactions:
         MzVdLCJpZCI6NTg1LCJtZWRpYV90eXBlIjoibW92aWUiLCJvcmlnaW5hbF9s
         YW5ndWFnZSI6ImVuIiwidGl0bGUiOiJNb25zdGVycywgSW5jLiIsImJhY2tk
         cm9wX3BhdGgiOiJcL2VLQlVZZVNnR1Z2enRPMk1aeEQ1WU1jejZrdi5qcGci
-        LCJwb3B1bGFyaXR5Ijo0LjQ2MjU2LCJ2b3RlX2NvdW50IjozMjc3LCJ2aWRl
-        byI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6Ny4yNn0seyJwb3N0ZXJfcGF0aCI6
-        IlwvYTA1eFFVOWh1WTNQNXV1ckxjR0dIbXNmMlZoLmpwZyIsImFkdWx0Ijpm
-        YWxzZSwib3ZlcnZpZXciOiJBIGxvb2sgYXQgdGhlIHJlbGF0aW9uc2hpcCBi
-        ZXR3ZWVuIE1pa2UgYW5kIFN1bGxleSBkdXJpbmcgdGhlaXIgZGF5cyBhdCBN
-        b25zdGVycyBVbml2ZXJzaXR5IOKAlCB3aGVuIHRoZXkgd2VyZW4ndCBuZWNl
-        c3NhcmlseSB0aGUgYmVzdCBvZiBmcmllbmRzLiIsInJlbGVhc2VfZGF0ZSI6
-        IjIwMTMtMDYtMjAiLCJvcmlnaW5hbF90aXRsZSI6Ik1vbnN0ZXJzIFVuaXZl
-        cnNpdHkiLCJnZW5yZV9pZHMiOlsxNiwxMDc1MV0sImlkIjo2MjIxMSwibWVk
-        aWFfdHlwZSI6Im1vdmllIiwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJlbiIsInRp
-        dGxlIjoiTW9uc3RlcnMgVW5pdmVyc2l0eSIsImJhY2tkcm9wX3BhdGgiOiJc
-        LzVtRENLS1M3TThhVVpLZFNobkNhN2xMYnptSC5qcGciLCJwb3B1bGFyaXR5
-        IjozLjQyNTM5NSwidm90ZV9jb3VudCI6MTgzMiwidmlkZW8iOmZhbHNlLCJ2
-        b3RlX2F2ZXJhZ2UiOjcuMDN9XSwibmFtZSI6IlN0ZXZlIEJ1c2NlbWkiLCJw
-        b3B1bGFyaXR5IjoxMy4zOTE4MjZ9XSwidG90YWxfcmVzdWx0cyI6MSwidG90
-        YWxfcGFnZXMiOjF9
+        LCJwb3B1bGFyaXR5Ijo0Ljk3NzY3Mywidm90ZV9jb3VudCI6MzI4MCwidmlk
+        ZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjcuMjZ9LHsicG9zdGVyX3BhdGgi
+        OiJcL2EwNXhRVTlodVkzUDV1dXJMY0dHSG1zZjJWaC5qcGciLCJhZHVsdCI6
+        ZmFsc2UsIm92ZXJ2aWV3IjoiQSBsb29rIGF0IHRoZSByZWxhdGlvbnNoaXAg
+        YmV0d2VlbiBNaWtlIGFuZCBTdWxsZXkgZHVyaW5nIHRoZWlyIGRheXMgYXQg
+        TW9uc3RlcnMgVW5pdmVyc2l0eSDigJQgd2hlbiB0aGV5IHdlcmVuJ3QgbmVj
+        ZXNzYXJpbHkgdGhlIGJlc3Qgb2YgZnJpZW5kcy4iLCJyZWxlYXNlX2RhdGUi
+        OiIyMDEzLTA2LTIwIiwib3JpZ2luYWxfdGl0bGUiOiJNb25zdGVycyBVbml2
+        ZXJzaXR5IiwiZ2VucmVfaWRzIjpbMTYsMTA3NTFdLCJpZCI6NjIyMTEsIm1l
+        ZGlhX3R5cGUiOiJtb3ZpZSIsIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJ0
+        aXRsZSI6Ik1vbnN0ZXJzIFVuaXZlcnNpdHkiLCJiYWNrZHJvcF9wYXRoIjoi
+        XC81bURDS0tTN004YVVaS2RTaG5DYTdsTGJ6bUguanBnIiwicG9wdWxhcml0
+        eSI6My4xOTM1NTUsInZvdGVfY291bnQiOjE4MzQsInZpZGVvIjpmYWxzZSwi
+        dm90ZV9hdmVyYWdlIjo3LjAyfV0sIm5hbWUiOiJTdGV2ZSBCdXNjZW1pIiwi
+        cG9wdWxhcml0eSI6MTEuODk2MDU1fV0sInRvdGFsX3Jlc3VsdHMiOjEsInRv
+        dGFsX3BhZ2VzIjoxfQ==
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:04 GMT
+  recorded_at: Wed, 24 Feb 2016 16:48:08 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=&primary_release_year=1996&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
@@ -117,7 +117,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:27:05 GMT
+      - Wed, 24 Feb 2016 16:48:09 GMT
       Server:
       - openresty
       Vary:
@@ -125,9 +125,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '32'
+      - '38'
       X-Ratelimit-Reset:
-      - '1456248426'
+      - '1456332499'
       Content-Length:
       - '1468'
       Connection:
@@ -142,25 +142,25 @@ http_interactions:
         Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
         pregnant - investigator who''ll stop at nothing to get her man. And if you
         think her small-time investigative skills will give the crooks a run for their
-        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.763493,"vote_count":804,"video":false,"vote_average":7.5},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.47021,"vote_count":806,"video":false,"vote_average":7.5},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
         time, a cataclysmic temblor hits Los Angeles, turning it into an island. The
         president views the quake as a sign from above, expels Los Angeles from the
         country and makes it a penal colony for those found guilty of moral crimes.
         When his daughter, part of a resistance movement, steals the control unit
         for a doomsday weapon, Snake again gets tapped to save the day.","release_date":"1996-08-09","genre_ids":[28,12,878,53],"id":10061,"original_title":"Escape
-        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":2.255022,"vote_count":129,"video":false,"vote_average":5.41},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
+        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":2.530853,"vote_count":129,"video":false,"vote_average":5.41},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
         Altman''s story is a riff on race, class, and power cross-cuts between the
         two kidnappings and the background of corrupt politics and virtuoso jazz music.
         It all takes place in Kansas City in 1934.","release_date":"1996-08-16","genre_ids":[53,18,10402,80],"id":22479,"original_title":"Kansas
-        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.257037,"vote_count":1,"video":false,"vote_average":6},{"poster_path":"\/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","adult":false,"overview":"Tommy
+        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.179517,"vote_count":1,"video":false,"vote_average":6},{"poster_path":"\/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","adult":false,"overview":"Tommy
         has lost his job, his love and his life. He lives in a small apartment above
         the Trees Lounge, a bar which he frequents along with a few other regulars
         without lives. He gets a job driving an ice cream truck and ends up getting
         involved with the seventeen year old niece of his ex-girlfriend. This gets
         him into serious trouble with her father.","release_date":"1996-10-11","genre_ids":[35,18],"id":27845,"original_title":"Trees
-        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.20954,"vote_count":13,"video":false,"vote_average":5.74}],"total_results":4,"total_pages":1}'
+        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.136349,"vote_count":13,"video":false,"vote_average":5.74}],"total_results":4,"total_pages":1}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:04 GMT
+  recorded_at: Wed, 24 Feb 2016 16:48:08 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=&primary_release_year=1996&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
@@ -186,7 +186,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Tue, 23 Feb 2016 17:27:06 GMT
+      - Wed, 24 Feb 2016 16:48:09 GMT
       Server:
       - openresty
       Vary:
@@ -194,9 +194,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '31'
+      - '37'
       X-Ratelimit-Reset:
-      - '1456248426'
+      - '1456332499'
       Content-Length:
       - '1468'
       Connection:
@@ -211,23 +211,23 @@ http_interactions:
         Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
         pregnant - investigator who''ll stop at nothing to get her man. And if you
         think her small-time investigative skills will give the crooks a run for their
-        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":4.763493,"vote_count":804,"video":false,"vote_average":7.5},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.47021,"vote_count":806,"video":false,"vote_average":7.5},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
         time, a cataclysmic temblor hits Los Angeles, turning it into an island. The
         president views the quake as a sign from above, expels Los Angeles from the
         country and makes it a penal colony for those found guilty of moral crimes.
         When his daughter, part of a resistance movement, steals the control unit
         for a doomsday weapon, Snake again gets tapped to save the day.","release_date":"1996-08-09","genre_ids":[28,12,878,53],"id":10061,"original_title":"Escape
-        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":2.255022,"vote_count":129,"video":false,"vote_average":5.41},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
+        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":2.530853,"vote_count":129,"video":false,"vote_average":5.41},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
         Altman''s story is a riff on race, class, and power cross-cuts between the
         two kidnappings and the background of corrupt politics and virtuoso jazz music.
         It all takes place in Kansas City in 1934.","release_date":"1996-08-16","genre_ids":[53,18,10402,80],"id":22479,"original_title":"Kansas
-        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.257037,"vote_count":1,"video":false,"vote_average":6},{"poster_path":"\/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","adult":false,"overview":"Tommy
+        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.179517,"vote_count":1,"video":false,"vote_average":6},{"poster_path":"\/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","adult":false,"overview":"Tommy
         has lost his job, his love and his life. He lives in a small apartment above
         the Trees Lounge, a bar which he frequents along with a few other regulars
         without lives. He gets a job driving an ice cream truck and ends up getting
         involved with the seventeen year old niece of his ex-girlfriend. This gets
         him into serious trouble with her father.","release_date":"1996-10-11","genre_ids":[35,18],"id":27845,"original_title":"Trees
-        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.20954,"vote_count":13,"video":false,"vote_average":5.74}],"total_results":4,"total_pages":1}'
+        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.136349,"vote_count":13,"video":false,"vote_average":5.74}],"total_results":4,"total_pages":1}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:27:04 GMT
+  recorded_at: Wed, 24 Feb 2016 16:48:08 GMT
 recorded_with: VCR 2.9.3

@@ -43,9 +43,6 @@
             <% if current_user.rated_movies.include?(@movie) %>
               | My Rating: <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
             <% end %><!-- if user rating -->
-            <% if @movie.in_db %>
-               | <%= @movie.runtime %> min
-            <% end %><!-- runtime -->
             |
             <% @movie.genres.each do |genre| %>
               <%= link_to "#{genre}", genre_path(genre), id: "genre_link_movie_show" %>
