@@ -275,8 +275,8 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "more info page shows production companies and links to a discover search", js: true do
         find("#movie_more_link_movie_partial").click
-        expect(page).to have_content("PolyGram Filmed Entertainment", :record => :new_episodes)
-        VCR.use_cassette("tmdb_production_company_search") do
+        expect(page).to have_content("PolyGram Filmed Entertainment")
+        VCR.use_cassette("tmdb_production_company_search", :record => :new_episodes) do
           click_link "PolyGram Filmed Entertainment"
         end
         wait_for_ajax
