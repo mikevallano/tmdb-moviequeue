@@ -1,7 +1,6 @@
 class TaggingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
-  before_action :redirect_url
 
   include TmdbHandler
 
@@ -13,7 +12,7 @@ class TaggingsController < ApplicationController
 
     respond_to do |format|
       format.js {}
-      format.html { redirect_to @redirect_url, notice: 'Tag was added.' }
+      format.html { redirect_to movie_path(@movie), notice: 'Tag was added.' }
     end
   end
 
@@ -24,7 +23,7 @@ class TaggingsController < ApplicationController
     respond_to do |format|
       if @tagging.destroy
         format.js {}
-        format.html { redirect_to @redirect_url, notice: 'Tag was removed.' }
+        format.html { redirect_to movie_path(@movie), notice: 'Tag was removed.' }
         format.json { head :no_content }
       else
         redirect_to @redirect_url, notice: "tag not removed"
@@ -49,18 +48,5 @@ private
         @movie = Movie.friendly.find(params[:movie_id])
     end
   end #set movie
-
-  def redirect_url
-    :set_movie
-    @page = params[:page] if params[:page].present?
-    if params[:list_id].present?
-      @list = current_user.all_lists.find(params[:list_id])
-      @redirect_url = user_list_path(current_user, @list, page: @page)
-    elsif params[:from].present? && params[:from] == "movie"
-      @redirect_url = movie_path(@movie)
-    else
-      @redirect_url = movies_path(page: @page)
-    end
-  end
 
 end
