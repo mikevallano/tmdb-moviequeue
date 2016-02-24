@@ -2,4 +2,4 @@
 
 <h1>Profile page for <%= current_user.username %></h1>
 <p>Email: <%= current_user.email %></p>
-<p><%= link_to "Change your password/update info", edit_user_registration_path %></p>
+<p><%= link_to "Change your password/update info", edit_user_registration_path, id: "edit_user_link_profile_page" %></p>

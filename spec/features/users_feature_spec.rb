@@ -5,7 +5,7 @@ RSpec.feature "Users feature spec", :type => :feature do
   feature "Users can sign up, sign in, log out, have a list, and visit profile" do
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
-    let(:existing_user) { FactoryGirl.create(:user) }
+    let(:existing_user) { FactoryGirl.create(:user, password: "password") }
 
     scenario "user can successfully sign up" do
       sign_up_with(email, username, "password")
@@ -112,6 +112,26 @@ RSpec.feature "Users feature spec", :type => :feature do
       visit(user_path(existing_user))
       url = URI.parse(current_url)
       expect("#{url}").to include("#{existing_user.slug}")
+    end
+
+    scenario "user can edit their info from the profile page" do
+      sign_in_user(existing_user)
+      visit(user_path(existing_user))
+      click_link "edit_user_link_profile_page"
+      fill_in "user_username", with: "newusername"
+      fill_in "user_current_password", with: "password"
+      click_button "Update"
+      visit(root_path)
+      visit(user_path(existing_user))
+      expect(page).to have_content("newusername")
+    end
+
+    scenario "user can cancel their account from profile page" do
+      sign_in_user(existing_user)
+      visit(user_path(existing_user))
+      click_link "edit_user_link_profile_page"
+      click_link_or_button "Cancel my account"
+      expect(page).to have_content("cancelled")
     end
 
   end

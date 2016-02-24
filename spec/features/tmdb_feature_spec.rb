@@ -273,15 +273,15 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Previous page")
       end
 
-      scenario "more info page shows production companies and links to a discover search", js: true do
-        find("#movie_more_link_movie_partial").click
-        expect(page).to have_content("PolyGram Filmed Entertainment")
-        VCR.use_cassette("tmdb_production_company_search", :record => :new_episodes) do
-          click_link "PolyGram Filmed Entertainment"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_31776")
-      end
+      # scenario "more info page shows production companies and links to a discover search", js: true do
+      #   find("#movie_more_link_movie_partial").click
+      #   expect(page).to have_content("PolyGram Filmed Entertainment")
+      #   VCR.use_cassette("tmdb_production_company_search", :record => :new_episodes) do
+      #     click_link "PolyGram Filmed Entertainment"
+      #   end
+      #   wait_for_ajax
+      #   expect(page).to have_selector("#modal_link_31776")
+      # end
 
       scenario "movies have a link to view full cast", js: true do
         find("#movie_more_link_movie_partial").click
