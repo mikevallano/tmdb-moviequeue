@@ -6,6 +6,11 @@ ready = function() {
     source: $("#movie_field_movie_search").data("autocomplete-source")
   });
 
+  $( "#movie_field_movie_search_again" ).autocomplete({
+    minLength: 4,
+    source: $("#movie_field_movie_search_again").data("autocomplete-source")
+  });
+
   $( "#homepage-search-field" ).autocomplete({
     minLength: 4,
     source: $("#homepage-search-field").data("autocomplete-source")
