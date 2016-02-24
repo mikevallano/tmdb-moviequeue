@@ -12,30 +12,4 @@ class Rating < ActiveRecord::Base
 
   scope :by_user, lambda { |user| where(:user_id => user.id) }
 
-  def value_text
-    v = value
-    case v
-    when 1
-      "1 Star"
-    when 2
-      "2 Stars"
-    when 3
-      "3 Stars"
-    when 4
-      "4 Stars"
-    when 5
-      "5 Stars"
-    when 6
-      "6 Stars"
-    when 7
-      "7 Stars"
-    when 8
-      "8 Stars"
-    when 9
-      "9 Stars"
-    when 10
-      "10 Stars"
-    end
-  end #value text
-
 end
