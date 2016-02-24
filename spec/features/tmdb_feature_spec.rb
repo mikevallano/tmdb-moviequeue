@@ -66,9 +66,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
       scenario "users searches for two actors and the API returns results" do
-        skip "this actually isn't working"
-        api_two_actor_search
-        binding.pry
+        VCR.use_cassette('tmdb_two_actor_search') do
+          fill_in "actor1_field_two_actor_search", with: 'Steve Buscemi'
+          fill_in "actor2_field_two_actor_search", with: 'John Goodman'
+          click_button "search_button_two_actor_search"
+        end
         expect(page).to have_selector("#modal_link_115")
       end
 
@@ -238,6 +240,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "more info page shows more info", js: true do
         find("#movie_more_link_movie_partial").click
+        wait_for_ajax
         #description
         expect(page).to have_content("you betcha")
         #genres
