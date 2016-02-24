@@ -5,8 +5,7 @@ class Movie < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, :use => :history
 
-  validates_presence_of :tmdb_id
-  validates_uniqueness_of :tmdb_id
+  validates :tmdb_id, :uniqueness => :true, :presence => true
 
   has_many :listings
   has_many :lists, through: :listings

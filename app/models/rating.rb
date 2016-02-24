@@ -1,7 +1,6 @@
 class Rating < ActiveRecord::Base
   validates_presence_of :value
-  validates :user_id, :uniqueness => { :scope => :movie_id }
-  validates_presence_of :user_id
+  validates :user_id, :uniqueness => { :scope => :movie_id }, :presence => true
   validates_presence_of :movie
 
   belongs_to :user

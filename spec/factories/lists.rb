@@ -9,6 +9,10 @@ FactoryGirl.define do
     factory :invalid_list do
       name nil
     end
+
+    factory :list_with_too_long_name do
+      name { SecureRandom.urlsafe_base64(61) }
+    end
   end
 
 end
