@@ -1,4 +1,4 @@
-## README
+## Flicks On Lists
 
 [![Build Status](https://travis-ci.org/mikevallano/tmdb-moviequeue.svg?branch=master)](https://travis-ci.org/mikevallano/tmdb-moviequeue) [![Code Climate](https://codeclimate.com/github/mikevallano/tmdb-moviequeue/badges/gpa.svg)](https://codeclimate.com/github/mikevallano/tmdb-moviequeue) [![Coverage Status](https://coveralls.io/repos/github/mikevallano/tmdb-moviequeue/badge.svg?branch=master)](https://coveralls.io/github/mikevallano/tmdb-moviequeue?branch=master)
 
@@ -12,6 +12,8 @@
  6. Browse other users' lists. Want to know what other people watch during the holidays or when they're in the mood for a dark comedy? You can easily browse and add movies to your lists.
 
 # Getting Started/Things to note:
+
+* The site is available at [http://www.flicksonlists.com/](http://www.flicksonlists.com/)
 
 * Ruby version: 2.2.2
 
