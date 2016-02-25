@@ -33,7 +33,7 @@
 
 * The data is gathered from the awesome API available from TMDB: <https://www.themoviedb.org/documentation/api>, which is managed in the tmdb_controller and the tmdb_handler module in the lib directory. You will need to sign up at TMDB and get your own API key, which is referenced as an environment variable throughout this project.
 
-# Creators and Maintainers:
+## Creators and Maintainers:
 This site was built to solve our own problem of movie management, which started as a crappy Google sheet, then evolved to a very basic Rails app, to what it is here in all its glory.  The other puropse was to build a Rails app that showcased our Rails skills. "We" are [Mike](https://github.com/mikevallano?tab=repositories) (back end) and [Anne](https://github.com/lortza?tab=repositories) (front end).
 
 ## Wiki
