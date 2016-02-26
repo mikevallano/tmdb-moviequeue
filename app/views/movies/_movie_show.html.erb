@@ -23,7 +23,7 @@
 
       <div class="col-xs-3">
         <div class="sidebar">
-        <%= link_to image_for(@movie), movie_more_path(tmdb_id: @movie.tmdb_id), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
+        <%= link_to image_for(@movie), link_to_movie(@movie), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
         <div class="mobile">
         <%= render 'movies/movie_screening', movie: @movie %>
         <%= render "movies/movie_watch_info", movie: @movie %>
