@@ -14,12 +14,12 @@ class User < ActiveRecord::Base
 
   has_many :memberships, :foreign_key => "member_id", dependent: :destroy
   has_many :member_lists, :through => :memberships,
-  :source => :list, dependent: :destroy
+  :source => :list
 
   has_many :member_listings, through: :member_lists,
-  :source => :listings, dependent: :destroy
+  :source => :listings
 
-  has_many :movies, through: :listings, dependent: :destroy
+  has_many :movies, through: :listings
   has_many :member_movies, :through => :member_lists,
   :source => :movies, dependent: :destroy
 
