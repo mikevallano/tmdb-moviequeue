@@ -4,7 +4,8 @@ module MoviesHelper
     if movie.poster_path.present?
       image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}")
     else
-      image_tag('placeholder.png')
+      render "movies/movie_missing_poster", movie: movie
+      # image_tag('placeholder.png')
     end #if
   end #image_for
 
