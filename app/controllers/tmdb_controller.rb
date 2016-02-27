@@ -6,9 +6,19 @@ class TmdbController < ApplicationController
 
   def search
     if params[:movie_title]
-      @movie_title = params[:movie_title]
+      @movie_title = I18n.transliterate(params[:movie_title])
       tmdb_handler_search(@movie_title)
     end
+  end
+
+  def movie_autocomplete
+    tmdb_handler_movie_autocomplete(params[:term])
+    render json: @autocomplete_results
+  end
+
+  def person_autocomplete
+    tmdb_handler_person_autocomplete(params[:term])
+    render json: @autocomplete_results
   end
 
   def movie_more
@@ -18,6 +28,14 @@ class TmdbController < ApplicationController
     else
       redirect_to api_search_path
     end
+  end
+
+  def update_tmdb_data
+    if params[:tmdb_id]
+      @tmdb_id = params[:tmdb_id]
+      tmdb_handler_update_movie(@tmdb_id)
+    end
+    redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end
 
   def similar_movies
@@ -41,7 +59,7 @@ class TmdbController < ApplicationController
 
   def actor_search
     if params[:actor]
-      @actor = params[:actor]
+      @actor = I18n.transliterate(params[:actor])
       if params[:page]
         @page = params[:page]
       else
@@ -58,8 +76,8 @@ class TmdbController < ApplicationController
 
   def two_actor_search
     if params[:actor] && params[:actor2]
-      @actor = params[:actor]
-      @actor2 = params[:actor2]
+      @actor = I18n.transliterate(params[:actor])
+      @actor2 = I18n.transliterate(params[:actor2])
       if params[:page]
         @page = params[:page]
       else
@@ -156,7 +174,6 @@ class TmdbController < ApplicationController
   end #discover search
 
   def discover_show_search_params(show_params)
-    #TODO: Clean this up
     @keys = show_params.keys
     @actor_display = show_params[:actor].titlecase if @keys.include?("actor")
     if @keys.include?("genre")
@@ -174,7 +191,12 @@ class TmdbController < ApplicationController
     end
     @year_show = show_params[:date][:year] if @keys.include?("date")
     @year_display = "#{@year_select_display} #{@year_show}" if @year_show.present?
-    @sort_display = "Sorted by #{show_params[:sort_by]}" if @keys.include?("sort_by")
+    if @keys.include?("sort_by")
+      @sort_selected = show_params[:sort_by]
+      @sort_options = Movie::SORT_BY.to_h
+      @sort_key = @sort_options.key(@sort_selected)
+      @sort_display = "sorted by #{@sort_key}" if @keys.include?("sort_by")
+    end
 
     "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
   end

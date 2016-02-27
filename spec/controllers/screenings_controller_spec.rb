@@ -94,9 +94,9 @@ RSpec.describe ScreeningsController, type: :controller do
           expect(assigns(:screening)).to eq(screening)
         end
 
-        it "redirects to the movie" do
+        it "redirects to screenings index" do
           put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => valid_attributes }
-          expect(response).to redirect_to(movie_path(movie))
+          expect(response).to redirect_to(movie_screenings_path(movie))
         end
       end
 
@@ -115,9 +115,9 @@ RSpec.describe ScreeningsController, type: :controller do
         }.to change(Screening, :count).by(-1)
       end
 
-      it "redirects to the movie" do
+      it "redirects to screenings index" do
         delete :destroy, { :id => screening.to_param, movie_id: movie.id }
-        expect(response).to redirect_to(movie_url(movie))
+        expect(response).to redirect_to(movie_screenings_path(movie))
       end
     end
 

@@ -25,9 +25,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 28 Jan 2016 16:12:52 GMT
+      - Wed, 24 Feb 2016 16:49:15 GMT
       Etag:
-      - '"43e5c3ff7e4a57a4b325eb5227a17553"'
+      - '"faa1f0536726b7c493badd61505030a4"'
       Server:
       - openresty
       Status:
@@ -35,17 +35,17 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '14445'
+      - '23261'
       X-Memc-Expires:
-      - '14355'
+      - '5539'
       X-Memc-Key:
       - 7982397048fe5e63fc1e264608f433e0
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '35'
+      - '38'
       X-Ratelimit-Reset:
-      - '1453997575'
+      - '1456332563'
       Content-Length:
       - '1021'
       Connection:
@@ -63,12 +63,12 @@ http_interactions:
         Lounge between his friend Vince Vaughn, screenwriter Scott Rosenberg and a
         local man, who allegedly instigated the brawl.\n\nBuscemi has one son, Lucian,
         with his wife Jo Andres.","birthday":"1957-12-13","deathday":"","homepage":"","id":884,"imdb_id":"nm0000114","name":"Steve
-        Buscemi","place_of_birth":"New York City, New York, USA","popularity":16.804309,"profile_path":"/7sDzFRScCv85usSwPG01BTac7UY.jpg"}'
+        Buscemi","place_of_birth":"New York City, New York, USA","popularity":10.896055,"profile_path":"/e19GfOWzMNN1hi7B9Ci62hMvtXs.jpg"}'
     http_version: 
-  recorded_at: Thu, 28 Jan 2016 16:12:52 GMT
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/person/884/combined_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/person/884/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
     body:
       encoding: US-ASCII
       string: ''
@@ -91,9 +91,9 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 28 Jan 2016 16:12:53 GMT
+      - Wed, 24 Feb 2016 16:49:15 GMT
       Etag:
-      - W/"3b12dd67a7053b4691500b3ccee0a13c"
+      - W/"03841d613a6d4dd3c529d09a8e37a4df"
       Server:
       - openresty
       Status:
@@ -103,263 +103,308 @@ http_interactions:
       X-Memc:
       - HIT
       X-Memc-Age:
-      - '8260'
+      - '24498'
       X-Memc-Expires:
-      - '20540'
+      - '4302'
       X-Memc-Key:
-      - 2347e9599610526e73675ea69e7e795b
+      - e40d38e5b39de5d3837b07dc19a1e236
       X-Ratelimit-Limit:
       - '40'
       X-Ratelimit-Remaining:
-      - '34'
+      - '37'
       X-Ratelimit-Reset:
-      - '1453997575'
+      - '1456332563'
       Content-Length:
-      - '9725'
+      - '7954'
       Connection:
       - keep-alive
     body:
       encoding: ASCII-8BIT
-      string: '{"cast":[{"adult":false,"character":"Rockhound","credit_id":"52fe4216c3a36847f800317f","id":95,"original_title":"Armageddon","poster_path":"/coINnuCzcw5FMHBty8hcudMOBnO.jpg","release_date":"1998-06-30","title":"Armageddon","media_type":"movie"},{"adult":false,"character":"Theodore
-        Donald Kerabatsos","credit_id":"52fe421ac3a36847f800413d","id":115,"original_title":"The
-        Big Lebowski","poster_path":"/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","release_date":"1998-03-06","title":"The
-        Big Lebowski","media_type":"movie"},{"adult":false,"character":"Carl Showalter","credit_id":"52fe4230c3a36847f800af1b","id":275,"original_title":"Fargo","poster_path":"/b8cCEKv4q8iIatnfFO8dDDwxws1.jpg","release_date":"1996-04-05","title":"Fargo","media_type":"movie"},{"adult":false,"character":"Chet","credit_id":"52fe4233c3a36847f800b97d","id":290,"original_title":"Barton
-        Fink","poster_path":"/dAsGm1jsQIJTe0oX081eXUDyFWY.jpg","release_date":"1991-08-01","title":"Barton
-        Fink","media_type":"movie"},{"adult":false,"character":"Mink","credit_id":"52fe423cc3a36847f800e79f","id":379,"original_title":"Miller''s
-        Crossing","poster_path":"/szjELUMzo3fIVBlMTISIMfQWqJc.jpg","release_date":"1990-09-21","title":"Miller''s
-        Crossing","media_type":"movie"},{"adult":false,"character":"Mister Shhh","credit_id":"52fe423ec3a36847f800f33b","id":400,"original_title":"Things
-        to Do in Denver When You''re Dead","poster_path":"/cBl7Yms567eR7UDhLOX8qI0LH0L.jpg","release_date":"1995-12-01","title":"Things
-        to Do in Denver When You''re Dead","media_type":"movie"},{"adult":false,"character":"Mr.
-        Pink","credit_id":"52fe424ac3a36847f8012cc9","id":500,"original_title":"Reservoir
-        Dogs","poster_path":"/4ctv9pxKpwjTFevWQbvaqXkXbPF.jpg","release_date":"1992-06-25","title":"Reservoir
-        Dogs","media_type":"movie"},{"adult":false,"character":"Randall (voice)","credit_id":"52fe4256c3a36847f801690f","id":585,"original_title":"Monsters,
-        Inc.","poster_path":"/93Y9BGx8blzmZOPSoivkFfaifqU.jpg","release_date":"2001-11-01","title":"Monsters,
-        Inc.","media_type":"movie"},{"adult":false,"character":"Norther Winslow","credit_id":"52fe4258c3a36847f80170a9","id":587,"original_title":"Big
-        Fish","poster_path":"/6DRFdlNZpAaEt7eejsbAlJGgaM7.jpg","release_date":"2003-12-25","title":"Big
-        Fish","media_type":"movie"},{"adult":false,"character":"Buddy Holly","credit_id":"52fe426ac3a36847f801cb2b","id":680,"original_title":"Pulp
-        Fiction","poster_path":"/dM2w364MScsjFf8pfMbaWUcWrR.jpg","release_date":"1994-10-14","title":"Pulp
-        Fiction","media_type":"movie"},{"adult":false,"character":"Kellner","credit_id":"52fe4287c3a36847f8025f1b","id":883,"original_title":"Coffee
-        and Cigarettes","poster_path":"/4IZ9SR6quqjUTghphn0oTBjnQKi.jpg","release_date":"2004-05-13","title":"Coffee
-        and Cigarettes","media_type":"movie"},{"adult":false,"character":"Seymour","credit_id":"52fe42fcc3a36847f8031e2d","id":1548,"original_title":"Ghost
-        World","poster_path":"/oDoEkXVw5iikwPy0bQ8u0m5E85i.jpg","release_date":"2001-06-16","title":"Ghost
-        World","media_type":"movie"},{"adult":false,"character":"James ''Mac'' McCord","credit_id":"52fe4306c3a36847f8034de3","id":1635,"original_title":"The
-        Island","poster_path":"/erprD7GIkvZz2KM4Z35eyTJKZMI.jpg","release_date":"2005-07-21","title":"The
-        Island","media_type":"movie"},{"adult":false,"character":"Garland Greene","credit_id":"52fe430ec3a36847f8037097","id":1701,"original_title":"Con
-        Air","poster_path":"/yhaOQ7xXw0PLHLvg1w0M9zlPdg6.jpg","release_date":"1997-06-01","title":"Con
-        Air","media_type":"movie"},{"adult":false,"character":"Eddie","credit_id":"52fe43179251416c75003147","id":10061,"original_title":"Escape
+      string: '{"cast":[{"adult":false,"character":"Eddie","credit_id":"52fe43179251416c75003147","id":10061,"original_title":"Escape
         from L.A.","poster_path":"/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","release_date":"1996-08-09","title":"Escape
-        from L.A.","media_type":"movie"},{"adult":false,"character":"Crazy Eyes","credit_id":"52fe432dc3a36847f804034d","id":2022,"original_title":"Mr.
+        from L.A."},{"adult":false,"character":"Crazy Eyes","credit_id":"52fe432dc3a36847f804034d","id":2022,"original_title":"Mr.
         Deeds","poster_path":"/l3hmNjhxmqjXrvGNMMmeOmsyX3r.jpg","release_date":"2002-06-28","title":"Mr.
-        Deeds","media_type":"movie"},{"adult":false,"character":"n.a.","credit_id":"52fe43359251416c750079fb","id":10148,"original_title":"Keep
+        Deeds"},{"adult":false,"character":"n.a.","credit_id":"52fe43359251416c750079fb","id":10148,"original_title":"Keep
         Coming Back","poster_path":null,"release_date":"2011-07-01","title":"Keep
-        Coming Back","media_type":"movie"},{"adult":false,"character":"Off. Neil Fleming
-        (voice)","credit_id":"52fe4337c3a36847f80431f5","id":2114,"original_title":"Final
+        Coming Back"},{"adult":false,"character":"Off. Neil Fleming (voice)","credit_id":"52fe4337c3a36847f80431f5","id":2114,"original_title":"Final
         Fantasy: The Spirits Within","poster_path":"/7xmWJM5eugu582m8EtTaw0fSBF2.jpg","release_date":"2001-07-02","title":"Final
-        Fantasy: The Spirits Within","media_type":"movie"},{"adult":false,"character":"Touriste
-        (Tuileries)","credit_id":"52fe4347c3a36847f80482cd","id":2266,"original_title":"Paris,
-        je t''aime","poster_path":"/rZcG8RyxIYI0Irhk4K553M4mhG5.jpg","release_date":"2006-06-20","title":"Paris,
-        je t''aime","media_type":"movie"},{"adult":false,"character":"Cornell","credit_id":"52fe43769251416c750113d1","id":10468,"original_title":"28
+        Fantasy: The Spirits Within"},{"adult":false,"character":"Touriste (Tuileries)","credit_id":"52fe4347c3a36847f80482cd","id":2266,"original_title":"Paris,
+        je t''aime","poster_path":"/rZcG8RyxIYI0Irhk4K553M4mhG5.jpg","release_date":"2006-05-16","title":"Paris,
+        je t''aime"},{"adult":false,"character":"Cornell","credit_id":"52fe43769251416c750113d1","id":10468,"original_title":"28
         Days","poster_path":"/qTrrElHcONoix4hb4IpLiqEnjlb.jpg","release_date":"2000-04-06","title":"28
-        Days","media_type":"movie"},{"adult":false,"character":"Clinton Fitzer","credit_id":"52fe439cc3a36847f8061ba5","id":3563,"original_title":"I
-        Now Pronounce You Chuck & Larry","poster_path":"/9CrSPxDr7r01coqofKghYiGplAc.jpg","release_date":"2007-07-19","title":"I
-        Now Pronounce You Chuck & Larry","media_type":"movie"},{"adult":false,"character":"Philo","credit_id":"52fe43e1c3a368484e003aa5","id":20333,"original_title":"The
+        Days"},{"adult":false,"character":"Clinton Fitzer","credit_id":"52fe439cc3a36847f8061ba5","id":3563,"original_title":"I
+        Now Pronounce You Chuck & Larry","poster_path":"/9CrSPxDr7r01coqofKghYiGplAc.jpg","release_date":"2007-07-12","title":"I
+        Now Pronounce You Chuck & Larry"},{"adult":false,"character":"Philo","credit_id":"52fe43e1c3a368484e003aa5","id":20333,"original_title":"The
         Last Outlaw","poster_path":"/xr3kH2BPsa9kVFr0cKx7hHFqSqz.jpg","release_date":"1993-10-30","title":"The
-        Last Outlaw","media_type":"movie"},{"adult":false,"character":"Bellingham
-        (segment \"Lot 249\")","credit_id":"52fe43f5c3a368484e007e1b","id":20701,"original_title":"Tales
-        from the Darkside","poster_path":"/AkyxKTVJEvQoDTzT2ywQUZvYVw9.jpg","release_date":"1990-05-04","title":"Tales
-        from the Darkside","media_type":"movie"},{"adult":false,"character":"Charlie
-        the Barber","credit_id":"52fe44229251416c75029ed7","id":11305,"original_title":"Mystery
+        Last Outlaw"},{"adult":false,"character":"Bellingham (segment \"Lot 249\")","credit_id":"52fe43f5c3a368484e007e1b","id":20701,"original_title":"Tales
+        from the Darkside","poster_path":"/AkyxKTVJEvQoDTzT2ywQUZvYVw9.jpg","release_date":"1990-05-03","title":"Tales
+        from the Darkside"},{"adult":false,"character":"Charlie the Barber","credit_id":"52fe44229251416c75029ed7","id":11305,"original_title":"Mystery
         Train","poster_path":"/cGnJ8XHGeB7aeDP50tsJvmXeENM.jpg","release_date":"1989-09-06","title":"Mystery
-        Train","media_type":"movie"},{"adult":false,"character":"Dr. Robert Wilson","credit_id":"52fe4430c3a36847f8087655","id":5937,"original_title":"John
-        Rabe","poster_path":"/z8CZ1wHEfFlqDmJeO1vZB72OEAE.jpg","release_date":"2011-04-27","title":"John
-        Rabe","media_type":"movie"},{"adult":false,"character":"George Twisp","credit_id":"52fe443cc3a368484e017697","id":22327,"original_title":"Youth
-        in Revolt","poster_path":"/nQ45Ypo7fdgBWGUICyT0XR5RPU6.jpg","release_date":"2009-10-13","title":"Youth
-        in Revolt","media_type":"movie"},{"adult":false,"character":"Johnny Flynn","credit_id":"52fe4442c3a368484e018dab","id":22479,"original_title":"Kansas
+        Train"},{"adult":false,"character":"Dr. Robert Wilson","credit_id":"52fe4430c3a36847f8087655","id":5937,"original_title":"John
+        Rabe","poster_path":"/z8CZ1wHEfFlqDmJeO1vZB72OEAE.jpg","release_date":"2009-04-02","title":"John
+        Rabe"},{"adult":false,"character":"George Twisp","credit_id":"52fe443cc3a368484e017697","id":22327,"original_title":"Youth
+        in Revolt","poster_path":"/nQ45Ypo7fdgBWGUICyT0XR5RPU6.jpg","release_date":"2009-09-11","title":"Youth
+        in Revolt"},{"adult":false,"character":"Johnny Flynn","credit_id":"52fe4442c3a368484e018dab","id":22479,"original_title":"Kansas
         City","poster_path":"/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","release_date":"1996-08-16","title":"Kansas
-        City","media_type":"movie"},{"adult":false,"character":"Ray Coleman","credit_id":"52fe44439251416c7502e9c3","id":11456,"original_title":"Domestic
+        City"},{"adult":false,"character":"Ray Coleman","credit_id":"52fe44439251416c7502e9c3","id":11456,"original_title":"Domestic
         Disturbance","poster_path":"/2rD850CRE2kX9ZVFdkSTUccnpYj.jpg","release_date":"2001-10-30","title":"Domestic
-        Disturbance","media_type":"movie"},{"adult":false,"character":"Willy Wilhelm","credit_id":"52fe446fc3a36847f8095ccf","id":7007,"original_title":"Rising
+        Disturbance"},{"adult":false,"character":"Willy Wilhelm","credit_id":"52fe446fc3a36847f8095ccf","id":7007,"original_title":"Rising
         Sun","poster_path":"/d07rjd7e54ClVLoixmf6alTiDDj.jpg","release_date":"1993-07-30","title":"Rising
-        Sun","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe448bc3a368484e028e59","id":24235,"original_title":"Champion","poster_path":"/dXkJVYpTwt8oQwldpjcQg0HAPxg.jpg","release_date":"2005-03-12","title":"Champion","media_type":"movie"},{"adult":false,"character":"Buscemi","credit_id":"52fe4490c3a36847f809d501","id":8068,"original_title":"Desperado","poster_path":"/7eVo5DbP7gcsDzHcpRCTA6JAuF2.jpg","release_date":"1995-08-25","title":"Desperado","media_type":"movie"},{"adult":false,"character":"Pierre
-        Peders","credit_id":"52fe44a6c3a36847f80a2335","id":8414,"original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview","media_type":"movie"},{"adult":false,"character":"Nick","credit_id":"52fe44d29251416c9101df15","id":32446,"original_title":"Parting
+        Sun"},{"adult":false,"character":"Himself","credit_id":"52fe448bc3a368484e028e59","id":24235,"original_title":"Champion","poster_path":"/dXkJVYpTwt8oQwldpjcQg0HAPxg.jpg","release_date":"2005-03-12","title":"Champion"},{"adult":false,"character":"Buscemi","credit_id":"52fe4490c3a36847f809d501","id":8068,"original_title":"Desperado","poster_path":"/7eVo5DbP7gcsDzHcpRCTA6JAuF2.jpg","release_date":"1995-08-25","title":"Desperado"},{"adult":false,"character":"Pierre
+        Peders","credit_id":"52fe44a6c3a36847f80a2335","id":8414,"original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview"},{"adult":false,"character":"Nick","credit_id":"52fe44d29251416c9101df15","id":32446,"original_title":"Parting
         Glances","poster_path":"/rZuSLsjdZ6GjrP6regN2ZVluvnn.jpg","release_date":"1986-01-01","title":"Parting
-        Glances","media_type":"movie"},{"adult":false,"character":"Homeless Guy","credit_id":"52fe44d4c3a36847f80ac725","id":9032,"original_title":"Big
+        Glances"},{"adult":false,"character":"Homeless Guy","credit_id":"52fe44d4c3a36847f80ac725","id":9032,"original_title":"Big
         Daddy","poster_path":"/avF6Iiws8bNuXg2oKAGdG4LiqOI.jpg","release_date":"1999-06-25","title":"Big
-        Daddy","media_type":"movie"},{"adult":false,"character":"Nick Reve","credit_id":"52fe44d8c3a36847f80ad757","id":9071,"original_title":"Living
+        Daddy"},{"adult":false,"character":"Nick Reve","credit_id":"52fe44d8c3a36847f80ad757","id":9071,"original_title":"Living
         in Oblivion","poster_path":"/7dZwXfk6bniArhZTkxExvGa3Nfc.jpg","release_date":"1995-01-20","title":"Living
-        in Oblivion","media_type":"movie"},{"adult":false,"character":"Romero","credit_id":"52fe44d89251416c75042fc1","id":12279,"original_title":"Spy
+        in Oblivion"},{"adult":false,"character":"Romero","credit_id":"52fe44d89251416c75042fc1","id":12279,"original_title":"Spy
         Kids 3-D: Game Over","poster_path":"/tethGDyocmatW6Li1NcUBXQo6Oo.jpg","release_date":"2003-07-25","title":"Spy
-        Kids 3-D: Game Over","media_type":"movie"},{"adult":false,"character":"Nebbercracker
-        (voice)","credit_id":"52fe44e3c3a36847f80b01b5","id":9297,"original_title":"Monster
-        House","poster_path":"/lRXpOazybgbCff6xZjCPbRP685p.jpg","release_date":"2006-07-21","title":"Monster
-        House","media_type":"movie"},{"adult":false,"character":"Romero","credit_id":"52fe44fec3a36847f80b6591","id":9488,"original_title":"Spy
+        Kids 3-D: Game Over"},{"adult":false,"character":"Nebbercracker (voice)","credit_id":"52fe44e3c3a36847f80b01b5","id":9297,"original_title":"Monster
+        House","poster_path":"/m0gpGljVAKAHM36BLX0RR4cxrNl.jpg","release_date":"2006-07-21","title":"Monster
+        House"},{"adult":false,"character":"Romero","credit_id":"52fe44fec3a36847f80b6591","id":9488,"original_title":"Spy
         Kids 2: The Island of Lost Dreams","poster_path":"/p0waDhvhpIj5T2v1OmL7DeLD5oq.jpg","release_date":"2002-08-07","title":"Spy
-        Kids 2: The Island of Lost Dreams","media_type":"movie"},{"adult":false,"character":"Test
-        Tube","credit_id":"52fe4509c3a36847f80b8a0f","id":9558,"original_title":"King
+        Kids 2: The Island of Lost Dreams"},{"adult":false,"character":"Test Tube","credit_id":"52fe4509c3a36847f80b8a0f","id":9558,"original_title":"King
         of New York","poster_path":"/2KU2fz0XvIjV6YTuPts2w86zgXu.jpg","release_date":"1990-07-18","title":"King
-        of New York","media_type":"movie"},{"adult":false,"character":"Irving","credit_id":"52fe450e9251416c7504a311","id":12647,"original_title":"Billy
+        of New York"},{"adult":false,"character":"Irving","credit_id":"52fe450e9251416c7504a311","id":12647,"original_title":"Billy
         Bathgate","poster_path":"/wMIXsvxco8ob3b6RE9otuui3jQO.jpg","release_date":"1991-11-01","title":"Billy
-        Bathgate","media_type":"movie"},{"adult":false,"character":"Frank","credit_id":"52fe4516c3a368484e047beb","id":26738,"original_title":"Rage","poster_path":"/uOB8zzzXuTcLapJEqkh99paLDgL.jpg","release_date":"2009-09-24","title":"Rage","media_type":"movie"},{"adult":false,"character":"John","credit_id":"52fe4528c3a368484e04b9db","id":27023,"original_title":"Saint
+        Bathgate"},{"adult":false,"character":"Frank","credit_id":"52fe4516c3a368484e047beb","id":26738,"original_title":"Rage","poster_path":"/uOB8zzzXuTcLapJEqkh99paLDgL.jpg","release_date":"2009-09-24","title":"Rage"},{"adult":false,"character":"John","credit_id":"52fe4528c3a368484e04b9db","id":27023,"original_title":"Saint
         John of Las Vegas","poster_path":"/ei4BnSSkrywtR5FFPEV9jtRDGb7.jpg","release_date":"2009-06-10","title":"Saint
-        John of Las Vegas","media_type":"movie"},{"adult":false,"character":"Nick
-        (archive footage)","credit_id":"52fe452ac3a368484e04bf11","id":27047,"original_title":"Fabulous!
+        John of Las Vegas"},{"adult":false,"character":"Nick (archive footage)","credit_id":"52fe452ac3a368484e04bf11","id":27047,"original_title":"Fabulous!
         The Story of Queer Cinema","poster_path":"/5Sf3zxVswuq1niOuuta8wHtzj2I.jpg","release_date":"2006-01-01","title":"Fabulous!
-        The Story of Queer Cinema","media_type":"movie"},{"adult":false,"character":"Templeton
-        the Rat (voice)","credit_id":"52fe4557c3a36847f80c8d1d","id":9986,"original_title":"Charlotte''s
+        The Story of Queer Cinema"},{"adult":false,"character":"Templeton the Rat
+        (voice)","credit_id":"52fe4557c3a36847f80c8d1d","id":9986,"original_title":"Charlotte''s
         Web","poster_path":"/zmfPv26TJrMeE9ngSEpBG44uePa.jpg","release_date":"2006-12-15","title":"Charlotte''s
-        Web","media_type":"movie"},{"adult":false,"character":"Tommy","credit_id":"52fe4569c3a368484e05928b","id":27845,"original_title":"Trees
+        Web"},{"adult":false,"character":"Tommy","credit_id":"52fe4569c3a368484e05928b","id":27845,"original_title":"Trees
         Lounge","poster_path":"/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","release_date":"1996-10-11","title":"Trees
-        Lounge","media_type":"movie"},{"adult":false,"character":"Dale Martin","credit_id":"52fe4578c3a368484e05d349","id":28089,"original_title":"The
+        Lounge"},{"adult":false,"character":"Dale Martin","credit_id":"52fe4578c3a368484e05d349","id":28089,"original_title":"The
         Messenger","poster_path":"/el6yT5RjrT5PeoQDTrO96rziHKa.jpg","release_date":"2009-11-13","title":"The
-        Messenger","media_type":"movie"},{"adult":false,"character":"Happy Franks","credit_id":"52fe457bc3a368484e05df2b","id":28134,"original_title":"The
+        Messenger"},{"adult":false,"character":"Happy Franks","credit_id":"52fe457bc3a368484e05df2b","id":28134,"original_title":"The
         Impostors","poster_path":"/5HWt9UOZAqVzxOrv1ZH5g3RfxKX.jpg","release_date":"1998-05-18","title":"The
-        Impostors","media_type":"movie"},{"adult":false,"character":"Rex","credit_id":"52fe457e9251416c75058777","id":13595,"original_title":"Airheads","poster_path":"/w4d8TFSUFVI0W8IRUTGrQVvFFdz.jpg","release_date":"1994-08-05","title":"Airheads","media_type":"movie"},{"adult":false,"character":"Les
-        Galantine","credit_id":"52fe45879251416c75059a71","id":13650,"original_title":"Delirious","poster_path":"/pEkAacpdg5Nme1PYUNmRAmJOE6N.jpg","release_date":"2006-09-26","title":"Delirious","media_type":"movie"},{"adult":false,"character":"Wesley","credit_id":"52fe458d9251416c7505a82d","id":13700,"original_title":"Home
+        Impostors"},{"adult":false,"character":"Rex","credit_id":"52fe457e9251416c75058777","id":13595,"original_title":"Airheads","poster_path":"/w4d8TFSUFVI0W8IRUTGrQVvFFdz.jpg","release_date":"1994-08-05","title":"Airheads"},{"adult":false,"character":"Les
+        Galantine","credit_id":"52fe45879251416c75059a71","id":13650,"original_title":"Delirious","poster_path":"/pEkAacpdg5Nme1PYUNmRAmJOE6N.jpg","release_date":"2006-09-26","title":"Delirious"},{"adult":false,"character":"Wesley","credit_id":"52fe458d9251416c7505a82d","id":13700,"original_title":"Home
         on the Range","poster_path":"/1KFa2Mzzn2DMlC95eJwRYgRsHI.jpg","release_date":"2004-04-02","title":"Home
-        on the Range","media_type":"movie"},{"adult":false,"character":"Angelo","credit_id":"52fe45c09251416c7506132d","id":13994,"original_title":"Romance
-        & Cigarettes","poster_path":"/hmePGWj7SFiDChBTfI9z8CY12sM.jpg","release_date":"2007-09-07","title":"Romance
-        & Cigarettes","media_type":"movie"},{"adult":false,"character":"Jimmy","credit_id":"52fe45d3c3a36847f80dcab3","id":41578,"original_title":"Floundering","poster_path":"/ddb5R3Hev63Ol7CJvOe2W1eOBEF.jpg","release_date":"1994-01-01","title":"Floundering","media_type":"movie"},{"adult":false,"character":"Scamper","credit_id":"52fe45de9251416c75065419","id":14248,"original_title":"Igor","poster_path":"/en4ddVTs4n49iDYMZtkvedFgcM8.jpg","release_date":"2008-09-19","title":"Igor","media_type":"movie"},{"adult":false,"character":"Switchblade","credit_id":"52fe45e4c3a36847f80e07bd","id":41950,"original_title":"Call
+        on the Range"},{"adult":false,"character":"Angelo","credit_id":"52fe45c09251416c7506132d","id":13994,"original_title":"Romance
+        & Cigarettes","poster_path":"/hmePGWj7SFiDChBTfI9z8CY12sM.jpg","release_date":"2005-09-13","title":"Romance
+        & Cigarettes"},{"adult":false,"character":"Jimmy","credit_id":"52fe45d3c3a36847f80dcab3","id":41578,"original_title":"Floundering","poster_path":"/ddb5R3Hev63Ol7CJvOe2W1eOBEF.jpg","release_date":"1994-01-01","title":"Floundering"},{"adult":false,"character":"Scamper
+        (voice)","credit_id":"52fe45de9251416c75065419","id":14248,"original_title":"Igor","poster_path":"/en4ddVTs4n49iDYMZtkvedFgcM8.jpg","release_date":"2008-09-19","title":"Igor"},{"adult":false,"character":"Switchblade","credit_id":"52fe45e4c3a36847f80e07bd","id":41950,"original_title":"Call
         Me","poster_path":"/gKvEils67yTWmWMAoqvvRIPwb6G.jpg","release_date":"1988-05-20","title":"Call
-        Me","media_type":"movie"},{"adult":false,"character":"Jerry Cubbins","credit_id":"52fe45ed9251416c75067457","id":14390,"original_title":"Double
+        Me"},{"adult":false,"character":"Jerry Cubbins","credit_id":"52fe45ed9251416c75067457","id":14390,"original_title":"Double
         Whammy","poster_path":"/rGmsG1uaNjo7SxyXQOKMSKevpyk.jpg","release_date":"2001-01-20","title":"Double
-        Whammy","media_type":"movie"},{"adult":false,"character":"George","credit_id":"52fe45f39251416c75068043","id":14434,"original_title":"I
+        Whammy"},{"adult":false,"character":"George","credit_id":"52fe45f39251416c75068043","id":14434,"original_title":"I
         Think I Love My Wife","poster_path":"/7NXibal8XVAuGc6PIn8CVzORrDV.jpg","release_date":"2007-03-16","title":"I
-        Think I Love My Wife","media_type":"movie"},{"adult":false,"character":"Nick","credit_id":"52fe45fcc3a368484e07a49b","id":29825,"original_title":"The
-        Real Blonde","poster_path":"/lgoH7u9atnAJ1pgjTyG9MnrJEto.jpg","release_date":"1998-02-27","title":"The
-        Real Blonde","media_type":"movie"},{"adult":false,"character":"''Hesch'' Abramowics","credit_id":"52fe46429251416c750728d5","id":15192,"original_title":"The
+        Think I Love My Wife"},{"adult":false,"character":"Nick","credit_id":"52fe45fcc3a368484e07a49b","id":29825,"original_title":"The
+        Real Blonde","poster_path":"/lgoH7u9atnAJ1pgjTyG9MnrJEto.jpg","release_date":"1997-09-14","title":"The
+        Real Blonde"},{"adult":false,"character":"''Hesch'' Abramowics","credit_id":"52fe46429251416c750728d5","id":15192,"original_title":"The
         Grey Zone","poster_path":"/bLvNDTM1LKeC6ioDw0L2WEl8Xoc.jpg","release_date":"2001-09-13","title":"The
-        Grey Zone","media_type":"movie"},{"adult":false,"character":"Bananas The Clown","credit_id":"52fe4658c3a36847f80f9cb7","id":43656,"original_title":"13
+        Grey Zone"},{"adult":false,"character":"Bananas The Clown","credit_id":"52fe4658c3a36847f80f9cb7","id":43656,"original_title":"13
         Moons","poster_path":"/k9jvqeXtc5AARclaBdvrcq7iSbk.jpg","release_date":"2002-01-01","title":"13
-        Moons","media_type":"movie"},{"adult":false,"character":"Randall Boggs (voice)","credit_id":"52fe4675c3a368484e091dc5","id":62211,"original_title":"Monsters
-        University","poster_path":"/a05xQU9huY3P5uurLcGGHmsf2Vh.jpg","release_date":"2013-06-21","title":"Monsters
-        University","media_type":"movie"},{"adult":false,"character":"Neal","credit_id":"52fe467ec3a36847f81022d1","id":44219,"original_title":"The
+        Moons"},{"adult":false,"character":"Randall Boggs (voice)","credit_id":"52fe4675c3a368484e091dc5","id":62211,"original_title":"Monsters
+        University","poster_path":"/a05xQU9huY3P5uurLcGGHmsf2Vh.jpg","release_date":"2013-06-20","title":"Monsters
+        University"},{"adult":false,"character":"Neal","credit_id":"52fe467ec3a36847f81022d1","id":44219,"original_title":"The
         Chosen One","poster_path":"/q6u9GYfQXTjZL6q37OOgRzJiNkV.jpg","release_date":"2010-09-03","title":"The
-        Chosen One","media_type":"movie"},{"adult":false,"character":"Mickey","credit_id":"52fe468dc3a36847f81052bf","id":44535,"original_title":"Somebody
+        Chosen One"},{"adult":false,"character":"Mickey","credit_id":"52fe468dc3a36847f81052bf","id":44535,"original_title":"Somebody
         to Love","poster_path":"/vXIGFSwb87DJBiywAiOFzccrVmt.jpg","release_date":"1994-09-27","title":"Somebody
-        to Love","media_type":"movie"},{"adult":false,"character":"Ed Chilton","credit_id":"52fe468fc3a36847f8105957","id":44562,"original_title":"Ed
+        to Love"},{"adult":false,"character":"Ed Chilton","credit_id":"52fe468fc3a36847f8105957","id":44562,"original_title":"Ed
         and His Dead Mother","poster_path":"/qBwBfyKAEEw0HLZmEjLO2owEDie.jpg","release_date":"1993-06-04","title":"Ed
-        and His Dead Mother","media_type":"movie"},{"adult":false,"character":"Waiter","credit_id":"52fe4694c3a368484e09860f","id":62934,"original_title":"Fight
+        and His Dead Mother"},{"adult":false,"character":"Waiter","credit_id":"52fe4694c3a368484e09860f","id":62934,"original_title":"Fight
         for Your Right Revisited","poster_path":"/iHtr4dogfis6LipyaHD7Zuv34ff.jpg","release_date":"2011-04-22","title":"Fight
-        for Your Right Revisited","media_type":"movie"},{"adult":false,"character":"Wiley","credit_id":"52fe46b29251416c9105c9a1","id":38365,"original_title":"Grown
+        for Your Right Revisited"},{"adult":false,"character":"Wiley","credit_id":"52fe46b29251416c9105c9a1","id":38365,"original_title":"Grown
         Ups","poster_path":"/t6Yj2UlqsrHHK6kJO1FWepR6mEd.jpg","release_date":"2010-06-24","title":"Grown
-        Ups","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe46c5c3a36847f81111ed","id":45485,"original_title":"I
+        Ups"},{"adult":false,"character":"Himself","credit_id":"52fe46c5c3a36847f81111ed","id":45485,"original_title":"I
         Knew It Was You: Rediscovering John Cazale","poster_path":"/bP3IHwZcHlS3JFaPvXfVlXdhADZ.jpg","release_date":"2009-01-16","title":"I
-        Knew It Was You: Rediscovering John Cazale","media_type":"movie"},{"adult":false,"character":"Ed
+        Knew It Was You: Rediscovering John Cazale"},{"adult":false,"character":"Ed
         Hoyt","credit_id":"52fe4762c3a368484e0c42c9","id":67365,"original_title":"The
-        Search for One-eye Jimmy","poster_path":"/l7sSxez2aIWQHYvk7O2lzMmu31q.jpg","release_date":"1996-06-21","title":"The
-        Search for One-eye Jimmy","media_type":"movie"},{"adult":false,"character":"Wilfredo","credit_id":"52fe47a7c3a36847f81411f7","id":49788,"original_title":"Slaves
+        Search for One-eye Jimmy","poster_path":"/l7sSxez2aIWQHYvk7O2lzMmu31q.jpg","release_date":"1994-11-14","title":"The
+        Search for One-eye Jimmy"},{"adult":false,"character":"Wilfredo","credit_id":"52fe47a7c3a36847f81411f7","id":49788,"original_title":"Slaves
         of New York","poster_path":"/3Db979Wwd8sKQLpEAgmydn0Ge75.jpg","release_date":"1989-03-18","title":"Slaves
-        of New York","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe47a79251416c750a0ef7","id":18893,"original_title":"Joe
+        of New York"},{"adult":false,"character":"Himself","credit_id":"52fe47a79251416c750a0ef7","id":18893,"original_title":"Joe
         Strummer: The Future Is Unwritten","poster_path":"/1o2vTPVzHEHU3q9RxJAkCY0a3mG.jpg","release_date":"2007-05-18","title":"Joe
-        Strummer: The Future Is Unwritten","media_type":"movie"},{"adult":false,"character":"Frank","credit_id":"52fe47cac3a36847f81486b9","id":50536,"original_title":"Twenty
+        Strummer: The Future Is Unwritten"},{"adult":false,"character":"Frank","credit_id":"52fe47cac3a36847f81486b9","id":50536,"original_title":"Twenty
         Bucks","poster_path":"/y3xG6ig3DpW4U0BEVkd0QUvosfo.jpg","release_date":"1993-10-21","title":"Twenty
-        Bucks","media_type":"movie"},{"adult":false,"character":"Bucky the Hamster
-        (voice)","credit_id":"52fe47e19251416c750a8905","id":19585,"original_title":"G-Force","poster_path":"/ecTQ40F6Ob4JW2qMRUf8ThxViyd.jpg","release_date":"2009-07-21","title":"G-Force","media_type":"movie"},{"adult":false,"character":"","credit_id":"52fe480dc3a36847f8155ead","id":51933,"original_title":"Handsome
+        Bucks"},{"adult":false,"character":"Bucky the Hamster (voice)","credit_id":"52fe47e19251416c750a8905","id":19585,"original_title":"G-Force","poster_path":"/ecTQ40F6Ob4JW2qMRUf8ThxViyd.jpg","release_date":"2009-07-21","title":"G-Force"},{"adult":false,"character":"","credit_id":"52fe480dc3a36847f8155ead","id":51933,"original_title":"Handsome
         Harry","poster_path":"/solugFmCfz8k5Vo3cNJGafEGv7S.jpg","release_date":"2009-04-25","title":"Handsome
-        Harry","media_type":"movie"},{"adult":false,"character":"Martin Kunkle","credit_id":"52fe4840c3a36847f815e2c1","id":52735,"original_title":"Love
+        Harry"},{"adult":false,"character":"Martin Kunkle","credit_id":"52fe4840c3a36847f815e2c1","id":52735,"original_title":"Love
         in the Time of Money","poster_path":"/zl1TIAZN2tFiD1ECbUPKLK4ssJc.jpg","release_date":"2002-11-01","title":"Love
-        in the Time of Money","media_type":"movie"},{"adult":false,"character":"Aldolpho
-        Rollo","credit_id":"52fe484ac3a36847f815ff33","id":52936,"original_title":"In
+        in the Time of Money"},{"adult":false,"character":"Aldolpho Rollo","credit_id":"52fe484ac3a36847f815ff33","id":52936,"original_title":"In
         the Soup","poster_path":"/mePx7JEk2yWQFvcEp3XtzfvQIYR.jpg","release_date":"1992-10-23","title":"In
-        the Soup","media_type":"movie"},{"adult":false,"character":"Whining Willie","credit_id":"52fe4858c3a368484e0f41c3","id":72096,"original_title":"Bloodhounds
+        the Soup"},{"adult":false,"character":"Whining Willie","credit_id":"52fe4858c3a368484e0f41c3","id":72096,"original_title":"Bloodhounds
         of Broadway","poster_path":"/dJ0lci8sd3m4aLIs3wTha965UdA.jpg","release_date":"1989-11-03","title":"Bloodhounds
-        of Broadway","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe4862c3a36847f81648c3","id":53380,"original_title":"Divine
+        of Broadway"},{"adult":false,"character":"Himself","credit_id":"52fe4862c3a36847f81648c3","id":53380,"original_title":"Divine
         Trash","poster_path":"/bKGcOWhRsGXkQCRTfSHtMPCoqA2.jpg","release_date":"1998-01-18","title":"Divine
-        Trash","media_type":"movie"},{"adult":false,"character":"","credit_id":"52fe48be9251416c91096e11","id":83770,"original_title":"On
+        Trash"},{"adult":false,"character":"","credit_id":"52fe48be9251416c91096e11","id":83770,"original_title":"On
         the Road","poster_path":"/uORuwLgdDFkA4BuU9b9nuhTkuy.jpg","release_date":"2012-05-22","title":"On
-        the Road","media_type":"movie"},{"adult":false,"character":"Bill Blago","credit_id":"52fe4909c3a368484e117701","id":75622,"original_title":"Rampart","poster_path":"/ykEi3o0phggVEb7aPfGOPO3UDc9.jpg","release_date":"2012-02-10","title":"Rampart","media_type":"movie"},{"adult":false,"character":"Wayne
+        the Road"},{"adult":false,"character":"Bill Blago","credit_id":"52fe4909c3a368484e117701","id":75622,"original_title":"Rampart","poster_path":"/ykEi3o0phggVEb7aPfGOPO3UDc9.jpg","release_date":"2011-12-10","title":"Rampart"},{"adult":false,"character":"Wayne
         (voice)","credit_id":"52fe493ec3a368484e1216af","id":76492,"original_title":"Hotel
-        Transylvania","poster_path":"/9qugesYpAWHUpdrw2w8URSGkAPt.jpg","release_date":"2012-09-27","title":"Hotel
-        Transylvania","media_type":"movie"},{"adult":false,"character":"Worker","credit_id":"52fe49e89251416c750d7539","id":97640,"original_title":"Sleepwalk","poster_path":"/rPCC5vkZudLLSTvTrf6gOwaqr3x.jpg","release_date":"1986-09-09","title":"Sleepwalk","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe4a83c3a368484e157c77","id":122825,"original_title":"Minnesota
+        Transylvania","poster_path":"/9qugesYpAWHUpdrw2w8URSGkAPt.jpg","release_date":"2012-09-20","title":"Hotel
+        Transylvania"},{"adult":false,"character":"Worker","credit_id":"52fe49e89251416c750d7539","id":97640,"original_title":"Sleepwalk","poster_path":"/rPCC5vkZudLLSTvTrf6gOwaqr3x.jpg","release_date":"1986-09-09","title":"Sleepwalk"},{"adult":false,"character":"Himself","credit_id":"52fe4a83c3a368484e157c77","id":122825,"original_title":"Minnesota
         Nice","poster_path":"/xF7FR027EVRrEjBnyDHNWpw9rsg.jpg","release_date":"2003-04-01","title":"Minnesota
-        Nice","media_type":"movie"},{"adult":false,"character":"Anton Marvelton","credit_id":"52fe4aacc3a368484e161039","id":124459,"original_title":"The
-        Incredible Burt Wonderstone","poster_path":"/5WpMIIEfRaJL2WrgQMImu4S79ME.jpg","release_date":"2013-03-15","title":"The
-        Incredible Burt Wonderstone","media_type":"movie"},{"adult":false,"character":"Wiley","credit_id":"52fe4ab3c3a36847f81dd21f","id":109418,"original_title":"Grown
-        Ups 2","poster_path":"/xVfzcl1fcTDA4T76enoHF80MR4n.jpg","release_date":"2013-07-12","title":"Grown
-        Ups 2","media_type":"movie"},{"adult":false,"character":"Dead Pimp","credit_id":"52fe4adbc3a368484e16a9ff","id":126273,"original_title":"No
+        Nice"},{"adult":false,"character":"Anton Marvelton","credit_id":"52fe4aacc3a368484e161039","id":124459,"original_title":"The
+        Incredible Burt Wonderstone","poster_path":"/5WpMIIEfRaJL2WrgQMImu4S79ME.jpg","release_date":"2013-03-14","title":"The
+        Incredible Burt Wonderstone"},{"adult":false,"character":"Wiley","credit_id":"52fe4ab3c3a36847f81dd21f","id":109418,"original_title":"Grown
+        Ups 2","poster_path":"/xVfzcl1fcTDA4T76enoHF80MR4n.jpg","release_date":"2013-07-11","title":"Grown
+        Ups 2"},{"adult":false,"character":"Dead Pimp","credit_id":"52fe4adbc3a368484e16a9ff","id":126273,"original_title":"No
         Picnic","poster_path":"/4ClOIcbuK3MXBa93lHso4s55bB3.jpg","release_date":"1986-01-17","title":"No
-        Picnic","media_type":"movie"},{"adult":false,"character":"Unknown","credit_id":"52fe4adbc3a368484e16aa27","id":126275,"original_title":"Force
+        Picnic"},{"adult":false,"character":"Unknown","credit_id":"52fe4adbc3a368484e16aa27","id":126275,"original_title":"Force
         of Circumstance","poster_path":null,"release_date":"1990-01-01","title":"Force
-        of Circumstance","media_type":"movie"},{"adult":false,"character":"Nicky","credit_id":"52fe4bddc3a36847f82171a1","id":118555,"original_title":"Heart","poster_path":"/wHmpyUBvnUSVT4MfdwTmyApIav2.jpg","release_date":"1987-11-01","title":"Heart","media_type":"movie"},{"adult":false,"character":"Skalk
-        (voice)","credit_id":"52fe4d1fc3a36847f824fbdf","id":172391,"original_title":"Khumba","poster_path":"/47L9VufChwKF4K6VXeBr6IMWODm.jpg","release_date":"2013-10-25","title":"Khumba","media_type":"movie"},{"adult":false,"character":"","credit_id":"52fe4d379251416c75133d97","id":188418,"original_title":"Come
+        of Circumstance"},{"adult":false,"character":"Theodore Donald Kerabatsos","credit_id":"52fe421ac3a36847f800413d","id":115,"original_title":"The
+        Big Lebowski","poster_path":"/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","release_date":"1998-02-15","title":"The
+        Big Lebowski"},{"adult":false,"character":"Carl Showalter","credit_id":"52fe4230c3a36847f800af1b","id":275,"original_title":"Fargo","poster_path":"/b8cCEKv4q8iIatnfFO8dDDwxws1.jpg","release_date":"1996-04-05","title":"Fargo"},{"adult":false,"character":"Chet","credit_id":"52fe4233c3a36847f800b97d","id":290,"original_title":"Barton
+        Fink","poster_path":"/dAsGm1jsQIJTe0oX081eXUDyFWY.jpg","release_date":"1991-08-01","title":"Barton
+        Fink"},{"adult":false,"character":"Mink","credit_id":"52fe423cc3a36847f800e79f","id":379,"original_title":"Miller''s
+        Crossing","poster_path":"/gmUAhNHY4bxQzgHjXci5JAW7u62.jpg","release_date":"1990-09-21","title":"Miller''s
+        Crossing"},{"adult":false,"character":"Mister Shhh","credit_id":"52fe423ec3a36847f800f33b","id":400,"original_title":"Things
+        to Do in Denver When You''re Dead","poster_path":"/cBl7Yms567eR7UDhLOX8qI0LH0L.jpg","release_date":"1995-12-01","title":"Things
+        to Do in Denver When You''re Dead"},{"adult":false,"character":"Mr. Pink","credit_id":"52fe424ac3a36847f8012cc9","id":500,"original_title":"Reservoir
+        Dogs","poster_path":"/4ctv9pxKpwjTFevWQbvaqXkXbPF.jpg","release_date":"1992-06-25","title":"Reservoir
+        Dogs"},{"adult":false,"character":"Randall (voice)","credit_id":"52fe4256c3a36847f801690f","id":585,"original_title":"Monsters,
+        Inc.","poster_path":"/93Y9BGx8blzmZOPSoivkFfaifqU.jpg","release_date":"2001-11-01","title":"Monsters,
+        Inc."},{"adult":false,"character":"Norther Winslow","credit_id":"52fe4258c3a36847f80170a9","id":587,"original_title":"Big
+        Fish","poster_path":"/6DRFdlNZpAaEt7eejsbAlJGgaM7.jpg","release_date":"2003-12-25","title":"Big
+        Fish"},{"adult":false,"character":"Buddy Holly","credit_id":"52fe426ac3a36847f801cb2b","id":680,"original_title":"Pulp
+        Fiction","poster_path":"/dM2w364MScsjFf8pfMbaWUcWrR.jpg","release_date":"1994-10-14","title":"Pulp
+        Fiction"},{"adult":false,"character":"Kellner","credit_id":"52fe4287c3a36847f8025f1b","id":883,"original_title":"Coffee
+        and Cigarettes","poster_path":"/4IZ9SR6quqjUTghphn0oTBjnQKi.jpg","release_date":"2003-09-05","title":"Coffee
+        and Cigarettes"},{"adult":false,"character":"Seymour","credit_id":"52fe42fcc3a36847f8031e2d","id":1548,"original_title":"Ghost
+        World","poster_path":"/oDoEkXVw5iikwPy0bQ8u0m5E85i.jpg","release_date":"2001-06-16","title":"Ghost
+        World"},{"adult":false,"character":"James ''Mac'' McCord","credit_id":"52fe4306c3a36847f8034de3","id":1635,"original_title":"The
+        Island","poster_path":"/erprD7GIkvZz2KM4Z35eyTJKZMI.jpg","release_date":"2005-07-20","title":"The
+        Island"},{"adult":false,"character":"Garland Greene","credit_id":"52fe430ec3a36847f8037097","id":1701,"original_title":"Con
+        Air","poster_path":"/yhaOQ7xXw0PLHLvg1w0M9zlPdg6.jpg","release_date":"1997-06-01","title":"Con
+        Air"},{"adult":false,"character":"Rockhound","credit_id":"52fe4216c3a36847f800317f","id":95,"original_title":"Armageddon","poster_path":"/coINnuCzcw5FMHBty8hcudMOBnO.jpg","release_date":"1998-06-30","title":"Armageddon"},{"adult":false,"character":"Nicky","credit_id":"52fe4bddc3a36847f82171a1","id":118555,"original_title":"Heart","poster_path":"/wHmpyUBvnUSVT4MfdwTmyApIav2.jpg","release_date":"1987-11-01","title":"Heart"},{"adult":false,"character":"Skalk
+        (voice)","credit_id":"52fe4d1fc3a36847f824fbdf","id":172391,"original_title":"Khumba","poster_path":"/47L9VufChwKF4K6VXeBr6IMWODm.jpg","release_date":"2013-07-18","title":"Khumba"},{"adult":false,"character":"","credit_id":"52fe4d379251416c75133d97","id":188418,"original_title":"Come
         Together: A Night for John Lennon''s Words and Music","poster_path":"/rQUSUFSxQIhRvUes4krCCEBTMIW.jpg","release_date":"2001-10-02","title":"Come
-        Together: A Night for John Lennon''s Words and Music","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"52fe4e199251416c91126745","id":251475,"original_title":"Rockets
+        Together: A Night for John Lennon''s Words and Music"},{"adult":false,"character":"Himself","credit_id":"52fe4e199251416c91126745","id":251475,"original_title":"Rockets
         Redglare!","poster_path":null,"release_date":"2003-05-02","title":"Rockets
-        Redglare!","media_type":"movie"},{"adult":false,"character":"","credit_id":"52fe4ee79251416c91141ac3","id":255345,"original_title":"Film
+        Redglare!"},{"adult":false,"character":"","credit_id":"52fe4ee79251416c91141ac3","id":255345,"original_title":"Film
         House Fever","poster_path":null,"release_date":"1986-01-02","title":"Film
-        House Fever","media_type":"movie"},{"adult":false,"character":"Willy / Raphael","credit_id":"52ffac5dc3a368400f069b63","id":255736,"original_title":"The
+        House Fever"},{"adult":false,"character":"Willy / Raphael","credit_id":"52ffac5dc3a368400f069b63","id":255736,"original_title":"The
         Way It Is","poster_path":"/b3McxMjubvAONjCHHh3mUiZjn9Z.jpg","release_date":"1985-12-11","title":"The
-        Way It Is","media_type":"movie"},{"adult":false,"character":"OPP Man","credit_id":"5318e30b92514177bf001624","id":36630,"original_title":"Zandalee","poster_path":"/2htCUPJ6IsosO44lbN5XLfjDDhR.jpg","release_date":"1991-07-18","title":"Zandalee","media_type":"movie"},{"adult":false,"character":"Waiter","credit_id":"5345721dc3a36825a00018d1","id":263912,"original_title":"Coffee
+        Way It Is"},{"adult":false,"character":"OPP Man","credit_id":"5318e30b92514177bf001624","id":36630,"original_title":"Zandalee","poster_path":"/2htCUPJ6IsosO44lbN5XLfjDDhR.jpg","release_date":"1991-05-09","title":"Zandalee"},{"adult":false,"character":"Waiter","credit_id":"5345721dc3a36825a00018d1","id":263912,"original_title":"Coffee
         and Cigarettes II","poster_path":"/esQd0eTBMdD33AF3VwMQvMIP9u9.jpg","release_date":"1989-01-01","title":"Coffee
-        and Cigarettes II","media_type":"movie"},{"adult":false,"character":"Gregory
-        Stark","credit_id":"5413398b0e0a264f3d0003c3","id":9686,"original_title":"New
+        and Cigarettes II"},{"adult":false,"character":"Gregory Stark","credit_id":"5413398b0e0a264f3d0003c3","id":9686,"original_title":"New
         York Stories","poster_path":"/ydzOOOidCSb85N8w11oWNmsP0wU.jpg","release_date":"1989-03-10","title":"New
-        York Stories","media_type":"movie"},{"adult":false,"character":"Beatnik Barman","credit_id":"541339ffc3a3687da1000376","id":11934,"original_title":"The
+        York Stories"},{"adult":false,"character":"Beatnik Barman","credit_id":"541339ffc3a3687da1000376","id":11934,"original_title":"The
         Hudsucker Proxy","poster_path":"/olViHNQHPy18SOJvbAI1bXUjHXI.jpg","release_date":"1994-03-11","title":"The
-        Hudsucker Proxy","media_type":"movie"},{"adult":false,"character":"David ''Dave''
-        Veltri","credit_id":"54133a70c3a3687d9e0003bd","id":11003,"original_title":"The
+        Hudsucker Proxy"},{"adult":false,"character":"David ''Dave'' Veltri","credit_id":"54133a70c3a3687d9e0003bd","id":11003,"original_title":"The
         Wedding Singer","poster_path":"/t4M6RrwBQKTqbnG9vqG339G7FCC.jpg","release_date":"1998-02-13","title":"The
-        Wedding Singer","media_type":"movie"},{"adult":false,"character":"Himself","credit_id":"545f9ff00e0a261fb3009675","id":288130,"original_title":"A
+        Wedding Singer"},{"adult":false,"character":"Himself","credit_id":"545f9ff00e0a261fb3009675","id":288130,"original_title":"A
         Good Job: Stories of the FDNY","poster_path":"/9xVUft4tDujE9ElVt04zK0ifeCy.jpg","release_date":"2014-09-08","title":"A
-        Good Job: Stories of the FDNY","media_type":"movie"},{"adult":false,"character":"Wayne
-        (voice)","credit_id":"546c8f06925141305f0013ea","id":159824,"original_title":"Hotel
-        Transylvania 2","poster_path":"/t4PLWexbe4wbNydCOBv18cYexup.jpg","release_date":"2015-09-25","title":"Hotel
-        Transylvania 2","media_type":"movie"},{"adult":false,"character":"Eddy","credit_id":"52fe4710c3a368484e0b2e71","id":65572,"original_title":"Heart
-        of Midnight","poster_path":"/y34KZCdyVQSKrXsdbetykP10r1D.jpg","release_date":"1989-03-03","title":"Heart
-        of Midnight","media_type":"movie"},{"adult":false,"character":"Jimmy","credit_id":"52fe4e78c3a36847f82920a9","id":238215,"original_title":"The
+        Good Job: Stories of the FDNY"},{"adult":false,"character":"Wayne (voice)","credit_id":"546c8f06925141305f0013ea","id":159824,"original_title":"Hotel
+        Transylvania 2","poster_path":"/t4PLWexbe4wbNydCOBv18cYexup.jpg","release_date":"2015-09-21","title":"Hotel
+        Transylvania 2"},{"adult":false,"character":"Eddy","credit_id":"52fe4710c3a368484e0b2e71","id":65572,"original_title":"Heart
+        of Midnight","poster_path":"/y34KZCdyVQSKrXsdbetykP10r1D.jpg","release_date":"1988-11-10","title":"Heart
+        of Midnight"},{"adult":false,"character":"Jimmy","credit_id":"52fe4e78c3a36847f82920a9","id":238215,"original_title":"The
         Cobbler","poster_path":"/rUMpmOaoJdoLjkoUfUJaTfk3QyL.jpg","release_date":"2014-09-11","title":"The
-        Cobbler","media_type":"movie"},{"adult":false,"character":"","credit_id":"5517955e9251416f00002cbe","id":11017,"original_title":"Billy
+        Cobbler"},{"adult":false,"character":"","credit_id":"5517955e9251416f00002cbe","id":11017,"original_title":"Billy
         Madison","poster_path":"/5mP8F0NYSVrwrlWRCSD4uywMNnX.jpg","release_date":"1995-02-10","title":"Billy
-        Madison","media_type":"movie"},{"adult":false,"character":"","credit_id":"554c57eac3a36824cd000d50","id":19448,"original_title":"The
+        Madison"},{"adult":false,"character":"","credit_id":"554c57eac3a36824cd000d50","id":19448,"original_title":"The
         Laramie Project","poster_path":"/terEBLSU6gmb9linwWTHPtjYRIR.jpg","release_date":"2002-01-10","title":"The
-        Laramie Project","media_type":"movie"},{"adult":false,"character":"Luke","credit_id":"5581247892514144aa001392","id":300589,"original_title":"Lonesome
+        Laramie Project"},{"adult":false,"character":"Luke","credit_id":"5581247892514144aa001392","id":300589,"original_title":"Lonesome
         Dove","poster_path":"/pxoaZSuuYOaVEwHxy6aqP4GOKas.jpg","release_date":"1989-02-05","title":"Lonesome
-        Dove","media_type":"movie"},{"adult":false,"character":"","credit_id":"55a1576f925141297d001a7d","id":348304,"original_title":"My
+        Dove"},{"adult":false,"character":"","credit_id":"55a1576f925141297d001a7d","id":348304,"original_title":"My
         Depression (The Up and Down and Up of It)","poster_path":"/dpSj8ApYOG8W6gtciYGKvqewg7.jpg","release_date":"2015-07-13","title":"My
-        Depression (The Up and Down and Up of It)","media_type":"movie"},{"adult":false,"character":"Doc
+        Depression (The Up and Down and Up of It)"},{"adult":false,"character":"Doc
         Griffin","credit_id":"559d8784c3a3680814000013","id":347969,"original_title":"The
         Ridiculous 6","poster_path":"/k77xcsBtZMq9zIlTVQV7UBemzXD.jpg","release_date":"2015-12-11","title":"The
-        Ridiculous 6","media_type":"movie"},{"adult":false,"character":"","credit_id":"563e8cdd9251413b1300dbdd","id":367141,"original_title":"Life
+        Ridiculous 6"},{"adult":false,"character":"","credit_id":"563e8cdd9251413b1300dbdd","id":367141,"original_title":"Life
         Lessons","poster_path":"/bn0tSzEXmugZY5cN36ftbOKc6tO.jpg","release_date":"1989-03-17","title":"Life
-        Lessons","media_type":"movie"},{"adult":false,"character":"Building Manager","credit_id":"563fcb1cc3a3681b54031cac","id":284294,"original_title":"Time
-        Out of Mind","poster_path":"/a9SQXoFCqzLMCDCIhIzTTDd7cg0.jpg","release_date":"2015-09-09","title":"Time
-        Out of Mind","media_type":"movie"},{"adult":false,"character":"","credit_id":"5676b188c3a368168e0060c7","id":28134,"original_title":"The
+        Lessons"},{"adult":false,"character":"Building Manager","credit_id":"563fcb1cc3a3681b54031cac","id":284294,"original_title":"Time
+        Out of Mind","poster_path":"/a9SQXoFCqzLMCDCIhIzTTDd7cg0.jpg","release_date":"2014-09-07","title":"Time
+        Out of Mind"},{"adult":false,"character":"","credit_id":"5676b188c3a368168e0060c7","id":28134,"original_title":"The
         Impostors","poster_path":"/5HWt9UOZAqVzxOrv1ZH5g3RfxKX.jpg","release_date":"1998-05-18","title":"The
-        Impostors","media_type":"movie"},{"character":"","credit_id":"5256c32c19c2956ff601d1f7","episode_count":2,"first_air_date":"1989-12-16","id":456,"name":"The
-        Simpsons","original_name":"The Simpsons","poster_path":"/yTZQkSsxUFJZJe67IenRM0AEklc.jpg","media_type":"tv"},{"character":"","credit_id":"5256c86719c2956ff6044522","episode_count":1,"first_air_date":"1999-01-10","id":1398,"name":"The
-        Sopranos","original_name":"The Sopranos","poster_path":"/u0cLcBQITrYqfHsn06fxnQwtqiE.jpg","media_type":"tv"},{"character":"","credit_id":"5257199e760ee3776a18149c","episode_count":1,"first_air_date":"1984-09-16","id":1908,"name":"Miami
-        Vice","original_name":"Miami Vice","poster_path":"/8n6E4Fnaz9qOnK2gniJVdDNZ4by.jpg","media_type":"tv"},{"character":"","credit_id":"52572a3d760ee3776a2c7f76","episode_count":2,"first_air_date":"1996-07-22","id":2224,"name":"The
-        Daily Show with Trevor Noah","original_name":"The Daily Show with Trevor Noah","poster_path":"/tZlqGXWGzEJNRl9QCCUN8ioSv2D.jpg","media_type":"tv"},{"character":"","credit_id":"52576a4e760ee36aaa3d2578","episode_count":1,"first_air_date":"1993-01-31","id":4464,"name":"Homicide:
-        Life on the Street","original_name":"Homicide: Life on the Street","poster_path":"/5rYmgeMCKKDVl6nvXsCbNiL5v9u.jpg","media_type":"tv"},{"character":"","credit_id":"52577370760ee36aaa4e1fe5","episode_count":1,"first_air_date":"1994-09-19","id":4588,"name":"ER","original_name":"ER","poster_path":"/qnllIuJI11tskEolTd3QsbR0TuC.jpg","media_type":"tv"},{"character":"","credit_id":"52595ed5760ee3466194dd1c","episode_count":5,"first_air_date":"1989-02-05","id":41692,"name":"Lonesome
-        Dove","original_name":"Lonesome Dove","poster_path":"/pXpA0VVB7IDuesAZB0ff0WmuxAc.jpg","media_type":"tv"},{"character":"","credit_id":"525338b619c2957940056d0e","episode_count":1,"first_air_date":"1995-09-13","id":97,"name":"The
-        Drew Carey Show","original_name":"The Drew Carey Show","poster_path":"/cu5dTBNOr6lCrtQIGtVbKKNlT1G.jpg","media_type":"tv"},{"character":"Celery
-        Salesman","credit_id":"532cc9c9c3a3685fe20005b6","episode_count":1,"first_air_date":"2011-01-21","id":33922,"name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg","media_type":"tv"},{"character":"","credit_id":"52537bd019c2957940191722","episode_count":1,"first_air_date":"1992-09-23","id":500,"name":"Mad
-        About You","original_name":"Mad About You","poster_path":"/6vVYaC8zgQDzHfEX2Mzg0vd7V6j.jpg","media_type":"tv"},{"character":"","credit_id":"5253916e19c29579402941d7","episode_count":1,"first_air_date":"1986-09-15","id":732,"name":"L.A.
-        Law","original_name":"L.A. Law","poster_path":"/6w9WqSTf669jc2j5cZykPZhnIi3.jpg","media_type":"tv"},{"character":"Nucky
-        Thompson","credit_id":"52570df519c295731c000d23","episode_count":12,"first_air_date":"2010-09-19","id":1621,"name":"Boardwalk
-        Empire","original_name":"Boardwalk Empire","poster_path":"/yXZ0ooun7zNNBS9kuHS3TYlnYZ4.jpg","media_type":"tv"},{"character":"","credit_id":"52573510760ee3776a399ec5","episode_count":1,"first_air_date":"1989-06-10","id":2391,"name":"Tales
-        from the Crypt","original_name":"Tales from the Crypt","poster_path":"/faZKMT856LWSnzgVh3L4BMazGmz.jpg","media_type":"tv"},{"character":"","credit_id":"5257626a760ee36aaa320eff","episode_count":1,"first_air_date":"1985-09-18","id":4297,"name":"The
-        Equalizer","original_name":"The Equalizer","poster_path":"/cvV1CxhbC8vyfQPHUVPUeQjdVw1.jpg","media_type":"tv"},{"character":"","credit_id":"525770ea760ee36aaa489020","episode_count":1,"first_air_date":"1993-09-13","id":4573,"name":"Late
-        Night with Conan O''Brien","original_name":"Late Night with Conan O''Brien","poster_path":"/v4N5l6JooObhXbjXoFaKbx92wB9.jpg","media_type":"tv"},{"character":"","credit_id":"525775d2760ee36aaa51aa3b","episode_count":4,"first_air_date":"2006-10-11","id":4608,"name":"30
-        Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg","media_type":"tv"},{"character":"","credit_id":"525785cf19c29531db28ebd0","episode_count":1,"first_air_date":"1988-10-01","id":6323,"name":"Monsters","original_name":"Monsters","poster_path":"/dS6pFQPhy5mYtrCiCZFGBCbB8gH.jpg","media_type":"tv"},{"character":"","credit_id":"52578647760ee36aaa6375c7","episode_count":1,"first_air_date":"2006-04-01","id":6421,"name":"The
-        Henry Rollins Show","original_name":"The Henry Rollins Show","poster_path":"/27dYhdkZYsqc9QzXp4Ow9JBk7Kr.jpg","media_type":"tv"},{"character":"","credit_id":"5273d2a6760ee3572c02d9fb","episode_count":3,"first_air_date":"1975-10-11","id":1667,"name":"Saturday
-        Night Live","original_name":"Saturday Night Live","poster_path":"/pCSb6uZwlCCrM3hBgqohbwSF9t1.jpg","media_type":"tv"},{"character":"Enoch
-        ''Nucky'' Thompson","credit_id":"53b24cd4c3a3682eee0072c0","episode_count":47,"first_air_date":"2010-09-19","id":1621,"name":"Boardwalk
-        Empire","original_name":"Boardwalk Empire","poster_path":"/yXZ0ooun7zNNBS9kuHS3TYlnYZ4.jpg","media_type":"tv"},{"character":"Various","credit_id":"54ef661dc3a3686d660072cc","episode_count":1,"first_air_date":"2011-01-21","id":33922,"name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg","media_type":"tv"}],"crew":[{"adult":false,"credit_id":"52fe4479c3a36847f8098159","department":"Directing","id":7301,"job":"Director","original_title":"Lonesome
+        Impostors"}],"crew":[{"adult":false,"credit_id":"52fe4479c3a36847f8098159","department":"Directing","id":7301,"job":"Director","original_title":"Lonesome
         Jim","poster_path":"/u3MCMfSqFifnSKiQnfIZhyqQt40.jpg","release_date":"2005-11-16","title":"Lonesome
-        Jim","media_type":"movie"},{"adult":false,"credit_id":"52fe44a6c3a36847f80a2353","department":"Writing","id":8414,"job":"Screenplay","original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview","media_type":"movie"},{"adult":false,"credit_id":"52fe44a6c3a36847f80a2359","department":"Directing","id":8414,"job":"Director","original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview","media_type":"movie"},{"adult":false,"credit_id":"52fe452ec3a36847f80c0b6b","department":"Directing","id":9791,"job":"Director","original_title":"Animal
+        Jim"},{"adult":false,"credit_id":"52fe44a6c3a36847f80a2353","department":"Writing","id":8414,"job":"Screenplay","original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview"},{"adult":false,"credit_id":"52fe44a6c3a36847f80a2359","department":"Directing","id":8414,"job":"Director","original_title":"Interview","poster_path":"/m9AEYUn5Dn3LPpl7i2sEfznFL9x.jpg","release_date":"2007-01-20","title":"Interview"},{"adult":false,"credit_id":"52fe452ec3a36847f80c0b6b","department":"Directing","id":9791,"job":"Director","original_title":"Animal
         Factory","poster_path":"/ddzkzHPQIfKYF4gJD3sAFYaRltC.jpg","release_date":"2000-10-13","title":"Animal
-        Factory","media_type":"movie"},{"adult":false,"credit_id":"52fe452ec3a36847f80c0b71","department":"Production","id":9791,"job":"Producer","original_title":"Animal
+        Factory"},{"adult":false,"credit_id":"52fe452ec3a36847f80c0b71","department":"Production","id":9791,"job":"Producer","original_title":"Animal
         Factory","poster_path":"/ddzkzHPQIfKYF4gJD3sAFYaRltC.jpg","release_date":"2000-10-13","title":"Animal
-        Factory","media_type":"movie"},{"adult":false,"credit_id":"52fe4569c3a368484e059281","department":"Directing","id":27845,"job":"Director","original_title":"Trees
+        Factory"},{"adult":false,"credit_id":"52fe4569c3a368484e059281","department":"Directing","id":27845,"job":"Director","original_title":"Trees
         Lounge","poster_path":"/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","release_date":"1996-10-11","title":"Trees
-        Lounge","media_type":"movie"},{"adult":false,"credit_id":"52fe4569c3a368484e059287","department":"Writing","id":27845,"job":"Writer","original_title":"Trees
+        Lounge"},{"adult":false,"credit_id":"52fe4569c3a368484e059287","department":"Writing","id":27845,"job":"Writer","original_title":"Trees
         Lounge","poster_path":"/vDV5Yq26zV85Z9mLcm1hK1bfNuU.jpg","release_date":"1996-10-11","title":"Trees
-        Lounge","media_type":"movie"},{"credit_id":"5256c82d19c2956ff6040c1e","department":"Directing","episode_count":4,"first_air_date":"1999-01-10","id":1398,"job":"Director","name":"The
-        Sopranos","original_name":"The Sopranos","poster_path":"/u0cLcBQITrYqfHsn06fxnQwtqiE.jpg","media_type":"tv"},{"credit_id":"52574f8c760ee36aaa197b39","department":"Directing","episode_count":2,"first_air_date":"1997-07-12","id":3322,"job":"Director","name":"Oz","original_name":"Oz","poster_path":"/eK7VZISZ69HtLtMqIk60qIkz8lJ.jpg","media_type":"tv"},{"credit_id":"52576a6d760ee36aaa3d4a88","department":"Directing","episode_count":1,"first_air_date":"1993-01-31","id":4464,"job":"Director","name":"Homicide:
-        Life on the Street","original_name":"Homicide: Life on the Street","poster_path":"/5rYmgeMCKKDVl6nvXsCbNiL5v9u.jpg","media_type":"tv"},{"credit_id":"525775e0760ee36aaa51b96e","department":"Directing","episode_count":2,"first_air_date":"2006-10-11","id":4608,"job":"Director","name":"30
-        Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg","media_type":"tv"},{"credit_id":"525854a3760ee346610887cd","department":"Directing","episode_count":6,"first_air_date":"2009-06-08","id":18053,"job":"Director","name":"Nurse
-        Jackie","original_name":"Nurse Jackie","poster_path":"/47j0d1oxnCxAUTzqVTKjWkHqkjF.jpg","media_type":"tv"},{"credit_id":"54e1e596bcca015433000150","department":"Directing","episode_count":1,"first_air_date":"2011-01-21","id":33922,"job":"Director","name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg","media_type":"tv"}],"id":884}'
+        Lounge"}],"id":884}'
     http_version: 
-  recorded_at: Thu, 28 Jan 2016 16:12:52 GMT
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/person/884/tv_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=28800
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 24 Feb 2016 16:49:15 GMT
+      Etag:
+      - W/"1663965ff9259c8bf10331d01fb2ce6b"
+      Server:
+      - openresty
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '18347'
+      X-Memc-Expires:
+      - '10453'
+      X-Memc-Key:
+      - 7299abfbd1ad12ffb651934d05d25e30
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '36'
+      X-Ratelimit-Reset:
+      - '1456332563'
+      Content-Length:
+      - '1861'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"cast":[{"character":"","credit_id":"5256c32c19c2956ff601d1f7","episode_count":2,"first_air_date":"1989-12-16","id":456,"name":"The
+        Simpsons","original_name":"The Simpsons","poster_path":"/yTZQkSsxUFJZJe67IenRM0AEklc.jpg"},{"character":"","credit_id":"5256c86719c2956ff6044522","episode_count":1,"first_air_date":"1999-01-10","id":1398,"name":"The
+        Sopranos","original_name":"The Sopranos","poster_path":"/u0cLcBQITrYqfHsn06fxnQwtqiE.jpg"},{"character":"","credit_id":"5257199e760ee3776a18149c","episode_count":1,"first_air_date":"1984-09-16","id":1908,"name":"Miami
+        Vice","original_name":"Miami Vice","poster_path":"/8n6E4Fnaz9qOnK2gniJVdDNZ4by.jpg"},{"character":"","credit_id":"52572a3d760ee3776a2c7f76","episode_count":2,"first_air_date":"1996-07-22","id":2224,"name":"The
+        Daily Show with Trevor Noah","original_name":"The Daily Show with Trevor Noah","poster_path":"/tZlqGXWGzEJNRl9QCCUN8ioSv2D.jpg"},{"character":"","credit_id":"52576a4e760ee36aaa3d2578","episode_count":1,"first_air_date":"1993-01-31","id":4464,"name":"Homicide:
+        Life on the Street","original_name":"Homicide: Life on the Street","poster_path":"/5rYmgeMCKKDVl6nvXsCbNiL5v9u.jpg"},{"character":"","credit_id":"52577370760ee36aaa4e1fe5","episode_count":1,"first_air_date":"1994-09-19","id":4588,"name":"ER","original_name":"ER","poster_path":"/qnllIuJI11tskEolTd3QsbR0TuC.jpg"},{"character":"Pete","credit_id":"56ad478dc3a3681c34006885","episode_count":4,"first_air_date":"2016-01-30","id":65454,"name":"Horace
+        and Pete","original_name":"Horace and Pete","poster_path":"/sy4dwBu27FzlonyQbmCycSIfEUd.jpg"},{"character":"","credit_id":"52595ed5760ee3466194dd1c","episode_count":5,"first_air_date":"1989-02-05","id":41692,"name":"Lonesome
+        Dove","original_name":"Lonesome Dove","poster_path":"/pXpA0VVB7IDuesAZB0ff0WmuxAc.jpg"},{"character":"","credit_id":"525338b619c2957940056d0e","episode_count":1,"first_air_date":"1995-09-13","id":97,"name":"The
+        Drew Carey Show","original_name":"The Drew Carey Show","poster_path":"/cu5dTBNOr6lCrtQIGtVbKKNlT1G.jpg"},{"character":"Celery
+        Salesman","credit_id":"532cc9c9c3a3685fe20005b6","episode_count":1,"first_air_date":"2011-01-21","id":33922,"name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg"},{"character":"","credit_id":"52537bd019c2957940191722","episode_count":1,"first_air_date":"1992-09-23","id":500,"name":"Mad
+        About You","original_name":"Mad About You","poster_path":"/6vVYaC8zgQDzHfEX2Mzg0vd7V6j.jpg"},{"character":"","credit_id":"5253916e19c29579402941d7","episode_count":1,"first_air_date":"1986-09-15","id":732,"name":"L.A.
+        Law","original_name":"L.A. Law","poster_path":"/6w9WqSTf669jc2j5cZykPZhnIi3.jpg"},{"character":"Nucky
+        Thompson","credit_id":"52570df519c295731c000d23","episode_count":12,"first_air_date":"2010-09-19","id":1621,"name":"Boardwalk
+        Empire","original_name":"Boardwalk Empire","poster_path":"/yXZ0ooun7zNNBS9kuHS3TYlnYZ4.jpg"},{"character":"","credit_id":"52573510760ee3776a399ec5","episode_count":1,"first_air_date":"1989-06-10","id":2391,"name":"Tales
+        from the Crypt","original_name":"Tales from the Crypt","poster_path":"/faZKMT856LWSnzgVh3L4BMazGmz.jpg"},{"character":"","credit_id":"5257626a760ee36aaa320eff","episode_count":1,"first_air_date":"1985-09-18","id":4297,"name":"The
+        Equalizer","original_name":"The Equalizer","poster_path":"/cvV1CxhbC8vyfQPHUVPUeQjdVw1.jpg"},{"character":"","credit_id":"525770ea760ee36aaa489020","episode_count":1,"first_air_date":"1993-09-13","id":4573,"name":"Late
+        Night with Conan O''Brien","original_name":"Late Night with Conan O''Brien","poster_path":"/v4N5l6JooObhXbjXoFaKbx92wB9.jpg"},{"character":"","credit_id":"525775d2760ee36aaa51aa3b","episode_count":4,"first_air_date":"2006-10-11","id":4608,"name":"30
+        Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg"},{"character":"","credit_id":"525785cf19c29531db28ebd0","episode_count":1,"first_air_date":"1988-10-01","id":6323,"name":"Monsters","original_name":"Monsters","poster_path":"/dS6pFQPhy5mYtrCiCZFGBCbB8gH.jpg"},{"character":"","credit_id":"52578647760ee36aaa6375c7","episode_count":1,"first_air_date":"2006-04-01","id":6421,"name":"The
+        Henry Rollins Show","original_name":"The Henry Rollins Show","poster_path":"/27dYhdkZYsqc9QzXp4Ow9JBk7Kr.jpg"},{"character":"","credit_id":"5273d2a6760ee3572c02d9fb","episode_count":3,"first_air_date":"1975-10-11","id":1667,"name":"Saturday
+        Night Live","original_name":"Saturday Night Live","poster_path":"/aXdHYUXubjdVzdQvUsV5OxpCNeu.jpg"},{"character":"Enoch
+        ''Nucky'' Thompson","credit_id":"53b24cd4c3a3682eee0072c0","episode_count":47,"first_air_date":"2010-09-19","id":1621,"name":"Boardwalk
+        Empire","original_name":"Boardwalk Empire","poster_path":"/yXZ0ooun7zNNBS9kuHS3TYlnYZ4.jpg"},{"character":"Various","credit_id":"54ef661dc3a3686d660072cc","episode_count":1,"first_air_date":"2011-01-21","id":33922,"name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg"}],"crew":[{"credit_id":"5256c82d19c2956ff6040c1e","department":"Directing","episode_count":4,"first_air_date":"1999-01-10","id":1398,"job":"Director","name":"The
+        Sopranos","original_name":"The Sopranos","poster_path":"/u0cLcBQITrYqfHsn06fxnQwtqiE.jpg"},{"credit_id":"52574f8c760ee36aaa197b39","department":"Directing","episode_count":2,"first_air_date":"1997-07-12","id":3322,"job":"Director","name":"Oz","original_name":"Oz","poster_path":"/eK7VZISZ69HtLtMqIk60qIkz8lJ.jpg"},{"credit_id":"52576a6d760ee36aaa3d4a88","department":"Directing","episode_count":1,"first_air_date":"1993-01-31","id":4464,"job":"Director","name":"Homicide:
+        Life on the Street","original_name":"Homicide: Life on the Street","poster_path":"/5rYmgeMCKKDVl6nvXsCbNiL5v9u.jpg"},{"credit_id":"525775e0760ee36aaa51b96e","department":"Directing","episode_count":2,"first_air_date":"2006-10-11","id":4608,"job":"Director","name":"30
+        Rock","original_name":"30 Rock","poster_path":"/fPpCR6719TWDiPAsIlbjzeqVzvp.jpg"},{"credit_id":"525854a3760ee346610887cd","department":"Directing","episode_count":6,"first_air_date":"2009-06-08","id":18053,"job":"Director","name":"Nurse
+        Jackie","original_name":"Nurse Jackie","poster_path":"/47j0d1oxnCxAUTzqVTKjWkHqkjF.jpg"},{"credit_id":"54e1e596bcca015433000150","department":"Directing","episode_count":1,"first_air_date":"2011-01-21","id":33922,"job":"Director","name":"Portlandia","original_name":"Portlandia","poster_path":"/nFkTruyjmdCYBlxCjB8k7Dv7GNW.jpg"}],"id":884}'
+    http_version: 
+  recorded_at: Wed, 24 Feb 2016 16:49:14 GMT
 recorded_with: VCR 2.9.3

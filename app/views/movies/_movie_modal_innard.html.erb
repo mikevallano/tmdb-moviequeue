@@ -1,14 +1,12 @@
-<hr>          
-          <!-- TODO: Refactor the shit out of this: -->
-          <% @lists_except_movie = current_user.lists_except_movie(movie) %>
-
-        <% if movie.in_db && movie.lists.by_user(current_user).present? %>
+<hr>
 
         <div class="partial-spacer">
           <div id="movie_tagged_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_tag', movie: movie %>
           </div>
         </div><!-- partial-spacer -->
+
+        <% if movie.in_db && movie.lists.by_user(current_user).present? %>
 
         <div class="partial-spacer">
           <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
@@ -50,9 +48,9 @@
             <%= render 'movies/movie_review', movie: movie %>
           </div>
         </div> <!-- partial-spacer -->
-          
-          
 
-          
-        
-          
+
+
+
+
+

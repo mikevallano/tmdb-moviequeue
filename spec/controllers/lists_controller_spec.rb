@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ListsController, type: :controller do
 
-  let(:list_name) { FFaker::HipsterIpsum.words(3).join(' ') }
+  let(:list_name) { SecureRandom.urlsafe_base64(10) }
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
   let(:list) { FactoryGirl.create(:list, :owner => user) }

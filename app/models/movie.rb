@@ -5,8 +5,7 @@ class Movie < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, :use => :history
 
-  validates_presence_of :tmdb_id
-  validates_uniqueness_of :tmdb_id
+  validates :tmdb_id, :uniqueness => :true, :presence => true
 
   has_many :listings
   has_many :lists, through: :listings
@@ -86,6 +85,10 @@ class Movie < ActiveRecord::Base
     user_movies = user.all_movies.uniq
     seen_movies = user.watched_movies.uniq
     unseen_movies = (user_movies - seen_movies)
+  end
+
+  def most_recent_screening_by(user)
+    screenings.by_user(user).sort_by(&:date_watched).last.date_watched.stamp("1/2/2001")
   end
 
   def date_added_to_list(list)

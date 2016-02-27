@@ -16,6 +16,19 @@ module TmdbHandler
       end
   end
 
+  def tmdb_handler_movie_autocomplete(query)
+    @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
+    @autocomplete_results = @tmdb_response[:results].map{ |result| result[:title] }.uniq
+  end
+
+  def tmdb_handler_person_autocomplete(query)
+    @search_url = "http://api.themoviedb.org/3/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
+    @person_results = @tmdb_response[:results].select{ |result| result[:media_type] == "person"}
+    @autocomplete_results = @person_results.map{ |result| result[:name] }.uniq
+  end
+
   def tmdb_handler_movie_more(id)
     @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
@@ -56,10 +69,6 @@ module TmdbHandler
     @directors = MovieDirecting.parse_results(@director_credits)
     @editor_credits = @crew.select { |crew| crew[:job] == "Editor" }
     @editors = MovieEditing.parse_results(@editor_credits)
-    # TODO : add these in if it makes sense
-    @writer_credits = @crew.select { |crew| crew[:job] == "Writer" }
-    @screenplay_credits = @crew.select { |crew| crew[:job] == "Screenplay" }
-    @producer_credits = @crew.select { |crew| crew[:job] == "Producer" }
   end #full_cast
 
   def tmdb_handler_add_movie(tmdb_id)
@@ -72,8 +81,21 @@ module TmdbHandler
     popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
   end
 
-  def tmdb_handler_actor_more(actor_id)
+  def tmdb_handler_update_movie(tmdb_id)
+    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    @movie_to_update = Movie.find_by(tmdb_id: tmdb_id)
+    @movie = MovieMore.tmdb_info(@result)
 
+    @movie_to_update.update_attributes(title: @movie.title, imdb_id: @movie.imdb_id, genres: @movie.genres,
+      actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
+      poster_path: @movie.poster_path, release_date: @movie.release_date, overview: @movie.overview,
+      trailer: @movie.trailer, director: @movie.director, director_id: @movie.director_id,
+      vote_average: @movie.vote_average, popularity: @movie.popularity, runtime: @movie.runtime,
+      mpaa_rating: @movie.mpaa_rating)
+  end
+
+  def tmdb_handler_actor_more(actor_id)
     tmdb_handler_person_detail_search(actor_id)
   end
 

@@ -5,13 +5,14 @@
   <div class="pull-right">
     <p class="button-main">
       <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list) %>
+      <%= link_to 'Delete List', user_list_path(@list.owner, @list), id: "destroy_list_link_list_show", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %>
       <%= link_to 'Cancel', user_lists_path(current_user) %>
     </p>
   </div> <!-- pull-right -->
 </div> <!-- row -->
 
 <div class="row">
-    
+
   <div class="form-container">
     <%= render 'form' %>
   </div> <!-- form-container -->

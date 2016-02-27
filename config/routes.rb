@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
   get 'tmdb/search', to: 'tmdb#search', as: :api_search
   get 'tmdb/movie_more', to: 'tmdb#movie_more', as: :movie_more
+  get 'tmdb/update_tmdb_data', to: 'tmdb#update_tmdb_data', as: :update_tmdb_data
   get 'tmdb/similar_movies', to: 'tmdb#similar_movies', as: :similar_movies
   get 'tmdb/full_cast', to: 'tmdb#full_cast', as: :full_cast
   get 'tmdb/actor_search', to: 'tmdb#actor_search', as: :actor_search
@@ -40,11 +41,14 @@ Rails.application.routes.draw do
   get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
   get 'tmdb/two_movie_search', to: 'tmdb#two_movie_search', as: :two_movie_search
   get 'tmdb/discover_search', to: 'tmdb#discover_search', as: :discover_search
+  get 'tmdb/movie_autocomplete', to: 'tmdb#movie_autocomplete', as: :movie_autocomplete
+  get 'tmdb/person_autocomplete', to: 'tmdb#person_autocomplete', as: :person_autocomplete
 
   resources :invites, only: [:create]
 
   root 'pages#home'
-  get 'pages/about'
+  get 'about', to: 'pages#about', as: :about
+  get 'faq', to: 'pages#faq', as: :faq
   get 'pages/awaiting_confirmation', as: :awaiting_confirmation
 
 end

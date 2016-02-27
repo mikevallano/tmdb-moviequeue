@@ -1,14 +1,13 @@
 
   <!-- MODAL -->
  <div class="modal fade" id="myModal_<%= movie.tmdb_id %>" tabindex="-1" role="dialog">
-      <!-- TODO: Refactor the shit out of this: -->
-  <% @lists_except_movie = current_user.lists_except_movie(movie) %>
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div class="row">
         <div class="col-xs-3">
-          <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_more_link_movie_partial" if movie.poster_path.present? %>
+          <%= link_to image_for(movie), link_to_movie(movie), id: "movie_more_link_movie_partial" if movie.poster_path.present? %>
 
           <div class="watch-info">
             <%= render 'movies/movie_screening', movie: movie %>
@@ -18,18 +17,18 @@
 
         <div class="col-xs-9">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h1 class="modal-title"><%= link_to "#{movie.title}", movie_more_path(tmdb_id: movie.tmdb_id) %></h1>
+        <h1 class="modal-title"><%= link_to "#{movie.title}", link_to_movie(movie) %></h1>
 
         <p><%= movie.release_date.stamp("2001") if movie.release_date.present? %> | <%= movie.mpaa_rating %> | <icon class="fa fa-star"></icon> <%= "#{movie.vote_average} /10"%> | <%= movie.runtime %> min
         </p>
 
         <p><% @movie.actors.first(3).each do |actor| %>
-            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: actor), id: "actor_link_movie_modal" %></span>
+            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_modal" %></span>
           <% end %>
           <%= link_to " Full Cast", full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show", class: "fa fa-chevron-circle-right" %>
           </p>
 
-        <p><span class="pseudo-header">Overview: </span><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to " Full Details", movie_more_path(tmdb_id: movie.tmdb_id), class: "fa fa-chevron-circle-right" %>
+        <p><span class="pseudo-header">Overview: </span><%= truncate(movie.overview, length: 150, separator: ' ') %> <%= link_to " Full Details", link_to_movie(movie), class: "fa fa-chevron-circle-right" %>
 
         <div id="movie_modal_innard_<%= "#{movie.tmdb_id}" %>">
           <%= render 'movies/movie_modal_innard', movie: movie %>
@@ -40,7 +39,7 @@
       </div><!-- body -->
 
       <div class="modal-footer">
-        <p class="btn btn-default"><%= link_to "Movie Details", movie_more_path(tmdb_id: movie.tmdb_id), id: "movie_show_link_movie_partial" %></p>
+        <p class="btn btn-default"><%= link_to "Movie Details", link_to_movie(movie), id: "movie_show_link_movie_partial" %></p>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>  <!-- modal-footer -->
 

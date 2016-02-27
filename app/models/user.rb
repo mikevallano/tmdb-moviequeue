@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   validates :username, :presence => true, :uniqueness => true
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.]*\z/
 
-  has_many :lists, :foreign_key => "owner_id"
-  has_many :listings, through: :lists
+  has_many :lists, :foreign_key => "owner_id", dependent: :destroy
+  has_many :listings, through: :lists, dependent: :destroy
 
-  has_many :memberships, :foreign_key => "member_id"
+  has_many :memberships, :foreign_key => "member_id", dependent: :destroy
   has_many :member_lists, :through => :memberships,
   :source => :list
 
@@ -21,28 +21,33 @@ class User < ActiveRecord::Base
 
   has_many :movies, through: :listings
   has_many :member_movies, :through => :member_lists,
-  :source => :movies
+  :source => :movies, dependent: :destroy
 
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
   has_many :sent_invites, :class_name => "Invite",
-  :foreign_key => "sender_id"
+  :foreign_key => "sender_id", dependent: :destroy
 
   has_many :received_invites, :class_name => "Invite",
-  :foreign_key => "receiver_id"
+  :foreign_key => "receiver_id", dependent: :destroy
 
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_many :reviewed_movies, through: :reviews,
   :source => :movie
 
-  has_many :ratings
+  has_many :ratings, dependent: :destroy
   has_many :rated_movies, through: :ratings,
   :source => :movie
 
-  has_many :screenings
+  has_many :screenings, dependent: :destroy
   has_many :watched_movies, through: :screenings,
   :source => :movie
+
+  def admin?
+    admins = %w(roscoe mikevallano anne)
+    admins.include?(self.username)
+  end
 
   def all_lists
     (self.lists | self.member_lists).uniq
@@ -59,6 +64,10 @@ class User < ActiveRecord::Base
     else
       all_lists
     end
+  end
+
+  def all_lists_by_name
+    self.all_lists.sort_by { |list| list.name.downcase }
   end
 
   def all_movies
@@ -121,12 +130,6 @@ class User < ActiveRecord::Base
       where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
       where(conditions.to_hash).first
-    end
-  end
-
-  def validate_username
-    if User.where(email: username).exists?
-      errors.add(:username, :invalid)
     end
   end
 

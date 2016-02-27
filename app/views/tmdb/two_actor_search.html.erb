@@ -8,8 +8,8 @@
 <p>Enter two actors and see the movies they've been in together.</p>
 
   <%= form_tag '/tmdb/two_actor_search', { class: "form-class", id: "two-actor-search", role: "form", method: :get } do %>
-    <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor1_field_two_actor_search", placeholder: "Enter Actor One's Name" %>
-    <%= text_field_tag :actor2, nil, class: "form-control search-form", id: "actor2_field_two_actor_search", placeholder: "Enter Actor Two's Name" %>
+    <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor1_field_two_actor_search", placeholder: "Enter Actor One's Name", data: { autocomplete_source: person_autocomplete_path } %>
+    <%= text_field_tag :actor2, nil, class: "form-control search-form", id: "actor2_field_two_actor_search", placeholder: "Enter Actor Two's Name", data: { autocomplete_source: person_autocomplete_path } %>
     <%= submit_tag "Search", id: "search_button_two_actor_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 
@@ -31,11 +31,11 @@
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
       <% if @previous_page.present? %>
-        <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %>
+        <%= link_to "Previous page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@previous_page}") %>
       <% end %>
 
       <% if @next_page.present? %>
-        <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
+        <%= link_to "Next page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@next_page}") %>
       <% end %>
 
     <% end %> <!-- # @not_found.present? -->

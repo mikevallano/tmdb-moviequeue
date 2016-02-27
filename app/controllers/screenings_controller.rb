@@ -4,8 +4,6 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_url, only: :create
-
 
   def index
     @screenings = @movie.screenings.by_user(current_user)
@@ -27,7 +25,7 @@ class ScreeningsController < ApplicationController
 
     respond_to do |format|
       if @screening.save
-        format.html { redirect_to @redirect_url, notice: 'Screening was successfully created.' }
+        format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
         format.js {}
       else
@@ -40,7 +38,7 @@ class ScreeningsController < ApplicationController
   def update
     respond_to do |format|
       if @screening.update(screening_params)
-        format.html { redirect_to movie_path(@movie), notice: 'Screening was successfully updated.' }
+        format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully updated.' }
         format.json { render :show, status: :ok, location: @screening }
       else
         format.html { render :edit }
@@ -52,7 +50,7 @@ class ScreeningsController < ApplicationController
   def destroy
     @screening.destroy
     respond_to do |format|
-      format.html { redirect_to movie_path(@movie), notice: 'Screening was successfully destroyed.' }
+      format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -78,21 +76,6 @@ class ScreeningsController < ApplicationController
 
     def screening_params
       params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes, :tmdb_id)
-    end
-
-    def redirect_url
-      @page = params[:page] if params[:page].present?
-      if params[:from].present? && params[:from] == "list_show"
-        @list = current_user.all_lists.find(params[:list_id])
-        @redirect_url = user_list_path(current_user, @list, page: @page)
-      elsif params[:from].present? && params[:from] == "movie_show"
-        @movie = current_user.movies.find(params[:movie_id])
-        @redirect_url = movie_path(@movie)
-      elsif params[:from].present? && params[:from] == "movies_index"
-        @redirect_url = movies_path(page: @page)
-      else
-        @redirect_url = movie_screenings_path(@movie)
-      end
     end
 
 end

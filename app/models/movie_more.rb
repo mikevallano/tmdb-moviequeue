@@ -36,9 +36,23 @@ class MovieMore
       if @in_db
         @movie = Movie.find_by(tmdb_id: @tmdb_id)
       else
+        self.tmdb_info(result)
+      end #if in_db
+    @movie
+  end
+
+    def times_seen_by(user)
+      0
+    end
+
+    def self.tmdb_info(result)
         @title = result[:title]
         @release_date = Date.parse(result[:release_date]) if result[:release_date].present?
-        @vote_average = result[:vote_average].round(1)
+        if result[:vote_average].present?
+          @vote_average = result[:vote_average].round(1)
+        else
+          @vote_average = 0
+        end
         @genres = result[:genres].map { |genre| genre[:name] }
         @overview = result[:overview]
         @actors = result[:credits][:cast].map { |cast| cast[:name] }
@@ -56,7 +70,11 @@ class MovieMore
         @imdb_id = result[:imdb_id]
         @adult = result[:adult]
         @popularity = result[:popularity]
-        @runtime = result[:runtime]
+        if result[:runtime].present?
+          @runtime = result[:runtime]
+        else
+          @runtime = 0
+        end
         @tags = nil
         @lists = nil
 
@@ -81,12 +99,6 @@ class MovieMore
         @movie = MovieMore.new(@title, @in_db, @tmdb_id, @release_date, @vote_average, @genres,
           @overview, @actors, @backdrop_path, @poster_path, @trailer, @imdb_id, @mpaa_rating,
           @director, @director_id, @adult, @popularity, @runtime, @tags, @lists)
-      end #if in_db
-    @movie
-  end
-
-    def times_seen_by(user)
-      0
     end
 
 end

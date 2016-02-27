@@ -25,7 +25,7 @@
       <div class="headshot-container">
       <%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" if actor[:profile_path].present? %>
         <div class="name-block">
-        <p class="actor"><%= link_to "#{actor[:name]}", actor_search_path(actor: "#{actor[:name]}")  %></p>
+        <p class="actor"><%= link_to "#{actor[:name]}", actor_search_path(actor: I18n.transliterate("#{actor[:name]}"))  %></p>
           <p>As <%= actor[:character] %><p>
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->

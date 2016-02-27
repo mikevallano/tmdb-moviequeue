@@ -13,7 +13,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
     let(:membership1) { FactoryGirl.create(:membership, list_id: list.id, member_id: user1.id) }
     let(:membership2) { FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id) }
     let(:tag1) { FactoryGirl.create(:tag) }
-    let(:tag2) { FactoryGirl.create(:tag, name: FFaker::DizzleIpsum.words(2).join(' ')) }
+    let(:tag2) { FactoryGirl.create(:tag, name: SecureRandom.urlsafe_base64(5)) }
     let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
     let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
@@ -56,8 +56,7 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       scenario "members can't delete a list unless they are the owner" do
         sign_in_user(user2)
         visit(user_lists_path(user2))
-        click_link "destroy_list_link_list_index"
-        expect(page).to have_content("Only list owners can delete lists.")
+        expect(page).not_to have_selector("#destroy_list_link_list_index")
       end
 
     end #without JS
