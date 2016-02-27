@@ -12,15 +12,13 @@
 
   <div class="row">
     <div class="tv-credits">
-    <h3>Seasons:</h3>
-    <p>
-    <% @seasons.each do |season| %>
-      <%= link_to "Season #{season[:season_number]}",
-      tv_season_path(season_number: "#{season[:season_number]}", show_id: @show_id, show_name: @show_name) %>
-    <% end %>
-    </p>
+    <h2>Seasons: |
+      <% @seasons.each do |season| %>
+       <%= link_to "#{season[:season_number]}", tv_season_path(show_id: @show_id, season_number: season[:season_number], show_name: @show_name) %> |
+      <% end %>
+    </h2> 
 
-    <h3>Show Cast:</h3>
+    <h2>Show Cast:</h2>
     <% @show_cast.each do |actor| %>
       <div class="headshot-container">
       <%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" if actor[:profile_path].present? %>
