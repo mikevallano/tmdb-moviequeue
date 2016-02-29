@@ -1,7 +1,8 @@
+<% content_for(:title, "Actor Search") %>
+
 <h1>Search by Actor</h1>
 
 <% if !@actor.present? %>
-<% content_for(:title, "Actor Search") %>
 
   <%= form_tag '/tmdb/actor_search', { class: "form-class", id: "actor-search", role: "form", method: :get } do %>
     <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor_name_actor_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
@@ -14,12 +15,13 @@
   <% if @not_found.present? %>
       <h2>Hmm. <%= @not_found %></h2>
       <p>Check your spelling and try again.</p>
-      <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_nav_link" %></p>
+      <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_again_link" %></p>
 
   <% else %> <!-- #if @not_found.present -->
 
+    <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_again_link" %></p>
     <h2>Here are the movies that <%= @actor.titlecase %> has been in:</h2>
-    <p class="button-main"><%= link_to "See #{@actor.titlecase}'s Bio & Credits", actor_more_path(actor_id: @actor1_id) %> <%= link_to "Search Again", actor_search_path %> </p>
+    <p class="button-main"><%= link_to "#{@actor.titlecase}'s Full Credits & Bio", actor_more_path(actor_id: @actor1_id) %></p>
 
     <div class="row">
       <div id ="movies_actor_search_loop">

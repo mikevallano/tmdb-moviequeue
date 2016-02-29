@@ -1,53 +1,54 @@
-<h1><%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %> Season <%= @season_number %></h1>
-<p class="button-main"><%= link_to "Back to the #{@show_name} TV Show Page", tv_more_path(show_id: @show_id) %></p>
+<h1><%= link_to "#{@show_name}", tv_series_path(show_id: @show_id) %> <%= @season_number_display %></h1>
+<p class="button-main"><%= link_to "Back to #{@show_name}", tv_series_path(show_id: @show_id) %></p>
 <div class="row">
   <h2>Seasons: |
     <% @seasons.each do |season| %>
-     <%= link_to "#{season[:season_number]}", tv_season_path(show_id: @show_id, season_number: season[:season_number], show_name: @show_name) %> |
+     <%= link_to season_number_display(season), tv_season_path(show_id: @show_id, season_number: season.season_number, show_name: @show_name) %> |
     <% end %>
-  </h2> 
+  </h2>
 </div> <!-- row -->
-  
+
 <div class="row">
-  <h2>Season <%= @season_number %> Cast</h2>
-    <% @show_cast.each do |actor| %>
+  <h2><%= @season_number_display %> Cast</h2>
+    <% @actors.each do |actor| %>
       <div class="headshot-container">
-      <%= image_tag "http://image.tmdb.org/t/p/w150#{actor[:profile_path]}" if actor[:profile_path].present? %>
+      <%= headshot_for(actor) %>
         <div class="name-block">
-        <p class="actor"><%= link_to "#{actor[:name]}", actor_search_path(actor: I18n.transliterate("#{actor[:name]}"))  %></p>
-          <p>As <%= truncate(actor[:character], length: 18) %><p>
+        <p class="actor"><%= link_to "#{actor.name}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+          <p>As <%= truncate(actor.character_name, length: 18) %><p>
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->
       <% end %><!-- actors each do -->
-   
+
 </div> <!-- row -->
 
 
 <div class="row">
-  <h2>Season <%= @season_number %> Episodes</h2>
+  <h2><%= @season_number_display %> Episodes</h2>
   <table class="table">
 
     <tbody>
       <% @episodes.each do |episode| %>
         <tr>
           <td>
-            <h2><%= episode[:episode_number] %>: <%= episode[:name] %> (<%= episode[:air_date] %>)</h2>
-            <%= episode[:overview] %>
-            
-            <% if episode[:guest_stars].present? %>
+            <h2><%= episode.episode_number %>: <%= episode.name %> (<%= episode.air_date.stamp("1/2/2001") %>)</h2>
+            <%= episode.overview %>
+            <p><%= image_tag("http://image.tmdb.org/t/p/w185#{episode.still_path}") if episode.still_path.present? %></p>
+
+            <% if episode.guest_stars.present? %>
               <h3>Guest Stars</h3>
               <p>
-              <% episode[:guest_stars].each do |guest| %>
-                <span class="tag-link"><%= link_to "#{guest[:name]}", actor_search_path(actor: "#{guest[:name]}") %> </span>
+              <% episode.guest_stars.each do |guest| %>
+                <span class="tag-link"><%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %> </span>
               <% end %><!-- each guest star -->
               </p>
             <% end %><!-- if guest star present-->
           </td>
-          
+
         </tr>
       <% end %>
     </tbody>
   </table>
 </div> <!-- row -->
 <hr>
-<p class="button-main"><%= link_to "Back to the #{@show_name} TV Show Page", tv_more_path(show_id: @show_id) %></p>
+<p class="button-main"><%= link_to "Back to #{@show_name}", tv_series_path(show_id: @show_id) %></p>

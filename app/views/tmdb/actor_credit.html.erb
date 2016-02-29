@@ -1,7 +1,7 @@
 <article id="profile">
   <div class="row">
 
-<h1><%= @character %> on <%= link_to "#{@show_name}", tv_more_path(show_id: @show_id) %></h1>
+<h1><%= @character %> on <%= link_to "#{@show_name}", tv_series_path(show_id: @show_id) %></h1>
 <div class="pull-right">
    <p class="button-main"><%= link_to "Back to Actor Profile", actor_more_path(actor_id: @actor_id) %> </p>
 </div> <!-- pull-right -->
@@ -10,7 +10,7 @@
 </div><!-- row -->
 <div class="row">
 <div class="credits">
-   
+
   <% if @credit_results[:media][:episodes].present? %>
     <h3>Air date: <%= @air_date %> </h3>
     <h3>Episode name: <%= @episode_name %> </h3>
@@ -24,7 +24,7 @@
     <td><%= image_tag "http://image.tmdb.org/t/p/w92#{season[:poster_path]}" %></td>
     <td>Season: <%= season[:season_number] %></td>
     <td>Air date: <%= season[:air_date] %></td>
-    
+
     </tr>
     <% end %>
     </table>

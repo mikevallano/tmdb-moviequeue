@@ -105,10 +105,10 @@ class TmdbController < ApplicationController
     tmdb_handler_actor_credit(@credit_id)
   end
 
-  def tv_more
+  def tv_series
     @show_id = params[:show_id]
     @actor_id = params[:actor_id]
-    tmdb_handler_tv_more(@show_id)
+    tmdb_handler_tv_series(@show_id)
   end
 
   def tv_season

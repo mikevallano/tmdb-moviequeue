@@ -133,7 +133,7 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_tv_more(show_id)
+  def tmdb_handler_tv_series(show_id)
     @show_url = "https://api.themoviedb.org/3/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @show_results = JSON.parse(open(@show_url).read, symbolize_names: true)
     @first_air_date = @show_results[:first_air_date]
@@ -145,16 +145,23 @@ module TmdbHandler
     @number_of_episodes = @show_results[:number_of_episodes]
     @number_of_seasons = @show_results[:number_of_seasons]
     @overview = @show_results[:overview]
-    @seasons = @show_results[:seasons]
-    @show_cast = @show_results[:credits][:cast]
+    @seasons = TVAllSeasons.parse_results(@show_results[:seasons], @show_id)
+    @actors = TVCast.parse_results(@show_results[:credits][:cast])
   end
 
   def tmdb_handler_tv_season(show_id, season_number)
     @season_url = "https://api.themoviedb.org/3/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @show_id = show_id
     @season_results = JSON.parse(open(@season_url).read, symbolize_names: true)
-    tmdb_handler_tv_more(show_id)
-    @episodes = @season_results[:episodes]
-    @season_cast = @season_results[:credits][:cast]
+    tmdb_handler_tv_series(show_id)
+    @episodes = TVSeason.parse_results(@season_results[:episodes])
+    if season_number == "0"
+      @season_number_display = "Misc/Extras"
+    else
+      @season_number_display = "Season #{season_number}"
+    end
+
+    @actors = TVCast.parse_results(@season_results[:credits][:cast])
   end
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
