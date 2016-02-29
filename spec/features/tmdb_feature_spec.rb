@@ -344,7 +344,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "actor search page links to actor more info search" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link "Get a full list of credits and bio"
+          click_link_or_button "bio_and_credits_link_actor_search"
         end
         expect(page).to have_content("Steve Buscemi")
         expect(page).to have_content("Born")
@@ -352,7 +352,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "actor more info page links movies to movie_more_info path" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link "Get a full list of credits and bio"
+          click_link_or_button "bio_and_credits_link_actor_search"
         end
         VCR.use_cassette("actor_more_movie_link") do
           click_link "Fargo"
@@ -362,7 +362,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "actor more info page links tv shows to the tv show page" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link "Get a full list of credits and bio"
+          click_link_or_button "bio_and_credits_link_actor_search"
         end
         VCR.use_cassette("actor_tv_more") do
           click_link "The Simpsons"
@@ -372,7 +372,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "actor more info page links tv credits to credit url" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link "Get a full list of credits and bio"
+          click_link_or_button "bio_and_credits_link_actor_search"
         end
         VCR.use_cassette("actor_tv_credit") do
           click_link "Appearance Details", match: :first

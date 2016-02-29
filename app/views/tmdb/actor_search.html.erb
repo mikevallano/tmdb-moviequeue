@@ -21,7 +21,7 @@
 
     <h1>Movies that <%= @actor.titlecase %> has been in:</h1>
 
-    <p class="button-main"><%= link_to "#{@actor.titlecase}'s Full Credits & Bio", actor_more_path(actor_id: @actor1_id) %></p>
+    <p class="button-main"><%= link_to "#{@actor.titlecase}'s Full Credits & Bio", actor_more_path(actor_id: @actor1_id), id: "bio_and_credits_link_actor_search" %></p>
 
     <div class="row">
       <div id ="movies_actor_search_loop">
