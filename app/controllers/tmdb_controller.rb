@@ -100,8 +100,6 @@ class TmdbController < ApplicationController
 
   def actor_credit
     @credit_id = params[:credit_id]
-    @actor_id = params[:actor_id]
-    @show_name = params[:show_name]
     tmdb_handler_actor_credit(@credit_id)
   end
 

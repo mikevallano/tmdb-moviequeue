@@ -118,19 +118,7 @@ module TmdbHandler
   def tmdb_handler_actor_credit(credit_id)
     @credit_url = "https://api.themoviedb.org/3/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
     @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
-    @character = @credit_results[:media][:character]
-    @show_id = @credit_results[:media][:id]
-    if @credit_results[:media][:episodes].present?
-      @air_date = @credit_results[:media][:episodes].first[:air_date]
-      @episode_name = @credit_results[:media][:episodes].first[:name]
-      @season_number = @credit_results[:media][:episodes].first[:season_number]
-      @episode_number = @credit_results[:media][:episodes].first[:episode_number]
-      @episode_overview = @credit_results[:media][:episodes].first[:overview]
-      @still_image = @credit_results[:media][:episodes].first[:still_path]
-      @episode_url = "https://api.themoviedb.org/3/tv/#{@episode_id}/season/#{@season_number}/episode/#{@episode_number}?api_key=#{ENV['tmdb_api_key']}"
-    else
-      @seasons = @credit_results[:media][:seasons]
-    end
+    @credit = TVActorCredit.parse_results(@credit_results)
   end
 
   def tmdb_handler_tv_series(show_id)
@@ -145,6 +133,7 @@ module TmdbHandler
     @season_results = JSON.parse(open(@season_url).read, symbolize_names: true)
     tmdb_handler_tv_series(show_id)
     @episodes = TVSeason.parse_results(@season_results[:episodes])
+    # to display the correct current season number in the view:
     if season_number == "0"
       @season_number_display = "Misc/Extras"
     else

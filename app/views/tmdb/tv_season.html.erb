@@ -1,9 +1,10 @@
-<h1><%= link_to "#{@show_name}", tv_series_path(show_id: @show_id) %> <%= @season_number_display %></h1>
-<p class="button-main"><%= link_to "Back to #{@show_name}", tv_series_path(show_id: @show_id) %></p>
+
+<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @show_id) %> <%= @season_number_display %></h1>
+<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @show_id) %></p>
 <div class="row">
   <h2>Seasons: |
     <% @series.seasons.each do |season| %>
-     <%= link_to season_number_display(season), tv_season_path(show_id: @show_id, season_number: season, show_name: @show_name) %> |
+     <%= link_to season_number_display(season), tv_season_path(show_id: @show_id, season_number: season, show_name: @series.show_name) %> |
     <% end %>
   </h2>
 </div> <!-- row -->
@@ -53,4 +54,4 @@
   </table>
 </div> <!-- row -->
 <hr>
-<p class="button-main"><%= link_to "Back to #{@show_name}", tv_series_path(show_id: @show_id) %></p>
+<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @show_id) %></p>
