@@ -9,10 +9,10 @@ module TmdbHelper
   end #headshot_for
 
   def season_number_display(season)
-    if season.season_number == 0
+    if season == 0
       "Misc/Extras"
     else
-      season.season_number
+      season
     end
   end
 
