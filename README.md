@@ -21,9 +21,9 @@
 
 * PostgreSQL v9.3.4
 
-* No special database setup instructions. `$ rake db:setup` should do it.
+* No special database setup instructions. `$ rake db:setup` will do it.
 
-* No special server info. It's using Puma, but `$ rails s` will do it.
+* No special server info. It's using Puma, and `$ rails s` will do it.
 
 * There are no special rake tasks or seeds.
 
