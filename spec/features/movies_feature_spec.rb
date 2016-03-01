@@ -59,7 +59,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).not_to have_selector("#new_review_link_movie_show")
         expect(page).not_to have_selector("#rating_submit_button_rating_form")
         expect(page).not_to have_selector("#mark_watched_link_movie_show")
-      end #does not show links if not on a list
+      end
 
       scenario "update movie button retrieves latest info from API" do
         sign_in_user(anne) #anne is an "admin"
