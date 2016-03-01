@@ -39,7 +39,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         visit(movie_path(movie))
         click_link "Crime"
         expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
-      end #genres are links
+      end
 
       scenario "movie show page has the movie's poster image" do
         sign_in_user(user)
