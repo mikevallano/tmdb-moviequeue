@@ -46,4 +46,14 @@ class MoviesController < ApplicationController
     respond_to :js
   end
 
+  def modal_close
+    @tmdb_id = params[:tmdb_id]
+    if Movie.exists?(tmdb_id: @tmdb_id)
+      @movie = Movie.find_by(tmdb_id: @tmdb_id)
+    else
+      tmdb_handler_movie_more(@tmdb_id)
+    end
+    respond_to :js
+  end
+
 end

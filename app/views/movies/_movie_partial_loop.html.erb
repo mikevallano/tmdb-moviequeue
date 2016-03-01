@@ -5,9 +5,9 @@
         <!-- MODAL TRIGGER -->
 
         <% if @list.present? %>
-          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list.id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
+          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list.id), remote: true, data: { target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
         <% else %>
-          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: {toggle: "modal", target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
+          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: { target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
         <% end %>
 
         <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
