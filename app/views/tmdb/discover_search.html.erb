@@ -5,17 +5,20 @@
 <% if !@movies.present? %>
 
 <h2>All fields are optional. Search by whatever you want.</h2>
-  <div class="row">
+
   <%= form_tag '/tmdb/discover_search', { class: 'form-class', id: 'discover-search', role: 'form', method: :get } do %>
+  <div class="row">
     <%= text_field_tag :actor, nil, class: "form-control search-form", id: "actor_field_discover_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
     <%= select_tag :genre, options_for_select(Movie::GENRES), { class: "form-control search-form", id: "genre_field_discover_search", :include_blank => "Pick a genre" } %></br>
     <%= select_year(0, {:prompt => "Enter a year", :start_year => DateTime.now.year, :end_year => DateTime.now.year - 100}, {:field_name => :year, :prefix => :year, :id => "year_field_discover_search", class: "form-control search-form" }) %>
     <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), { class: "form-control search-form", id: "year_select_discover_search", :include_blank => "Year select" } %></br>
     <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), { class: "form-control search-form", id: "mpaa_field_discover_search", :include_blank => "Pick a rating" } %></br>
-    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control search-form", id: "sort_by_discover_search", :include_blank => "Sort by" } %></br>
-  </div> <!-- row -->
-  <div class="row">
-    <%= submit_tag "Search", id: "search_button_discover_search", class: "form-control-submit search-form-submit" %>
+    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control search-form", id: "sort_by_discover_search", :include_blank => "Sort by" } %>
+  </br>
+    <div class="row">
+      <br></br><br></br>
+      <p><%= submit_tag "Search", id: "search_button_discover_search", class: "form-control-submit search-form-submit" %></p>
+    </div> <!-- row -->
   </div> <!-- row -->
   <% end %> <!-- #search form do -->
 
