@@ -370,6 +370,17 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("The Simpsons")
       end #actor tv more
 
+      scenario "tv series page links to individual seasons" do
+        VCR.use_cassette("tmdb_actor_more") do
+          click_link_or_button "bio_and_credits_link_actor_search"
+        end
+        VCR.use_cassette("actor_tv_more") do
+          click_link "The Simpsons"
+        end
+        click_link "5"
+        expect(page).to have_content("Season 5")
+      end #actor tv more
+
       scenario "actor more info page links tv credits to credit url" do
         VCR.use_cassette("tmdb_actor_more") do
           click_link_or_button "bio_and_credits_link_actor_search"
