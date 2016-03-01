@@ -402,6 +402,13 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Portlandia")
       end #actor tv credit
 
+      scenario "actor more page has actor's headshot" do
+        VCR.use_cassette("tmdb_actor_more") do
+          click_link_or_button "bio_and_credits_link_actor_search"
+        end
+        expect(page).to have_css("img[src*='http://image.tmdb.org/t/p/w185/e19GfOWzMNN1hi7B9Ci62hMvtXs.jpg']")
+      end
+
     end #actor searches
 
 

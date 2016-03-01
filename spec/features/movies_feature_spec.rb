@@ -41,6 +41,13 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
       end #genres are links
 
+      scenario "movie show page has the movie's poster image" do
+        sign_in_user(user)
+        listing
+        visit(movie_path(movie))
+        expect(page).to have_css("img[src*='http://image.tmdb.org/t/p/w185/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg']")
+      end #genres are links
+
       scenario "movie show page does not have rating, reviews, or mark as watched unless it's on a list" do
         sign_in_user(user2)
         visit(movie_path(movie2))
