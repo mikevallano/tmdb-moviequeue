@@ -392,6 +392,16 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Horace")
       end #actor tv credit
 
+      scenario "actor credit shows episodes the actor was in" do
+        VCR.use_cassette("tmdb_actor_more") do
+          click_link_or_button "bio_and_credits_link_actor_search"
+        end
+        VCR.use_cassette("actor_tv_credit2") do
+          click_link "appearance_details_portlandia", match: :first
+        end
+        expect(page).to have_content("Portlandia")
+      end #actor tv credit
+
     end #actor searches
 
 
