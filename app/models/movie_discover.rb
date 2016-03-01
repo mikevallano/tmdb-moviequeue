@@ -38,11 +38,11 @@ class MovieDiscover
       @before_year = nil
     end #if @year_select.present?
 
-    @genre = params[:genre] if params[:genre].present?
-    @actor = params[:actor] if params[:actor].present?
-    @actor2 = params[:actor2] if params[:actor2].present?
-    @company = params[:company] if params[:company].present?
-    @mpaa_rating = params[:mpaa_rating] if params[:mpaa_rating].present?
+    params[:genre].present? ? @genre = params[:genre] : @genre = nil
+    params[:actor].present? ? @actor = params[:actor] : @actor = nil
+    params[:actor2].present? ? @actor2 = params[:actor2] : @actor2 = nil
+    params[:company].present? ? @company = params[:company] : @company = nil
+    params[:mpaa_rating].present? ? @mpaa_rating = params[:mpaa_rating] : @mpaa_rating = nil
 
     if params[:sort_by].present?
       @sort_by = params[:sort_by]
