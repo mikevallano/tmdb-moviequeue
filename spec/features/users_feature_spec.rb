@@ -9,7 +9,7 @@ RSpec.feature "Users feature spec", :type => :feature do
 
     scenario "user can successfully sign up" do
       sign_up_with(email, username, "password")
-      expect(page).to have_content("#{@email}")
+      expect(page).to have_content("#{@current_user.username}")
     end
 
     scenario "user is redirected to awaiting confirmation page after signing up" do
@@ -64,7 +64,7 @@ RSpec.feature "Users feature spec", :type => :feature do
       fill_in "user_password", with: existing_user.password
       click_button "log_in_button_new_session"
       @current_user = User.find_by_email(existing_user.email)
-      expect(page).to have_content("#{@email}")
+      expect(page).to have_content("#{@current_user.username}")
     end
 
     scenario "existing user can sign in with username" do
@@ -74,7 +74,7 @@ RSpec.feature "Users feature spec", :type => :feature do
       fill_in "user_password", with: existing_user.password
       click_button "log_in_button_new_session"
       @current_user = User.find_by_email(existing_user.email)
-      expect(page).to have_content("#{@email}")
+      expect(page).to have_content("#{@current_user.username}")
     end
 
     scenario "user can sign out" do

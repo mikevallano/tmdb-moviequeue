@@ -35,7 +35,7 @@
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
       <% if @previous_page.present? %>
-        <%= link_to "Previous page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@previous_page}") %>
+        <%= link_to "Previous page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@previous_page}") %></br>
       <% end %>
 
       <% if @next_page.present? %>
@@ -45,5 +45,7 @@
     <% end %> <!-- # @not_found.present? -->
 
 <% end %> <!-- # if !@actor.present? && !@actor2.present? -->
+
+</br>
 
 
