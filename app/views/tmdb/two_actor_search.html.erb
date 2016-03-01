@@ -28,6 +28,10 @@
         <%= render partial: 'movies/movie_partial_loop', object: @movies %>
       </div> <!-- movies_actor_search_loop -->
 
+      </br>
+      <p class="button-main"><%= link_to "Search Again", two_actor_search_path, id: "two_actor_search_again_link" %></p>
+      </br>
+
       <%= "Page #{@page} of #{@total_pages}" %></br>
 
       <% if @previous_page.present? %>
@@ -39,8 +43,6 @@
       <% end %>
 
     <% end %> <!-- # @not_found.present? -->
-
-    <p><%= link_to "Search again", two_actor_search_path %> </p>
 
 <% end %> <!-- # if !@actor.present? && !@actor2.present? -->
 
