@@ -153,16 +153,6 @@ class TmdbController < ApplicationController
       # use the MovieDiscover class to parse the params
       @search_query = MovieDiscover.parse_params(@cleaned_params)
 
-      @sort_by = params[:sort_by]
-      @date = params[:date]
-      @genre = params[:genre]
-      @actor = params[:actor]
-      @actor2 = params[:actor2]
-      @company = params[:company]
-      @mpaa_rating = params[:mpaa_rating]
-      @year_select = params[:year_select]
-      @page = params[:page]
-
       #use the instance of MovieDiscover class to pass the data to the tmdb_handler
       tmdb_handler_discover_search(@search_query.exact_year, @search_query.after_year, @search_query.before_year,
         @search_query.genre, @search_query.actor, @search_query.actor2, @search_query.company, @search_query.mpaa_rating,

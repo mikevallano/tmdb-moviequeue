@@ -16,9 +16,9 @@ class MovieDiscover
   attr_accessor :exact_year, :after_year, :before_year, :genre, :actor, :actor2, :company, :mpaa_rating, :sort_by, :page
 
   def self.parse_params(params)
-    @year_select = params[:year_select]
+    params[:year_select].present? ? @year_select = params[:year_select] : @year_select = nil
 
-    @year = params[:date][:year] if params[:date].present?
+    params[:date].present? ? @year = params[:date][:year] : @year = nil
 
     unless @year.present?
       @year_select = nil
