@@ -51,5 +51,6 @@ Rails.application.routes.draw do
   get 'about', to: 'pages#about', as: :about
   get 'faq', to: 'pages#faq', as: :faq
   get 'pages/awaiting_confirmation', as: :awaiting_confirmation
+  get 'demo', to: 'pages#demo', as: :demo
 
 end

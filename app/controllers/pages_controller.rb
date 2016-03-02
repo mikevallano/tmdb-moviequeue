@@ -8,6 +8,9 @@ class PagesController < ApplicationController
   def faq
   end
 
+  def demo
+  end
+
   #limbo page for users awaiting confirmation email
   def awaiting_confirmation
   end
