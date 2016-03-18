@@ -83,7 +83,7 @@ module SortingHandler
     when "only show unwatched"
       @movies = Movie.unwatched_by_user(current_user)
     when "only show watched"
-      @movies = current_user.watched_movies
+      @movies = Movie.watched_by_user(current_user)
     when "movies not on a list"
       @movies = current_user.all_movies_not_on_a_list
     else
