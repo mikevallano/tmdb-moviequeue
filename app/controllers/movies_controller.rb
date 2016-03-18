@@ -11,13 +11,13 @@ class MoviesController < ApplicationController
         @movies = @list.movies.tagged_with(params['tag'], @list).paginate(:page => params[:page], per_page: 20)
       else #params list_id
         @movies = Movie.by_tag_and_user(@tag, current_user).paginate(:page => params[:page], per_page: 20)
-      end #params list_id
+      end #if params list_id
     elsif params[:genre]
       @genre = params[:genre]
       @movies = current_user.movies_by_genre(@genre).paginate(:page => params[:page], per_page: 20)
     else
       @movies = current_user.all_movies.paginate(:page => params[:page], per_page: 20)
-    end #params tag
+    end #if params tag
 
 
     @sort_by = params[:sort_by]
