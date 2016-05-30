@@ -43,7 +43,7 @@
             <% end %><!-- lists.each -->
             <li role="separator" class="divider"></li>
             <li><%= link_to 'Manage My Lists', user_lists_path(current_user), id: "my_lists_nav_link" %></li>
-            <li><%= link_to ' New List', new_user_list_path(current_user), class: "fa fa-plus" %></li>
+            <li><%= link_to ' New List', new_user_list_path(current_user) %></li>
           </ul> <!-- dropdown items -->
         </li><!-- dropdown button -->
         <li><%= link_to 'Public Lists', public_lists_path, id: "public_lists_nav_link" %></li>
