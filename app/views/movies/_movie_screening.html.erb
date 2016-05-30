@@ -2,13 +2,20 @@
 
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
 
-  <p class="sidebar-button"><%= link_to " Watched. Add/View Screenings", movie_screenings_path(movie), id: "add_screening_link_movies_partial", class: "fa fa-check-square-o" %></p>
+  <p class="sidebar-button">
+    <%= link_to '<i class="fa fa-check-square-o"></i> Watched. Add/View Screenings'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial" %>
+  </p>
 
 <% else %> <!-- #if movie has been seen -->
 
-  <p class="sidebar-button"><%= link_to "  Mark as Watched", screenings_path(:screening => { notes: nil }, tmdb_id: movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true, class: "fa fa-square-o" %></p>
+  <p class="sidebar-button">
+    <%= link_to '<i class="fa fa-square-o"></i> Mark as Watched'.html_safe, screenings_path(:screening => { notes: nil }, tmdb_id: movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %>
+    </p>
 
 <% end %> <!-- #if movie has been seen -->
 
 </div><!-- id= movie_seen -->
+
+<p class="sidebar-button"><%= link_to '<i class="fa fa-search"></i> Find Similar Movies'.html_safe, similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more" %>
+</p>
 
