@@ -13,17 +13,17 @@ h1, h2, h3 {
 } /* h1, h2, h3 */
 
 h1 {
-  font-size: 40px; 
+  font-size: 40px;
 } /* h1 */
 
 h2 {
-  font-size: 20px; 
+  font-size: 20px;
 } /* h2 */
 
 h3 {
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 2px; 
+  letter-spacing: 2px;
 } /* h3 */
 
 p, ol, ul, td {
@@ -71,37 +71,37 @@ a {
       background-color: darken($dark-blue, 10%);
       text-decoration: none;
     }
-  } 
+  }
 } /* .tag-link */
 
 /* FORM PLACEHOLDER TEXT */
 input::-webkit-input-placeholder {
 color: white !important;
 }
- 
+
 input:-moz-placeholder { /* Firefox 18- */
-color: white !important;  
+color: white !important;
 }
- 
+
 input::-moz-placeholder {  /* Firefox 19+ */
-color: white !important;  
+color: white !important;
 }
- 
-input:-ms-input-placeholder {  
-color: white !important;  
+
+input:-ms-input-placeholder {
+color: white !important;
 }
 
 
 /* BOOTSTRAP AND FONT AWESOME */
 
 .well {
-  background-color: lighten($primary-background-color, 10%); 
+  background-color: lighten($primary-background-color, 10%);
   border: 0px;
   overflow: auto;
 } /* .well */
 
 .fa {
-  line-height: 1.2; 
+  line-height: 1.2;
 } /* .fa */
 
 
@@ -167,7 +167,7 @@ color: white !important;
   .form-container {
     width: 100%;
     float: left;
-    margin-right: 20px; 
+    margin-right: 20px;
   } /* .form-container */
 
 } /* 900px */
@@ -176,7 +176,7 @@ color: white !important;
   .col-xs-3 {
     width: 100%;
     clear: both;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   } /* .col-xs-3 */
     
 } /* 360px */

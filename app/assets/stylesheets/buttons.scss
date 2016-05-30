@@ -8,7 +8,7 @@
     padding: 0.2em 0.5em;
     display: block;
     float: left;
-    margin-right: 1px; 
+    margin-right: 1px;
     background-color: transparent;}
   .pagination .disabled {
     color: transparent;
@@ -50,11 +50,11 @@
 
 
 button.close {
-  color: white; 
+  color: white;
   text-shadow: none;
   border: none;
 } /* button.close */
-  
+
 .button-main {
   a {
     color: $light-blue;
@@ -72,7 +72,7 @@ button.close {
       text-decoration: none;
     }
   } /* a */
-    
+
 } /* .button-main */
 
 .button-large {
@@ -94,14 +94,14 @@ button.close {
       text-decoration: none;
     }
   } /* a */
-    
+
 } /* .button-large */
 
 
 
 /* MODAL FOOTER BUTTONS */
 .modal-footer {
-  .btn { 
+  .btn {
     a {
       color: black;
 
