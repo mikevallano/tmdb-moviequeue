@@ -2,8 +2,8 @@
 
   <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
 
-      <p class="fa fa-edit"><span class="pseudo-header"> My Review:</span> <%= truncate(movie.reviews.by_user(current_user).first.body, length: 100, separator: ' ') %>:
-      <%= link_to " Full Review", movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_partial", class: "fa fa-chevron-circle-right" %>
+      <p><icon class="fa fa-edit"></icon><span class="pseudo-header"> My Review:</span> <%= truncate(movie.reviews.by_user(current_user).first.body, length: 100, separator: ' ') %>
+      <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Review'.html_safe, movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_partial" %>
       </p>
 
   <% else %> <!-- #if movie has been reviewed -->

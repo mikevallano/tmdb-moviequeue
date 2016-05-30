@@ -2,7 +2,9 @@
 
   <% if current_user.rated_movies.include?(movie) %> <!-- #if movie has been rated -->
 
-    <p class="fa fa-star"><span class="pseudo-header"> My Rating:</span> <%= movie.ratings.by_user(current_user).first.value %>/10 <%= link_to " ", movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial", class: "fa fa-pencil" %></p>
+    <p><icon class="fa fa-star"></icon><span class="pseudo-header"> My Rating:</span> <%= movie.ratings.by_user(current_user).first.value %>/10 <%= link_to '<i class="fa fa-pencil"></i> Edit Rating'.html_safe, movie_rating_path(movie, movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
+
+    </p>
 
   <% else %> <!-- #if movie has been rated -->
 
