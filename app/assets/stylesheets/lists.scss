@@ -12,17 +12,26 @@ article#list {
   .list-image-stack-container {
     float: left;
     margin: 0px 15px 15px 15px;
-    min-width: 200px; 
+    min-width: 200px;
     height: 85px;
     img {
       width: 50px;
       float: left;
-      margin-right: -20px; 
+      margin-right: -20px;
       border-left: 1px solid $primary-background-color;
       -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
       -moz-box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
       box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
     } /* img */
+    .missing-poster {
+      width: 50px;
+      height: 75px;
+      float: left;
+      margin-right: -20px;
+      margin-top: 0px;
+      font-size: 5px;
+    } /* .missing-poster */
+
   } /* .list-image-stack-container */
   .list-details {
     width: 45%;
