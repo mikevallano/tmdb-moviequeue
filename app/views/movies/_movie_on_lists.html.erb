@@ -1,5 +1,5 @@
-  <p class="fa fa-list-ul"><span class="pseudo-header"> Lists:</span>
+  <p><icon class="fa fa-list-ul"></icon><span class="pseudo-header"> Lists:</span>
     <% movie.lists.by_user(current_user).each do |list| %>
-      <%= link_to "#{list.name} ", user_list_path(list.owner, list.slug), id: "show_list_link_on_list_movies_partial" %><%= link_to "", delete_listing_path(list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, remote: true, data: { confirm: "You are taking this movie out of your " + list.name + " list. Are you sure you want to do that?" }, class: "fa fa-times-circle" %>
+      <%= link_to "  #{list.name} ", user_list_path(list.owner, list.slug), id: "show_list_link_on_list_movies_partial" %><%= link_to "", delete_listing_path(list.id, movie.id), id: "remove_movie_link_movies_partial", method: :delete, remote: true, data: { confirm: "You are taking this movie out of your " + list.name + " list. Are you sure you want to do that?" }, class: "fa fa-times-circle" %>
     <% end %> <!-- # list loop -->
 
