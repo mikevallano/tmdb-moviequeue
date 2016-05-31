@@ -1,11 +1,18 @@
 <!-- similar movies -->
-<p class="sidebar-button"><%= link_to " Find Similar Movies", similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more", class: "fa fa-search" %></p>
+<p class="sidebar-button"><%= link_to '<i class="fa fa-search"></i> Find Similar Movies'.html_safe, similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more" %>
+</p>
 
 <!--  link to netflix -->
-<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="http://www.netflix.com/search/<%= @movie.title %>" target="_blank" alt="Search Netflix"> Find on Netflix</a></p>
+<p class="sidebar-button">
+  <a href="http://www.netflix.com/search/<%= @movie.title %>" target="_blank" alt="Find on Netflix"><i class="fa fa-chevron-circle-right"></i> Find on Netflix</a>
+</p>
 
 <!--  link to amazon -->
-<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= @movie.title %> <%= @movie.release_date.stamp('2001') if @movie.release_date.present? %>" target="_blank" title="Search Amazon"> Find on Amazon</a></p>
+<p class="sidebar-button">
+  <a href="https://www.amazon.com/s/url=search-alias%3Dinstant-video&field-keywords=<%= @movie.title %> <%= @movie.release_date.stamp('2001') if @movie.release_date.present? %>" target="_blank" title="Search Amazon"><i class="fa fa-chevron-circle-right"></i> Find on Amazon</a>
+</p>
 
 <!-- link to youtube -->
-<p class="sidebar-button"><a class="fa fa-chevron-circle-right" href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie <%= @movie.release_date.stamp('2001') if @movie.release_date.present? %>" target="_blank"> Find on YouTube</a></p>
+<p class="sidebar-button">
+  <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie <%= @movie.release_date.stamp('2001') if @movie.release_date.present? %>" target="_blank"><i class="fa fa-chevron-circle-right"></i> Find on YouTube</a>
+</p>

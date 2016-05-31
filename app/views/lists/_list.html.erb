@@ -4,7 +4,7 @@
     <article id="list">
     <div class="row">
 
-      <div class="list-image-stack-container ">
+      <div class="list-image-stack-container">
         <a href="<%= user_list_path(list.owner, list) %>">
           <% list.movies.last(6).each do |movie| %>
             <%= image_for(movie) %>
@@ -21,9 +21,9 @@
 
     <div class="list-mgt-links">
       <ul>
-        <li><%= link_to " Show Movies", user_list_path(list.owner, list), id: "show_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
+        <li><%= link_to '<i class="fa fa-chevron-circle-right"></i> Show Movies'.html_safe, user_list_path(list.owner, list), id: "show_list_link_list_index" %></li>
         <% if current_user == list.owner %> <!-- only list owners can edit or delete a list -->
-          <li><%= link_to ' Manage List', edit_user_list_path(list.owner, list), id: "edit_list_link_list_index", class: "fa fa-chevron-circle-right" %></li>
+          <li><%= link_to '<i class="fa fa-chevron-circle-right"></i> Manage List'.html_safe, edit_user_list_path(list.owner, list), id: "edit_list_link_list_index" %></li>
         <% end %><!-- if current_user == list.owner  -->
         </ul>
     </div> <!-- list-mgt-links -->
