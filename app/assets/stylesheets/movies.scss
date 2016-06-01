@@ -3,8 +3,8 @@
 
 $index-poster-width: 125px;
 $index-poster-height: 185px;
-$mobile-modal-poster-width: 100%;
-$mobile-modal-poster-height: $mobile-modal-poster-width*.48+$mobile-modal-poster-width;
+$responsive-poster-width: 100%;
+$responsive-poster-height: $responsive-poster-width*.48+$responsive-poster-width;
 
 /* MOVIE INDEX PAGE */
 
@@ -19,8 +19,8 @@ article.tile-cover-pic {
   height: $index-poster-height;
   overflow: hidden;
   img {
-    width: $index-poster-width;
-    height: $index-poster-height;
+    width: $responsive-poster-width;
+    height: $responsive-poster-height;
   } /* img */
 
 } /* article.tile-cover-pic */
@@ -65,7 +65,6 @@ article.tile-cover-pic {
 .modal {
   img {
     border: 1px solid #000;
-    // width: 200px;
   } /* img */
   h1 {
     line-height: 99%;
@@ -275,7 +274,7 @@ article.tile-cover-pic {
        } /* img */
       .watch-info {
         width: 45%;
-         float: right;
+        float: right;
       } /* .watch-info */
     } /* .col-xs-3 */
 
@@ -372,14 +371,13 @@ article.tile-cover-pic {
       margin-bottom: 10px;
       img {
          clear: both;
-         width: $mobile-modal-poster-width;
-         height: $mobile-modal-poster-height;
+         width: $responsive-poster-width;
+         height: $responsive-poster-height;
          text-align: center;
-         width: 100%;
        } /* img */
        .missing-poster {
-        width: $mobile-modal-poster-width;
-        height: $mobile-modal-poster-height;
+        width: $responsive-poster-width;
+        height: $responsive-poster-height;
         min-height: 325px;
        }
       .watch-info {
