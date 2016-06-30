@@ -168,16 +168,30 @@ module TmdbHandler
 
   end
 
-  def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
-    company, mpaa_rating, sort_by, page)
+  # def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
+  #   company, mpaa_rating, sort_by, page)
 
-    if actor.present?
-      @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{actor}&api_key=#{ENV['tmdb_api_key']}"
+def tmdb_handler_discover_search(params)
+  @actor = params[:actor]
+  @actor2 = params[:actor2]
+  @exact_year = params[:exact_year]
+  @after_year = params[:after_year]
+  @before_year = params[:before_year]
+  @genre = params[:genre]
+  @company = params[:company]
+  @mpaa_rating = params[:mpaa_rating]
+  @sort_by = params[:sort_by]
+  @page = params[:page]
+  @year_select = params[:year_select]
+
+    if @actor.present?
+      @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{@actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
       @actor1_search_result.present? ? @actor1_id = @actor1_search_result.first[:id] : @not_found = "No results for '#{actor}'."
     end
-    if actor2.present?
-      @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{actor2}&api_key=#{ENV['tmdb_api_key']}"
+
+    if @actor2.present?
+      @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{@actor2}&api_key=#{ENV['tmdb_api_key']}"
       @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
       @actor2_search_result.present? ? @actor2_id = @actor2_search_result.first[:id] : @not_found = "No results for '#{actor2}'."
     end
@@ -191,12 +205,13 @@ module TmdbHandler
     else
       @people = ''
     end
-    years = [exact_year, after_year, before_year].compact
+
+    years = [@exact_year, @after_year, @before_year].compact
     if years.any?
       years = years.first
-      if years == exact_year
+      if years == @exact_year
         @year_search = "primary_release_year=#{years}"
-      elsif years == after_year
+      elsif years == @after_year
         @year_search = "primary_release_date.gte=#{years}"
       else
         @year_search = "primary_release_date.lte=#{years}"
@@ -204,13 +219,12 @@ module TmdbHandler
     else
       @year_search = "primary_release_date.gte=1800-01-01"
     end
-
-    @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{genre}&with_people=#{@people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
+    @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{@genre}&with_people=#{@people}&with_companies=#{@company}&certification_country=US&certification=#{@mpaa_rating}&sort_by=#{@sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
     @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
     @movies = MovieSearch.parse_results(@discover_results)
     @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]
 
-    @page = page.to_i
+    @page = @page.to_i
     if @page > 1
       @previous_page = @page - 1
     end
@@ -219,14 +233,14 @@ module TmdbHandler
     end
 
     rescue
-    if actor.present?
+    if @actor.present?
       unless @actor1_search_result.present?
-        @not_found = "No results for '#{actor}'."
+        @not_found = "No results for '#{@actor}'."
       end
     end
-    if actor2.present?
+    if @actor2.present?
       unless @actor2_search_result.present?
-        @not_found = "No results for '#{actor2}'."
+        @not_found = "No results for '#{@actor2}'."
       end
     end
 
