@@ -3,7 +3,7 @@
 <h1>Find Common Movies Between 2 Actors</h1>
 
 
-<% if !@actor.present? && !@actor2.present? %>
+<% if !@actor.present? && !@actor2.present? && !@not_found.present? %>
 
 <p>Enter two actors and see the movies they've been in together.</p>
 
@@ -13,38 +13,35 @@
     <%= submit_tag "Search", id: "search_button_two_actor_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 
+<% elsif @not_found.present? %>
+
+  <h2>Hmm. <%= @not_found %></h2>
+  <p> Check your spelling and try again.</p>
+  <p class="button-main"><%= link_to "Search Again", two_actor_search_path %></p>
+
 <% else %>
+  <h2><%= "Those two actors have been in #{@movies.size} movies together:" %></h2>
+  <br>
 
-  <% if @not_found.present? %>
-    <h2>Hmm. <%= @not_found %></h2>
-    <p> Check your spelling and try again.</p>
-    <p class="button-main"><%= link_to "Search Again", two_actor_search_path %></p>
+  <div id ="two_actor_search_loop">
+    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+  </div> <!-- movies_actor_search_loop -->
 
-    <% else %> <!-- # @not_found.present? -->
-      <h2><%= "Those two actors have been in #{@movies.size} movies together:" %></h2>
-      <br>
+  </br>
+  <p class="button-main"><%= link_to "Search Again", two_actor_search_path, id: "two_actor_search_again_link" %></p>
+  </br>
 
-      <div id ="two_actor_search_loop">
-        <%= render partial: 'movies/movie_partial_loop', object: @movies %>
-      </div> <!-- movies_actor_search_loop -->
+  <%= "Page #{@page} of #{@total_pages}" %></br>
 
-      </br>
-      <p class="button-main"><%= link_to "Search Again", two_actor_search_path, id: "two_actor_search_again_link" %></p>
-      </br>
+  <% if @previous_page.present? %>
+    <%= link_to "Previous page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@previous_page}") %></br>
+  <% end %>
 
-      <%= "Page #{@page} of #{@total_pages}" %></br>
+  <% if @next_page.present? %>
+    <%= link_to "Next page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@next_page}") %>
+  <% end %>
 
-      <% if @previous_page.present? %>
-        <%= link_to "Previous page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@previous_page}") %></br>
-      <% end %>
-
-      <% if @next_page.present? %>
-        <%= link_to "Next page", actor_search_path(actor: I18n.transliterate("#{@actor}"), page: "#{@next_page}") %>
-      <% end %>
-
-    <% end %> <!-- # @not_found.present? -->
-
-<% end %> <!-- # if !@actor.present? && !@actor2.present? -->
+<% end %> <!-- # @not_found.present? -->
 
 </br>
 

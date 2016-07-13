@@ -187,13 +187,21 @@ def tmdb_handler_discover_search(params)
     if @actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{@actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
-      @actor1_search_result.present? ? @actor1_id = @actor1_search_result.first[:id] : @not_found = "No results for '#{actor}'."
+      if !@actor1_search_result.present?
+        return @not_found = "No results for '#{actor}'."
+      else
+        @actor1_id = @actor1_search_result.first[:id]
+      end
     end
 
     if @actor2.present?
       @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{@actor2}&api_key=#{ENV['tmdb_api_key']}"
       @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
-      @actor2_search_result.present? ? @actor2_id = @actor2_search_result.first[:id] : @not_found = "No results for '#{actor2}'."
+      if !@actor2_search_result.present?
+        return @not_found = "No results for '#{actor2}'."
+      else
+        @actor2_id = @actor2_search_result.first[:id]
+      end
     end
 
     if @actor1_id.present? && @actor2_id.present?
