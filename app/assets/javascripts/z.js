@@ -1,6 +1,11 @@
 var ready;
 ready = function() {
 
+  $( "#header_movie_search" ).autocomplete({
+    minLength: 4,
+    source: $("#header_movie_search").data("autocomplete-source")
+  });
+
   $( "#movie_field_movie_search" ).autocomplete({
     minLength: 4,
     source: $("#movie_field_movie_search").data("autocomplete-source")
@@ -45,6 +50,12 @@ ready = function() {
     minLength: 4,
     source: $("#movie2_field_two_movie_search").data("autocomplete-source")
   });
+
+  $('#header-movie-search, ul.ui-autocomplete').css({
+    'position': 'relative',
+    'z-index': 1100
+  });
+
 
 };
 
