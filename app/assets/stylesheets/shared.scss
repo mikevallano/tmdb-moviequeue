@@ -91,6 +91,26 @@ input:-ms-input-placeholder {
 color: white !important;
 }
 
+#header-movie-search input::-webkit-input-placeholder {
+  color: #262626 !important;
+  text-align: center;
+}
+
+#header-movie-search input:-moz-placeholder { /* Firefox 18- */
+  color: #262626 !important;
+  text-align: center;
+}
+
+#header-movie-search input::-moz-placeholder {  /* Firefox 19+ */
+  color: #262626 !important;
+  text-align: center;
+}
+
+#header-movie-search input:-ms-input-placeholder {
+  color: #262626 !important;
+  text-align: center;
+}
+
 
 /* BOOTSTRAP AND FONT AWESOME */
 

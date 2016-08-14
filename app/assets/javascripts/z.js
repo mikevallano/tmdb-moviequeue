@@ -1,72 +1,30 @@
 var ready;
 ready = function() {
 
-  $( "#header_movie_search" ).autocomplete({
+  $(".autocomplete-auto-submit").autocomplete({
+    source: $(".autocomplete-auto-submit").data("autocomplete-source"),
     minLength: 4,
-    source: $("#header_movie_search").data("autocomplete-source")
-  });
+    select: function(event, ui) {
+      $(".autocomplete-auto-submit").val(ui.item.value);
+      $(this).closest("form").submit();
+      $("#overlay-modal").show(); }
+    });
 
-  $( "#movie_field_movie_search" ).autocomplete({
+  $( ".autocomplete-search-field" ).autocomplete({
     minLength: 4,
-    source: $("#movie_field_movie_search").data("autocomplete-source")
-  });
-
-  $( "#movie_field_movie_search_again" ).autocomplete({
-    minLength: 4,
-    source: $("#movie_field_movie_search_again").data("autocomplete-source")
-  });
-
-  $( "#homepage-search-field" ).autocomplete({
-    minLength: 4,
-    source: $("#homepage-search-field").data("autocomplete-source")
-  });
-
-  $( "#actor_name_actor_search" ).autocomplete({
-    minLength: 4,
-    source: $("#actor_name_actor_search").data("autocomplete-source")
-  });
-
-  $( "#actor_field_discover_search" ).autocomplete({
-    minLength: 4,
-    source: $("#actor_field_discover_search").data("autocomplete-source")
-  });
-
-  $( "#actor1_field_two_actor_search" ).autocomplete({
-    minLength: 4,
-    source: $("#actor1_field_two_actor_search").data("autocomplete-source")
-  });
-
-  $( "#actor2_field_two_actor_search" ).autocomplete({
-    minLength: 4,
-    source: $("#actor2_field_two_actor_search").data("autocomplete-source")
-  });
-
-  $( "#movie1_field_two_movie_search" ).autocomplete({
-    minLength: 4,
-    source: $("#movie1_field_two_movie_search").data("autocomplete-source")
-  });
-
-  $( "#movie2_field_two_movie_search" ).autocomplete({
-    minLength: 4,
-    source: $("#movie2_field_two_movie_search").data("autocomplete-source")
+    source: $(".autocomplete-search-field").data("autocomplete-source")
   });
 
   $('#header-movie-search, ul.ui-autocomplete').css({
     'position': 'relative',
+    'max-width': '455px',
     'z-index': 1100
   });
-
 
 };
 
 $(document).ready(ready);
 $(document).on('page:load', ready);
-
-
-
-
-
-  // console.log("i see dead javascripts")
 
 
     // This hides the 'year select' field until a year is selected
@@ -82,8 +40,5 @@ $(document).on('page:load', ready);
 
 
 // autocomplete
-
-
-
 
 // the final closer
