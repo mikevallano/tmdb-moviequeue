@@ -32,15 +32,16 @@ article.tile-cover-pic {
   margin: -10px 10px 10px 0px;
   width: $index-poster-width;
   height: $index-poster-height;
-  overflow: hidden;
+  word-wrap: break-word;
   padding: 5%;
   text-align: center;
   color: black;
   p {
     margin: 30% 0%;
-    font-size: 200%;
+    font-size: 150%;
     line-height: 100%;
     font-family: $header-family;
+    color: white;
   } /* p */
   a {
   color: black;
@@ -190,7 +191,7 @@ article.tile-cover-pic {
 
   .screening-link {
     font-family: $body-family;
-    font-size: 12px; 
+    font-size: 12px;
     a {
       color: $light-blue;
       &:visited {
