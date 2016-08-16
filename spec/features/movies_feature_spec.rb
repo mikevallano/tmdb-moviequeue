@@ -244,6 +244,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
           counter = Movie.first.id
           30.times do
             FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+            FactoryGirl.create(:screening, user_id: user.id, movie_id: Movie.find(counter).id)
             counter += 1
           end
           visit(movie_path(Movie.last))

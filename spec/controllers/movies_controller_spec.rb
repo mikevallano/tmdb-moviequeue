@@ -10,11 +10,13 @@ RSpec.describe MoviesController, type: :controller do
   let(:movie) { FactoryGirl.create(:movie) }
   let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
   let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:screening) { FactoryGirl.create(:screening, user_id: user.id, movie_id: movie.id) }
 
   shared_examples_for 'with logged in user' do
 
     describe "GET #index" do
       it "assigns all movies as @movies" do
+        screening
         get :index
         expect(assigns(:movies)).to include(movie)
       end
