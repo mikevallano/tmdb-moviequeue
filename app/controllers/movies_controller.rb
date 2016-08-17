@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
       @genre = params[:genre]
       @movies = current_user.movies_by_genre(@genre).paginate(:page => params[:page], per_page: 20)
     else
-      @movies = current_user.all_movies.paginate(:page => params[:page], per_page: 20)
+      @movies = current_user.all_movies_by_recently_watched.paginate(:page => params[:page], per_page: 20)
     end #if params tag
 
 

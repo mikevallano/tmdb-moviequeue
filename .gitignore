@@ -18,7 +18,7 @@ tester2.rb
 tester.html.erb
 tester2.html.erb
 tester.js.erb
-coverage/*
+/coverage/*
 spec/vcr_cassettes/*
 
 # Ignore application configuration
