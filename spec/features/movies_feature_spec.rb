@@ -395,8 +395,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         scenario "sort by recently watched" do
           select "recently watched", :from => "sort_by"
           click_button "sort_button_movies_index"
-          expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-          expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end #sort by title
 
 
