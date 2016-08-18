@@ -6,8 +6,8 @@ div {
     margin-bottom: 10px;
     label {
       font-family: $header-family;
-      // font-size: .9em; 
-    } /* label */ 
+      // font-size: .9em;
+    } /* label */
   }/* field actions */
 }/* div */
 input[type="submit"] {
@@ -44,24 +44,24 @@ input[type="submit"] {
   max-width: 900px;
   min-width: 300px;
   float: left;
-  margin-right: 20px; 
+  margin-right: 20px;
 } /* .form-container */
 
 .form-control {
   width: 70%;
   float: left;
   margin-right: 3px;
-  height: 35px; 
-  background-color: lighten($primary-background-color, 25%); 
+  height: 35px;
+  background-color: lighten($primary-background-color, 25%);
   color: $light-gray;
-  border: 1px solid $dark-gray;    
+  border: 1px solid $dark-gray;
 } /* .form-control */
 
 .form-control-submit {
   text-align: center;
   height: 35px;
   width: auto;
-  // padding: 0; 
+  // padding: 0;
 } /* .submit */
 
 
@@ -77,10 +77,18 @@ input[type="submit"] {
   width: auto;
 } /* .submit */
 
+/* NAV BAR ONLY */
+.search-form-header {
+  width: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+} /* .search-form-header */
+
 /* LIST EDIT ONLY */
 .edit-form, .edit-form-submit {
   margin-bottom: 15px;
-  clear: both; 
+  clear: both;
 } /* .edit-form */
 
 .edit-form-submit {

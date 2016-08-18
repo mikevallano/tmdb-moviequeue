@@ -62,6 +62,12 @@
           </ul><!-- Search dropdown items -->
         </li><!-- Search dropdown button -->
 
+        <li><%= form_tag '/tmdb/search',
+          { class: "form-class", id: "header-movie-search", role: "form", method: :get } do %>
+              <%= text_field_tag :movie_title_header, nil, class: "form-control search-form-header autocomplete-auto-submit", id: "header_movie_search", placeholder: "Search for a Movie", data: { autocomplete_source: movie_autocomplete_path } %>
+            <% end %><!-- form_tag -->
+        </li> <!-- form -->
+
       <% else %>
         <li><%= link_to "Sign In", new_user_session_path, id: "sign_in_nav_link" %></li>
         <li><%= link_to "Sign Up", new_user_registration_path, id: "sign_up_nav_link" %></li>

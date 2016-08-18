@@ -12,8 +12,8 @@
 
         <% if current_user.present? %>
           <%= form_tag '/tmdb/search', { class: "form-class", id: "home-page-search", role: "form", method: :get } do %>
-          <%= text_field_tag :movie_title, nil, class: "form-control search-form", id: "homepage-search-field", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
-          <%= submit_tag "Search", id: "search_by_title_button", class: "home-submit" %>
+          <%= text_field_tag :movie_title, nil, class: "form-control search-form autocomplete-auto-submit", id: "homepage-search-field", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
+          <%= submit_tag "Search", id: "search_by_title_home_button", class: "home-submit" %>
           <% end %><!-- form_tag -->
           </div> <!-- search-bar -->
         </div> <!-- row -->
