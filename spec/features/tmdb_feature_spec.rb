@@ -44,7 +44,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         api_actor_search
         expect(page).to have_content("Page 1 of 6")
         expect(page).not_to have_content("Previous page")
-        VCR.use_cassette("tmdb_actor_next_page") do
+        VCR.use_cassette("tmdb_actor_next_page", :record => :new_episodes) do
           click_link "Next page"
         end
         expect(page).to have_content("Page 2 of 6")
@@ -132,10 +132,10 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "search by actor returns results", js: true do
         visit(discover_search_path)
-        VCR.use_cassette("fill_in_frances_mcdormand") do
+        VCR.use_cassette("fill_in_frances_mcdormand", :record => :new_episodes) do
           fill_in "actor_field_discover_search", with: "Frances McDormand"
         end
-        VCR.use_cassette("discover_actor_search") do
+        VCR.use_cassette("discover_actor_search", :record => :new_episodes) do
           click_button "search_button_discover_search"
         end
         wait_for_ajax
@@ -144,11 +144,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "search by actor and year", js: true do
         visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi") do
+        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
         end
           select "1996", :from => "date[year]"
-        VCR.use_cassette("discover_actor_and_year") do
+        VCR.use_cassette("discover_actor_and_year", :record => :new_episodes) do
           click_button "search_button_discover_search"
         end
         wait_for_ajax
@@ -157,12 +157,12 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "search by actor and specific year", js: true do
         visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi") do
+        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
         end
           select "1996", :from => "date[year]"
           select "Exact Year", :from => "year_select"
-        VCR.use_cassette("discover_actor_and_specific_year") do
+        VCR.use_cassette("discover_actor_and_specific_year", :record => :new_episodes) do
           click_button "search_button_discover_search"
         end
         wait_for_ajax
@@ -171,12 +171,12 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "search by actor and before year", js: true do
         visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi") do
+        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
         end
           select "1997", :from => "date[year]"
           select "Before This Year", :from => "year_select"
-         VCR.use_cassette("discover_actor_and_before_year") do
+         VCR.use_cassette("discover_actor_and_before_year", :record => :new_episodes) do
           click_button "search_button_discover_search"
         end
         wait_for_ajax
@@ -185,13 +185,13 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "search by actor year and mpaa rating", js: true do
         visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi") do
+        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_field_discover_search", with: "Steve Buscemi"
         end
           select "1997", :from => "date[year]"
           select "Before This Year", :from => "year_select"
           select "R", :from => "mpaa_rating"
-        VCR.use_cassette("discover_actor_mpaa_rating_and_year") do
+        VCR.use_cassette("discover_actor_mpaa_rating_and_year", :record => :new_episodes) do
           click_button "search_button_discover_search"
         end
         wait_for_ajax
