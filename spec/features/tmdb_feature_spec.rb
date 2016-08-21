@@ -37,6 +37,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "users searches for an actor and the API returns results" do
         api_actor_search
+        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
@@ -338,6 +339,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         sign_in_user(user)
         visit(actor_search_path)
         api_actor_search
+        wait_for_ajax
       end
 
       scenario "users searches for an actor and the API returns results" do
