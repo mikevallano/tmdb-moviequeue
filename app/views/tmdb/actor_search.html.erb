@@ -35,11 +35,11 @@
 
     <div class="row">
       <% if @previous_page.present? %>
-        <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}") %></br>
+        <%= link_to "Previous page", actor_search_path(actor: "#{@actor}", page: "#{@previous_page}", sort_by: params["sort_by"]) %></br>
       <% end %>
 
       <% if @next_page.present? %>
-        <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}") %>
+        <%= link_to "Next page", actor_search_path(actor: "#{@actor}", page: "#{@next_page}", sort_by: params["sort_by"]) %>
       <% end %>
     </div>
 
