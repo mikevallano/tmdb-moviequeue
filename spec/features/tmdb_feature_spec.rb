@@ -337,7 +337,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       before(:each) do
         sign_in_user(user)
         visit(actor_search_path)
-        api_actor_search
+        api_actor_search_buscemi
       end
 
       scenario "users searches for an actor and the API returns results" do

@@ -78,6 +78,13 @@ module FeatureHelpers
     end
   end
 
+  def api_actor_search_buscemi
+    VCR.use_cassette('tmdb_actor_search_buschemi', :record => :new_episodes) do
+      fill_in "actor_name_actor_search", with: 'steve buscemi'
+      click_button "submit_button_actor_search"
+    end
+  end
+
   def bad_api_actor_search
     VCR.use_cassette('tmdb_bad_actor_search', :record => :new_episodes) do
       fill_in "actor_name_actor_search", with: '&sjhskjhdf*s7'
