@@ -244,7 +244,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         find("#movie_more_link_movie_partial").click
         wait_for_ajax
         #description
-        expect(page).to have_content("you betcha")
+        expect(page).to have_content("Fargo")
         #genres
         expect(page).to have_content("Crime")
         #actors
