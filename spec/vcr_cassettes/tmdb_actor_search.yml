@@ -764,4 +764,339 @@ http_interactions:
         dG90YWxfcGFnZXMiOjZ9
     http_version: 
   recorded_at: Wed, 24 Feb 2016 16:47:37 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=William%20H.%20Macy
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sun, 21 Aug 2016 17:45:19 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Reset:
+      - '1471801529'
+      Content-Length:
+      - '1265'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"profile_path":"\/cYmHYCGxkOVZgu2oDyhF6lKgfaj.jpg","adult":false,"id":3905,"known_for":[{"poster_path":"\/26L7XODsNlxX3VwkfuUnYOslbRF.jpg","adult":false,"overview":"In
+        need of funds for research, Dr. Alan Grant accepts a large sum of money to
+        accompany Paul and Amanda Kirby on an aerial tour of the infamous Isla Sorna.
+        It isn''t long before all hell breaks loose and the stranded wayfarers must
+        fight for survival as a host of new -- and even more deadly -- dinosaurs try
+        to make snacks of them.","release_date":"2001-07-18","original_title":"Jurassic
+        Park III","genre_ids":[12,28,53,878],"id":331,"media_type":"movie","original_language":"en","title":"Jurassic
+        Park III","backdrop_path":"\/jNUEjodQaJ6HcAXbaB9gOFVcQOC.jpg","popularity":1.099293,"vote_count":1230,"video":false,"vote_average":5.62},{"poster_path":"\/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg","adult":false,"overview":"Jack
+        is a young boy of 5 years old who has lived all his life in one room. He believes
+        everything within it are the only real things in the world. But what will
+        happen when his Ma suddenly tells him that there are other things outside
+        of Room?","release_date":"2015-10-16","original_title":"Room","genre_ids":[18,53],"id":264644,"media_type":"movie","original_language":"en","title":"Room","backdrop_path":"\/tBhp8MGaiL3BXpPCSl5xY397sGH.jpg","popularity":7.444161,"vote_count":1151,"video":false,"vote_average":8.05},{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","original_title":"Fargo","genre_ids":[80,18,53],"id":275,"media_type":"movie","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.097516,"vote_count":967,"video":false,"vote_average":7.55}],"name":"William
+        H. Macy","popularity":4.823776}],"total_results":1,"total_pages":1}'
+    http_version: 
+  recorded_at: Sun, 21 Aug 2016 17:45:17 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_date.gte=1800-01-01&sort_by=.desc&with_companies=&with_genres=&with_people=3905
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sun, 21 Aug 2016 17:45:20 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '38'
+      X-Ratelimit-Reset:
+      - '1471801529'
+      Content-Length:
+      - '5265'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"poster_path":"\/bCWpxGGcP9DsCLwfNpnfcl1vLk8.jpg","adult":false,"overview":"A
+        street-wise kid, Mark Sway, sees the suicide of Jerome Clifford, a prominent
+        Louisiana lawyer, whose current client is Barry ''The Blade'' Muldano, a Mafia
+        hit-man. Before Jerome shoots himself, he tells Mark where the body of a Senator
+        is buried. Clifford shoots himself and Mark is found at the scene, and both
+        the FBI and the Mafia quickly realize that Mark probably knows more than he
+        says.","release_date":"1994-07-20","genre_ids":[18,53,80,9648],"id":10731,"original_title":"The
+        Client","original_language":"en","title":"The Client","backdrop_path":"\/cmJeM2aXBHWIsftfb7dz3ksjyDV.jpg","popularity":1.708678,"vote_count":110,"video":false,"vote_average":6.09},{"poster_path":"\/a38CTs2mJ2uDHHH6mUJmuGH8RVI.jpg","adult":false,"overview":"In
+        1968 the lives of a retired doorman, hotel manager, lounge singer, busboy,
+        beautician and others intersect in the wake of Robert F. Kennedy''s assassination
+        at the Ambassador Hotel in Los Angeles.","release_date":"2006-09-05","genre_ids":[36,18],"id":10741,"original_title":"Bobby","original_language":"en","title":"Bobby","backdrop_path":"\/shyV7mvHa9bDojeMfb2tZDlGJjF.jpg","popularity":1.92969,"vote_count":50,"video":false,"vote_average":5.55},{"poster_path":"\/6H5B8BnNEDOFVe0mul1xtMdd2vS.jpg","adult":false,"overview":"(William
+        H. Macy) works at a Las Vegas casino, where he uses his innate ability to
+        bring about misfortune in those around him to jinx gamblers into losing. His
+        imposing boss, Shelly Kaplow (Alec Baldwin), is happy with the arrangement.
+        But Bernie finds unexpected happiness when he begins dating attractive waitress
+        Natalie Belisario (Maria Bello).","release_date":"2003-01-17","genre_ids":[18,10749],"id":10744,"original_title":"The
+        Cooler","original_language":"en","title":"The Cooler","backdrop_path":"\/l3WApYTkuY6iuzeblrCZzSLRBYP.jpg","popularity":1.270473,"vote_count":29,"video":false,"vote_average":6.41},{"poster_path":"\/2lLwnwqU6iEjFrq3lC3u4rRlFAg.jpg","adult":false,"overview":"Five
+        hapless inner-city low-lifes unsuccessfully attempt to burgle a pawnbroker''s
+        safe, but wind up gaining more than they lose.","release_date":"2002-05-24","genre_ids":[35,80],"id":9260,"original_title":"Welcome
+        to Collinwood","original_language":"en","title":"Welcome to Collinwood","backdrop_path":"\/gdm95M5cvp6iPYTbPdSbaWUTCEc.jpg","popularity":1.384851,"vote_count":17,"video":false,"vote_average":6.18},{"poster_path":"\/wguhhHAHoh2ECwjf5oHRH0P9ial.jpg","adult":false,"overview":"A
+        young man receives an emergency phone call on his cell phone from an older
+        woman. The catch? The woman claims to have been kidnapped; and the kidnappers
+        have targeted her husband and child next.","release_date":"2004-09-06","genre_ids":[28,12,80,53],"id":9759,"original_title":"Cellular","original_language":"en","title":"Cellular","backdrop_path":"\/xRr4nXdNPjP8sXlNdUH7ckfrqMB.jpg","popularity":1.877143,"vote_count":282,"video":false,"vote_average":6.05},{"poster_path":"\/8Nge4rXAQzU5w9U8OvnXuuJltL9.jpg","adult":false,"overview":"The
+        tale of three unlikely heroes - a misfit mouse who prefers reading books to
+        eating them, an unhappy rat who schemes to leave the darkness of the dungeon,
+        and a bumbling servant girl with cauliflower ears - whose fates are intertwined
+        with that of the castle''s princess.","release_date":"2008-10-29","genre_ids":[16,35,10751],"id":10199,"original_title":"The
+        Tale of Despereaux","original_language":"en","title":"The Tale of Despereaux","backdrop_path":"\/otiDe4tbyTct7hvNXVW6PsGVojZ.jpg","popularity":1.926627,"vote_count":149,"video":false,"vote_average":5.75},{"poster_path":"\/zgg8psC8jvNEx5RC4NJ4c9J0KtE.jpg","adult":false,"overview":"Russian
+        terrorists conspire to hijack the aircraft with the president and his family
+        on board. The commander in chief finds himself facing an impossible predicament:
+        give in to the terrorists and sacrifice his family, or risk everything to
+        uphold his principles - and the integrity of the nation.","release_date":"1997-07-23","genre_ids":[28,53],"id":9772,"original_title":"Air
+        Force One","original_language":"en","title":"Air Force One","backdrop_path":"\/4fTzk3CzU0F89CtxswZxC844WvA.jpg","popularity":3.067697,"vote_count":429,"video":false,"vote_average":6.05},{"poster_path":"\/7psRSVuCZyYfxCxt4DTmeIcplPL.jpg","adult":false,"overview":"When
+        Captain Amazing (Kinnear) is kidnapped by Casanova Frankenstein (Rush) a group
+        of superheroes combine together to create a plan. But these aren''t normal
+        superheroes. Now, the group who include such heroes as Mr. Furious (Stiller),
+        The Shoveller (Macy) and The Blue Raja (Azaria) must put all the powers together
+        to save everyone they know and love.","release_date":"1999-08-06","genre_ids":[12,14,28,35,878],"id":9824,"original_title":"Mystery
+        Men","original_language":"en","title":"Mystery Men","backdrop_path":"\/l44rhuS5ces5fAhmU5jbmQwmaDl.jpg","popularity":1.426422,"vote_count":103,"video":false,"vote_average":5.37},{"poster_path":"\/huVxyPbe5XYZjSVGI68Y7RBo6I9.jpg","adult":false,"overview":"An
+        office worker inadvertently becomes a hero after he saves a woman''s life.","release_date":"2007-11-23","genre_ids":[10749,35,18],"id":10247,"original_title":"He
+        Was a Quiet Man","original_language":"en","title":"He Was a Quiet Man","backdrop_path":"\/a94rYKkW0wtko06ogdT2zQ0CHRF.jpg","popularity":1.340581,"vote_count":25,"video":false,"vote_average":6.34},{"poster_path":"\/xzYOaFGZBNAciQXRasQQ8sYxBSi.jpg","adult":false,"overview":"True
+        story of the undersized Depression-era racehorse whose victories lifted not
+        only the spirits of the team behind it but also those of their nation.","release_date":"2003-07-22","genre_ids":[18,36],"id":4464,"original_title":"Seabiscuit","original_language":"en","title":"Seabiscuit","backdrop_path":"\/jtB7e0lwsYsT8J2uDHzrL7zUxlZ.jpg","popularity":1.659873,"vote_count":93,"video":false,"vote_average":6.42},{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.097516,"vote_count":967,"video":false,"vote_average":7.55},{"poster_path":"\/26L7XODsNlxX3VwkfuUnYOslbRF.jpg","adult":false,"overview":"In
+        need of funds for research, Dr. Alan Grant accepts a large sum of money to
+        accompany Paul and Amanda Kirby on an aerial tour of the infamous Isla Sorna.
+        It isn''t long before all hell breaks loose and the stranded wayfarers must
+        fight for survival as a host of new -- and even more deadly -- dinosaurs try
+        to make snacks of them.","release_date":"2001-07-18","genre_ids":[12,28,53,878],"id":331,"original_title":"Jurassic
+        Park III","original_language":"en","title":"Jurassic Park III","backdrop_path":"\/jNUEjodQaJ6HcAXbaB9gOFVcQOC.jpg","popularity":1.099293,"vote_count":1230,"video":false,"vote_average":5.62},{"poster_path":"\/jxkHxPiMfGiFvxSOduNV4oIKJI5.jpg","adult":false,"overview":"An
+        epic mosaic of many interrelated characters in search of happiness, forgiveness,
+        and meaning in the San Fernando Valley.","release_date":"1999-12-08","genre_ids":[18],"id":334,"original_title":"Magnolia","original_language":"en","title":"Magnolia","backdrop_path":"\/9In3XGQSdr2yfgUoEdCpqxEGAOO.jpg","popularity":4.372569,"vote_count":371,"video":false,"vote_average":7.26},{"poster_path":"\/sTsMrXrTya8KpFm8lgtlQR12X7Z.jpg","adult":false,"overview":"During
+        the final weeks of a presidential race, the President is accused of sexual
+        misconduct. To distract the public until the election, the President''s adviser
+        hires a Hollywood producer to help him stage a fake war.","release_date":"1997-12-25","genre_ids":[35,18],"id":586,"original_title":"Wag
+        the Dog","original_language":"en","title":"Wag the Dog","backdrop_path":"\/y1seh8UMjKlTOVEVco8OieJ2Lbm.jpg","popularity":2.557258,"vote_count":98,"video":false,"vote_average":6.55},{"poster_path":"\/zVdtKldeTgI5vwoxWWF2IhbPMul.jpg","adult":false,"overview":"Charlie
+        Berns (William H. Macy) is a veteran Hollywood movie producer who has given
+        up on his career and life. That is until his idealistic screenwriter nephew
+        (Jason Ritter) comes bearing the script of a lifetime and Charlie decides
+        to give his career one final shot. The only thing standing in his way is Diedre
+        Hearn (Meg Ryan), a sharp-witted studio executive brought in to keep Charlie
+        in line.","release_date":"2008-11-20","genre_ids":[35,18,10749],"id":16511,"original_title":"The
+        Deal","original_language":"en","title":"The Deal","backdrop_path":"\/6fn4idKvvhzKdqozIxmtLybBVOM.jpg","popularity":1.976911,"vote_count":5,"video":false,"vote_average":6},{"poster_path":"\/bGBLs1iU8i4JrEtZ5XbJCkFp3c2.jpg","adult":false,"overview":"Seemingly
+        mild-mannered businessman Edmond Burke visits a fortuneteller and hears a
+        remark that spurs him to leave his wife abruptly and seek what is missing
+        from his life. Encounters with strangers and unsavory people weaken the barriers
+        encompassing his long-suppressed rage, until Edmond explodes in violence.","release_date":"2005-08-31","genre_ids":[18,53],"id":18191,"original_title":"Edmond","original_language":"en","title":"Edmond","backdrop_path":"\/rfazYbmFVPoFpUOQKrfrogdGRGr.jpg","popularity":1.151628,"vote_count":16,"video":false,"vote_average":5.78},{"poster_path":"\/nxoWs4s6bCA6ZjJI8fdnKJs2yDh.jpg","adult":false,"overview":"In
+        the waning months of World War II, a man and his wife are mistakenly identified
+        as Jews by their anti-Semitic Brooklyn neighbors. Suddenly the victims of
+        religious and racial persecution, they find themselves aligned with a local
+        Jewish immigrant in a struggle for dignity and survival.","release_date":"2001-10-19","genre_ids":[18],"id":18192,"original_title":"Focus","original_language":"en","title":"Focus","backdrop_path":"\/16W4FdgeWNswGwIYBI3McNxVvNy.jpg","popularity":1.090656,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/Mg0JtAJBZLaiamQBwAXkAeZYBI.jpg","adult":false,"overview":"Timmy
+        meets a girl mouse and they set off to find the Great Owl.","release_date":"1998-12-22","genre_ids":[16,10751],"id":20756,"original_title":"The
+        Secret of NIMH 2: Timmy to the Rescue","original_language":"en","title":"The
+        Secret of NIMH 2: Timmy to the Rescue","backdrop_path":"\/myw81tZ5yqGPWcBJ4d09Wr4Wb8S.jpg","popularity":1.347456,"vote_count":4,"video":false,"vote_average":4},{"poster_path":"\/niGIQDSSEifqZHxwW3dZf8MFEWr.jpg","adult":false,"overview":"This
+        lengthy docudrama records the harrowing conditions at the Confederacy''s most
+        notorious prisoner-of-war camp. The drama unfolds through the eyes of a company
+        of Union soldiers captured at the Battle of Cold Harbor, VA, in June 1864,
+        and shipped to the camp in southern Georgia. A private, Josiah Day, and his
+        sergeant  try to hold their company together in the face of squalid living
+        conditions, inhumane punishments, and a gang of predatory fellow prisoners
+        called the Raiders.","release_date":"1996-03-03","genre_ids":[10752,18],"id":21038,"original_title":"Andersonville","original_language":"en","title":"Andersonville","backdrop_path":"\/8s2V0oAhXVDzDp462WiVDJQc1Gm.jpg","popularity":1.110059,"vote_count":5,"video":false,"vote_average":5.6},{"poster_path":"\/tr6ERlXWAQumU9kRTCbEEGPJurc.jpg","adult":false,"overview":"Bobby
+        Gold is a career cop who is reassigned from a hunt for a cop killer to the
+        investigation of the murder of an old Jewish woman in Baltimore, and in the
+        process finds himself exploring his own sense of identity.","release_date":"1991-05-28","genre_ids":[18,80],"id":22828,"original_title":"Homicide","original_language":"en","title":"Homicide","backdrop_path":"\/6zt8sn4lmj7j61limKexyKGEAPY.jpg","popularity":1.116112,"vote_count":6,"video":false,"vote_average":5}],"total_results":88,"total_pages":5}'
+    http_version: 
+  recorded_at: Sun, 21 Aug 2016 17:45:17 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_date.gte=1800-01-01&sort_by=.desc&with_companies=&with_genres=&with_people=3905
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sun, 21 Aug 2016 17:45:20 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '37'
+      X-Ratelimit-Reset:
+      - '1471801529'
+      Content-Length:
+      - '5265'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"poster_path":"\/bCWpxGGcP9DsCLwfNpnfcl1vLk8.jpg","adult":false,"overview":"A
+        street-wise kid, Mark Sway, sees the suicide of Jerome Clifford, a prominent
+        Louisiana lawyer, whose current client is Barry ''The Blade'' Muldano, a Mafia
+        hit-man. Before Jerome shoots himself, he tells Mark where the body of a Senator
+        is buried. Clifford shoots himself and Mark is found at the scene, and both
+        the FBI and the Mafia quickly realize that Mark probably knows more than he
+        says.","release_date":"1994-07-20","genre_ids":[18,53,80,9648],"id":10731,"original_title":"The
+        Client","original_language":"en","title":"The Client","backdrop_path":"\/cmJeM2aXBHWIsftfb7dz3ksjyDV.jpg","popularity":1.708678,"vote_count":110,"video":false,"vote_average":6.09},{"poster_path":"\/a38CTs2mJ2uDHHH6mUJmuGH8RVI.jpg","adult":false,"overview":"In
+        1968 the lives of a retired doorman, hotel manager, lounge singer, busboy,
+        beautician and others intersect in the wake of Robert F. Kennedy''s assassination
+        at the Ambassador Hotel in Los Angeles.","release_date":"2006-09-05","genre_ids":[36,18],"id":10741,"original_title":"Bobby","original_language":"en","title":"Bobby","backdrop_path":"\/shyV7mvHa9bDojeMfb2tZDlGJjF.jpg","popularity":1.92969,"vote_count":50,"video":false,"vote_average":5.55},{"poster_path":"\/6H5B8BnNEDOFVe0mul1xtMdd2vS.jpg","adult":false,"overview":"(William
+        H. Macy) works at a Las Vegas casino, where he uses his innate ability to
+        bring about misfortune in those around him to jinx gamblers into losing. His
+        imposing boss, Shelly Kaplow (Alec Baldwin), is happy with the arrangement.
+        But Bernie finds unexpected happiness when he begins dating attractive waitress
+        Natalie Belisario (Maria Bello).","release_date":"2003-01-17","genre_ids":[18,10749],"id":10744,"original_title":"The
+        Cooler","original_language":"en","title":"The Cooler","backdrop_path":"\/l3WApYTkuY6iuzeblrCZzSLRBYP.jpg","popularity":1.270473,"vote_count":29,"video":false,"vote_average":6.41},{"poster_path":"\/2lLwnwqU6iEjFrq3lC3u4rRlFAg.jpg","adult":false,"overview":"Five
+        hapless inner-city low-lifes unsuccessfully attempt to burgle a pawnbroker''s
+        safe, but wind up gaining more than they lose.","release_date":"2002-05-24","genre_ids":[35,80],"id":9260,"original_title":"Welcome
+        to Collinwood","original_language":"en","title":"Welcome to Collinwood","backdrop_path":"\/gdm95M5cvp6iPYTbPdSbaWUTCEc.jpg","popularity":1.384851,"vote_count":17,"video":false,"vote_average":6.18},{"poster_path":"\/wguhhHAHoh2ECwjf5oHRH0P9ial.jpg","adult":false,"overview":"A
+        young man receives an emergency phone call on his cell phone from an older
+        woman. The catch? The woman claims to have been kidnapped; and the kidnappers
+        have targeted her husband and child next.","release_date":"2004-09-06","genre_ids":[28,12,80,53],"id":9759,"original_title":"Cellular","original_language":"en","title":"Cellular","backdrop_path":"\/xRr4nXdNPjP8sXlNdUH7ckfrqMB.jpg","popularity":1.877143,"vote_count":282,"video":false,"vote_average":6.05},{"poster_path":"\/8Nge4rXAQzU5w9U8OvnXuuJltL9.jpg","adult":false,"overview":"The
+        tale of three unlikely heroes - a misfit mouse who prefers reading books to
+        eating them, an unhappy rat who schemes to leave the darkness of the dungeon,
+        and a bumbling servant girl with cauliflower ears - whose fates are intertwined
+        with that of the castle''s princess.","release_date":"2008-10-29","genre_ids":[16,35,10751],"id":10199,"original_title":"The
+        Tale of Despereaux","original_language":"en","title":"The Tale of Despereaux","backdrop_path":"\/otiDe4tbyTct7hvNXVW6PsGVojZ.jpg","popularity":1.926627,"vote_count":149,"video":false,"vote_average":5.75},{"poster_path":"\/zgg8psC8jvNEx5RC4NJ4c9J0KtE.jpg","adult":false,"overview":"Russian
+        terrorists conspire to hijack the aircraft with the president and his family
+        on board. The commander in chief finds himself facing an impossible predicament:
+        give in to the terrorists and sacrifice his family, or risk everything to
+        uphold his principles - and the integrity of the nation.","release_date":"1997-07-23","genre_ids":[28,53],"id":9772,"original_title":"Air
+        Force One","original_language":"en","title":"Air Force One","backdrop_path":"\/4fTzk3CzU0F89CtxswZxC844WvA.jpg","popularity":3.067697,"vote_count":429,"video":false,"vote_average":6.05},{"poster_path":"\/7psRSVuCZyYfxCxt4DTmeIcplPL.jpg","adult":false,"overview":"When
+        Captain Amazing (Kinnear) is kidnapped by Casanova Frankenstein (Rush) a group
+        of superheroes combine together to create a plan. But these aren''t normal
+        superheroes. Now, the group who include such heroes as Mr. Furious (Stiller),
+        The Shoveller (Macy) and The Blue Raja (Azaria) must put all the powers together
+        to save everyone they know and love.","release_date":"1999-08-06","genre_ids":[12,14,28,35,878],"id":9824,"original_title":"Mystery
+        Men","original_language":"en","title":"Mystery Men","backdrop_path":"\/l44rhuS5ces5fAhmU5jbmQwmaDl.jpg","popularity":1.426422,"vote_count":103,"video":false,"vote_average":5.37},{"poster_path":"\/huVxyPbe5XYZjSVGI68Y7RBo6I9.jpg","adult":false,"overview":"An
+        office worker inadvertently becomes a hero after he saves a woman''s life.","release_date":"2007-11-23","genre_ids":[10749,35,18],"id":10247,"original_title":"He
+        Was a Quiet Man","original_language":"en","title":"He Was a Quiet Man","backdrop_path":"\/a94rYKkW0wtko06ogdT2zQ0CHRF.jpg","popularity":1.340581,"vote_count":25,"video":false,"vote_average":6.34},{"poster_path":"\/xzYOaFGZBNAciQXRasQQ8sYxBSi.jpg","adult":false,"overview":"True
+        story of the undersized Depression-era racehorse whose victories lifted not
+        only the spirits of the team behind it but also those of their nation.","release_date":"2003-07-22","genre_ids":[18,36],"id":4464,"original_title":"Seabiscuit","original_language":"en","title":"Seabiscuit","backdrop_path":"\/jtB7e0lwsYsT8J2uDHzrL7zUxlZ.jpg","popularity":1.659873,"vote_count":93,"video":false,"vote_average":6.42},{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.097516,"vote_count":967,"video":false,"vote_average":7.55},{"poster_path":"\/26L7XODsNlxX3VwkfuUnYOslbRF.jpg","adult":false,"overview":"In
+        need of funds for research, Dr. Alan Grant accepts a large sum of money to
+        accompany Paul and Amanda Kirby on an aerial tour of the infamous Isla Sorna.
+        It isn''t long before all hell breaks loose and the stranded wayfarers must
+        fight for survival as a host of new -- and even more deadly -- dinosaurs try
+        to make snacks of them.","release_date":"2001-07-18","genre_ids":[12,28,53,878],"id":331,"original_title":"Jurassic
+        Park III","original_language":"en","title":"Jurassic Park III","backdrop_path":"\/jNUEjodQaJ6HcAXbaB9gOFVcQOC.jpg","popularity":1.099293,"vote_count":1230,"video":false,"vote_average":5.62},{"poster_path":"\/jxkHxPiMfGiFvxSOduNV4oIKJI5.jpg","adult":false,"overview":"An
+        epic mosaic of many interrelated characters in search of happiness, forgiveness,
+        and meaning in the San Fernando Valley.","release_date":"1999-12-08","genre_ids":[18],"id":334,"original_title":"Magnolia","original_language":"en","title":"Magnolia","backdrop_path":"\/9In3XGQSdr2yfgUoEdCpqxEGAOO.jpg","popularity":4.372569,"vote_count":371,"video":false,"vote_average":7.26},{"poster_path":"\/sTsMrXrTya8KpFm8lgtlQR12X7Z.jpg","adult":false,"overview":"During
+        the final weeks of a presidential race, the President is accused of sexual
+        misconduct. To distract the public until the election, the President''s adviser
+        hires a Hollywood producer to help him stage a fake war.","release_date":"1997-12-25","genre_ids":[35,18],"id":586,"original_title":"Wag
+        the Dog","original_language":"en","title":"Wag the Dog","backdrop_path":"\/y1seh8UMjKlTOVEVco8OieJ2Lbm.jpg","popularity":2.557258,"vote_count":98,"video":false,"vote_average":6.55},{"poster_path":"\/zVdtKldeTgI5vwoxWWF2IhbPMul.jpg","adult":false,"overview":"Charlie
+        Berns (William H. Macy) is a veteran Hollywood movie producer who has given
+        up on his career and life. That is until his idealistic screenwriter nephew
+        (Jason Ritter) comes bearing the script of a lifetime and Charlie decides
+        to give his career one final shot. The only thing standing in his way is Diedre
+        Hearn (Meg Ryan), a sharp-witted studio executive brought in to keep Charlie
+        in line.","release_date":"2008-11-20","genre_ids":[35,18,10749],"id":16511,"original_title":"The
+        Deal","original_language":"en","title":"The Deal","backdrop_path":"\/6fn4idKvvhzKdqozIxmtLybBVOM.jpg","popularity":1.976911,"vote_count":5,"video":false,"vote_average":6},{"poster_path":"\/bGBLs1iU8i4JrEtZ5XbJCkFp3c2.jpg","adult":false,"overview":"Seemingly
+        mild-mannered businessman Edmond Burke visits a fortuneteller and hears a
+        remark that spurs him to leave his wife abruptly and seek what is missing
+        from his life. Encounters with strangers and unsavory people weaken the barriers
+        encompassing his long-suppressed rage, until Edmond explodes in violence.","release_date":"2005-08-31","genre_ids":[18,53],"id":18191,"original_title":"Edmond","original_language":"en","title":"Edmond","backdrop_path":"\/rfazYbmFVPoFpUOQKrfrogdGRGr.jpg","popularity":1.151628,"vote_count":16,"video":false,"vote_average":5.78},{"poster_path":"\/nxoWs4s6bCA6ZjJI8fdnKJs2yDh.jpg","adult":false,"overview":"In
+        the waning months of World War II, a man and his wife are mistakenly identified
+        as Jews by their anti-Semitic Brooklyn neighbors. Suddenly the victims of
+        religious and racial persecution, they find themselves aligned with a local
+        Jewish immigrant in a struggle for dignity and survival.","release_date":"2001-10-19","genre_ids":[18],"id":18192,"original_title":"Focus","original_language":"en","title":"Focus","backdrop_path":"\/16W4FdgeWNswGwIYBI3McNxVvNy.jpg","popularity":1.090656,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/Mg0JtAJBZLaiamQBwAXkAeZYBI.jpg","adult":false,"overview":"Timmy
+        meets a girl mouse and they set off to find the Great Owl.","release_date":"1998-12-22","genre_ids":[16,10751],"id":20756,"original_title":"The
+        Secret of NIMH 2: Timmy to the Rescue","original_language":"en","title":"The
+        Secret of NIMH 2: Timmy to the Rescue","backdrop_path":"\/myw81tZ5yqGPWcBJ4d09Wr4Wb8S.jpg","popularity":1.347456,"vote_count":4,"video":false,"vote_average":4},{"poster_path":"\/niGIQDSSEifqZHxwW3dZf8MFEWr.jpg","adult":false,"overview":"This
+        lengthy docudrama records the harrowing conditions at the Confederacy''s most
+        notorious prisoner-of-war camp. The drama unfolds through the eyes of a company
+        of Union soldiers captured at the Battle of Cold Harbor, VA, in June 1864,
+        and shipped to the camp in southern Georgia. A private, Josiah Day, and his
+        sergeant  try to hold their company together in the face of squalid living
+        conditions, inhumane punishments, and a gang of predatory fellow prisoners
+        called the Raiders.","release_date":"1996-03-03","genre_ids":[10752,18],"id":21038,"original_title":"Andersonville","original_language":"en","title":"Andersonville","backdrop_path":"\/8s2V0oAhXVDzDp462WiVDJQc1Gm.jpg","popularity":1.110059,"vote_count":5,"video":false,"vote_average":5.6},{"poster_path":"\/tr6ERlXWAQumU9kRTCbEEGPJurc.jpg","adult":false,"overview":"Bobby
+        Gold is a career cop who is reassigned from a hunt for a cop killer to the
+        investigation of the murder of an old Jewish woman in Baltimore, and in the
+        process finds himself exploring his own sense of identity.","release_date":"1991-05-28","genre_ids":[18,80],"id":22828,"original_title":"Homicide","original_language":"en","title":"Homicide","backdrop_path":"\/6zt8sn4lmj7j61limKexyKGEAPY.jpg","popularity":1.116112,"vote_count":6,"video":false,"vote_average":5}],"total_results":88,"total_pages":5}'
+    http_version: 
+  recorded_at: Sun, 21 Aug 2016 17:45:18 GMT
 recorded_with: VCR 2.9.3

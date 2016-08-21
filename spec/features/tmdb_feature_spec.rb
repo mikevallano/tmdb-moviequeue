@@ -345,7 +345,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
       scenario "actor search page links to actor more info search" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
         expect(page).to have_content("Steve Buscemi")
@@ -353,30 +353,30 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end #actor more info search
 
       scenario "actor more info page links movies to movie_more_info path" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
-        VCR.use_cassette("actor_more_movie_link") do
+        VCR.use_cassette("actor_more_movie_link", :record => :new_episodes) do
           click_link "Fargo"
         end
         expect(current_url).to eq(movie_more_url(tmdb_id: 275))
       end #actor movie more
 
       scenario "actor more info page links tv shows to the tv show page" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
-        VCR.use_cassette("actor_tv_more") do
+        VCR.use_cassette("actor_tv_more", :record => :new_episodes) do
           click_link "The Simpsons"
         end
         expect(page).to have_content("The Simpsons")
       end #actor tv more
 
       scenario "tv series page links to individual seasons" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
-        VCR.use_cassette("actor_tv_more") do
+        VCR.use_cassette("actor_tv_more", :record => :new_episodes) do
           click_link "The Simpsons"
         end
         click_link "5"
@@ -384,10 +384,10 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end #actor tv more
 
       scenario "actor more info page links tv credits to credit url" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
-        VCR.use_cassette("actor_tv_credit") do
+        VCR.use_cassette("actor_tv_credit", :record => :new_episodes) do
           click_link "Appearance Details", match: :first
         end
         expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "56ad478dc3a3681c34006885", show_name: "Horace and Pete"))
@@ -395,7 +395,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end #actor tv credit
 
       scenario "actor credit shows episodes the actor was in" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
         VCR.use_cassette("actor_tv_credit2") do
@@ -405,7 +405,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end #actor tv credit
 
       scenario "actor more page has actor's headshot" do
-        VCR.use_cassette("tmdb_actor_more") do
+        VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
         expect(page).to have_css("img[src*='http://image.tmdb.org/t/p/w185/e19GfOWzMNN1hi7B9Ci62hMvtXs.jpg']")
