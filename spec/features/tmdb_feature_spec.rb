@@ -340,10 +340,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         api_actor_search_buscemi
       end
 
-      scenario "users searches for an actor and the API returns results" do
-        expect(page).to have_selector("#modal_link_275")
-      end
-
       scenario "actor search page links to actor more info search" do
         VCR.use_cassette("tmdb_actor_more", :record => :new_episodes) do
           click_link_or_button "bio_and_credits_link_actor_search"
