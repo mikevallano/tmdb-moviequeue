@@ -37,18 +37,17 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "users searches for an actor and the API returns results" do
         api_actor_search
-        wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
       end
 
       scenario "actor results are paginated" do
         api_actor_search
-        expect(page).to have_content("Page 1 of 6")
+        expect(page).to have_content("Page 1 of 5")
         expect(page).not_to have_content("Previous page")
         VCR.use_cassette("tmdb_actor_next_page", :record => :new_episodes) do
           click_link "Next page"
         end
-        expect(page).to have_content("Page 2 of 6")
+        expect(page).to have_content("Page 2 of 5")
         expect(page).to have_content("Previous page")
       end
 
@@ -339,7 +338,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         sign_in_user(user)
         visit(actor_search_path)
         api_actor_search
-        wait_for_ajax
       end
 
       scenario "users searches for an actor and the API returns results" do
