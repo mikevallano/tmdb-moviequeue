@@ -171,18 +171,18 @@ module TmdbHandler
   # def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
   #   company, mpaa_rating, sort_by, page)
 
-def tmdb_handler_discover_search(params)
-  @actor = params[:actor]
-  @actor2 = params[:actor2]
-  @exact_year = params[:exact_year]
-  @after_year = params[:after_year]
-  @before_year = params[:before_year]
-  @genre = params[:genre]
-  @company = params[:company]
-  @mpaa_rating = params[:mpaa_rating]
-  @sort_by = params[:sort_by]
-  @page = params[:page]
-  @year_select = params[:year_select]
+  def tmdb_handler_discover_search(params)
+    @actor = params[:actor]
+    @actor2 = params[:actor2]
+    @exact_year = params[:exact_year]
+    @after_year = params[:after_year]
+    @before_year = params[:before_year]
+    @genre = params[:genre]
+    @company = params[:company]
+    @mpaa_rating = params[:mpaa_rating]
+    @sort_by = params[:sort_by]
+    @page = params[:page]
+    @year_select = params[:year_select]
 
     if @actor.present?
       @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{@actor}&api_key=#{ENV['tmdb_api_key']}"

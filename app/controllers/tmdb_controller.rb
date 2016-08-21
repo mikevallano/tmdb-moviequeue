@@ -60,18 +60,11 @@ class TmdbController < ApplicationController
 
   def actor_search
     if params[:actor]
-      @actor = I18n.transliterate(params[:actor])
-      if params[:page]
-        @page = params[:page]
-      else
-        @page = 1
-      end
-      if params[:sort_by].present?
-        @sort_by = params[:sort_by]
-      else
-        @sort_by = "popularity"
-      end
-      tmdb_handler_discover_search(nil, nil, nil, nil, @actor, nil, nil, nil, @sort_by, @page)
+      params[:actor] = I18n.transliterate(params[:actor])
+      params[:page] = params[:page] || 1
+      params[:sort_by] = params[:sort_by] || "popularity"
+
+      tmdb_handler_discover_search(params)
     end
   end
 
@@ -79,14 +72,9 @@ class TmdbController < ApplicationController
     if params[:actor] && params[:actor2]
       params[:actor] = I18n.transliterate(params[:actor])
       params[:actor2] = I18n.transliterate(params[:actor2])
-      if !params[:page].present?
-        params[:page] = 1
-      end
-      if !params[:sort_by].present?
-        params[:sort_by] = "popularity"
-      end
-      # binding.pry
-      # tmdb_handler_two_actor_search(@name_one, @name_two)
+      params[:page] = params[:page] || 1
+      params[:sort_by] = params[:sort_by] || "popularity"
+
       tmdb_handler_discover_search(params)
     end
   end
@@ -132,18 +120,11 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
-    puts "params: #{params}"
     #format date/year hash passed in params. otherwise year is passed directly on paginated pages
     params[:year] = params[:date][:year] if params[:date].present?
 
-    @cleaned_params = params.slice(:sort_by, :year, :genre, :actor, :actor2,
-      :company, :mpaa_rating, :year_select, :page)
-
-    puts "cleaned params: #{@cleaned_params}"
-
-    @passed_params = @cleaned_params.select{ |k, v| v.present?}
-
-    puts "passed params: #{@passed_params}"
+    @passed_params = params.slice(:sort_by, :year, :genre, :actor, :actor2,
+      :company, :mpaa_rating, :year_select, :page).select{ |k, v| v.present?}
 
     if @passed_params.any?
       parse_params(@passed_params) #module to help parse
