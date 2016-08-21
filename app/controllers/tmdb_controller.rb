@@ -6,8 +6,8 @@ class TmdbController < ApplicationController
   include SearchParamParser
 
   def search
-    if params[:movie_title]
-      @movie_title = I18n.transliterate(params[:movie_title])
+    if @movie_title = params[:movie_title] || params[:movie_title_header]
+      @movie_title = I18n.transliterate(@movie_title)
       tmdb_handler_search(@movie_title)
     end
   end

@@ -99,7 +99,8 @@ class User < ActiveRecord::Base
   end
 
   def all_movies_by_recently_watched
-    self.watched_movies.order('screenings.date_watched').reverse.uniq
+    watched = self.watched_movies.order('screenings.date_watched').reverse.uniq
+    (watched + all_movies).uniq
   end
 
   def all_movies_not_on_a_list
