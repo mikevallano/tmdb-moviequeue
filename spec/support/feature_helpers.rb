@@ -72,21 +72,21 @@ module FeatureHelpers
   end
 
   def api_actor_search
-    VCR.use_cassette('tmdb_actor_search') do
+    VCR.use_cassette('tmdb_actor_search', :record => :new_episodes) do
       fill_in "actor_name_actor_search", with: 'Steve Buscemi'
       click_button "submit_button_actor_search"
     end
   end
 
   def bad_api_actor_search
-    VCR.use_cassette('tmdb_bad_actor_search') do
+    VCR.use_cassette('tmdb_bad_actor_search', :record => :new_episodes) do
       fill_in "actor_name_actor_search", with: '&sjhskjhdf*s7'
       click_button "submit_button_actor_search"
     end
   end
 
   def api_two_actor_search
-    VCR.use_cassette('tmdb_two_actor_search') do
+    VCR.use_cassette('tmdb_two_actor_search', :record => :new_episodes) do
       fill_in "actor1_field_two_actor_search", with: 'Steve Buscemi'
       fill_in "actor2_field_two_actor_search", with: 'John Goodman'
       click_button "search_button_two_actor_search"
@@ -94,7 +94,7 @@ module FeatureHelpers
   end
 
   def bad_api_two_actor_search
-    VCR.use_cassette('tmdb_bad_two_actor_search') do
+    VCR.use_cassette('tmdb_bad_two_actor_search', :record => :new_episodes) do
       fill_in "actor1_field_two_actor_search", with: '&*&*&^'
       fill_in "actor2_field_two_actor_search", with: 'skjsdf&*sfsd%'
       click_button "search_button_two_actor_search"
