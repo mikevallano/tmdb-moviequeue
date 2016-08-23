@@ -28,6 +28,7 @@ RSpec.feature "Pages feature spec", :type => :feature do
        VCR.use_cassette('movie_search_header') do
         find('#header_movie_search').native.send_keys(:return)
       end
+      wait_for_ajax
       expect(page).to have_selector("#modal_link_275")
     end
 
