@@ -27,7 +27,7 @@
 
 * There are no special rake tasks or seeds.
 
-* Simply running `$ rsepc` will run the test suite, which uses Selenium, and therefore launches Firefox.
+* Simply running `$ rsepc` will run the test suite, which uses Poltergeist as the headless browser.
 
 * There are no background jobs.
 

@@ -148,7 +148,6 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario "users can add a movie to their list", js: true do
         list1
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(api_search_path)
         VCR.use_cassette('tmdb_search', :match_requests_on => [:body]) do
@@ -168,20 +167,17 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
       scenario "users can remove a movie from their list from the list show page", js: true do
         listing
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
         find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
         find("#remove_movie_link_movies_partial").click
-        page.driver.browser.switch_to.alert.accept
         wait_for_ajax
         expect(page).not_to have_selector("#remove_movie_link_movies_partial")
       end
 
       scenario "user can update a listing's priority", js: true do
         listing
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
         find("#modal_link_#{movie.tmdb_id}")

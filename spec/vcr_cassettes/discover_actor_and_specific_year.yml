@@ -334,4 +334,142 @@ http_interactions:
         Z2VzIjoxLCJ0b3RhbF9yZXN1bHRzIjoxfQ==
     http_version: 
   recorded_at: Wed, 24 Feb 2016 17:18:02 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_year=1996&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 23 Aug 2016 00:05:53 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '35'
+      X-Ratelimit-Reset:
+      - '1471910760'
+      Content-Length:
+      - '1463'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.764143,"vote_count":969,"video":false,"vote_average":7.55},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
+        time, a cataclysmic temblor hits Los Angeles, turning it into an island. The
+        president views the quake as a sign from above, expels Los Angeles from the
+        country and makes it a penal colony for those found guilty of moral crimes.
+        When his daughter, part of a resistance movement, steals the control unit
+        for a doomsday weapon, Snake again gets tapped to save the day.","release_date":"1996-08-09","genre_ids":[28,12,878,53],"id":10061,"original_title":"Escape
+        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":1.587688,"vote_count":165,"video":false,"vote_average":5.39},{"poster_path":"\/yN5MHg0WP1hje1XX9hwFT4YFmfJ.jpg","adult":false,"overview":"Tommy
+        has lost his job, his love and his life. He lives in a small apartment above
+        the Trees Lounge, a bar which he frequents along with a few other regulars
+        without lives. He gets a job driving an ice cream truck and ends up getting
+        involved with the seventeen year old niece of his ex-girlfriend. This gets
+        him into serious trouble with her father.","release_date":"1996-10-11","genre_ids":[35,18],"id":27845,"original_title":"Trees
+        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.215997,"vote_count":15,"video":false,"vote_average":5.97},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
+        Altman''s story is a riff on race, class, and power cross-cuts between the
+        two kidnappings and the background of corrupt politics and virtuoso jazz music.
+        It all takes place in Kansas City in 1934.","release_date":"1996-08-16","genre_ids":[53,18,10402,80],"id":22479,"original_title":"Kansas
+        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.088958,"vote_count":2,"video":false,"vote_average":6}],"total_results":4,"total_pages":1}'
+    http_version: 
+  recorded_at: Tue, 23 Aug 2016 00:05:53 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_year=1996&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 23 Aug 2016 00:05:53 GMT
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '34'
+      X-Ratelimit-Reset:
+      - '1471910760'
+      Content-Length:
+      - '1467'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"poster_path":"\/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg","adult":false,"overview":"Jerry,
+        a small-town Minnesota car salesman is bursting at the seams with debt...
+        but he''s got a plan. He''s going to hire two thugs to kidnap his wife in
+        a scheme to collect a hefty ransom from his wealthy father-in-law. It''s going
+        to be a snap and nobody''s going to get hurt... until people start dying.
+        Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely
+        pregnant - investigator who''ll stop at nothing to get her man. And if you
+        think her small-time investigative skills will give the crooks a run for their
+        ransom... you betcha!","release_date":"1996-04-05","genre_ids":[80,18,53],"id":275,"original_title":"Fargo","original_language":"en","title":"Fargo","backdrop_path":"\/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg","popularity":3.764143,"vote_count":969,"video":false,"vote_average":7.55},{"poster_path":"\/rAjz6XFC6Zs07oraJSnajbaAbG9.jpg","adult":false,"overview":"This
+        time, a cataclysmic temblor hits Los Angeles, turning it into an island. The
+        president views the quake as a sign from above, expels Los Angeles from the
+        country and makes it a penal colony for those found guilty of moral crimes.
+        When his daughter, part of a resistance movement, steals the control unit
+        for a doomsday weapon, Snake again gets tapped to save the day.","release_date":"1996-08-09","genre_ids":[28,12,878,53],"id":10061,"original_title":"Escape
+        from L.A.","original_language":"en","title":"Escape from L.A.","backdrop_path":"\/uNKMgNqdl0EFjk8dJmwmAqynuKP.jpg","popularity":1.587688,"vote_count":165,"video":false,"vote_average":5.39},{"poster_path":"\/fer4sGAUAFlRFZBn9l7tF1Y75uX.jpg","adult":false,"overview":"Robert
+        Altman''s story is a riff on race, class, and power cross-cuts between the
+        two kidnappings and the background of corrupt politics and virtuoso jazz music.
+        It all takes place in Kansas City in 1934.","release_date":"1996-08-16","genre_ids":[53,18,10402,80],"id":22479,"original_title":"Kansas
+        City","original_language":"en","title":"Kansas City","backdrop_path":"\/A5uYGESsD1w0tAPiKDVs8UfGc9v.jpg","popularity":1.088958,"vote_count":2,"video":false,"vote_average":6},{"poster_path":"\/yN5MHg0WP1hje1XX9hwFT4YFmfJ.jpg","adult":false,"overview":"Tommy
+        has lost his job, his love and his life. He lives in a small apartment above
+        the Trees Lounge, a bar which he frequents along with a few other regulars
+        without lives. He gets a job driving an ice cream truck and ends up getting
+        involved with the seventeen year old niece of his ex-girlfriend. This gets
+        him into serious trouble with her father.","release_date":"1996-10-11","genre_ids":[35,18],"id":27845,"original_title":"Trees
+        Lounge","original_language":"en","title":"Trees Lounge","backdrop_path":"\/quDQ6qQMP8p6dKtUSZXlOAtNt0J.jpg","popularity":1.215997,"vote_count":15,"video":false,"vote_average":5.97}],"total_results":4,"total_pages":1}'
+    http_version: 
+  recorded_at: Tue, 23 Aug 2016 00:05:53 GMT
 recorded_with: VCR 2.9.3

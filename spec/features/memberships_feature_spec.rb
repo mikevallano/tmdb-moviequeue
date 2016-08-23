@@ -74,7 +74,6 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       end
 
       scenario "users update priorities on lists they're a member of", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user2)
         visit(user_list_path(user1, list))
         find("#modal_link_#{movie1.tmdb_id}").click
@@ -87,7 +86,6 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       end
 
       scenario "users can see other members' tags but not other users' tags", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user2)
         visit(user_list_path(user1, list))
         find("#modal_link_#{movie1.tmdb_id}").click
@@ -97,7 +95,6 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       end
 
       scenario "users can click other member's tags and see tagged movies", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user2)
         wait_for_ajax
         visit(user_list_path(user1, list))

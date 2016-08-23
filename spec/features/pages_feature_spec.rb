@@ -22,8 +22,7 @@ RSpec.feature "Pages feature spec", :type => :feature do
     end
 
     scenario "users can search for a movie from the header", js: true do
-      skip "Need to switch to poltergiest"
-      VCR.use_cassette('movie_title_search_header') do
+      VCR.use_cassette('movie_title_search_header', :record => :new_episodes) do
         fill_in "movie_title_header", with: 'fargo'
       end
        VCR.use_cassette('movie_search_header') do

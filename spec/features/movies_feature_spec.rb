@@ -74,7 +74,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       context "the movie on the show page is on one of the user's lists" do
         before(:each) do
-          page.driver.browser.manage.window.resize_to(1280,800)
           sign_in_user(user)
           listing
         end
@@ -166,7 +165,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
       context "tagging" do
         before(:each) do
           listing
-          page.driver.browser.manage.window.resize_to(1280,800)
           sign_in_user(user)
           visit(movies_path)
           find("#modal_link_#{movie.tmdb_id}")
@@ -259,7 +257,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
       context "rating, reviews, marking watched" do
         before(:each) do
           listing
-          page.driver.browser.manage.window.resize_to(1280,800)
           sign_in_user(user)
           visit(movies_path)
           find("#modal_link_#{movie.tmdb_id}")
@@ -284,6 +281,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         scenario "movie rated by user shows link to the rating show path", js: true do
           FactoryGirl.create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
           FactoryGirl.create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
+          visit(movies_path)
           find("#modal_link_#{movie.tmdb_id}").click
           expect(page).to have_selector("#show_rating_link_movies_partial")
           expect(page).not_to have_selector("#new_rating_link_movies_partial")
