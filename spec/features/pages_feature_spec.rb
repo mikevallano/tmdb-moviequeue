@@ -25,8 +25,8 @@ RSpec.feature "Pages feature spec", :type => :feature do
       VCR.use_cassette('movie_title_search_header', :record => :new_episodes) do
         fill_in "movie_title_header", with: 'fargo'
       end
-       VCR.use_cassette('movie_search_header') do
-        find('#header_movie_search').native.send_keys(:return)
+       VCR.use_cassette('movie_search_header', :record => :new_episodes) do
+        find('#header_movie_search').native.send_key(:Enter)
       end
       wait_for_ajax
       expect(page).to have_selector("#modal_link_275")
