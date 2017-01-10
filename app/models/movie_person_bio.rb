@@ -16,7 +16,10 @@ class MoviePersonBio
     @id = result[:id]
     @name = result[:name]
     @bio = result[:biography].present? ? MoviePersonBio.parse_bio(result[:biography]) : "No birthday available."
-    @birthday = result[:birthday].present? ? Date.parse(result[:birthday]).stamp("June 9th, 2001") : "No bio available."
+    if result[:birthday].present?
+      date = Date.parse(result[:birthday]) rescue nil
+      @birthday = date ? date.stamp("June 9th, 2001") : "No bio available"
+    end
     @profile_path = result[:profile_path]
 
     MoviePersonBio.new(@id, @name, @bio, @birthday, @profile_path)
