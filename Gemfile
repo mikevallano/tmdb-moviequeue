@@ -21,6 +21,7 @@ gem 'will_paginate'
 gem 'coveralls', require: false
 gem 'rack-mini-profiler'
 gem 'stamp'
+gem 'sentry-raven'
 
 group :development, :test do
   gem 'pry'
