@@ -4,7 +4,7 @@
       <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_bio.profile_path}" %>
       <div class="contents">
         <h1><%= @person_bio.name %></h1>
-        <h2>Born: <%= @person_bio.birthday.stamp("June 9th, 2001") if @person_bio.birthday.present?  %></h2>
+        <h2>Born: <%= @person_bio.birthday if @person_bio.birthday.present?  %></h2>
         <p class="bio"><%= @person_bio.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
