@@ -1,17 +1,21 @@
 <% content_for(:title, "About Flicks on Lists") %>
 
 <h1>About Flicks On Lists</h1>
-<h2>This site helps your movie viewing in a few ways:</h2>
-  <ul>
-    <li>You can <%= link_to "create lists", new_user_list_path(current_user) %> of movies that you want to watch. No more wasting precious movie-watching time with movie-finding time. No more stale popcorn.</li>
-    <li>You can <%= link_to "track movies", movies_path %> you've seen. You may wish to forget that you've watched <%= link_to "Sharknado", api_search_path(movie_title: "sharknado") %>, but the data doesn't lie (you can also rate it and prioritize it so you don't have to suffer through it again).</li>
-    <li>You can <%= link_to "share a list", edit_user_list_path(current_user, current_user.lists.first) %> with someone you watch lots of movies with. Members of the list can add or remove movies from lists, and members can see each other's tags. Movies are better watched together.</li>
-    <li>Is <%= link_to "that the guy", actor_more_path(actor_id: 884) %> from that <%= link_to "one movie", movie_more_path(tmdb_id: 275) %> ? Was that guy <%= link_to "in a movie with that other guy", two_actor_search_path %>? Now you'll know. This site allows you to search by <%= link_to "various means", discover_search_path %> to determine if that was indeed that guy.</li>
-    <li>Find movies you want to watch. With loads of <%= link_to "different ways to search", discover_search_path %>, you can <%= link_to "build lists of movies", user_lists_path(current_user) %> to make sure you're well stocked when the mood is right.</li>
-    <li><%= link_to "Browse other users' lists", public_lists_path %>. Want to know what other people watch during the holidays or when they're in the mood for a dark comedy? You can easily browse and add movies to your lists.</li>
-  </ul>
 
-<p>Data for this site comes from <%= link_to "TMDb", "https://www.themoviedb.org/?language=en", target: "_blank" %>.</p>
-<p>This site was built by <%= link_to "Mike", "https://github.com/mikevallano?tab=repositories", target: "_blank" %> (back end) and <%= link_to "Anne", "https://github.com/lortza?tab=repositories", target: "_blank" %> (front end).</p>
-<p>View the code on <%= link_to "Github", "https://github.com/mikevallano/tmdb-moviequeue", target: "_blank" %>.</p>
-<p>Have more questions? Head to the <%= link_to "FAQs", faq_path %>.
+<div id="about-container">
+  <h2>This site helps your movie viewing in a few ways:</h2>
+    <ul>
+      <li>You can create lists of movies that you want to watch. No more wasting precious movie-watching time with movie-finding time. No more stale popcorn.</li>
+      <li>You can track movies you've seen. You may wish to forget that you've watched Sharknado, but the data doesn't lie (you can also rate it and prioritize it so you don't have to suffer through it again).</li>
+      <li>You can share a list with someone you watch lots of movies with. Members of the list can add or remove movies from lists, and members can see each other's tags. Movies are better watched together.</li>
+      <li>Is that the guy from that one movie? Was that guy in a movie with that other guy? Now you'll know. This site allows you to search by various means to determine if that was indeed that guy.</li>
+      <li>Find movies you want to watch. With loads of different ways to search, you can build lists of movies to make sure you're well stocked when the mood is right.</li>
+      <li>Browse other users' lists. Want to know what other people watch during the holidays or when they're in the mood for a dark comedy? You can easily browse and add movies to your lists.</li>
+    </ul>
+
+  <h2>More about Flicks on Lists:</h2>
+    <p>Data for this site comes from <%= link_to "TMDb", "https://www.themoviedb.org/?language=en", target: "_blank" %>.</p>
+    <p>This site was built by <%= link_to "Mike", "https://github.com/mikevallano?tab=repositories", target: "_blank" %> (back end) and <%= link_to "Anne", "https://github.com/lortza?tab=repositories", target: "_blank" %> (front end).</p>
+    <p>View the code on <%= link_to "Github", "https://github.com/mikevallano/tmdb-moviequeue", target: "_blank" %>.</p>
+    <p>Have more questions? Head to the <%= link_to "FAQs", faq_path %>.
+</div>
