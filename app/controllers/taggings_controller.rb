@@ -17,13 +17,12 @@ class TaggingsController < ApplicationController
   end
 
   def destroy
-    @list = List.find(params[:list_id]) if params[:list_id].present?
     @tagging = current_user.taggings.find_by("tag_id = ? AND movie_id = ?", params[:tag_id], params[:movie_id])
     respond_to do |format|
       if @tagging && @tagging.destroy
         format.js {}
       else
-        @error = 'Unable to delete tag'
+        @error = "Unable to delete tag. tag_id: #{params[:tag_id] || 'none'}. movie_id: #{params[:movie_id] || 'none'}"
         format.js {}
       end
     end
