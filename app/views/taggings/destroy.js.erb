@@ -1,1 +1,5 @@
+if ('<%= @error.present? %>' == true) {
+  alert('<%= @error %>');
+}
+
 $("#movie_tagged_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_tag', :locals => {:movie => @movie}) %>");

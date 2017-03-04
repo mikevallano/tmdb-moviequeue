@@ -17,16 +17,14 @@ class TaggingsController < ApplicationController
   end
 
   def destroy
-    @from = params[:from] #account for page number too
     @list = List.find(params[:list_id]) if params[:list_id].present?
     @tagging = current_user.taggings.find_by("tag_id = ? AND movie_id = ?", params[:tag_id], params[:movie_id])
     respond_to do |format|
-      if @tagging.destroy
+      if @tagging && @tagging.destroy
         format.js {}
-        format.html { redirect_to movie_path(@movie), notice: 'Tag was removed.' }
-        format.json { head :no_content }
       else
-        redirect_to redirect_to movie_path(@movie), notice: "tag not removed"
+        @error = 'Unable to delete tag'
+        format.js {}
       end
     end
   end
