@@ -173,8 +173,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
         visit(user_list_path(user, list))
         find("#modal_link_#{movie.tmdb_id}")
         find("#modal_link_#{movie.tmdb_id}").click
-        find("#remove_movie_link_movies_partial").click
-        page.driver.browser.switch_to.alert.accept
+        accept_confirm do
+          find("#remove_movie_link_movies_partial").click
+        end
+        # find("#remove_movie_link_movies_partial").click
+        # page.driver.browser.switch_to.alert.accept
         wait_for_ajax
         expect(page).not_to have_selector("#remove_movie_link_movies_partial")
       end
