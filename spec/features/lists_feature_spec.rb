@@ -176,7 +176,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         find("#remove_movie_link_movies_partial").click
         page.driver.browser.switch_to.alert.accept
         wait_for_ajax
-        expect(page).not_to have_selector("#remove_movie_link_movies_partial")
+        expect(page).not_to have_selector("#modal_link_#{movie.tmdb_id}")
       end
 
       scenario "user can update a listing's priority", js: true do
