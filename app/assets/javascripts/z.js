@@ -26,6 +26,10 @@ ready = function() {
 $(document).ready(ready);
 $(document).on('page:load', ready);
 
+$(document).on('change', 'form#new_listing select, form#new_rating select', function() {
+    $(this).closest("form").submit();
+});
+
 
     // This hides the 'year select' field until a year is selected
     // $(function() {
