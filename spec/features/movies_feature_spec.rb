@@ -102,7 +102,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#show_rating_link_movies_partial")
           expect(page).to have_selector("#rating_submit_button_rating_form")
           select "5", :from => "rating[value]"
-          click_button "rating_submit_button_rating_form"
           expect(page).to have_content("5")
           expect(page).to have_selector("#show_rating_link_movies_partial")
           expect(page).not_to have_selector("#new_rating_link_movie_show")
@@ -277,7 +276,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#show_rating_link_movies_partial")
           expect(page).to have_selector("#rating_submit_button_rating_form")
           select "5", :from => "rating[value]", match: :first
-          click_button "rating_submit_button_rating_form", match: :first
           expect(page).to have_content("5")
         end
 
