@@ -45,6 +45,8 @@ RSpec.configure do |config|
   config.include MailerHelpers
   config.include WaitForAjax, type: :feature
   config.before(:each) { reset_mailer }
+  config.include FactoryGirl::Syntax::Methods
+
 
 
   config.use_transactional_fixtures = false
