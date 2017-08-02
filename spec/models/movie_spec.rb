@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
   let(:user) { create(:user) }
+  let(:user2) {create(:user)}
   let(:movie) { create(:movie) }
   let(:movie2) { create(:movie) }
   let(:list) { create(:list, owner_id: user.id) }
@@ -24,11 +25,22 @@ RSpec.describe Movie, type: :model do
   let(:fargo_listing) { create(:listing,
                         list_id: list.id,
                         movie_id: fargo.id,
-                        priority: 9) }
+                        priority: 9,
+                        created_at: 1.day.ago) }
   let(:no_country_listing) { create(:listing,
                              list_id: list.id,
                              movie_id: no_country.id,
-                             priority: 8) }
+                             priority: 8,
+                             created_at: 3.days.ago) }
+  let(:fargo_screening) {create(:screening,
+                          user: user,
+                          movie: fargo)}
+  let(:membership1) {create(:membership,
+                            member: user,
+                            list: list)}
+  let(:membership2) {create(:membership,
+                            member: user2,
+                            list: list)}
 
   it { is_expected.to validate_presence_of(:tmdb_id) }
 
@@ -58,8 +70,28 @@ RSpec.describe Movie, type: :model do
     end
 
     it 'sorts by recently added' do
-      no_country_listing.update(created_at: 2.days.ago.to_date)
       expect(Movie.by_recently_added(list).first).to eq(fargo)
+    end
+
+    context 'with screenings' do
+
+      before do
+        user.screenings << fargo_screening
+        membership1; membership2
+      end
+
+      it 'sorts by watched by user' do
+        expect(Movie.by_watched_by_user(list, user).first).to eq(fargo)
+      end
+
+      it 'sorts by watched by members' do
+        expect(Movie.by_watched_by_members(list).first).to eq(fargo)
+      end
+
+      it 'sorts by unwatched by user' do
+        expect(Movie.by_unwatched_by_user(list, user).first).to eq(no_country)
+      end
+
     end
 
   end
