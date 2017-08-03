@@ -15,18 +15,28 @@ RSpec.describe Movie, type: :model do
                 title: "Fargo",
                 runtime: 90,
                 vote_average: 8,
-                release_date: Date.today - 8000,
+                release_date: 15.years.ago.to_date,
                 tmdb_id: 275) }
   let(:no_country) { create(:movie,
                      title: "No Country for Old Men",
+                     runtime: 117,
+                     vote_average: 9,
+                     release_date: 10.years.ago.to_date) }
+  let(:lebowski) { create(:movie,
+                     title: "Big Lebowski",
                      runtime: 100,
                      vote_average: 9,
-                     release_date: Date.today - 6000) }
+                     release_date: 12.years.ago.to_date) }
   let(:fargo_listing) { create(:listing,
                         list_id: list.id,
                         movie_id: fargo.id,
                         priority: 9,
                         created_at: 1.day.ago) }
+  let(:lebowski_listing) { create(:listing,
+                        list_id: list.id,
+                        movie_id: lebowski.id,
+                        priority: 5,
+                        created_at: 3.days.ago) }
   let(:no_country_listing) { create(:listing,
                              list_id: list.id,
                              movie_id: no_country.id,
@@ -34,7 +44,22 @@ RSpec.describe Movie, type: :model do
                              created_at: 3.days.ago) }
   let(:fargo_screening) {create(:screening,
                           user: user,
-                          movie: fargo)}
+                          movie: fargo,
+                          date_watched: 30.days.ago)}
+  let(:fargo_screening2) {create(:screening,
+                          user: user,
+                          movie: fargo,
+                          date_watched: 10.days.ago)}
+  let(:no_country_screening) {create(:screening,
+                          user: user,
+                          movie: no_country)}
+  let(:user2_fargo_screening) {create(:screening,
+                          user: user2,
+                          movie: fargo,
+                          date_watched: 20.days.ago)}
+  let(:lewbowski_screening) {create(:screening,
+                          user: user,
+                          movie: lebowski)}
   let(:membership1) {create(:membership,
                             member: user,
                             list: list)}
@@ -91,6 +116,44 @@ RSpec.describe Movie, type: :model do
       it 'sorts by unwatched by user' do
         expect(Movie.by_unwatched_by_user(list, user).first).to eq(no_country)
       end
+
+      it 'sorts by recently watched by user' do
+        user.screenings << no_country_screening
+        fargo_screening.update(date_watched: 3.days.ago.to_date)
+        no_country_screening.update(date_watched: 5.days.ago.to_date)
+        expect(Movie.by_recently_watched_by_user(user).first).to eq(fargo)
+      end
+
+      it 'returns count of times a user has seen a movie' do
+        user.screenings << fargo_screening2
+        expect(fargo.times_seen_by(user)).to eq(2)
+      end
+
+      it 'returns uniq movies watched by user' do
+        user.screenings << no_country_screening
+        user.screenings << lewbowski_screening
+        user.screenings << fargo_screening2
+        expect(Movie.watched_by_user(user)).to match_array([fargo, no_country, lebowski])
+      end
+
+      it 'returns movies not seen by a user' do
+        user.screenings << no_country_screening
+        lebowski_listing
+        expect(Movie.unwatched_by_user(user)).to match_array([lebowski])
+      end
+
+      it 'returns date of most recent screening by user' do
+        user.screenings << fargo_screening2
+        expect(fargo.most_recent_screening_by(user)).to eq(fargo_screening2.date_watched.stamp('1/2/2001'))
+      end
+
+      it 'returns the date the movie was added to a list' do
+        expect(fargo.date_added_to_list(list)).to eq(fargo_listing.created_at)
+      end
+
+    end
+
+    context 'tags' do
 
     end
 
