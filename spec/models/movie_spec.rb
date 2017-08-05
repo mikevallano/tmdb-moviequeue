@@ -30,17 +30,17 @@ RSpec.describe Movie, type: :model do
   let(:fargo_listing) { create(:listing,
                         list_id: list.id,
                         movie_id: fargo.id,
-                        priority: 9,
+                        priority: 5,
                         created_at: 1.day.ago) }
   let(:lebowski_listing) { create(:listing,
                         list_id: list.id,
                         movie_id: lebowski.id,
-                        priority: 5,
+                        priority: 2,
                         created_at: 3.days.ago) }
   let(:no_country_listing) { create(:listing,
                              list_id: list.id,
                              movie_id: no_country.id,
-                             priority: 8,
+                             priority: 4,
                              created_at: 3.days.ago) }
   let(:fargo_screening) {create(:screening,
                           user: user,
@@ -66,6 +66,11 @@ RSpec.describe Movie, type: :model do
   let(:membership2) {create(:membership,
                             member: user2,
                             list: list)}
+  let(:tag) {create(:tag, name: 'killer')}
+  let(:tagging) {create(:tagging,
+                         tag: tag,
+                         movie: fargo,
+                         user: user)}
 
   it { is_expected.to validate_presence_of(:tmdb_id) }
 
@@ -154,6 +159,38 @@ RSpec.describe Movie, type: :model do
     end
 
     context 'tags' do
+      before do
+        tagging
+      end
+
+      it 'returns movies with a tag' do
+        expect(Movie.tagged_with(tag.name, user)).to match_array([fargo])
+      end
+
+      it 'returns tag list for a movie' do
+        expect(fargo.tag_list(user)).to match_array([tag])
+      end
+    end
+
+    context 'genre' do
+      before do
+        fargo.update(genres: ['Comedy'])
+      end
+
+      it 'returns movies by genre' do
+        expect(Movie.by_genre('Comedy')).to match_array([fargo])
+      end
+    end
+
+    context 'priority' do
+
+      it 'returns priority for a movie by list' do
+        expect(fargo.priority(list)).to eq(5)
+      end
+
+      it 'returns prirotity text for a movie by list' do
+        expect(fargo.priority_text(list)).to eq('Top')
+      end
 
     end
 
