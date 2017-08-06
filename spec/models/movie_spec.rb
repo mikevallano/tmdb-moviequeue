@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
-  let(:user) { create(:user) }
-  let(:user2) {create(:user)}
+  let(:user) { create(:user, username: 'useruno') }
+  let(:user2) {create(:user, username: 'userdos')}
   let(:movie) { create(:movie) }
   let(:movie2) { create(:movie) }
   let(:list) { create(:list, owner_id: user.id) }
@@ -115,7 +115,23 @@ RSpec.describe Movie, type: :model do
       end
 
       it 'sorts by watched by members' do
-        expect(Movie.by_watched_by_members(list).first).to eq(fargo)
+        Listing.destroy_all
+        new_listing1 = create(:listing,
+                              list_id: list.id,
+                              movie_id: no_country.id,
+                              priority: 5,
+                              created_at: 3.days.ago)
+        new_listing2 = create(:listing,
+                              list_id: list.id,
+                              movie_id: fargo.id,
+                              priority: 5,
+                              created_at: 1.day.ago)
+        user.screenings.destroy_all
+        expect(list.movies.first.title).to eq('Fargo')
+        user.screenings << no_country_screening
+        expect(user.screenings.count).to eq(1)
+        expect(user.screenings.first.movie.title).to eq(no_country.title)
+        expect(Movie.by_watched_by_members(list).first.title).to eq(no_country.title)
       end
 
       it 'sorts by unwatched by user' do
@@ -153,7 +169,7 @@ RSpec.describe Movie, type: :model do
       end
 
       it 'returns the date the movie was added to a list' do
-        expect(fargo.date_added_to_list(list)).to eq(fargo_listing.created_at)
+        expect(fargo.date_added_to_list(list).to_date).to eq(fargo_listing.created_at.to_date)
       end
 
     end
