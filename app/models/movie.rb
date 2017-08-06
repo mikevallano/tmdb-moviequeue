@@ -58,7 +58,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.by_watched_by_members(list)
-    list.movies.sort_by { |movie| movie.viewers.include?(list.members.ids) ? 0 : 1  }
+    list.movies.sort_by { |movie| (movie.viewers.pluck(:id) & list.members.ids).any? ? 0 : 1  }
   end
 
   def self.by_unwatched_by_user(list, user)
