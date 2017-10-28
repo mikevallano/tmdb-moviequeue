@@ -26,9 +26,17 @@ ready = function() {
 $(document).ready(ready);
 $(document).on('page:load', ready);
 
-$(document).on('change', 'form#new_listing select, form#new_rating select', function() {
+$(document)
+  .on('change', 'form#new_listing select, form#new_rating select', function() {
     $(this).closest("form").submit();
-});
+  })
+  .on('input', '#trailer-text-field', function() {
+    if ($("#trailer-text-field").val().length > 4 ) {
+      $('#add-trailer-btn').prop("disabled", false);
+    } else {
+      $('#add-trailer-btn').prop("disabled", true);
+    }
+  });
 
 
     // This hides the 'year select' field until a year is selected

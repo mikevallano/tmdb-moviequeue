@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_movie, only: [:update]
   include SortingHandler
   include TmdbHandler
 
@@ -27,13 +28,20 @@ class MoviesController < ApplicationController
 
   end #index
 
+  def update
+    if @movie.update(required_params)
+      redirect_to movie_path(@movie, anchor: 'trailer-section')
+    else
+      redirect_to movie_path(@movie), notice: @movie.errors.full_messages
+    end
+  end
+
   def show
     @movie = Movie.friendly.find(params[:id])
     if request.path != movie_path(@movie)
       return redirect_to @movie, :status => :moved_permanently
     end
-
-  end #show
+  end
 
   def modal
     @list = List.find(params[:list_id]) if params[:list_id].present?
@@ -54,6 +62,27 @@ class MoviesController < ApplicationController
       tmdb_handler_movie_more(@tmdb_id)
     end
     respond_to :js
+  end
+
+  private
+
+  def set_movie
+    if params[:tmdb_id].present?
+      @tmdb_id = params[:tmdb_id]
+      unless Movie.exists?(tmdb_id: @tmdb_id)
+        tmdb_handler_add_movie(@tmdb_id)
+      end
+        @movie = Movie.find_by(tmdb_id: @tmdb_id)
+      else
+        @movie = Movie.friendly.find(params[:movie_id])
+    end
+  end #set movie
+
+  def required_params
+    if params[:trailer].present?
+      params[:trailer] = params[:trailer].gsub('https://www.youtube.com/watch?v=', '')
+    end
+    params.permit(:trailer)
   end
 
 end
