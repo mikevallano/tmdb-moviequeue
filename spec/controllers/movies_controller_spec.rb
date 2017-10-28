@@ -1,15 +1,13 @@
 require 'rails_helper'
 
-
 RSpec.describe MoviesController, type: :controller do
 
-
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
-  let(:movie) { FactoryGirl.create(:movie) }
-  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
-  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:movie) { create(:movie) }
+  let(:list) { create(:list, owner_id: user.id) }
+  let(:listing) { create(:listing, list_id: list.id, movie_id: movie.id) }
 
   shared_examples_for 'with logged in user' do
 
@@ -22,8 +20,36 @@ RSpec.describe MoviesController, type: :controller do
 
     describe "GET #show" do
       it "assigns the requested movie as @movie" do
-        get :show, {:id => movie.to_param}
+        get :show, {id: movie.to_param}
         expect(assigns(:movie)).to eq(movie)
+      end
+    end
+
+    describe 'PATCH #update' do
+      it 'updates the movie' do
+        youtube_id = '88ur8usk'
+        patch :update,
+              { id: movie.id,
+                tmdb_id: movie.tmdb_id,
+                trailer: youtube_id }
+        expect(movie.reload.trailer).to eq(youtube_id)
+      end
+
+      it 'strips full youtube url' do
+        youtube_id = '44urisjfk'
+        patch :update,
+              { id: movie.id,
+                tmdb_id: movie.tmdb_id,
+                trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
+        expect(movie.reload.trailer).to eq(youtube_id)
+      end
+
+      it 'redirects to the movie show page, trailer-section' do
+        patch :update,
+              { id: movie.id,
+                tmdb_id: movie.tmdb_id,
+                trailer: 'tester' }
+        expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
       end
     end
 
@@ -42,7 +68,7 @@ RSpec.describe MoviesController, type: :controller do
     describe "GET #show" do
       before(:example) do
         movie
-        get :show, {:id => movie.to_param}
+        get :show, {id: movie.to_param}
       end
         it { is_expected.to redirect_to new_user_session_path }
     end
