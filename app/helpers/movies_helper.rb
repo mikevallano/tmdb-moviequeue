@@ -5,9 +5,8 @@ module MoviesHelper
       image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}")
     else
       render "movies/movie_missing_poster", movie: movie
-      # image_tag('placeholder.png')
-    end #if
-  end #image_for
+    end
+  end
 
   def link_to_movie(movie)
     if movie.in_db
