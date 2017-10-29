@@ -98,36 +98,36 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).to have_content("spooky")
         end #user can tag movie
 
-        scenario "user can remove tags from the movie show page", js: true do
-          visit(movie_path(movie))
-          fill_in "tag_list", with: "dark comedy"
-          click_button "add_tags_button_movies_partial", match: :first
-          expect(page).to have_content("dark-comedy")
-          click_link "remove_tag_link_movies_partial"
-          expect(page).not_to have_content("dark-comedy")
-        end
+        # scenario "user can remove tags from the movie show page", js: true do
+        #   visit(movie_path(movie))
+        #   fill_in "tag_list", with: "dark comedy"
+        #   click_button "add_tags_button_movies_partial", match: :first
+        #   expect(page).to have_content("dark-comedy")
+        #   click_link "remove_tag_link_movies_partial"
+        #   expect(page).not_to have_content("dark-comedy")
+        # end
 
-        scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
-          screening
-          visit(movie_path(movie))
-          expect(page).not_to have_selector("#show_rating_link_movies_partial")
-          expect(page).to have_selector("#rating_submit_button_rating_form")
-          select "5", :from => "rating[value]"
-          expect(page).to have_content("5")
-          expect(page).to have_selector("#show_rating_link_movies_partial")
-          expect(page).not_to have_selector("#new_rating_link_movie_show")
-        end
+        # scenario "movie seen but not yet rated shows field to rate movie then link to rating after it's created", js: true do
+        #   screening
+        #   visit(movie_path(movie))
+        #   expect(page).not_to have_selector("#show_rating_link_movies_partial")
+        #   expect(page).to have_selector("#rating_submit_button_rating_form")
+        #   select "5", :from => "rating[value]"
+        #   expect(page).to have_content("5")
+        #   expect(page).to have_selector("#show_rating_link_movies_partial")
+        #   expect(page).not_to have_selector("#new_rating_link_movie_show")
+        # end
 
-        scenario "unwatched movie has a link to mark as watched", js: true do
-          visit(movie_path(movie))
-          expect(page).to have_selector("#mark_watched_link_movies_partial")
-          expect(page).not_to have_selector("#add_screening_link_movies_partial")
-          find "#mark_watched_link_movies_partial", match: :first
-          click_link "mark_watched_link_movies_partial", match: :first #mark movie as watched
-          wait_for_ajax
-          expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
-          expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
-        end
+        # scenario "unwatched movie has a link to mark as watched", js: true do
+        #   visit(movie_path(movie))
+        #   expect(page).to have_selector("#mark_watched_link_movies_partial")
+        #   expect(page).not_to have_selector("#add_screening_link_movies_partial")
+        #   find "#mark_watched_link_movies_partial", match: :first
+        #   click_link "mark_watched_link_movies_partial", match: :first #mark movie as watched
+        #   wait_for_ajax
+        #   expect(page).not_to have_selector("#mark_watched_link_movies_partial") #no link to mark as watched
+        #   expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
+        # end
 
       end #movie is on a list
 
@@ -173,46 +173,46 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).not_to have_link("Next")
       end #pagination
 
-      context "tagging" do
-        before(:each) do
-          listing
-          page.driver.browser.manage.window.resize_to(1280,800)
-          sign_in_user(user)
-          visit(movies_path)
-          find("#modal_link_#{movie.tmdb_id}")
-        end
+      # context "tagging" do
+      #   before(:each) do
+      #     listing
+      #     page.driver.browser.manage.window.resize_to(1280,800)
+      #     sign_in_user(user)
+      #     visit(movies_path)
+      #     find("#modal_link_#{movie.tmdb_id}")
+      #   end
 
-        scenario "users can tag a movie from movies index page", js: true do
-          find("#modal_link_#{movie.tmdb_id}").click
-          fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_partial"
-          wait_for_ajax
-          expect(page).to have_content("dark-comedy")
-          expect(page).to have_content("spooky")
-        end #user can tag movie
+      #   scenario "users can tag a movie from movies index page", js: true do
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     fill_in "tag_list", with: "dark comedy, spooky"
+      #     click_button "add_tags_button_movies_partial"
+      #     wait_for_ajax
+      #     expect(page).to have_content("dark-comedy")
+      #     expect(page).to have_content("spooky")
+      #   end #user can tag movie
 
-        scenario "user can click a tag to see movies with that tag", js: true do
-          find("#modal_link_#{movie.tmdb_id}").click
-          fill_in "tag_list", with: "dark comedy, spooky"
-          click_button "add_tags_button_movies_partial"
-          wait_for_ajax
-          click_link "spooky"
-          wait_for_ajax
-          expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
-        end
+      #   scenario "user can click a tag to see movies with that tag", js: true do
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     fill_in "tag_list", with: "dark comedy, spooky"
+      #     click_button "add_tags_button_movies_partial"
+      #     wait_for_ajax
+      #     click_link "spooky"
+      #     wait_for_ajax
+      #     expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
+      #   end
 
-        scenario "user can remove tags", js: true do
-          find("#modal_link_#{movie.tmdb_id}").click
-          fill_in "tag_list", with: "dark comedy"
-          click_button "add_tags_button_movies_partial", match: :first
-          wait_for_ajax
-          expect(page).to have_content("dark-comedy")
-          find("#remove_tag_link_movies_partial").click
-          wait_for_ajax
-          expect(page).not_to have_content("dark-comedy")
-        end
+      #   scenario "user can remove tags", js: true do
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     fill_in "tag_list", with: "dark comedy"
+      #     click_button "add_tags_button_movies_partial", match: :first
+      #     wait_for_ajax
+      #     expect(page).to have_content("dark-comedy")
+      #     find("#remove_tag_link_movies_partial").click
+      #     wait_for_ajax
+      #     expect(page).not_to have_content("dark-comedy")
+      #   end
 
-      end #tagging context
+      # end #tagging context
 
       context "pagingation" do
 
@@ -266,69 +266,69 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       end #pagination context
 
-      context "rating, reviews, marking watched" do
-        before(:each) do
-          listing
-          page.driver.browser.manage.window.resize_to(1280,800)
-          sign_in_user(user)
-          visit(movies_path)
-          find("#modal_link_#{movie.tmdb_id}")
-        end
+      # context "rating, reviews, marking watched" do
+      #   before(:each) do
+      #     listing
+      #     page.driver.browser.manage.window.resize_to(1280,800)
+      #     sign_in_user(user)
+      #     visit(movies_path)
+      #     find("#modal_link_#{movie.tmdb_id}")
+      #   end
 
-        scenario "movie not yet watched doesn't show field to rate movie", js: true do
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).not_to have_selector("#show_rating_link_movies_partial")
-          expect(page).not_to have_selector("#rating_submit_button_rating_form")
-        end
+      #   scenario "movie not yet watched doesn't show field to rate movie", js: true do
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).not_to have_selector("#show_rating_link_movies_partial")
+      #     expect(page).not_to have_selector("#rating_submit_button_rating_form")
+      #   end
 
-        scenario "movie that has been watched shows field to rate movie", js: true do
-          create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).not_to have_selector("#show_rating_link_movies_partial")
-          expect(page).to have_selector("#rating_submit_button_rating_form")
-          select "5", :from => "rating[value]", match: :first
-          expect(page).to have_content("5")
-        end
+      #   scenario "movie that has been watched shows field to rate movie", js: true do
+      #     create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).not_to have_selector("#show_rating_link_movies_partial")
+      #     expect(page).to have_selector("#rating_submit_button_rating_form")
+      #     select "5", :from => "rating[value]", match: :first
+      #     expect(page).to have_content("5")
+      #   end
 
-        scenario "movie rated by user shows link to the rating show path", js: true do
-          create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).to have_selector("#show_rating_link_movies_partial")
-          expect(page).not_to have_selector("#new_rating_link_movies_partial")
-        end
+      #   scenario "movie rated by user shows link to the rating show path", js: true do
+      #     create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).to have_selector("#show_rating_link_movies_partial")
+      #     expect(page).not_to have_selector("#new_rating_link_movies_partial")
+      #   end
 
-        scenario "movie watched but not yet reviewed shows link to review the movie", js: true do
-          create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).not_to have_selector("#show_review_link_movies_partial")
-          expect(page).to have_selector("#new_review_link_movies_partial")
-        end
+      #   scenario "movie watched but not yet reviewed shows link to review the movie", js: true do
+      #     create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).not_to have_selector("#show_review_link_movies_partial")
+      #     expect(page).to have_selector("#new_review_link_movies_partial")
+      #   end
 
-        scenario "movie reviewed by user shows link to the rating show path", js: true do
-          create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).to have_selector("#show_review_link_movies_partial")
-          expect(page).not_to have_selector("#new_review_link_movies_partial")
-        end
+      #   scenario "movie reviewed by user shows link to the rating show path", js: true do
+      #     create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).to have_selector("#show_review_link_movies_partial")
+      #     expect(page).not_to have_selector("#new_review_link_movies_partial")
+      #   end
 
-        scenario "link to mark as watched if not watched, link marks as watched", js: true do
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).not_to have_selector("#add_screening_link_movies_partial")
-          click_link "mark_watched_link_movies_partial", match: :first
-          expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
-          expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
-        end
+      #   scenario "link to mark as watched if not watched, link marks as watched", js: true do
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).not_to have_selector("#add_screening_link_movies_partial")
+      #     click_link "mark_watched_link_movies_partial", match: :first
+      #     expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
+      #     expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
+      #   end
 
-        scenario "if the movie has been watched, there is no link to mark as watched", js: true do
-          create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-          find("#modal_link_#{movie.tmdb_id}").click
-          expect(page).not_to have_selector("#mark_watched_link_movies_partial")
-          expect(page).to have_selector("#add_screening_link_movies_partial")
-        end
+      #   scenario "if the movie has been watched, there is no link to mark as watched", js: true do
+      #     create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
+      #     find("#modal_link_#{movie.tmdb_id}").click
+      #     expect(page).not_to have_selector("#mark_watched_link_movies_partial")
+      #     expect(page).to have_selector("#add_screening_link_movies_partial")
+      #   end
 
-      end #rating, reviews, marking watched
+      # end #rating, reviews, marking watched
 
       context "sorting" do
         before(:each) do

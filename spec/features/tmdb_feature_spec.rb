@@ -123,181 +123,181 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     end #search by two movies
 
-    describe "discover searches" do
+    # describe "discover searches" do
 
-      before(:each) do
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user)
-      end
+    #   before(:each) do
+    #     page.driver.browser.manage.window.resize_to(1280,800)
+    #     sign_in_user(user)
+    #   end
 
-      scenario "search by actor returns results", js: true do
-        visit(discover_search_path)
-        VCR.use_cassette("fill_in_frances_mcdormand", :record => :new_episodes) do
-          fill_in "actor_field_discover_search", with: "Frances McDormand"
-        end
-        VCR.use_cassette("discover_actor_search", :record => :new_episodes) do
-          click_button "search_button_discover_search"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
-      end
+    #   scenario "search by actor returns results", js: true do
+    #     visit(discover_search_path)
+    #     VCR.use_cassette("fill_in_frances_mcdormand", :record => :new_episodes) do
+    #       fill_in "actor_field_discover_search", with: "Frances McDormand"
+    #     end
+    #     VCR.use_cassette("discover_actor_search", :record => :new_episodes) do
+    #       click_button "search_button_discover_search"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_selector("#modal_link_275")
+    #   end
 
-      scenario "search by actor and year", js: true do
-        visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_field_discover_search", with: "Steve Buscemi"
-        end
-          select "1996", :from => "date[year]"
-        VCR.use_cassette("discover_actor_and_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
-      end
+    #   scenario "search by actor and year", js: true do
+    #     visit(discover_search_path)
+    #     VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
+    #       fill_in "actor_field_discover_search", with: "Steve Buscemi"
+    #     end
+    #       select "1996", :from => "date[year]"
+    #     VCR.use_cassette("discover_actor_and_year", :record => :new_episodes) do
+    #       click_button "search_button_discover_search"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_selector("#modal_link_275")
+    #   end
 
-      scenario "search by actor and specific year", js: true do
-        visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_field_discover_search", with: "Steve Buscemi"
-        end
-          select "1996", :from => "date[year]"
-          select "Exact Year", :from => "year_select"
-        VCR.use_cassette("discover_actor_and_specific_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
-      end
+    #   scenario "search by actor and specific year", js: true do
+    #     visit(discover_search_path)
+    #     VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
+    #       fill_in "actor_field_discover_search", with: "Steve Buscemi"
+    #     end
+    #       select "1996", :from => "date[year]"
+    #       select "Exact Year", :from => "year_select"
+    #     VCR.use_cassette("discover_actor_and_specific_year", :record => :new_episodes) do
+    #       click_button "search_button_discover_search"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_selector("#modal_link_275")
+    #   end
 
-      scenario "search by actor and before year", js: true do
-        visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_field_discover_search", with: "Steve Buscemi"
-        end
-          select "1997", :from => "date[year]"
-          select "Before This Year", :from => "year_select"
-         VCR.use_cassette("discover_actor_and_before_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
-      end
+    #   scenario "search by actor and before year", js: true do
+    #     visit(discover_search_path)
+    #     VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
+    #       fill_in "actor_field_discover_search", with: "Steve Buscemi"
+    #     end
+    #       select "1997", :from => "date[year]"
+    #       select "Before This Year", :from => "year_select"
+    #      VCR.use_cassette("discover_actor_and_before_year", :record => :new_episodes) do
+    #       click_button "search_button_discover_search"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_selector("#modal_link_275")
+    #   end
 
-      scenario "search by actor year and mpaa rating", js: true do
-        visit(discover_search_path)
-        VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_field_discover_search", with: "Steve Buscemi"
-        end
-          select "1997", :from => "date[year]"
-          select "Before This Year", :from => "year_select"
-          select "R", :from => "mpaa_rating"
-        VCR.use_cassette("discover_actor_mpaa_rating_and_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
-        end
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
-      end
+    #   scenario "search by actor year and mpaa rating", js: true do
+    #     visit(discover_search_path)
+    #     VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
+    #       fill_in "actor_field_discover_search", with: "Steve Buscemi"
+    #     end
+    #       select "1997", :from => "date[year]"
+    #       select "Before This Year", :from => "year_select"
+    #       select "R", :from => "mpaa_rating"
+    #     VCR.use_cassette("discover_actor_mpaa_rating_and_year", :record => :new_episodes) do
+    #       click_button "search_button_discover_search"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_selector("#modal_link_275")
+    #   end
 
-      # scenario "search by actor year and sort by popularity", js: true do
-      #   skip "vcr issues"
-      #   visit(discover_search_path)
-      #   VCR.use_cassette("fill_in_steve_buscemi") do
-      #     fill_in "actor_field_discover_search", with: "Steve Buscemi"
-      #   end
-      #     select "1996", :from => "date[year]"
-      #     select "Popularity", :from => "sort_by"
-      #   VCR.use_cassette("discover_actor_year_and_sort") do
-      #     click_button "search_button_discover_search"
-      #   end
-      #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_275")
-      # end
+    #   # scenario "search by actor year and sort by popularity", js: true do
+    #   #   skip "vcr issues"
+    #   #   visit(discover_search_path)
+    #   #   VCR.use_cassette("fill_in_steve_buscemi") do
+    #   #     fill_in "actor_field_discover_search", with: "Steve Buscemi"
+    #   #   end
+    #   #     select "1996", :from => "date[year]"
+    #   #     select "Popularity", :from => "sort_by"
+    #   #   VCR.use_cassette("discover_actor_year_and_sort") do
+    #   #     click_button "search_button_discover_search"
+    #   #   end
+    #   #   wait_for_ajax
+    #   #   expect(page).to have_selector("#modal_link_275")
+    #   # end
 
-      # scenario "search by genre year and sort", js: true do
-      #   skip "vcr issues"
-      #   visit(discover_search_path)
-      #   VCR.use_cassette("discover_genre_year_sort") do
-      #     select "1996", :from => "date[year]"
-      #     select "Crime", :from => "genre"
-      #     select "Popularity", :from => "sort_by"
-      #     click_button "search_button_discover_search"
-      #   end
-      #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_275")
-      # end
+    #   # scenario "search by genre year and sort", js: true do
+    #   #   skip "vcr issues"
+    #   #   visit(discover_search_path)
+    #   #   VCR.use_cassette("discover_genre_year_sort") do
+    #   #     select "1996", :from => "date[year]"
+    #   #     select "Crime", :from => "genre"
+    #   #     select "Popularity", :from => "sort_by"
+    #   #     click_button "search_button_discover_search"
+    #   #   end
+    #   #   wait_for_ajax
+    #   #   expect(page).to have_selector("#modal_link_275")
+    #   # end
 
-    end #discover searches
+    # end #discover searches
 
-    describe "movie more info results" do
+    # describe "movie more info results" do
 
-      before(:each) do
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user)
-        visit(api_search_path)
-        api_search_for_movie
-        find("#modal_link_275").click
-        wait_for_ajax
-        find("#movie_more_link_movie_partial")
-      end
+    #   before(:each) do
+    #     page.driver.browser.manage.window.resize_to(1280,800)
+    #     sign_in_user(user)
+    #     visit(api_search_path)
+    #     api_search_for_movie
+    #     find("#modal_link_275").click
+    #     wait_for_ajax
+    #     find("#movie_more_link_movie_partial")
+    #   end
 
-      scenario "more info page shows more info", js: true do
-        find("#movie_more_link_movie_partial").click
-        wait_for_ajax
-        #description
-        expect(page).to have_content("Fargo")
-        #genres
-        expect(page).to have_content("Crime")
-        #actors
-        expect(page).to have_content("Steve Buscemi")
-        #director
-        expect(page).to have_content("Joel Coen")
-      end
+    #   scenario "more info page shows more info", js: true do
+    #     find("#movie_more_link_movie_partial").click
+    #     wait_for_ajax
+    #     #description
+    #     expect(page).to have_content("Fargo")
+    #     #genres
+    #     expect(page).to have_content("Crime")
+    #     #actors
+    #     expect(page).to have_content("Steve Buscemi")
+    #     #director
+    #     expect(page).to have_content("Joel Coen")
+    #   end
 
-      scenario "more info page shows link to similar movies that go to their more info page", js: true do
-        find("#movie_more_link_movie_partial").click
-        VCR.use_cassette("tmdb_similar_movies_more_info", :record => :new_episodes) do
-          find("#similar_movies_link_movie_more").click
-        end
-        wait_for_ajax
-        # expect(page).to have_content("The Revenant")
-        expect(page).to have_selector("#modal_link_281957")
-      end
+    #   scenario "more info page shows link to similar movies that go to their more info page", js: true do
+    #     find("#movie_more_link_movie_partial").click
+    #     VCR.use_cassette("tmdb_similar_movies_more_info", :record => :new_episodes) do
+    #       find("#similar_movies_link_movie_more").click
+    #     end
+    #     wait_for_ajax
+    #     # expect(page).to have_content("The Revenant")
+    #     expect(page).to have_selector("#modal_link_281957")
+    #   end
 
-      scenario "similar movies are paginated", js: true do
-        find("#movie_more_link_movie_partial").click
-        VCR.use_cassette("tmdb_similar_movies_more_info", :record => :new_episodes) do
-          find("#similar_movies_link_movie_more").click
-        end
-        # expect(page).to have_content("The Revenant")
-        expect(page).to have_selector("#modal_link_281957")
-        expect(page).not_to have_content("Previous page")
-        VCR.use_cassette("tmdb_similar_movies_paginate", :record => :new_episodes) do
-          click_link "Next page"
-        end
-        wait_for_ajax
-        expect(page).to have_content("Previous page")
-      end
+    #   scenario "similar movies are paginated", js: true do
+    #     find("#movie_more_link_movie_partial").click
+    #     VCR.use_cassette("tmdb_similar_movies_more_info", :record => :new_episodes) do
+    #       find("#similar_movies_link_movie_more").click
+    #     end
+    #     # expect(page).to have_content("The Revenant")
+    #     expect(page).to have_selector("#modal_link_281957")
+    #     expect(page).not_to have_content("Previous page")
+    #     VCR.use_cassette("tmdb_similar_movies_paginate", :record => :new_episodes) do
+    #       click_link "Next page"
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_content("Previous page")
+    #   end
 
-      # scenario "more info page shows production companies and links to a discover search", js: true do
-      #   find("#movie_more_link_movie_partial").click
-      #   expect(page).to have_content("PolyGram Filmed Entertainment")
-      #   VCR.use_cassette("tmdb_production_company_search", :record => :new_episodes) do
-      #     click_link "PolyGram Filmed Entertainment"
-      #   end
-      #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_31776")
-      # end
+    #   # scenario "more info page shows production companies and links to a discover search", js: true do
+    #   #   find("#movie_more_link_movie_partial").click
+    #   #   expect(page).to have_content("PolyGram Filmed Entertainment")
+    #   #   VCR.use_cassette("tmdb_production_company_search", :record => :new_episodes) do
+    #   #     click_link "PolyGram Filmed Entertainment"
+    #   #   end
+    #   #   wait_for_ajax
+    #   #   expect(page).to have_selector("#modal_link_31776")
+    #   # end
 
-      scenario "movies have a link to view full cast", js: true do
-        find("#movie_more_link_movie_partial").click
-        VCR.use_cassette("full_cast") do
-          find("#full_cast_link_movie_show").click
-        end
-        wait_for_ajax
-        expect(page).to have_content("Steve Buscemi")
-      end
+    #   scenario "movies have a link to view full cast", js: true do
+    #     find("#movie_more_link_movie_partial").click
+    #     VCR.use_cassette("full_cast") do
+    #       find("#full_cast_link_movie_show").click
+    #     end
+    #     wait_for_ajax
+    #     expect(page).to have_content("Steve Buscemi")
+    #   end
 
-    end #movie more info results
+    # end #movie more info results
 
     describe "movie added to the database" do
 
