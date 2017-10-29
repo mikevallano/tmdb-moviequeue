@@ -37,6 +37,8 @@ unless ENV['TRAVIS']
   Capybara.javascript_driver = :chrome
 end
 
+Rails.application.eager_load! if ENV['TRAVIS']
+
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include Warden::Test::Helpers
