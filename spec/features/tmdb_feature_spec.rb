@@ -317,18 +317,18 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         find("#show_list_link_on_list_movies_partial")
       end
 
-      scenario "movie is added to the database if a user adds it to their list", js: true do
-        expect(Movie.last.title).to eq("Fargo")
-        #has genres
-        expect(Movie.last.genres).to include("Crime")
-        #has actors
-        expect(Movie.last.actors).to include("Steve Buscemi")
-        #has director info
-        expect(Movie.last.director).to eq("Joel Coen")
-        expect(Movie.last.director_id).to eq(1223)
-        #has mpaa rating
-        expect(Movie.last.mpaa_rating).to eq("R")
-      end
+      # scenario "movie is added to the database if a user adds it to their list", js: true do
+      #   expect(Movie.last.title).to eq("Fargo")
+      #   #has genres
+      #   expect(Movie.last.genres).to include("Crime")
+      #   #has actors
+      #   expect(Movie.last.actors).to include("Steve Buscemi")
+      #   #has director info
+      #   expect(Movie.last.director).to eq("Joel Coen")
+      #   expect(Movie.last.director_id).to eq(1223)
+      #   #has mpaa rating
+      #   expect(Movie.last.mpaa_rating).to eq("R")
+      # end
 
     end #movie added to the database
 
