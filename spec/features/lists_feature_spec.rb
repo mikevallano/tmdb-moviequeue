@@ -395,15 +395,15 @@ RSpec.feature "Lists feature spec", :type => :feature do
         expect(page).not_to have_selector("#add_priority_button_movies_partial")
       end
 
-      scenario "user sees standard list show page if user's all_lists does include list" do
-        skip "now using partial. should rewrite"
-        sign_in_user(public_list.owner)
-        click_link "public_lists_nav_link"
-        click_link "#{public_list.name.titlecase}"
-        expect(page).not_to have_selector("#add_to_list_button_movies_partial")
-        expect(page).to have_selector("#add_priority_button_movies_partial")
-        expect(page).to have_selector("#rating_submit_button_rating_form")
-      end
+      # scenario "user sees standard list show page if user's all_lists does include list" do
+      #   skip "now using partial. should rewrite"
+      #   sign_in_user(public_list.owner)
+      #   click_link "public_lists_nav_link"
+      #   click_link "#{public_list.name.titlecase}"
+      #   expect(page).not_to have_selector("#add_to_list_button_movies_partial")
+      #   expect(page).to have_selector("#add_priority_button_movies_partial")
+      #   expect(page).to have_selector("#rating_submit_button_rating_form")
+      # end
 
       describe "public show page pagination" do
         it "should paginate the movies on a public list" do
