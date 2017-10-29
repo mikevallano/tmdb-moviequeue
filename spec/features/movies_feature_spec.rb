@@ -83,20 +83,20 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).to have_content("98 min")
       end
 
-      # context "the movie on the show page is on one of the user's lists" do
-      #   before(:each) do
-      #     page.driver.browser.manage.window.resize_to(1280,800)
-      #     sign_in_user(user)
-      #     listing
-      #   end
+      context "the movie on the show page is on one of the user's lists" do
+        before(:each) do
+          page.driver.browser.manage.window.resize_to(1280,800)
+          sign_in_user(user)
+          listing
+        end
 
-      #   scenario "users can add tags to a movie from the movie show page", js: true do
-      #     visit(movie_path(movie))
-      #     fill_in "tag_list", with: "dark comedy, spooky"
-      #     click_button "add_tags_button_movies_partial"
-      #     expect(page).to have_content("dark-comedy")
-      #     expect(page).to have_content("spooky")
-      #   end #user can tag movie
+        # scenario "users can add tags to a movie from the movie show page", js: true do
+        #   visit(movie_path(movie))
+        #   fill_in "tag_list", with: "dark comedy, spooky"
+        #   click_button "add_tags_button_movies_partial"
+        #   expect(page).to have_content("dark-comedy")
+        #   expect(page).to have_content("spooky")
+        # end #user can tag movie
 
         # scenario "user can remove tags from the movie show page", js: true do
         #   visit(movie_path(movie))
