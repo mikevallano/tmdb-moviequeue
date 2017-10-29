@@ -5,7 +5,7 @@ services:
  - postgresql
 addons:
  postgresql: "9.3"
- chrome: stable
+ # chrome: stable
  code_climate:
   repo_token: ENV["code_climate_repo_token"]
   before_install:
