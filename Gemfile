@@ -45,7 +45,7 @@ group :test do
     gem 'capybara'
     gem 'database_cleaner'
     gem 'launchy'
-    gem 'selenium-webdriver', '~> 2.53.4'
+    gem 'selenium-webdriver'
     gem 'vcr'
     gem 'webmock'
 end
