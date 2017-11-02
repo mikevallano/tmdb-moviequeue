@@ -5,6 +5,7 @@ services:
  - postgresql
 addons:
  postgresql: "9.3"
+ firefox: latest
  # chrome: stable
  code_climate:
   repo_token: ENV["code_climate_repo_token"]
