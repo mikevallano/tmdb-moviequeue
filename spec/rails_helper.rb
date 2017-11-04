@@ -40,7 +40,7 @@ Capybara.register_driver :chrome do |app|
     opts = { args: %w[window-size=1280,1024] }
   end
   caps = Selenium::WebDriver::Remote::Capabilities.chrome( chromeOptions: opts )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps, driver_path: '/usr/bin/google-chrome')
 end
 
 # unless ENV['TRAVIS']
