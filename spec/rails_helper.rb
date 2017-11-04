@@ -29,13 +29,27 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-unless ENV['TRAVIS']
-  Capybara.register_driver :chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
-  end
+Capybara.javascript_driver = :chrome
 
-  Capybara.javascript_driver = :chrome
+# Register the driver
+Capybara.register_driver :chrome do |app|
+  if ENV['TRAVIS']
+    opts = { args: %w[headless disable-gpu window-size=1280,1024] }
+    opts['binary'] = '/usr/bin/google-chrome'
+  else
+    opts = { args: %w[window-size=1280,1024] }
+  end
+  caps = Selenium::WebDriver::Remote::Capabilities.chrome( chromeOptions: opts )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
 end
+
+# unless ENV['TRAVIS']
+#   Capybara.register_driver :chrome do |app|
+#     Capybara::Selenium::Driver.new(app, :browser => :chrome)
+#   end
+
+#   Capybara.javascript_driver = :chrome
+# end
 
 Rails.application.eager_load! if ENV['TRAVIS']
 
