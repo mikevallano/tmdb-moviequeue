@@ -23,6 +23,7 @@ addons:
     - unzip chromedriver_linux64.zip
     - sudo chmod u+x chromedriver
     - sudo mv chromedriver /usr/bin/
+    - export PATH=$PATH:$PWD/chromedriver
 
     # # For selenium in headless linux system, But no need when PhantomJS
     # - "export DISPLAY=:99.0"
