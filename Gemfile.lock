@@ -347,9 +347,3 @@ DEPENDENCIES
   web-console (~> 2.0)
   webmock
   will_paginate
-
-RUBY VERSION
-   ruby 2.2.2p95
-
-BUNDLED WITH
-   1.15.1
