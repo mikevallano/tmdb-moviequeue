@@ -84,7 +84,7 @@
 
             <% if @movie.trailer.present? %> <!-- #if trailer present -->
               <div class="embed-container">
-                <iframe src="https://www.youtube.com/embed/<%= @movie.trailer %>"></iframe>
+                <iframe src="https://www.youtube.com/embed/<%= @movie.trailer %>?rel=0"></iframe>
               </div> <!-- embed-container -->
               <% else %> <!-- #if trailer present -->
                 <p class="sidebar-button trailer-button">
