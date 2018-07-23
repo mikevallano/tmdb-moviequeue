@@ -29,6 +29,14 @@ module MoviesHelper
   def movie_stats_display(movie)
     "#{release_date_display(movie)} | #{movie.mpaa_rating} | #{runtime_display(movie)} | #{star_rating(movie)}"
   end
+
+  def movie_genres_display(movie)
+    output = raw(movie.genres.map do |genre|
+      link_to genre, genre_path(genre)
+    end.join(", "))
+    output.prepend(" | ")
+  end
+
   def runtime_display(movie)
     "#{movie.runtime/60}hr #{movie.runtime % 60}min"
   end
