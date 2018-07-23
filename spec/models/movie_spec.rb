@@ -88,10 +88,6 @@ RSpec.describe Movie, type: :model do
     expect(invalid_movie).not_to be_valid
   end
 
-  it "displays runtime in h:mm format" do
-    expect(fargo.runtime_display).to eq("1hr 30min")
-  end
-
 
   describe 'Sorting' do
 

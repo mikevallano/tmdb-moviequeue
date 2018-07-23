@@ -26,8 +26,11 @@ module MoviesHelper
     movie.trailer.present? ? 'Change trailer' : 'Add a trailer'
   end
 
+  def runtime_display(movie)
+    "#{movie.runtime/60}hr #{movie.runtime % 60}min"
+  end
   def movie_stats(movie)
-    "#{movie.release_date.stamp("2001") if movie.release_date.present?} | #{movie.mpaa_rating} | ★ #{movie.vote_average} /10 | #{movie.runtime_display}"
+    "#{movie.release_date.stamp("2001") if movie.release_date.present?} | #{movie.mpaa_rating} | ★ #{movie.vote_average} /10 | #{runtime_display(movie)}"
   end
 
 end #MoviesHelper
