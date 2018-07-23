@@ -53,24 +53,18 @@ a {
   }
 }
 
-.tag-link {
+a.tag-link {
   line-height: 190%;
-  a {
-    // font-size: 0.9em;
+  color: $light-blue;
+  border: 1px solid $dark-blue;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: 3px;
+  &:visited { color: $light-blue; }
+  &:hover {
     color: $light-blue;
-    border: 1px solid $dark-blue;
-    padding: 1px 4px;
-    border-radius: 3px;
-
-    &:visited {
-      color: $light-blue;
-    }
-
-    &:hover {
-      color: $light-blue;
-      background-color: darken($dark-blue, 10%);
-      text-decoration: none;
-    }
+    background-color: darken($dark-blue, 10%);
+    text-decoration: none;
   }
 } /* .tag-link */
 

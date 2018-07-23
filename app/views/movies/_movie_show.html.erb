@@ -33,17 +33,8 @@
               <%= movie_stats_display(@movie) %>
               <%= movie_genres_display(@movie) %>
             </p>
-
-            <p>
-            <% @movie.actors.first(4).each do |actor| %>
-              <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_show" %></span>
-            <% end %>
-            <span class="tag-link"><%= link_to "#{@movie.director} (director)", director_search_path(director_id: @movie.director_id, name: I18n.transliterate(@movie.director)) if @movie.director.present? %></span>
-             <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
-             </p>
-
-             <p><%= @movie.overview %></p>
-
+            <p><%= movie_cast_display(@movie) %></p>
+            <p><%= @movie.overview %></p>
           </div> <!-- col-xs-12 -->
         </div> <!-- row -->
 

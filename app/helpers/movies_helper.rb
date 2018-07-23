@@ -37,6 +37,29 @@ module MoviesHelper
     output.prepend(" | ")
   end
 
+  def movie_cast_display(movie)
+    cast = movie_actors_display(movie)
+    cast += movie_director_display(movie)
+    cast += full_cast_link(movie)
+  end
+
+
+  private
+
+  def movie_actors_display(movie)
+    raw(movie.actors.first(4).map do |actor|
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'tag-link'
+    end.join(""))
+  end
+
+  def movie_director_display(movie)
+    link_to "#{movie.director} (director)", director_search_path(director_id: movie.director_id, name: I18n.transliterate(movie.director)), class: 'tag-link' if movie.director.present?
+  end
+
+  def full_cast_link(movie)
+    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show"
+  end
+
   def runtime_display(movie)
     "#{movie.runtime/60}hr #{movie.runtime % 60}min"
   end
