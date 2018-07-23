@@ -27,7 +27,7 @@ module MoviesHelper
   end
 
   def movie_stats(movie)
-    "#{movie.release_date.stamp("2001") if movie.release_date.present?} | #{movie.mpaa_rating} | ★ #{movie.vote_average} /10 | #{movie.runtime}"
+    "#{movie.release_date.stamp("2001") if movie.release_date.present?} | #{movie.mpaa_rating} | ★ #{movie.vote_average} /10 | #{movie.runtime_display}"
   end
 
 end #MoviesHelper
