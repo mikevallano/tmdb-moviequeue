@@ -69,6 +69,10 @@ class Movie < ActiveRecord::Base
     joins(:screenings).where(screenings: { user_id: user.id }).order("screenings.date_watched").reverse
   end
 
+  def runtime_display
+    "#{runtime/60}hr #{runtime % 60}min"
+  end
+
   def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
     true
   end

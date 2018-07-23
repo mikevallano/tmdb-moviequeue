@@ -21,6 +21,7 @@ class MovieMore
     @adult = adult
     @popularity = popularity
     @runtime = runtime
+    @runtime_display = "#{runtime/60}hr #{runtime % 60}min"
     @tags = tags
     @lists = lists
 
@@ -28,7 +29,7 @@ class MovieMore
 
   attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :genres, :overview,
   :actors, :backdrop_path, :poster_path, :trailer, :imdb_id, :mpaa_rating, :director,
-  :director_id, :adult, :popularity, :runtime, :tags, :lists
+  :director_id, :adult, :popularity, :runtime, :runtime_display, :tags, :lists
 
   def self.parse_result(result)
     @tmdb_id = result[:id]
@@ -102,5 +103,3 @@ class MovieMore
     end
 
 end
-
-

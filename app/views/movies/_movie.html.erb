@@ -20,8 +20,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title"><%= link_to "#{movie.title}", link_to_movie(movie) %></h1>
 
-        <p><%= movie.release_date.stamp("2001") if movie.release_date.present? %> | <%= movie.mpaa_rating %> | <icon class="fa fa-star"></icon> <%= "#{movie.vote_average} /10"%> | <%= movie.runtime %> min
-        </p>
+        <p><%= movie_stats(movie) %></p>
 
         <p><% @movie.actors.first(3).each do |actor| %>
             <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_modal" %></span>
