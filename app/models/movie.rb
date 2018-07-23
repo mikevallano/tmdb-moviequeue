@@ -70,7 +70,7 @@ class Movie < ActiveRecord::Base
   end
 
   def runtime_display
-    "#{runtime/60}h #{runtime % 60}min"
+    "#{runtime/60}hr #{runtime % 60}min"
   end
 
   def in_db #since search results are treated as @movie instances, this determines a @movie is in the database
