@@ -43,8 +43,8 @@ module MoviesHelper
     output.prepend(" | ")
   end
 
-  def movie_cast_display(movie)
-    cast = movie_actors_display(movie)
+  def movie_cast_display(movie, qty)
+    cast = movie_actors_display(movie, qty)
     cast += movie_director_display(movie)
     cast += full_cast_link(movie)
   end
@@ -52,8 +52,8 @@ module MoviesHelper
 
   private
 
-  def movie_actors_display(movie)
-    raw(movie.actors.first(4).map do |actor|
+  def movie_actors_display(movie, qty)
+    raw(movie.actors.first(qty).map do |actor|
       link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'tag-link'
     end.join(""))
   end

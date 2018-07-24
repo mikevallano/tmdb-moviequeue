@@ -21,7 +21,7 @@
         <h1 class="modal-title"><%= link_to "#{movie.title}", link_to_movie(movie) %></h1>
 
         <p><%= movie_stats_display(movie) %></p>
-        <p><%= movie_cast_display(movie) %></p>
+        <p><%= movie_cast_display(movie, 3) %></p>
 
         <p><span class="pseudo-header">Overview: </span><%= truncate(movie.overview, length: 150, separator: ' ') %>  <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Details'.html_safe, link_to_movie(movie) %>
 
