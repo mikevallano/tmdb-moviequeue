@@ -20,13 +20,8 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title"><%= link_to "#{movie.title}", link_to_movie(movie) %></h1>
 
-        <p><%= movie_stats(movie) %></p>
-
-        <p><% @movie.actors.first(3).each do |actor| %>
-            <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_modal" %></span>
-          <% end %>
-          <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
-          </p>
+        <p><%= movie_stats_display(movie) %></p>
+        <p><%= movie_cast_display(movie, 3) %></p>
 
         <p><span class="pseudo-header">Overview: </span><%= truncate(movie.overview, length: 150, separator: ' ') %>  <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Details'.html_safe, link_to_movie(movie) %>
 

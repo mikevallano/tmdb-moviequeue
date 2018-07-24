@@ -2,19 +2,13 @@
 <article class="movie-show">
   <div class="row">
     <div class="col-xs-12">
-
-    <div id="movie-splash-container">
-
-
-      <div class="backdrop-image">
-        <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %>
-      </div> <!-- backdrop-image -->
-      <div id="gradient-box">
-
-      </div><!-- gradient-box -->
-
-    </div><!-- movie-splash-container -->
-  </div> <!-- col-xs-12 -->
+      <div id="movie-splash-container">
+        <div class="backdrop-image">
+          <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %>
+        </div> <!-- backdrop-image -->
+        <div id="gradient-box"></div>
+      </div><!-- movie-splash-container -->
+    </div> <!-- col-xs-12 -->
   </div> <!-- row -->
 
 
@@ -23,43 +17,24 @@
 
       <div class="col-xs-3">
         <div class="sidebar">
-        <%= link_to image_for(@movie), link_to_movie(@movie), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
-        <div class="mobile">
-        <%= render 'movies/movie_screening', movie: @movie %>
-        <%= render "movies/movie_watch_info", movie: @movie %>
-        </div> <!-- mobile -->
-
+          <%= link_to image_for(@movie), link_to_movie(@movie), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
+          <div class="mobile">
+            <%= render 'movies/movie_screening', movie: @movie %>
+            <%= render "movies/movie_watch_info", movie: @movie %>
+          </div> <!-- mobile -->
         </div> <!-- sidebar -->
-
       </div><!-- col-xs-3 -->
 
       <div class="col-xs-9">
         <div class="row">
           <div class="col-xs-12">
-
             <h1><%= @movie.title %></h1>
             <p>
-            <%= movie_stats(@movie) %>
-            <% if current_user.rated_movies.include?(@movie) %>
-              | My Rating: <%= link_to "#{@movie.ratings.by_user(current_user).first.value}", movie_rating_path(@movie, @movie.ratings.by_user(current_user).first), id: "show_rating_link_movies_partial" %>
-            <% end %><!-- if user rating -->
-            |
-            <% @movie.genres.each do |genre| %>
-              <%= link_to "#{genre}", genre_path(genre), id: "genre_link_movie_show" %>
-              <%= "," unless genre == @movie.genres.last %>
-            <% end %>
+              <%= movie_stats_display(@movie) %>
+              <%= movie_genres_display(@movie) %>
             </p>
-
-            <p>
-            <% @movie.actors.first(4).each do |actor| %>
-              <span class="tag-link"><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)), id: "actor_link_movie_show" %></span>
-            <% end %>
-            <span class="tag-link"><%= link_to "#{@movie.director} (director)", director_search_path(director_id: @movie.director_id, name: I18n.transliterate(@movie.director)) if @movie.director.present? %></span>
-             <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: @movie.tmdb_id), id: "full_cast_link_movie_show" %>
-             </p>
-
-             <p><%= @movie.overview %></p>
-
+            <p><%= movie_cast_display(@movie, 4) %></p>
+            <p><%= @movie.overview %></p>
           </div> <!-- col-xs-12 -->
         </div> <!-- row -->
 
@@ -73,7 +48,7 @@
           </div> <!-- col-xs-6 -->
 
           <div id="movie_show_listings_<%= "#{@movie.tmdb_id}" %>"class="col-xs-6">
-              <%= render "movies/movie_show_list_manage", movie: @movie %>
+            <%= render "movies/movie_show_list_manage", movie: @movie %>
           </div>
         </div> <!-- row -->
 
@@ -82,14 +57,14 @@
         <div class="row" id='trailer-section'>
           <div class="col-xs-12">
 
-            <% if @movie.trailer.present? %> <!-- #if trailer present -->
+            <% if @movie.trailer.present? %>
               <div class="embed-container">
                 <iframe src="https://www.youtube.com/embed/<%= @movie.trailer %>?rel=0"></iframe>
-              </div> <!-- embed-container -->
-              <% else %> <!-- #if trailer present -->
-                <p class="sidebar-button trailer-button">
-                  <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer"><i class="fa fa-chevron-circle-right"></i> Watch the Trailer</a>
-                </p>
+              </div>
+            <% else %>
+              <p class="sidebar-button trailer-button">
+                <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer"><i class="fa fa-chevron-circle-right"></i> Watch the Trailer</a>
+              </p>
             <% end %> <!-- #if trailer present -->
 
             <%= form_tag(movie_path(@movie), { class: "form-class", id: "add-trailer", method: :patch } ) do %>
@@ -103,10 +78,10 @@
 
             <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
               <p><strong>Production Companies:</strong>
-              <% @production_companies.each do |company| %>
-                <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
-                <%= ", " unless company == @production_companies.last %>
-             <% end %> <!-- # each -->
+                <% @production_companies.each do |company| %>
+                  <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
+                  <%= ", " unless company == @production_companies.last %>
+                <% end %> <!-- # each -->
               </p>
             <% end %> <!-- # if @production_companies.present? -->
           </div> <!-- col-xs-12 -->
@@ -140,6 +115,7 @@
             </div> <!-- well well-sm -->
           </div> <!-- col-xs-12 -->
         </div> <!-- row -->
+
       </div> <!-- col-xs-9 -->
     </div> <!-- movie-bottom-details -->
   </div> <!-- row -->
