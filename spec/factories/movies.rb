@@ -11,6 +11,7 @@ FactoryGirl.define do
     vote_average 7.5
     popularity 1.5
     mpaa_rating "R"
+    director { FFaker::Name.name }
 
     factory :invalid_movie do
       tmdb_id nil

@@ -93,6 +93,31 @@ describe MoviesHelper, type: :helper do
 
   end
 
+  describe '#movie_cast_display' do
+    let(:actors_list) {[
+                        "Actor 1",
+                        "Actor 2",
+                        "Actor 3"]}
+
+    it "displays the first `n` actors for a movie" do
+      movie.actors = actors_list
+      expect(movie_cast_display(movie, 2)).to include('Actor 2')
+      expect(movie_cast_display(movie, 2)).to_not include('Actor 3')
+    end
+
+    it "displays the director if there is one" do
+      director = movie.director
+      expect(movie_cast_display(movie, 2)).to include(director)
+
+      movie.director = nil
+      expect(movie_cast_display(movie, 2)).to_not include(director)
+    end
+
+    it "displays a link to see the full cast" do
+      expect(movie_cast_display(movie, 2)).to include("Full Cast</a>")
+    end
+  end
+
   describe '#runtime_display' do
     let(:movie) { create(:movie, runtime: 190)}
     it 'displays hours and minutes' do
