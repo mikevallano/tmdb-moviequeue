@@ -82,6 +82,17 @@ describe MoviesHelper, type: :helper do
       expect(response).to include('Me')
     end
   end
+
+  describe '#movie_genres_display' do
+    let(:genre_list) { ['Action', 'Comedy', 'Romance'] }
+
+    it 'displays links to the genres for a movie' do
+      movie.genres = genre_list
+      expect(movie_genres_display(movie)).to include('<a href="/genres/Action">Action</a>')
+    end
+
+  end
+
   describe '#runtime_display' do
     let(:movie) { create(:movie, runtime: 190)}
     it 'displays hours and minutes' do
