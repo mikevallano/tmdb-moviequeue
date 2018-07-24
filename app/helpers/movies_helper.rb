@@ -27,7 +27,13 @@ module MoviesHelper
   end
 
   def movie_stats_display(movie)
-    "#{release_date_display(movie)} | #{movie.mpaa_rating} | #{runtime_display(movie)} | #{star_rating(movie)}"
+    movie_stats = [
+      release_date_display(movie),
+      movie.mpaa_rating,
+      runtime_display(movie),
+      star_rating(movie)
+    ]
+    movie_stats.compact.join(" | ")
   end
 
   def movie_genres_display(movie)
@@ -61,7 +67,9 @@ module MoviesHelper
   end
 
   def runtime_display(movie)
-    "#{movie.runtime/60}hr #{movie.runtime % 60}min"
+    if movie.runtime.present?
+      movie.runtime % 60 == 0 ? "#{movie.runtime/60}hr" : "#{movie.runtime/60}hr #{movie.runtime % 60}min"
+    end
   end
 
   def release_date_display(movie)

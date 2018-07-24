@@ -53,4 +53,50 @@ describe MoviesHelper, type: :helper do
       expect(helper.trailer_button_text(movie)).to eq('Add a trailer')
     end
   end
+
+  describe '#movie_stats_display' do
+    let(:current_user) { create(:user) }
+    let(:movie) { create(:movie,
+                          title: "Free Chickens",
+                          release_date: "2015-12-07",
+                          vote_average: 7.5,
+                          runtime: 120,
+                          mpaa_rating: "R"
+                )}
+
+    it 'renders the release_date, mpaa_rating, runtime, and star_rating' do
+      expect(movie_stats_display(movie)).to eq("2015 | R | 2hr | 7.5 ★")
+    end
+
+    it 'does not include empty pipes `|`' do
+      movie.runtime = nil
+      expect(movie_stats_display(movie)).to eq("2015 | R | 7.5 ★")
+    end
+
+    it "shows current user's rating if there is one" do
+      response = movie_stats_display(movie)
+      expect(response).not_to include('Me')
+
+      create(:rating, user: current_user, movie: movie, value: 7)
+      response = movie_stats_display(movie)
+      expect(response).to include('Me')
+    end
+  end
+  describe '#runtime_display' do
+    let(:movie) { create(:movie, runtime: 190)}
+    it 'displays hours and minutes' do
+      expect(runtime_display(movie)).to eq('3hr 10min')
+    end
+
+    it 'displays only hours when the minute-count is divisible by 60' do
+      movie.runtime = 120
+      expect(runtime_display(movie)).to eq('2hr')
+    end
+
+    it 'displays nothing if there is no runtime' do
+      movie.runtime = nil
+      expect(runtime_display(movie)).to eq(nil)
+    end
+  end
+
 end
