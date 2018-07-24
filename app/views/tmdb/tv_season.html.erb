@@ -42,7 +42,7 @@
               <h3>Guest Stars</h3>
               <p>
               <% episode.guest_stars.each do |guest| %>
-                <span class="tag-link"><%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %> </span>
+                <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}"), class: 'cast-name-link' %>
               <% end %><!-- each guest star -->
               </p>
             <% end %><!-- if guest star present-->

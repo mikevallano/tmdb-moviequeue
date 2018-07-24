@@ -54,12 +54,12 @@ module MoviesHelper
 
   def movie_actors_display(movie, qty)
     raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'tag-link'
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link'
     end.join(""))
   end
 
   def movie_director_display(movie)
-    link_to "#{movie.director} (director)", director_search_path(director_id: movie.director_id, name: I18n.transliterate(movie.director)), class: 'tag-link' if movie.director.present?
+    link_to "#{movie.director} (director)", director_search_path(director_id: movie.director_id, name: I18n.transliterate(movie.director)), class: 'cast-name-link' if movie.director.present?
   end
 
   def full_cast_link(movie)
