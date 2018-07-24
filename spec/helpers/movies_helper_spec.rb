@@ -53,5 +53,4 @@ describe MoviesHelper, type: :helper do
       expect(helper.trailer_button_text(movie)).to eq('Add a trailer')
     end
   end
-
 end
