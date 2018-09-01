@@ -120,13 +120,8 @@ describe MoviesHelper, type: :helper do
 
   describe '#runtime_display' do
     let(:movie) { create(:movie, runtime: 190)}
-    it 'displays hours and minutes' do
-      expect(runtime_display(movie)).to eq('3hr 10min')
-    end
-
-    it 'displays only hours when the minute-count is divisible by 60' do
-      movie.runtime = 120
-      expect(runtime_display(movie)).to eq('2hr')
+    it 'converts minutes to hours and minutes' do
+      expect(runtime_display(movie)).to_not eq(movie.runtime)
     end
 
     it 'displays nothing if there is no runtime' do

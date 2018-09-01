@@ -67,9 +67,7 @@ module MoviesHelper
   end
 
   def runtime_display(movie)
-    if movie.runtime.present?
-      movie.runtime % 60 == 0 ? "#{movie.runtime/60}hr" : "#{movie.runtime/60}hr #{movie.runtime % 60}min"
-    end
+    DateAndTimeHelper.display_time(movie.runtime) if movie.runtime.present?
   end
 
   def release_date_display(movie)
