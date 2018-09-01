@@ -8,6 +8,12 @@ module DateAndTimeHelper
 
       display_time_in_hours_and_minutes(minutes)
     end
+
+    def years_since_date(date)
+      today = Date.today
+      today.year - date.year - ((today.month > date.month || (today.month == date.month && today.day >= date.day)) ? 0 : 1)
+    end
+
     private
 
     def display_time_in_hours(minutes)

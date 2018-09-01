@@ -4,11 +4,12 @@
       <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_bio.profile_path}" %>
       <div class="contents">
         <h1><%= @person_bio.name %></h1>
-        <h2>Born: <%= @person_bio.birthday if @person_bio.birthday.present?  %></h2>
         <p class="bio"><%= @person_bio.bio %></p>
+        <h2>Born: <%= @person_profile.birthday_and_age %></h2>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
+
   <div class="row">
     <div class="credits">
 
@@ -29,4 +30,3 @@
     </div> <!-- credits -->
   </div> <!-- row -->
 </article>
-

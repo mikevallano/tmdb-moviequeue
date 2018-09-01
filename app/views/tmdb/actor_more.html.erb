@@ -4,8 +4,8 @@
       <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_bio.profile_path}" %>
       <div class="contents">
         <h1><%= @person_bio.name %></h1>
-        <h2>Born: <%= @person_bio.birthday %></h2>
         <p class="bio">Bio: <%= @person_bio.bio %></p>
+        <h2>Born: <%= @person_profile.birthday_and_age %></h2>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
@@ -26,7 +26,6 @@
       <%= render "writer_credits" %>
 
       <%= render "screenplay_credits" %>
-
 
     </div> <!-- credits -->
   </div> <!-- row -->

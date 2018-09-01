@@ -19,4 +19,10 @@ RSpec.describe DateAndTimeHelper, type: :helper do
     end
   end
 
+  describe '.years_since_date' do
+    it 'returns the difference in years between a given date and today' do
+      year_ago = Date.today - 366
+      expect(DateAndTimeHelper.years_since_date(year_ago)).to eq(1)
+    end
+  end
 end
