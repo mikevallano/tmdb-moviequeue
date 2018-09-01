@@ -100,9 +100,9 @@ module TmdbHandler
   end
 
   def tmdb_handler_person_detail_search(person_id)
-    @person_bio = MoviePersonBio.parse_result(@bio_results)
     api_bio_url = "https://api.themoviedb.org/3/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
     bio_results = JSON.parse(open(api_bio_url).read, symbolize_names: true)
+    @person_profile = MoviePersonProfile.parse_result(bio_results)
 
     api_movie_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
     movie_credits_results = JSON.parse(open(api_movie_credits_url).read, symbolize_names: true)

@@ -1,11 +1,11 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_bio.profile_path}" %>
+      <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_profile.profile_path}" %>
       <div class="contents">
-        <h1><%= @person_bio.name %></h1>
-        <p class="bio"><%= @person_bio.bio %></p>
+        <h1><%= @person_profile.name %></h1>
         <h2>Born: <%= @person_profile.birthday_and_age %></h2>
+        <p class="bio"><%= @person_profile.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
