@@ -100,19 +100,17 @@ module TmdbHandler
   end
 
   def tmdb_handler_person_detail_search(person_id)
-    @bio_url = "https://api.themoviedb.org/3/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
-    @bio_results = JSON.parse(open(@bio_url).read, symbolize_names: true)
     @person_bio = MoviePersonBio.parse_result(@bio_results)
+    api_bio_url = "https://api.themoviedb.org/3/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
+    bio_results = JSON.parse(open(api_bio_url).read, symbolize_names: true)
 
-    @movie_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
-    @movie_credits_results = JSON.parse(open(@movie_credits_url).read, symbolize_names: true)
+    api_movie_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
+    movie_credits_results = JSON.parse(open(api_movie_credits_url).read, symbolize_names: true)
+    @person_movie_credits = MoviePersonCredits.parse_result(movie_credits_results)
 
-    @person_movie_credits = MoviePersonCredits.parse_result(@movie_credits_results)
-
-    @tv_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
-    @tv_credits_results = JSON.parse(open(@tv_credits_url).read, symbolize_names: true)
-    @person_tv_credits = TVPersonCredits.parse_result(@tv_credits_results)
-
+    api_tv_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
+    tv_credits_results = JSON.parse(open(api_tv_credits_url).read, symbolize_names: true)
+    @person_tv_credits = TVPersonCredits.parse_result(tv_credits_results)
   end
 
   def tmdb_handler_actor_credit(credit_id)
