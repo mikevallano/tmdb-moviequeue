@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe DateAndTimeHelper, type: :helper do
-
   describe '.display_time' do
     it 'displays hours and minutes' do
       time_in_minutes = 190
@@ -21,7 +20,7 @@ RSpec.describe DateAndTimeHelper, type: :helper do
 
   describe '.years_since_date' do
     it 'returns the difference in years between a given date and today' do
-      year_ago = Date.today - 366
+      year_ago = Time.zone.today - 366
       expect(DateAndTimeHelper.years_since_date(year_ago)).to eq(1)
     end
   end
