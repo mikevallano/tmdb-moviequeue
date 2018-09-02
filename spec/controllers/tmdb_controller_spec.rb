@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe TmdbController, type: :controller do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie) { FactoryBot.create(:movie) }
 
   context 'with a logged in user' do
 

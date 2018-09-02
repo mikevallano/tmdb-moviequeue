@@ -29,7 +29,8 @@ group :development, :test do
   gem 'awesome_print'
   gem 'quiet_assets'
   gem 'rspec-rails', '~> 3.0'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
+  gem 'rubocop-rspec'
   gem 'letter_opener'
   gem 'capybara-email'
   gem 'guard-rspec', require: false
@@ -37,7 +38,6 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 2.0'
   gem 'spring'
-
 end
 
 group :test do
