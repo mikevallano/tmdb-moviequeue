@@ -4,10 +4,10 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
   feature "User can perform various searches using the TMDB api" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
-    let(:list) { FactoryGirl.create(:list, name: "my queue", owner_id: user.id) }
+    let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
 
     describe "search by title" do
 

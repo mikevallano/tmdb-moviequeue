@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :list do
     owner_id { 1 }
     sequence(:name) { |n| "list name#{n}" }

@@ -4,27 +4,27 @@ RSpec.feature "Lists feature spec", :type => :feature do
 
   feature "List views" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
-    let(:user2) { FactoryGirl.create(:user) }
-    let(:movie) { FactoryGirl.create(:movie) }
-    let(:movie2) { FactoryGirl.create(:movie) }
-    let(:fargo) { FactoryGirl.create(:movie, title: "Fargo", runtime: 90,
+    let(:user2) { FactoryBot.create(:user) }
+    let(:movie) { FactoryBot.create(:movie) }
+    let(:movie2) { FactoryBot.create(:movie) }
+    let(:fargo) { FactoryBot.create(:movie, title: "Fargo", runtime: 90,
       vote_average: 8, release_date: Date.today - 8000) }
-    let(:no_country) { FactoryGirl.create(:movie, title: "No Country for Old Men", runtime: 100,
+    let(:no_country) { FactoryBot.create(:movie, title: "No Country for Old Men", runtime: 100,
       vote_average: 9, release_date: Date.today - 6000) }
-    let(:fargo_listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: fargo.id) }
-    let(:no_country_listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: no_country.id) }
-    let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
-    let(:list1) { FactoryGirl.create(:list, name: "my queue", owner_id: user.id) }
-    let(:list2) { FactoryGirl.create(:list, owner_id: user2.id) }
-    let(:list3) { FactoryGirl.create(:list, owner_id: user.id) }
-    let(:public_list) { FactoryGirl.create(:list, :owner => user, :is_public => true) }
-    let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
-    let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, movie_id: movie.id) }
-    let(:listing3) { FactoryGirl.create(:listing, list_id: list3.id, movie_id: movie.id) }
-    let(:public_listing) { FactoryGirl.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
+    let(:fargo_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: fargo.id) }
+    let(:no_country_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: no_country.id) }
+    let(:list) { FactoryBot.create(:list, owner_id: user.id) }
+    let(:list1) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
+    let(:list2) { FactoryBot.create(:list, owner_id: user2.id) }
+    let(:list3) { FactoryBot.create(:list, owner_id: user.id) }
+    let(:public_list) { FactoryBot.create(:list, :owner => user, :is_public => true) }
+    let(:listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie.id) }
+    let(:listing2) { FactoryBot.create(:listing, list_id: list2.id, movie_id: movie.id) }
+    let(:listing3) { FactoryBot.create(:listing, list_id: list3.id, movie_id: movie.id) }
+    let(:public_listing) { FactoryBot.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
     let(:list_name) { FFaker::HipsterIpsum.words(1).join(' ') }
     let(:list_description) { FFaker::HipsterIpsum.phrase }
 
@@ -66,7 +66,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "listings are destroyed when list is deleted" do
         sign_in_user(user)
         list
-        FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id)
+        FactoryBot.create(:listing, list_id: list.id, movie_id: movie.id)
         expect(user.movies).to include(movie)
         click_link "my_lists_nav_link"
         click_link "edit_list_link_list_index"
@@ -77,7 +77,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario "memberships are destroyed when list is deleted" do
         sign_in_user(user)
         list
-        FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id)
+        FactoryBot.create(:membership, list_id: list.id, member_id: user2.id)
         expect(user2.member_lists).to include(list)
         click_link "my_lists_nav_link"
         click_link "edit_list_link_list_index"
@@ -130,10 +130,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
     describe "list show page paginates movies" do
       scenario "list show page paginates movies" do
         sign_in_user(user)
-        30.times { FactoryGirl.create(:movie) }
+        30.times { FactoryBot.create(:movie) }
         counter = Movie.first.id
         30.times do
-          FactoryGirl.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
+          FactoryBot.create(:listing, list_id: list.id, movie_id: Movie.find(counter).id)
           counter += 1
         end
         visit user_list_path(user, list)
@@ -408,10 +408,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
       describe "public show page pagination" do
         it "should paginate the movies on a public list" do
           sign_in_user(user)
-          30.times { FactoryGirl.create(:movie) }
+          30.times { FactoryBot.create(:movie) }
           counter = (Movie.first.id + 1)
           30.times do
-            FactoryGirl.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id, user_id: user.id)
+            FactoryBot.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id, user_id: user.id)
             counter += 1
           end
           click_link "sign_out_nav_link"
@@ -428,7 +428,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       describe "public list page pagination" do
         it "should paginate the lists on the all lists page" do
           sign_in_user(user)
-          30.times { FactoryGirl.create(:list, is_public: true, owner: user) }
+          30.times { FactoryBot.create(:list, is_public: true, owner: user) }
           click_link "sign_out_nav_link"
           sign_in_user(user2)
           click_link "public_lists_nav_link"

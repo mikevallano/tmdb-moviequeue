@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :movie do
     title { FFaker::Movie.title }
     sequence(:tmdb_id) { |n| n + 10 }
@@ -14,7 +14,7 @@ FactoryGirl.define do
     director { FFaker::Name.name }
 
     factory :invalid_movie do
-      tmdb_id nil
+      tmdb_id { nil }
     end
   end
 

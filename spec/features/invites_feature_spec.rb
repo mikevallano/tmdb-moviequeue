@@ -4,11 +4,11 @@ RSpec.feature "Invites feature spec", :type => :feature do
 
   feature "User can send an invite to another user" do
 
-    let(:user1) { FactoryGirl.create(:user) }
-    let(:user2) { FactoryGirl.create(:user) }
+    let(:user1) { FactoryBot.create(:user) }
+    let(:user2) { FactoryBot.create(:user) }
     let(:username) { FFaker::Internet.user_name }
     let(:receiver_email) { FFaker::Internet.email }
-    let(:list) { FactoryGirl.create(:list, owner_id: user1.id) }
+    let(:list) { FactoryBot.create(:list, owner_id: user1.id) }
 
 
     scenario "users can send invite" do

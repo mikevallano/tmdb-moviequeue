@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe ListsController, type: :controller do
 
   let(:list_name) { SecureRandom.urlsafe_base64(10) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user) }
-  let(:list) { FactoryGirl.create(:list, :owner => user) }
-  let(:list2) { FactoryGirl.create(:list, :owner => user2) }
-  let(:public_list) { FactoryGirl.create(:list, :owner => user, :is_public => true) }
-  let(:invalid_list) { FactoryGirl.create(:invalid_list) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
+  let(:list) { FactoryBot.create(:list, :owner => user) }
+  let(:list2) { FactoryBot.create(:list, :owner => user2) }
+  let(:public_list) { FactoryBot.create(:list, :owner => user, :is_public => true) }
+  let(:invalid_list) { FactoryBot.create(:invalid_list) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
@@ -112,7 +112,7 @@ RSpec.describe ListsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:list, name: "zibbler") }
+        let(:new_attributes) { FactoryBot.attributes_for(:list, name: "zibbler") }
 
         it "updates the requested list" do
           put :update, { user_id: user.to_param, :id => list.to_param, :list => new_attributes }
@@ -205,7 +205,7 @@ RSpec.describe ListsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:list, name: "zibbler", description: "zag nuts") }
+        let(:new_attributes) { FactoryBot.attributes_for(:list, name: "zibbler", description: "zag nuts") }
 
         before(:example) do
           put :update, { user_id: user.to_param, :id => list.to_param, :list => new_attributes }
@@ -216,7 +216,7 @@ RSpec.describe ListsController, type: :controller do
 
       context "with invalid params" do
         before(:example) do
-          put :update, { user_id: user.to_param, :id => list.to_param, :list => FactoryGirl.attributes_for(:invalid_list)}
+          put :update, { user_id: user.to_param, :id => list.to_param, :list => FactoryBot.attributes_for(:invalid_list)}
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -274,7 +274,7 @@ RSpec.describe ListsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:list, name: "zibbler") }
+        let(:new_attributes) { FactoryBot.attributes_for(:list, name: "zibbler") }
 
         before(:example) do
           put :update, { user_id: user2.to_param, :id => list2.to_param, :list => new_attributes }
@@ -285,7 +285,7 @@ RSpec.describe ListsController, type: :controller do
 
       context "with invalid params" do
         before(:example) do
-          put :update, { user_id: user2.to_param, :id => list2.to_param, :list => FactoryGirl.attributes_for(:invalid_list) }
+          put :update, { user_id: user2.to_param, :id => list2.to_param, :list => FactoryBot.attributes_for(:invalid_list) }
         end
         it { is_expected.to redirect_to user_lists_path(user) }
       end

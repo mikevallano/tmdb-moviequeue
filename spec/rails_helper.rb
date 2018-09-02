@@ -2,15 +2,16 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+
 
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 require 'coveralls'
 Coveralls.wear!('rails')
 require 'devise'
-require "shoulda/matchers"
+require 'shoulda/matchers'
 require 'support/controller_helpers'
 require 'support/feature_helpers'
 require 'support/mailer_helpers'
@@ -45,9 +46,7 @@ RSpec.configure do |config|
   config.include MailerHelpers
   config.include WaitForAjax, type: :feature
   config.before(:each) { reset_mailer }
-  config.include FactoryGirl::Syntax::Methods
-
-
+  config.include FactoryBot::Syntax::Methods
 
   config.use_transactional_fixtures = false
 

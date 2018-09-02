@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Review, type: :model do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:movie) { FactoryGirl.create(:movie) }
-  let(:review) { FactoryGirl.build(:review) }
-  let(:review2) { FactoryGirl.create(:review, user_id: user.id, movie_id: movie.id) }
-  let(:review3) { FactoryGirl.build(:review, user_id: user.id, movie_id: movie.id) }
-  let(:invalid_review) { FactoryGirl.build(:invalid_review) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:movie) { FactoryBot.create(:movie) }
+  let(:review) { FactoryBot.build(:review) }
+  let(:review2) { FactoryBot.create(:review, user_id: user.id, movie_id: movie.id) }
+  let(:review3) { FactoryBot.build(:review, user_id: user.id, movie_id: movie.id) }
+  let(:invalid_review) { FactoryBot.build(:invalid_review) }
 
   it { is_expected.to validate_presence_of(:body) }
 

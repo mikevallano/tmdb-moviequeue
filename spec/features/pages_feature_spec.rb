@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Pages feature spec", :type => :feature do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   describe "search by title" do
 

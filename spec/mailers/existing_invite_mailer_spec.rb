@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ExistingInviteMailer, type: :mailer do
-let(:user) { FactoryGirl.create(:user) }
-let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
-let(:invite) { FactoryGirl.create(:invite, sender_id: user.id, list_id: list.id) }
+let(:user) { FactoryBot.create(:user) }
+let(:list) { FactoryBot.create(:list, owner_id: user.id) }
+let(:invite) { FactoryBot.create(:invite, sender_id: user.id, list_id: list.id) }
 let(:mail) { ExistingInviteMailer.existing_invite_mailer(invite) }
 
   describe "invite mailer" do

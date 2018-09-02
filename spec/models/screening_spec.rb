@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Screening, type: :model do
-  let(:screening) { FactoryGirl.build(:screening) }
-  let(:invalid_screening) { FactoryGirl.build(:invalid_screening) }
+  let(:screening) { FactoryBot.build(:screening) }
+  let(:invalid_screening) { FactoryBot.build(:invalid_screening) }
 
   it { is_expected.to validate_presence_of(:user) }
   it { is_expected.to validate_presence_of(:movie) }

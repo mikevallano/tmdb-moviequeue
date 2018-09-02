@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe InvitesController, type: :controller do
 
-  let(:user1) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user) }
-  let(:list) { FactoryGirl.create(:list) }
+  let(:user1) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
+  let(:list) { FactoryBot.create(:list) }
   let(:receiver_email) { FFaker::Internet.email }
-  let(:invite) { FactoryGirl.build(:invite, list_id: list.id, email: receiver_email, sender_id: user1.id) }
-  let(:invalid_invite) { FactoryGirl.build(:invalid_invite, list_id: list.id, sender_id: user1.id) }
+  let(:invite) { FactoryBot.build(:invite, list_id: list.id, email: receiver_email, sender_id: user1.id) }
+  let(:invalid_invite) { FactoryBot.build(:invalid_invite, list_id: list.id, sender_id: user1.id) }
   let(:current_user) { login_with user1 }
   let(:invalid_user) { login_with nil }
   let(:valid_attributes) { invite.attributes }

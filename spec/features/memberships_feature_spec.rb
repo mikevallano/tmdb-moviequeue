@@ -4,18 +4,18 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
   feature "User can access lists and movies they're members of" do
 
-    let(:user1) { FactoryGirl.create(:user) }
-    let(:user2) { FactoryGirl.create(:user) }
-    let(:user3) { FactoryGirl.create(:user) }
-    let(:movie1) { FactoryGirl.create(:movie) }
-    let(:list) { FactoryGirl.create(:list, owner_id: user1.id) }
-    let(:listing1) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie1.id) }
-    let(:membership1) { FactoryGirl.create(:membership, list_id: list.id, member_id: user1.id) }
-    let(:membership2) { FactoryGirl.create(:membership, list_id: list.id, member_id: user2.id) }
-    let(:tag1) { FactoryGirl.create(:tag) }
-    let(:tag2) { FactoryGirl.create(:tag, name: SecureRandom.urlsafe_base64(5)) }
-    let(:tagging1) { FactoryGirl.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
-    let(:tagging2) { FactoryGirl.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
+    let(:user1) { FactoryBot.create(:user) }
+    let(:user2) { FactoryBot.create(:user) }
+    let(:user3) { FactoryBot.create(:user) }
+    let(:movie1) { FactoryBot.create(:movie) }
+    let(:list) { FactoryBot.create(:list, owner_id: user1.id) }
+    let(:listing1) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie1.id) }
+    let(:membership1) { FactoryBot.create(:membership, list_id: list.id, member_id: user1.id) }
+    let(:membership2) { FactoryBot.create(:membership, list_id: list.id, member_id: user2.id) }
+    let(:tag1) { FactoryBot.create(:tag) }
+    let(:tag2) { FactoryBot.create(:tag, name: SecureRandom.urlsafe_base64(5)) }
+    let(:tagging1) { FactoryBot.create(:tagging, tag_id: tag1.id, movie_id: movie1.id, user_id: user1.id) }
+    let(:tagging2) { FactoryBot.create(:tagging, tag_id: tag2.id, movie_id: movie1.id, user_id: user3.id) }
 
 
     context "without JS" do

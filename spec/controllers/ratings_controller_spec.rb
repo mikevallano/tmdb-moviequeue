@@ -4,20 +4,20 @@ require 'rails_helper'
 RSpec.describe RatingsController, type: :controller do
 
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user) }
-  let(:list) { FactoryGirl.create(:list, :owner => user) }
-  let(:list2) { FactoryGirl.create(:list, :owner => user2) }
-  let(:movie)  { FactoryGirl.create(:movie) }
-  let(:movie2)  { FactoryGirl.create(:movie) }
-  let(:movie3)  { FactoryGirl.create(:movie) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
+  let(:list) { FactoryBot.create(:list, :owner => user) }
+  let(:list2) { FactoryBot.create(:list, :owner => user2) }
+  let(:movie)  { FactoryBot.create(:movie) }
+  let(:movie2)  { FactoryBot.create(:movie) }
+  let(:movie3)  { FactoryBot.create(:movie) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
-  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
-  let(:rating) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id, value: 8) }
-  let(:rating2) { FactoryGirl.create(:rating, user_id: user2.id, movie_id: movie.id) }
-  let(:invalid_rating) { FactoryGirl.build(:invalid_rating) }
+  let(:listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:rating) { FactoryBot.create(:rating, user_id: user.id, movie_id: movie.id, value: 8) }
+  let(:rating2) { FactoryBot.create(:rating, user_id: user2.id, movie_id: movie.id) }
+  let(:invalid_rating) { FactoryBot.build(:invalid_rating) }
   let(:invalid_attributes) { invalid_rating.attributes }
 
 
@@ -86,7 +86,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: 2) }
+        let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 2) }
 
         it "updates the requested rating" do
           put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
@@ -181,7 +181,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: 5) }
+        let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 5) }
 
         before(:example) do
           put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
@@ -231,7 +231,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:rating, value: 5) }
+        let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 5) }
         before(:example) do
           put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
         end
