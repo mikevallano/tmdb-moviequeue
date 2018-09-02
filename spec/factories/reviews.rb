@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :review do
     user
     movie
     body { FFaker::HipsterIpsum.sentence }
 
     factory :invalid_review do
-      body nil
+      body { nil }
     end
   end
 

@@ -1,12 +1,12 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :listing do
     list
     movie
     user
-    priority 3
+    priority { 3 }
 
     factory :invalid_listing do
-      movie nil
+      movie { nil }
     end
   end
 

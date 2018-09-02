@@ -5,7 +5,7 @@ RSpec.feature "Users feature spec", :type => :feature do
   feature "Users can sign up, sign in, log out, have a list, and visit profile" do
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
-    let(:existing_user) { FactoryGirl.create(:user, password: "password") }
+    let(:existing_user) { FactoryBot.create(:user, password: "password") }
 
     scenario "user can successfully sign up" do
       sign_up_with(email, username, "password")

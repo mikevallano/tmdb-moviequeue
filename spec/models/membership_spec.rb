@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Membership, type: :model do
-  let(:membership) { FactoryGirl.create(:membership) }
+  let(:membership) { FactoryBot.create(:membership) }
 
   context "with a valid factory" do
     it "has a valid factory" do

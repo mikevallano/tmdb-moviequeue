@@ -4,18 +4,18 @@ require 'rails_helper'
 RSpec.describe ScreeningsController, type: :controller do
 
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user) }
-  let(:list) { FactoryGirl.create(:list, :owner => user) }
-  let(:list2) { FactoryGirl.create(:list, :owner => user2) }
-  let(:movie)  { FactoryGirl.create(:movie) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
+  let(:list) { FactoryBot.create(:list, :owner => user) }
+  let(:list2) { FactoryBot.create(:list, :owner => user2) }
+  let(:movie)  { FactoryBot.create(:movie) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
-  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, movie_id: movie.id) }
-  let(:screening) { FactoryGirl.create(:screening, user_id: user.id, movie_id: movie.id) }
-  let(:screening2) { FactoryGirl.create(:screening, user_id: user2.id, movie_id: movie.id) }
-  let(:invalid_screening) { FactoryGirl.build(:invalid_screening) }
+  let(:listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:screening) { FactoryBot.create(:screening, user_id: user.id, movie_id: movie.id) }
+  let(:screening2) { FactoryBot.create(:screening, user_id: user2.id, movie_id: movie.id) }
+  let(:invalid_screening) { FactoryBot.build(:invalid_screening) }
   let(:valid_attributes) { screening.attributes }
   let(:invalid_attributes) { invalid_screening.attributes }
 
@@ -81,7 +81,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:screening, notes: "epic notes!") }
+        let(:new_attributes) { FactoryBot.attributes_for(:screening, notes: "epic notes!") }
 
         it "updates the requested screening" do
           put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
@@ -170,7 +170,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:screening, notes: "epic notes!") }
+        let(:new_attributes) { FactoryBot.attributes_for(:screening, notes: "epic notes!") }
 
         before(:example) do
           put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
@@ -223,7 +223,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) { FactoryGirl.attributes_for(:screening, notes: "epic notes!") }
+        let(:new_attributes) { FactoryBot.attributes_for(:screening, notes: "epic notes!") }
 
         it "it raises an exception if user tries to update another users's screening"  do
           expect {

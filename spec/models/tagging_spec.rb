@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tagging, type: :model do
-  let(:tagging) { FactoryGirl.create(:tagging) }
+  let(:tagging) { FactoryBot.create(:tagging) }
 
   context "with a valid factory" do
     it "has a valid factory" do

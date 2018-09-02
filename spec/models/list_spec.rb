@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe List, type: :model do
-  let(:list) { FactoryGirl.build(:list) }
-  let(:invalid_list) { FactoryGirl.build(:invalid_list) }
-  let(:list_with_too_long_name) { FactoryGirl.build(:list_with_too_long_name) }
+  let(:list) { FactoryBot.build(:list) }
+  let(:invalid_list) { FactoryBot.build(:invalid_list) }
+  let(:list_with_too_long_name) { FactoryBot.build(:list_with_too_long_name) }
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).scoped_to(:owner_id) }

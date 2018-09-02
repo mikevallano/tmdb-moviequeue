@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Rating, type: :model do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:movie) { FactoryGirl.create(:movie) }
-  let(:rating) { FactoryGirl.build(:rating) }
-  let(:rating2) { FactoryGirl.create(:rating, user_id: user.id, movie_id: movie.id ) }
-  let(:rating3) { FactoryGirl.build(:rating, user_id: user.id, movie_id: movie.id) }
-  let(:invalid_rating) { FactoryGirl.build(:invalid_rating) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:movie) { FactoryBot.create(:movie) }
+  let(:rating) { FactoryBot.build(:rating) }
+  let(:rating2) { FactoryBot.create(:rating, user_id: user.id, movie_id: movie.id ) }
+  let(:rating3) { FactoryBot.build(:rating, user_id: user.id, movie_id: movie.id) }
+  let(:invalid_rating) { FactoryBot.build(:invalid_rating) }
 
   it { is_expected.to validate_presence_of(:value) }
   it { is_expected.to validate_presence_of(:user_id) }

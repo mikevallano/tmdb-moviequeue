@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Listing, type: :model do
-  let(:listing) { FactoryGirl.build(:listing) }
-  let(:listing1) { FactoryGirl.create(:listing) }
-  let(:invalid_listing) { FactoryGirl.build(:invalid_listing) }
+  let(:listing) { FactoryBot.build(:listing) }
+  let(:listing1) { FactoryBot.create(:listing) }
+  let(:invalid_listing) { FactoryBot.build(:invalid_listing) }
 
   it { is_expected.to validate_presence_of(:list) }
   it { is_expected.to validate_presence_of(:movie) }

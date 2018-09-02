@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe TaggingsController, type: :controller do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie) { FactoryBot.create(:movie) }
   let(:tag_list) { "funny, scary" }
-  let(:tag) { FactoryGirl.create(:tag) }
-  let(:tagging) { FactoryGirl.create(:tagging, tag_id: tag.id, movie_id: movie.id, user_id: user.id) }
+  let(:tag) { FactoryBot.create(:tag) }
+  let(:tagging) { FactoryBot.create(:tagging, tag_id: tag.id, movie_id: movie.id, user_id: user.id) }
 
   context 'with a logged in user' do
 

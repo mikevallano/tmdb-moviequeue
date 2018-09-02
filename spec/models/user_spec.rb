@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:invalid_user) { FactoryGirl.build(:invalid_user) }
-  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
-  let(:list2) { FactoryGirl.create(:list, owner_id: user.id) }
-  let(:movie) { FactoryGirl.create(:movie) }
-  let(:movie2) { FactoryGirl.create(:movie) }
-  let(:listing) { FactoryGirl.create(:listing, list_id: list.id, user_id: user.id, movie_id: movie.id ) }
-  let(:listing2) { FactoryGirl.create(:listing, list_id: list2.id, user_id: user.id, movie_id: movie2.id ) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:invalid_user) { FactoryBot.build(:invalid_user) }
+  let(:list) { FactoryBot.create(:list, owner_id: user.id) }
+  let(:list2) { FactoryBot.create(:list, owner_id: user.id) }
+  let(:movie) { FactoryBot.create(:movie) }
+  let(:movie2) { FactoryBot.create(:movie) }
+  let(:listing) { FactoryBot.create(:listing, list_id: list.id, user_id: user.id, movie_id: movie.id ) }
+  let(:listing2) { FactoryBot.create(:listing, list_id: list2.id, user_id: user.id, movie_id: movie2.id ) }
 
   it { is_expected.to validate_uniqueness_of(:username) }
   it { is_expected.to validate_presence_of(:username) }

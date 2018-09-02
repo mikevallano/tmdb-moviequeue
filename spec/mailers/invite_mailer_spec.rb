@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe InviteMailer, type: :mailer do
 
-let(:user) { FactoryGirl.create(:user) }
-let(:invite) { FactoryGirl.create(:invite, sender_id: user.id) }
+let(:user) { FactoryBot.create(:user) }
+let(:invite) { FactoryBot.create(:invite, sender_id: user.id) }
 let(:mail) { InviteMailer.new_invite_mailer(invite) }
 
   describe "invite mailer" do

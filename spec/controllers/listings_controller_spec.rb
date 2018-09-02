@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe ListingsController, type: :controller do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
   let(:current_user) { login_with user }
   let(:current_user2) { login_with user2 }
   let(:invalid_user) { login_with nil }
-  let(:movie) { FactoryGirl.create(:movie) }
-  let(:movie2) { FactoryGirl.create(:movie) }
-  let(:list) { FactoryGirl.create(:list, owner_id: user.id) }
+  let(:movie) { FactoryBot.create(:movie) }
+  let(:movie2) { FactoryBot.create(:movie) }
+  let(:list) { FactoryBot.create(:list, owner_id: user.id) }
   let(:tmdb_id) { movie.tmdb_id }
   let(:tmdb_id2) { movie2.tmdb_id }
   let(:valid_attributes) { {tmdb_id: tmdb_id} }
-  let(:listing) { FactoryGirl.create(:listing, movie_id: movie.id, list_id: list.id, user_id: user.id) }
+  let(:listing) { FactoryBot.create(:listing, movie_id: movie.id, list_id: list.id, user_id: user.id) }
 
 
   shared_examples_for "logged in access" do

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Invite, type: :model do
-  let(:invite) { FactoryGirl.build(:invite) }
-  let(:invalid_invite) { FactoryGirl.build(:invalid_invite) }
-  let(:invalid_email_invite) { FactoryGirl.build(:invalid_email_invite) }
+  let(:invite) { FactoryBot.build(:invite) }
+  let(:invalid_invite) { FactoryBot.build(:invalid_invite) }
+  let(:invalid_email_invite) { FactoryBot.build(:invalid_email_invite) }
 
   context "with a valid factory" do
 
