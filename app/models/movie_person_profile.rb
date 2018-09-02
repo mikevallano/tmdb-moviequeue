@@ -1,4 +1,5 @@
 class MoviePersonProfile
+  include ActiveModel::Validations
 
   def initialize(person_id:, name:, bio:, birthday_and_age:, profile_path:)
     @person_id = person_id
@@ -10,11 +11,13 @@ class MoviePersonProfile
 
   attr_accessor :person_id, :name, :bio, :birthday_and_age, :profile_path
 
+  validates :person_id, :name, :bio, :birthday_and_age, :profile_path, presence: true
+
   def self.parse_result(result)
     id = result[:id]
     profile_path = result[:profile_path]
     name = result[:name]
-    bio = result[:biography].present? ? self.parse_bio(result[:biography]) : "Bio not available."
+    bio = result[:biography].present? ? self.parse_bio(result[:biography]) : 'Bio not available.'
     date = Date.parse(result[:birthday]) rescue nil
     birthday_and_age = display_birthday_and_age(date)
 
