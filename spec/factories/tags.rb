@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "tag name#{n}" }
 
     factory :invalid_tag do
-      name nil
+      name { nil }
     end
 
     factory :tag_too_long do

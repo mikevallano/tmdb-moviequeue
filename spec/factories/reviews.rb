@@ -5,7 +5,7 @@ FactoryGirl.define do
     body { FFaker::HipsterIpsum.sentence }
 
     factory :invalid_review do
-      body nil
+      body { nil }
     end
   end
 

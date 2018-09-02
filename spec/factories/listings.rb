@@ -3,10 +3,10 @@ FactoryGirl.define do
     list
     movie
     user
-    priority 3
+    priority { 3 }
 
     factory :invalid_listing do
-      movie nil
+      movie { nil }
     end
   end
 
