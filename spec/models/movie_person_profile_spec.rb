@@ -84,9 +84,9 @@ RSpec.describe MoviePersonProfile, type: :model do
       end
     end
 
-    context 'when does not have a birthday_and_age' do
+    context 'when does not have a birthday' do
       it 'is invalid' do
-        movie_person_profile.birthday_and_age = nil
+        movie_person_profile.birthday = nil
         expect(movie_person_profile).to_not be_valid
       end
     end
@@ -177,27 +177,30 @@ RSpec.describe MoviePersonProfile, type: :model do
   end
 
   describe '.parse_birthday' do
-    it 'returns "Not available" message if there is no date provided' do
+    it 'returns an empty string if there is no date provided' do
       birthday = nil
       parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
-      message = 'not available'
 
-      expect(parsed_birthday.downcase.include?(message)).to be true
+      expect(parsed_birthday).to eq('')
     end
 
-    it 'includes the word version of the birthdate in the returned string' do
-      birthday = '2000-01-28'
+    it 'returns the date in string format if there is a date provided' do
+      birthday = '2018-01-31'
       parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
 
-      expect(parsed_birthday.include?('January')).to be true
+      expect(parsed_birthday).to eq(birthday)
+    end
+  end
+
+  describe '#age' do
+    it 'returns an empty string if there is no birthday' do
+      movie_person_profile.birthday = ''
+      expect(movie_person_profile.age).to eq('')
     end
 
-    it "includes the person's current age in the returned string" do
-      birthday = '2000-01-28'
-      current_age = DateAndTimeHelper.years_since_date(birthday.to_date).to_s
-      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
-
-      expect(parsed_birthday.include?(current_age)).to be true
+    it "returns a person's current age if a birthday is provided" do
+      calculated_age = DateAndTimeHelper.years_since_date(movie_person_profile.birthday.to_date)
+      expect(movie_person_profile.age).to eq(calculated_age)
     end
   end
 end

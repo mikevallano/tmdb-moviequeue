@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:profile_path) { |n| "profile_path_#{n}" }
     sequence(:name) { |n| "name #{n}" }
     sequence(:bio) { |n| "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} \r\nbio #{n}\n\r#{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}" }
-    sequence(:birthday_and_age) { |n| "birthday_and_age #{n}" }
+    birthday { '2000-01-28' }
 
     initialize_with do
       new(person_id: person_id,
