@@ -6,12 +6,12 @@ FactoryBot.define do
     sequence(:bio) { |n| "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} \r\nbio #{n}\n\r#{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}" }
     sequence(:birthday_and_age) { |n| "birthday_and_age #{n}" }
 
-    initialize_with {
+    initialize_with do
       new(person_id: person_id,
+          profile_path: profile_path,
           name: name,
           bio: bio,
-          birthday_and_age: birthday_and_age,
-          profile_path: profile_path)
-    }
+          birthday: birthday)
+    end
   end
 end
