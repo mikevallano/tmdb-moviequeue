@@ -30,12 +30,9 @@ class MoviePersonProfile
       )
     end
 
-  def self.display_birthday_and_age(date)
-    return "Not available" unless date
     def parse_bio(biography)
       return 'Bio not available.' if biography.blank?
 
-    "#{date.stamp('January 1st, 2018')} (Age: #{DateAndTimeHelper.years_since_date(date)})"
       standardize_wikipedia_credit(biography)
       biography.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
     end
@@ -50,6 +47,13 @@ class MoviePersonProfile
 
     def wikipedia_credit?(bio)
       bio.include?(WIKIPEDIA_CREDIT[:starting]) || bio.include?(WIKIPEDIA_CREDIT[:trailing])
+    end
+
+    def parse_birthday(birthday)
+      return 'Not available' unless birthday
+
+      date = Date.parse(birthday)
+      "#{date.stamp('January 1st, 2018')} (Age: #{DateAndTimeHelper.years_since_date(date)})"
     end
   end
 end

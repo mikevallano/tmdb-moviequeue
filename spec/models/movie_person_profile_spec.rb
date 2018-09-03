@@ -159,15 +159,12 @@ RSpec.describe MoviePersonProfile, type: :model do
     end
   end
 
-  describe '.display_birthday_and_age' do
-    xit 'returns "Not available" if there is no Date' do
   describe '.wikipedia_credit?' do
     it 'returns true if a starting Wikipedia credit exists' do
       bio = "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} Bio Goes here."
       expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
     end
 
-    xit 'returns a string with the birthdate and Age' do
     it 'returns true if a trailing Wikipedia credit exists' do
       bio = "Bio Goes here. #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}"
       expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
@@ -178,6 +175,29 @@ RSpec.describe MoviePersonProfile, type: :model do
       expect(MoviePersonProfile.wikipedia_credit?(bio)).to be false
     end
   end
+
+  describe '.parse_birthday' do
+    it 'returns "Not available" message if there is no date provided' do
+      birthday = nil
+      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
+      message = 'not available'
+
+      expect(parsed_birthday.downcase.include?(message)).to be true
+    end
+
+    it 'includes the word version of the birthdate in the returned string' do
+      birthday = '2000-01-28'
+      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
+
+      expect(parsed_birthday.include?('January')).to be true
+    end
+
+    it "includes the person's current age in the returned string" do
+      birthday = '2000-01-28'
+      current_age = DateAndTimeHelper.years_since_date(birthday.to_date).to_s
+      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
+
+      expect(parsed_birthday.include?(current_age)).to be true
     end
   end
 end
