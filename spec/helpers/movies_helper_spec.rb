@@ -119,15 +119,16 @@ describe MoviesHelper, type: :helper do
   end
 
   describe '#runtime_display' do
-    let(:movie) { create(:movie, runtime: 190)}
-    it 'converts minutes to hours and minutes' do
-      expect(runtime_display(movie)).to_not eq(movie.runtime)
+    let(:movie) { create(:movie, runtime: 190) }
+
+    it 'displays runtime minutes as hours and minutes' do
+      converted_runtime = DateAndTimeHelper.display_time(movie.runtime)
+      expect(runtime_display(movie)).to eq(converted_runtime)
     end
 
-    it 'displays nothing if there is no runtime' do
+    it 'returns nil if there is no runtime' do
       movie.runtime = nil
       expect(runtime_display(movie)).to eq(nil)
     end
   end
-
 end

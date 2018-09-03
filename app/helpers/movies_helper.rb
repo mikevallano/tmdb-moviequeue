@@ -67,7 +67,7 @@ module MoviesHelper
   end
 
   def runtime_display(movie)
-    DateAndTimeHelper.display_time(movie.runtime) if movie.runtime.present?
+    movie.runtime.present? ? DateAndTimeHelper.display_time(movie.runtime) : nil
   end
 
   def release_date_display(movie)
