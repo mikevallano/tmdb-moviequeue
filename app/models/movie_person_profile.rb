@@ -13,6 +13,11 @@ class MoviePersonProfile
 
   validates :person_id, :name, :bio, :birthday_and_age, :profile_path, presence: true
 
+  WIKIPEDIA_CREDIT = {
+    starting: 'From Wikipedia, the free encyclopedia.',
+    trailing: 'Description above from Wikipedia.',
+    standard: 'Bio from Wikipedia.'
+  }.freeze
 
   class << self
     def parse_result(result)
@@ -33,6 +38,18 @@ class MoviePersonProfile
     "#{date.stamp('January 1st, 2018')} (Age: #{DateAndTimeHelper.years_since_date(date)})"
       standardize_wikipedia_credit(biography)
       biography.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
+    end
+
+    def standardize_wikipedia_credit(bio)
+      return '' unless wikipedia_credit?(bio)
+
+      bio.gsub!(/(#{WIKIPEDIA_CREDIT[:starting]}?)\s+/, '')
+      bio.gsub!(/ #{WIKIPEDIA_CREDIT[:trailing]}/, '')
+      bio << " #{WIKIPEDIA_CREDIT[:standard]}"
+    end
+
+    def wikipedia_credit?(bio)
+      bio.include?(WIKIPEDIA_CREDIT[:starting]) || bio.include?(WIKIPEDIA_CREDIT[:trailing])
     end
   end
 end

@@ -128,20 +128,56 @@ RSpec.describe MoviePersonProfile, type: :model do
       expect(parsed_bio.downcase.include?("\r\n")).to be false
     end
   end
+
+  describe '.standardize_wikipedia_credit' do
+    it 'removes starting Wikipedia credit if there is one' do
+      bio = results_for_known_person[:biography]
+      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+
+      expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:starting])).to be false
     end
 
-    xit 'appends "Bio from Wikipedia"' do
+    it 'removes trailing Wikipedia credit if there is one' do
+      bio = results_for_known_person[:biography]
+      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+
+      expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing])).to be false
     end
 
-    xit 'replaces carriage returns with <br>' do
+    it 'appends "Bio from Wikipedia" if there were any Wikipedia credits' do
+      bio = results_for_known_person[:biography]
+      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+
+      expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:standard])).to be true
+    end
+
+    it 'appends nothing if there were not any Wikipedia credits' do
+      bio = results_for_unknown_person[:biography]
+      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+
+      expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:standard])).to be false
     end
   end
 
   describe '.display_birthday_and_age' do
     xit 'returns "Not available" if there is no Date' do
+  describe '.wikipedia_credit?' do
+    it 'returns true if a starting Wikipedia credit exists' do
+      bio = "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} Bio Goes here."
+      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
     end
 
     xit 'returns a string with the birthdate and Age' do
+    it 'returns true if a trailing Wikipedia credit exists' do
+      bio = "Bio Goes here. #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}"
+      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
+    end
+
+    it 'returns false if there is no credit for Wikipedia' do
+      bio = 'Bio Goes here.'
+      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be false
+    end
+  end
     end
   end
 end
