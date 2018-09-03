@@ -17,8 +17,14 @@ Metrics/BlockLength:
     - !ruby/regexp /.*_spec\.rb$/
 Metrics/LineLength:
   Max: 99
+  Exclude:
+    - 'spec/factories/**/*'
+    - !ruby/regexp /.*_spec\.rb$/
 Style/BlockDelimiters:
   Exclude:
     - !ruby/regexp /.*_spec\.rb$/
 Style/EmptyMethod:
   EnforcedStyle: expanded
+Style/NumericLiterals:
+  Exclude:
+    - !ruby/regexp /.*_spec\.rb$/

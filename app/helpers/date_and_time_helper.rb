@@ -11,10 +11,14 @@ module DateAndTimeHelper
 
     def years_since_date(date)
       today = Time.zone.today
-      today.year - date.year - ((today.month > date.month || (today.month == date.month && today.day >= date.day)) ? 0 : 1)
+      today.year - date.year - allowance_for_same_date(date, today)
     end
 
     private
+
+    def allowance_for_same_date(date, today)
+      today.month > date.month || (today.month == date.month && today.day >= date.day) ? 0 : 1
+    end
 
     def display_time_in_hours(minutes)
       "#{minutes / MINUTES_IN_AN_HOUR}hr"
