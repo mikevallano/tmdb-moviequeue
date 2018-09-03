@@ -14,11 +14,6 @@ class MoviePersonProfile
   validates :person_id, :name, :bio, :birthday_and_age, :profile_path, presence: true
 
 
-  def self.parse_bio(bio)
-    bio.gsub!(/(From Wikipedia, the free encyclopedia.?)\s+/, '')
-    bio.gsub!(/(Description above from).*Wikipedia\s.*\./, "Bio from Wikipedia.")
-    bio.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
-  end
   class << self
     def parse_result(result)
       MoviePersonProfile.new(
@@ -32,7 +27,12 @@ class MoviePersonProfile
 
   def self.display_birthday_and_age(date)
     return "Not available" unless date
+    def parse_bio(biography)
+      return 'Bio not available.' if biography.blank?
 
     "#{date.stamp('January 1st, 2018')} (Age: #{DateAndTimeHelper.years_since_date(date)})"
+      standardize_wikipedia_credit(biography)
+      biography.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
+    end
   end
 end

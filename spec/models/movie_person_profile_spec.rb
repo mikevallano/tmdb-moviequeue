@@ -106,7 +106,28 @@ RSpec.describe MoviePersonProfile, type: :model do
   end
 
   describe '.parse_bio' do
-    xit 'removes lines about Wikipedia' do
+    it 'returns a biography if one is present' do
+      bio = results_for_known_person[:biography]
+
+      expect(MoviePersonProfile.parse_bio(bio).present?).to be true
+    end
+
+    it 'returns a "not available" message if no bio is present' do
+      bio = results_for_known_person_without_details[:biography]
+      parsed_bio = MoviePersonProfile.parse_bio(bio.clone)
+      message = 'not available'
+
+      expect(parsed_bio.downcase.include?(message)).to be true
+    end
+
+    it 'replaces carriage returns with <br>' do
+      bio = results_for_known_person[:biography]
+      parsed_bio = MoviePersonProfile.parse_bio(bio.clone)
+
+      expect(parsed_bio.downcase.include?('<br>')).to be true
+      expect(parsed_bio.downcase.include?("\r\n")).to be false
+    end
+  end
     end
 
     xit 'appends "Bio from Wikipedia"' do
