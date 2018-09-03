@@ -3,21 +3,24 @@ module DateAndTimeHelper
     MINUTES_IN_AN_HOUR = 60
 
     def display_time(minutes)
-      return nil if minutes.nil?
-      return display_time_in_hours(minutes) if (minutes % MINUTES_IN_AN_HOUR).zero?
+      return nil if minutes.blank?
 
-      display_time_in_hours_and_minutes(minutes)
+      full_hour?(minutes) ? display_time_in_hours(minutes) : display_time_in_hours_and_minutes(minutes)
     end
 
     def years_since_date(date)
       today = Time.zone.today
-      today.year - date.year - allowance_for_same_date(date, today)
+      today.year - date.year - (date_occurred_yet_this_year?(date, today) ? 0 : 1)
     end
 
     private
 
-    def allowance_for_same_date(date, today)
-      today.month > date.month || (today.month == date.month && today.day >= date.day) ? 0 : 1
+    def date_occurred_yet_this_year?(date, today)
+      today.month > date.month || (today.month == date.month && today.day >= date.day)
+    end
+
+    def full_hour?(minutes)
+      (minutes % MINUTES_IN_AN_HOUR).zero?
     end
 
     def display_time_in_hours(minutes)
