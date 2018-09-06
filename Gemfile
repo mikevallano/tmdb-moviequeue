@@ -30,6 +30,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_bot_rails'
+  gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
   gem 'rubocop-rspec'
   gem 'letter_opener'
   gem 'capybara-email'
