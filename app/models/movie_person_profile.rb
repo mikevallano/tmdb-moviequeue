@@ -1,5 +1,4 @@
 class MoviePersonProfile
-  include ActiveModel::Validations
 
   def initialize(person_id:, name:, bio:, birthday:, profile_path:)
     @person_id = person_id
@@ -10,8 +9,6 @@ class MoviePersonProfile
   end
 
   attr_accessor :person_id, :name, :bio, :birthday, :profile_path
-
-  validates :person_id, :name, :bio, :birthday, :profile_path, presence: true
 
   WIKIPEDIA_CREDIT = {
     starting: 'From Wikipedia, the free encyclopedia.',
