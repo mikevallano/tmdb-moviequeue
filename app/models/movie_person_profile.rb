@@ -1,14 +1,14 @@
 class MoviePersonProfile
-
-  def initialize(person_id:, name:, bio:, birthday:, profile_path:)
-    @person_id = person_id
-    @profile_path = profile_path
-    @name = name
-    @bio = bio
-    @birthday = birthday
+  def initialize(args)
+    @person_id = args[:person_id]
+    @profile_path = args[:profile_path]
+    @name = args[:name]
+    @bio = args[:bio]
+    @birthday = args[:birthday]
+    @deathday = args[:deathday]
   end
 
-  attr_accessor :person_id, :name, :bio, :birthday, :profile_path
+  attr_accessor :person_id, :name, :bio, :birthday, :deathday, :profile_path
 
   WIKIPEDIA_CREDIT = {
     starting: 'From Wikipedia, the free encyclopedia.',
@@ -23,7 +23,8 @@ class MoviePersonProfile
         profile_path: result[:profile_path],
         name: result[:name],
         bio: parse_bio(result[:biography]),
-        birthday: parse_birthday(result[:birthday])
+        birthday: parse_date(result[:birthday]),
+        deathday: parse_date(result[:deathday])
       )
     end
 
@@ -46,12 +47,21 @@ class MoviePersonProfile
       bio.include?(WIKIPEDIA_CREDIT[:starting]) || bio.include?(WIKIPEDIA_CREDIT[:trailing])
     end
 
-    def parse_birthday(birthday)
-      birthday.nil? ? '' : birthday
+    def parse_date(date)
+      date.nil? ? '' : date
     end
   end
 
   def age
-    @birthday.blank? ? '' : DateAndTimeHelper.years_since_date(@birthday.clone.to_date)
+    return '' if @birthday.blank?
+
+    if @deathday.blank?
+      DateAndTimeHelper.years_since_date(@birthday.clone.to_date)
+    else
+      DateAndTimeHelper.years_between_dates(
+        starting_date: @birthday.clone.to_date,
+        ending_date: @deathday.clone.to_date
+      )
+    end
   end
 end
