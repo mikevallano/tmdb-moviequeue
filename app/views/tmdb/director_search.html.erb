@@ -4,7 +4,7 @@
       <%= image_tag "http://image.tmdb.org/t/p/w185#{@person_profile.profile_path}" %>
       <div class="contents">
         <h1><%= @person_profile.name %></h1>
-        <h2>Born: <%= display_birthday_and_age(@person_profile) %></h2>        
+        <h2>Born: <%= display_birthday_info(@person_profile) %></h2>
         <p class="bio"><%= @person_profile.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->

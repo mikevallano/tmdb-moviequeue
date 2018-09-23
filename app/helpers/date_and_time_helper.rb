@@ -8,15 +8,19 @@ module DateAndTimeHelper
       full_hour?(minutes) ? display_time_in_hours(minutes) : display_time_in_hours_and_minutes(minutes)
     end
 
+    def years_between_dates(starting_date:, ending_date:)
+      ending_date.year - starting_date.year - (date_occurred_yet_for_year?(starting_date, ending_date) ? 0 : 1)
+    end
+
     def years_since_date(date)
       today = Time.zone.today
-      today.year - date.year - (date_occurred_yet_this_year?(date, today) ? 0 : 1)
+      today.year - date.year - (date_occurred_yet_for_year?(date, today) ? 0 : 1)
     end
 
     private
 
-    def date_occurred_yet_this_year?(date, today)
-      today.month > date.month || (today.month == date.month && today.day >= date.day)
+    def date_occurred_yet_for_year?(starting_date, ending_date)
+      ending_date.month > starting_date.month || (ending_date.month == starting_date.month && ending_date.day >= starting_date.day)
     end
 
     def full_hour?(minutes)

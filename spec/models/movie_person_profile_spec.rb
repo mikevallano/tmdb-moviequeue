@@ -4,23 +4,53 @@ require 'rails_helper'
 
 RSpec.describe MoviePersonProfile, type: :model do
   let(:movie_person_profile) { build(:movie_person_profile) }
+  let(:living_movie_person_profile) { build(:living_movie_person_profile) }
+  let(:deceased_movie_person_profile) { build(:deceased_movie_person_profile) }
 
   let(:results_for_known_person) {
-    { birthday: '1926-06-28',
+    { birthday: '1963-12-18',
       known_for_department: 'Acting',
       deathday: nil,
-      id: 14639,
-      name: 'Mel Brooks',
-      also_known_as: ['Melvin James Kaminsky '],
+      id: 287,
+      name: 'Brad Pitt',
+      also_known_as:
+        ['برد پیت',
+         'William Bradley Pitt ',
+         'Бред Питт',
+         'Бред Пітт',
+         'Buratto Pitto',
+         'Брэд Питт',
+         '畢·彼特',
+         'ブラッド・ピット',
+         '브래드 피트',
+         'براد بيت',
+         'แบรด พิตต์'],
       gender: 2,
-      biography: "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} Melvin Brooks (né Kaminsky, born June 28, 1926) is an American filmmaker, comedian, actor and composer.\n\rHe is known as a creator of broad film farces and comic parodies.\r\nBrooks began his career as a comic and a writer for the early TV variety show Your Show of Shows.\r\n #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}",
-      popularity: 1.644,
-      place_of_birth: 'Brooklyn, New York, USA',
-      profile_path: '/ndFo3LOYNCUghQTK833N1Wtuynr.jpg',
+      biography: "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} William Bradley \"Brad\" Pitt (born December 18, 1963) is an American actor and film producer. Pitt has received tw and four Golden Globe Award nominations, winning one.\n\rHe has been described as one of the world's most attractive menreceived substantial media attention.\r\n #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}",
+      popularity: 15.192,
+      place_of_birth: 'Shawnee, Oklahoma, USA',
+      profile_path: '/kU3B75TyRiCgE270EyZnHjfivoq.jpg',
       adult: false,
-      imdb_id: 'nm0000316',
+      imdb_id: 'nm0000093',
       homepage: nil }
-  }
+    }
+
+  # let(:results_for_known_person_who_died) {
+  #   { birthday: '1922-06-10',
+  #     known_for_department: 'Acting',
+  #     deathday: '1969-06-22',
+  #     id: 9066,
+  #     name: 'Judy Garland',
+  #     also_known_as: ['Joots Garland', 'Frances Ethel Gumm', 'Baby Gumm', '주디 갈랜드'],
+  #     gender: 1,
+  #     biography: "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} Judy Garland (June 10, 1922 – June 22, 1969) was an American actress and singer.\n\rRespected for her versatility, she received a juvenile Academy Award, won a Golden Globe Award, as well as Grammy Awards and a Special Tony Award.\r\n #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}",
+  #     popularity: 2.62,
+  #     place_of_birth: 'Grand Rapids, Minnesota, USA',
+  #     profile_path: '/dkhMrLSfnqS3fmxWuXaEMwxN0Tf.jpg',
+  #     adult: false,
+  #     imdb_id: 'nm0000023',
+  #     homepage: nil }
+  # }
 
   let(:results_for_known_person_without_details) {
     { birthday: nil,
@@ -133,17 +163,17 @@ RSpec.describe MoviePersonProfile, type: :model do
     end
   end
 
-  describe '.parse_birthday' do
+  describe '.parse_date' do
     it 'returns an empty string if there is no date provided' do
       birthday = nil
-      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
+      parsed_birthday = MoviePersonProfile.parse_date(birthday)
 
       expect(parsed_birthday).to eq('')
     end
 
     it 'returns the date in string format if there is a date provided' do
       birthday = '2018-01-31'
-      parsed_birthday = MoviePersonProfile.parse_birthday(birthday)
+      parsed_birthday = MoviePersonProfile.parse_date(birthday)
 
       expect(parsed_birthday).to eq(birthday)
     end
@@ -155,9 +185,17 @@ RSpec.describe MoviePersonProfile, type: :model do
       expect(movie_person_profile.age).to eq('')
     end
 
-    it "returns a person's current age if a birthday is provided" do
-      calculated_age = DateAndTimeHelper.years_since_date(movie_person_profile.birthday.to_date)
-      expect(movie_person_profile.age).to eq(calculated_age)
+    it "returns a living person's current age if a birthday is provided" do
+      calculated_age = DateAndTimeHelper.years_since_date(living_movie_person_profile.birthday.to_date)
+      expect(living_movie_person_profile.age).to eq(calculated_age)
+    end
+
+    it "returns a deceased person's age at death age if a birth & death dates are provided" do
+      calculated_age = DateAndTimeHelper.years_between_dates(
+        starting_date: deceased_movie_person_profile.birthday.to_date,
+        ending_date: deceased_movie_person_profile.deathday.to_date
+      )
+      expect(deceased_movie_person_profile.age).to eq(calculated_age)
     end
   end
 end

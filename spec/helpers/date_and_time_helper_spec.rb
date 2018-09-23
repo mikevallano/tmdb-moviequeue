@@ -24,4 +24,31 @@ RSpec.describe DateAndTimeHelper, type: :helper do
       expect(DateAndTimeHelper.years_since_date(year_ago)).to eq(1)
     end
   end
+
+  describe '.years_between_dates' do
+    it 'returns the difference in years between two given dates' do
+      year_ago = Time.zone.today - 366
+      this_year = Time.zone.today
+      expect(DateAndTimeHelper.years_between_dates(
+        starting_date: year_ago,
+        ending_date: this_year
+        )).to eq(1)
+    end
+
+    it 'takes into account whether the day has happened yet in the ending date' do
+      starting_date = '2000-06-01'.to_date
+      premature_ending_date = '2001-04-01'.to_date
+      mature_ending_date = '2001-12-01'.to_date
+
+      expect(DateAndTimeHelper.years_between_dates(
+        starting_date: starting_date,
+        ending_date: premature_ending_date
+        )).to eq(0)
+
+      expect(DateAndTimeHelper.years_between_dates(
+        starting_date: starting_date,
+        ending_date: mature_ending_date
+        )).to eq(1)
+    end
+  end
 end
