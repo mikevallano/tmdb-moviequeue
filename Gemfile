@@ -18,7 +18,7 @@ gem 'figaro'
 gem 'friendly_id'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
-gem 'coveralls', require: false
+gem 'coveralls', '0.8.11', require: false
 gem 'rack-mini-profiler'
 gem 'stamp'
 gem 'sentry-raven'
