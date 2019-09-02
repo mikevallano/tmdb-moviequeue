@@ -1,6 +1,4 @@
-var ready;
-ready = function() {
-
+$(document).ready(function(){
   $(".autocomplete-auto-submit").autocomplete({
     source: $(".autocomplete-auto-submit").data("autocomplete-source"),
     minLength: 4,
@@ -20,11 +18,7 @@ ready = function() {
     'max-width': '455px',
     'z-index': 1100
   });
-
-};
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
+});
 
 $(document)
   .on('change', 'form#new_listing select, form#new_rating select', function() {
