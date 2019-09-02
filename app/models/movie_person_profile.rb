@@ -38,8 +38,8 @@ class MoviePersonProfile
     def standardize_wikipedia_credit(bio)
       return '' unless wikipedia_credit?(bio)
 
-      bio.gsub!(/(#{WIKIPEDIA_CREDIT[:starting]}?)\s+/, '')
-      bio.gsub!(/ #{WIKIPEDIA_CREDIT[:trailing]}/, '')
+      bio = bio.gsub(/(#{WIKIPEDIA_CREDIT[:starting]}?)\s+/, '')
+      bio = bio.gsub(/ #{WIKIPEDIA_CREDIT[:trailing]}/, '')
       bio << " #{WIKIPEDIA_CREDIT[:standard]}"
     end
 
