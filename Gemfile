@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.4.7'
 gem 'puma'
-gem 'rails', '4.2.3'
-gem 'pg'
+gem 'rails', '4.2.10'
+gem 'pg', '~> 0.18'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -23,6 +23,10 @@ gem 'rack-mini-profiler'
 gem 'stamp'
 gem 'sentry-raven'
 
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :development, :test do
   gem 'pry'
   gem 'ffaker'
@@ -37,7 +41,6 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'spring-commands-rspec'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
 end
 

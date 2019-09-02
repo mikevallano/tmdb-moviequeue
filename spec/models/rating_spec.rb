@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Rating, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:movie) { FactoryBot.create(:movie) }
-  let(:rating) { FactoryBot.build(:rating) }
+  let(:rating) { FactoryBot.build(:rating, user: user, movie: movie) }
   let(:rating2) { FactoryBot.create(:rating, user_id: user.id, movie_id: movie.id ) }
   let(:rating3) { FactoryBot.build(:rating, user_id: user.id, movie_id: movie.id) }
   let(:invalid_rating) { FactoryBot.build(:invalid_rating) }
