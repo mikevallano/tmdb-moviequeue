@@ -57,6 +57,11 @@ RSpec.describe User, type: :model do
       expect(user.lists_except_movie(movie)).to include(list2)
     end
 
+    it "responds to lists_except_movie" do
+      list2
+      expect(user.lists_except_movie).to match_array([list, list2])
+    end
+
     it "responds to all_movies" do
       expect(user).to respond_to(:all_movies)
     end

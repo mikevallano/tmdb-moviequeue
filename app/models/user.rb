@@ -62,8 +62,8 @@ class User < ActiveRecord::Base
   end
 
   def lists_except_movie(movie = nil)
-    if movie.present? && existing_movie = Movie.find_by(tmdb_id: movie.tmdb_id)
-      (all_lists - existing_movie.lists.by_user(self))
+    if movie.present? && movie.in_db
+      (all_lists - movie.lists.by_user(self))
         .sort_by { |list| list.name.downcase }
     else
       all_lists_by_name
