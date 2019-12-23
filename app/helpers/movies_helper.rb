@@ -49,6 +49,11 @@ module MoviesHelper
     cast += full_cast_link(movie)
   end
 
+  def list_autocomplete_dropdown(movie)
+    current_user.lists_except_movie(movie)
+      .map{ |list| {label: list.name, id: list.id} }
+  end
+
 
   private
 

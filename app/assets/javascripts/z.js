@@ -18,6 +18,16 @@ $(document).ready(function(){
     'max-width': '455px',
     'z-index': 1100
   });
+
+  $('#add-to-list-dropdown').autocomplete({
+    source: $("#add-to-list-dropdown").data("autocomplete-source"),
+    minLength: 0,
+    select: function(event, ui) {
+      handleAddToListAutocompleteSelect(event, ui)
+    }
+  })
+
+  $('#add-to-list-dropdown').click(showAllListsForAutocomplete)
 });
 
 $(document)
@@ -32,19 +42,27 @@ $(document)
     }
   });
 
+const handleAddToListAutocompleteSelect = function(event, ui) {
+  $("#list_autocomplete_val").val(ui.item.id);
+  $('form#new_listing').submit();
+}
 
-    // This hides the 'year select' field until a year is selected
-    // $(function() {
-    //   $("#year_select_discover_search").hide();
-    //   $("#year_field_discover_search").on("change",function() {
-    //     var year = this.value;
-    //     if (year == "") return; // please select - possibly you want something else here
+$(document).on('shown.bs.modal', function(){
+  $('form#new_listing').click(showAllListsForAutocomplete)
+  $('#add-to-list-dropdown').autocomplete({
+    source: $("#add-to-list-dropdown").data("autocomplete-source"),
+    minLength: 0,
+    select: function(event, ui) {
+      handleAddToListAutocompleteSelect(event, ui)
+    }
+  })
+});
 
-    //     $("#year_select_discover_search").show();
-    //   });
-    // });
-
-
-// autocomplete
-
-// the final closer
+function showAllListsForAutocomplete() {
+  // hack to show all lists when initially clicking
+  // in the field. this triggers a backspace keypress
+  let evt = jQuery.Event('keydown');
+  evt.which = 8; // backspace
+  evt.keyCode = 8
+  $('#add-to-list-dropdown').trigger(evt)
+}

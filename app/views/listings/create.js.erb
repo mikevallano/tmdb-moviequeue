@@ -9,3 +9,13 @@ else {
   $("#movie_other_list_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_add_to_another_list', :locals => {:movie => @movie}) %>");
   $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_show_list_manage', :locals => {:movie => @movie}) %>");
 }
+
+$('#add-to-list-dropdown').click(showAllListsForAutocomplete)
+
+ $('.add-to-list-dropdown').autocomplete({
+   source: $("#add-to-list-dropdown").data("autocomplete-source"),
+   minLength: 0,
+   select: function(event, ui) {
+    handleAddToListAutocompleteSelect(event, ui)
+   }
+ })
