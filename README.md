@@ -15,7 +15,7 @@
 
 * The site is available at [http://www.flicksonlists.com/](http://www.flicksonlists.com/)
 
-* Ruby version: 2.4.7
+* Ruby version: 2.5.3
 
 * Rails version: 4.2.10
 

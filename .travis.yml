@@ -19,7 +19,7 @@
 
 language: ruby
 rvm:
- - 2.4.7
+ - 2.5.3
 services:
  - postgresql
  - xvfb
