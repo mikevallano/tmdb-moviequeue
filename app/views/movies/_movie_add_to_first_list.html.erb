@@ -1,9 +1,16 @@
 
 <p class="fa fa-list-ul"><span class="pseudo-header"> Lists:</span>
       <%= form_for(Listing.new, class: "form-class", id: "modal-add-to-first-list", remote: true) do |f| %>
-        <%= f.collection_select :list_id, current_user.lists_except_movie(movie), :id, :name, { prompt: "Add to a list" }, {class: "form-control"} %>
+        <%= text_field_tag  'list_dropdown',
+                            nil,
+                            class: "form-control",
+                            id: 'add-to-list-dropdown',
+                            placeholder: 'Add to list',
+                            data: { autocomplete_source: list_autocomplete_dropdown(movie) }  %>
+
+        <%= hidden_field_tag 'listing[list_id]', '', id: 'list_autocomplete_val' %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= hidden_field_tag :from, "first_list" %>
         <%= f.submit "+ Add", id: "add_to_list_button_movies_partial", class: "form-control-submit" %>
-      <% end %> <!-- # add to list form -->
+      <% end %>

@@ -7,7 +7,8 @@
 
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
 
-        <div class="partial-spacer">
+        <div class="partial-spacer ui-front">
+          <!-- ui-front is needed for jquery autocomplete in the modal -->
           <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_on_lists', movie: movie %>
           </div>
@@ -28,7 +29,8 @@
 
         <% else %><!-- movie.in_db && movie.lists.by_user -->
 
-        <div class="partial-spacer">
+        <div class="partial-spacer ui-front">
+          <!-- ui-front is needed for jquery autocomplete in the modal -->
           <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_add_to_first_list', movie: movie %>
           </div>
@@ -47,4 +49,3 @@
             <%= render 'movies/movie_review', movie: movie %>
           </div>
         </div> <!-- partial-spacer -->
-
