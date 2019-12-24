@@ -61,7 +61,7 @@ $(document).on('shown.bs.modal', function(){
 function showAllListsForAutocomplete() {
   // hack to show all lists when initially clicking
   // in the field. this triggers a backspace keypress
-  let evt = jQuery.Event('keydown');
+  var evt = jQuery.Event('keydown');
   evt.which = 8; // backspace
   evt.keyCode = 8
   $('#add-to-list-dropdown').trigger(evt)
