@@ -42,7 +42,7 @@ $(document)
     }
   });
 
-const handleAddToListAutocompleteSelect = function(event, ui) {
+function handleAddToListAutocompleteSelect(event, ui) {
   $("#list_autocomplete_val").val(ui.item.id);
   $('form#new_listing').submit();
 }
