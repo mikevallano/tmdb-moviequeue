@@ -3,18 +3,19 @@
     <% @movies.each do |movie| %>
       <article class="tile-cover-pic">
         <!-- MODAL TRIGGER -->
+        <p id="modal-trigger">
+          <%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
+                                        remote: true,
+                                        data: { target: "#myModal_#{movie.tmdb_id}" },
+                                        id: "modal_link_#{movie.tmdb_id}"
+          %>
+        </p>
 
-        <% if @list.present? %>
-          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list.id), remote: true, data: { target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
-        <% else %>
-          <p><%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: { target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %></p>
-        <% end %>
+        <p id="modal-trigger-mobile">
+          <%= link_to image_for(movie), movie_path(movie) %>
+        </p>
 
-        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>">
-
-        </div>
-
+        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
       </article> <!-- tile-cover-pic -->
     <% end %><!-- movies.each -->
   </div> <!-- row tile container-->
-
