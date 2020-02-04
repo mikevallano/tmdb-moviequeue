@@ -1,11 +1,15 @@
 <% content_for(:title, "Editing") %>
 
-<h1>Edit Your Screening</h1>
+<p class="button-main pull-right">
+  <%= link_to 'Back', movie_screenings_path(@movie) %>
+</p>
+
+<h1>Edit</h1>
 <h2>Your <%= @screening.date_watched.stamp("12-31-2016") %> Screening of <%= @movie.title %></h2>
 
 <%= render 'form' %>
 
+<hr>
 <p class="button-main">
-  <%= link_to 'Back To Screenings', movie_screenings_path(@movie) %>
-  <%= link_to 'Back To ' + @movie.title, movie_path(@movie) %>
+  <%= link_to 'Delete', movie_screening_path(@movie, @screening), method: :delete, data: { confirm: 'Are you sure you want to delete this screening? This action cannot be undone.' } %>
 </p>
