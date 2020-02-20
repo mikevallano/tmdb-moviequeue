@@ -3,23 +3,19 @@
 <h1>Screenings for <%= link_to "#{@movie.title}", movie_path(@movie) %></h1>
 
 <table class="table">
-  <thead>
-    <tr>
-      <th>Date Watched</th>
-      <th>Location Watched</th>
-      <th>Notes</th>
-      <th colspan="3">Manage Screenings</th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @screenings.order("date_watched DESC").each do |screening| %>
       <tr>
         <td><%= screening.date_watched.stamp("1/2/2001") %></td>
-        <td><%= screening.location_watched %></td>
-        <td><%= screening.notes %></td>
-        <td><%= link_to 'Edit', edit_movie_screening_path(@movie, screening) %></td>
-        <td><%= link_to 'Delete', movie_screening_path(@movie, screening), method: :delete, data: { confirm: 'Are you sure you want to delete this screening? This action cannot be undone.' } %></td>
+        <td>
+          <p>
+            <strong><%= screening.location_watched %></strong><br />
+            <%= screening.notes %>
+          </p>
+        </td>
+        <td>
+          <%= link_to 'Edit', edit_movie_screening_path(@movie, screening) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
