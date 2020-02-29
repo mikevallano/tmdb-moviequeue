@@ -12,7 +12,8 @@
         </p>
 
         <p id="modal-trigger-mobile">
-          <%= link_to image_for(movie), movie_path(movie) %>
+          <%#= link_to image_for(movie), movie_path(movie) %>
+          <%= link_to image_for(movie), movie_more_path(tmdb_id: "#{movie.tmdb_id}") %>
         </p>
 
         <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
