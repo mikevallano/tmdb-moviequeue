@@ -13,7 +13,13 @@ class ScreeningsController < ApplicationController
   end
 
   def new
-    @screening = @movie.screenings.by_user(current_user).new
+    default_params = {
+      date_watched: Time.zone.today,
+      location_watched: current_user.default_location
+    }
+    @screening = @movie.screenings
+                       .by_user(current_user)
+                       .new(default_params)
   end
 
   def edit
