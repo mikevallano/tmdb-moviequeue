@@ -13,6 +13,11 @@
     <%= f.text_field :username %>
   </div>
 
+  <div class="field">
+   <%= f.label :default_location, 'Default Location for screenings (where you watched the movie)' %><br />
+   <%= f.text_field :default_location %>
+ </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

@@ -5,5 +5,16 @@
   <span class="screening-link"><%= link_to "Add / Manage Screenings", movie_screenings_path(@movie), id: "add_screening_link_movies_partial" %></span>
 <% else %> <!-- #if movie has been seen -->
   <h2>You Haven't Seen this One Yet!
-  <span class="screening-link"><%= link_to "Mark as Watched", screenings_path(:screening => { notes: nil }, tmdb_id: @movie.tmdb_id, from: "movies_index", page: params[:page]), :method => :post, id: "mark_watched_link_movies_partial", remote: true %></span></h2>
+    <span class='screening-link'>
+      <%= link_to 'Mark as Watched', screenings_path(
+        screening: { location_watched: current_user.default_location },
+        tmdb_id: @movie.tmdb_id,
+        from: 'movies_index',
+        page: params[:page]
+      ),
+      method: :post,
+      id: 'mark_watched_link_movies_partial',
+      remote: true %>
+    </span>
+  </h2>
 <% end %> <!-- #if movie has been seen -->

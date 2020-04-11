@@ -1,11 +1,11 @@
 ## Related Issues & PRs
-> Closes #X
+Closes #X
 
 ## Problems Solved
->
+*
 
 ## Screenshots
 [screenshots here]
 
 ## Things Learned
->
+*
