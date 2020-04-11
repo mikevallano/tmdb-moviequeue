@@ -14,7 +14,7 @@ class ScreeningsController < ApplicationController
 
   def new
     default_params = {
-      date_watched: Time.zone.today,
+      date_watched: Date.current,
       location_watched: current_user.default_location
     }
     @screening = @movie.screenings
