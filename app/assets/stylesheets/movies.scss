@@ -5,6 +5,7 @@ $index-poster-width: 125px;
 $index-poster-height: 185px;
 $responsive-poster-width: 100%;
 $responsive-poster-height: $responsive-poster-width*.48+$responsive-poster-width;
+$missing-poster-background-color: lighten($primary-background-color, 20%);
 
 /* MOVIE INDEX PAGE */
 
@@ -22,12 +23,12 @@ article.tile-cover-pic {
     width: $responsive-poster-width;
     height: $responsive-poster-height;
   } /* img */
-
+  background-color: $missing-poster-background-color;
 } /* article.tile-cover-pic */
 
 .missing-poster {
   position: relative;
-  background-color: lighten($primary-background-color, 20%);
+  background-color: $missing-poster-background-color;
   float: left;
   margin: -10px 10px 10px 0px;
   width: $index-poster-width;
@@ -66,6 +67,7 @@ article.tile-cover-pic {
 .modal {
   img {
     border: 1px solid #000;
+    background-color: $missing-poster-background-color;
   } /* img */
   h1 {
     line-height: 99%;
@@ -99,6 +101,7 @@ article.tile-cover-pic {
   .missing-poster {
     width: $index-poster-width;
     height: $index-poster-height;
+    background-color: $missing-poster-background-color;
   } /* .missing-poster */
 } /* .modal */
 
@@ -106,7 +109,6 @@ article.tile-cover-pic {
 /* MOVIE SHOW PAGE */
 
 .movie-show {
-
   a {
     color: $link-color;
 
