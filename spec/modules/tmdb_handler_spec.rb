@@ -77,4 +77,14 @@ RSpec.describe TmdbHandler, type: :module do
       end
     end
   end
+
+  context 'when tmdb_id is passed as a string' do
+    let(:tmdb_id) { movie.tmdb_id.to_s }
+
+    it 'returns true' do
+      VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie', record: :new_episodes) do
+        expect(subject).to eq(true)
+      end
+    end
+  end
 end
