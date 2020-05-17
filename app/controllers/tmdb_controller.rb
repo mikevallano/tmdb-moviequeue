@@ -34,7 +34,7 @@ class TmdbController < ApplicationController
   def update_tmdb_data
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
-      tmdb_handler_update_movie(@tmdb_id)
+      TmdbHandler.tmdb_handler_update_movie(@tmdb_id)
     end
     redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end
