@@ -89,7 +89,6 @@ module TmdbHandler
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
     Raven.capture_message("API request failed for tmdb_id: #{tmdb_id}") && return unless api_result && api_result[:id] == tmdb_id
-
     updated_data = MovieMore.tmdb_info(api_result)
 
     if movie.title != updated_data.title
@@ -114,6 +113,8 @@ module TmdbHandler
       runtime: updated_data.runtime,
       mpaa_rating: updated_data.mpaa_rating
     )
+  rescue ActiveRecord::RecordInvalid => e
+    Raven.capture_message("Movie failed to save: tmdb_id: #{tmdb_id}. Message: #{e.message}") && return
   end
 
   def tmdb_handler_actor_more(actor_id)
