@@ -84,7 +84,8 @@ module TmdbHandler
 
   def self.tmdb_handler_update_movie(tmdb_id)
     movie = Movie.find_by(tmdb_id: tmdb_id)
-    Raven.capture_message("movie not found in our db: #{tmdb_id}") && return unless movie
+    Raven.capture_message("movie not found in our db: #{tmdb_id}") if defined?(Raven) && movie.blank?
+    return unless movie
 
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
