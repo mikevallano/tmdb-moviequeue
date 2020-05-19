@@ -103,7 +103,6 @@ module TmdbHandler
       raise TmdbHandlerError.new(msg)
     end
 
-
     movie.update!(
       title: updated_data.title,
       imdb_id: updated_data.imdb_id,

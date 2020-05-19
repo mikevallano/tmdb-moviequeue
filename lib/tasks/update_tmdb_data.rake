@@ -1,8 +1,8 @@
 # To run the rake task: rake "tmdb_data:refresh"
 # To run from console: Rake::Task["tmdb_data:refresh"].invoke
 
-TIME_FRAME = 1.week.ago
-BATCH_SIZE = 50
+TIME_FRAME = (ENV['tmdb_refresh_time_frame_days'] || 7).to_i.days.ago
+BATCH_SIZE = (ENV['tmdb_refresh_batch_size'] || 50).to_i
 
 namespace :tmdb_data do
   desc 'refresh tmdb_data'
