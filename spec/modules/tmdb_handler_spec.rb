@@ -21,36 +21,23 @@ RSpec.describe TmdbHandler, type: :module do
 
   context 'when movie is not found in db' do
     let(:tmdb_id) { 'wrong' }
-    it { is_expected.to be_nil }
-    it { expect{subject}.not_to change{ movie.reload.updated_at } }
+    it { expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError) }
   end
 
   context 'when no movie found from api response' do
     before { movie.update(tmdb_id: 'wrong')}
-    it 'returns nil' do
+    it 'raises an error and does not update the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie', record: :new_episodes) do
-        expect(subject).to be_nil
-      end
-    end
-
-    it 'does not update the movie' do
-      VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie', record: :new_episodes) do
-        expect{ subject }.not_to change{ movie.reload.updated_at }
+        expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
       end
     end
   end
 
   context 'when the title does not match' do
     before { movie.update(title: 'Fargowrong') }
-    it 'returns nil' do
+    it 'raises an error and does not update the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title', record: :new_episodes) do
-        expect(subject).to be_nil
-      end
-    end
-
-    it 'does not update the movie' do
-      VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title', record: :new_episodes) do
-        expect{ subject }.not_to change{ movie.reload.updated_at }
+        expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
       end
     end
   end
@@ -71,9 +58,9 @@ RSpec.describe TmdbHandler, type: :module do
     let(:dupe_movie) { build(:movie, tmdb_id: movie.tmdb_id) }
     before { dupe_movie.save(validate: false) }
 
-    it 'returns nil' do
+    it 'raises an error and does not update the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie', record: :new_episodes) do
-        expect(subject).to be_nil
+        expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
       end
     end
   end

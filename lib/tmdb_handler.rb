@@ -1,6 +1,12 @@
 module TmdbHandler
   BASE_URL = 'https://api.themoviedb.org/3'.freeze
 
+  class TmdbHandlerError < StandardError
+    def initialize(message)
+      super(message)
+    end
+  end
+
   def tmdb_handler_search(query)
     @query = query.titlecase
     @search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
@@ -84,18 +90,19 @@ module TmdbHandler
 
   def self.tmdb_handler_update_movie(tmdb_id)
     movie = Movie.find_by(tmdb_id: tmdb_id)
-    Raven.capture_message("movie not found in our db: #{tmdb_id}") if defined?(Raven) && movie.blank?
-    return unless movie
+    raise TmdbHandlerError.new("Movie not found in DB: tmdb_id: #{tmdb_id}") unless movie
 
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
-    Raven.capture_message("API request failed for tmdb_id: #{tmdb_id}") && return unless api_result && api_result[:id].to_s == tmdb_id.to_s
+    raise TmdbHandlerError.new("API request failed for tmdb_id: #{tmdb_id}") unless api_result && api_result[:id].to_s == tmdb_id.to_s
+
     updated_data = MovieMore.tmdb_info(api_result)
 
     if movie.title != updated_data.title
       msg = "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Updated title: #{updated_data.title}"
-      Raven.capture_message(msg) && return
+      raise TmdbHandlerError.new(msg)
     end
+
 
     movie.update!(
       title: updated_data.title,
@@ -114,8 +121,8 @@ module TmdbHandler
       runtime: updated_data.runtime,
       mpaa_rating: updated_data.mpaa_rating
     )
-  rescue ActiveRecord::RecordInvalid => e
-    Raven.capture_message("Movie failed to save: tmdb_id: #{tmdb_id}. Message: #{e.message}") && return
+  rescue ActiveRecord::RecordInvalid => error
+    raise TmdbHandlerError.new(error.message)
   end
 
   def tmdb_handler_actor_more(actor_id)
