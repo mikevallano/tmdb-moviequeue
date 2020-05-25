@@ -22,7 +22,11 @@ namespace :tmdb_data do
       updated_movies << tmdb_id
       sleep 0.01
     end
-
-    puts "*** Updated_movies: count: #{updated_movies.count}. tmdb_ids: #{updated_movies}"
+    output = "*** Updated_movies: count: #{updated_movies.count}. tmdb_ids: #{updated_movies}"
+    puts output
+  rescue => error
+    output = "*** Updated_movies: count: #{updated_movies.count}. tmdb_ids: #{updated_movies}"
+    puts "Not all movies uptated. #{output}"
+    raise error
   end
 end

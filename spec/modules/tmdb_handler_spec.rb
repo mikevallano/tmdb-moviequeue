@@ -35,9 +35,15 @@ RSpec.describe TmdbHandler, type: :module do
 
   context 'when the title does not match' do
     before { movie.update(title: 'Fargowrong') }
-    it 'raises an error and does not update the movie' do
+    it 'does not raise an error' do
       VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title', record: :new_episodes) do
-        expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
+        expect{subject}.not_to raise_error
+      end
+    end
+
+    it 'does not update the movie' do
+      VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title', record: :new_episodes) do
+        expect{ subject }.not_to change{ movie.reload.updated_at }
       end
     end
   end

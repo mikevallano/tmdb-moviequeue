@@ -99,8 +99,8 @@ module TmdbHandler
     updated_data = MovieMore.tmdb_info(api_result)
 
     if movie.title != updated_data.title
-      msg = "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Updated title: #{updated_data.title}"
-      raise TmdbHandlerError.new(msg)
+      puts "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Updated title: #{updated_data.title}"
+      return
     end
 
     movie.update!(
@@ -118,7 +118,8 @@ module TmdbHandler
       vote_average: updated_data.vote_average,
       popularity: updated_data.popularity,
       runtime: updated_data.runtime,
-      mpaa_rating: updated_data.mpaa_rating
+      mpaa_rating: updated_data.mpaa_rating,
+      updated_at: Time.current
     )
   rescue ActiveRecord::RecordInvalid => error
     raise TmdbHandlerError.new(error.message)
