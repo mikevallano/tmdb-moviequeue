@@ -99,7 +99,7 @@ module TmdbHandler
     updated_data = MovieMore.tmdb_info(api_result)
 
     if movie.title != updated_data.title
-      puts "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Updated title: #{updated_data.title}"
+      puts "Movie title doesn't match. Movie not updated. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
       return
     end
 
