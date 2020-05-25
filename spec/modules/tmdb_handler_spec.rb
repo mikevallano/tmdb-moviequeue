@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TmdbHandler, type: :module do
   let(:movie) { create(:movie_in_tmdb) }
   let(:tmdb_id) { movie.tmdb_id }
-  subject { TmdbHandler.tmdb_handler_update_movie(tmdb_id) }
+  subject { TmdbHandler.tmdb_handler_update_movie(movie) }
 
   context 'with a valid movie' do
     it 'returns true' do
@@ -17,11 +17,6 @@ RSpec.describe TmdbHandler, type: :module do
         expect{ subject }.to change{ movie.reload.updated_at }
       end
     end
-  end
-
-  context 'when movie is not found in db' do
-    let(:tmdb_id) { 'wrong' }
-    it { expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError) }
   end
 
   context 'when no movie found from api response' do
@@ -67,16 +62,6 @@ RSpec.describe TmdbHandler, type: :module do
     it 'raises an error and does not update the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie', record: :new_episodes) do
         expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
-      end
-    end
-  end
-
-  context 'when tmdb_id is passed as a string' do
-    let(:tmdb_id) { movie.tmdb_id.to_s }
-
-    it 'returns true' do
-      VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie', record: :new_episodes) do
-        expect(subject).to eq(true)
       end
     end
   end
