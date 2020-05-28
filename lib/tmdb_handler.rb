@@ -1,8 +1,15 @@
 module TmdbHandler
+  BASE_URL = 'https://api.themoviedb.org/3'.freeze
+
+  class TmdbHandlerError < StandardError
+    def initialize(message)
+      super(message)
+    end
+  end
 
   def tmdb_handler_search(query)
     @query = query.titlecase
-    @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @discover_results = @tmdb_response[:results]
     if !@discover_results.present?
@@ -17,20 +24,20 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_autocomplete(query)
-    @search_url = "http://api.themoviedb.org/3/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @autocomplete_results = @tmdb_response[:results].map{ |result| result[:title] }.uniq
   end
 
   def tmdb_handler_person_autocomplete(query)
-    @search_url = "http://api.themoviedb.org/3/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    @search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
     @person_results = @tmdb_response[:results].select{ |result| result[:media_type] == "person"}
     @autocomplete_results = @person_results.map{ |result| result[:name] }.uniq
   end
 
   def tmdb_handler_movie_more(id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    @movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     @movie = MovieMore.parse_result(@result)
 
@@ -39,7 +46,7 @@ module TmdbHandler
   end
 
   def tmdb_handler_similar_movies(tmdb_id, page)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases,similar&page=#{page}"
+    @movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases,similar&page=#{page}"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     @similar_results = @result[:similar][:results]
     @total_pages = @result[:similar][:total_pages]
@@ -58,7 +65,7 @@ module TmdbHandler
   end #similar movies
 
   def tmdb_handler_full_cast(tmdb_id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     tmdb_handler_movie_more(tmdb_id)
     @credits = @result[:credits]
@@ -81,18 +88,39 @@ module TmdbHandler
     popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
   end
 
-  def tmdb_handler_update_movie(tmdb_id)
-    @movie_url = "https://api.themoviedb.org/3/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
-    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
-    @movie_to_update = Movie.find_by(tmdb_id: tmdb_id)
-    @movie = MovieMore.tmdb_info(@result)
+  def self.tmdb_handler_update_movie(movie)
+    tmdb_id = movie.tmdb_id
+    movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
+    raise TmdbHandlerError.new("API request failed for tmdb_id: #{tmdb_id}") unless api_result && api_result[:id].to_s == tmdb_id.to_s
 
-    @movie_to_update.update_attributes(title: @movie.title, imdb_id: @movie.imdb_id, genres: @movie.genres,
-      actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
-      poster_path: @movie.poster_path, release_date: @movie.release_date, overview: @movie.overview,
-      trailer: @movie.trailer, director: @movie.director, director_id: @movie.director_id,
-      vote_average: @movie.vote_average, popularity: @movie.popularity, runtime: @movie.runtime,
-      mpaa_rating: @movie.mpaa_rating)
+    updated_data = MovieMore.tmdb_info(api_result)
+
+    if movie.title != updated_data.title
+      puts "Movie title doesn't match. Movie not updated. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
+      return
+    end
+
+    movie.update!(
+      title: updated_data.title,
+      imdb_id: updated_data.imdb_id,
+      genres: updated_data.genres,
+      actors: updated_data.actors,
+      backdrop_path: updated_data.backdrop_path,
+      poster_path: updated_data.poster_path,
+      release_date: updated_data.release_date,
+      overview: updated_data.overview,
+      trailer: movie.trailer || updated_data.trailer,
+      director: updated_data.director,
+      director_id: updated_data.director_id,
+      vote_average: updated_data.vote_average,
+      popularity: updated_data.popularity,
+      runtime: updated_data.runtime,
+      mpaa_rating: updated_data.mpaa_rating,
+      updated_at: Time.current
+    )
+  rescue ActiveRecord::RecordInvalid => error
+    raise TmdbHandlerError.new(error.message)
   end
 
   def tmdb_handler_actor_more(actor_id)
@@ -100,33 +128,33 @@ module TmdbHandler
   end
 
   def tmdb_handler_person_detail_search(person_id)
-    api_bio_url = "https://api.themoviedb.org/3/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
+    api_bio_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
     bio_results = JSON.parse(open(api_bio_url).read, symbolize_names: true)
     @person_profile = MoviePersonProfile.parse_result(bio_results)
 
-    api_movie_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
+    api_movie_credits_url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
     movie_credits_results = JSON.parse(open(api_movie_credits_url).read, symbolize_names: true)
     @person_movie_credits = MoviePersonCredits.parse_result(movie_credits_results)
 
-    api_tv_credits_url = "https://api.themoviedb.org/3/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
+    api_tv_credits_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
     tv_credits_results = JSON.parse(open(api_tv_credits_url).read, symbolize_names: true)
     @person_tv_credits = TVPersonCredits.parse_result(tv_credits_results)
   end
 
   def tmdb_handler_actor_credit(credit_id)
-    @credit_url = "https://api.themoviedb.org/3/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
+    @credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
     @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
     @credit = TVActorCredit.parse_results(@credit_results)
   end
 
   def tmdb_handler_tv_series(show_id)
-    @show_url = "https://api.themoviedb.org/3/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @show_url = "#{BASE_URL}/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @show_results = JSON.parse(open(@show_url).read, symbolize_names: true)
     @series = TVSeries.parse_results(@show_results, show_id)
   end
 
   def tmdb_handler_tv_season(show_id, season_number)
-    @season_url = "https://api.themoviedb.org/3/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    @season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @show_id = show_id
     @season_results = JSON.parse(open(@season_url).read, symbolize_names: true)
     tmdb_handler_tv_series(show_id)
@@ -183,7 +211,7 @@ module TmdbHandler
     @year_select = params[:year_select]
 
     if @actor.present?
-      @actor1_url = "https://api.themoviedb.org/3/search/person?query=#{@actor}&api_key=#{ENV['tmdb_api_key']}"
+      @actor1_url = "#{BASE_URL}/search/person?query=#{@actor}&api_key=#{ENV['tmdb_api_key']}"
       @actor1_search_result = JSON.parse(open(@actor1_url).read, symbolize_names: true)[:results]
       if !@actor1_search_result.present?
         return @not_found = "No results for '#{actor}'."
@@ -193,7 +221,7 @@ module TmdbHandler
     end
 
     if @actor2.present?
-      @actor2_url = "https://api.themoviedb.org/3/search/person?query=#{@actor2}&api_key=#{ENV['tmdb_api_key']}"
+      @actor2_url = "#{BASE_URL}/search/person?query=#{@actor2}&api_key=#{ENV['tmdb_api_key']}"
       @actor2_search_result = JSON.parse(open(@actor2_url).read, symbolize_names: true)[:results]
       if !@actor2_search_result.present?
         return @not_found = "No results for '#{actor2}'."
@@ -225,7 +253,7 @@ module TmdbHandler
     else
       @year_search = "primary_release_date.gte=1800-01-01"
     end
-    @discover_url = "https://api.themoviedb.org/3/discover/movie?#{@year_search}&with_genres=#{@genre}&with_people=#{@people}&with_companies=#{@company}&certification_country=US&certification=#{@mpaa_rating}&sort_by=#{@sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
+    @discover_url = "#{BASE_URL}/discover/movie?#{@year_search}&with_genres=#{@genre}&with_people=#{@people}&with_companies=#{@company}&certification_country=US&certification=#{@mpaa_rating}&sort_by=#{@sort_by}.desc&page=#{@page}&api_key=#{ENV['tmdb_api_key']}"
     @discover_results = JSON.parse(open(@discover_url).read, symbolize_names: true)[:results]
     @movies = MovieSearch.parse_results(@discover_results)
     @total_pages = JSON.parse(open(@discover_url).read, symbolize_names: true)[:total_pages]

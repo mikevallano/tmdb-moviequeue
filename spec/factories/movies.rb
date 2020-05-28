@@ -16,6 +16,20 @@ FactoryBot.define do
     factory :invalid_movie do
       tmdb_id { nil }
     end
-  end
 
+    factory :movie_in_tmdb do
+      title { 'Fargo' }
+      tmdb_id { 275 }
+      imdb_id { 'tt0116282' }
+      backdrop_path { '/747dgDfL5d8esobk7h4odaOFhUq.jpg' }
+      poster_path { '/kKpORM0G7xDvJGQiXpQ0wUp9Dwo.jpg' }
+      release_date { 'Fri, 08 Mar 1996' }
+      overview { 'Jerry, a small-town Minnesota car salesman' }
+      trailer { 'h2tY82z3xXU' }
+      vote_average { 7.9 }
+      popularity { 17.27 }
+      mpaa_rating { 'R' }
+      director { 'Joel Coen' }
+    end
+  end
 end

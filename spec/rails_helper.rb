@@ -38,6 +38,8 @@ unless ENV['TRAVIS']
   Capybara.javascript_driver = :chrome
 end
 
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include Warden::Test::Helpers

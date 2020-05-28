@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'figaro'
 gem 'friendly_id'
+gem 'httparty'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
 gem 'coveralls', '0.8.11', require: false
