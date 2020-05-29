@@ -92,13 +92,12 @@ module TmdbHandler
     tmdb_id = movie.tmdb_id
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
-    raise TmdbHandlerError.new("API request failed for tmdb_id: #{tmdb_id}") unless api_result && api_result[:id].to_s == tmdb_id.to_s
+    raise TmdbHandlerError.new("API request failed for movie: #{movie.title}") unless api_result && api_result[:id].to_s == tmdb_id.to_s
 
     updated_data = MovieMore.tmdb_info(api_result)
 
     if movie.title != updated_data.title
-      puts "Movie title doesn't match. Movie not updated. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
-      return
+      puts "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
     end
 
     movie.update!(
@@ -120,7 +119,7 @@ module TmdbHandler
       updated_at: Time.current
     )
   rescue ActiveRecord::RecordInvalid => error
-    raise TmdbHandlerError.new(error.message)
+    raise TmdbHandlerError.new("#{movie.title} failed update. #{error.message}")
   end
 
   def tmdb_handler_actor_more(actor_id)

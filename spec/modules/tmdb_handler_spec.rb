@@ -36,9 +36,9 @@ RSpec.describe TmdbHandler, type: :module do
       end
     end
 
-    it 'does not update the movie' do
+    it 'still updates the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title', record: :new_episodes) do
-        expect{ subject }.not_to change{ movie.reload.updated_at }
+        expect{ subject }.to change{ movie.reload.updated_at }
       end
     end
   end
