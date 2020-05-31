@@ -1,4 +1,4 @@
-# To run the rake task: rake "tmdb_data:refresh"
+# To run the rake task: rake tmdb_data:refresh
 # To run from console: Rake::Task["tmdb_data:refresh"].invoke
 
 TIME_FRAME = (ENV['tmdb_refresh_time_frame_days'] || 7).to_i.days.ago
