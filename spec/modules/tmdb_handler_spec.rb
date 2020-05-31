@@ -23,7 +23,8 @@ RSpec.describe TmdbHandler, type: :module do
     before { movie.update(tmdb_id: 'wrong')}
     it 'raises an error and does not update the movie' do
       VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie', record: :new_episodes) do
-        expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
+        expect{ subject }.not_to raise_error(TmdbHandler::TmdbHandlerError)
+        expect{ subject }.not_to change{ movie.reload.updated_at }
       end
     end
   end
