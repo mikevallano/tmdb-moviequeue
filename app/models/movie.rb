@@ -44,6 +44,9 @@ class Movie < ActiveRecord::Base
   scope :by_longest_runtime, -> { order(:runtime).reverse_order }
   scope :by_recent_release_date, -> { order(:release_date).reverse_order }
   scope :by_highest_vote_average, -> { order(:vote_average).reverse_order }
+  scope :default_list_order, -> (list) do
+    list.movies.order('CAST(listings.created_at as DATE) desc, listings.priority desc')
+  end
 
   def self.by_highest_priority(list)
     list.movies.sort_by { |movie| movie.priority(list) }.reverse
