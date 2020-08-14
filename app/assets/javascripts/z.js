@@ -19,15 +19,15 @@ $(document).ready(function(){
     'z-index': 1100
   });
 
-  $('#add-to-list-dropdown').autocomplete({
-    source: $("#add-to-list-dropdown").data("autocomplete-source"),
+  $('.list-dropdown').autocomplete({
+    source: $('.list-dropdown').data('autocomplete-source'),
     minLength: 0,
     select: function(event, ui) {
-      handleAddToListAutocompleteSelect(event, ui)
+      handleAddToListAutocompleteSelect($('.list-dropdown'), ui)
     }
   })
 
-  $('#add-to-list-dropdown').click(showAllListsForAutocomplete)
+  $('.ui-autocomplete-input').click(triggerClickForListAutocomplete)
 });
 
 $(document)
@@ -42,27 +42,18 @@ $(document)
     }
   });
 
-function handleAddToListAutocompleteSelect(event, ui) {
-  $("#list_autocomplete_val").val(ui.item.id);
-  $('form#new_listing').submit();
+function handleAddToListAutocompleteSelect(element, ui) {
+  // populate the form field with the id of the autocomplete-selected list
+  element.parent().find('.list-id-field').val(ui.item.id)
+  // submit the form
+  element.parent().submit()
 }
 
-$(document).on('shown.bs.modal', function(){
-  $('form#new_listing').click(showAllListsForAutocomplete)
-  $('#add-to-list-dropdown').autocomplete({
-    source: $("#add-to-list-dropdown").data("autocomplete-source"),
-    minLength: 0,
-    select: function(event, ui) {
-      handleAddToListAutocompleteSelect(event, ui)
-    }
-  })
-});
-
-function showAllListsForAutocomplete() {
+function triggerClickForListAutocomplete() {
   // hack to show all lists when initially clicking
   // in the field. this triggers a backspace keypress
   var evt = jQuery.Event('keydown');
   evt.which = 8; // backspace
   evt.keyCode = 8
-  $('#add-to-list-dropdown').trigger(evt)
+  $(this).trigger(evt)
 }
