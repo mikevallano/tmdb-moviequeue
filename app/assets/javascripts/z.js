@@ -19,6 +19,7 @@ $(document).ready(function(){
     'z-index': 1100
   });
 
+  // Generic selector to trigger autocomplete on the movie show page
   $('.list-dropdown').autocomplete({
     source: $('.list-dropdown').data('autocomplete-source'),
     minLength: 0,
