@@ -7,7 +7,8 @@
           <%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
                                         remote: true,
                                         data: { target: "#myModal_#{movie.tmdb_id}" },
-                                        id: "modal_link_#{movie.tmdb_id}"
+                                        id: "modal_link_#{movie.tmdb_id}",
+                                        class: 'modal-linker'
           %>
         </p>
 

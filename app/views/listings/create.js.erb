@@ -1,21 +1,39 @@
 var from = "<%= @from %>";
 if (from == 'first_list') {
   console.log("from page " + from);
-  $("#movie_modal_innard_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_modal_innard', :locals => {:movie => @movie}) %>");
-  $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_show_list_manage', :locals => {:movie => @movie}) %>");
+  $("#movie_modal_innard_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_modal_innard', locals: {movie: @movie}) %>");
+  $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_show_list_manage', locals: {movie: @movie}) %>");
 }
 else {
-  $("#movie_on_lists_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_on_lists', :locals => {:movie => @movie}) %>");
-  $("#movie_other_list_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_add_to_another_list', :locals => {:movie => @movie}) %>");
-  $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render :partial => 'movies/movie_show_list_manage', :locals => {:movie => @movie}) %>");
+  $("#movie_on_lists_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_on_lists', locals: {movie: @movie}) %>");
+  $("#movie_other_list_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_add_to_another_list', locals: {movie: @movie}) %>");
+  $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_show_list_manage', locals: {movie: @movie}) %>");
 }
 
-$('#add-to-list-dropdown').click(showAllListsForAutocomplete)
+<%# On a list view, we need to specify the movie
+so we use the movie's tmdb_id %>
+var $listPageDropdown = $("#myModal_<%= @movie.tmdb_id %>").find("#add-to-list-dropdown-" + "<%= @movie.tmdb_id %>");
 
- $('.add-to-list-dropdown').autocomplete({
-   source: $("#add-to-list-dropdown").data("autocomplete-source"),
-   minLength: 0,
-   select: function(event, ui) {
-    handleAddToListAutocompleteSelect(event, ui)
-   }
- })
+($listPageDropdown).click(triggerClickForListAutocomplete);
+
+($listPageDropdown).autocomplete({
+  source: $listPageDropdown.data('autocomplete-source'),
+  minLength: 0,
+  select: function(event, ui) {
+    handleAddToListAutocompleteSelect($listPageDropdown, ui)
+  }
+});
+
+<%# On a show page, we have only one movie,
+but we still need the selector because the class is on _all_ movies %>
+var $showPageDropdown = $("#movie_show_listings_" + "<%= @movie.tmdb_id %>").find("#add-to-list-dropdown-" + "<%= @movie.tmdb_id %>");
+
+($showPageDropdown).click(triggerClickForListAutocomplete);
+
+($showPageDropdown).autocomplete({
+  source: $showPageDropdown.data('autocomplete-source'),
+  minLength: 0,
+  select: function(event, ui) {
+    handleAddToListAutocompleteSelect($showPageDropdown, ui)
+  }
+});

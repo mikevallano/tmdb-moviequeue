@@ -3,12 +3,12 @@
       <%= form_for(Listing.new, class: "form-class", id: "modal-add-to-first-list", remote: true) do |f| %>
         <%= text_field_tag  'list_dropdown',
                             nil,
-                            class: "form-control",
-                            id: 'add-to-list-dropdown',
+                            class: "form-control list-dropdown",
+                            id: "add-to-list-dropdown-#{movie.tmdb_id}",
                             placeholder: 'Add to list',
                             data: { autocomplete_source: list_autocomplete_dropdown(movie) }  %>
 
-        <%= hidden_field_tag 'listing[list_id]', '', id: 'list_autocomplete_val' %>
+        <%= hidden_field_tag 'listing[list_id]', '', id: 'list_autocomplete_val', class: 'list-id-field' %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= hidden_field_tag :from, "first_list" %>
