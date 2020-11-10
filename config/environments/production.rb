@@ -78,8 +78,8 @@ Rails.application.configure do
     domain: 'heroku.com',
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD']
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY']
   }
 
   # ActionMailer Config
