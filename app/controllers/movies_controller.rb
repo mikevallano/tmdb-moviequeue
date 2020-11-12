@@ -81,13 +81,13 @@ class MoviesController < ApplicationController
   private
 
   def required_params
-    params[:trailer] = parse_youtube_url(params[:trailer]) if params[:trailer].present?
+    trailer_url = params[:trailer]
+    params[:trailer] = trailer_url.include?('youtube.com') ? youtube_id : trailer_url
     params.permit(:trailer)
   end
 
-  def parse_youtube_url(trailer)
-    return trailer unless trailer.include?('youtube.com')
-    uri = Addressable::URI.parse(trailer)
-    uri.query_values["v"] if uri.query_values
+  def youtube_id
+    uri = Addressable::URI.parse(params[:trailer])
+    uri.query_values['v'] if uri.query_values
   end
 end

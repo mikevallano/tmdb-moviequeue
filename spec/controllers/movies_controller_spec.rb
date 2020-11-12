@@ -58,6 +58,31 @@ RSpec.describe MoviesController, type: :controller do
                 trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
         expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
       end
+
+      context 'with invalid or non-youtube trailers' do
+        # TODO: This illustrates how it currently works.
+        # In https://github.com/mikevallano/tmdb-moviequeue/issues/218,
+        # the plan is to restrict the form field to valid youtube urls,
+        # only allow admins access to this feature,
+        # or add a new join table so random users can't modify movies directly.
+        it 'leaves non-youtube urls as-is' do
+          trailer = 'https://www.example.com'
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: trailer }
+          expect(movie.reload.trailer).to eq(trailer)
+        end
+
+        it 'handles empty trailer urls' do
+          trailer = ''
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: trailer }
+          expect(movie.reload.trailer).to eq(trailer)
+        end
+      end
     end
 
   end #shared example with logged in user
