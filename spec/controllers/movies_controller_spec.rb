@@ -8,6 +8,7 @@ RSpec.describe MoviesController, type: :controller do
   let(:movie) { create(:movie) }
   let(:list) { create(:list, owner_id: user.id) }
   let(:listing) { create(:listing, list_id: list.id, movie_id: movie.id) }
+  let(:youtube_id) { '44urisjfk' }
 
   shared_examples_for 'with logged in user' do
 
@@ -27,7 +28,6 @@ RSpec.describe MoviesController, type: :controller do
 
     describe 'PATCH #update' do
       it 'updates the movie' do
-        youtube_id = '88ur8usk'
         patch :update,
               { id: movie.id,
                 tmdb_id: movie.tmdb_id,
@@ -36,7 +36,6 @@ RSpec.describe MoviesController, type: :controller do
       end
 
       it 'strips full youtube url' do
-        youtube_id = '44urisjfk'
         patch :update,
               { id: movie.id,
                 tmdb_id: movie.tmdb_id,
@@ -44,12 +43,45 @@ RSpec.describe MoviesController, type: :controller do
         expect(movie.reload.trailer).to eq(youtube_id)
       end
 
+      it 'strips youtube url with additional params' do
+        patch :update,
+              { id: movie.id,
+                tmdb_id: movie.tmdb_id,
+                trailer: "https://www.youtube.com/watch?v=#{youtube_id}&ab_channel=A24" }
+        expect(movie.reload.trailer).to eq(youtube_id)
+      end
+
       it 'redirects to the movie show page, trailer-section' do
         patch :update,
               { id: movie.id,
                 tmdb_id: movie.tmdb_id,
-                trailer: 'tester' }
+                trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
         expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
+      end
+
+      context 'with invalid or non-youtube trailers' do
+        # TODO: This illustrates how it currently works.
+        # In https://github.com/mikevallano/tmdb-moviequeue/issues/218,
+        # the plan is to restrict the form field to valid youtube urls,
+        # only allow admins access to this feature,
+        # or add a new join table so random users can't modify movies directly.
+        it 'leaves non-youtube urls as-is' do
+          trailer = 'https://www.example.com'
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: trailer }
+          expect(movie.reload.trailer).to eq(trailer)
+        end
+
+        it 'handles empty trailer urls' do
+          trailer = ''
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: trailer }
+          expect(movie.reload.trailer).to eq(trailer)
+        end
       end
     end
 

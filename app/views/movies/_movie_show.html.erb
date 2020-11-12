@@ -59,7 +59,7 @@
 
             <% if @movie.trailer.present? %>
               <div class="embed-container">
-                <iframe src="https://www.youtube.com/embed/<%= @movie.trailer %>?rel=0"></iframe>
+                <iframe src="https://www.youtube.com/embed/<%= @movie.trailer %>?rel=0" allowfullscreen></iframe>
               </div>
             <% else %>
               <p class="sidebar-button trailer-button">
