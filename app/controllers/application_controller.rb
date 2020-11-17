@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def restrict_to_admin!
+    return if current_user.admin?
+    redirect_to :back, alert: 'Must be an admin to access that feature'
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :password, :password_confirmation, :remember_me])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :username, :email, :password, :remember_me])

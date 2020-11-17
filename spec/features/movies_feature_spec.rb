@@ -63,13 +63,19 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       scenario 'update the movie trailer', js: true do
         youtube_id = '73829hsuhf'
-        sign_in_user(user)
+        sign_in_user(anne) #anne is an "admin"
         visit(movie_path(movie))
         fill_in 'trailer', with: youtube_id
         click_button('add-trailer-btn')
         url = URI.parse(current_url)
         expect("#{url}").to include('trailer-section') #redirects to anchor tag
         expect(movie.reload.trailer).to eq(youtube_id) #updates the trailer
+      end
+
+      scenario 'non-admin shoudl not see trailer btn' do
+        sign_in_user(user)
+        visit(movie_path(movie))
+        expect(page).not_to have_selector('#add-trailer-btn')
       end
 
       scenario "update movie button retrieves latest info from API" do
@@ -80,7 +86,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         VCR.use_cassette('update_movie') do
           click_link("update_movie_link_movie_show")
         end
-        expect(page).to have_content("98 min")
+        expect(page).to have_content("1h 38m")
       end
 
       context "the movie on the show page is on one of the user's lists" do
