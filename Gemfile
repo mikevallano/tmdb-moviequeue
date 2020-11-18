@@ -51,5 +51,6 @@ group :test do
     gem 'launchy'
     gem 'selenium-webdriver'
     gem 'vcr'
+    gem 'webdrivers', '~> 4.0', require: false
     gem 'webmock'
 end
