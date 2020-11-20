@@ -12,6 +12,13 @@
   <a href="https://www.amazon.com/s?k=<%= @movie.title.gsub(' ', '+') %>&i=instant-video" target="_blank" title="Search Amazon"><i class="fa fa-chevron-circle-right"></i> Find on Amazon</a>
 </p>
 
+<!-- link to vudu -->
+<p class="sidebar-button">
+  <a href="https://www.vudu.com/content/movies/search?searchString=<%= @movie.title %>" target="_blank">
+    <i class="fa fa-chevron-circle-right"></i> Find on Vudu
+  </a>
+</p>
+
 <!-- link to youtube -->
 <p class="sidebar-button">
   <a href="https://www.youtube.com/results?search_query=<%= @movie.title %>+full+movie <%= @movie.release_date.stamp('2001') if @movie.release_date.present? %>" target="_blank"><i class="fa fa-chevron-circle-right"></i> Find on YouTube</a>
