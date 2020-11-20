@@ -8,7 +8,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
     let(:username) { FFaker::Internet.user_name }
     let(:user) { create(:user) }
     let(:user2) { create(:user) }
-    let(:anne) { create(:user, username: "anne") }
+    let(:admin_user) { create(:user, admin: true) }
     let(:list) { create(:list, owner_id: user.id) }
     let(:movie) { create(:movie, title: "Fargo", genres: ["Crime"]) }
     let(:movie2) { create(:movie) }
@@ -63,7 +63,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       scenario 'update the movie trailer', js: true do
         youtube_id = '73829hsuhf'
-        sign_in_user(anne) #anne is an "admin"
+        sign_in_user(admin_user)
         visit(movie_path(movie))
         fill_in 'trailer', with: youtube_id
         click_button('add-trailer-btn')
@@ -79,7 +79,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
       end
 
       scenario "update movie button retrieves latest info from API" do
-        sign_in_user(anne) #anne is an "admin"
+        sign_in_user(admin_user)
         fargo
         visit(movie_path(fargo))
         expect(fargo.runtime).to eq(90)
