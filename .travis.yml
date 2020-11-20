@@ -31,5 +31,5 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - export DISPLAY=:99.0
 script:
-  - bundle exec rake db:setup
+  - bundle exec rake db:migrate RAILS_ENV=test
   - bundle exec rspec --exclude-pattern "**/features/*_spec.rb"
