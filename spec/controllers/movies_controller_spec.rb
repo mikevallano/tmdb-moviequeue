@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe MoviesController, type: :controller do
 
   let(:user) { create(:user) }
+  let(:admin_user) { create(:user, username: "anne") }
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
   let(:movie) { create(:movie) }
@@ -27,63 +28,80 @@ RSpec.describe MoviesController, type: :controller do
     end
 
     describe 'PATCH #update' do
-      it 'updates the movie' do
-        patch :update,
-              { id: movie.id,
-                tmdb_id: movie.tmdb_id,
-                trailer: youtube_id }
-        expect(movie.reload.trailer).to eq(youtube_id)
-      end
-
-      it 'strips full youtube url' do
-        patch :update,
-              { id: movie.id,
-                tmdb_id: movie.tmdb_id,
-                trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
-        expect(movie.reload.trailer).to eq(youtube_id)
-      end
-
-      it 'strips youtube url with additional params' do
-        patch :update,
-              { id: movie.id,
-                tmdb_id: movie.tmdb_id,
-                trailer: "https://www.youtube.com/watch?v=#{youtube_id}&ab_channel=A24" }
-        expect(movie.reload.trailer).to eq(youtube_id)
-      end
-
-      it 'redirects to the movie show page, trailer-section' do
-        patch :update,
-              { id: movie.id,
-                tmdb_id: movie.tmdb_id,
-                trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
-        expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
-      end
-
-      context 'with invalid or non-youtube trailers' do
-        # TODO: This illustrates how it currently works.
-        # In https://github.com/mikevallano/tmdb-moviequeue/issues/218,
-        # the plan is to restrict the form field to valid youtube urls,
-        # only allow admins access to this feature,
-        # or add a new join table so random users can't modify movies directly.
-        it 'leaves non-youtube urls as-is' do
-          trailer = 'https://www.example.com'
+      context 'with an admin' do
+        let(:current_user) { login_with(admin_user) }
+        it 'updates the movie' do
           patch :update,
                 { id: movie.id,
                   tmdb_id: movie.tmdb_id,
-                  trailer: trailer }
-          expect(movie.reload.trailer).to eq(trailer)
+                  trailer: youtube_id }
+          expect(movie.reload.trailer).to eq(youtube_id)
         end
 
-        it 'handles empty trailer urls' do
-          trailer = ''
+        it 'strips full youtube url' do
           patch :update,
                 { id: movie.id,
                   tmdb_id: movie.tmdb_id,
-                  trailer: trailer }
-          expect(movie.reload.trailer).to eq(trailer)
+                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
+          expect(movie.reload.trailer).to eq(youtube_id)
+        end
+
+        it 'strips youtube url with additional params' do
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}&ab_channel=A24" }
+          expect(movie.reload.trailer).to eq(youtube_id)
+        end
+
+        it 'redirects to the movie show page, trailer-section' do
+          patch :update,
+                { id: movie.id,
+                  tmdb_id: movie.tmdb_id,
+                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
+          expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
+        end
+
+        context 'with invalid or non-youtube trailers' do
+          # TODO: This illustrates how it currently works.
+          # In https://github.com/mikevallano/tmdb-moviequeue/issues/218,
+          # the plan is to restrict the form field to valid youtube urls,
+          # only allow admins access to this feature,
+          # or add a new join table so random users can't modify movies directly.
+          it 'leaves non-youtube urls as-is' do
+            trailer = 'https://www.example.com'
+            patch :update,
+                  { id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: trailer }
+            expect(movie.reload.trailer).to eq(trailer)
+          end
+
+          it 'handles empty trailer urls' do
+            trailer = ''
+            patch :update,
+                  { id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: trailer }
+            expect(movie.reload.trailer).to eq(trailer)
+          end
         end
       end
-    end
+
+      context 'with a non-admin' do
+        let(:current_user) { login_with(user) }
+        it 'does not update the movie' do
+          @request.env['HTTP_REFERER'] = movie_path(movie)
+          patch :update,
+                  { id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: youtube_id }
+            expect(movie.reload.trailer).not_to eq(youtube_id)
+            expect(response).to redirect_to(movie_path(movie))
+            expect(flash[:alert]).to eq('Must be an admin to access that feature')
+        end
+      end
+    end # describe #update
 
   end #shared example with logged in user
 

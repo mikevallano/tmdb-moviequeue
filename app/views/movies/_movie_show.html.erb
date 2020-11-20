@@ -67,6 +67,7 @@
               </p>
             <% end %> <!-- #if trailer present -->
 
+          <% if current_user.admin? %>
             <%= form_tag(movie_path(@movie), { class: "form-class", id: "add-trailer", method: :patch } ) do %>
               <%= text_field_tag :trailer, nil,
                                   { placeholder: trailer_placeholder_text(@movie),
@@ -75,6 +76,7 @@
               <%= hidden_field_tag(:tmdb_id, @movie.tmdb_id) %>
               <%= submit_tag trailer_button_text(@movie), id: "add-trailer-btn", class: "form-control-submit", disabled: 'disabled' %>
             <% end %> <!-- # tag form loop -->
+          <% end %> <!-- # if admin? -->
 
             <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
               <p><strong>Production Companies:</strong>
