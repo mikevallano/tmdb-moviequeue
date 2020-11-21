@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe MoviesController, type: :controller do
 
   let(:user) { create(:user) }
-  let(:admin_user) { create(:user, username: "anne") }
+  let(:admin_user) { create(:user, admin: true) }
   let(:current_user) { login_with user }
   let(:invalid_user) { login_with nil }
   let(:movie) { create(:movie) }
