@@ -18,6 +18,7 @@ require 'support/mailer_helpers'
 require 'support/vcr'
 require 'capybara/email/rspec'
 require 'support/wait_for_ajax'
+require 'webdrivers/chromedriver'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -30,13 +31,19 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-unless ENV['TRAVIS']
-  Capybara.register_driver :chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+Capybara.register_driver :chrome do |app|
+  if ENV['TRAVIS']
+    opts = { args: %w[headless disable-gpu window-size=1280,1024] }
+    # opts['binary'] = '/usr/bin/google-chrome'
+  else
+    opts = { args: %w[headless disable-gpu window-size=1280,1024] }
   end
-
-  Capybara.javascript_driver = :chrome
+  caps = Selenium::WebDriver::Remote::Capabilities.chrome( chromeOptions: opts )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
 end
+
+Capybara.default_driver = ENV['TRAVIS'] ? :headless_chrome : :chrome
+Capybara.javascript_driver = ENV['TRAVIS'] ? :headless_chrome : :chrome
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
