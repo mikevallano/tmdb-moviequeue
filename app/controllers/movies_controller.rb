@@ -88,7 +88,7 @@ class MoviesController < ApplicationController
   end
 
   def youtube_id
-    uri = Addressable::URI.parse(params[:trailer])
-    uri.query_values['v'] if uri.query_values
+    uri = URI.parse(params[:trailer])
+    CGI::parse(uri.query)['v']&.first if uri.query
   end
 end
