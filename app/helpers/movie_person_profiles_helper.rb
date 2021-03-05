@@ -9,6 +9,6 @@ module MoviePersonProfilesHelper
   end
 
   def actor_movie_posters_uri(actor)
-    "#{root_url}/tmdb/actor_search?actor=#{actor.name.gsub(' ', '+')}"
+    "#{root_url}tmdb/actor_search?actor=#{actor.name.gsub(' ', '+')}"
   end
 end

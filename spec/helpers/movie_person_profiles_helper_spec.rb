@@ -3,10 +3,9 @@
 require 'rails_helper'
 
 describe MoviePersonProfilesHelper, type: :helper do
-  let(:profile) { build(:movie_person_profile) }
+  let(:profile) { build(:movie_person_profile, name: 'Geoff Jefferson') }
   let(:living_profile) { build(:living_movie_person_profile) }
   let(:deceased_profile) { build(:deceased_movie_person_profile) }
-
 
   describe '#display_birthday_info' do
     it 'includes the word version of the birthdate in the returned string' do
@@ -41,6 +40,14 @@ describe MoviePersonProfilesHelper, type: :helper do
       profile.birthday = ''
 
       expect(display_birthday_info(profile)).to eq('Not available')
+    end
+  end
+
+  describe '#actor_movie_posters_uri' do
+    it "generates a uri based on the actor's name" do
+      expected_segment = 'tmdb/actor_search?actor=Geoff+Jefferson'
+      actual_uri = actor_movie_posters_uri(profile)
+      expect(actual_uri).to include(expected_segment)
     end
   end
 end
