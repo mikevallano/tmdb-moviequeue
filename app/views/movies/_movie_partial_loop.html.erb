@@ -4,6 +4,7 @@
       <article class="tile-cover-pic">
         <!-- MODAL TRIGGER -->
         <p id="modal-trigger">
+          <!-- Always display the modal on desktop -->
           <%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
                                         remote: true,
                                         data: { target: "#myModal_#{movie.tmdb_id}" },
@@ -13,7 +14,12 @@
         </p>
 
         <p id="modal-trigger-mobile">
-          <%= link_to image_for(movie), movie_path(movie) %>
+          <!-- Get to a show page on mobile regardless of movie object persistence -->
+          <% if movie.is_a?(Movie) %>
+            <%= link_to image_for(movie), movie_path(movie) %>
+          <% else %>
+            <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id) %>
+          <% end %>
         </p>
 
         <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
