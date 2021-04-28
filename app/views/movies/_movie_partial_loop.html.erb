@@ -19,7 +19,6 @@
             <%= link_to image_for(movie), movie_path(movie) %>
           <% else %>
             <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id) %>
-            <%#= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id), remote: true, data: { target: "#myModal_#{movie.tmdb_id}" }, id: "modal_link_#{movie.tmdb_id}" %>
           <% end %>
         </p>
 
