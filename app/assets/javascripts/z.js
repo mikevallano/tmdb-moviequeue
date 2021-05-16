@@ -15,8 +15,7 @@ $(document).ready(function(){
 
   $('#header-movie-search, ul.ui-autocomplete').css({
     'position': 'relative',
-    'max-width': '455px',
-    'z-index': 1100
+    'max-width': '455px'
   });
 
   // Generic selector to trigger autocomplete on the movie show page
