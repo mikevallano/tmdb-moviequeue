@@ -1,0 +1,16 @@
+<% unless Rails.env.production? %>
+  <div style='background-color: darkcyan;
+              color: white;
+              font-family: monospace;
+              font-size: 1.25em;
+              height: 45px;
+              padding: .75em;
+              position: fixed;
+              text-align: center;
+              width: 100%;
+              z-index: 100;
+  '>
+    🐈 😃 👍 <%= Rails.env.upcase %>: <%= "#{EnvironmentBanner.current_branch}" %> 👍 😃 🐈
+  </div>
+  <div style='height: 45px;'></div>
+<% end %>
