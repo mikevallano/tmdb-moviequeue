@@ -81,10 +81,9 @@ module MoviesHelper
 
   def star_rating(movie)
     if current_user.rated_movies.include?(movie)
-      "IMDB: #{movie.vote_average} ★, Me: #{movie.ratings.by_user(current_user).first.value } ★"
+      "IMDB: #{movie.vote_average} ★, Me: #{movie.ratings.by_user(current_user).first.value } ♥"
     else
       "#{movie.vote_average} ★"
     end
   end
-
 end #MoviesHelper
