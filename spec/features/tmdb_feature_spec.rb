@@ -199,6 +199,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_selector("#modal_link_275")
       end
 
+      # TODO: Either fix this up or remove it. See issue #247
       # scenario "search by actor year and sort by popularity", js: true do
       #   skip "vcr issues"
       #   visit(discover_search_path)
@@ -254,17 +255,20 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Joel Coen")
       end
 
-      scenario "more info page shows link to similar movies that go to their more info page", js: true do
+      xscenario "more info page shows link to similar movies that go to their more info page", js: true do
+        # TODO: failing because similar movies have changed.
+        # Should be fixed to be more flexible. See issue #247
         find("#movie_more_link_movie_partial").click
         VCR.use_cassette("tmdb_similar_movies_more_info") do
           find("#similar_movies_link_movie_more").click
         end
-        # wait_for_ajax
-        # # expect(page).to have_content("The Revenant")
-        # expect(page).to have_selector("#modal_link_281957")
+        wait_for_ajax
+        # expect(page).to have_content("The Revenant")
+        expect(page).to have_selector("#modal_link_281957")
       end
 
       scenario "similar movies are paginated", js: true do
+        # TODO: clean this up. See issue #247.
         find("#movie_more_link_movie_partial").click
         VCR.use_cassette("tmdb_similar_movies_more_info") do
           find("#similar_movies_link_movie_more").click
@@ -279,6 +283,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Previous page")
       end
 
+      # TODO: Either get this working or remove it. See issue #247
       # scenario "more info page shows production companies and links to a discover search", js: true do
       #   find("#movie_more_link_movie_partial").click
       #   expect(page).to have_content("PolyGram Filmed Entertainment")
@@ -302,6 +307,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     xdescribe "movie added to the database" do
       # TODO failing because the selector for adding to a list needs to autocomplete
+      # See issue #247
       before(:each) do
         list
         page.driver.browser.manage.window.resize_to(1280,800)
@@ -382,6 +388,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       xscenario "actor more info page links tv credits to credit url" do
         # TODO: need to update to be more general
+        # See issue #247
         VCR.use_cassette("tmdb_actor_more") do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
