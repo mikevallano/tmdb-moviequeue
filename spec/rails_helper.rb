@@ -39,15 +39,13 @@ capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
   }
 )
 
-unless ENV['TRAVIS']
-  Capybara.register_driver :chrome do |app|
-    # Capybara::Selenium::Driver.new(app, :browser => :chrome)
-    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
-  end
-
-  # use selenium_chrome to actually see what's doing
-  Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.register_driver :chrome do |app|
+  # Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
+
+# use selenium_chrome to actually see what's doing
+Capybara.javascript_driver = :selenium_chrome_headless
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
