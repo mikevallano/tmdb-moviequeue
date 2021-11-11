@@ -35,6 +35,7 @@ unless ENV['TRAVIS']
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
+  # use selenium_chrome to actually see what's doing
   Capybara.javascript_driver = :selenium_chrome_headless
 end
 
