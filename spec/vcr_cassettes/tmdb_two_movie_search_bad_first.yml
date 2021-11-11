@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=*sdlfkjsdflkjsdf
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=*sdlfkjsdflkjsdf
     body:
       encoding: US-ASCII
       string: ''
@@ -18,84 +18,102 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=21600
       Content-Type:
       - application/json;charset=utf-8
-      Date:
-      - Wed, 24 Feb 2016 16:47:43 GMT
-      Etag:
-      - 72b32a1f754ba1c09b3695e0cb6cde7f
-      Server:
-      - openresty
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '25'
-      X-Ratelimit-Reset:
-      - '1456332466'
-      Content-Length:
-      - '57'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-    body:
-      encoding: UTF-8
-      string: '{"page":1,"results":[],"total_results":0,"total_pages":1}'
-    http_version: 
-  recorded_at: Wed, 24 Feb 2016 16:47:42 GMT
-- request:
-    method: get
-    uri: http://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=The%20Big%20Lebowski
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=21600
-      Content-Type:
-      - application/json;charset=utf-8
       Date:
-      - Wed, 24 Feb 2016 16:47:43 GMT
+      - Thu, 11 Nov 2021 00:52:02 GMT
       Server:
       - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
       Vary:
       - Accept-Encoding
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '24'
-      X-Ratelimit-Reset:
-      - '1456332466'
-      Content-Length:
-      - '608'
-      Connection:
-      - keep-alive
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 8ef79748441f91fd579e2b98492c890c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW53-C1
+      X-Amz-Cf-Id:
+      - kIq-VahldFQZgGYzd0h7MJBnFcnYvlg0QXQ_skoYWifqx1uPOxpCzA==
     body:
       encoding: ASCII-8BIT
-      string: '{"page":1,"results":[{"poster_path":"\/aHaVjVoXeNanfwUwQ92SG7tosFM.jpg","adult":false,"overview":"Jeffrey
-        \"The Dude\" Lebowski, a Los Angeles slacker who only wants to bowl and drink
-        white Russians, is mistaken for another Jeffrey Lebowski, a wheelchair-bound
-        millionaire, and finds himself dragged into a strange series of events involving
-        nihilists, adult film producers, ferrets, errant toes, and large sums of money.","release_date":"1998-02-15","genre_ids":[35,80],"id":115,"original_title":"The
-        Big Lebowski","original_language":"en","title":"The Big Lebowski","backdrop_path":"\/okbbgki0sUFgDHWSInMIQgC86Pc.jpg","popularity":3.036516,"vote_count":1274,"video":false,"vote_average":7.53},{"poster_path":null,"adult":false,"overview":"This
-        summer, see your favorite Coen Brothers'' cult classic in a whole new way.
-        Kind of.","release_date":"2011-03-29","genre_ids":[],"id":249110,"original_title":"The
-        Big Lebowski 2","original_language":"en","title":"The Big Lebowski 2","backdrop_path":null,"popularity":1.001195,"vote_count":1,"video":false,"vote_average":0}],"total_results":2,"total_pages":1}'
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
     http_version: 
-  recorded_at: Wed, 24 Feb 2016 16:47:42 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 11 Nov 2021 00:52:02 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=The%20Big%20Lebowski
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 11 Nov 2021 00:52:03 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 56a488589681428d031d729dbc238a07.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW53-C1
+      X-Amz-Cf-Id:
+      - 20Zq428wNfmTFH4S0xK5SrG4F9xm78IZiDSuX4XIZiWgP8aYPxUKXw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"adult":false,"backdrop_path":"/nevS6wjzCxZESvmjJZqdyZ3RNQ6.jpg","genre_ids":[35,80],"id":115,"original_language":"en","original_title":"The
+        Big Lebowski","overview":"Jeffrey ''The Dude'' Lebowski, a Los Angeles slacker
+        who only wants to bowl and drink White Russians, is mistaken for another Jeffrey
+        Lebowski, a wheelchair-bound millionaire, and finds himself dragged into a
+        strange series of events involving nihilists, adult film producers, ferrets,
+        errant toes, and large sums of money.","popularity":29.04,"poster_path":"/5DpmtMBXXNDujIuSlKW3WLKuqEd.jpg","release_date":"1998-03-06","title":"The
+        Big Lebowski","video":false,"vote_average":7.9,"vote_count":8819},{"adult":false,"backdrop_path":null,"genre_ids":[],"id":249110,"original_language":"en","original_title":"The
+        Big Lebowski 2","overview":"This summer, see your favorite Coen Brothers''
+        cult classic in a whole new way. Kind of.","popularity":1.426,"poster_path":"/xxHizKYKLp6cUTxswPc9HfxCd07.jpg","release_date":"2011-03-29","title":"The
+        Big Lebowski 2","video":false,"vote_average":2.6,"vote_count":7},{"adult":false,"backdrop_path":null,"genre_ids":[99],"id":763400,"original_language":"en","original_title":"The
+        Making of The Big Lebowski","overview":"A short documentary about the production
+        of The Big Lebowski (1998).","popularity":0.84,"poster_path":"/8szaRNN9bETpBHds2OLRkKbgb80.jpg","release_date":"1998-10-27","title":"The
+        Making of The Big Lebowski","video":false,"vote_average":6,"vote_count":1}],"total_pages":1,"total_results":3}'
+    http_version: 
+  recorded_at: Thu, 11 Nov 2021 00:52:03 GMT
+recorded_with: VCR 5.0.0

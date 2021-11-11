@@ -18,59 +18,118 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=28800
       Content-Type:
       - application/json;charset=utf-8
-      Date:
-      - Tue, 23 Feb 2016 17:12:44 GMT
-      Etag:
-      - W/"23e8925999387cca108ebf3df82becd5"
-      Server:
-      - openresty
-      Status:
-      - 200 OK
-      Vary:
-      - Accept-Encoding
-      X-Memc:
-      - HIT
-      X-Memc-Age:
-      - '13553'
-      X-Memc-Expires:
-      - '15247'
-      X-Memc-Key:
-      - d391e9bdd381f9f0679bbfc749059ac8
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '32'
-      X-Ratelimit-Reset:
-      - '1456247570'
-      Content-Length:
-      - '2240'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
+      Date:
+      - Thu, 11 Nov 2021 00:55:38 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=28800
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - a1b06d3aeac8d2169c0fccd47763c96201864318
+      X-Memc-Age:
+      - '2727'
+      X-Memc-Expires:
+      - '873'
+      Etag:
+      - W/"f27a10d5d4091c5ed684ce3ae5a95a8f"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0bcd0e379c9cf8a77e6550e0c70cfaf9.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW53-C1
+      X-Amz-Cf-Id:
+      - rAEbOwfm_gOHU1cgW-D8IpZsJjCNI92dIz7raUopGxBWqEoLCLYOgg==
     body:
       encoding: ASCII-8BIT
-      string: '{"backdrop_path":"/f5uNbUC76oowt5mt5J9QlqrIYQ6.jpg","created_by":[{"id":5741,"name":"Matt
-        Groening","profile_path":"/zYzOuM94hbVmage9XZrQ8daHyoF.jpg"}],"episode_run_time":[22],"first_air_date":"1989-12-16","genres":[{"id":35,"name":"Comedy"},{"id":16,"name":"Animation"},{"id":10751,"name":"Family"}],"homepage":"http://www.thesimpsons.com/","id":456,"in_production":true,"languages":["en"],"last_air_date":"2016-02-21","name":"The
-        Simpsons","networks":[{"id":303,"name":"Fox"},{"id":400,"name":"Antena 3"},{"id":1189,"name":"Neox"}],"number_of_episodes":588,"number_of_seasons":27,"origin_country":["US"],"original_language":"en","original_name":"The
+      string: '{"backdrop_path":"/iWsYpPTBvsXxXQcP5imjPZ8F8UX.jpg","created_by":[{"id":5741,"credit_id":"5256bdc619c2956ff6001be4","name":"Matt
+        Groening","gender":2,"profile_path":"/2HmAw3AN93DGESPi3ibLZgBa8cT.jpg"}],"episode_run_time":[22],"first_air_date":"1989-12-17","genres":[{"id":10751,"name":"Family"},{"id":16,"name":"Animation"},{"id":35,"name":"Comedy"}],"homepage":"https://www.fox.com/the-simpsons/","id":456,"in_production":true,"languages":["en"],"last_air_date":"2021-11-07","last_episode_to_air":{"air_date":"2021-11-07","episode_number":6,"id":3271553,"name":"A
+        Serious Flanders: Part One","overview":"When a ruthless debt collector come
+        to Springfield, Homer and Ned''s lives are sucked into the artificial world
+        of prestige TV.","production_code":"QABF21","season_number":33,"still_path":"/8vUh5H3tmR55BQPUCBzxGiF5dUI.jpg","vote_average":0.0,"vote_count":0},"name":"The
+        Simpsons","next_episode_to_air":{"air_date":"2021-11-14","episode_number":7,"id":3271554,"name":"A
+        Serious Flanders: Part Two","overview":"Things for Ned and Homer go from bad
+        to gosh-darn worse in the stunning conclusion of this ''Simpflix'' prestige
+        crime thriller.","production_code":"QABF22","season_number":33,"still_path":null,"vote_average":0.0,"vote_count":0},"networks":[{"name":"FOX","id":19,"logo_path":"/1DSpHrWyOORkL9N2QHX7Adt31mQ.png","origin_country":"US"}],"number_of_episodes":717,"number_of_seasons":33,"origin_country":["US"],"original_language":"en","original_name":"The
         Simpsons","overview":"Set in Springfield, the average American town, the show
         focuses on the antics and everyday adventures of the Simpson family; Homer,
         Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands. Since
         the beginning, the series has been a pop culture icon, attracting hundreds
         of celebrities to guest star. The show has also made name for itself in its
-        fearless satirical take on politics, media and American life in general.","popularity":15.33142,"poster_path":"/yTZQkSsxUFJZJe67IenRM0AEklc.jpg","production_companies":[{"name":"Gracie
-        Films","id":18},{"name":"20th Century Fox Television","id":1556},{"name":"The
-        Curiosity Company","id":29500}],"seasons":[{"air_date":"1987-04-19","episode_count":61,"id":3581,"poster_path":"/lzN0CllVFXtGtSl15r59Kb52DdT.jpg","season_number":0},{"air_date":"1989-12-16","episode_count":13,"id":3582,"poster_path":"/o6wvnWuUKW1g2bLs2gmI2ObMYJG.jpg","season_number":1},{"air_date":"1991-03-23","episode_count":22,"id":3583,"poster_path":"/899T1Dil6IYq37A6uzYhFaOqilr.jpg","season_number":2},{"air_date":"1991-09-19","episode_count":24,"id":3584,"poster_path":"/wedEESbwtgysceFhdMlMMTrHKpz.jpg","season_number":3},{"air_date":"1992-09-24","episode_count":22,"id":3585,"poster_path":"/ddIiahsCEYHqKD0xZPwdRZF7VIu.jpg","season_number":4},{"air_date":"1993-09-30","episode_count":22,"id":3586,"poster_path":"/ztD5qDtGXkjdfRrno9Emnn4UHVG.jpg","season_number":5},{"air_date":"1994-09-04","episode_count":25,"id":3587,"poster_path":"/59HHaOIi7JQTfRQsKaajhvMaon4.jpg","season_number":6},{"air_date":"1995-09-17","episode_count":25,"id":3588,"poster_path":"/kbLb79JIYAMj8aSyfmqBN89yudl.jpg","season_number":7},{"air_date":"1996-10-27","episode_count":25,"id":3589,"poster_path":"/fInRa8rbJhjM5LUrsT2F7DO2B6Q.jpg","season_number":8},{"air_date":"1997-09-21","episode_count":25,"id":3590,"poster_path":"/fYwRRzbCaGNHtKXySHP88u3Nphe.jpg","season_number":9},{"air_date":"1998-08-23","episode_count":23,"id":3591,"poster_path":"/xtDXrWJwfWIFonb7LmLQc1EUAwh.jpg","season_number":10},{"air_date":"1999-09-26","episode_count":22,"id":3592,"poster_path":"/exp4uKirVfHPBSKoJK5j8NMGkLe.jpg","season_number":11},{"air_date":"2000-11-01","episode_count":21,"id":3593,"poster_path":"/zuxRNFLbITVZGbEZoG7SaCT2ZYH.jpg","season_number":12},{"air_date":"2001-11-06","episode_count":22,"id":3594,"poster_path":"/taVd1uPq27IQiXSyknQg3ybAPYf.jpg","season_number":13},{"air_date":"2002-11-03","episode_count":22,"id":3595,"poster_path":"/akyPsaNTFipfzrhpxNscEmlnMeK.jpg","season_number":14},{"air_date":"2003-11-02","episode_count":22,"id":3596,"poster_path":"/7kS9w9SyjhpiLrwIfCtx0GYuRiR.jpg","season_number":15},{"air_date":"2004-11-07","episode_count":21,"id":3597,"poster_path":"/9zGCsrc3O4YxwlFW8HXWGGU35YF.jpg","season_number":16},{"air_date":"2005-09-11","episode_count":22,"id":3598,"poster_path":"/qRNdd8RC6gfFfpw9nLteLkxfgmb.jpg","season_number":17},{"air_date":"2006-09-10","episode_count":22,"id":3599,"poster_path":"/2ufMOFXBrJpDfYPuX867i9GTRN6.jpg","season_number":18},{"air_date":"2007-09-23","episode_count":20,"id":3600,"poster_path":"/9yyIKU2kBBzzv8mVdOcKwWEHXyc.jpg","season_number":19},{"air_date":"2008-09-28","episode_count":21,"id":3601,"poster_path":"/c1Bxaehz9ETrYpMSwS44uC0aRZz.jpg","season_number":20},{"air_date":"2009-09-27","episode_count":23,"id":3602,"poster_path":"/vT5OgXM5rMKzzF4rrSjFxI3USCg.jpg","season_number":21},{"air_date":"2010-09-26","episode_count":22,"id":3603,"poster_path":"/dfYWKwINJ5DaJHxdkHtaVJQfBZI.jpg","season_number":22},{"air_date":"2011-09-25","episode_count":22,"id":3604,"poster_path":"/leehbIbn1loBlEndV7WibzyRtuV.jpg","season_number":23},{"air_date":"2012-09-30","episode_count":22,"id":3605,"poster_path":"/geQfditNq4d4pZXAEAnUAFtWoGL.jpg","season_number":24},{"air_date":"2013-09-29","episode_count":22,"id":3606,"poster_path":"/e0MUnARB8E0BmtHpEvE1Xu1RR3Y.jpg","season_number":25},{"air_date":"2014-09-28","episode_count":22,"id":62103,"poster_path":"/5HR6Cp7WowTUFkTZ1nrkvi6vqbW.jpg","season_number":26},{"air_date":"2015-09-27","episode_count":14,"id":68067,"poster_path":"/npIeyM8Z2NV3bpzKL6xZ29ex3OE.jpg","season_number":27}],"status":"Returning
-        Series","type":"Scripted","vote_average":8.0,"vote_count":187,"credits":{"cast":[{"character":"Bart
-        Simpson","credit_id":"5256bdc319c2956ff6001554","id":200,"name":"Nancy Cartwright","profile_path":"/wb8RZu3vw7gDZoRFWNNpsbznRWC.jpg","order":0},{"character":"Homer
-        Simpson","credit_id":"5256bdc319c2956ff600157c","id":198,"name":"Dan Castellaneta","profile_path":"/dmId1hAL2tluhrgVPChDabeoA0n.jpg","order":1},{"character":"Marge
-        Simpson","credit_id":"5256bdc319c2956ff60015a0","id":199,"name":"Julie Kavner","profile_path":"/AuhOCpsQwr09nBvTtaqArggLNd7.jpg","order":2},{"character":"Lisa
-        Simpson","credit_id":"5256bdc319c2956ff60015ba","id":5586,"name":"Yeardley
-        Smith","profile_path":"/g2LYM8XqkFiPsupUgky6PNuIenL.jpg","order":3}],"crew":[]}}'
+        fearless satirical take on politics, media and American life in general.","popularity":532.402,"poster_path":"/tubgEpjTUA7t0kejVMBsNBZDarZ.jpg","production_companies":[{"id":29500,"logo_path":"/a3ltwX7b1opYeG7MxaxxswDmkeg.png","name":"The
+        Curiosity Company","origin_country":"US"},{"id":18,"logo_path":"/uqhagSwM7NAkQWVCQhKTyoqF8XH.png","name":"Gracie
+        Films","origin_country":"US"},{"id":1556,"logo_path":"/31h94rG9hzjprXoYNy3L1ErUya2.png","name":"20th
+        Century Fox Television","origin_country":"US"},{"id":154887,"logo_path":null,"name":"20th
+        Television Animation","origin_country":"US"}],"production_countries":[{"iso_3166_1":"US","name":"United
+        States of America"}],"seasons":[{"air_date":"1987-04-19","episode_count":80,"id":3581,"name":"Specials","overview":"","poster_path":"/nU6uGiDztSPTBagRACk0yqoxGN5.jpg","season_number":0},{"air_date":"1989-12-17","episode_count":13,"id":3582,"name":"Season
+        1","overview":"","poster_path":"/488IWIcFsTFMfmVc7Kwv0Y1bHMt.jpg","season_number":1},{"air_date":"1990-10-11","episode_count":22,"id":3583,"name":"Season
+        2","overview":"","poster_path":"/4ROAI3tNaRaL8UZWoSO51woN3WE.jpg","season_number":2},{"air_date":"1991-09-19","episode_count":24,"id":3584,"name":"Season
+        3","overview":"","poster_path":"/8Xxoh0BJ2fN6i9Vgvi75AtOUtkY.jpg","season_number":3},{"air_date":"1992-09-24","episode_count":22,"id":3585,"name":"Season
+        4","overview":"","poster_path":"/99Y4jM3a6cX52DBD2Dw61g1dGh8.jpg","season_number":4},{"air_date":"1993-09-30","episode_count":22,"id":3586,"name":"Season
+        5","overview":"","poster_path":"/p8tRDtrkzquirArGp6S1b7Zxle3.jpg","season_number":5},{"air_date":"1994-09-04","episode_count":25,"id":3587,"name":"Season
+        6","overview":"","poster_path":"/snDwSvdyCy60DuQybCBVKxtxLX5.jpg","season_number":6},{"air_date":"1995-09-17","episode_count":25,"id":3588,"name":"Season
+        7","overview":"","poster_path":"/tLVFgS1kxkqmwakZRE4kTk6BiAR.jpg","season_number":7},{"air_date":"1996-10-27","episode_count":25,"id":3589,"name":"Season
+        8","overview":"","poster_path":"/1lrQjZq8ctoAshlKsi2F0PR2HLV.jpg","season_number":8},{"air_date":"1997-09-21","episode_count":25,"id":3590,"name":"Season
+        9","overview":"","poster_path":"/t8fjeqkohXBHeKoEj6ZFZG4XHI4.jpg","season_number":9},{"air_date":"1998-08-23","episode_count":23,"id":3591,"name":"Season
+        10","overview":"","poster_path":"/ixqRTQkjBDHT0n1YyKEcHCsAyS1.jpg","season_number":10},{"air_date":"1999-09-26","episode_count":22,"id":3592,"name":"Season
+        11","overview":"","poster_path":"/swM9G5ojulvLYIF721Y6swoJQGh.jpg","season_number":11},{"air_date":"2000-11-01","episode_count":21,"id":3593,"name":"Season
+        12","overview":"","poster_path":"/xPRZmUukPXqlSZfGMaEI0GyVhjW.jpg","season_number":12},{"air_date":"2001-11-06","episode_count":22,"id":3594,"name":"Season
+        13","overview":"","poster_path":"/zlyQtqZff5XedatzPR3TZkFEsLc.jpg","season_number":13},{"air_date":"2002-11-03","episode_count":22,"id":3595,"name":"Season
+        14","overview":"","poster_path":"/3udHYBrZzJWmGNjTl21D93TYbCG.jpg","season_number":14},{"air_date":"2003-11-02","episode_count":22,"id":3596,"name":"Season
+        15","overview":"","poster_path":"/svXs3ugVAoKSZoBQNUZ3sQIp1ly.jpg","season_number":15},{"air_date":"2004-11-07","episode_count":21,"id":3597,"name":"Season
+        16","overview":"","poster_path":"/iquKGAhJKZ9IkKtKT4JqhAnjDFW.jpg","season_number":16},{"air_date":"2005-09-11","episode_count":22,"id":3598,"name":"Season
+        17","overview":"","poster_path":"/9EpBFv9YpKCZhXQhKKTSG1h3OGi.jpg","season_number":17},{"air_date":"2006-09-10","episode_count":22,"id":3599,"name":"Season
+        18","overview":"","poster_path":"/7L7ZUZYghgjCcUfLcOPl86MiCvT.jpg","season_number":18},{"air_date":"2007-09-23","episode_count":20,"id":3600,"name":"Season
+        19","overview":"","poster_path":"/8SkD4jvPIPkugszVeWoAa0gLxW.jpg","season_number":19},{"air_date":"2008-09-28","episode_count":21,"id":3601,"name":"Season
+        20","overview":"","poster_path":"/or7v8DhoSXX4DoDPXqFg0qT6RSR.jpg","season_number":20},{"air_date":"2009-09-27","episode_count":23,"id":3602,"name":"Season
+        21","overview":"","poster_path":"/zw4BQOMFlM8cu1beAUJhY6Rk76T.jpg","season_number":21},{"air_date":"2010-09-26","episode_count":22,"id":3603,"name":"Season
+        22","overview":"","poster_path":"/fOX0HS4Tn8w21hwhOa8YrAakv7k.jpg","season_number":22},{"air_date":"2011-09-25","episode_count":22,"id":3604,"name":"Season
+        23","overview":"","poster_path":"/6SKdh36MCY9fzjen19mIBiZI8p6.jpg","season_number":23},{"air_date":"2012-09-30","episode_count":22,"id":3605,"name":"Season
+        24","overview":"","poster_path":"/kejxf5JJoIJR4jygJQQhuutK7el.jpg","season_number":24},{"air_date":"2013-09-29","episode_count":22,"id":3606,"name":"Season
+        25","overview":"","poster_path":"/sBYXSBgzVwyUXG4QncOv9DoSp5E.jpg","season_number":25},{"air_date":"2014-09-28","episode_count":22,"id":62103,"name":"Season
+        26","overview":"Homer and Bart attempt to solve some father/son conflicts,
+        Marge opens a sandwich franchise, the Simpsons meet their former selves, Bart
+        schemes to bring down his new fourth grade teacher, Homer has a mid-life crisis,
+        and the cast of Futurama make an appearance in Springfield.","poster_path":"/qoj96WCeePxkC0qkV391T7a6iom.jpg","season_number":26},{"air_date":"2015-09-27","episode_count":22,"id":68067,"name":"Season
+        27","overview":"","poster_path":"/AoOVTGxfGyfRpmNJhonfqPeTiY8.jpg","season_number":27},{"air_date":"2016-09-25","episode_count":22,"id":80361,"name":"Season
+        28","overview":"","poster_path":"/Asrn5wh8mHVm8a1ZsIWfwBX00RM.jpg","season_number":28},{"air_date":"2017-10-01","episode_count":21,"id":91255,"name":"Season
+        29","overview":"","poster_path":"/9LAihbWybQA2UCLjitES1K3xc3T.jpg","season_number":29},{"air_date":"2018-09-30","episode_count":23,"id":110088,"name":"Season
+        30","overview":"","poster_path":"/l18xQsO27KFJwsj35JaAsG95dN7.jpg","season_number":30},{"air_date":"2019-09-29","episode_count":22,"id":131143,"name":"Season
+        31","overview":"","poster_path":"/yT47p0XMkefgzOBQ2G3j31bK41x.jpg","season_number":31},{"air_date":"2020-09-27","episode_count":22,"id":156684,"name":"Season
+        32","overview":"","poster_path":"/ifvEta1mmPGLu3E6lFnPSJAyBhh.jpg","season_number":32},{"air_date":"2021-09-26","episode_count":11,"id":184349,"name":"Season
+        33","overview":"","poster_path":"/sjg9DQMgZzUA0Uqfw7eL89gFXOr.jpg","season_number":33}],"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Returning
+        Series","tagline":"On your marks, get set, d''oh!","type":"Scripted","vote_average":7.9,"vote_count":7247,"credits":{"cast":[{"adult":false,"gender":2,"id":198,"known_for_department":"Acting","name":"Dan
+        Castellaneta","original_name":"Dan Castellaneta","popularity":7.305,"profile_path":"/AmeqWhP4A46AWkM4kVphg6jOTQX.jpg","character":"Homer
+        Simpson / Abe Simpson / Barney Gumble / Krusty (voice)","credit_id":"5256bdc319c2956ff600157c","order":0},{"adult":false,"gender":1,"id":199,"known_for_department":"Acting","name":"Julie
+        Kavner","original_name":"Julie Kavner","popularity":4.455,"profile_path":"/x3oG3OXtBfTFgqXPqxI1GKVEiaQ.jpg","character":"Marge
+        Simpson / Patty Bouvier / Selma Bouvier (voice)","credit_id":"5256bdc319c2956ff60015a0","order":1},{"adult":false,"gender":1,"id":200,"known_for_department":"Acting","name":"Nancy
+        Cartwright","original_name":"Nancy Cartwright","popularity":6.69,"profile_path":"/40qNhyYJhSE2Yiy4pnXSZhdufO6.jpg","character":"Bart
+        Simpson / Nelson Muntz / Ralph Wiggum (voice)","credit_id":"5256bdc319c2956ff6001554","order":2},{"adult":false,"gender":1,"id":5586,"known_for_department":"Acting","name":"Yeardley
+        Smith","original_name":"Yeardley Smith","popularity":3.54,"profile_path":"/9AjPwbb3uz4GfgOPBYsy2ILvwkB.jpg","character":"Lisa
+        Simpson (voice)","credit_id":"5256bdc319c2956ff60015ba","order":3},{"adult":false,"gender":2,"id":5587,"known_for_department":"Acting","name":"Hank
+        Azaria","original_name":"Hank Azaria","popularity":3.254,"profile_path":"/yFDw4b0jucuFWNnGcBPfpYUtn16.jpg","character":"Moe
+        Szyslak / Chief Wiggum / Apu / Comic Book Guy / Carl (voice)","credit_id":"5256bdc319c2956ff600167a","order":7},{"adult":false,"gender":2,"id":6008,"known_for_department":"Acting","name":"Harry
+        Shearer","original_name":"Harry Shearer","popularity":2.768,"profile_path":"/au1mO0Mb9gni7h0rJCSokBTDnVf.jpg","character":"Ned
+        Flanders / Mr. Burns / Smithers / Skinner / Lenny (voice)","credit_id":"5cf20dbe9251411cdbba646e","order":500}],"crew":[{"adult":false,"gender":2,"id":531,"known_for_department":"Sound","name":"Danny
+        Elfman","original_name":"Danny Elfman","popularity":2.127,"profile_path":"/zFladKAPypbzp26Tfyeiy23vanH.jpg","credit_id":"60c132f7a284eb00298890dc","department":"Sound","job":"Main
+        Title Theme Composer"}]}}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:12:43 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 11 Nov 2021 00:55:38 GMT
+recorded_with: VCR 5.0.0

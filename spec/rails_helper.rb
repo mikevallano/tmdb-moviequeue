@@ -35,7 +35,7 @@ unless ENV['TRAVIS']
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
-  Capybara.javascript_driver = :chrome
+  Capybara.javascript_driver = :selenium_chrome_headless
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
