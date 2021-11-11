@@ -30,9 +30,19 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+  chromeOptions: {
+    args: %w[
+      headless disable-gpu no-sandbox
+      --window-size=1980,1080 --enable-features=NetworkService,NetworkServiceInProcess
+    ]
+  }
+)
+
 unless ENV['TRAVIS']
   Capybara.register_driver :chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    # Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
   end
 
   # use selenium_chrome to actually see what's doing
