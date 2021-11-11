@@ -92,6 +92,7 @@ module TmdbHandler
     tmdb_id = movie.tmdb_id.to_s
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
+    puts "api_result: #{api_result} #{'*' * 100}"
     raise TmdbHandlerError.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}") unless api_result
     if api_result[:status_code] == 34 && api_result[:status_message]&.include?('could not be found')
       puts "Movie not found, so not updated. Title: #{movie.title}. tmdb_id: #{tmdb_id}"
