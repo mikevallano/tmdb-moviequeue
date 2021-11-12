@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/credit/54ef661dc3a3686d660072cc?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/credit/532cc9c9c3a3685fe20005b6?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
     body:
       encoding: US-ASCII
       string: ''
@@ -18,44 +18,73 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=28800
       Content-Type:
       - application/json;charset=utf-8
-      Date:
-      - Tue, 01 Mar 2016 02:41:40 GMT
-      Etag:
-      - '"bf4984f6835f52b2b4d1c04e7114f930"'
-      Server:
-      - openresty
-      Status:
-      - 200 OK
-      X-Memc:
-      - HIT
-      X-Memc-Age:
-      - '308'
-      X-Memc-Expires:
-      - '28492'
-      X-Memc-Key:
-      - 994d39d99badebf90dc308e3feeb4b76
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '39'
-      X-Ratelimit-Reset:
-      - '1456800110'
-      Content-Length:
-      - '542'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
+      Date:
+      - Thu, 11 Nov 2021 00:55:40 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=28800
+      X-Memc:
+      - MISS, STORE
+      X-Memc-Key:
+      - fcb7e34d68a48388ea5e729b684eaf0e7f5de361
+      X-Memc-Age:
+      - '0'
+      X-Memc-Expires:
+      - '16090'
+      Etag:
+      - W/"fe27e1d98b629cd9c75e5d0d3dc5b85e"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 9640b18d737cfe6781325a87b2339aa5.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW53-C1
+      X-Amz-Cf-Id:
+      - TeGtVOw3iGAsh2xS2w88YgjodD1gTUTNhAEYDBG76qtwpymaoqKXcA==
     body:
-      encoding: UTF-8
-      string: '{"credit_type":"cast","department":"Actors","job":"Actor","media":{"id":33922,"name":"Portlandia","original_name":"Portlandia","character":"Various","episodes":[{"air_date":"2015-02-26","episode_number":8,"name":"House
-        for Sale","overview":"Fred and Carrie''s landlord moves into their house;
-        Kath and Dave decide to buy a new home for their next renovation project.","season_number":5,"still_path":"/a2qb6likwtCiNiaiJoh6Ov6tnGI.jpg"}],"seasons":[]},"media_type":"tv","id":"54ef661dc3a3686d660072cc","person":{"name":"Steve
-        Buscemi","id":884}}'
+      encoding: ASCII-8BIT
+      string: '{"credit_type":"cast","department":"Acting","job":"Actor","media":{"backdrop_path":"/kCOLltSpNznhpdHhxCsky3eU1jI.jpg","first_air_date":"2011-01-21","genre_ids":[35],"id":33922,"name":"Portlandia","origin_country":["US"],"original_language":"en","original_name":"Portlandia","overview":"Satirical
+        sketch comedy set and filmed in Portland, Oregon that explores the eccentric
+        misfits who embody the foibles of modern culture.","poster_path":"/pfaxCP6YqlFHCL3QytnTanwRTL5.jpg","vote_average":6.8,"vote_count":89,"popularity":13.789,"character":"Celery
+        Salesman","episodes":[{"air_date":"2014-03-13","episode_number":3,"id":972820,"name":"Celery
+        Guy","overview":"A celery salesman goes to great lengths to have celery become
+        more popular; 911 dispatchers assure callers that it''s beets; The Order Grill
+        is open for lunch; Carrie declares social bankruptcy; a fed up office worker
+        wants to become a gutter punk.","production_code":"","season_number":4,"show_id":33922,"still_path":"/lWih2Si0KPsAkmGnqd3YC1I2uNn.jpg","vote_average":8.0,"vote_count":3}],"seasons":[{"air_date":"2014-02-27","episode_count":10,"id":44743,"name":"Season
+        4","overview":"","poster_path":"/i4i7iRNytb5JChQH5upQUKuastn.jpg","season_number":4,"show_id":33922}]},"media_type":"tv","id":"532cc9c9c3a3685fe20005b6","person":{"adult":false,"gender":2,"name":"Steve
+        Buscemi","id":884,"known_for":[{"id":680,"overview":"A burger-loving hit man,
+        his philosophical partner, a drug-addled gangster''s moll and a washed-up
+        boxer converge in this sprawling, comedic crime caper. Their adventures unfurl
+        in three stories that ingeniously trip back and forth in time.","release_date":"1994-09-10","adult":false,"backdrop_path":"/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg","vote_count":21979,"genre_ids":[53,80],"title":"Pulp
+        Fiction","original_language":"en","original_title":"Pulp Fiction","poster_path":"/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg","vote_average":8.5,"video":false,"popularity":60.174,"media_type":"movie"},{"adult":false,"backdrop_path":"/hVxPPgSL72qS18jIB3eWXoAsoWu.jpg","genre_ids":[16,35,10751],"id":585,"original_language":"en","original_title":"Monsters,
+        Inc.","overview":"James Sullivan and Mike Wazowski are monsters, they earn
+        their living scaring children and are the best in the business... even though
+        they''re more afraid of the children than they are of them. When a child accidentally
+        enters their world, James and Mike suddenly find that kids are not to be afraid
+        of and they uncover a conspiracy that could threaten all children across the
+        world.","poster_path":"/sgheSKxZkttIe8ONsf2sWXPgip3.jpg","release_date":"2001-11-01","title":"Monsters,
+        Inc.","video":false,"vote_average":7.8,"vote_count":14744,"popularity":145.975,"media_type":"movie"},{"adult":false,"backdrop_path":"/g6R1OT7ETBLGLeUJOE0pOiAFHcI.jpg","genre_ids":[80,53],"id":500,"original_language":"en","original_title":"Reservoir
+        Dogs","overview":"A botched robbery indicates a police informant, and the
+        pressure mounts in the aftermath at a warehouse. Crime begets violence as
+        the survivors -- veteran Mr. White, newcomer Mr. Orange, psychopathic parolee
+        Mr. Blonde, bickering weasel Mr. Pink and Nice Guy Eddie -- unravel.","poster_path":"/lsBnfheKZBO3UKU7lVHIeGZLWuF.jpg","release_date":"1992-09-02","title":"Reservoir
+        Dogs","video":false,"vote_average":8.2,"vote_count":11126,"popularity":34.064,"media_type":"movie"}],"known_for_department":"Acting","profile_path":"/lQKdHMxfYcCBOvwRKBAxPZVNtkg.jpg","popularity":14.094}}'
     http_version: 
-  recorded_at: Tue, 01 Mar 2016 02:41:39 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 11 Nov 2021 00:55:40 GMT
+recorded_with: VCR 5.0.0

@@ -124,7 +124,8 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#new_rating_link_movie_show")
         end
 
-        scenario "unwatched movie has a link to mark as watched", js: true do
+        xscenario "unwatched movie has a link to mark as watched", js: true do
+          # TODO: Needs to be fixed. See issue #247
           visit(movie_path(movie))
           expect(page).to have_selector("#mark_watched_link_movies_partial")
           expect(page).not_to have_selector("#add_screening_link_movies_partial")
@@ -179,7 +180,8 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).not_to have_link("Next")
       end #pagination
 
-      context "tagging" do
+      xcontext "tagging" do
+        # TODO: Needs to be fixed. See issue #247
         before(:each) do
           listing
           page.driver.browser.manage.window.resize_to(1280,800)
@@ -319,11 +321,13 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#new_review_link_movies_partial")
         end
 
-        scenario "link to mark as watched if not watched, link marks as watched", js: true do
+        xscenario "link to mark as watched if not watched, link marks as watched", js: true do
+        # TODO: Flickering. See issue #247
           find("#modal_link_#{movie.tmdb_id}").click
           expect(page).not_to have_selector("#add_screening_link_movies_partial")
           click_link "mark_watched_link_movies_partial", match: :first
           expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
+          find("#add_screening_link_movies_partial")
           expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
         end
 

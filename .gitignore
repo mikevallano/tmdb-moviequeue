@@ -19,7 +19,6 @@ tester.html.erb
 tester2.html.erb
 tester.js.erb
 coverage/
-spec/vcr_cassettes/*
 
 # Ignore application configuration
 /config/application.yml

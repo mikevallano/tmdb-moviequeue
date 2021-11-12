@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/credit/56ad478dc3a3681c34006885?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/credit/5adab0c9c3a36862ef003fd0?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
     body:
       encoding: US-ASCII
       string: ''
@@ -18,43 +18,74 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - public, max-age=28800
       Content-Type:
       - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
       Date:
-      - Tue, 23 Feb 2016 17:12:45 GMT
-      Etag:
-      - '"0e3a3a80ac7c1f66cd23643a3d37311a"'
+      - Thu, 11 Nov 2021 00:55:40 GMT
       Server:
       - openresty
-      Status:
-      - 200 OK
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=28800
       X-Memc:
       - MISS, STORE
+      X-Memc-Key:
+      - a612ccba90ac13aecdf065bd1033f91c6a8bee94
       X-Memc-Age:
       - '0'
       X-Memc-Expires:
-      - '28800'
-      X-Memc-Key:
-      - 9561c1a73815b7a1dbc45a8292cf5c74
-      X-Ratelimit-Limit:
-      - '40'
-      X-Ratelimit-Remaining:
-      - '31'
-      X-Ratelimit-Reset:
-      - '1456247570'
-      Content-Length:
-      - '339'
-      Connection:
-      - keep-alive
+      - '15479'
+      Etag:
+      - W/"23e26f53aa5556c4fe5d622c95d1574e"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 f3debe815c4aaee72e83dd7c98a4a7a8.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW53-C1
+      X-Amz-Cf-Id:
+      - RipUBa5L9EW5MehEuPoRiB8uacqAuyWcleXs3dM8Zs4luxJzb36wPw==
     body:
-      encoding: UTF-8
-      string: '{"credit_type":"cast","department":"Actors","job":"Actor","media":{"id":65454,"name":"Horace
-        and Pete","original_name":"Horace and Pete","character":"Pete","episodes":[],"seasons":[{"air_date":"2016-01-30","poster_path":null,"season_number":1}]},"media_type":"tv","id":"56ad478dc3a3681c34006885","person":{"name":"Steve
-        Buscemi","id":884}}'
+      encoding: ASCII-8BIT
+      string: '{"credit_type":"cast","department":"Acting","job":"Actor","media":{"overview":"The
+        first season of this comedy anthology is set in the offices of Heaven Inc.
+        When God plans to destroy the Earth, two low-level angels must convince their
+        boss to save humanity. They bet him they can pull off their most impossible
+        miracle yet: help two humans fall in love.","vote_count":120,"backdrop_path":"/k4vgXFmthBqQFuHWraI2KdP8cFO.jpg","original_name":"Miracle
+        Workers","genre_ids":[35],"first_air_date":"2019-02-12","origin_country":["US"],"id":78950,"poster_path":"/2rTZrFxEXAb6y2Fwj5oHP2jOwhx.jpg","name":"Miracle
+        Workers","original_language":"en","vote_average":7.0,"popularity":19.434,"character":"God","episodes":[],"seasons":[{"air_date":"2019-02-12","episode_count":7,"id":102727,"name":"Season
+        1","overview":"When God plans to destroy the Earth, two low-level angels must
+        convince their boss to save humanity. They bet him they can pull off their
+        most impossible miracle yet: help two humans fall in love.","poster_path":"/iJfncT3KradVqWjwC71gT5jEgfl.jpg","season_number":1,"show_id":23023}]},"media_type":"tv","id":"5adab0c9c3a36862ef003fd0","person":{"adult":false,"gender":2,"name":"Steve
+        Buscemi","id":884,"known_for":[{"id":680,"overview":"A burger-loving hit man,
+        his philosophical partner, a drug-addled gangster''s moll and a washed-up
+        boxer converge in this sprawling, comedic crime caper. Their adventures unfurl
+        in three stories that ingeniously trip back and forth in time.","release_date":"1994-09-10","adult":false,"backdrop_path":"/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg","vote_count":21979,"genre_ids":[53,80],"title":"Pulp
+        Fiction","original_language":"en","original_title":"Pulp Fiction","poster_path":"/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg","vote_average":8.5,"video":false,"popularity":60.174,"media_type":"movie"},{"adult":false,"backdrop_path":"/hVxPPgSL72qS18jIB3eWXoAsoWu.jpg","genre_ids":[16,35,10751],"id":585,"original_language":"en","original_title":"Monsters,
+        Inc.","overview":"James Sullivan and Mike Wazowski are monsters, they earn
+        their living scaring children and are the best in the business... even though
+        they''re more afraid of the children than they are of them. When a child accidentally
+        enters their world, James and Mike suddenly find that kids are not to be afraid
+        of and they uncover a conspiracy that could threaten all children across the
+        world.","poster_path":"/sgheSKxZkttIe8ONsf2sWXPgip3.jpg","release_date":"2001-11-01","title":"Monsters,
+        Inc.","video":false,"vote_average":7.8,"vote_count":14744,"popularity":145.975,"media_type":"movie"},{"adult":false,"backdrop_path":"/g6R1OT7ETBLGLeUJOE0pOiAFHcI.jpg","genre_ids":[80,53],"id":500,"original_language":"en","original_title":"Reservoir
+        Dogs","overview":"A botched robbery indicates a police informant, and the
+        pressure mounts in the aftermath at a warehouse. Crime begets violence as
+        the survivors -- veteran Mr. White, newcomer Mr. Orange, psychopathic parolee
+        Mr. Blonde, bickering weasel Mr. Pink and Nice Guy Eddie -- unravel.","poster_path":"/lsBnfheKZBO3UKU7lVHIeGZLWuF.jpg","release_date":"1992-09-02","title":"Reservoir
+        Dogs","video":false,"vote_average":8.2,"vote_count":11126,"popularity":34.064,"media_type":"movie"}],"known_for_department":"Acting","profile_path":"/lQKdHMxfYcCBOvwRKBAxPZVNtkg.jpg","popularity":14.094}}'
     http_version: 
-  recorded_at: Tue, 23 Feb 2016 17:12:43 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 11 Nov 2021 00:55:40 GMT
+recorded_with: VCR 5.0.0
