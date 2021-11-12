@@ -41,6 +41,14 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
       end
 
+      scenario "clicking director name goes to director results" do
+        sign_in_user(user)
+        movie = create(:movie_in_tmdb)
+        visit(movie_path(movie))
+        click_link "#{movie.director} (director)"
+        expect(page).to have_content(movie.director)
+      end
+
       scenario "movie show page has the movie's poster image" do
         sign_in_user(user)
         listing

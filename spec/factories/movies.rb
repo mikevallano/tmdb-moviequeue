@@ -30,6 +30,7 @@ FactoryBot.define do
       popularity { 17.27 }
       mpaa_rating { 'R' }
       director { 'Joel Coen' }
+      director_id { 1223 }
     end
   end
 end
