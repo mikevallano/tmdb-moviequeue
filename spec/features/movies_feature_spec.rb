@@ -322,7 +322,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         end
 
         xscenario "link to mark as watched if not watched, link marks as watched", js: true do
-        # TODO: Flickering See issue #247
+        # TODO: Flickering. See issue #247
           find("#modal_link_#{movie.tmdb_id}").click
           expect(page).not_to have_selector("#add_screening_link_movies_partial")
           click_link "mark_watched_link_movies_partial", match: :first
