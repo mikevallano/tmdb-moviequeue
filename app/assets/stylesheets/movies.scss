@@ -34,9 +34,10 @@ article.tile-cover-pic {
   width: $index-poster-width;
   height: $index-poster-height;
   word-wrap: break-word;
-  padding: 5%;
+  padding: .25rem;
   text-align: center;
   color: black;
+  overflow: hidden;
   p {
     margin: 30% 0%;
     font-size: 150%;
