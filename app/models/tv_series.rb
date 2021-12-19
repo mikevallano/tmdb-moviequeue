@@ -17,9 +17,10 @@ class TVSeries
 
   def self.parse_search_results(results)
     results.map do|result|
+      first_air_date = Date.parse(result[:first_air_date])&.stamp("1/2/2001") if result[:first_air_date].present?
       TVSeries.new(
         show_id: result[:id],
-        first_air_date: Date.parse(result[:first_air_date])&.stamp("1/2/2001"),
+        first_air_date: first_air_date,
         last_air_date: nil,
         show_name: result[:name],
         backdrop_path: result[:backdrop_path],
