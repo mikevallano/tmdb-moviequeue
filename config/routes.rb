@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get 'tmdb/two_actor_search', to: 'tmdb#two_actor_search', as: :two_actor_search
   get 'tmdb/director_search', to: 'tmdb#director_search', as: :director_search
   get 'tmdb/tv_series', to: 'tmdb#tv_series', as: :tv_series
+  get 'tmdb/tv_series_search', to: 'tmdb#tv_series_search', as: :tv_series_search
   get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
   get 'tmdb/two_movie_search', to: 'tmdb#two_movie_search', as: :two_movie_search
   get 'tmdb/discover_search', to: 'tmdb#discover_search', as: :discover_search

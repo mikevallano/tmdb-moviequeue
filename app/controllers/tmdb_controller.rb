@@ -90,6 +90,12 @@ class TmdbController < ApplicationController
     tmdb_handler_actor_credit(@credit_id)
   end
 
+  def tv_series_search
+    if show_title = params[:show_title] || params[:show_title_header]
+      @show_title = I18n.transliterate(show_title)
+      @tv_shows = tmdb_handler_tv_series_search(show_title)
+    end
+  end
   def tv_series
     @show_id = params[:show_id]
     @actor_id = params[:actor_id]
