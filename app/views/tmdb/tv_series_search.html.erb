@@ -3,25 +3,25 @@
 <h1 id="search_by_title_header">Search for a TV Show by Title</h1>
 <%= form_tag '/tmdb/tv_series_search', { class: "form-class", id: "show-title-search", role: "form", method: :get } do %>
   <%= text_field_tag :show_title, nil,
-    class: "form-control search-form search-form autocomplete-auto-submit",
+    class: "form-control search-form autocomplete-tv-series-search",
     id: "tv_series_field_tv_series_search",
     placeholder: "Enter TV Show Title",
     data: { autocomplete_source: tv_series_autocomplete_path }  %>
-  <%= submit_tag "Search", id: "search_by_title_button", class: "form-control-submit search-form-submit" %>
+  <%= submit_tag "Search", id: "submit_button_tv_series_search", class: "form-control-submit search-form-submit" %>
 <% end %>
 <br>
 
-<% if @show_title.present? && @tv_shows.blank? %>
-  <h2>Hmm. We couldn't find anything for "<%= @show_title %>".</h2>
+<% if @query.present? && @search_results.blank? %>
+  <h2>Hmm. We couldn't find anything for "<%= @query %>".</h2>
   <p>Check your spelling and try again.</p>
 <% end %>
 
-<% if @tv_shows.present? %>
-  <h2>TV Shows matching "<%= @show_title %>"</h2>
+<% if @search_results.present? %>
+  <h2>TV Shows matching "<%= @query %>"</h2>
   <div class='row tile-container'>
-    <% @tv_shows.each do |series| %>
+    <% @search_results.each do |result| %>
     <article class="tile-cover-pic">
-      <%= link_to image_for_tv_poster(series), tv_series_path(show_id: series.show_id) %>
+      <%= link_to image_for_tv_poster(result), tv_series_path(show_id: result.show_id) %>
     </article>
     <% end %>
   </div>
