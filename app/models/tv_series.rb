@@ -58,7 +58,7 @@ class TVSeries
       number_of_seasons: @number_of_seasons,
       overview: @overview,
       seasons: @seasons,
-      actor: @actors
+      actors: @actors
     )
   end
 end

@@ -1,6 +1,6 @@
 <% content_for(:title, "Search by TV Show Title") %>
 
-<h1 id="search_by_title_header">Search for a TV Show by Title:</h1>
+<h1 id="search_by_title_header">Search for a TV Show by Title</h1>
 <%= form_tag '/tmdb/tv_series_search', { class: "form-class", id: "show-title-search", role: "form", method: :get } do %>
   <%= text_field_tag :show_title, nil,
     class: "form-control search-form search-form autocomplete-auto-submit",
@@ -17,9 +17,12 @@
 <% end %>
 
 <% if @tv_shows.present? %>
-  <h2>TV Shows matching "<%= @show_title %>":</h2>
-  <br>
-  <% @tv_shows.each do |series| %>
-    <%= link_to image_for_tv_poster(series), tv_series_path(show_id: series.show_id) %>
-  <% end %>
+  <h2>TV Shows matching "<%= @show_title %>"</h2>
+  <div class='row tile-container'>
+    <% @tv_shows.each do |series| %>
+    <article class="tile-cover-pic">
+      <%= link_to image_for_tv_poster(series), tv_series_path(show_id: series.show_id) %>
+    </article>
+    <% end %>
+  </div>
 <% end %>
