@@ -1,17 +1,16 @@
-
-<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @show_id) %> <%= @season_number_display %></h1>
-<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @show_id) %></p>
+<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> <%= formatted_season_number(@season_number) %></h1>
+<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
 <div class="row">
   <h2>Seasons: |
     <% @series.seasons.each do |season| %>
-     <%= link_to season_number_display(season), tv_season_path(show_id: @show_id, season_number: season, show_name: @series.show_name) %> |
+     <%= link_to season_number_display(season), tv_season_path(show_id: @series.show_id, season_number: season, show_name: @series.show_name) %> |
     <% end %>
   </h2>
 </div> <!-- row -->
 
 <div class="row">
   <% if @series.actors.present? %>
-    <h2><%= @season_number_display %> Cast</h2>
+    <h2><%= formatted_season_number(@season_number) %> Cast</h2>
       <% @series.actors.each do |actor| %>
         <div class="headshot-container">
         <%= headshot_for(actor) %>
@@ -22,14 +21,11 @@
         </div> <!-- headshot-container -->
         <% end %><!-- actors each do -->
   <% end %> <!-- if actors present? -->
-
 </div> <!-- row -->
 
-
 <div class="row">
-  <h2><%= @season_number_display %> Episodes</h2>
+  <h2><%= formatted_season_number(@season_number) %> Episodes</h2>
   <table class="table">
-
     <tbody>
       <% @episodes.each do |episode| %>
         <tr>
@@ -47,11 +43,10 @@
               </p>
             <% end %><!-- if guest star present-->
           </td>
-
         </tr>
       <% end %>
     </tbody>
   </table>
 </div> <!-- row -->
 <hr>
-<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @show_id) %></p>
+<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
