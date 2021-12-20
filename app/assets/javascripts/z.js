@@ -8,14 +8,18 @@ $(document).ready(function(){
       $("#overlay-modal").show(); }
     });
 
+  $("#autocomplete-tv-series-search-submit").autocomplete({
+    source: $("#autocomplete-tv-series-search-submit").data("autocomplete-source"),
+    minLength: 4,
+    select: function(event, ui) {
+      $("#autocomplete-tv-series-search-submit").val(ui.item.value);
+      $(this).closest("form").submit();
+      $("#overlay-modal").show(); }
+    });
+
   $( ".autocomplete-search-field" ).autocomplete({
     minLength: 4,
     source: $(".autocomplete-search-field").data("autocomplete-source")
-  });
-
-  $( ".autocomplete-tv-series-search" ).autocomplete({
-    minLength: 4,
-    source: $(".autocomplete-tv-series-search").data("autocomplete-source")
   });
 
   $('#header-movie-search, ul.ui-autocomplete').css({
