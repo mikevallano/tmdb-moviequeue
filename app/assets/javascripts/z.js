@@ -13,11 +13,6 @@ $(document).ready(function(){
     source: $(".autocomplete-search-field").data("autocomplete-source")
   });
 
-  $( ".autocomplete-tv-series-search" ).autocomplete({
-    minLength: 4,
-    source: $(".autocomplete-tv-series-search").data("autocomplete-source")
-  });
-
   $('#header-movie-search, ul.ui-autocomplete').css({
     'position': 'relative',
     'max-width': '455px'
