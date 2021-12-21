@@ -1,12 +1,18 @@
 $(document).ready(function(){
-  $(".autocomplete-auto-submit").autocomplete({
-    source: $(".autocomplete-auto-submit").data("autocomplete-source"),
-    minLength: 4,
-    select: function(event, ui) {
-      $(".autocomplete-auto-submit").val(ui.item.value);
-      $(this).closest("form").submit();
-      $("#overlay-modal").show(); }
-    });
+  $('.autocomplete-auto-submit').each(function(){
+    var form = $(this)
+    var source = form.data('autocomplete-source')
+
+    form.autocomplete({
+      source: source,
+      minLength: 4,
+      select: function (event, ui) {
+        $(this).closest(".autocomplete-auto-submit").val(ui.item.value);
+        $(this).closest("form").submit();
+        $("#overlay-modal").show();
+      }
+    })
+  });
 
   $( ".autocomplete-search-field" ).autocomplete({
     minLength: 4,
