@@ -1,21 +1,18 @@
 $(document).ready(function(){
-  $(".autocomplete-auto-submit").autocomplete({
-    source: $(".autocomplete-auto-submit").data("autocomplete-source"),
-    minLength: 4,
-    select: function(event, ui) {
-      $(".autocomplete-auto-submit").val(ui.item.value);
-      $(this).closest("form").submit();
-      $("#overlay-modal").show(); }
-    });
+  $('.autocomplete-auto-submit').each(function(){
+    let form = $(this)
+    let source = form.data('autocomplete-source')
 
-  $("#autocomplete-tv-series-search-submit").autocomplete({
-    source: $("#autocomplete-tv-series-search-submit").data("autocomplete-source"),
-    minLength: 4,
-    select: function(event, ui) {
-      $("#autocomplete-tv-series-search-submit").val(ui.item.value);
-      $(this).closest("form").submit();
-      $("#overlay-modal").show(); }
-    });
+    form.autocomplete({
+      source: source,
+      minLength: 4,
+      select: function (event, ui) {
+        $(this).closest(".autocomplete-auto-submit").val(ui.item.value);
+        $(this).closest("form").submit();
+        $("#overlay-modal").show();
+      }
+    })
+  });
 
   $( ".autocomplete-search-field" ).autocomplete({
     minLength: 4,
