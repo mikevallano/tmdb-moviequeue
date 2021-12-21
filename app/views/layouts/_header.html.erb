@@ -50,8 +50,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search Options <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Search by Title", api_search_path, id: "movie_search_nav_link" %></li>
             <li><%= link_to "Search by Actor", actor_search_path, id: "actor_search_nav_link" %></li>
+            <li><%= link_to "Search by Movie Title", api_search_path, id: "movie_search_nav_link" %></li>
+            <li><%= link_to "Search by TV Series", tv_series_search_path, id: "movie_search_nav_link" %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to "Advanced Search", discover_search_path, id: "discover_search_nav_link" %></li>
             <li role="separator" class="divider"></li>

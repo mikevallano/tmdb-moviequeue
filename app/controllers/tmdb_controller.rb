@@ -90,6 +90,19 @@ class TmdbController < ApplicationController
     tmdb_handler_actor_credit(@credit_id)
   end
 
+  def tv_series_search
+    query = show_title = params[:show_title] || params[:show_title_header]
+    if query.present?
+      @query = I18n.transliterate(query)
+      @search_results = tmdb_handler_tv_series_search(query)
+    end
+  end
+
+  def tv_series_autocomplete
+    autocomplete_results = tmdb_handler_tv_series_autocomplete(params[:term])
+    render json: autocomplete_results
+  end
+
   def tv_series
     @show_id = params[:show_id]
     @actor_id = params[:actor_id]

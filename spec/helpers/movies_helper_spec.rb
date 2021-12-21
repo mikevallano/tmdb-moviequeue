@@ -9,7 +9,7 @@ describe MoviesHelper, type: :helper do
       allow(movie).to receive(:poster_path).and_return(nil)
       allow(helper).to receive(:render)
       helper.image_for(movie)
-      expect(helper).to have_received(:render).with("movies/movie_missing_poster", movie: movie)
+      expect(helper).to have_received(:render).with("shared/missing_poster", title: movie.title)
     end
 
     it 'returns an image tag if the movie has a poster path' do

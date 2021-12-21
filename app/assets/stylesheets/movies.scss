@@ -30,13 +30,14 @@ article.tile-cover-pic {
   position: relative;
   background-color: $missing-poster-background-color;
   float: left;
-  margin: -10px 10px 10px 0px;
+  margin: 10px 10px 10px 0px;
   width: $index-poster-width;
   height: $index-poster-height;
   word-wrap: break-word;
-  padding: 5%;
+  padding: .25rem;
   text-align: center;
   color: black;
+  overflow: hidden;
   p {
     margin: 30% 0%;
     font-size: 150%;

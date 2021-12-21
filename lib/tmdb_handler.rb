@@ -152,6 +152,19 @@ module TmdbHandler
     @credit = TVActorCredit.parse_results(@credit_results)
   end
 
+  def tmdb_handler_tv_series_search(query)
+    search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
+    discover_results = tmdb_response[:results]
+    TVSeries.parse_search_results(discover_results) if discover_results.present?
+  end
+
+  def tmdb_handler_tv_series_autocomplete(query)
+    search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
+    tmdb_response[:results].map{ |result| result[:name] }.uniq
+  end
+
   def tmdb_handler_tv_series(show_id)
     @show_url = "#{BASE_URL}/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     @show_results = JSON.parse(open(@show_url).read, symbolize_names: true)
