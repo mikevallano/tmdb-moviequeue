@@ -19,13 +19,14 @@ class TVActorCredit
     @actor_name = result[:person][:name]
     @actor_id = result[:person][:id]
     @character = result[:media][:character]
+
     if result[:media][:seasons].present?
-      @seasons = TVCreditSeasons.parse_results(result[:media][:seasons])
+      @seasons = TVCreditSeason.parse_records(result[:media][:seasons])
     else
       @seasons = nil
     end
     if result[:media][:episodes].present?
-      @episodes = TVEpisodes.parse_results(result[:media][:episodes])
+      @episodes = TVEpisode.parse_records(result[:media][:episodes])
     else
       @episodes = nil
     end

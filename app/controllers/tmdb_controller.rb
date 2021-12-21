@@ -86,8 +86,8 @@ class TmdbController < ApplicationController
   end
 
   def actor_credit
-    @credit_id = params[:credit_id]
-    tmdb_handler_actor_credit(@credit_id)
+    credit_id = params[:credit_id]
+    @credit = tmdb_handler_actor_credit(credit_id)
   end
 
   def tv_series_search

@@ -147,16 +147,16 @@ module TmdbHandler
   end
 
   def tmdb_handler_actor_credit(credit_id)
-    @credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
-    @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
-    @credit = TVActorCredit.parse_results(@credit_results)
+    credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
+    credit_results = JSON.parse(open(credit_url).read, symbolize_names: true)
+    TVActorCredit.parse_results(credit_results)
   end
 
   def tmdb_handler_tv_series_search(query)
     search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
     discover_results = tmdb_response[:results]
-    TVSeries.parse_search_results(discover_results) if discover_results.present?
+    TVSeries.parse_search_records(discover_results) if discover_results.present?
   end
 
   def tmdb_handler_tv_series_autocomplete(query)
