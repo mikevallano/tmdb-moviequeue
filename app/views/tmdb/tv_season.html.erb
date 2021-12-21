@@ -1,4 +1,4 @@
-<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> <%= formatted_season_number(@season_number) %></h1>
+<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> <%= @season.name %></h1>
 <p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
 <div class="row">
   <h2>Seasons: |
@@ -10,7 +10,7 @@
 
 <div class="row">
   <% if @series.actors.present? %>
-    <h2><%= formatted_season_number(@season_number) %> Cast</h2>
+    <h2><%= @season.name %> Cast</h2>
       <% @series.actors.each do |actor| %>
         <div class="headshot-container">
         <%= headshot_for(actor) %>
@@ -24,10 +24,10 @@
 </div> <!-- row -->
 
 <div class="row">
-  <h2><%= formatted_season_number(@season_number) %> Episodes</h2>
+  <h2><%= @season.name %> Episodes</h2>
   <table class="table">
     <tbody>
-      <% @episodes.each do |episode| %>
+      <% @season.episodes.each do |episode| %>
         <tr>
           <td>
             <h2><%= episode.episode_number %>: <%= episode.name %> (<%= episode.air_date.stamp("1/2/2001") %>)</h2>

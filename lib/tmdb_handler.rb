@@ -171,10 +171,14 @@ module TmdbHandler
     TVSeries.parse_results(show_results, show_id)
   end
 
-  def tmdb_handler_tv_season(show_id, season_number)
+  def tmdb_handler_tv_season(series:, show_id:, season_number:)
     season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     season_results = JSON.parse(open(season_url).read, symbolize_names: true)
-    TVSeason.parse_results(season_results[:episodes])
+    TVSeason.parse_data(
+      series: series,
+      show_id: show_id,
+      season_data: season_results
+    )
   end
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
@@ -203,9 +207,6 @@ module TmdbHandler
     end
 
   end
-
-  # def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
-  #   company, mpaa_rating, sort_by, page)
 
   def tmdb_handler_discover_search(params)
     @actor = params[:actor]

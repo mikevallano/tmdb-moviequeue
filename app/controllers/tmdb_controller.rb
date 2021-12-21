@@ -110,9 +110,13 @@ class TmdbController < ApplicationController
 
   def tv_season
     show_id = params[:show_id]
-    @season_number = params[:season_number]
+    season_number = params[:season_number]
     @series = tmdb_handler_tv_series(show_id)
-    @episodes = tmdb_handler_tv_season(show_id, @season_number)
+    @season = tmdb_handler_tv_season(
+      series: @series,
+      show_id: show_id,
+      season_number: season_number
+    )
   end
 
   def two_movie_search
