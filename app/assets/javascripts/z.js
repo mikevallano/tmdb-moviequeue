@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('.autocomplete-auto-submit').each(function(){
-    let form = $(this)
-    let source = form.data('autocomplete-source')
+    var form = $(this)
+    var source = form.data('autocomplete-source')
 
     form.autocomplete({
       source: source,
