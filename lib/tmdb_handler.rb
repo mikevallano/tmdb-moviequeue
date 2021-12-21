@@ -166,23 +166,15 @@ module TmdbHandler
   end
 
   def tmdb_handler_tv_series(show_id)
-    @show_url = "#{BASE_URL}/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    @show_results = JSON.parse(open(@show_url).read, symbolize_names: true)
-    @series = TVSeries.parse_results(@show_results, show_id)
+    show_url = "#{BASE_URL}/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    show_results = JSON.parse(open(show_url).read, symbolize_names: true)
+    TVSeries.parse_results(show_results, show_id)
   end
 
   def tmdb_handler_tv_season(show_id, season_number)
-    @season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    @show_id = show_id
-    @season_results = JSON.parse(open(@season_url).read, symbolize_names: true)
-    tmdb_handler_tv_series(show_id)
-    @episodes = TVSeason.parse_results(@season_results[:episodes])
-    # to display the correct current season number in the view:
-    if season_number == "0"
-      @season_number_display = "Misc/Extras"
-    else
-      @season_number_display = "Season #{season_number}"
-    end
+    season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    season_results = JSON.parse(open(season_url).read, symbolize_names: true)
+    TVSeason.parse_results(season_results[:episodes])
   end
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)

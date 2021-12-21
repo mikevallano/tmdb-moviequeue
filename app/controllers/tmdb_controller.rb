@@ -104,17 +104,15 @@ class TmdbController < ApplicationController
   end
 
   def tv_series
-    @show_id = params[:show_id]
-    @actor_id = params[:actor_id]
-    tmdb_handler_tv_series(@show_id)
+    show_id = params[:show_id]
+    @series = tmdb_handler_tv_series(show_id)
   end
 
   def tv_season
+    show_id = params[:show_id]
     @season_number = params[:season_number]
-    @show_id = params[:show_id]
-    @show_name = params[:show_name]
-    @actor_id = params[:actor_id]
-    tmdb_handler_tv_season(@show_id, @season_number)
+    @series = tmdb_handler_tv_series(show_id)
+    @episodes = tmdb_handler_tv_season(show_id, @season_number)
   end
 
   def two_movie_search

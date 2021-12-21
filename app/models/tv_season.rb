@@ -1,13 +1,11 @@
 class TVSeason
   def initialize(episode_number, name, air_date, guest_stars, overview, still_path)
-
     @episode_number = episode_number
     @name = name
     @air_date = air_date
     @guest_stars = guest_stars
     @overview = overview
     @still_path = still_path
-
   end #init
 
   attr_accessor :episode_number, :name, :air_date, :guest_stars, :overview, :still_path
@@ -25,6 +23,7 @@ class TVSeason
       end
       @overview = result[:overview]
       @still_path = result[:still_path]
+      # TODO: refactor this into a TvEpisode object
       @episode = TVSeason.new(@episode_number, @name, @air_date, @guest_stars, @overview, @still_path)
       @episodes << @episode
     end
