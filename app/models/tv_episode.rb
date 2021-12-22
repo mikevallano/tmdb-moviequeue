@@ -12,7 +12,13 @@ class TVEpisode
     @still_path = still_path
   end
 
-  def self.parse_data(data)
+  def self.parse_records(episodes_data)
+    episodes_data.map do |data|
+      parse_record(data)
+    end
+  end
+
+  def self.parse_record(data)
     air_date = Date.parse(data[:air_date]) if data[:air_date].present?
     guest_stars = TVCast.parse_results(data[:guest_stars]) if data[:guest_stars].present?
     new(
