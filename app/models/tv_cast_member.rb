@@ -24,6 +24,6 @@ class TVCastMember
   def self.parse_records(json)
     json.map do |record|
       parse_record(record)
-    end.sort_by { |r| r.order }.reverse
+    end.sort_by { |r| r.order }
   end
 end
