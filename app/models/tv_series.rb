@@ -38,7 +38,7 @@ class TVSeries
     first_air_date = Date.parse(result[:first_air_date]).stamp("1/2/2001") if result[:first_air_date].present?
     last_air_date = Date.parse(result[:last_air_date]).stamp("1/2/2001") if result[:last_air_date].present?
     seasons = (1..(result[:number_of_seasons])).to_a if result[:number_of_seasons].present?
-    actors = TVCast.parse_results(result[:credits][:cast])
+    actors = TVCastMember.parse_records(result[:credits][:cast])
 
     @series = TVSeries.new(
       show_id: show_id,
