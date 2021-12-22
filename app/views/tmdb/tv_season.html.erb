@@ -1,5 +1,6 @@
 <h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> <%= @season.name %></h1>
 <p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
+
 <div class="row">
   <h2>Seasons: |
     <% @series.seasons.each do |season| %>
@@ -23,30 +24,36 @@
   <% end %> <!-- if actors present? -->
 </div> <!-- row -->
 
-<div class="row">
-  <h2><%= @season.name %> Episodes</h2>
-  <table class="table">
-    <tbody>
-      <% @season.episodes.each do |episode| %>
-        <tr>
-          <td>
-            <h2><%= episode.episode_number %>: <%= episode.name %> (<%= episode.air_date.stamp("1/2/2001") %>)</h2>
-            <%= episode.overview %>
-            <p><%= image_tag("http://image.tmdb.org/t/p/w185#{episode.still_path}") if episode.still_path.present? %></p>
-
-            <% if episode.guest_stars.present? %>
-              <h3>Guest Stars</h3>
-              <p>
-              <% episode.guest_stars.each do |guest| %>
-                <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}"), class: 'cast-name-link' %>
-              <% end %><!-- each guest star -->
-              </p>
-            <% end %><!-- if guest star present-->
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div> <!-- row -->
 <hr>
+
+<h2><%= @season.name %> Episodes</h2>
+<% @season.episodes.each do |episode| %>
+  <div class='row'>
+    <h2><%= episode.episode_number %>: <%= episode.name %></h2>
+    <div class='col-sm-6'>
+      <p><%= image_tag("http://image.tmdb.org/t/p/w185#{episode.still_path}") if episode.still_path.present? %></p>
+      <p>
+        <%= episode.overview %>
+        <% if episode.air_date.present? %>
+          (Aired on <%= episode.air_date.stamp("01-02-2001") %>)
+        <% end %>
+      </p>
+    </div>
+    <% if episode.guest_stars.present? %>
+    <div class='col-sm-6'>
+      <h3 style='margin-top: 0;'>Guest Stars</h3>
+      <ul>
+        <% episode.guest_stars.each do |guest| %>
+          <li>
+            <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+            <%= "as #{guest.character_name}" if guest.character_name.present? %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %><!-- if guest star present-->
+  </div>
+  <hr>
+<% end %>
+
 <p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
