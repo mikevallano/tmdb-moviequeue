@@ -1,0 +1,40 @@
+<h1><%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> <%= @season.name %></h1>
+<p class="button-main"><%= link_to "Back to #{@series.show_name}", tv_series_path(show_id: @series.show_id) %></p>
+
+<h2><%= @season.name %></h2>
+
+<p><%= image_tag("http://image.tmdb.org/t/p/w185#{episode.still_path}") if episode.still_path.present? %></p>
+
+<p>
+  <%= episode.overview %>
+  <% if episode.air_date.present? %>
+    (Aired on <%= episode.air_date.stamp("01-02-2001") %>)
+  <% end %>
+</p>
+
+<h2><%= @episode.name %> Cast</h2>
+
+<div class="row">
+  <% @episode.cast_members.each do |actor| %>
+    <div class="headshot-container">
+    <%= headshot_for(actor) %>
+      <div class="name-block">
+      <p class="actor"><%= link_to "#{actor.name}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+        <p>As <%= truncate(actor.character_name, length: 18) %><p>
+      </div> <!-- name-block -->
+    </div> <!-- headshot-container -->
+  <% end %>
+  <% if @episode.guest_stars.present? %>
+    <% @episode.guest_stars.each do |actor| %>
+      <div class="headshot-container">
+      <%= headshot_for(actor) %>
+        <div class="name-block">
+        <p class="actor"><%= link_to "#{actor.name}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+          <p>As <%= truncate(actor.character_name, length: 18) %><p>
+        </div> <!-- name-block -->
+      </div> <!-- headshot-container -->
+    <% end %>
+  <% end %>
+</div> <!-- row -->
+
+<p class="button-main"><%= link_to "Back to #{@season.name}", tv_season(show_id: @series.show_id, season_number: @season.season_number) %></p>
