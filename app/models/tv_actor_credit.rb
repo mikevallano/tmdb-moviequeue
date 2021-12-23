@@ -17,7 +17,7 @@ class TVActorCredit
     seasons = TVCreditSeason.parse_records(record[:media][:seasons]).presence if record[:media][:seasons].present?
     episodes = TVEpisode.parse_records(record[:media][:episodes]).presence if record[:media][:episodes].present?
 
-    TVActorCredit.new(
+    new(
       actor_name: record[:person][:name],
       actor_id: record[:person][:id],
       character: record[:media][:character],

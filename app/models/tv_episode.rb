@@ -20,7 +20,7 @@ class TVEpisode
 
   def self.parse_record(data)
     air_date = Date.parse(data[:air_date]) if data[:air_date].present?
-    guest_stars = TVCast.parse_results(data[:guest_stars]) if data[:guest_stars].present?
+    guest_stars = TVCastMember.parse_records(data[:guest_stars]) if data[:guest_stars].present?
     new(
       episode_id: data[:id],
       episode_number: data[:episode_number],
