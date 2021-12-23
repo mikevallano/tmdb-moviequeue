@@ -90,6 +90,14 @@ class TmdbController < ApplicationController
     @credit = tmdb_handler_actor_credit(credit_id)
   end
 
+  def tv_episode
+    @episode = tmdb_handler_tv_episode(
+      series_id: params[:series_id],
+      season_number: params[:season_number],
+      episode_number: params[:episode_number]
+    )
+  end
+
   def tv_series_search
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?

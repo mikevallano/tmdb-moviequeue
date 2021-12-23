@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'pages#home'
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
   get 'tmdb/actor_credit', to: 'tmdb#actor_credit', as: :actor_credit
   get 'tmdb/two_actor_search', to: 'tmdb#two_actor_search', as: :two_actor_search
   get 'tmdb/director_search', to: 'tmdb#director_search', as: :director_search
+  get 'tmdb/tv_episode', to: 'tmdb#tv_episode', as: :tv_episode
   get 'tmdb/tv_series', to: 'tmdb#tv_series', as: :tv_series
   get 'tmdb/tv_series_search', to: 'tmdb#tv_series_search', as: :tv_series_search
   get 'tmdb/tv_season', to: 'tmdb#tv_season', as: :tv_season
@@ -49,10 +51,8 @@ Rails.application.routes.draw do
 
   resources :invites, only: [:create]
 
-  root 'pages#home'
   get 'about', to: 'pages#about', as: :about
   get 'faq', to: 'pages#faq', as: :faq
   get 'pages/awaiting_confirmation', as: :awaiting_confirmation
   get 'demo', to: 'pages#demo', as: :demo
-
 end
