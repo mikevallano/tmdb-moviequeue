@@ -1,35 +1,32 @@
 class TVActorCredit
-  def initialize(show_name, show_id, actor_name, actor_id, character, seasons, episodes)
+  attr_accessor :show_name, :show_id, :actor_name, :actor_id, :character, :seasons, :episodes, :profile_path, :known_for
 
-    @show_name = show_name
-    @show_id = show_id
-    @actor_name = actor_name
+  def initialize(show_name:, show_id:, actor_name:, actor_id:, character:, seasons:, episodes:, profile_path:, known_for:)
     @actor_id = actor_id
+    @actor_name = actor_name
     @character = character
-    @seasons = seasons
     @episodes = episodes
+    @known_for = known_for
+    @profile_path = profile_path
+    @show_id = show_id
+    @show_name = show_name
+    @seasons = seasons
+  end
 
-  end #init
+  def self.parse_record(record)
+    seasons = TVCreditSeason.parse_records(record[:media][:seasons]).presence if record[:media][:seasons].present?
+    episodes = TVEpisode.parse_records(record[:media][:episodes]).presence if record[:media][:episodes].present?
 
-  attr_accessor :show_name, :show_id, :actor_name, :actor_id, :character, :seasons, :episodes
-
-  def self.parse_results(result)
-    @show_name = result[:media][:name]
-    @show_id = result[:media][:id]
-    @actor_name = result[:person][:name]
-    @actor_id = result[:person][:id]
-    @character = result[:media][:character]
-    if result[:media][:seasons].present?
-      @seasons = TVCreditSeasons.parse_results(result[:media][:seasons])
-    else
-      @seasons = nil
-    end
-    if result[:media][:episodes].present?
-      @episodes = TVEpisodes.parse_results(result[:media][:episodes])
-    else
-      @episodes = nil
-    end
-    @credit = TVActorCredit.new(@show_name, @show_id, @actor_name, @actor_id, @character, @seasons, @episodes)
-  end #parse results
-
-end #class
+    TVActorCredit.new(
+      actor_name: record[:person][:name],
+      actor_id: record[:person][:id],
+      character: record[:media][:character],
+      episodes: episodes,
+      known_for: record[:person][:known_for],
+      profile_path: record[:person][:profile_path],
+      show_id: record[:media][:id],
+      show_name: record[:media][:name],
+      seasons: seasons
+    )
+  end
+end

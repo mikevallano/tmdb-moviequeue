@@ -1,34 +1,32 @@
 class TVSeason
-  def initialize(episode_number, name, air_date, guest_stars, overview, still_path)
-    @episode_number = episode_number
-    @name = name
+  attr_accessor :series, :show_id, :air_date, :name, :overview, :season_id, :poster_path, :season_number, :credit, :episodes
+
+  def initialize(series:, show_id:, air_date:, name:, overview:, season_id:, poster_path:, season_number:, credit:, episodes:)
+    @series = series
+    @show_id = show_id
     @air_date = air_date
-    @guest_stars = guest_stars
+    @name = name
     @overview = overview
-    @still_path = still_path
-  end #init
+    @season_id = season_id
+    @poster_path = poster_path
+    @season_number = season_number
+    @credit = credit
+    @episodes = episodes
+  end
 
-  attr_accessor :episode_number, :name, :air_date, :guest_stars, :overview, :still_path
-
-  def self.parse_results(json)
-    @episodes = []
-    json.each do |result|
-      @episode_number = result[:episode_number]
-      @name = result[:name]
-      @air_date = Date.parse(result[:air_date]) if result[:air_date].present?
-      if result[:guest_stars].present?
-        @guest_stars = TVCast.parse_results(result[:guest_stars])
-      else
-        @guest_stars = nil
-      end
-      @overview = result[:overview]
-      @still_path = result[:still_path]
-      # TODO: refactor this into a TvEpisode object
-      @episode = TVSeason.new(@episode_number, @name, @air_date, @guest_stars, @overview, @still_path)
-      @episodes << @episode
-    end
-    @episodes
-
-  end #parse results
-
-end #class
+ def self.parse_record(series:, show_id:, season_data:)
+   air_date = Date.parse(season_data[:air_date]) if season_data[:air_date].present?
+   new(
+    series: series,
+    show_id: show_id,
+    air_date: air_date,
+    name: season_data[:name],
+    overview: season_data[:overview],
+    season_id: season_data[:id],
+    poster_path: season_data[:poster_path],
+    season_number: season_data[:season_number],
+    credit: season_data[:credits],
+    episodes: TVEpisode.parse_records(season_data[:episodes])
+   )
+ end
+end

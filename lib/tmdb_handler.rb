@@ -147,16 +147,16 @@ module TmdbHandler
   end
 
   def tmdb_handler_actor_credit(credit_id)
-    @credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
-    @credit_results = JSON.parse(open(@credit_url).read, symbolize_names: true)
-    @credit = TVActorCredit.parse_results(@credit_results)
+    credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
+    credit_data = JSON.parse(open(credit_url).read, symbolize_names: true)
+    TVActorCredit.parse_record(credit_data)
   end
 
   def tmdb_handler_tv_series_search(query)
     search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
     discover_results = tmdb_response[:results]
-    TVSeries.parse_search_results(discover_results) if discover_results.present?
+    TVSeries.parse_search_records(discover_results) if discover_results.present?
   end
 
   def tmdb_handler_tv_series_autocomplete(query)
@@ -167,14 +167,18 @@ module TmdbHandler
 
   def tmdb_handler_tv_series(show_id)
     show_url = "#{BASE_URL}/tv/#{show_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    show_results = JSON.parse(open(show_url).read, symbolize_names: true)
-    TVSeries.parse_results(show_results, show_id)
+    series_data = JSON.parse(open(show_url).read, symbolize_names: true)
+    TVSeries.parse_record(series_data, show_id)
   end
 
-  def tmdb_handler_tv_season(show_id, season_number)
+  def tmdb_handler_tv_season(series:, show_id:, season_number:)
     season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
     season_results = JSON.parse(open(season_url).read, symbolize_names: true)
-    TVSeason.parse_results(season_results[:episodes])
+    TVSeason.parse_record(
+      series: series,
+      show_id: show_id,
+      season_data: season_results
+    )
   end
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
@@ -203,9 +207,6 @@ module TmdbHandler
     end
 
   end
-
-  # def tmdb_handler_discover_search(exact_year, after_year, before_year, genre, actor, actor2,
-  #   company, mpaa_rating, sort_by, page)
 
   def tmdb_handler_discover_search(params)
     @actor = params[:actor]
