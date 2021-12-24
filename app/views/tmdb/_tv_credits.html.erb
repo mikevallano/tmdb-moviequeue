@@ -2,7 +2,7 @@
 <ul>
   <% @person_tv_credits.actor.each do |credit| %>
     <li><%= link_to "#{credit.show_name}", tv_series_path(show_id: credit.show_id, actor_id: @actor_id) %>
-    <%= "| As #{credit.character}" if credit.character.present? %> |
+    <%= "| as #{credit.character}" if credit.character.present? %> |
     <%= link_to " Appearance Details", actor_credit_path(actor_id: @actor_id, credit_id: credit.credit_id,
     show_name: "#{credit.show_name}"), id: "appearance_details_#{credit.show_name.downcase}" %></li>
   <% end %>

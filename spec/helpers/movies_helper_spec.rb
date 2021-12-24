@@ -22,6 +22,16 @@ describe MoviesHelper, type: :helper do
     end
   end
 
+  describe 'actor_age_at_movie_release' do
+    it "returns an actor's age at the time" do
+      actor_birthday = '2000-01-31'
+      movie_release_year = '2020'
+      age = actor_age_at_movie_release(actor_birthday, movie_release_year)
+
+      expect(age).to eq(20)
+    end
+  end
+
   describe '#link_to_movie' do
     it 'returns the correct link path when movie is not in db' do
       allow(movie).to receive(:in_db).and_return(false)
