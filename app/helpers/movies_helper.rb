@@ -7,6 +7,11 @@ module MoviesHelper
     end
   end
 
+  def actor_age_at_movie_release(actor_birthday, release_year)
+    birth_year = actor_birthday.to_date.year
+    release_year.to_i - birth_year
+  end
+
   def link_to_movie(movie)
     if movie.in_db
       movie_path(movie)
