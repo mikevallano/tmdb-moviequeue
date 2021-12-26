@@ -181,16 +181,12 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_tv_episode(series_id:, season_number:, episode_number:)
+  def tmdb_handler_tv_episode(show_id:, season_number:, episode_number:)
     # https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/episode/{episode_number}?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&language=en-US
 
-    episode_url = "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
+    episode_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
     episode_data = JSON.parse(open(episode_url).read, symbolize_names: true)
-    TVSeason.parse_record(
-      series: series,
-      show_id: show_id,
-      episode_data: episode_data
-    )
+    TVEpisode.parse_record(episode_data)
   end
 
   def tmdb_handler_two_movie_search(movie_one, movie_two)
