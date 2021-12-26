@@ -4,8 +4,11 @@
 </h3>
 <ul>
   <% @person_movie_credits.actor.each do |credit| %>
-    <li><%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
-    <%= " | #{credit.date} " if credit.date != "Date unavailable" %>
-    <%= "| As #{credit.character}" if credit.character.present? %></li>
+    <li>
+      <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
+      <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
+      <%= "| age #{actor_age_at_movie_release(@person_profile.birthday, credit.date)}" if credit.date != "Date unavailable" %>
+      <%= "as #{credit.character}" if credit.character.present? %>
+  </li>
   <% end %>
 </ul>
