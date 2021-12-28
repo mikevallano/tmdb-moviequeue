@@ -3,7 +3,6 @@
 </h2>
 
 <div>
-  <h1><%= @season.name %></h1>
   <%= image_tag "http://image.tmdb.org/t/p/w185#{@season.poster_path}", class: 'pull-left', style: 'padding-right: 20px;' if @season.poster_path.present? %>
   <p><%= @season.overview %></p>
 </div>

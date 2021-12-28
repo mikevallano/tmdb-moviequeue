@@ -182,8 +182,6 @@ module TmdbHandler
   end
 
   def tmdb_handler_tv_episode(show_id:, season_number:, episode_number:)
-    # https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/episode/{episode_number}?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&language=en-US
-
     episode_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
     episode_data = JSON.parse(open(episode_url).read, symbolize_names: true)
     TVEpisode.parse_record(episode_data)
