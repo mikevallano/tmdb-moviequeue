@@ -1,8 +1,9 @@
-module TmdbHelper
+# frozen_string_literal: true
 
+module TmdbHelper
   def headshot_for(actor)
     if actor.profile_path.present?
-      image_tag("http://image.tmdb.org/t/p/w185#{actor.profile_path}")
+      image_tag(TmdbImageUrlHelper.image_url(file_path: actor.profile_path, size: :medium, image_type: :profile))
     else
       image_tag('headshot_placeholder.jpg')
     end #if
@@ -15,5 +16,4 @@ module TmdbHelper
       season
     end
   end
-
-end #TmdbHelper
+end
