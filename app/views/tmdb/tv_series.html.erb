@@ -20,6 +20,15 @@
       </h2>
     <% end %><!-- if @series.seasons.present? -->
 
+    <% if @series.seasons_posters.present? %>
+      <h2>Seasons: |
+        <% @series.seasons_posters.each do |season| %>
+        <%= image_tag "http://image.tmdb.org/t/p/w185#{season.poster_path}" if season.poster_path.present? %>
+
+        <% end %>
+      </h2>
+    <% end %><!-- if @series.seasons.present? -->
+
     <% if @series.actors.present? %>
       <h2>Show Cast:</h2>
         <% @series.actors.each do |actor| %>

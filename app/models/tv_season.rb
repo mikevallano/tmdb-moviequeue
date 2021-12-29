@@ -15,6 +15,27 @@ class TVSeason
     @episodes = episodes
   end
 
+  def self.parse_season_posters(seasons_data)
+    seasons_data.map do |season_data|
+      # next if season_data[:season_number] == 0
+
+      air_date = Date.parse(season_data[:air_date]) if season_data[:air_date].present?
+      new(
+        series: nil,
+        show_id: nil,
+        air_date: air_date,
+        name: season_data[:name],
+        overview: season_data[:overview],
+        season_id: nil,
+        poster_path: season_data[:poster_path],
+        season_number: season_data[:season_number],
+        credits: nil,
+        cast_members: nil,
+        episodes: nil
+      )
+    end
+  end
+
  def self.parse_record(series:, show_id:, season_data:)
    air_date = Date.parse(season_data[:air_date]) if season_data[:air_date].present?
    new(

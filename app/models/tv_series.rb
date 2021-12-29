@@ -1,7 +1,7 @@
 class TVSeries
-  attr_accessor :show_id, :first_air_date, :last_air_date, :show_name, :backdrop_path, :poster_path, :number_of_episodes, :number_of_seasons, :overview, :seasons, :actors
+  attr_accessor :show_id, :first_air_date, :last_air_date, :show_name, :backdrop_path, :poster_path, :number_of_episodes, :number_of_seasons, :overview, :seasons, :actors, :seasons_posters
 
-  def initialize(show_id:, first_air_date:, last_air_date:, show_name:, backdrop_path:, poster_path:, number_of_episodes:, number_of_seasons:, overview:, seasons:, actors:)
+  def initialize(show_id:, first_air_date:, last_air_date:, show_name:, backdrop_path:, poster_path:, number_of_episodes:, number_of_seasons:, overview:, seasons:, seasons_posters: [], actors:)
     @show_id = show_id
     @first_air_date = first_air_date
     @last_air_date = last_air_date
@@ -12,6 +12,7 @@ class TVSeries
     @number_of_seasons = number_of_seasons
     @overview = overview
     @seasons = seasons
+    @seasons_posters = seasons_posters
     @actors = actors
   end
 
@@ -29,6 +30,7 @@ class TVSeries
         number_of_seasons: nil,
         overview: result[:overview],
         seasons: nil,
+        seasons_posters: nil,
         actors: nil
       )
     end
@@ -39,6 +41,7 @@ class TVSeries
     last_air_date = Date.parse(result[:last_air_date]).stamp("1/2/2001") if result[:last_air_date].present?
     seasons = (1..(result[:number_of_seasons])).to_a if result[:number_of_seasons].present?
     actors = TVCastMember.parse_records(result[:credits][:cast])
+    seasons_posters = TVSeason.parse_season_posters(result[:seasons])
 
     @series = TVSeries.new(
       show_id: show_id,
@@ -51,6 +54,7 @@ class TVSeries
       number_of_seasons: result[:number_of_seasons],
       overview: result[:overview],
       seasons: seasons,
+      seasons_posters: seasons_posters,
       actors: actors
     )
   end
