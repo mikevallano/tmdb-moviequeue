@@ -7,7 +7,7 @@
     <li>
       <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
       <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
-      <%= "| age #{actor_age_at_movie_release(@person_profile.birthday, credit.date)}" if credit.date != "Date unavailable" %>
+      <%= display_actor_age_at_release(@person_profile.birthday, credit.date) %>
       <%= "as #{credit.character}" if credit.character.present? %>
   </li>
   <% end %>

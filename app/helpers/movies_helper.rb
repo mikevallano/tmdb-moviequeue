@@ -7,7 +7,14 @@ module MoviesHelper
     end
   end
 
+  def display_actor_age_at_release(actor_birthday, release_year)
+    age = actor_age_at_movie_release(actor_birthday, release_year)
+    "| age #{age}" if age.present?
+  end
+
   def actor_age_at_movie_release(actor_birthday, release_year)
+    return nil unless actor_birthday.to_date.present? && release_year != "Date unavailable"
+
     birth_year = actor_birthday.to_date.year
     release_year.to_i - birth_year
   end
