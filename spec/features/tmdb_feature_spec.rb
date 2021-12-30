@@ -415,7 +415,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         VCR.use_cassette("tmdb_actor_more") do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
-        expect(page).to have_css("img[src*='http://image.tmdb.org']")
+        expect(page).to have_css("img[src*='https://image.tmdb.org']")
       end
 
     end #actor searches
