@@ -6,7 +6,11 @@
 
 <div>
   <h1><%= @episode.name %></h1>
-  <%= image_tag("http://image.tmdb.org/t/p/w185#{@episode.still_path}", class: 'pull-left', style: 'padding-right: 20px;') if @episode.still_path.present? %>
+  <%= image_tag(
+    TmdbImageService.image_url(file_path: @episode.still_path, size: :medium, image_type: :still),
+    class: 'pull-left',
+    style: 'padding-right: 20px;'
+  ) if @episode.still_path.present? %>
   <p>
     <%= @episode.overview %>
     <% if @episode.air_date.present? %>

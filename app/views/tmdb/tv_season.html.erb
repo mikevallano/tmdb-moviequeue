@@ -3,7 +3,11 @@
 </h2>
 
 <div>
-  <%= image_tag "http://image.tmdb.org/t/p/w185#{@season.poster_path}", class: 'pull-left', style: 'padding-right: 20px;' if @season.poster_path.present? %>
+  <%= image_tag(
+    TmdbImageService.image_url(file_path: @season.poster_path, size: :medium, image_type: :poster),
+    class: 'pull-left',
+    style: 'padding-right: 20px;'
+    ) if @season.poster_path.present? %>
   <p><%= @season.overview %></p>
 </div>
 
@@ -35,7 +39,11 @@
           episode_number: episode.episode_number) %>
     </h2>
     <div class='col-sm-6'>
-      <p><%= image_tag("http://image.tmdb.org/t/p/w185#{episode.still_path}") if episode.still_path.present? %></p>
+      <p>
+        <%= image_tag(
+          TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)
+        ) if episode.still_path.present? %>
+      </p>
       <p>
         <%= episode.overview %>
         <% if episode.air_date.present? %>
