@@ -255,34 +255,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Joel Coen")
       end
 
-      xscenario "more info page shows link to similar movies that go to their more info page", js: true do
-        # TODO: failing because similar movies have changed.
-        # Should be fixed to be more flexible. See issue #247
-        find("#movie_more_link_movie_partial").click
-        VCR.use_cassette("tmdb_similar_movies_more_info") do
-          find("#similar_movies_link_movie_more").click
-        end
-        wait_for_ajax
-        # expect(page).to have_content("The Revenant")
-        expect(page).to have_selector("#modal_link_281957")
-      end
-
-      scenario "similar movies are paginated", js: true do
-        # TODO: clean this up. See issue #247.
-        find("#movie_more_link_movie_partial").click
-        VCR.use_cassette("tmdb_similar_movies_more_info") do
-          find("#similar_movies_link_movie_more").click
-        end
-        # expect(page).to have_content("The Revenant")
-        # expect(page).to have_selector("#modal_link_281957")
-        expect(page).not_to have_content("Previous page")
-        VCR.use_cassette("tmdb_similar_movies_paginate") do
-          click_link "Next page"
-        end
-        # wait_for_ajax
-        expect(page).to have_content("Previous page")
-      end
-
       # TODO: Either get this working or remove it. See issue #247
       # scenario "more info page shows production companies and links to a discover search", js: true do
       #   find("#movie_more_link_movie_partial").click

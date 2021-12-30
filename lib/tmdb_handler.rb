@@ -37,32 +37,12 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_more(id)
-    @movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    @movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
     @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
     @movie = MovieMore.parse_result(@result)
 
     @production_companies = @result[:production_companies]
-    @similar_movies = @result[:similar][:results]
   end
-
-  def tmdb_handler_similar_movies(tmdb_id, page)
-    @movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases,similar&page=#{page}"
-    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
-    @similar_results = @result[:similar][:results]
-    @total_pages = @result[:similar][:total_pages]
-
-    @movie = MovieMore.parse_result(@result)
-    @movies = MovieSearch.parse_results(@similar_results)
-
-    @page = page.to_i
-    if @page > 1
-      @previous_page = @page - 1
-    end
-    unless @page >= @total_pages
-      @next_page = @page + 1
-    end
-
-  end #similar movies
 
   def tmdb_handler_full_cast(tmdb_id)
     @movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
@@ -90,7 +70,7 @@ module TmdbHandler
 
   def self.tmdb_handler_update_movie(movie)
     tmdb_id = movie.tmdb_id.to_s
-    movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
+    movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
     raise TmdbHandlerError.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}") unless api_result
     if api_result[:status_code] == 34 && api_result[:status_message]&.include?('could not be found')
