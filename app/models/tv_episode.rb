@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVEpisode
   attr_accessor :episode_id, :episode_number, :name, :air_date, :guest_stars, :season_number, :overview, :still_path
 
