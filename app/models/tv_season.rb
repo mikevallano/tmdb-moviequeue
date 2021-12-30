@@ -17,8 +17,6 @@ class TVSeason
 
   def self.parse_season_posters(seasons_data)
     seasons_data.map do |season_data|
-      # next if season_data[:season_number] == 0
-
       air_date = Date.parse(season_data[:air_date]) if season_data[:air_date].present?
       new(
         series: nil,

@@ -1,46 +1,63 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag "http://image.tmdb.org/t/p/w185#{@series.poster_path}" if @series.poster_path.present? %>
+      <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @series.poster_path, size: :medium, image_type: :poster)) if @series.poster_path.present? %>
       <div class="contents">
+        <p class="stats">
+          TV Series |
+          Aired: <%= @series.first_air_date %> to <%= @series.last_air_date %> |
+          Seasons: <%= @series.number_of_seasons %> |
+          Episodes: <%= @series.number_of_episodes %>
+        </p>
         <h1><%= @series.show_name %></h1>
-        <p class="stats">TV Series | Aired: <%= @series.first_air_date %> to <%= @series.last_air_date %> | Seasons: <%= @series.number_of_seasons %> | Episodes: <%= @series.number_of_episodes %> </p>
-        <p class="bio"><%= @series.overview if @series.overview.present? %></p>
+        <% if @series.tagline.present? %>
+          <p><q><%= @series.tagline %></q></p>
+        <% end %>
+        <p class="bio">
+          <%= @series.overview if @series.overview.present? %>
+        </p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
 
   <div class="row">
     <div class="tv-credits">
-    <% if @series.seasons.present? %>
-      <h2>Seasons: |
-        <% @series.seasons.each do |season| %>
-         <%= link_to season_number_display(season), tv_season_path(show_id: @series.show_id, season_number: season, show_name: @series.show_name) %> |
+      <% if @series.seasons.present? %>
+        <h2>Seasons: |
+          <% @series.seasons.each do |season| %>
+           <%= link_to season_number_display(season), tv_season_path(show_id: @series.show_id, season_number: season, show_name: @series.show_name) %> |
+          <% end %>
+        </h2>
+      <% end %><!-- if @series.seasons.present? -->
+
+      <div style="clear: both;">
+        <% if @series.seasons_posters.present? %>
+          <h2>Seasons:</h2>
+          <% @series.seasons_posters.each do |season| %>
+            <div class="season-poster-container">
+              <%= image_for_season_poster(season) %>
+              <div class="name-block">
+                <p><%= link_to "#{season.name}", tv_season_path(show_id: @series.show_id, season_number: season.season_number, show_name: @series.show_name)  %></p>
+              </div>
+            </div>
+          <% end %>
         <% end %>
-      </h2>
-    <% end %><!-- if @series.seasons.present? -->
+      </div>
 
-    <% if @series.seasons_posters.present? %>
-      <h2>Seasons: |
-        <% @series.seasons_posters.each do |season| %>
-        <%= image_tag "http://image.tmdb.org/t/p/w185#{season.poster_path}" if season.poster_path.present? %>
-
-        <% end %>
-      </h2>
-    <% end %><!-- if @series.seasons.present? -->
-
-    <% if @series.actors.present? %>
-      <h2>Show Cast:</h2>
-        <% @series.actors.each do |actor| %>
-          <div class="headshot-container">
-          <%= headshot_for(actor) %>
-            <div class="name-block">
-            <p class="actor"><%= link_to "#{actor.name}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-              <p>As <%= truncate(actor.character_name, length: 18) %><p>
-            </div> <!-- name-block -->
-          </div> <!-- headshot-container -->
+      <div style="clear: both;">
+        <% if @series.actors.present? %>
+          <h2>Show Cast:</h2>
+          <% @series.actors.each do |actor| %>
+            <div class="headshot-container">
+              <%= headshot_for(actor) %>
+              <div class="name-block">
+              <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+                <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+              </div> <!-- name-block -->
+            </div> <!-- headshot-container -->
           <% end %><!-- actors each do -->
-    <% end %><!-- if @series.actors.present? -->
+        <% end %><!-- if @series.actors.present? -->
+      </div>
 
     </div> <!-- credits -->
   </div> <!-- row -->

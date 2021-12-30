@@ -2,7 +2,24 @@ module TvSeriesHelper
   def image_for_tv_poster(series)
     title = series.show_name
     if series.poster_path.present?
-      image_tag("http://image.tmdb.org/t/p/w185#{series.poster_path}", title: title, alt: title)
+      image_tag(
+        TmdbImageUrlHelper.image_url(file_path: series.poster_path, size: :medium, image_type: :poster),
+        title: title,
+        alt: title
+      )
+    else
+      render "shared/missing_poster", title: title
+    end
+  end
+
+  def image_for_season_poster(season)
+    title = season.name
+    if season.poster_path.present?
+      image_tag(
+        TmdbImageUrlHelper.image_url(file_path: season.poster_path, size: :medium, image_type: :poster),
+        title: title,
+        alt: title
+      )
     else
       render "shared/missing_poster", title: title
     end
