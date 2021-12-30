@@ -4,7 +4,7 @@
     <div class="col-xs-12">
       <div id="movie-splash-container">
         <div class="backdrop-image">
-          <%= image_tag "http://image.tmdb.org/t/p/w1280#{@movie.backdrop_path}" %>
+          <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @movie.backdrop_path, size: :large, image_type: :backdrop)) %>
         </div> <!-- backdrop-image -->
         <div id="gradient-box"></div>
       </div><!-- movie-splash-container -->
