@@ -15,7 +15,7 @@ describe MoviesHelper, type: :helper do
     it 'returns an image tag if the movie has a poster path' do
       allow(movie).to receive(:poster_path).and_return('tester')
       expect(helper.image_for(movie)).to eq(
-        image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}",
+        image_tag("https://image.tmdb.org/t/p/w185#{movie.poster_path}",
           title: movie.title,
           alt: movie.title)
         )

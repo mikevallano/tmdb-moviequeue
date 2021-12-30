@@ -53,7 +53,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         sign_in_user(user)
         listing
         visit(movie_path(movie))
-        expect(page).to have_css("img[src*='http://image.tmdb.org/t/p/w185/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg']")
+        expect(page).to have_css("img[src*='https://image.tmdb.org/t/p/w185/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg']")
       end #genres are links
 
       scenario "movie show page does not have rating, reviews, or mark as watched unless it's on a list" do
