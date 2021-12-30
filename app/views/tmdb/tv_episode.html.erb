@@ -21,8 +21,8 @@
     <div class="headshot-container">
     <%= headshot_for(actor) %>
       <div class="name-block">
-        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-        <p>as <%= truncate(actor.character_name, length: 18) %><p>
+        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+        <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
       </div> <!-- name-block -->
     </div> <!-- headshot-container -->
   <% end %>
@@ -31,8 +31,8 @@
       <div class="headshot-container">
       <%= headshot_for(actor) %>
         <div class="name-block">
-          <p class="actor"><%= link_to "#{truncate(actor.name, length: 18)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-          <p>as <%= truncate(actor.character_name, length: 18) %><p>
+          <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+          <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->
     <% end %>
