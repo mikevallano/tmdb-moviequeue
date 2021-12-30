@@ -37,7 +37,7 @@
             <div class="season-poster-container">
               <%= image_for_season_poster(season) %>
               <div class="name-block">
-                <p><%= link_to "#{season.name}", tv_season_path(show_id: @series.show_id, season_number: season.season_number, show_name: @series.show_name)  %></p>
+                <p><%= link_to season.name, tv_season_path(show_id: @series.show_id, season_number: season.season_number, show_name: @series.show_name)  %></p>
               </div>
             </div>
           <% end %>
@@ -51,7 +51,7 @@
             <div class="headshot-container">
               <%= headshot_for(actor) %>
               <div class="name-block">
-              <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+              <p class="actor"><%= link_to truncate(actor.name, length: 18, escape: false), actor_search_path(actor: I18n.transliterate(actor.name))  %></p>
                 <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
               </div> <!-- name-block -->
             </div> <!-- headshot-container -->
