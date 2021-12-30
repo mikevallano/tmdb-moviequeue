@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-describe TmdbImageUrlHelper, type: :helper do
+describe TmdbImageService do
   describe 'self.image_url' do
-    let(:file_path) { 'foo.jpg' }
+    let(:file_path) { '/foo.jpg' }
     it 'returns a secure image url' do
-      result = TmdbImageUrlHelper.image_url(
+      result = TmdbImageService.image_url(
         file_path: file_path,
         image_type: :poster,
         size: :medium
@@ -15,23 +15,23 @@ describe TmdbImageUrlHelper, type: :helper do
     end
 
     it 'returns a medium poster url by default' do
-      result = TmdbImageUrlHelper.image_url(file_path: file_path)
-      expect(result).to eq("https://image.tmdb.org/t/p/w185foo.jpg")
+      result = TmdbImageService.image_url(file_path: file_path)
+      expect(result).to eq("https://image.tmdb.org/t/p/w185/foo.jpg")
     end
 
     it 'handles being passed a string as an argument for image_type' do
-      result = TmdbImageUrlHelper.image_url(file_path: file_path, image_type: 'poster')
-      expect(result).to eq("https://image.tmdb.org/t/p/w185foo.jpg")
+      result = TmdbImageService.image_url(file_path: file_path, image_type: 'poster')
+      expect(result).to eq("https://image.tmdb.org/t/p/w185/foo.jpg")
     end
 
     it 'handles being passed a string as an argument for image_type' do
-      result = TmdbImageUrlHelper.image_url(file_path: file_path, size: 'medium')
-      expect(result).to eq("https://image.tmdb.org/t/p/w185foo.jpg")
+      result = TmdbImageService.image_url(file_path: file_path, size: 'medium')
+      expect(result).to eq("https://image.tmdb.org/t/p/w185/foo.jpg")
     end
 
     it 'raises an error if the supplied image type is invalid' do
       expect do
-        TmdbImageUrlHelper.image_url(
+        TmdbImageService.image_url(
           file_path: file_path,
           image_type: :garbage,
           size: :medium
@@ -41,7 +41,7 @@ describe TmdbImageUrlHelper, type: :helper do
 
     it 'raises an error if the supplied size is invalid' do
       expect do
-        TmdbImageUrlHelper.image_url(
+        TmdbImageService.image_url(
           file_path: file_path,
           image_type: :still,
           size: :garbage

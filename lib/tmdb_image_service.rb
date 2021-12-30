@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TmdbImageUrlHelper
+module TmdbImageService
   # Image Docs: https://developers.themoviedb.org/3/getting-started/images
   # Image configuration: https://developers.themoviedb.org/3/configuration/get-api-configuration
 

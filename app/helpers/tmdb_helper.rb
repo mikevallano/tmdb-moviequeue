@@ -3,7 +3,7 @@
 module TmdbHelper
   def headshot_for(actor)
     if actor.profile_path.present?
-      image_tag(TmdbImageUrlHelper.image_url(
+      image_tag(TmdbImageService.image_url(
                   file_path: actor.profile_path,
                   size: :medium,
                   image_type: :profile

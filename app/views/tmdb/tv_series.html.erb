@@ -2,7 +2,7 @@
   <div class="row">
     <div class="summary-box">
       <%= image_tag(
-        TmdbImageUrlHelper.image_url(file_path: @series.poster_path, size: :medium, image_type: :poster)
+        TmdbImageService.image_url(file_path: @series.poster_path, size: :medium, image_type: :poster)
       ) if @series.poster_path.present? %>
       <div class="contents">
         <h1><%= @series.show_name %></h1>

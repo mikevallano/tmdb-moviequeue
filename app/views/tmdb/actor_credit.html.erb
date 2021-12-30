@@ -20,7 +20,7 @@
                 <p><%= link_to "Season: #{episode.season_number}", tv_season_path(season_number: episode.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %>, Episode: <%= episode.episode_number %></p>
                 <% if episode.still_path.present? %>
                   <p>
-                    <%= image_tag(TmdbImageUrlHelper.image_url(file_path: episode.still_path, size: :medium, image_type: :still)) %>
+                    <%= image_tag(TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)) %>
                   </p>
                 <% end %>
               </td>
@@ -38,7 +38,7 @@
       <% @credit.seasons.each do |season| %>
       <tr>
         <td>
-          <%= image_tag(TmdbImageUrlHelper.image_url(file_path: season.poster_path, size: :xsmall, image_type: :poster)) if season.poster_path.present? %>
+          <%= image_tag(TmdbImageService.image_url(file_path: season.poster_path, size: :xsmall, image_type: :poster)) if season.poster_path.present? %>
         </td>
         <td><%= link_to "Season: #{season_number_display(season.season_number)}", tv_season_path(season_number: season.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %></td>
         <td>Air date: <%= season.air_date %></td>

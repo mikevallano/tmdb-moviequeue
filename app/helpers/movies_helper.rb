@@ -4,7 +4,7 @@ module MoviesHelper
   def image_for(movie)
     if movie.poster_path.present?
       image_tag(
-        TmdbImageUrlHelper.image_url(file_path: movie.poster_path, size: :medium, image_type: :poster),
+        TmdbImageService.image_url(file_path: movie.poster_path, size: :medium, image_type: :poster),
         title: movie.title,
         alt: movie.title
       )

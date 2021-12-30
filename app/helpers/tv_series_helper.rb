@@ -5,7 +5,7 @@ module TvSeriesHelper
     title = series.show_name
     if series.poster_path.present?
       image_tag(
-        TmdbImageUrlHelper.image_url(file_path: series.poster_path, size: :medium, image_type: :poster),
+        TmdbImageService.image_url(file_path: series.poster_path, size: :medium, image_type: :poster),
         title: title,
         alt: title
       )

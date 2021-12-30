@@ -1,7 +1,7 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @person_profile.profile_path, size: :medium, image_type: :profile)) %>
+      <%= image_tag(TmdbImageService.image_url(file_path: @person_profile.profile_path, size: :medium, image_type: :profile)) %>
       <div class="contents">
         <h1><%= @person_profile.name %></h1>
         <h2>Born: <%= display_birthday_info(@person_profile) %></h2>
