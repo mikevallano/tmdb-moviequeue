@@ -1,7 +1,13 @@
+# frozen_string_literal: true
+
 module MoviesHelper
   def image_for(movie)
     if movie.poster_path.present?
-      image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}", title: movie.title, alt: movie.title)
+      image_tag(
+        TmdbImageUrlHelper.image_url(file_path: movie.poster_path, size: :medium, image_type: :poster),
+        title: movie.title,
+        alt: movie.title
+      )
     else
       render "shared/missing_poster", title: movie.title
     end
