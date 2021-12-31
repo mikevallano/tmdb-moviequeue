@@ -16,8 +16,8 @@
       <%= render partial "director_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
 
       <%= render "producer_credits" %>
+      <%= render partial: "editor_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
 
-      <%= render "editor_credits" %>
 
       <%= render "writer_credits" %>
 

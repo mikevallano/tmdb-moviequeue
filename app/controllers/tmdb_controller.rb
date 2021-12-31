@@ -148,10 +148,6 @@ class TmdbController < ApplicationController
       @director_id = params[:director_id]
       @name = params[:name]
       @director = tmdb_handler_person_detail_search(@director_id)
-
-      @person_profile = @director.profile
-      @person_movie_credits = @director.movie_credits
-      @person_tv_credits = @director.tv_credits
     end
   end
 
