@@ -7,13 +7,13 @@ RSpec.describe TmdbHandler, type: :module do
 
   context 'with a valid movie' do
     it 'returns true' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_a_valid_movie') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
         expect(subject).to eq(true)
       end
     end
 
     it 'updates the movie' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_a_valid_movie') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
         expect{ subject }.to change{ movie.reload.updated_at }
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe TmdbHandler, type: :module do
   context 'when no movie found from api response' do
     before { movie.update(tmdb_id: 'wrong')}
     it 'raises an error and does not update the movie' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_an_invalid_movie') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie') do
         expect{ subject }.not_to raise_error(TmdbHandler::TmdbHandlerError)
         expect{ subject }.not_to change{ movie.reload.updated_at }
       end
@@ -32,13 +32,13 @@ RSpec.describe TmdbHandler, type: :module do
   context 'when the title does not match' do
     before { movie.update(title: 'Fargowrong') }
     it 'does not raise an error' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_wrong_title') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title') do
         expect{subject}.not_to raise_error
       end
     end
 
     it 'still updates the movie' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_wrong_title') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title') do
         expect{ subject }.to change{ movie.reload.updated_at }
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe TmdbHandler, type: :module do
     let(:correct_mpaa_rating) { 'R' }
     before { movie.update(mpaa_rating: wrong_mpaa_rating) }
     it 'updates movie with latest tmdb info' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_outdated_info') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_outdated_info') do
         subject
         expect(movie.reload.mpaa_rating).to eq(correct_mpaa_rating)
       end
@@ -61,7 +61,7 @@ RSpec.describe TmdbHandler, type: :module do
     before { dupe_movie.save(validate: false) }
 
     it 'raises an error and does not update the movie' do
-      VCR.use_cassette('TmdbHandler.update_movie_with_a_valid_movie') do
+      VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
         expect{subject}.to raise_error(TmdbHandler::TmdbHandlerError).and not_change{ movie.reload.updated_at }
       end
     end
