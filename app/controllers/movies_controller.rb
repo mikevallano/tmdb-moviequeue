@@ -50,7 +50,7 @@ class MoviesController < ApplicationController
     if Movie.exists?(tmdb_id: @tmdb_id)
       @movie = Movie.find_by(tmdb_id: @tmdb_id)
     else
-      tmdb_handler_movie_more(@tmdb_id)
+      TmdbHandler.movie_more(@tmdb_id)
     end
     respond_to :js
   end
@@ -60,7 +60,7 @@ class MoviesController < ApplicationController
     if Movie.exists?(tmdb_id: @tmdb_id)
       @movie = Movie.find_by(tmdb_id: @tmdb_id)
     else
-      tmdb_handler_movie_more(@tmdb_id)
+      TmdbHandler.movie_more(@tmdb_id)
     end
     respond_to :js
   end
@@ -71,7 +71,7 @@ class MoviesController < ApplicationController
     if params[:tmdb_id].present?
       @tmdb_id = params[:tmdb_id]
       unless Movie.exists?(tmdb_id: @tmdb_id)
-        tmdb_handler_add_movie(@tmdb_id)
+        TmdbHandler.add_movie(@tmdb_id)
       end
         @movie = Movie.find_by(tmdb_id: @tmdb_id)
       else

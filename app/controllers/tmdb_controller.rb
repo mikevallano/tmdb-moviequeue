@@ -1,31 +1,30 @@
 class TmdbController < ApplicationController
-  before_action :authenticate_user!
-
   require 'open-uri'
-  include TmdbHandler
   include SearchParamParser
+
+  before_action :authenticate_user!
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
       @movie_title = I18n.transliterate(@movie_title)
-      tmdb_handler_search(@movie_title)
+      TmdbHandler.search(@movie_title)
     end
   end
 
   def movie_autocomplete
-    tmdb_handler_movie_autocomplete(params[:term])
+    TmdbHandler.movie_autocomplete(params[:term])
     render json: @autocomplete_results
   end
 
   def person_autocomplete
-    tmdb_handler_person_autocomplete(params[:term])
+    TmdbHandler.person_autocomplete(params[:term])
     render json: @autocomplete_results
   end
 
   def movie_more
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
-      tmdb_handler_movie_more(@tmdb_id)
+      TmdbHandler.movie_more(@tmdb_id)
     else
       redirect_to api_search_path
     end
@@ -35,7 +34,7 @@ class TmdbController < ApplicationController
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
       movie = Movie.find_by!(tmdb_id: @tmdb_id)
-      TmdbHandler.tmdb_handler_update_movie(movie)
+      TmdbHandler.TmdbHandler.update_movie(movie)
     end
     redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end
@@ -48,16 +47,16 @@ class TmdbController < ApplicationController
       else
         @page = 1
       end #if page
-      tmdb_handler_similar_movies(@tmdb_id, @page)
+      TmdbHandler.similar_movies(@tmdb_id, @page)
     end #if tmdb_id
-  end #similar movies
+  end
 
   def full_cast
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
-      tmdb_handler_full_cast(@tmdb_id)
+      TmdbHandler.full_cast(@tmdb_id)
     end
-  end #full cast
+  end
 
   def actor_search
     if params[:actor]
@@ -65,7 +64,7 @@ class TmdbController < ApplicationController
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
-      tmdb_handler_discover_search(params)
+      TmdbHandler.discover_search(params)
     end
   end
 
@@ -76,43 +75,43 @@ class TmdbController < ApplicationController
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
-      tmdb_handler_discover_search(params)
+      TmdbHandler.discover_search(params)
     end
   end
 
   def actor_more
     @actor_id = params[:actor_id]
-    tmdb_handler_actor_more(@actor_id)
+    TmdbHandler.actor_more(@actor_id)
   end
 
   def actor_credit
     credit_id = params[:credit_id]
-    @credit = tmdb_handler_actor_credit(credit_id)
+    @credit = TmdbHandler.actor_credit(credit_id)
   end
 
   def tv_series_search
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
-      @search_results = tmdb_handler_tv_series_search(query)
+      @search_results = TmdbHandler.tv_series_search(query)
     end
   end
 
   def tv_series_autocomplete
-    autocomplete_results = tmdb_handler_tv_series_autocomplete(params[:term])
+    autocomplete_results = TmdbHandler.tv_series_autocomplete(params[:term])
     render json: autocomplete_results
   end
 
   def tv_series
     show_id = params[:show_id]
-    @series = tmdb_handler_tv_series(show_id)
+    @series = TmdbHandler.tv_series(show_id)
   end
 
   def tv_season
     show_id = params[:show_id]
     season_number = params[:season_number]
-    @series = tmdb_handler_tv_series(show_id)
-    @season = tmdb_handler_tv_season(
+    @series = TmdbHandler.tv_series(show_id)
+    @season = TmdbHandler.tv_season(
       series: @series,
       show_id: show_id,
       season_number: season_number
@@ -122,13 +121,13 @@ class TmdbController < ApplicationController
   def tv_episode
     show_id = params[:show_id]
     season_number = params[:season_number]
-    @series = tmdb_handler_tv_series(show_id)
-    @season = tmdb_handler_tv_season(
+    @series = TmdbHandler.tv_series(show_id)
+    @season = TmdbHandler.tv_season(
       series: @series,
       show_id: show_id,
       season_number: season_number
     )
-    @episode = tmdb_handler_tv_episode(
+    @episode = TmdbHandler.tv_episode(
       show_id: show_id,
       season_number: season_number,
       episode_number: params[:episode_number]
@@ -139,7 +138,7 @@ class TmdbController < ApplicationController
     if params[:movie_one] && params[:movie_two]
       @movie_one = params[:movie_one]
       @movie_two = params[:movie_two]
-      tmdb_handler_two_movie_search(@movie_one, @movie_two)
+      TmdbHandler.two_movie_search(@movie_one, @movie_two)
     end
   end
 
@@ -147,7 +146,7 @@ class TmdbController < ApplicationController
     if params[:director_id]
       @director_id = params[:director_id]
       @name = params[:name]
-      tmdb_handler_person_detail_search(@director_id)
+      TmdbHandler.person_detail_search(@director_id)
     end
   end
 
@@ -165,10 +164,9 @@ class TmdbController < ApplicationController
       @discover_view_params = @passed_params.slice(:actor, :genre, :date, :year, :year_select, :mpaa_rating, :sort_by)
       @params_for_view = discover_show_search_params(@discover_view_params)
 
-      tmdb_handler_discover_search(@passed_params)
+      TmdbHandler.discover_search(@passed_params)
     end
-
-  end #discover search
+  end
 
   def discover_show_search_params(show_params)
     @keys = show_params.keys
@@ -200,5 +198,4 @@ class TmdbController < ApplicationController
     end
     "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
   end
-
-end #final
+end

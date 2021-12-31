@@ -38,7 +38,7 @@ private
     if params[:tmdb_id].present?
       @tmdb_id = params[:tmdb_id]
       unless Movie.exists?(tmdb_id: @tmdb_id)
-        tmdb_handler_add_movie(@tmdb_id)
+        TmdbHandler.add_movie(@tmdb_id)
       end
         @movie = Movie.find_by(tmdb_id: @tmdb_id)
       else
