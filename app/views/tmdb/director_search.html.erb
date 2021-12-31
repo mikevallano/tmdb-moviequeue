@@ -1,11 +1,11 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag(TmdbImageService.image_url(file_path: @person_profile.profile_path, size: :medium, image_type: :profile)) %>
+      <%= image_tag(TmdbImageService.image_url(file_path: @director.profile.profile_path, size: :medium, image_type: :profile)) %>
       <div class="contents">
-        <h1><%= @person_profile.name %></h1>
-        <h2>Born: <%= display_birthday_info(@person_profile) %></h2>
-        <p class="bio"><%= @person_profile.bio %></p>
+        <h1><%= @director.profile.name %></h1>
+        <h2>Born: <%= display_birthday_info(@director.profile) %></h2>
+        <p class="bio"><%= @director.profile.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
@@ -13,7 +13,7 @@
   <div class="row">
     <div class="credits">
 
-      <%= render "director_credits" %>
+      <%= render partial "director_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
 
       <%= render "producer_credits" %>
 
@@ -25,7 +25,7 @@
 
       <%= render "movie_credits" %>
 
-      <%= render "tv_credits" %>
+      <%= render partial "tv_credits", locals: { tv_credits: @director.tv_credits, actor_id: @director.person_id }  %>
 
     </div> <!-- credits -->
   </div> <!-- row -->

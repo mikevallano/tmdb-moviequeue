@@ -4,6 +4,7 @@ class TmdbController < ApplicationController
   require 'open-uri'
   include TmdbHandler
   include SearchParamParser
+  include TmdbHandler
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
@@ -81,8 +82,7 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor_id = params[:actor_id]
-    tmdb_handler_actor_more(@actor_id)
+    @actor = tmdb_handler_actor_more(params[:actor_id])
   end
 
   def actor_credit
@@ -147,7 +147,11 @@ class TmdbController < ApplicationController
     if params[:director_id]
       @director_id = params[:director_id]
       @name = params[:name]
-      tmdb_handler_person_detail_search(@director_id)
+      @director = tmdb_handler_person_detail_search(@director_id)
+
+      @person_profile = @director.profile
+      @person_movie_credits = @director.movie_credits
+      @person_tv_credits = @director.tv_credits
     end
   end
 

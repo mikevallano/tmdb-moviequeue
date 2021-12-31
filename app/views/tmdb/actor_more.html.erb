@@ -1,11 +1,11 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag(TmdbImageService.image_url(file_path: @person_profile.profile_path, size: :medium, image_type: :profile)) %>
+      <%= image_tag(TmdbImageService.image_url(file_path: @actor.profile.profile_path, size: :medium, image_type: :profile)) %>
       <div class="contents">
-        <h1><%= @person_profile.name %></h1>
-        <h2>Born: <%= display_birthday_info(@person_profile) %></h2>
-        <p class="bio"><%= @person_profile.bio %></p>
+        <h1><%= @actor.profile.name %></h1>
+        <h2>Born: <%= display_birthday_info(@actor.profile) %></h2>
+        <p class="bio"><%= @actor.profile.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
@@ -13,11 +13,11 @@
   <div class="row">
     <div class="credits">
 
-      <%= render partial: "movie_credits", locals: { person_profile: @person_profile } %>
+      <%= render partial: "movie_credits", locals: { person_profile: @actor.profile } %>
 
-      <%= render "tv_credits" %>
+      <%= render partial "tv_credits", locals: { tv_credits: @actor.tv_credits, actor_id: @actor.person_id }  %>
 
-      <%= render "director_credits" %>
+      <%= render partial "director_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
 
       <%= render "producer_credits" %>
 
