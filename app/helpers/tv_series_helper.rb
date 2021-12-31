@@ -10,6 +10,19 @@ module TvSeriesHelper
         alt: title
       )
     else
+      render "shared/missing_poster", title: title
+    end
+  end
+
+  def image_for_season_poster(season)
+    title = season.name
+    if season.poster_path.present?
+      image_tag(
+        TmdbImageService.image_url(file_path: season.poster_path, size: :medium, image_type: :poster),
+        title: title,
+        alt: title
+      )
+    else
       render 'shared/missing_poster', title: title
     end
   end

@@ -6,11 +6,7 @@
 
 <div>
   <h1><%= @episode.name %></h1>
-  <%= image_tag(
-    TmdbImageService.image_url(file_path: @episode.still_path, size: :medium, image_type: :still),
-    class: 'pull-left',
-    style: 'padding-right: 20px;'
-  ) if @episode.still_path.present? %>
+  <%= image_tag(TmdbImageService.image_url(file_path: @episode.still_path, size: :original, image_type: :still), style: 'width: 100%; margin-bottom: 1rem;') if @episode.still_path.present? %>
   <p>
     <%= @episode.overview %>
     <% if @episode.air_date.present? %>
@@ -19,13 +15,13 @@
   </p>
 </div>
 
-<div class="row", style="clear: both;">
+<div class="row">
   <h2>Cast</h2>
   <% @season.cast_members.each do |actor| %>
     <div class="headshot-container">
     <%= headshot_for(actor) %>
       <div class="name-block">
-        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+        <p class="actor"><%= link_to truncate(actor.name, length: 18, escape: false), actor_search_path(actor: I18n.transliterate(actor.name)) %></p>
         <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
       </div> <!-- name-block -->
     </div> <!-- headshot-container -->
@@ -35,7 +31,7 @@
       <div class="headshot-container">
       <%= headshot_for(actor) %>
         <div class="name-block">
-          <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+          <p class="actor"><%= link_to truncate(actor.name, length: 18, escape: false), actor_search_path(actor: I18n.transliterate(actor.name)) %></p>
           <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
         </div> <!-- name-block -->
       </div> <!-- headshot-container -->
