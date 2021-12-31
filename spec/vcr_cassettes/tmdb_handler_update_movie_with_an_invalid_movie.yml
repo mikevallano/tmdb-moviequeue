@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/movie/0?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&append_to_response=trailers,credits,similar,releases
+    uri: https://api.themoviedb.org/3/movie/0?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&append_to_response=trailers,credits,releases
     body:
       encoding: US-ASCII
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 11 Nov 2021 01:36:34 GMT
+      - Fri, 31 Dec 2021 22:59:35 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -40,25 +40,25 @@ http_interactions:
       X-Memc:
       - MISS
       X-Memc-Key:
-      - 89a99a5e678a4b350194c56c4b742e9df01ea32c
+      - 339900d5d09184908de9e9962decd9df96fa20f1
       X-Memc-Age:
       - '0'
       X-Memc-Expires:
-      - '15423'
+      - '15403'
       Vary:
       - Accept-Encoding
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 6c6707b9b2a2151353d87b53eeed3031.cloudfront.net (CloudFront)
+      - 1.1 86e7490fde5a22b9c665579fff4df533.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DFW53-C1
+      - DFW55-C3
       X-Amz-Cf-Id:
-      - jcISjqeX39U3rO1aGGC2QdcOcgq7ZwJU7VrGJWBCBjHPoIh6HkgkSw==
+      - YpaRH0UKd5uw3GU2wcx3hDN6NHw-Lag7e6dB72aVFIfnctsknBhC9Q==
     body:
       encoding: ASCII-8BIT
       string: '{"success":false,"status_code":34,"status_message":"The resource you
         requested could not be found."}'
     http_version: 
-  recorded_at: Thu, 11 Nov 2021 01:36:34 GMT
+  recorded_at: Fri, 31 Dec 2021 22:59:35 GMT
 recorded_with: VCR 5.0.0
