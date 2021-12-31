@@ -4,7 +4,6 @@ class TmdbController < ApplicationController
   require 'open-uri'
   include TmdbHandler
   include SearchParamParser
-  include TmdbHandler
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
