@@ -20,13 +20,11 @@
 
       <%= render partial: "writer_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
 
+      <%= render partial: "screenplay_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
 
-      <%= render "screenplay_credits" %>
       <%= render partial: "movie_credits", locals: { movie_credits: @director.movie_credits, person_profile: @director.profile }  %>
 
-
-      <%= render partial "tv_credits", locals: { tv_credits: @director.tv_credits, actor_id: @director.person_id }  %>
-
-    </div> <!-- credits -->
-  </div> <!-- row -->
+      <%= render partial: "tv_credits", locals: { tv_credits: @director.tv_credits, actor_id: @director.person_id }  %>
+    </div>
+  </div>
 </article>

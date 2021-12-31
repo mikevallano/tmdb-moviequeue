@@ -24,9 +24,7 @@
 
       <%= render partial: "writer_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
 
-
-      <%= render "screenplay_credits" %>
-
-    </div> <!-- credits -->
-  </div> <!-- row -->
+      <%= render partial: "screenplay_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+    </div>
+  </div>
 </article>
