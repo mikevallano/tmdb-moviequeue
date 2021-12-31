@@ -1,7 +1,9 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @series.poster_path, size: :medium, image_type: :poster)) if @series.poster_path.present? %>
+      <%= image_tag(
+        TmdbImageService.image_url(file_path: @series.poster_path, size: :medium, image_type: :poster)
+      ) if @series.poster_path.present? %>
       <div class="contents">
         <p class="stats">
           TV Series |

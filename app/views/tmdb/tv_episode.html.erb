@@ -6,7 +6,7 @@
 
 <div>
   <h1><%= @episode.name %></h1>
-  <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @episode.still_path, size: :original, image_type: :still), style: 'width: 100%; margin-bottom: 1rem;') if @episode.still_path.present? %>
+  <%= image_tag(TmdbImageService.image_url(file_path: @episode.still_path, size: :original, image_type: :still), style: 'width: 100%; margin-bottom: 1rem;') if @episode.still_path.present? %>
   <p>
     <%= @episode.overview %>
     <% if @episode.air_date.present? %>

@@ -15,10 +15,24 @@ describe MoviesHelper, type: :helper do
     it 'returns an image tag if the movie has a poster path' do
       allow(movie).to receive(:poster_path).and_return('tester')
       expect(helper.image_for(movie)).to eq(
-        image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}",
+        image_tag("https://image.tmdb.org/t/p/w185#{movie.poster_path}",
           title: movie.title,
           alt: movie.title)
         )
+    end
+  end
+
+  describe 'display_actor_age_at_release' do
+    it 'does not display anything if the age is unavailable' do
+      allow_any_instance_of(MoviesHelper).to receive(:actor_age_at_movie_release).and_return(nil)
+      result = display_actor_age_at_release('foo', 'bar')
+      expect(result).to eq(nil)
+    end
+
+    it 'displays "| age 10" if the age is available' do
+      allow_any_instance_of(MoviesHelper).to receive(:actor_age_at_movie_release).and_return(10)
+      result = display_actor_age_at_release('foo', 'bar')
+      expect(result).to eq("| age 10")
     end
   end
 
@@ -29,6 +43,22 @@ describe MoviesHelper, type: :helper do
       age = actor_age_at_movie_release(actor_birthday, movie_release_year)
 
       expect(age).to eq(20)
+    end
+
+    it 'returns nil when a birth year is missing' do
+      actor_birthday = ''
+      movie_release_year = '2020'
+      age = actor_age_at_movie_release(actor_birthday, movie_release_year)
+
+      expect(age).to be(nil)
+    end
+
+    it 'returns nil when a release date is unavailable' do
+      actor_birthday = '2000-01-31'
+      movie_release_year = 'Date unavailable'
+      age = actor_age_at_movie_release(actor_birthday, movie_release_year)
+
+      expect(age).to be(nil)
     end
   end
 

@@ -1,13 +1,26 @@
+# frozen_string_literal: true
+
 module MoviesHelper
   def image_for(movie)
     if movie.poster_path.present?
-      image_tag("http://image.tmdb.org/t/p/w185#{movie.poster_path}", title: movie.title, alt: movie.title)
+      image_tag(
+        TmdbImageService.image_url(file_path: movie.poster_path, size: :medium, image_type: :poster),
+        title: movie.title,
+        alt: movie.title
+      )
     else
       render "shared/missing_poster", title: movie.title
     end
   end
 
+  def display_actor_age_at_release(actor_birthday, release_year)
+    age = actor_age_at_movie_release(actor_birthday, release_year)
+    "| age #{age}" if age.present?
+  end
+
   def actor_age_at_movie_release(actor_birthday, release_year)
+    return nil unless actor_birthday.to_date.present? && release_year != "Date unavailable"
+
     birth_year = actor_birthday.to_date.year
     release_year.to_i - birth_year
   end

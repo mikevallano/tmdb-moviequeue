@@ -3,7 +3,11 @@
 </h2>
 
 <div>
-  <%= image_tag(TmdbImageUrlHelper.image_url(file_path: @season.poster_path, size: :small, image_type: :poster), class: 'pull-left', style: 'padding-right: 20px;') if @season.poster_path.present? %>
+  <%= image_tag(
+    TmdbImageService.image_url(file_path: @season.poster_path, size: :medium, image_type: :poster),
+    class: 'pull-left',
+    style: 'padding-right: 20px;'
+    ) if @season.poster_path.present? %>
   <p><%= @season.overview %></p>
 </div>
 
@@ -36,7 +40,9 @@
     </h2>
     <div class='col-sm-6'>
       <p>
-        <%= image_tag(TmdbImageUrlHelper.image_url(file_path: episode.still_path, size: :large, image_type: :still)) if episode.still_path.present? %>
+        <%= image_tag(
+          TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)
+        ) if episode.still_path.present? %>
       </p>
       <p>
         <%= episode.overview %>

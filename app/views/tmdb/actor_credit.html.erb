@@ -18,7 +18,11 @@
                 <h2>Air date: <%= episode.air_date %></h2>
                 <p><%= "Overview: #{episode.overview}" if episode.overview.present? %></p>
                 <p><%= link_to "Season: #{episode.season_number}", tv_season_path(season_number: episode.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %>, Episode: <%= episode.episode_number %></p>
-                <p><%= image_tag "http://image.tmdb.org/t/p/w185#{episode.still_path}" if episode.still_path.present? %></p>
+                <% if episode.still_path.present? %>
+                  <p>
+                    <%= image_tag(TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)) %>
+                  </p>
+                <% end %>
               </td>
             </tr>
           <% end %><!-- @credit.episodes loop-->
@@ -33,7 +37,9 @@
     <table class="table">
       <% @credit.seasons.each do |season| %>
       <tr>
-        <td><%= image_tag "http://image.tmdb.org/t/p/w92#{season.poster_path}" if season.poster_path.present? %></td>
+        <td>
+          <%= image_tag(TmdbImageService.image_url(file_path: season.poster_path, size: :xsmall, image_type: :poster)) if season.poster_path.present? %>
+        </td>
         <td><%= link_to "Season: #{season_number_display(season.season_number)}", tv_season_path(season_number: season.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %></td>
         <td>Air date: <%= season.air_date %></td>
       </tr>
