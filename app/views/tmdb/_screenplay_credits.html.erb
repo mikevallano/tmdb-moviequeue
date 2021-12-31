@@ -1,14 +1,14 @@
-<h3>Screenplay Credits (<%= @person_movie_credits.screenplay.size + @person_tv_credits.screenplay.size %>)</h3>
-  <p>Movies (<%= @person_movie_credits.screenplay.size %>)</p>
+<h3>Screenplay Credits (<%= movie_credits.screenplay.size + tv_credits.screenplay.size %>)</h3>
+  <p>Movies (<%= movie_credits.screenplay.size %>)</p>
     <ul>
-      <% @person_movie_credits.screenplay.each do |credit| %>
+      <% movie_credits.screenplay.each do |credit| %>
         <%= render "movie_credit_loop", credit: credit %>
       <% end %>
     </ul>
 
-  <p>TV (<%= @person_tv_credits.screenplay.size %>)</p>
+  <p>TV (<%= tv_credits.screenplay.size %>)</p>
     <ul>
-      <% @person_tv_credits.writing.each do |credit| %>
+      <% tv_credits.writing.each do |credit| %>
         <%= render "tv_credit_loop", credit: credit %>
       <% end %>
     </ul>

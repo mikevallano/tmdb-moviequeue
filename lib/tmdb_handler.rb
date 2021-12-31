@@ -128,22 +128,22 @@ module TmdbHandler
     raise TmdbHandlerError.new("#{movie.title} failed update. #{error.message}")
   end
 
-  def tmdb_handler_actor_more(actor_id)
-    tmdb_handler_person_detail_search(actor_id)
-  end
-
   def tmdb_handler_person_detail_search(person_id)
     api_bio_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
     bio_results = JSON.parse(open(api_bio_url).read, symbolize_names: true)
-    @person_profile = MoviePersonProfile.parse_result(bio_results)
 
     api_movie_credits_url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
     movie_credits_results = JSON.parse(open(api_movie_credits_url).read, symbolize_names: true)
-    @person_movie_credits = MoviePersonCredits.parse_result(movie_credits_results)
 
     api_tv_credits_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
     tv_credits_results = JSON.parse(open(api_tv_credits_url).read, symbolize_names: true)
-    @person_tv_credits = TVPersonCredits.parse_result(tv_credits_results)
+
+    OpenStruct.new(
+      person_id: person_id,
+      profile: MoviePersonProfile.parse_result(bio_results),
+      movie_credits: MoviePersonCredits.parse_result(movie_credits_results),
+      tv_credits: TVPersonCredits.parse_result(tv_credits_results)
+    )
   end
 
   def tmdb_handler_actor_credit(credit_id)

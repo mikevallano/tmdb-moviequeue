@@ -1,13 +1,13 @@
 <h3>
-  <%= link_to 'Movie Poster View', actor_movie_posters_uri(@person_profile), style: 'float: right;' %>
-  Movie Credits (<%= @person_movie_credits.actor.size %>)
+  <%= link_to 'Movie Poster View', actor_movie_posters_uri(person_profile), style: 'float: right;' %>
+  Movie Credits (<%= movie_credits.actor.size %>)
 </h3>
 <ul>
-  <% @person_movie_credits.actor.each do |credit| %>
+  <% movie_credits.actor.each do |credit| %>
     <li>
       <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
       <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
-      <%= display_actor_age_at_release(@person_profile.birthday, credit.date) %>
+      <%= display_actor_age_at_release(person_profile.birthday, credit.date) %>
       <%= "as #{credit.character}" if credit.character.present? %>
   </li>
   <% end %>
