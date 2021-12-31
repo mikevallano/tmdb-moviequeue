@@ -82,7 +82,7 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = tmdb_handler_actor_more(params[:actor_id])
+    @actor = tmdb_handler_person_detail_search(params[:actor_id])
   end
 
   def actor_credit
@@ -145,9 +145,7 @@ class TmdbController < ApplicationController
 
   def director_search
     if params[:director_id]
-      @director_id = params[:director_id]
-      @name = params[:name]
-      @director = tmdb_handler_person_detail_search(@director_id)
+      @director = tmdb_handler_person_detail_search(params[:director_id])
     end
   end
 

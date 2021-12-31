@@ -128,10 +128,6 @@ module TmdbHandler
     raise TmdbHandlerError.new("#{movie.title} failed update. #{error.message}")
   end
 
-  def tmdb_handler_actor_more(actor_id)
-    tmdb_handler_person_detail_search(actor_id)
-  end
-
   def tmdb_handler_person_detail_search(person_id)
     api_bio_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
     bio_results = JSON.parse(open(api_bio_url).read, symbolize_names: true)
