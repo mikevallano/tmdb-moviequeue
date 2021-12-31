@@ -87,7 +87,7 @@ module TmdbHandler
     popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
   end
 
-  def self.self.update_movie(movie)
+  def self.update_movie(movie)
     tmdb_id = movie.tmdb_id.to_s
     movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,similar,releases"
     api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
