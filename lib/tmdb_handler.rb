@@ -175,6 +175,8 @@ module TmdbHandler
     movie_two_search_results = tmdb_handler_search(movie_two_title)
     movie_two_id = movie_two_search_results&.movies&.first&.tmdb_id
 
+    joint_search_results.not_found_message = movie_one_search_results.not_found_message.presence || movie_two_search_results.not_found_message.presence
+
     if movie_one_id.present? && movie_two_id.present?
       tmdb_handler_movie_more(movie_one_id)
       # @movie comes from tmdb_handler_movie_more
@@ -187,8 +189,6 @@ module TmdbHandler
       movie_two_actors = @movie.actors
 
       joint_search_results.common_actors = movie_one_actors & movie_two_actors
-    else
-      joint_search_results.not_found_message = 'Sorry, we could not locate data for those movies.'
     end
     joint_search_results
   end
@@ -275,6 +275,4 @@ module TmdbHandler
     end
 
   end #discover search
-
-
 end
