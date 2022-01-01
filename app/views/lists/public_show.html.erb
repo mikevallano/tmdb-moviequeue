@@ -2,7 +2,7 @@
 <br>
 
   <div id ="public_search_loop">
-    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
   </div>
 
   <div class="row tile-container">

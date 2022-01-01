@@ -26,7 +26,7 @@
     </br>
 
     <div id ="movies_search_loop">
-      <%= render partial: 'movies/movie_partial_loop', object: @search_results.movies %>
+      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @search_results.movies } %>
     </div> <!-- movies_search_loop -->
   <% end %> <!-- # if @search_results.not_found_message.present? -->
 <% end %> <!-- #initial if @movie_title.present? -->

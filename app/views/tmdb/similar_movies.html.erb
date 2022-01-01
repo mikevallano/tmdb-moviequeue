@@ -2,7 +2,7 @@
 <h1>Movies similar to <%= link_to "#{@movie.title}", movie_more_path(tmdb_id: @movie.tmdb_id) %></h1>
 
     <div id ="similar_movies_loop">
-      <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
     </div>
 
 

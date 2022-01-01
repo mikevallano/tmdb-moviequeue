@@ -25,7 +25,7 @@
 
     <div class="row">
       <div id ="movies_actor_search_loop">
-        <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+        <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
       </div> <!-- movies_actor_search_loop -->
     </div> <!-- row -->
 
@@ -48,5 +48,3 @@
 <% end %> <!-- # if @actor.present? -->
 
 <br>
-
-
