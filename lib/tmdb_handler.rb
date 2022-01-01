@@ -7,20 +7,20 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_search(query)
-    @query = query.titlecase
-    @search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
-    @discover_results = @tmdb_response[:results]
-    if !@discover_results.present?
-      @not_found = "No results for '#{@query}'."
-    else
-      @movies = MovieSearch.parse_results(@discover_results)
-    end
-    rescue
-      unless @tmdb_response.present?
-        @not_found = "No results for '#{@query}.'"
-      end
+  def tmdb_handler_search(movie_title)
+    query = I18n.transliterate(movie_title).titlecase
+    search_url = "#{BASE_URL}/search/movie?query=#{movie_title}&api_key=#{ENV['tmdb_api_key']}"
+    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
+    discover_results = tmdb_response[:results]
+    not_found = "No results for '#{query}'." if tmdb_response.blank? || discover_results.blank?
+    movies = MovieSearch.parse_results(discover_results) if discover_results.present?
+
+    OpenStruct.new(
+      movie_title: movie_title,
+      not_found_message: not_found,
+      query: query,
+      movies: movies
+    )
   end
 
   def tmdb_handler_movie_autocomplete(query)
