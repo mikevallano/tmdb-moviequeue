@@ -1,7 +1,3 @@
-<!-- similar movies -->
-<p class="sidebar-button"><%= link_to '<i class="fa fa-search"></i> Find Similar Movies'.html_safe, similar_movies_path(tmdb_id: @movie.tmdb_id), id: "similar_movies_link_movie_more" %>
-</p>
-
 <!--  link to netflix -->
 <p class="sidebar-button">
   <a href="http://www.netflix.com/search/<%= @movie.title %>" target="_blank" alt="Find on Netflix"><i class="fa fa-chevron-circle-right"></i> Find on Netflix</a>
