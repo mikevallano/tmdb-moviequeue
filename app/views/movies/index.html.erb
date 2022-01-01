@@ -1,5 +1,5 @@
 <% content_for(:title, "My Movies") %>
-  
+
 
 <div class="row">
   <h1>My Movie Collection</h1>
@@ -29,7 +29,7 @@
 
 <div class="row">
   <div id ="movies_index_loop">
-    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
   </div><!-- movies_index_loop -->
 </div> <!-- row -->
 
@@ -41,4 +41,3 @@
     </div><!-- pagination -->
   </center>
 </div> <!-- row tile-container -->
-

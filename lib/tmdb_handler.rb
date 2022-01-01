@@ -7,20 +7,20 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_search(query)
-    @query = query.titlecase
-    @search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-    @tmdb_response = JSON.parse(open(@search_url).read, symbolize_names: true)
-    @discover_results = @tmdb_response[:results]
-    if !@discover_results.present?
-      @not_found = "No results for '#{@query}'."
-    else
-      @movies = MovieSearch.parse_results(@discover_results)
-    end
-    rescue
-      unless @tmdb_response.present?
-        @not_found = "No results for '#{@query}.'"
-      end
+  def tmdb_handler_search(movie_title)
+    query = I18n.transliterate(movie_title).titlecase
+    search_url = "#{BASE_URL}/search/movie?query=#{movie_title}&api_key=#{ENV['tmdb_api_key']}"
+    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
+    discover_results = tmdb_response[:results]
+    not_found = "No results for '#{query}'." if tmdb_response.blank? || discover_results.blank?
+    movies = MovieSearch.parse_results(discover_results) if discover_results.present?
+
+    OpenStruct.new(
+      movie_title: movie_title,
+      not_found_message: not_found,
+      query: query,
+      movies: movies
+    )
   end
 
   def tmdb_handler_movie_autocomplete(query)
@@ -167,31 +167,30 @@ module TmdbHandler
     TVEpisode.parse_record(episode_data)
   end
 
-  def tmdb_handler_two_movie_search(movie_one, movie_two)
-    tmdb_handler_search(movie_one)
-      if @movies.present?
-        @movie_one_id = @movies.first.tmdb_id
-      else
-        @not_found
-      end
-    tmdb_handler_search(movie_two)
-      if @movies.present?
-        @movie_two_id = @movies.first.tmdb_id
-      else
-        @not_found
-      end
+  def tmdb_handler_two_movie_search(movie_one_title, movie_two_title)
+    joint_search_results = OpenStruct.new
 
-    unless @not_found.present?
-      tmdb_handler_movie_more(@movie_one_id)
-        @movie_one = @movie
-        @movie_one_actors = @movie.actors
-      tmdb_handler_movie_more(@movie_two_id)
-        @movie_two = @movie
-        @movie_two_actors = @movie.actors
+    movie_one_search_results = tmdb_handler_search(movie_one_title)
+    movie_one_id = movie_one_search_results&.movies&.first&.tmdb_id
+    movie_two_search_results = tmdb_handler_search(movie_two_title)
+    movie_two_id = movie_two_search_results&.movies&.first&.tmdb_id
 
-      @common_actors = @movie_one_actors & @movie_two_actors
+    joint_search_results.not_found_message = movie_one_search_results.not_found_message.presence || movie_two_search_results.not_found_message.presence
+
+    if movie_one_id.present? && movie_two_id.present?
+      tmdb_handler_movie_more(movie_one_id)
+      # @movie comes from tmdb_handler_movie_more
+      joint_search_results.movie_one = @movie
+      movie_one_actors = @movie.actors
+
+      tmdb_handler_movie_more(movie_two_id)
+      # @movie comes from tmdb_handler_movie_more
+      joint_search_results.movie_two = @movie
+      movie_two_actors = @movie.actors
+
+      joint_search_results.common_actors = movie_one_actors & movie_two_actors
     end
-
+    joint_search_results
   end
 
   def tmdb_handler_discover_search(params)
@@ -276,6 +275,4 @@ module TmdbHandler
     end
 
   end #discover search
-
-
 end

@@ -24,7 +24,7 @@
   <br>
 
   <div id ="two_actor_search_loop">
-    <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
   </div> <!-- movies_actor_search_loop -->
 
   </br>
@@ -44,5 +44,3 @@
 <% end %> <!-- # @not_found.present? -->
 
 </br>
-
-

@@ -7,8 +7,13 @@ class TmdbController < ApplicationController
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
-      @movie_title = I18n.transliterate(@movie_title)
-      tmdb_handler_search(@movie_title)
+      @search_results = tmdb_handler_search(@movie_title)
+    end
+  end
+
+  def two_movie_search
+    if params[:movie_one] && params[:movie_two]
+      @search_results = tmdb_handler_two_movie_search(params[:movie_one], params[:movie_two])
     end
   end
 
@@ -120,14 +125,6 @@ class TmdbController < ApplicationController
       season_number: season_number,
       episode_number: params[:episode_number]
     )
-  end
-
-  def two_movie_search
-    if params[:movie_one] && params[:movie_two]
-      @movie_one = params[:movie_one]
-      @movie_two = params[:movie_two]
-      tmdb_handler_two_movie_search(@movie_one, @movie_two)
-    end
   end
 
   def director_search

@@ -35,7 +35,7 @@
       <p class="button-main"><%= link_to "Search Again", discover_search_path %> </p>
 
     <div id ="discover_search_loop">
-      <%= render partial: 'movies/movie_partial_loop', object: @movies %>
+      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
     </div>
 
 

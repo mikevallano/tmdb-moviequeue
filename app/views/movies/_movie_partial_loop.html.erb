@@ -1,28 +1,27 @@
+<div class="row tile-container">
+  <% movies.each do |movie| %>
+    <article class="tile-cover-pic">
+      <!-- MODAL TRIGGER -->
+      <p id="modal-trigger">
+        <!-- Always display the modal on desktop -->
+        <%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
+                                      remote: true,
+                                      data: { target: "#myModal_#{movie.tmdb_id}" },
+                                      id: "modal_link_#{movie.tmdb_id}",
+                                      class: 'modal-linker'
+        %>
+      </p>
 
-  <div class="row tile-container">
-    <% @movies.each do |movie| %>
-      <article class="tile-cover-pic">
-        <!-- MODAL TRIGGER -->
-        <p id="modal-trigger">
-          <!-- Always display the modal on desktop -->
-          <%= link_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
-                                        remote: true,
-                                        data: { target: "#myModal_#{movie.tmdb_id}" },
-                                        id: "modal_link_#{movie.tmdb_id}",
-                                        class: 'modal-linker'
-          %>
-        </p>
+      <p id="modal-trigger-mobile">
+        <!-- Get to a show page on mobile regardless of movie object persistence -->
+        <% if movie.is_a?(Movie) %>
+          <%= link_to image_for(movie), movie_path(movie) %>
+        <% else %>
+          <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id) %>
+        <% end %>
+      </p>
 
-        <p id="modal-trigger-mobile">
-          <!-- Get to a show page on mobile regardless of movie object persistence -->
-          <% if movie.is_a?(Movie) %>
-            <%= link_to image_for(movie), movie_path(movie) %>
-          <% else %>
-            <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id) %>
-          <% end %>
-        </p>
-
-        <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
-      </article> <!-- tile-cover-pic -->
-    <% end %><!-- movies.each -->
-  </div> <!-- row tile container-->
+      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
+    </article> <!-- tile-cover-pic -->
+  <% end %><!-- movies.each -->
+</div> <!-- row tile container-->
