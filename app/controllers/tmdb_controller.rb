@@ -47,10 +47,9 @@ class TmdbController < ApplicationController
 
   def full_cast
     if params[:tmdb_id]
-      @tmdb_id = params[:tmdb_id]
-      tmdb_handler_full_cast(@tmdb_id)
+      @cast = tmdb_handler_full_cast(params[:tmdb_id])
     end
-  end #full cast
+  end
 
   def actor_search
     if params[:actor]
