@@ -1,14 +1,13 @@
 <% content_for(:title, "Full Cast") %>
 
 <div class="full-cast">
-
-  <h1>Full cast for <%= link_to "#{@movie.title}", movie_more_path(tmdb_id: @movie.tmdb_id) %></h1>
+  <h1>Full cast for <%= link_to "#{@cast.movie.title}", movie_more_path(tmdb_id: @cast.movie.tmdb_id) %></h1>
 
   <div class="row">
     <div class="col-xs-8">
       <h2>Actors:</h2>
 
-      <% @actors.each do |actor| %>
+      <% @cast.actors.each do |actor| %>
       <div class="headshot-container">
       <%= link_to headshot_for(actor), actor_more_path(actor_id: actor.actor_id) %>
         <div class="name-block">
@@ -23,7 +22,7 @@
       <div class="row">
         <h2>Directors:</h2>
 
-        <% @directors.each do |director| %>
+        <% @cast.directors.each do |director| %>
         <div class="headshot-container">
         <%= link_to headshot_for(director), director_search_path(director_id: director.director_id) %>
           <div class="name-block">
@@ -36,8 +35,7 @@
 
       <div class="row">
         <h2>Editors:</h2>
-
-        <% @editors.each do |editor| %>
+        <% @cast.editors.each do |editor| %>
         <div class="headshot-container">
         <%= link_to headshot_for(editor), director_search_path(director_id: editor.editor_id) %>
           <div class="name-block">
@@ -47,9 +45,6 @@
         </div> <!-- headshot-container -->
         <% end %><!-- editors each do -->
       </div> <!-- row -->
-
     </div> <!-- col-xs-4 -->
-
   </div> <!-- row -->
-
 </div> <!-- full-cast -->

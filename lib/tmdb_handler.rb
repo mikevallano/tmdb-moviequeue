@@ -45,18 +45,21 @@ module TmdbHandler
   end
 
   def tmdb_handler_full_cast(tmdb_id)
-    @movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
+    movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
+    result = JSON.parse(open(movie_url).read, symbolize_names: true)
+    director_credits = result[:credits][:crew].select { |crew| crew[:job] == "Director" }
+    editor_credits = result[:credits][:crew].select { |crew| crew[:job] == "Editor" }
+
+    # this gives us the @movie value
     tmdb_handler_movie_more(tmdb_id)
-    @credits = @result[:credits]
-    @cast = @result[:credits][:cast]
-    @actors = MovieCast.parse_results(@cast)
-    @crew = @result[:credits][:crew]
-    @director_credits = @crew.select { |crew| crew[:job] == "Director" }
-    @directors = MovieDirecting.parse_results(@director_credits)
-    @editor_credits = @crew.select { |crew| crew[:job] == "Editor" }
-    @editors = MovieEditing.parse_results(@editor_credits)
-  end #full_cast
+
+    OpenStruct.new(
+      movie: @movie,
+      actors: MovieCast.parse_results(result[:credits][:cast]),
+      directors: MovieDirecting.parse_results(director_credits),
+      editors: MovieEditing.parse_results(editor_credits),
+    )
+  end
 
   def tmdb_handler_add_movie(tmdb_id)
     tmdb_handler_movie_more(tmdb_id)
