@@ -37,11 +37,9 @@ module TmdbHandler
   end
 
   def tmdb_handler_movie_more(id)
-    @movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
-    @result = JSON.parse(open(@movie_url).read, symbolize_names: true)
-    @movie = MovieMore.parse_result(@result)
-
-    @production_companies = @result[:production_companies]
+    movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
+    result = JSON.parse(open(movie_url).read, symbolize_names: true)
+    MovieMore.parse_result(result)
   end
 
   def tmdb_handler_full_cast(tmdb_id)
@@ -50,11 +48,8 @@ module TmdbHandler
     director_credits = result[:credits][:crew].select { |crew| crew[:job] == "Director" }
     editor_credits = result[:credits][:crew].select { |crew| crew[:job] == "Editor" }
 
-    # this gives us the @movie value
-    tmdb_handler_movie_more(tmdb_id)
-
     OpenStruct.new(
-      movie: @movie,
+      movie: tmdb_handler_movie_more(tmdb_id),
       actors: MovieCast.parse_results(result[:credits][:cast]),
       directors: MovieDirecting.parse_results(director_credits),
       editors: MovieEditing.parse_results(editor_credits),
@@ -62,13 +57,26 @@ module TmdbHandler
   end
 
   def tmdb_handler_add_movie(tmdb_id)
-    tmdb_handler_movie_more(tmdb_id)
-
-    Movie.create(title: @movie.title, tmdb_id: @movie.tmdb_id, imdb_id: @movie.imdb_id,
-    genres: @movie.genres, actors: @movie.actors, adult: @result[:adult], backdrop_path: @movie.backdrop_path,
-    poster_path: @movie.poster_path, release_date: @movie.release_date, overview: @movie.overview, trailer: @movie.trailer,
-    director: @movie.director, director_id: @movie.director_id, vote_average: @movie.vote_average,
-    popularity: @movie.popularity, runtime: @movie.runtime, mpaa_rating: @movie.mpaa_rating)
+    movie = tmdb_handler_movie_more(tmdb_id)
+    Movie.create(
+      title: movie.title,
+      tmdb_id: movie.tmdb_id,
+      imdb_id: movie.imdb_id,
+      genres: movie.genres,
+      actors: movie.actors,
+      adult: movie.adult,
+      backdrop_path: movie.backdrop_path,
+      poster_path: movie.poster_path,
+      release_date: movie.release_date,
+      overview: movie.overview,
+      trailer: movie.trailer,
+      director: movie.director,
+      director_id: movie.director_id,
+      vote_average: movie.vote_average,
+      popularity: movie.popularity,
+      runtime: movie.runtime,
+      mpaa_rating: movie.mpaa_rating
+    )
   end
 
   def self.tmdb_handler_update_movie(movie)
@@ -181,15 +189,11 @@ module TmdbHandler
     joint_search_results.not_found_message = movie_one_search_results.not_found_message.presence || movie_two_search_results.not_found_message.presence
 
     if movie_one_id.present? && movie_two_id.present?
-      tmdb_handler_movie_more(movie_one_id)
-      # @movie comes from tmdb_handler_movie_more
-      joint_search_results.movie_one = @movie
-      movie_one_actors = @movie.actors
+      joint_search_results.movie_one = tmdb_handler_movie_more(movie_one_id)
+      movie_one_actors = joint_search_results.movie_one.actors
 
-      tmdb_handler_movie_more(movie_two_id)
-      # @movie comes from tmdb_handler_movie_more
-      joint_search_results.movie_two = @movie
-      movie_two_actors = @movie.actors
+      joint_search_results.movie_two = tmdb_handler_movie_more(movie_two_id)
+      movie_two_actors = joint_search_results.movie_two.actors
 
       joint_search_results.common_actors = movie_one_actors & movie_two_actors
     end
