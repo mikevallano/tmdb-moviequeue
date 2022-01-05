@@ -82,14 +82,14 @@
             <% end %> <!-- # tag form loop -->
           <% end %> <!-- # if admin? -->
 
-            <% if @production_companies.present? %> <!-- # if @production_companies.present? -->
+            <% if @movie.production_companies.present? %> <!-- # if @movie.production_companies.present? -->
               <p><strong>Production Companies:</strong>
-                <% @production_companies.each do |company| %>
+                <% @movie.production_companies.each do |company| %>
                   <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
-                  <%= ", " unless company == @production_companies.last %>
+                  <%= ", " unless company == @movie.production_companies.last %>
                 <% end %> <!-- # each -->
               </p>
-            <% end %> <!-- # if @production_companies.present? -->
+            <% end %> <!-- # if @movie.production_companies.present? -->
           </div> <!-- col-xs-12 -->
 
         </div> <!-- row -->
