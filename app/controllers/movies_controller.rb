@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoviesController < ApplicationController
   before_action :authenticate_user!
   before_action :restrict_to_admin!, only: :update
@@ -21,13 +23,11 @@ class MoviesController < ApplicationController
       @movies = current_user.all_movies_by_recently_watched.paginate(:page => params[:page], per_page: 20)
     end #if params tag
 
-
     @sort_by = params[:sort_by]
     if @sort_by.present?
       movies_index_sort_handler(@sort_by)
     end #if @sort_by.present?
-
-  end #index
+  end
 
   def update
     if @movie.update(required_params)
@@ -64,8 +64,6 @@ class MoviesController < ApplicationController
       @movie = Movie.friendly.find(params[:movie_id])
     end
   end
-
-  private
 
   def required_params
     trailer_url = params[:trailer]

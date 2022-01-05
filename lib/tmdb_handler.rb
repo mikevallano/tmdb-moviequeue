@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TmdbHandler
   BASE_URL = 'https://api.themoviedb.org/3'.freeze
 
