@@ -46,22 +46,12 @@ class MoviesController < ApplicationController
 
   def modal
     @list = List.find(params[:list_id]) if params[:list_id].present?
-    @tmdb_id = params[:tmdb_id]
-    if Movie.exists?(tmdb_id: @tmdb_id)
-      @movie = Movie.find_by(tmdb_id: @tmdb_id)
-    else
-      tmdb_handler_movie_more(@tmdb_id)
-    end
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_movie_more(params[:tmdb_id])
     respond_to :js
   end
 
   def modal_close
-    @tmdb_id = params[:tmdb_id]
-    if Movie.exists?(tmdb_id: @tmdb_id)
-      @movie = Movie.find_by(tmdb_id: @tmdb_id)
-    else
-      tmdb_handler_movie_more(@tmdb_id)
-    end
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_movie_more(params[:tmdb_id])
     respond_to :js
   end
 
@@ -69,15 +59,11 @@ class MoviesController < ApplicationController
 
   def set_movie
     if params[:tmdb_id].present?
-      @tmdb_id = params[:tmdb_id]
-      unless Movie.exists?(tmdb_id: @tmdb_id)
-        tmdb_handler_add_movie(@tmdb_id)
-      end
-        @movie = Movie.find_by(tmdb_id: @tmdb_id)
-      else
-        @movie = Movie.friendly.find(params[:movie_id])
+      @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+    else
+      @movie = Movie.friendly.find(params[:movie_id])
     end
-  end #set movie
+  end
 
   private
 

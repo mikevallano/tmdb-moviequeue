@@ -6,12 +6,8 @@ class ListingsController < ApplicationController
   def create
     @listing = current_user.listings.new(listing_params)
     @tmdb_id = params[:tmdb_id]
+    @movie = Movie.find_by(tmdb_id: @tmdb_id) || tmdb_handler_add_movie(@tmdb_id)
 
-    unless Movie.exists?(tmdb_id: @tmdb_id)
-      tmdb_handler_add_movie(@tmdb_id)
-    end
-
-    @movie = Movie.find_by_tmdb_id(@tmdb_id)
     @listing.movie_id = @movie.id
     @listing.user_id = current_user.id
 
