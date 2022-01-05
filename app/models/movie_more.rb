@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MovieMore
-  attr_accessor :actors, :adult, :backdrop_path, :crew, :director, :director_id, :genres, :imdb_id, :lists, :mpaa_rating, :overview, :popularity, :poster_path, :production_companies, :release_date, :runtime, :tags, :title, :tmdb_id, :trailer, :vote_average
+  attr_accessor :actors, :adult, :backdrop_path, :crew, :director, :director_id, :genres, :imdb_id, :in_db, :lists, :mpaa_rating, :overview, :popularity, :poster_path, :production_companies, :release_date, :runtime, :tags, :title, :tmdb_id, :trailer, :vote_average
 
   def initialize(args)
     @actors = args[:actors]
@@ -12,6 +12,7 @@ class MovieMore
     @director_id = args[:director_id]
     @lists = args[:lists]
     @imdb_id = args[:imdb_id]
+    @in_db = args[:in_db]
     @genres = args[:genres]
     @overview = args[:overview]
     @release_date = args[:release_date]
@@ -57,6 +58,7 @@ class MovieMore
       director_id: first_director[:id],
       genres: result[:genres].map { |genre| genre[:name] },
       imdb_id: result[:imdb_id],
+      in_db: Movie.exists?(tmdb_id: result[:tmdb_id]),
       lists: nil,
       mpaa_rating: mpaa_rating,
       overview: result[:overview],
