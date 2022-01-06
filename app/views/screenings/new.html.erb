@@ -2,7 +2,7 @@
 
 <h1>New Screening</h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals: movie: @movie, screening: @screening %>
 
 <p class="button-main">
   <%= link_to 'See All Screenings', movie_screenings_path(@movie) %>
