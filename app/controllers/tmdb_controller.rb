@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TmdbController < ApplicationController
   before_action :authenticate_user!
 
@@ -29,8 +31,7 @@ class TmdbController < ApplicationController
 
   def movie_more
     if params[:tmdb_id]
-      @tmdb_id = params[:tmdb_id]
-      tmdb_handler_movie_more(@tmdb_id)
+      @movie = tmdb_handler_movie_more(params[:tmdb_id])
     else
       redirect_to api_search_path
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScreeningsController < ApplicationController
   include TmdbHandler
 
@@ -63,25 +65,19 @@ class ScreeningsController < ApplicationController
 
   private
 
-    def set_screening
-      :set_movie
-      @screening = @movie.screenings.by_user(current_user).find(params[:id])
-    end
+  def set_screening
+    @screening = @movie.screenings.by_user(current_user).find(params[:id])
+  end
 
-    def set_movie
-      if params[:tmdb_id].present?
-        @tmdb_id = params[:tmdb_id]
-        unless Movie.exists?(tmdb_id: @tmdb_id)
-          tmdb_handler_add_movie(@tmdb_id)
-        end
-        @movie = Movie.find_by(tmdb_id: @tmdb_id)
-      else
-        @movie = Movie.friendly.find(params[:movie_id])
-      end
+  def set_movie
+    if params[:tmdb_id].present?
+      @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+    else
+      @movie = Movie.friendly.find(params[:movie_id])
     end
+  end
 
-    def screening_params
-      params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes, :tmdb_id)
-    end
-
+  def screening_params
+    params.require(:screening).permit(:user_id, :movie_id, :date_watched, :location_watched, :notes, :tmdb_id)
+  end
 end

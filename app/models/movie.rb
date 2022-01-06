@@ -1,5 +1,6 @@
-class Movie < ActiveRecord::Base
+# frozen_string_literal: true
 
+class Movie < ActiveRecord::Base
   self.per_page = 20
 
   extend FriendlyId
@@ -10,21 +11,15 @@ class Movie < ActiveRecord::Base
   has_many :listings
   has_many :lists, through: :listings
   has_many :users, through: :listings
-
-  def self.by_tag_and_user(tag, user)
-    joins(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
-  end
-
   has_many :taggings
   has_many :tags, through: :taggings
-
   has_many :reviews
-
   has_many :ratings
-
   has_many :screenings
   has_many :viewers, :through => :screenings,
   :source => :user
+
+  attr_accessor :production_companies
 
   LIST_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"],
   ["longest runtime", "longest runtime"], ["newest release", "newest release"],
@@ -39,6 +34,18 @@ class Movie < ActiveRecord::Base
   ["unwatched movies", "unwatched movies"], ["only show unwatched", "only show unwatched"],
   ["only show watched", "only show watched"], ["movies not on a list", "movies not on a list"] ]
 
+  GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
+  ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
+  ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],
+  ["Thriller", 53], ["War", 10752], ["Western", 37]]
+
+  MPAA_RATINGS = [ ["R", "R"], ["NC-17", "NC-17"], ["PG-13", "PG-13"], ["G", "G"] ]
+
+  SORT_BY = [ ["Popularity", "popularity"], ["Release date", "release_date"], ["Revenue", "revenue"],
+  ["Vote average", "vote_average"], ["Vote count","vote_count"] ]
+
+  YEAR_SELECT = [ ["Exact Year", "exact"], ["After This Year", "after"], ["Before This Year", "before"] ]
+
   scope :by_title, -> { order(:title) }
   scope :by_shortest_runtime, -> { order(:runtime) }
   scope :by_longest_runtime, -> { order(:runtime).reverse_order }
@@ -46,6 +53,10 @@ class Movie < ActiveRecord::Base
   scope :by_highest_vote_average, -> { order(:vote_average).reverse_order }
   scope :default_list_order, -> (list) do
     list.movies.order('CAST(listings.created_at as DATE) desc, listings.priority desc')
+  end
+
+  def self.by_tag_and_user(tag, user)
+    joins(:taggings).where(taggings: { user_id: user.id }).where(taggings: { tag_id: tag.id })
   end
 
   def self.by_highest_priority(list)
@@ -117,29 +128,11 @@ class Movie < ActiveRecord::Base
   def priority_text(list)
     p = listings.find_by(list_id: list.id).priority
     case p
-    when 1
-      "Bottom"
-    when 2
-      "Low"
-    when 3
-      "Normal"
-    when 4
-      "High"
-    when 5
-      "Top"
+    when 1 then "Bottom"
+    when 2 then "Low"
+    when 3 then "Normal"
+    when 4 then "High"
+    when 5 then "Top"
     end
-  end #priority_text
-
-  GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
-  ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
-  ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],
-  ["Thriller", 53], ["War", 10752], ["Western", 37]]
-
-  MPAA_RATINGS = [ ["R", "R"], ["NC-17", "NC-17"], ["PG-13", "PG-13"], ["G", "G"] ]
-
-  SORT_BY = [ ["Popularity", "popularity"], ["Release date", "release_date"], ["Revenue", "revenue"],
-  ["Vote average", "vote_average"], ["Vote count","vote_count"] ]
-
-  YEAR_SELECT = [ ["Exact Year", "exact"], ["After This Year", "after"], ["Before This Year", "before"] ]
-
+  end
 end

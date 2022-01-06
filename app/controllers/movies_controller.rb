@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoviesController < ApplicationController
   before_action :authenticate_user!
   before_action :restrict_to_admin!, only: :update
@@ -21,13 +23,11 @@ class MoviesController < ApplicationController
       @movies = current_user.all_movies_by_recently_watched.paginate(:page => params[:page], per_page: 20)
     end #if params tag
 
-
     @sort_by = params[:sort_by]
     if @sort_by.present?
       movies_index_sort_handler(@sort_by)
     end #if @sort_by.present?
-
-  end #index
+  end
 
   def update
     if @movie.update(required_params)
@@ -46,22 +46,12 @@ class MoviesController < ApplicationController
 
   def modal
     @list = List.find(params[:list_id]) if params[:list_id].present?
-    @tmdb_id = params[:tmdb_id]
-    if Movie.exists?(tmdb_id: @tmdb_id)
-      @movie = Movie.find_by(tmdb_id: @tmdb_id)
-    else
-      tmdb_handler_movie_more(@tmdb_id)
-    end
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_movie_more(params[:tmdb_id])
     respond_to :js
   end
 
   def modal_close
-    @tmdb_id = params[:tmdb_id]
-    if Movie.exists?(tmdb_id: @tmdb_id)
-      @movie = Movie.find_by(tmdb_id: @tmdb_id)
-    else
-      tmdb_handler_movie_more(@tmdb_id)
-    end
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_movie_more(params[:tmdb_id])
     respond_to :js
   end
 
@@ -69,17 +59,11 @@ class MoviesController < ApplicationController
 
   def set_movie
     if params[:tmdb_id].present?
-      @tmdb_id = params[:tmdb_id]
-      unless Movie.exists?(tmdb_id: @tmdb_id)
-        tmdb_handler_add_movie(@tmdb_id)
-      end
-        @movie = Movie.find_by(tmdb_id: @tmdb_id)
-      else
-        @movie = Movie.friendly.find(params[:movie_id])
+      @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+    else
+      @movie = Movie.friendly.find(params[:movie_id])
     end
-  end #set movie
-
-  private
+  end
 
   def required_params
     trailer_url = params[:trailer]
