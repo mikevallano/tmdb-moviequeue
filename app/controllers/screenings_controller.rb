@@ -66,7 +66,6 @@ class ScreeningsController < ApplicationController
   private
 
   def set_screening
-    :set_movie
     @screening = @movie.screenings.by_user(current_user).find(params[:id])
   end
 
