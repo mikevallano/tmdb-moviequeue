@@ -1,14 +1,12 @@
 class TaggingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_movie
+  before_action :set_movie, only: [:create, :destroy]
 
   include TmdbHandler
 
   def create
-    @tag_names = params[:tag_list]
     @list = List.find(params[:list_id]) if params[:list_id].present?
-
-    Tagging.create_taggings(@tag_names, @movie.id, current_user)
+    Tagging.create_taggings(params[:tag_list], @movie.id, current_user)
 
     respond_to do |format|
       format.js {}
