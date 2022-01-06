@@ -4,14 +4,11 @@ class ScreeningsController < ApplicationController
   include TmdbHandler
 
   before_action :authenticate_user!
-  before_action :set_movie
-  before_action :set_screening, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie, only: [:index, :new, :edit, :create, :update, :destroy]
+  before_action :set_screening, only: [:edit, :update, :destroy]
 
   def index
     @screenings = @movie.screenings.by_user(current_user)
-  end
-
-  def show
   end
 
   def new

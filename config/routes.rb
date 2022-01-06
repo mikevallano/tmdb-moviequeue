@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show, :update] do
     resources :reviews
     resources :ratings
-    resources :screenings
+    resources :screenings, only: [:index, :new, :edit, :create, :update, :destroy]
   end
 
   patch '/listings/:list_id/:movie_id', to: 'listings#update', as: :update_listing

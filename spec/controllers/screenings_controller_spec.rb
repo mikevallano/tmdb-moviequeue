@@ -29,13 +29,6 @@ RSpec.describe ScreeningsController, type: :controller do
       end
     end
 
-    describe "GET #show" do
-      it "assigns the requested screening as @screening" do
-        get :show, { :movie_id => movie.id, :id => screening.to_param }
-        expect(assigns(:screening)).to eq(screening)
-      end
-    end
-
     describe "GET #new" do
       it "assigns a new screening as @screening" do
         get :new, { :movie_id => movie.id }
@@ -131,13 +124,6 @@ RSpec.describe ScreeningsController, type: :controller do
       it { is_expected.to redirect_to new_user_session_path }
     end
 
-    describe "GET #show" do
-      before(:example) do
-        get :show, { :movie_id => movie.id, :id => screening.to_param }
-      end
-        it { is_expected.to redirect_to new_user_session_path }
-    end
-
     describe "GET #new" do
       before(:example) do
         get :new, { :movie_id => movie.id }
@@ -202,14 +188,6 @@ RSpec.describe ScreeningsController, type: :controller do
         get :index, { :movie_id => movie.id }
         expect(assigns(:screenings)).to eq([screening])
         expect(assigns(:screenings)).not_to include(screening2)
-      end
-    end
-
-    describe "GET #show" do
-      it "it raises an exception if user visits another users review show page" do
-        expect {
-          get :show, { :movie_id => movie.id, :id => screening2.to_param }
-          }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
 
