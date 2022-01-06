@@ -181,25 +181,22 @@ module TmdbHandler
   end
 
   def tmdb_handler_two_movie_search(movie_one_title, movie_two_title)
-    joint_search_results = OpenStruct.new
+    movie_one_results = tmdb_handler_search(movie_one_title)
+    movie_two_results = tmdb_handler_search(movie_two_title)
+    not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
-    movie_one_search_results = tmdb_handler_search(movie_one_title)
-    movie_one_id = movie_one_search_results&.movies&.first&.tmdb_id
-    movie_two_search_results = tmdb_handler_search(movie_two_title)
-    movie_two_id = movie_two_search_results&.movies&.first&.tmdb_id
-
-    joint_search_results.not_found_message = movie_one_search_results.not_found_message.presence || movie_two_search_results.not_found_message.presence
-
-    if movie_one_id.present? && movie_two_id.present?
-      joint_search_results.movie_one = tmdb_handler_movie_more(movie_one_id)
-      movie_one_actors = joint_search_results.movie_one.actors
-
-      joint_search_results.movie_two = tmdb_handler_movie_more(movie_two_id)
-      movie_two_actors = joint_search_results.movie_two.actors
-
-      joint_search_results.common_actors = movie_one_actors & movie_two_actors
+    if not_found_message.present?
+      OpenStruct.new(not_found_message: not_found_message)
+    else
+      movie_one = tmdb_handler_movie_more(movie_one_results.movies.first.tmdb_id)
+      movie_two = tmdb_handler_movie_more(movie_two_results.movies.first.tmdb_id)
+      OpenStruct.new(
+        movie_one: movie_one,
+        movie_two: movie_two,
+        common_actors: movie_one.actors & movie_two.actors,
+        not_found_message: nil
+      )
     end
-    joint_search_results
   end
 
   def tmdb_handler_discover_search(params)
