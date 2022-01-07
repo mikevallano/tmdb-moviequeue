@@ -7,7 +7,7 @@
 <h1>Edit</h1>
 <h2>Your <%= @screening.date_watched.stamp("12-31-2016") %> Screening of <%= @movie.title %></h2>
 
-<%= render partial: 'form', locals: movie: @movie, screening: @screening %>
+<%= render partial: 'form', locals: { movie: @movie, screening: @screening } %>
 
 <hr>
 <p class="button-main">
