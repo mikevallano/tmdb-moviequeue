@@ -1,28 +1,26 @@
 # frozen_string_literal: true
 
 class ListingsController < ApplicationController
-  before_action :authenticate_user!
-
   include TmdbHandler
 
+  before_action :authenticate_user!
+
   def create
-    @listing = current_user.listings.new(listing_params)
-    @tmdb_id = params[:tmdb_id]
-    @movie = Movie.find_by(tmdb_id: @tmdb_id) || tmdb_handler_add_movie(@tmdb_id)
-
-    @listing.movie_id = @movie.id
-    @listing.user_id = current_user.id
-
     @from = params[:from]
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+
+    listing = current_user.listings.new(listing_params)
+    listing.movie_id = @movie.id
+    listing.user_id = current_user.id
 
     respond_to do |format|
-      if @listing.save
+      if listing.save
         format.js {}
-        format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'added to your list.' }
-        format.json { render :show, status: :created, location: @listing }
+        format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'added to your list.' }
+        format.json { render :show, status: :created, location: listing }
       else
         format.html { redirect_to movie_path(@movie), notice: 'error.' }
-        format.json { render json: @listing.errors, status: :unprocessable_entity }
+        format.json { render json: listing.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -1,10 +1,10 @@
-<%= form_for([@movie, @screening]) do |f| %>
-  <% if @screening.errors.any? %>
+<%= form_for([movie, screening]) do |f| %>
+  <% if screening.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
+      <h2><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
 
       <ul>
-      <% @screening.errors.full_messages.each do |message| %>
+      <% screening.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,7 +12,7 @@
   <% end %>
 
   <%= f.hidden_field :user_id, value: current_user.id %>
-  <%= f.hidden_field :movie_id, value: @movie.id %>
+  <%= f.hidden_field :movie_id, value: movie.id %>
   <div class="field">
     <%= f.label :date_watched, "Date Watched" %><br>
     <%= f.date_field :date_watched %>
