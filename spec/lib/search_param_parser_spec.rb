@@ -40,7 +40,25 @@ describe SearchParamParser do
       let(:year) { '2020' }
       let(:date) { { year: year } }
 
-      context 'when year and year_select are present' do
+      context 'year is present' do
+        context 'when year_select is not present' do
+          it 'defaults to "exact"' do
+            result = described_class.parse_movie_params(
+              year_select: '',
+              date: date
+            )
+            expect(result[:exact_year]).to eq(year)
+          end
+
+          it 'sets the year_display value' do
+            result = described_class.parse_movie_params(
+              year_select: '',
+              date: date
+            )
+            expect(result[:year_display]).to eq('From 2020')
+          end
+        end
+
         context 'when year_select is "exact"' do
           let(:year_select) { 'exact' }
           it 'sets the exact_year value' do
@@ -139,17 +157,7 @@ describe SearchParamParser do
         end
       end
 
-      context 'when year_select is not present' do
-        it 'does not set any of the year keys' do
-          result = described_class.parse_movie_params(
-            year_select: '',
-            date: date
-          )
-          expect(result[:exact_year]).to be(nil)
-          expect(result[:before_year]).to be(nil)
-          expect(result[:after_year]).to be(nil)
-        end
-      end
+
     end
 
     context 'actor_display' do
