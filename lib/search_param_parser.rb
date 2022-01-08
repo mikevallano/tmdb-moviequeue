@@ -1,34 +1,65 @@
+# frozen_string_literal: true
+
 module SearchParamParser
+  def self.parse_movie_params(params)
+    output = {
+      actor: params[:actor],
+      actor2: params[:actor2],
+      year: nil,
+      exact_year: nil,
+      year_select: params[:year_select],
+      before_year: nil,
+      after_year: nil,
+      genre: params[:genre],
+      company: params[:company],
+      mpaa_rating: params[:mpaa_rating],
+      page: (params[:page].presence || 1),
+      sort_by: (params[:sort_by].presence || 'revenue'),
 
-  def parse_params(params)
-    @passed_params = params
+      actor_display: nil,
+      genre_display: nil,
+      rating_display: nil,
+      year_display: nil,
+      sort_display: nil
+    }
 
-    @year_select = @passed_params[:year_select]
+    if params[:actor].present?
+      output[:actor_display] = "#{params[:actor].titlecase} movies"
+    end
 
-    @year = @passed_params[:year]
-
-    if @year.present?
-      if @year_select.present?
-        if @year_select == "exact"
-          @passed_params[:exact_year] = @year
-        elsif @year_select == "after"
-          @passed_params[:after_year] = "#{@year}-12-31"
-        elsif @year_select == "before"
-          @passed_params[:before_year] = "#{@year}-01-01"
-        end
-      else
-        @passed_params[:exact_year] = @year
+    year = params[:date][:year] if params[:date].present?
+    output[:year] = year
+    if year.present? && params[:year_select].present?
+      if params[:year_select]  == 'exact'
+        output[:exact_year] = year
+        output[:year_display] = "From #{year}"
+      end
+      if params[:year_select]  == 'before'
+        output[:before_year] = "#{year}-01-01"
+        output[:year_display] = "Before #{year}"
+      end
+      if params[:year_select] == 'after'
+        output[:after_year] = "#{year}-12-31"
+        output[:year_display] = "After #{year}"
       end
     end
 
-    if !@passed_params[:page]
-      @passed_params[:page] = 1
-    end #pagination
-
-    if !@passed_params.keys.include?('sort_by')
-      @passed_params[:sort_by] = "revenue"
+    if params[:sort_by].present?
+      sort_options = Movie::SORT_BY.to_h
+      sort_key = sort_options.key(params[:sort_by])
+      output[:sort_display] = "Sorted by #{sort_key}"
     end
 
-  end #parase params
+    if params[:genre].present?
+      genres = Movie::GENRES.to_h
+      genre_selected = genres.key(params[:genre].to_i)
+      output[:genre_display] = "#{genre_selected} movies"
+    end
 
-end #final
+    if params[:mpaa_rating].present?
+      output[:rating_display] = "Rated #{params[:mpaa_rating]}"
+    end
+
+    output
+  end
+end

@@ -5,7 +5,6 @@ class TmdbController < ApplicationController
 
   require 'open-uri'
   include TmdbHandler
-  include SearchParamParser
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
@@ -136,51 +135,14 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
-    #format date/year hash passed in params. otherwise year is passed directly on paginated pages
-    params[:year] = params[:date][:year] if params[:date].present?
-
-    @passed_params = params.slice(:sort_by, :year, :genre, :actor, :actor2,
+    passed_params = params.slice(:sort_by, :date, :genre, :actor, :actor2,
       :company, :mpaa_rating, :year_select, :page).select{ |k, v| v.present?}
 
-    if @passed_params.any?
-      parse_params(@passed_params) #module to help parse
-
-      #parse passed params to show user what they searched for
-      @discover_view_params = @passed_params.slice(:actor, :genre, :date, :year, :year_select, :mpaa_rating, :sort_by)
-      @params_for_view = discover_show_search_params(@discover_view_params)
-
-      tmdb_handler_discover_search(@passed_params)
+    if passed_params.any?
+      searchable_params = SearchParamParser.parse_movie_params(passed_params)
+      tmdb_handler_discover_search(searchable_params)
+      display_params = searchable_params.slice(:actor_display, :genre_display, :rating_display, :year_display, :sort_display).select{ |k, v| v.present?}
+      @params_for_view = display_params.values.join(', ')
     end
-
-  end #discover search
-
-  def discover_show_search_params(params)
-    keys = params.keys
-    actor_display = params[:actor].titlecase if keys.include?("actor")
-
-    if keys.include?("genre")
-      genre_id = params[:genre].to_i
-      genres = Movie::GENRES.to_h
-      genre_selected = genres.key(genre_id)
-      genre_display = "#{genre_selected} movies"
-    end
-
-    rating_display = "Rating: #{params[:mpaa_rating]}" if keys.include?("mpaa_rating")
-
-    year_show = params[:year] if keys.include?("year")
-    year_display = "#{year_select_display(params[:year_select])} #{year_show}" if year_show.present?
-
-    sort_display = if keys.include?("sort_by")
-      sort_selected = params[:sort_by]
-      sort_options = Movie::SORT_BY.to_h
-      sort_key = sort_options.key(sort_selected)
-      "sorted by #{sort_key}" if keys.include?("sort_by")
-    end
-    "#{actor_display} #{genre_display} #{rating_display} #{year_display} #{sort_display}"
   end
-
-  def year_select_display(year_select)
-    (year_select == "exact" || year_select.blank?) ? "From" : year_select
-  end
-
-end #final
+end
