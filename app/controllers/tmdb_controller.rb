@@ -154,35 +154,33 @@ class TmdbController < ApplicationController
 
   end #discover search
 
-  def discover_show_search_params(show_params)
-    @keys = show_params.keys
-    @actor_display = show_params[:actor].titlecase if @keys.include?("actor")
+  def discover_show_search_params(params)
+    keys = params.keys
+    actor_display = params[:actor].titlecase if keys.include?("actor")
 
-    if @keys.include?("genre")
-      @genre_id = show_params[:genre].to_i
-      @genres = Movie::GENRES.to_h
-      @genre_selected = @genres.key(@genre_id)
-      @genre_display = "#{@genre_selected} movies"
+    if keys.include?("genre")
+      genre_id = params[:genre].to_i
+      genres = Movie::GENRES.to_h
+      genre_selected = genres.key(genre_id)
+      genre_display = "#{genre_selected} movies"
     end
 
-    @rating_display = "Rating: #{show_params[:mpaa_rating]}" if @keys.include?("mpaa_rating")
+    rating_display = "Rating: #{params[:mpaa_rating]}" if keys.include?("mpaa_rating")
 
-    if show_params[:year_select] == "exact" || !show_params[:year_select].present?
-      @year_select_display = "From"
-    else
-      @year_select_display = show_params[:year_select]
+    year_show = params[:year] if keys.include?("year")
+    year_display = "#{year_select_display(params[:year_select])} #{year_show}" if year_show.present?
+
+    sort_display = if keys.include?("sort_by")
+      sort_selected = params[:sort_by]
+      sort_options = Movie::SORT_BY.to_h
+      sort_key = sort_options.key(sort_selected)
+      "sorted by #{sort_key}" if keys.include?("sort_by")
     end
+    "#{actor_display} #{genre_display} #{rating_display} #{year_display} #{sort_display}"
+  end
 
-    @year_show = show_params[:year] if @keys.include?("year")
-    @year_display = "#{@year_select_display} #{@year_show}" if @year_show.present?
-
-    if @keys.include?("sort_by")
-      @sort_selected = show_params[:sort_by]
-      @sort_options = Movie::SORT_BY.to_h
-      @sort_key = @sort_options.key(@sort_selected)
-      @sort_display = "sorted by #{@sort_key}" if @keys.include?("sort_by")
-    end
-    "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
+  def year_select_display(year_select)
+    (year_select == "exact" || year_select.blank?) ? "From" : year_select
   end
 
 end #final
