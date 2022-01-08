@@ -28,8 +28,8 @@ module SearchParamParser
 
     year = params[:date][:year] if params[:date].present?
     output[:year] = year
-    if year.present? && params[:year_select].present?
-      if params[:year_select] == 'exact'
+    if year.present?
+      if params[:year_select].blank? || params[:year_select] == 'exact'
         output[:exact_year] = year
         output[:year_display] = "From #{year}"
       end
