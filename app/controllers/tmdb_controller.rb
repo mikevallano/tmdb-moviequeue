@@ -58,6 +58,7 @@ class TmdbController < ApplicationController
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
+      # TODO: move to separate query
       tmdb_handler_discover_search(params)
     end
   end
@@ -70,6 +71,7 @@ class TmdbController < ApplicationController
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
+      # TODO: move to separate query
       tmdb_handler_discover_search(params)
     end
   end
