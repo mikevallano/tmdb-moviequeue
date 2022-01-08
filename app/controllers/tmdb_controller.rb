@@ -137,14 +137,14 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
-    passed_params = params.slice(:sort_by, :date, :genre, :actor, :actor2,
-      :company, :mpaa_rating, :year_select, :page).select{ |k, v| v.present?}
+    form_params = [:sort_by, :date, :genre, :actor, :actor2, :company, :mpaa_rating, :year_select, :page]
+    passed_params = params.slice(*form_params).select{ |k, v| v.present?}
+    return if passed_params.blank?
 
-    if passed_params.any?
-      searchable_params = SearchParamParser.parse_movie_params(passed_params)
-      tmdb_handler_discover_search(searchable_params)
-      display_params = searchable_params.slice(:actor_display, :genre_display, :rating_display, :year_display, :sort_display).select{ |k, v| v.present?}
-      @params_for_view = display_params.values.join(', ')
-    end
+    searchable_params = SearchParamParser.parse_movie_params(passed_params)
+    tmdb_handler_discover_search(searchable_params)
+    displayable_params = [:actor_display, :genre_display, :rating_display, :year_display, :sort_display]
+    display_data = searchable_params.slice(*displayable_params)
+    @params_for_view = display_data.values.join(', ')
   end
 end

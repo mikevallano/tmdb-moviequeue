@@ -60,6 +60,6 @@ module SearchParamParser
       output[:rating_display] = "Rated #{params[:mpaa_rating]}"
     end
 
-    output
+    output.select{ |k, v| v.present?}
   end
 end
