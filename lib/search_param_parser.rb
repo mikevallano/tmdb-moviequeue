@@ -23,18 +23,17 @@ module SearchParamParser
       sort_display: nil
     }
 
-    if params[:actor].present?
-      output[:actor_display] = "#{params[:actor].titlecase} movies"
-    end
+    output[:actor_display] = "#{params[:actor].titlecase} movies" if params[:actor].present?
+    output[:rating_display] = "Rated #{params[:mpaa_rating]}" if params[:mpaa_rating].present?
 
     year = params[:date][:year] if params[:date].present?
     output[:year] = year
     if year.present? && params[:year_select].present?
-      if params[:year_select]  == 'exact'
+      if params[:year_select] == 'exact'
         output[:exact_year] = year
         output[:year_display] = "From #{year}"
       end
-      if params[:year_select]  == 'before'
+      if params[:year_select] == 'before'
         output[:before_year] = "#{year}-01-01"
         output[:year_display] = "Before #{year}"
       end
@@ -56,10 +55,6 @@ module SearchParamParser
       output[:genre_display] = "#{genre_selected} movies"
     end
 
-    if params[:mpaa_rating].present?
-      output[:rating_display] = "Rated #{params[:mpaa_rating]}"
-    end
-
-    output.select{ |k, v| v.present?}
+    output.select { |_k, v| v.present? }
   end
 end

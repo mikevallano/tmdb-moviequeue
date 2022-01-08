@@ -76,7 +76,7 @@ describe SearchParamParser do
               year_select: year_select,
               date: date
             )
-            expect(result[:before_year]).to eq("2020-01-01")
+            expect(result[:before_year]).to eq('2020-01-01')
           end
 
           it 'sets the year_display value' do
@@ -104,7 +104,7 @@ describe SearchParamParser do
               year_select: year_select,
               date: date
             )
-            expect(result[:after_year]).to eq("2020-12-31")
+            expect(result[:after_year]).to eq('2020-12-31')
           end
 
           it 'sets the year_display value' do
@@ -169,7 +169,7 @@ describe SearchParamParser do
     end
 
     context 'genre_display' do
-      before { stub_const('Movie::GENRES', GENRES = [['Cat', 42]]) }
+      before { stub_const('Movie::GENRES', GENRES = [['Cat', 42]].freeze) }
       context 'when genre is present' do
         it 'sets the genre_display to a genre name' do
           result = described_class.parse_movie_params(genre: 42)
@@ -202,7 +202,7 @@ describe SearchParamParser do
     end
 
     context 'sort_display' do
-      before { stub_const('Movie::SORT_BY', SORT_BY = [['Fancy Foo', 'foo']]) }
+      before { stub_const('Movie::SORT_BY', SORT_BY = [['Fancy Foo', 'foo']].freeze) }
       context 'when sort_by is present' do
         it 'sets the sort_display to a sorting option name' do
           result = described_class.parse_movie_params(sort_by: 'foo')
