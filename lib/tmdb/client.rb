@@ -27,6 +27,7 @@ module Tmdb
       end
 
       # formerly tmdb_handler_discover_search
+      # we call it "advanced search" in the view
       def movie_advanced_search(actor1: nil, actor2: nil,)
       end
 

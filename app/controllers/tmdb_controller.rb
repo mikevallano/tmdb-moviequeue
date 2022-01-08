@@ -52,6 +52,7 @@ class TmdbController < ApplicationController
     end
   end
 
+  # single actor search
   def actor_search
     if params[:actor]
       params[:actor] = I18n.transliterate(params[:actor])
@@ -62,6 +63,7 @@ class TmdbController < ApplicationController
     end
   end
 
+  # common movies between 2 actors
   def two_actor_search
     if params[:actor] && params[:actor2]
       params[:actor] = I18n.transliterate(params[:actor])
