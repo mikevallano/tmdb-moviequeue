@@ -180,7 +180,7 @@ module TmdbHandler
     TVEpisode.parse_record(episode_data)
   end
 
-  def tmdb_handler_two_movie_search(movie_one_title, movie_two_title)
+  def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
     movie_one_results = tmdb_handler_search(movie_one_title)
     movie_two_results = tmdb_handler_search(movie_two_title)
     not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence

@@ -5,7 +5,6 @@ class TmdbController < ApplicationController
 
   require 'open-uri'
   include TmdbHandler
-  include SearchParamParser
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
@@ -15,7 +14,7 @@ class TmdbController < ApplicationController
 
   def two_movie_search
     if params[:movie_one] && params[:movie_two]
-      @search_results = tmdb_handler_two_movie_search(params[:movie_one], params[:movie_two])
+      @search_results = tmdb_handler_search_common_actors_in_two_movies(params[:movie_one], params[:movie_two])
     end
   end
 
@@ -52,16 +51,19 @@ class TmdbController < ApplicationController
     end
   end
 
+  # single actor search
   def actor_search
     if params[:actor]
       params[:actor] = I18n.transliterate(params[:actor])
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
+      # TODO: move to separate query
       tmdb_handler_discover_search(params)
     end
   end
 
+  # common movies between 2 actors
   def two_actor_search
     if params[:actor] && params[:actor2]
       params[:actor] = I18n.transliterate(params[:actor])
@@ -69,6 +71,7 @@ class TmdbController < ApplicationController
       params[:page] = params[:page] || 1
       params[:sort_by] = params[:sort_by] || "popularity"
 
+      # TODO: move to separate query
       tmdb_handler_discover_search(params)
     end
   end
@@ -134,53 +137,12 @@ class TmdbController < ApplicationController
   end
 
   def discover_search
-    #format date/year hash passed in params. otherwise year is passed directly on paginated pages
-    params[:year] = params[:date][:year] if params[:date].present?
+    form_params = %i[sort_by date genre actor actor2 company mpaa_rating year_select page]
+    passed_params = params.slice(*form_params).select { |_k, v| v.present? }
+    return if passed_params.blank?
 
-    @passed_params = params.slice(:sort_by, :year, :genre, :actor, :actor2,
-      :company, :mpaa_rating, :year_select, :page).select{ |k, v| v.present?}
-
-    if @passed_params.any?
-      parse_params(@passed_params) #module to help parse
-
-      #parse passed params to show user what they searched for
-      @discover_view_params = @passed_params.slice(:actor, :genre, :date, :year, :year_select, :mpaa_rating, :sort_by)
-      @params_for_view = discover_show_search_params(@discover_view_params)
-
-      tmdb_handler_discover_search(@passed_params)
-    end
-
-  end #discover search
-
-  def discover_show_search_params(show_params)
-    @keys = show_params.keys
-    @actor_display = show_params[:actor].titlecase if @keys.include?("actor")
-
-    if @keys.include?("genre")
-      @genre_id = show_params[:genre].to_i
-      @genres = Movie::GENRES.to_h
-      @genre_selected = @genres.key(@genre_id)
-      @genre_display = "#{@genre_selected} movies"
-    end
-
-    @rating_display = "Rating: #{show_params[:mpaa_rating]}" if @keys.include?("mpaa_rating")
-
-    if show_params[:year_select] == "exact" || !show_params[:year_select].present?
-      @year_select_display = "From"
-    else
-      @year_select_display = show_params[:year_select]
-    end
-
-    @year_show = show_params[:year] if @keys.include?("year")
-    @year_display = "#{@year_select_display} #{@year_show}" if @year_show.present?
-
-    if @keys.include?("sort_by")
-      @sort_selected = show_params[:sort_by]
-      @sort_options = Movie::SORT_BY.to_h
-      @sort_key = @sort_options.key(@sort_selected)
-      @sort_display = "sorted by #{@sort_key}" if @keys.include?("sort_by")
-    end
-    "#{@actor_display} #{@genre_display} #{@rating_display} #{@year_display} #{@sort_display}"
+    searchable_params = SearchParamParser.parse_movie_params(passed_params)
+    tmdb_handler_discover_search(searchable_params)
+    @params_for_view = SearchParamParser.parse_movie_params_for_display(passed_params)
   end
-
-end #final
+end
