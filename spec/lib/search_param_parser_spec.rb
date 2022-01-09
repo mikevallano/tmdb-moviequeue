@@ -228,7 +228,7 @@ describe SearchParamParser do
               year_select: 'exact',
               date: date
             )
-            expect(result).to eq('From 2020')
+            expect(result).to eq('from 2020')
           end
         end
 
@@ -238,7 +238,7 @@ describe SearchParamParser do
               year_select: 'before',
               date: date
             )
-            expect(result).to eq('Before 2020')
+            expect(result).to eq('before 2020')
           end
         end
 
@@ -248,7 +248,7 @@ describe SearchParamParser do
               year_select: 'after',
               date: date
             )
-            expect(result).to eq('After 2020')
+            expect(result).to eq('after 2020')
           end
         end
       end
