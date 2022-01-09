@@ -182,7 +182,7 @@ describe SearchParamParser do
       context 'when sort_by is present' do
         it 'sets the sort_display to a sorting option name' do
           result = described_class.parse_movie_params_for_display(sort_by: 'foo')
-          expect(result).to eq('Sorted by Fancy Foo')
+          expect(result).to eq('sorted by Fancy Foo')
         end
       end
 
@@ -202,7 +202,7 @@ describe SearchParamParser do
             mpaa_rating: 'R',
             date: date
           )
-          expect(result).to eq('Jazzy Jeff movies, Rated R, From 2020')
+          expect(result).to eq('Jazzy Jeff movies, Rated R, from 2020')
         end
       end
     end
@@ -218,7 +218,7 @@ describe SearchParamParser do
               year_select: '',
               date: date
             )
-            expect(result).to eq('From 2020')
+            expect(result).to eq('from 2020')
           end
         end
 
