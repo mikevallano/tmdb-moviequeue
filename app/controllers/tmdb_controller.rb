@@ -143,8 +143,6 @@ class TmdbController < ApplicationController
 
     searchable_params = SearchParamParser.parse_movie_params(passed_params)
     tmdb_handler_discover_search(searchable_params)
-    displayable_params = %i[actor_display genre_display rating_display year_display sort_display]
-    display_data = searchable_params.slice(*displayable_params)
-    @params_for_view = display_data.values.join(', ')
+    @params_for_view = SearchParamParser.parse_movie_params_for_display(passed_params)
   end
 end
