@@ -44,17 +44,17 @@ module SearchParamParser
       year = params[:date][:year] if params[:date].present?
       if year.present?
         output[:year_display] = case params[:year_select]
-                                when 'before' then "Before #{year}"
-                                when 'after' then "After #{year}"
+                                when 'before' then "before #{year}"
+                                when 'after' then "after #{year}"
                                 else
-                                  "From #{year}"
+                                  "from #{year}"
         end
       end
 
       if params[:sort_by].present?
         sort_options = Movie::SORT_BY.to_h
         sort_key = sort_options.key(params[:sort_by])
-        output[:sort_display] = "Sorted by #{sort_key}"
+        output[:sort_display] = "sorted by #{sort_key}"
       end
 
       output.select { |_k, v| v.present? }
