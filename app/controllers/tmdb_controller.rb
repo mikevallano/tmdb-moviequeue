@@ -142,7 +142,10 @@ class TmdbController < ApplicationController
     return if passed_params.blank?
 
     searchable_params = SearchParamParser.parse_movie_params(passed_params)
-    tmdb_handler_discover_search(searchable_params)
+    # tmdb_handler_discover_search(searchable_params)
+    results = Tmdb::Client.movie_advanced_search(searchable_params)
+    @movies = results.movies
+    @total_pages = result.total_pages
     @params_for_view = SearchParamParser.parse_movie_params_for_display(passed_params)
   end
 end
