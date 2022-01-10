@@ -6,10 +6,7 @@ module SearchParamParser
       actor: params[:actor],
       actor2: params[:actor2],
       year: nil,
-      exact_year: nil,
       year_select: params[:year_select],
-      before_year: nil,
-      after_year: nil,
       genre: params[:genre],
       company: params[:company],
       mpaa_rating: params[:mpaa_rating],
@@ -17,13 +14,9 @@ module SearchParamParser
       sort_by: (params[:sort_by].presence || 'revenue')
     }
 
-    year = params[:date][:year] if params[:date].present?
-    output[:year] = year
-    if year.present?
-      output[:exact_year] = year if params[:year_select].blank? || params[:year_select] == 'exact'
-      output[:before_year] = "#{year}-01-01" if params[:year_select] == 'before'
-      output[:after_year] = "#{year}-12-31" if params[:year_select] == 'after'
-    end
+    year_from_date = params[:date][:year] if params[:date].present?
+    output[:year] = year_from_date.presence || params[:year]
+    output[:year_select] = (params[:year_select].presence || 'exact') if output[:year].present?
     output.select { |_k, v| v.present? }
   end
 
@@ -38,7 +31,8 @@ module SearchParamParser
       output[:genre_display] = "#{genre_selected} movies"
     end
 
-    year = params[:date][:year] if params[:date].present?
+    year_from_date = params[:date][:year] if params[:date].present?
+    year = year_from_date.presence || params[:year]
     if year.present?
       output[:year_display] =
         case params[:year_select]
