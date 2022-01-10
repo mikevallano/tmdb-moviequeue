@@ -24,18 +24,18 @@
   <% if @results.not_found_message.present? %>
     <h2>Hmm. <%= @results.not_found_message %></h2>
     <p>Check your spelling and try again.</p>
-    <p class="button-main"><%= link_to "Search Again", advanced_search_path, id: "discover_search_nav_link" %></p>
+    <p class="button-main"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
   <% else %><!--  we have movie results -->
     <% content_for(:title, "Search Results") %>
     <h2>Here are the results for: <%= "#{@parsed_results_text}" %></h2><br>
-    <p class="button-main"><%= link_to "Search Again", advanced_search_path %></p><br>
+    <p class="button-main"><%= link_to "Search Again", discover_search_path %></p><br>
 
     <div id ="discover_search_loop">
       <%= render partial: 'movies/movie_partial_loop', locals: { movies: @results.movies } %>
     </div>
 
-    <span class="button-main"><%= link_to "Previous page", advanced_search_path(@results.original_search.merge(page: "#{@results.previous_page}")) if @results.previous_page.present? %></span>
+    <span class="button-main"><%= link_to "Previous page", discover_search_path(@results.original_search.merge(page: "#{@results.previous_page}")) if @results.previous_page.present? %></span>
     <%= "Page #{@results.current_page} of #{@results.total_pages}" %>
-    <span class="button-main"><%= link_to "Next page", advanced_search_path(@results.original_search.merge(page: "#{@results.next_page}")) if @results.next_page.present? %></span>
+    <span class="button-main"><%= link_to "Next page", discover_search_path(@results.original_search.merge(page: "#{@results.next_page}")) if @results.next_page.present? %></span>
   <% end %><!--  #if @not_found.present? -->
 <% end %> <!-- #if !@results.movies.present? -->
