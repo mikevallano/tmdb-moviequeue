@@ -41,13 +41,33 @@ describe SearchParamParser do
       let(:date) { { year: year } }
 
       context 'year is present' do
+        context 'handling date vs year' do
+          it 'works with date and no year' do
+            result = described_class.parse_movie_params(
+              year_select: '',
+              date: date,
+              year: ''
+            )
+            expect(result[:year]).to eq(year)
+          end
+
+          it 'works with year and no date' do
+            result = described_class.parse_movie_params(
+              year_select: '',
+              date: '',
+              year: year
+            )
+            expect(result[:year]).to eq(year)
+          end
+        end
+
         context 'when year_select is not present' do
           it 'defaults to "exact"' do
             result = described_class.parse_movie_params(
               year_select: '',
               date: date
             )
-            expect(result[:exact_year]).to eq(year)
+            expect(result[:year_select]).to eq('exact')
           end
         end
 
@@ -58,70 +78,43 @@ describe SearchParamParser do
               year_select: year_select,
               date: date
             )
-            expect(result[:exact_year]).to eq(year)
-          end
-
-          it 'does not set other year values' do
-            result = described_class.parse_movie_params(
-              year_select: year_select,
-              date: date
-            )
-            expect(result[:before_year]).to be(nil)
-            expect(result[:after_year]).to be(nil)
+            expect(result[:year_select]).to eq(year_select)
           end
         end
 
         context 'when year_select is "before"' do
           let(:year_select) { 'before' }
-          it 'sets the before_year value' do
+          it 'sets the year_select value to "before"' do
             result = described_class.parse_movie_params(
               year_select: year_select,
               date: date
             )
-            expect(result[:before_year]).to eq('2020-01-01')
-          end
-
-          it 'does not set other year values' do
-            result = described_class.parse_movie_params(
-              year_select: year_select,
-              date: date
-            )
-            expect(result[:exact_year]).to be(nil)
-            expect(result[:after_year]).to be(nil)
+            expect(result[:year_select]).to eq(year_select)
           end
         end
 
         context 'when year_select is "after"' do
           let(:year_select) { 'after' }
-          it 'sets the after_year value' do
+          it 'sets the year_select value to "after"' do
             result = described_class.parse_movie_params(
               year_select: year_select,
               date: date
             )
-            expect(result[:after_year]).to eq('2020-12-31')
-          end
-
-          it 'does not set other year values' do
-            result = described_class.parse_movie_params(
-              year_select: year_select,
-              date: date
-            )
-            expect(result[:exact_year]).to be(nil)
-            expect(result[:before_year]).to be(nil)
+            expect(result[:year_select]).to eq(year_select)
           end
         end
       end
 
       context 'when year is not present' do
-        let(:year_select) { 'exact' }
+        let(:year_select) { 'before' }
         it 'does not set any of the year keys' do
           result = described_class.parse_movie_params(
             year_select: year_select,
-            date: ''
+            date: '',
+            year: ''
           )
-          expect(result[:exact_year]).to be(nil)
-          expect(result[:before_year]).to be(nil)
-          expect(result[:after_year]).to be(nil)
+          expect(result[:year_select]).to be(nil)
+          expect(result[:year]).to be(nil)
         end
       end
     end

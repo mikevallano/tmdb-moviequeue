@@ -6,7 +6,7 @@ module SearchParamParser
       actor: params[:actor],
       actor2: params[:actor2],
       year: nil,
-      year_select: params[:year_select],
+      year_select: nil,
       genre: params[:genre],
       company: params[:company],
       mpaa_rating: params[:mpaa_rating],
