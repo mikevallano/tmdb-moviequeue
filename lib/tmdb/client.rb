@@ -6,22 +6,75 @@ module Tmdb
     BASE_URL = 'https://api.themoviedb.org/3'.freeze
 
     class << self
-      # TOTALLY WIP
-      def movies_between_two_actors_search(actor_one_name, actor_two_name)
-        actor_one_results = search_person_by_name(actor_one_name)
-        actor_two_results = search_person_by_name(actor_two_name)
-        not_found_message = actor_one_results.not_found_message.presence || actor_two_results.not_found_message.presence
+      def movies_by_actor(params)
+        person = search_person_by_name(params[:actor_name])
 
-        if not_found_message.present?
-          OpenStruct.new(not_found_message: not_found_message)
+        if person.not_found_message.present?
+          OpenStruct.new(not_found_message: person.not_found_message)
         else
-          actor_one = tmdb_handler_movie_more(actor_one_results.movies.first.tmdb_id)
-          actor_two = tmdb_handler_movie_more(actor_two_results.movies.first.tmdb_id)
+          movie_results = movie_discover_search(
+            people: person.data[:id],
+            page: params[:page],
+            sort_by: params[:sort_by]
+          )
+
+          current_page = params[:page].to_i
           OpenStruct.new(
-            actor_one: actor_one,
-            actor_two: actor_two,
-            common_movies: actor_one.movies & actor_two.movies,
-            not_found_message: nil
+            actor: person.data,
+            actor_name: person.data[:name],
+            movies: movie_results.data,
+            not_found_message: nil,
+            current_page: current_page,
+            previous_page: (current_page - 1 if current_page > 1),
+            next_page: (current_page + 1 unless current_page >= movie_results.total_pages),
+            total_pages: movie_results.total_pages
+          )
+        end
+      end
+
+      def movies_between_multiple_actors_search(actor_names:, **params)
+        names = actor_names.uniq.reject{|name| name == ''}.presence || params[:paginate_names].presence
+        return if names.empty?
+
+        actor_results = names.compact.map do |name|
+          search_person_by_name(name)
+        end.compact
+
+        person_data = actor_results.map do |result|
+          result.data
+        end
+
+        person_ids = actor_results.map do |result|
+          result.data[:id]
+        end.join(',')
+
+        actor_names = actor_results.map do |result|
+          result.data[:name]
+        end
+
+        not_found_messages = actor_results.select do |result|
+          result.not_found_message.presence
+        end.join(',')
+
+        if not_found_messages.present?
+          OpenStruct.new(not_found_message: not_found_messages)
+        else
+          movie_results = movie_discover_search(
+            people: person_ids,
+            page: params[:page],
+            sort_by: params[:sort_by]
+          )
+
+          current_page = params[:page].to_i
+          OpenStruct.new(
+            actors: person_data,
+            actor_names: actor_names,
+            common_movies: movie_results.data,
+            not_found_message: nil,
+            current_page: current_page,
+            previous_page: (current_page - 1 if current_page > 1),
+            next_page: (current_page + 1 unless current_page >= movie_results.total_pages),
+            total_pages: movie_results.total_pages
           )
         end
       end
@@ -37,7 +90,7 @@ module Tmdb
             not_found_message: actor_search_result.not_found_message,
           )
         else
-          results = movie_discover_search(
+          movie_results = movie_discover_search(
             year: params[:year],
             year_select: params[:year_select],
             genre: params[:genre],
@@ -51,20 +104,19 @@ module Tmdb
           current_page = params[:page].to_i
           OpenStruct.new(
             original_search: params,
-            movies: results.movies,
+            movies: movie_results.data,
             not_found_message: nil,
             current_page: current_page,
             previous_page: (current_page - 1 if current_page > 1),
-            next_page: (current_page + 1 unless current_page >= results.total_pages),
-            total_pages: results.total_pages
+            next_page: (current_page + 1 unless current_page >= movie_results.total_pages),
+            total_pages: movie_results.total_pages
           )
         end
       end
 
       private
-      # formerly tmdb_handler_movie_discover_search
+
       def movie_discover_search(params)
-        # discover_url = "#{BASE_URL}/discover/movie?#{year_select}&with_genres=#{genre}&with_people=#{people}&with_companies=#{company}&certification_country=US&certification=#{mpaa_rating}&sort_by=#{sort_by}.desc&page=#{page}&api_key=#{ENV['tmdb_api_key']}"
         discover_url = "#{BASE_URL}/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
         discover_url += "&with_people=#{params[:people]}" if params[:people].present?
         discover_url += "&with_genres=#{params[:genre]}" if params[:genre].present?
@@ -84,12 +136,12 @@ module Tmdb
 
         OpenStruct.new(
           total_pages: JSON.parse(open(discover_url).read, symbolize_names: true)[:total_pages],
-          movies: MovieSearch.parse_results(results)
+          data: MovieSearch.parse_results(results)
         )
       end
 
       def search_person_by_name(person_name) # make private
-        searchable_name = I18n.transliterate(person_name)
+        searchable_name = I18n.transliterate(person_name.strip)
         search_url = "#{BASE_URL}/search/person?query=#{searchable_name}&api_key=#{ENV['tmdb_api_key']}"
         results = JSON.parse(open(search_url).read, symbolize_names: true)[:results]
         not_found_message = "No results for '#{person_name}'." if results.blank?
