@@ -22,6 +22,144 @@ describe MoviesHelper, type: :helper do
     end
   end
 
+  describe 'display_advanced_search_terms' do
+    context 'actor_display' do
+      context 'when an actor is present' do
+        it 'sets the actor_display to a title-cased actor name' do
+          result = helper.display_advanced_search_terms(actor: 'foo bar')
+          expect(result).to eq('Foo Bar movies')
+        end
+      end
+
+      context 'when an actor not is present' do
+        it 'does not include the actor_display key' do
+          result = helper.display_advanced_search_terms(actor: '')
+          expect(result).to eq('')
+        end
+      end
+    end
+
+    context 'genre_display' do
+      before { stub_const('Movie::GENRES', GENRES = [['Cat', 42]].freeze) }
+      context 'when genre is present' do
+        it 'sets the genre_display to a genre name' do
+          result = helper.display_advanced_search_terms(genre: 42)
+          expect(result).to eq('Cat movies')
+        end
+      end
+
+      context 'when genre not is present' do
+        it 'does not include the genre_display key' do
+          result = helper.display_advanced_search_terms(actor: '')
+          expect(result).to eq('')
+        end
+      end
+    end
+
+    context 'rating_display' do
+      context 'when mpaa_rating is present' do
+        it 'sets the rating_display' do
+          result = helper.display_advanced_search_terms(mpaa_rating: 'R')
+          expect(result).to eq('Rated R')
+        end
+      end
+
+      context 'when mpaa_rating not is present' do
+        it 'does not include the rating_display key' do
+          result = helper.display_advanced_search_terms(mpaa_rating: '')
+          expect(result).to eq('')
+        end
+      end
+    end
+
+    context 'sort_display' do
+      before { stub_const('Movie::SORT_BY', SORT_BY = [['Fancy Foo', 'foo']].freeze) }
+      context 'when sort_by is present' do
+        it 'sets the sort_display to a sorting option name' do
+          result = helper.display_advanced_search_terms(sort_by: 'foo')
+          expect(result).to eq('sorted by Fancy Foo')
+        end
+      end
+
+      context 'when sort_by not is present' do
+        it 'does not include the sort_display key' do
+          result = helper.display_advanced_search_terms(sort_by: '')
+          expect(result).to eq('')
+        end
+      end
+
+      context 'when multiple params are present' do
+        let(:year) { '2020' }
+        let(:date) { { year: year } }
+        it 'joins them all in one pretty string' do
+          result = helper.display_advanced_search_terms(
+            actor: 'jazzy jeff',
+            mpaa_rating: 'R',
+            date: date
+          )
+          expect(result).to eq('Jazzy Jeff movies, Rated R, from 2020')
+        end
+      end
+    end
+
+    context 'years' do
+      let(:year) { '2020' }
+      let(:date) { { year: year } }
+
+      context 'year is present' do
+        context 'when year_select is not present' do
+          it 'defaults to "exact"' do
+            result = helper.display_advanced_search_terms(
+              year_select: '',
+              date: date
+            )
+            expect(result).to eq('from 2020')
+          end
+        end
+
+        context 'when year_select is "exact"' do
+          it 'says "From" the year' do
+            result = helper.display_advanced_search_terms(
+              year_select: 'exact',
+              date: date
+            )
+            expect(result).to eq('from 2020')
+          end
+        end
+
+        context 'when year_select is "before"' do
+          it 'says "Before" the year' do
+            result = helper.display_advanced_search_terms(
+              year_select: 'before',
+              date: date
+            )
+            expect(result).to eq('before 2020')
+          end
+        end
+
+        context 'when year_select is "after"' do
+          it 'says "After" the year' do
+            result = helper.display_advanced_search_terms(
+              year_select: 'after',
+              date: date
+            )
+            expect(result).to eq('after 2020')
+          end
+        end
+      end
+
+      context 'when year is not present' do
+        it 'does not set any of the year keys' do
+          result = helper.display_advanced_search_terms(
+            year_select: '',
+            date: ''
+          )
+          expect(result).to eq('')
+        end
+      end
+    end
+  end
+
   describe 'display_actor_age_at_release' do
     it 'does not display anything if the age is unavailable' do
       allow_any_instance_of(MoviesHelper).to receive(:actor_age_at_movie_release).and_return(nil)

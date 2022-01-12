@@ -27,7 +27,7 @@
     <p class="button-main"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
   <% else %><!--  we have movie results -->
     <% content_for(:title, "Search Results") %>
-    <h2>Here are the results for: <%= "#{@parsed_results_text}" %></h2><br>
+    <h2>Here are the results for: <%= "#{display_advanced_search_terms(@results.original_search)}" %></h2><br>
     <p class="button-main"><%= link_to "Search Again", discover_search_path %></p><br>
 
     <div id ="discover_search_loop">
