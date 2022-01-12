@@ -47,8 +47,7 @@ class MovieMore
 
     us_movie_releases = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }
     mpaa_rating = us_movie_releases.present? && us_movie_releases.first[:certification].present? ? us_movie_releases.first[:certification] : 'NR'
-    first_director = result[:credits][:crew].find {|crew| crew[:department] == 'Directing'}
-
+    first_director = result[:credits][:crew].find {|crew| crew[:department] == 'Directing'}.presence || {}
     new(
       actors: result[:credits][:cast].map { |cast| cast[:name] },
       adult: result[:adult],
