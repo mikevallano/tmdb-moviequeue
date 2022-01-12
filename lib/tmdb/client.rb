@@ -79,8 +79,6 @@ module Tmdb
         end
       end
 
-      # formerly tmdb_handler_discover_search
-      # we call it "advanced search" in the view
       def movie_advanced_search(params)
         actor_search_result = search_person_by_name(params[:actor]) if params[:actor].present?
 
@@ -133,14 +131,16 @@ module Tmdb
         end
 
         results = JSON.parse(open(discover_url).read, symbolize_names: true)[:results]
+        not_found_message = "No results for this query." if results.blank?
 
         OpenStruct.new(
-          total_pages: JSON.parse(open(discover_url).read, symbolize_names: true)[:total_pages],
-          data: MovieSearch.parse_results(results)
+          data: MovieSearch.parse_results(results),
+          not_found_message: not_found_message,
+          total_pages: JSON.parse(open(discover_url).read, symbolize_names: true)[:total_pages]
         )
       end
 
-      def search_person_by_name(person_name) # make private
+      def search_person_by_name(person_name)
         searchable_name = I18n.transliterate(person_name.strip)
         search_url = "#{BASE_URL}/search/person?query=#{searchable_name}&api_key=#{ENV['tmdb_api_key']}"
         results = JSON.parse(open(search_url).read, symbolize_names: true)[:results]
