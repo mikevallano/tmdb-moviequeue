@@ -140,6 +140,7 @@ class TmdbController < ApplicationController
     end
   end
 
+  # advanced search
   def discover_search
     form_params = %i[sort_by date genre actor actor2 company mpaa_rating year year_select page]
     passed_params = params.slice(*form_params).select { |_k, v| v.present? }
@@ -147,6 +148,5 @@ class TmdbController < ApplicationController
 
     searchable_params = SearchParamParser.parse_movie_params(passed_params)
     @results = Tmdb::Client.movie_advanced_search(searchable_params)
-    @parsed_results_text = SearchParamParser.parse_movie_params_for_display(passed_params)
   end
 end

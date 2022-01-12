@@ -70,6 +70,36 @@ module MoviesHelper
       .map{ |list| {label: list.name, id: list.id} }
   end
 
+  def display_advanced_search_terms(original_search)
+    output = []
+    output << "#{original_search[:actor].titlecase} movies" if original_search[:actor].present?
+    output << "Rated #{original_search[:mpaa_rating]}" if original_search[:mpaa_rating].present?
+
+    if original_search[:genre].present?
+      genres = Movie::GENRES.to_h
+      genre_selected = genres.key(original_search[:genre].to_i)
+      output << "#{genre_selected} movies"
+    end
+
+    year_from_date = original_search[:date][:year] if original_search[:date].present?
+    year = year_from_date.presence || original_search[:year]
+    if year.present?
+      output <<
+        case original_search[:year_select]
+        when 'before' then "before #{year}"
+        when 'after' then "after #{year}"
+        else "from #{year}"
+        end
+    end
+
+    if original_search[:sort_by].present?
+      sort_options = Movie::SORT_BY.to_h
+      sort_key = sort_options.key(original_search[:sort_by])
+      output << "sorted by #{sort_key}"
+    end
+    output.join(', ')
+  end
+
 
   private
 
