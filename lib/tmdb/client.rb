@@ -8,10 +8,12 @@ module Tmdb
     class << self
       def movies_by_actor(params)
         person = search_person_by_name(params[:actor_name])
-
         if person.not_found_message.present?
-          OpenStruct.new(not_found_message: person.not_found_message)
+          OpenStruct.new(
+            not_found_message: person.not_found_message
+          )
         else
+        # if person.not_found_message.blank?
           movie_results = movie_discover_search(
             people: person.data[:id],
             page: params[:page],
@@ -30,6 +32,12 @@ module Tmdb
             total_pages: movie_results.total_pages
           )
         end
+      # rescue
+      #   binding.pry
+      #   not_found_message = "No results for '#{params[:actor_name]}'."
+      #   OpenStruct.new(
+      #     not_found_message: not_found_message
+      #   )
       end
 
       def movies_between_multiple_actors_search(actor_names:, **params)
@@ -142,7 +150,7 @@ module Tmdb
 
       def search_person_by_name(person_name)
         searchable_name = I18n.transliterate(person_name.strip)
-        search_url = "#{BASE_URL}/search/person?query=#{searchable_name}&api_key=#{ENV['tmdb_api_key']}"
+        search_url = "#{BASE_URL}/search/person?api_key=#{ENV['tmdb_api_key']}&query=#{searchable_name}"
         results = JSON.parse(open(search_url).read, symbolize_names: true)[:results]
         not_found_message = "No results for '#{person_name}'." if results.blank?
 

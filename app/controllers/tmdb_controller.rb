@@ -59,6 +59,7 @@ class TmdbController < ApplicationController
         page: (params[:page] || 1),
         sort_by: (params[:sort_by] || "popularity")
       )
+      # tmdb_handler_discover_search(params)
     end
   end
 

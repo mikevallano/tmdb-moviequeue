@@ -1,16 +1,15 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.feature "TMDB feature spec", :type => :feature do
-
   feature "User can perform various searches using the TMDB api" do
-
     let(:user) { FactoryBot.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
     let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
 
     describe "search by title" do
-
       before(:each) do
         sign_in_user(user)
         visit(api_search_path)
@@ -25,11 +24,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_search_for_movie
         expect(page).to have_content("No results")
       end
-
     end #search by title
 
     describe "search by actor" do
-
       before(:each) do
         sign_in_user(user)
         visit(actor_search_path)
@@ -56,11 +53,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_actor_search
         expect(page).to have_content("No results")
       end
-
     end #search by actor
 
     describe "search by two actors" do
-
       before(:each) do
         sign_in_user(user)
         visit(two_actor_search_path)
@@ -83,7 +78,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
     end #search by two actors
 
     describe "search by two movies" do
-
       before(:each) do
         sign_in_user(user)
       end
@@ -125,7 +119,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
     end #search by two movies
 
     describe "discover searches" do
-
       before(:each) do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
@@ -227,11 +220,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       #   wait_for_ajax
       #   expect(page).to have_selector("#modal_link_275")
       # end
-
     end #discover searches
 
     describe "movie more info results" do
-
       before(:each) do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
@@ -274,7 +265,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         wait_for_ajax
         expect(page).to have_content("Steve Buscemi")
       end
-
     end #movie more info results
 
     xdescribe "movie added to the database" do
@@ -308,11 +298,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         #has mpaa rating
         expect(Movie.last.mpaa_rating).to eq("R")
       end
-
-    end #movie added to the database
+    end
 
     describe "actor searches that drill down to tv" do
-
       before(:each) do
         sign_in_user(user)
         visit(actor_search_path)
@@ -391,8 +379,5 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end
 
     end #actor searches
-
-
   end
-
-end #final
+end

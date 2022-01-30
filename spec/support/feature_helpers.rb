@@ -86,8 +86,8 @@ module FeatureHelpers
   end
 
   def bad_api_actor_search
-    VCR.use_cassette('tmdb_bad_actor_search') do
-      fill_in "actor_name_actor_search", with: '&sjhskjhdf*s7'
+    VCR.use_cassette 'tmdb_bad_actor_search' do
+      fill_in "actor_name_actor_search", with: 'sjhskjhdf*s7'
       click_button "submit_button_actor_search"
     end
   end
