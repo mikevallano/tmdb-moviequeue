@@ -25,12 +25,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_movie_autocomplete(query)
-    search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
-    tmdb_response[:results].map{ |result| result[:title] }.uniq
-  end
-
   def tmdb_handler_person_autocomplete(query)
     search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
