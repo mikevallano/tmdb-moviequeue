@@ -40,14 +40,15 @@ class TmdbController < ApplicationController
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
       movie = Movie.find_by!(tmdb_id: @tmdb_id)
-      TmdbHandler.tmdb_handler_update_movie(movie)
+      Tbdb::Client.update_movie(movie)
     end
     redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end
 
   def full_cast
     if params[:tmdb_id]
-      @cast = Tmdb::Client.get_full_cast(params[:tmdb_id])
+      @cast = tmdb_handler_full_cast(params[:tmdb_id])
+      # @cast = Tmdb::Client.get_full_cast(params[:tmdb_id])
     end
   end
 
@@ -77,7 +78,7 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = tmdb_handler_person_detail_search(params[:actor_id])
+    @actor = Tmdb::Client.person_detail_search(params[:actor_id])
   end
 
   def actor_credit
@@ -132,7 +133,7 @@ class TmdbController < ApplicationController
 
   def director_search
     if params[:director_id]
-      @director = tmdb_handler_person_detail_search(params[:director_id])
+      @director = Tmdb::Client.person_detail_search(params[:director_id])
     end
   end
 
