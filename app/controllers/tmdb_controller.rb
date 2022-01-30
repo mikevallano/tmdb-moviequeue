@@ -24,7 +24,7 @@ class TmdbController < ApplicationController
   end
 
   def person_autocomplete
-    results = tmdb_handler_person_autocomplete(params[:term])
+    results = Tmdb::Client.person_autocomplete(params[:term])
     render json: results
   end
 
