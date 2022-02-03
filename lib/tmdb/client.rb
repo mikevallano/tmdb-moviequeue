@@ -74,14 +74,9 @@ module Tmdb
       end
 
       def person_detail_search(person_id)
-        api_bio_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
-        bio_results = fetch_parsed_response(api_bio_url)
-
-        api_movie_credits_url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
-        movie_credits_results = fetch_parsed_response(api_movie_credits_url)
-
-        api_tv_credits_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
-        tv_credits_results = fetch_parsed_response(api_tv_credits_url)
+        bio_results = get_parsed_person_bio(person_id)
+        movie_credits_results = get_parsed_person_movie_credits(person_id)
+        tv_credits_results = get_parsed_person_tv_credits(person_id)
 
         OpenStruct.new(
           person_id: person_id,

@@ -16,7 +16,7 @@ namespace :tmdb_data do
     updated_movies = []
 
     movies.each do |movie|
-      TmdbHandler.tmdb_handler_update_movie(movie)
+      Tmdb::Client.update_movie(movie)
       puts "Movie refreshed. #{movie.title}. tmdb_id: #{movie.tmdb_id}"
       updated_movies << movie.tmdb_id
       sleep 0.01
