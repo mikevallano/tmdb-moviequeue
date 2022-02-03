@@ -7,14 +7,12 @@ module Tmdb
 
     class << self
       def movie_autocomplete(query)
-        search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        data = fetch_parsed_response(search_url)
+        data = get_parsed_movie_search_results(query)
         data[:results].map{ |result| result[:title] }.uniq
       end
 
       def person_autocomplete(query)
-        search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        data = fetch_parsed_response(search_url)
+        data = get_parsed_multi_search_results(query)
         person_results = data[:results].select{ |result| result[:media_type] == "person"}
         person_results.map{ |result| result[:name] }.uniq
       end
@@ -86,10 +84,41 @@ module Tmdb
         )
       end
 
+      def actor_credit(credit_id)
+        data = get_parsed_credit(credit_id)
+        TVActorCredit.parse_record(data)
+      end
+
       private
 
-      def fetch_parsed_response(search_url)
-        tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
+      def get_parsed_credit(credit_id)
+        search_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_person_bio(person_id)
+        search_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_person_movie_credits(person_id)
+        search_url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_person_tv_credits(person_id)
+        search_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_multi_search_results(query)
+        search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_movie_search_results(query)
+        search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
       end
     end
   end
