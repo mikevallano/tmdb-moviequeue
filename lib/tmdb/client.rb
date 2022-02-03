@@ -84,7 +84,7 @@ module Tmdb
         )
       end
 
-      def actor_credit(credit_id)
+      def tv_actor_appearance_credits(credit_id)
         data = get_parsed_credit(credit_id)
         TVActorCredit.parse_record(data)
       end

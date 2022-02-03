@@ -308,4 +308,74 @@ RSpec.describe Tmdb::Client do
   xdescribe '.update_movie' do
   end
 
+  describe '.tv_actor_appearance_credits' do
+    let(:parsed_credits) do
+      {
+        media: {
+         :name=>"The Good Place",
+         :id=>66573,
+         :character=>"Doug Forcett",
+         :episodes=>
+          [{:air_date=>"2018-11-15",
+            :episode_number=>8,
+            :id=>1593085,
+            :name=>"Don't Let The Good Life Pass You By",
+            :overview=>"Michael and Janet visit the person.",
+            :production_code=>"",
+            :season_number=>3,
+            :show_id=>66573,
+            :still_path=>"/7wZBtiIlcTPekf3KiyKn1wwD6DQ.jpg",
+            :vote_average=>7.526,
+            :vote_count=>19}],
+         :seasons=>
+          [{:air_date=>"2018-09-27",
+            :episode_count=>12,
+            :id=>105508,
+            :name=>"Season 3",
+            :overview=>"",
+            :poster_path=>"/3dJDT1dVSuHBYqWD0OLT1ZXeLq7.jpg",
+            :season_number=>3,
+            :show_id=>66573}]
+        },
+        person: {
+          :name=>"Michael McKean",
+          :id=>21731,
+          :profile_path=>"/xuEZeuylzznJcf0nDs1RlvuzaPr.jpg",
+          :known_for=>
+          [{:backdrop_path=>"/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg",
+            :id=>456.0,
+            :genre_ids=>[10751.0, 16.0, 35.0],
+            :original_language=>"en",
+            :media_type=>"tv",
+            :poster_path=>"/tubgEpjTUA7t0kejVMBsNBZDarZ.jpg",
+            :popularity=>765.151,
+            :vote_count=>7531.0,
+            :vote_average=>7.9,
+            :original_name=>"The Simpsons",
+            :origin_country=>["US"],
+            :overview=>"Set in Springfield, the average American town.",
+            :name=>"The Simpsons",
+            :first_air_date=>"1989-12-17"}]
+        }
+      }
+    end
+    before do
+      allow(described_class).to receive(:get_parsed_credit).and_return(parsed_credits)
+    end
+
+    it 'returns tv_actor_credit data' do
+      person = described_class.tv_actor_appearance_credits('foo')
+      expect(person).to be_instance_of(TVActorCredit)
+      expect(person.actor_id).to eq(21731)
+      expect(person.actor_name).to eq('Michael McKean')
+      expect(person.character).to eq('Doug Forcett')
+      expect(person.episodes.first.episode_number).to eq(8)
+      expect(person.known_for.first[:name]).to eq('The Simpsons')
+      expect(person.profile_path).to eq('/xuEZeuylzznJcf0nDs1RlvuzaPr.jpg')
+      expect(person.show_id).to eq(66573)
+      expect(person.show_name).to eq('The Good Place')
+      expect(person.seasons.first.air_date).to eq('9/27/2018')
+    end
+  end
+
 end

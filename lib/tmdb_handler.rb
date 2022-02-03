@@ -68,12 +68,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_actor_credit(credit_id)
-    credit_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
-    credit_data = JSON.parse(open(credit_url).read, symbolize_names: true)
-    TVActorCredit.parse_record(credit_data)
-  end
-
   def tmdb_handler_tv_series_search(query)
     search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
