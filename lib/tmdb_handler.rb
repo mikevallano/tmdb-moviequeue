@@ -68,13 +68,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_tv_series_search(query)
-    search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
-    discover_results = tmdb_response[:results]
-    TVSeries.parse_search_records(discover_results) if discover_results.present?
-  end
-
   def tmdb_handler_tv_series_autocomplete(query)
     search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
     tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)

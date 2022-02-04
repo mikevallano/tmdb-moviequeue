@@ -90,7 +90,7 @@ class TmdbController < ApplicationController
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
-      @search_results = tmdb_handler_tv_series_search(query)
+      @search_results = Tmdb::Client.tv_series_search(query)
     end
   end
 

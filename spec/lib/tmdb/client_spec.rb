@@ -378,4 +378,41 @@ RSpec.describe Tmdb::Client do
     end
   end
 
+  describe '.tv_series_search' do
+    let(:parsed_tv_search_results) do
+      [{
+        :backdrop_path=>"/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg",
+        :first_air_date=>"1989-12-17",
+        :genre_ids=>[10751, 16, 35],
+        :id=>456,
+        :name=>"The Simpsons",
+        :origin_country=>["US"],
+        :original_language=>"en",
+        :original_name=>"The Simpsons",
+        :overview=>"Set in Springfield.",
+        :popularity=>707.512,
+        :poster_path=>"/tubgEpjTUA7t0kejVMBsNBZDarZ.jpg",
+        :vote_average=>7.9,
+        :vote_count=>7536
+      }]
+    end
+    before do
+      allow(described_class).to receive(:get_parsed_tv_search_results).and_return(parsed_tv_search_results)
+    end
+    it 'returns a TVSeries object with data' do
+      series = described_class.tv_series_search('foo').first
+      expect(series.show_id).to eq(456)
+      expect(series.first_air_date).to eq('12/17/1989')
+      expect(series.last_air_date).to eq(nil)
+      expect(series.show_name).to eq('The Simpsons')
+      expect(series.backdrop_path).to eq('/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg')
+      expect(series.poster_path).to eq('/tubgEpjTUA7t0kejVMBsNBZDarZ.jpg')
+      expect(series.number_of_episodes).to eq(nil)
+      expect(series.number_of_seasons).to eq(nil)
+      expect(series.overview).to eq('Set in Springfield.')
+      expect(series.seasons).to eq(nil)
+      expect(series.actors).to eq(nil)
+    end
+  end
+
 end
