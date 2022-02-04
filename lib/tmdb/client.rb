@@ -8,13 +8,7 @@ module Tmdb
     class << self
       def movie_autocomplete(query)
         data = get_parsed_movie_search_results(query)
-        data[:results].map{ |result| result[:title] }.uniq
-      end
-
-      def person_autocomplete(query)
-        data = get_parsed_multi_search_results(query)
-        person_results = data[:results].select{ |result| result[:media_type] == "person"}
-        person_results.map{ |result| result[:name] }.uniq
+        data.map{ |result| result[:title] }.uniq
       end
 
       # def get_full_cast(tmdb_id)
@@ -69,6 +63,12 @@ module Tmdb
         )
       rescue ActiveRecord::RecordInvalid => error
         raise Error.new("#{movie.title} failed update. #{error.message}")
+      end
+
+      def person_autocomplete(query)
+        data = get_parsed_multi_search_results(query)
+        person_results = data.select{ |result| result[:media_type] == "person"}
+        person_results.map{ |result| result[:name] }.uniq
       end
 
       def person_detail_search(person_id)
@@ -128,12 +128,12 @@ module Tmdb
 
       def get_parsed_multi_search_results(query)
         search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_movie_search_results(query)
         search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:result)
       end
     end
   end
