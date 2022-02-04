@@ -95,7 +95,7 @@ class TmdbController < ApplicationController
   end
 
   def tv_series_autocomplete
-    autocomplete_results = tmdb_handler_tv_series_autocomplete(params[:term])
+    autocomplete_results = Tmdb::Client.tv_series_autocomplete(params[:term])
     render json: autocomplete_results
   end
 

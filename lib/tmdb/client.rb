@@ -89,12 +89,15 @@ module Tmdb
         TVActorCredit.parse_record(data)
       end
 
+      def tv_series_autocomplete(query)
+        data = get_parsed_tv_search_results(query)
+        data.map{ |d| d[:name] }.uniq
+      end
+
       def tv_series_search(query)
         data = get_parsed_tv_search_results(query)
         TVSeries.parse_search_records(data) if data.present?
       end
-
-
 
       private
 
