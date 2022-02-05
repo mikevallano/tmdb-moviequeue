@@ -99,6 +99,11 @@ module Tmdb
         TVSeries.parse_search_records(data) if data.present?
       end
 
+      def tv_series(series_id)
+        data = get_parsed_tv_series_data(series_id)
+        TVSeries.parse_record(data, series_id)
+      end
+
       private
 
       def get_parsed_credit(credit_id)
@@ -118,6 +123,11 @@ module Tmdb
 
       def get_parsed_person_tv_credits(person_id)
         search_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
+      def get_parsed_tv_series_data(series_id)
+        search_url = "#{BASE_URL}/tv/#{series_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
         JSON.parse(open(search_url).read, symbolize_names: true)
       end
 
