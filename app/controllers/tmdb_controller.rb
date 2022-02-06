@@ -14,7 +14,7 @@ class TmdbController < ApplicationController
 
   def two_movie_search
     if params[:movie_one] && params[:movie_two]
-      @search_results = tmdb_handler_search_common_actors_in_two_movies(params[:movie_one], params[:movie_two])
+      @search_results = Tmdb::Client.common_actors_between_movies(params[:movie_one], params[:movie_two])
     end
   end
 

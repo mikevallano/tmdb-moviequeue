@@ -9,25 +9,6 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
-    movie_one_results = Tmdb::Client.movie_search(movie_one_title)
-    movie_two_results = Tmdb::Client.movie_search(movie_two_title)
-    not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
-
-    if not_found_message.present?
-      OpenStruct.new(not_found_message: not_found_message)
-    else
-      movie_one = Tmdb::Client.movie(movie_one_results.movies.first.tmdb_id)
-      movie_two = Tmdb::Client.movie(movie_two_results.movies.first.tmdb_id)
-      OpenStruct.new(
-        movie_one: movie_one,
-        movie_two: movie_two,
-        common_actors: movie_one.actors & movie_two.actors,
-        not_found_message: nil
-      )
-    end
-  end
-
   def tmdb_handler_discover_search(params)
     @actor = params[:actor]
     @actor2 = params[:actor2]

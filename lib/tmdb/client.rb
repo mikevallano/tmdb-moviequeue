@@ -84,6 +84,25 @@ module Tmdb
         raise Error.new("#{movie.title} failed update. #{error.message}")
       end
 
+      def common_actors_between_movies(movie_one_title, movie_two_title)
+        movie_one_results = movie_search(movie_one_title)
+        movie_two_results = movie_search(movie_two_title)
+        not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
+
+        if not_found_message.present?
+          OpenStruct.new(not_found_message: not_found_message)
+        else
+          movie_one = Tmdb::Client.movie(movie_one_results.movies.first.tmdb_id)
+          movie_two = Tmdb::Client.movie(movie_two_results.movies.first.tmdb_id)
+          OpenStruct.new(
+            movie_one: movie_one,
+            movie_two: movie_two,
+            common_actors: movie_one.actors & movie_two.actors,
+            not_found_message: nil
+          )
+        end
+      end
+
       def person_autocomplete(query)
         data = get_parsed_multi_search_results(query)
         person_results = data.select{ |result| result[:media_type] == "person"}
