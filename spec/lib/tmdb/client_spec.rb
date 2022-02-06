@@ -481,4 +481,71 @@ RSpec.describe Tmdb::Client do
     end
   end
 
+  describe 'tv_season' do
+    let(:tv_series) { build(:tv_series, show_id: 1) }
+    let(:parsed_tv_season_data) do
+      {
+        :_id=>"52538d0319c2957940260d67",
+        :air_date=>"1990-09-24",
+        :id=>1991,
+        :name=>"Season 4",
+        :overview=>"Riker tries to save the Enterprise and the Earth",
+        :production_code=>"40274-175",
+        :season_number=>4,
+        :still_path=>"/12345.jpg",
+        :poster_path=>"/67891.jpg",
+        :vote_average=>8.194,
+        :vote_count=>31,
+        credits: {
+          cast: [
+           {:adult=>false,
+            :gender=>2,
+            :id=>2388,
+            :known_for_department=>"Acting",
+            :name=>"Jonathan Frakes",
+            :original_name=>"Jonathan Frakes",
+            :popularity=>7.206,
+            :profile_path=>"/koY6DtPAnuiJpdOW3bPHzmoC6cZ.jpg",
+            :character=>"William T. Riker",
+            :credit_id=>"52538dc019c2957940268e42",
+            :order=>1},
+          ],
+        },
+        :episodes=>
+        [{:air_date=>"1990-09-30",
+          :episode_number=>2,
+          :crew=>
+           [{:department=>"Directing",
+             :job=>"Director",
+             :credit_id=>"52538d0819c2957940261261",
+             :adult=>false,
+             :gender=>2,
+             :id=>1219320,
+             :known_for_department=>"Directing",
+             :name=>"Cliff Bole",
+             :original_name=>"Cliff Bole",
+             :popularity=>0.771,
+             :profile_path=>nil
+           }],
+        }]
+      }
+    end
+    it 'returns a TVSeason object with data' do
+      allow(described_class).to receive(:get_parsed_tv_season_data).and_return(parsed_tv_season_data)
+      season = described_class.tv_season(series: tv_series, season_number: 'foo')
+
+      expect(season.series.show_id).to eq(1)
+      expect(season.show_id).to eq(1)
+      expect(season.air_date).to eq('1990-09-24'.to_date)
+      expect(season.name).to eq('Season 4')
+      expect(season.overview).to eq('Riker tries to save the Enterprise and the Earth')
+      expect(season.season_id).to eq(1991)
+      expect(season.season_id).to eq(1991)
+      expect(season.poster_path).to eq('/67891.jpg')
+      expect(season.season_number).to eq(4)
+      expect(season.credits[:cast].first[:name]).to eq('Jonathan Frakes')
+      expect(season.cast_members.first.name).to eq('Jonathan Frakes')
+      expect(season.episodes.first.air_date.to_s).to eq('1990-09-30')
+    end
+  end
 end

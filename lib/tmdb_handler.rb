@@ -68,16 +68,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_tv_season(series:, show_id:, season_number:)
-    season_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    season_results = JSON.parse(open(season_url).read, symbolize_names: true)
-    TVSeason.parse_record(
-      series: series,
-      show_id: show_id,
-      season_data: season_results
-    )
-  end
-
   def tmdb_handler_tv_episode(show_id:, season_number:, episode_number:)
     episode_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
     episode_data = JSON.parse(open(episode_url).read, symbolize_names: true)
