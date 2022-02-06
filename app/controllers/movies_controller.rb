@@ -59,7 +59,7 @@ class MoviesController < ApplicationController
 
   def set_movie
     if params[:tmdb_id].present?
-      @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+      @movie = GuaranteedMovie.find(params[:tmdb_id])
     else
       @movie = Movie.friendly.find(params[:movie_id])
     end

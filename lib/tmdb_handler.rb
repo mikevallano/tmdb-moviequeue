@@ -9,29 +9,6 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_add_movie(tmdb_id)
-    movie = Tmdb::Client.movie(tmdb_id)
-    Movie.create(
-      title: movie.title,
-      tmdb_id: movie.tmdb_id,
-      imdb_id: movie.imdb_id,
-      genres: movie.genres,
-      actors: movie.actors,
-      adult: movie.adult,
-      backdrop_path: movie.backdrop_path,
-      poster_path: movie.poster_path,
-      release_date: movie.release_date,
-      overview: movie.overview,
-      trailer: movie.trailer,
-      director: movie.director,
-      director_id: movie.director_id,
-      vote_average: movie.vote_average,
-      popularity: movie.popularity,
-      runtime: movie.runtime,
-      mpaa_rating: movie.mpaa_rating
-    )
-  end
-
   def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
     movie_one_results = Tmdb::Client.movie_search(movie_one_title)
     movie_two_results = Tmdb::Client.movie_search(movie_two_title)
