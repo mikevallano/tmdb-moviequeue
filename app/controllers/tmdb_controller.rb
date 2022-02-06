@@ -47,8 +47,7 @@ class TmdbController < ApplicationController
 
   def full_cast
     if params[:tmdb_id]
-      @cast = tmdb_handler_full_cast(params[:tmdb_id])
-      # @cast = Tmdb::Client.get_full_cast(params[:tmdb_id])
+      @cast = Tmdb::Client.movie_cast(params[:tmdb_id])
     end
   end
 

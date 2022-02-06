@@ -26,6 +26,19 @@ module Tmdb
         MovieMore.parse_result(data)
       end
 
+      def movie_cast(tmdb_movie_id)
+        data = get_parsed_movie_data(tmdb_movie_id)
+        director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
+        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
+
+        OpenStruct.new(
+          movie: movie(tmdb_movie_id),
+          actors: MovieCast.parse_results(data[:credits][:cast]),
+          directors: MovieDirecting.parse_results(director_credits),
+          editors: MovieEditing.parse_results(editor_credits),
+        )
+      end
+
       def movie_autocomplete(query)
         data = get_parsed_movie_search_results(query)
         data.map{ |result| result[:title] }.uniq

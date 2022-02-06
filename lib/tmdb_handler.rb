@@ -32,20 +32,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_full_cast(tmdb_id)
-    search_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-    data = JSON.parse(open(search_url).read, symbolize_names: true)
-    director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
-    editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
-
-    OpenStruct.new(
-      movie: Tmdb::Client.movie(tmdb_id),
-      actors: MovieCast.parse_results(data[:credits][:cast]),
-      directors: MovieDirecting.parse_results(director_credits),
-      editors: MovieEditing.parse_results(editor_credits),
-    )
-  end
-
   def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
     movie_one_results = Tmdb::Client.movie_search(movie_one_title)
     movie_two_results = Tmdb::Client.movie_search(movie_two_title)
