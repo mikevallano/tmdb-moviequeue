@@ -113,15 +113,15 @@ class TmdbController < ApplicationController
   end
 
   def tv_episode
-    show_id = params[:show_id]
+    series_id = params[:show_id]
     season_number = params[:season_number]
-    @series = Tmdb::Client.tv_series(show_id)
+    @series = Tmdb::Client.tv_series(series_id)
     @season = Tmdb::Client.tv_season(
       series: @series,
       season_number: season_number
     )
-    @episode = tmdb_handler_tv_episode(
-      show_id: show_id,
+    @episode = Tmdb::Client.tv_episode(
+      series_id: series_id,
       season_number: season_number,
       episode_number: params[:episode_number]
     )

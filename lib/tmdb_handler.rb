@@ -68,12 +68,6 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_tv_episode(show_id:, season_number:, episode_number:)
-    episode_url = "#{BASE_URL}/tv/#{show_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
-    episode_data = JSON.parse(open(episode_url).read, symbolize_names: true)
-    TVEpisode.parse_record(episode_data)
-  end
-
   def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
     movie_one_results = tmdb_handler_search(movie_one_title)
     movie_two_results = tmdb_handler_search(movie_two_title)

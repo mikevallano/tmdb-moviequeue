@@ -428,7 +428,7 @@ RSpec.describe Tmdb::Client do
     end
   end
 
-  describe 'tv_series' do
+  describe '.tv_series' do
     let(:parsed_tv_search_results) do
       {
         :backdrop_path=>"/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg",
@@ -481,7 +481,7 @@ RSpec.describe Tmdb::Client do
     end
   end
 
-  describe 'tv_season' do
+  describe '.tv_season' do
     let(:tv_series) { build(:tv_series, show_id: 1) }
     let(:parsed_tv_season_data) do
       {
@@ -546,6 +546,46 @@ RSpec.describe Tmdb::Client do
       expect(season.credits[:cast].first[:name]).to eq('Jonathan Frakes')
       expect(season.cast_members.first.name).to eq('Jonathan Frakes')
       expect(season.episodes.first.air_date.to_s).to eq('1990-09-30')
+    end
+  end
+
+  describe '.tv_episode' do
+    let(:tv_series) { build(:tv_series, show_id: 1) }
+    let(:parsed_tv_episode_data) do
+      {
+        :air_date=>"1990-10-08",
+        :episode_number=>3,
+        :guest_stars=>
+          [{:character=>"Chief O'Brien",
+          :credit_id=>"52538d0819c29579402612c4",
+          :order=>1,
+          :adult=>false,
+          :gender=>2,
+          :id=>17782,
+          :known_for_department=>"Acting",
+          :name=>"Colm Meaney",
+          :original_name=>"Colm Meaney",
+          :popularity=>9.629,
+          :profile_path=>"/guL6RJdlRMtOJN3LoaY3G8hG4Rd.jpg"}
+          ],
+        :name=>"Brothers",
+        :overview=>"Data mysteriously takes control of the Enterprise.",
+        :id=>37107,
+        :season_number=>4,
+        :still_path=>"/QfGzs.jpg",
+      }
+    end
+    it 'returns a TVEpisode object with data' do
+      allow(described_class).to receive(:get_parsed_tv_episode_data).and_return(parsed_tv_episode_data)
+      episode = described_class.tv_episode(series_id: tv_series.show_id, season_number: 'foo', episode_number: 'foo')
+      expect(episode.episode_id).to eq(37107)
+      expect(episode.episode_number).to eq(3)
+      expect(episode.name).to eq('Brothers')
+      expect(episode.air_date).to eq('1990-10-08'.to_date)
+      expect(episode.guest_stars.first.name).to eq('Colm Meaney')
+      expect(episode.season_number).to eq(4)
+      expect(episode.overview).to eq('Data mysteriously takes control of the Enterprise.')
+      expect(episode.still_path).to eq('/QfGzs.jpg')
     end
   end
 end

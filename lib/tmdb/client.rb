@@ -112,6 +112,11 @@ module Tmdb
         )
       end
 
+      def tv_episode(series_id:, season_number:, episode_number:)
+        episode_data = get_parsed_tv_episode_data(series_id: series_id, season_number: season_number, episode_number: episode_number)
+        TVEpisode.parse_record(episode_data)
+      end
+
       private
 
       def get_parsed_credit(credit_id)
@@ -143,6 +148,12 @@ module Tmdb
         search_url = "#{BASE_URL}/tv/#{series.show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
         JSON.parse(open(search_url).read, symbolize_names: true)
       end
+
+      def get_parsed_tv_episode_data(series_id:, season_number:, episode_number:)
+        search_url = "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
+        JSON.parse(open(search_url).read, symbolize_names: true)
+      end
+
       def get_parsed_tv_search_results(query)
         search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
         JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:results)
