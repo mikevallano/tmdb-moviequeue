@@ -100,7 +100,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "two movies search indicates first movie not found if search is bad" do
         visit(two_movie_search_path)
-        @movie_query1 = "*sdlfkjsdflkjsdf"
+        @movie_query1 = "sdlfkjsdflkjsdf"
         @movie_query2 = "The Big Lebowski"
         VCR.use_cassette("tmdb_two_movie_search_bad_first") do
           fill_in "movie1_field_two_movie_search", with: @movie_query1
@@ -113,7 +113,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       scenario "two movies search indicates second movie not found if search is bad" do
         visit(two_movie_search_path)
         @movie_query1 = "Fargo"
-        @movie_query2 = "*sdlfkjsdflkjsdf"
+        @movie_query2 = "sdlfkjsdflkjsdf"
         VCR.use_cassette("tmdb_two_movie_search_bad_second") do
           fill_in "movie1_field_two_movie_search", with: @movie_query1
           fill_in "movie2_field_two_movie_search", with: @movie_query2
