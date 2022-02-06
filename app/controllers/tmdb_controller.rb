@@ -40,7 +40,7 @@ class TmdbController < ApplicationController
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
       movie = Movie.find_by!(tmdb_id: @tmdb_id)
-      Tbdb::Client.update_movie(movie)
+      Tmdb::Client.update_movie(movie)
     end
     redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end

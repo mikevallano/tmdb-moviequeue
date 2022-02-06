@@ -41,7 +41,7 @@ module Tmdb
 
       def movie_autocomplete(query)
         data = get_parsed_movie_search_results(query)
-        data.map{ |result| result[:title] }.uniq
+        data.map { |d| d[:title] }.uniq
       end
 
       def update_movie(movie)
