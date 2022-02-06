@@ -11,20 +11,6 @@ module Tmdb
         data.map{ |result| result[:title] }.uniq
       end
 
-      # def get_full_cast(tmdb_id)
-      #   search_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-      #   data = fetch_parsed_response(search_url)
-      #   director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
-      #   editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
-      #
-      #   OpenStruct.new(
-      #     movie: tmdb_handler_movie_more(tmdb_id),
-      #     actors: MovieCast.parse_results(data[:credits][:cast]),
-      #     directors: MovieDirecting.parse_results(director_credits),
-      #     editors: MovieEditing.parse_results(editor_credits),
-      #   )
-      # end
-
       def update_movie(movie)
         tmdb_id = movie.tmdb_id.to_s
         movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
