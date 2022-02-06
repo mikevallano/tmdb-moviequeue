@@ -33,7 +33,7 @@ module Tmdb
 
       def update_movie(movie)
         tmdb_id = movie.tmdb_id.to_s
-        movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
+        movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
         api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
         raise Error.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}") unless api_result
         if api_result[:status_code] == 34 && api_result[:status_message]&.include?('could not be found')
@@ -119,63 +119,69 @@ module Tmdb
       end
 
       def tv_episode(series_id:, season_number:, episode_number:)
-        episode_data = get_parsed_tv_episode_data(series_id: series_id, season_number: season_number, episode_number: episode_number)
+        episode_data = get_parsed_tv_episode_data(
+          series_id: series_id,
+          season_number: season_number,
+          episode_number: episode_number
+        )
         TVEpisode.parse_record(episode_data)
       end
 
       private
 
       def get_parsed_credit(credit_id)
-        search_url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_person_bio(person_id)
-        search_url = "#{BASE_URL}/person/#{person_id}?api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/person/#{person_id}?api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_person_movie_credits(person_id)
-        search_url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_person_tv_credits(person_id)
-        search_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)
+      end
+
       def get_parsed_movie_data(movie_id)
         url = "#{BASE_URL}/movie/#{movie_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
         JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_tv_series_data(series_id)
-        search_url = "#{BASE_URL}/tv/#{series_id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/tv/#{series_id}?api_key=#{API_KEY}&append_to_response=credits"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_tv_season_data(series:, season_number:)
-        search_url = "#{BASE_URL}/tv/#{series.show_id}/season/#{season_number}?api_key=#{ENV['tmdb_api_key']}&append_to_response=credits"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/tv/#{series.show_id}/season/#{season_number}?api_key=#{API_KEY}&append_to_response=credits"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_tv_episode_data(series_id:, season_number:, episode_number:)
-        search_url = "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)
+        url = "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_tv_search_results(query)
-        search_url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:results)
+        url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_multi_search_results(query)
-        search_url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:results)
+        url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_movie_search_results(query)
-        search_url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{ENV['tmdb_api_key']}"
-        JSON.parse(open(search_url).read, symbolize_names: true)&.dig(:result)
+        url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{API_KEY}"
+        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
     end
   end
