@@ -25,14 +25,8 @@ module TmdbHandler
     )
   end
 
-  def tmdb_handler_movie_more(id)
-    movie_url = "#{BASE_URL}/movie/#{id}?api_key=#{ENV['tmdb_api_key']}&append_to_response=trailers,credits,releases"
-    result = JSON.parse(open(movie_url).read, symbolize_names: true)
-    MovieMore.parse_result(result)
-  end
-
   def tmdb_handler_add_movie(tmdb_id)
-    movie = tmdb_handler_movie_more(tmdb_id)
+    movie = Tmdb::Client.movie(tmdb_id)
     Movie.create(
       title: movie.title,
       tmdb_id: movie.tmdb_id,
@@ -61,7 +55,7 @@ module TmdbHandler
     editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
 
     OpenStruct.new(
-      movie: tmdb_handler_movie_more(tmdb_id),
+      movie: Tmdb::Client.movie(tmdb_id),
       actors: MovieCast.parse_results(data[:credits][:cast]),
       directors: MovieDirecting.parse_results(director_credits),
       editors: MovieEditing.parse_results(editor_credits),
@@ -76,8 +70,8 @@ module TmdbHandler
     if not_found_message.present?
       OpenStruct.new(not_found_message: not_found_message)
     else
-      movie_one = tmdb_handler_movie_more(movie_one_results.movies.first.tmdb_id)
-      movie_two = tmdb_handler_movie_more(movie_two_results.movies.first.tmdb_id)
+      movie_one = Tmdb::Client.movie(movie_one_results.movies.first.tmdb_id)
+      movie_two = Tmdb::Client.movie(movie_two_results.movies.first.tmdb_id)
       OpenStruct.new(
         movie_one: movie_one,
         movie_two: movie_two,

@@ -4,8 +4,14 @@ module Tmdb
   class Client
     class Error < StandardError; end
     BASE_URL = 'https://api.themoviedb.org/3'.freeze
+    API_KEY = ENV['tmdb_api_key']
 
     class << self
+      def movie(movie_id)
+        data = get_parsed_movie_data(movie_id)
+        MovieMore.parse_result(data)
+      end
+
       def movie_autocomplete(query)
         data = get_parsed_movie_search_results(query)
         data.map{ |result| result[:title] }.uniq
@@ -123,6 +129,9 @@ module Tmdb
       def get_parsed_person_tv_credits(person_id)
         search_url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{ENV['tmdb_api_key']}"
         JSON.parse(open(search_url).read, symbolize_names: true)
+      def get_parsed_movie_data(movie_id)
+        url = "#{BASE_URL}/movie/#{movie_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+        JSON.parse(open(url).read, symbolize_names: true)
       end
 
       def get_parsed_tv_series_data(series_id)

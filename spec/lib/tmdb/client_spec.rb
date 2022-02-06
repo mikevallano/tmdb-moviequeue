@@ -3,20 +3,52 @@
 require 'rails_helper'
 
 RSpec.describe Tmdb::Client do
+  describe 'movie' do
+    let(:parsed_movie_data) do
+      { adult: false,
+        backdrop_path: '/iEWkF.jpg',
+        genres: [{ id: 878, name: 'Science Fiction' }],
+        id: 16320,
+        imdb_id: 'tt0379786',
+        overview: 'it got revers',
+        popularity: 18.271,
+        poster_path: '/ckDo.jpg',
+        production_companies: [{ id: 33, logo_path: '/8lvHyhjr8oUKOOy2dKXoALWKdp0.png', name: 'Universal Pictures', origin_country: 'US' }],
+        release_date: '2005-09-03',
+        runtime: 119,
+        title: 'Serenity',
+        vote_average: 7.4,
+        trailers: { youtube: [{ name: 'Serenity (2005) Trailer 1080p HD', size: 'HD', source: 'JY3u7bB7dZk', type: 'Trailer' }] },
+        credits: {
+          cast: [{ name: 'Nathan Fillion' }],
+          crew: [{ name: 'Mister Foo', department: 'Directing' }]
+        },
+        releases: { countries: [
+          { certification: 'PG-13', iso_3166_1: 'US', primary: false, release_date: '2005-09-30' }
+        ] } }
+    end
+    it 'returns a MovieMore object with data' do
+      allow(described_class).to receive(:get_parsed_movie_data).and_return(parsed_movie_data)
+      movie = described_class.movie('foo')
+      expect(movie.title).to eq('Serenity')
+      expect(movie.overview).to eq('it got revers')
+    end
+  end
+
   describe '.movie_autocomplete' do
     it 'returns a list of unique movie names' do
       parsed_data = {
         page: 1,
         results: [
-          {:title=>'A'},
-          {:title=>'A'},
-          {:title=>'B'},
-          {:title=>'C'}
+          { title: 'A' },
+          { title: 'A' },
+          { title: 'B' },
+          { title: 'C' }
         ]
       }
       allow(described_class).to receive(:get_parsed_movie_search_results).and_return(parsed_data)
       names = described_class.movie_autocomplete("doesn't matter")
-      expect(names).to eq(['A', 'B', 'C'])
+      expect(names).to eq(%w[A B C])
     end
   end
 
@@ -25,9 +57,9 @@ RSpec.describe Tmdb::Client do
       parsed_data = {
         page: 1,
         results: [
-          {:media_type=>"movie", :original_title=>"Jennifer Lopez: Dance Again"},
-          {:media_type=>"person", :name=>"Jennifer Lopez"},
-          {:media_type=>"person", :name=>"Jennifer Gray"}
+          { media_type: 'movie', original_title: 'Jennifer Lopez: Dance Again' },
+          { media_type: 'person', name: 'Jennifer Lopez' },
+          { media_type: 'person', name: 'Jennifer Gray' }
         ]
       }
       allow(described_class).to receive(:get_parsed_multi_search_results).and_return(parsed_data)
@@ -68,12 +100,12 @@ RSpec.describe Tmdb::Client do
   describe '.person_detail_search' do
     let(:person_id) { '2387' }
     let(:person_bio_data) do
-      {:name=>"Patrick Stewart",
-       :biography=>"An English film, television and stage actor.",
-       :birthday=>"1940-07-13",
-       :deathday=>nil,
-       :id=>person_id,
-       :profile_path=>"/wEy5qSDT5jT3ZASc2hbwi59voPL.jpg"}
+      { name: 'Patrick Stewart',
+        biography: 'An English film, television and stage actor.',
+        birthday: '1940-07-13',
+        deathday: nil,
+        id: person_id,
+        profile_path: '/wEy5qSDT5jT3ZASc2hbwi59voPL.jpg' }
     end
 
     let(:person_movie_credit_data) do
