@@ -202,17 +202,17 @@ module Tmdb
       end
 
       def get_parsed_tv_search_results(query)
-        url = "#{BASE_URL}/search/tv?query=#{query}&api_key=#{API_KEY}"
+        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{query}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_multi_search_results(query)
-        url = "#{BASE_URL}/search/multi?query=#{query}&api_key=#{API_KEY}"
+        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{query}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_movie_search_results(query)
-        url = "#{BASE_URL}/search/movie?query=#{query}&api_key=#{API_KEY}"
+        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
     end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?query=zasdlkjfasdlkjf&api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=zasdlkjfasdlkjf
     body:
       encoding: US-ASCII
       string: ''
@@ -50,6 +50,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
-    http_version:
+    http_version: 
   recorded_at: Thu, 11 Nov 2021 00:55:31 GMT
 recorded_with: VCR 5.0.0

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?query=*sdlfkjsdflkjsdf&api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=*sdlfkjsdflkjsdf
     body:
       encoding: US-ASCII
       string: ''
@@ -50,11 +50,11 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
-    http_version:
+    http_version: 
   recorded_at: Thu, 11 Nov 2021 00:52:02 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?query=The%20Big%20Lebowski&api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=The%20Big%20Lebowski
     body:
       encoding: US-ASCII
       string: ''
@@ -114,6 +114,6 @@ http_interactions:
         Making of The Big Lebowski","overview":"A short documentary about the production
         of The Big Lebowski (1998).","popularity":0.84,"poster_path":"/8szaRNN9bETpBHds2OLRkKbgb80.jpg","release_date":"1998-10-27","title":"The
         Making of The Big Lebowski","video":false,"vote_average":6,"vote_count":1}],"total_pages":1,"total_results":3}'
-    http_version:
+    http_version: 
   recorded_at: Thu, 11 Nov 2021 00:52:03 GMT
 recorded_with: VCR 5.0.0
