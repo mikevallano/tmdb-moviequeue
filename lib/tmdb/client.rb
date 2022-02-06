@@ -7,6 +7,20 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
+      def movie_search(movie_title)
+        query = I18n.transliterate(movie_title).titlecase
+        data = get_parsed_movie_search_results(query)
+        not_found = "No results for '#{query}'." if data.blank?
+        movies = MovieSearch.parse_results(data) if data.present?
+
+        OpenStruct.new(
+          movie_title: movie_title,
+          not_found_message: not_found,
+          query: query,
+          movies: movies
+        )
+      end
+
       def movie(movie_id)
         data = get_parsed_movie_data(movie_id)
         MovieMore.parse_result(data)

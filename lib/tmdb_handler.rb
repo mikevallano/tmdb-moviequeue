@@ -9,22 +9,6 @@ module TmdbHandler
     end
   end
 
-  def tmdb_handler_search(movie_title)
-    query = I18n.transliterate(movie_title).titlecase
-    search_url = "#{BASE_URL}/search/movie?query=#{movie_title}&api_key=#{ENV['tmdb_api_key']}"
-    tmdb_response = JSON.parse(open(search_url).read, symbolize_names: true)
-    discover_results = tmdb_response[:results]
-    not_found = "No results for '#{query}'." if tmdb_response.blank? || discover_results.blank?
-    movies = MovieSearch.parse_results(discover_results) if discover_results.present?
-
-    OpenStruct.new(
-      movie_title: movie_title,
-      not_found_message: not_found,
-      query: query,
-      movies: movies
-    )
-  end
-
   def tmdb_handler_add_movie(tmdb_id)
     movie = Tmdb::Client.movie(tmdb_id)
     Movie.create(
@@ -63,8 +47,8 @@ module TmdbHandler
   end
 
   def tmdb_handler_search_common_actors_in_two_movies(movie_one_title, movie_two_title)
-    movie_one_results = tmdb_handler_search(movie_one_title)
-    movie_two_results = tmdb_handler_search(movie_two_title)
+    movie_one_results = Tmdb::Client.movie_search(movie_one_title)
+    movie_two_results = Tmdb::Client.movie_search(movie_two_title)
     not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
     if not_found_message.present?
