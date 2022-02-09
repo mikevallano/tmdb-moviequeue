@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=*sdlfkjsdflkjsdf
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Sdlfkjsdflkjsdf
     body:
       encoding: US-ASCII
       string: ''

@@ -8,29 +8,29 @@ class TmdbController < ApplicationController
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
-      @search_results = tmdb_handler_search(@movie_title)
+      @search_results = Tmdb::Client.movie_search(@movie_title)
     end
   end
 
   def two_movie_search
     if params[:movie_one] && params[:movie_two]
-      @search_results = tmdb_handler_search_common_actors_in_two_movies(params[:movie_one], params[:movie_two])
+      @search_results = Tmdb::Client.common_actors_between_movies(params[:movie_one], params[:movie_two])
     end
   end
 
   def movie_autocomplete
-    results = tmdb_handler_movie_autocomplete(params[:term])
+    results = Tmdb::Client.movie_autocomplete(params[:term])
     render json: results
   end
 
   def person_autocomplete
-    results = tmdb_handler_person_autocomplete(params[:term])
+    results = Tmdb::Client.person_autocomplete(params[:term])
     render json: results
   end
 
   def movie_more
     if params[:tmdb_id]
-      @movie = tmdb_handler_movie_more(params[:tmdb_id])
+      @movie = Tmdb::Client.movie(params[:tmdb_id])
     else
       redirect_to api_search_path
     end
@@ -40,14 +40,14 @@ class TmdbController < ApplicationController
     if params[:tmdb_id]
       @tmdb_id = params[:tmdb_id]
       movie = Movie.find_by!(tmdb_id: @tmdb_id)
-      TmdbHandler.tmdb_handler_update_movie(movie)
+      Tmdb::Client.update_movie(movie)
     end
     redirect_to movie_more_path(tmdb_id: @tmdb_id)
   end
 
   def full_cast
     if params[:tmdb_id]
-      @cast = tmdb_handler_full_cast(params[:tmdb_id])
+      @cast = Tmdb::Client.movie_cast(params[:tmdb_id])
     end
   end
 
@@ -77,54 +77,50 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = tmdb_handler_person_detail_search(params[:actor_id])
+    @actor = Tmdb::Client.person_detail_search(params[:actor_id])
   end
 
   def actor_credit
     credit_id = params[:credit_id]
-    @credit = tmdb_handler_actor_credit(credit_id)
+    @credit = Tmdb::Client.tv_actor_appearance_credits(credit_id)
   end
 
   def tv_series_search
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
-      @search_results = tmdb_handler_tv_series_search(query)
+      @search_results = Tmdb::Client.tv_series_search(query)
     end
   end
 
   def tv_series_autocomplete
-    autocomplete_results = tmdb_handler_tv_series_autocomplete(params[:term])
+    autocomplete_results = Tmdb::Client.tv_series_autocomplete(params[:term])
     render json: autocomplete_results
   end
 
   def tv_series
     show_id = params[:show_id]
-    @series = tmdb_handler_tv_series(show_id)
+    @series = Tmdb::Client.tv_series(show_id)
   end
 
   def tv_season
-    show_id = params[:show_id]
-    season_number = params[:season_number]
-    @series = tmdb_handler_tv_series(show_id)
-    @season = tmdb_handler_tv_season(
+    @series = Tmdb::Client.tv_series(params[:show_id])
+    @season = Tmdb::Client.tv_season(
       series: @series,
-      show_id: show_id,
-      season_number: season_number
+      season_number: params[:season_number]
     )
   end
 
   def tv_episode
-    show_id = params[:show_id]
+    series_id = params[:show_id]
     season_number = params[:season_number]
-    @series = tmdb_handler_tv_series(show_id)
-    @season = tmdb_handler_tv_season(
+    @series = Tmdb::Client.tv_series(series_id)
+    @season = Tmdb::Client.tv_season(
       series: @series,
-      show_id: show_id,
       season_number: season_number
     )
-    @episode = tmdb_handler_tv_episode(
-      show_id: show_id,
+    @episode = Tmdb::Client.tv_episode(
+      series_id: series_id,
       season_number: season_number,
       episode_number: params[:episode_number]
     )
@@ -132,7 +128,7 @@ class TmdbController < ApplicationController
 
   def director_search
     if params[:director_id]
-      @director = tmdb_handler_person_detail_search(params[:director_id])
+      @director = Tmdb::Client.person_detail_search(params[:director_id])
     end
   end
 

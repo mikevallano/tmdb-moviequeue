@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
 
   def create
     @from = params[:from]
-    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || tmdb_handler_add_movie(params[:tmdb_id])
+    @movie = GuaranteedMovie.find(params[:tmdb_id])
 
     listing = current_user.listings.new(listing_params)
     listing.movie_id = @movie.id

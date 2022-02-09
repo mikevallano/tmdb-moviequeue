@@ -15,11 +15,11 @@ class TVSeason
     @episodes = episodes
   end
 
- def self.parse_record(series:, show_id:, season_data:)
+ def self.parse_record(series:, season_data:)
    air_date = Date.parse(season_data[:air_date]) if season_data[:air_date].present?
    new(
     series: series,
-    show_id: show_id,
+    show_id: series.show_id,
     air_date: air_date,
     name: season_data[:name],
     overview: season_data[:overview],
