@@ -53,13 +53,12 @@ class TmdbController < ApplicationController
 
   # single actor search
   def actor_search
-    if params[:actor]
-      params[:actor] = I18n.transliterate(params[:actor])
-      params[:page] = params[:page] || 1
-      params[:sort_by] = params[:sort_by] || "popularity"
-
-      # TODO: move to separate query
-      tmdb_handler_discover_search(params)
+    if params[:actor].present?
+      @results = Tmdb::Client.movies_for_actor(
+        actor_name: params[:actor],
+        page: (params[:page] || 1),
+        sort_by: (params[:sort_by] || 'popularity')
+      )
     end
   end
 
