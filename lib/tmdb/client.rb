@@ -9,7 +9,8 @@ module Tmdb
     class << self
       def movie_search(movie_title)
         query = I18n.transliterate(movie_title).titlecase
-        data = get_parsed_movie_search_results(query)
+        url = url_for_movie_search(query)
+        data = get_data(url)&.dig(:results)
         not_found = "No results for '#{query}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
 
@@ -21,13 +22,15 @@ module Tmdb
         )
       end
 
-      def movie(movie_id)
-        data = get_parsed_movie_data(movie_id)
+      def movie_data(movie_id)
+        url = url_for_movie_data(movie_id)
+        data = get_data(url)
         MovieMore.parse_result(data)
       end
 
       def movie_cast(tmdb_movie_id)
-        data = get_parsed_movie_data(tmdb_movie_id)
+        url = url_for_movie_data(tmdb_movie_id)
+        data = get_data(url)
         director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
         editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
 
@@ -40,13 +43,14 @@ module Tmdb
       end
 
       def movie_autocomplete(query)
-        data = get_parsed_movie_search_results(query)
+        url = url_for_movie_search(query)
+        data = get_data(url)&.dig(:results)
         data.map { |d| d[:title] }.uniq
       end
 
       def update_movie(movie)
         tmdb_id = movie.tmdb_id.to_s
-        movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+        movie_url = url_for_movie_data(tmdb_id)
         api_result = HTTParty.get(movie_url).deep_symbolize_keys rescue nil
         raise Error.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}") unless api_result
         if api_result[:status_code] == 34 && api_result[:status_message]&.include?('could not be found')
@@ -92,8 +96,8 @@ module Tmdb
         if not_found_message.present?
           OpenStruct.new(not_found_message: not_found_message)
         else
-          movie_one = Tmdb::Client.movie(movie_one_results.movies.first.tmdb_id)
-          movie_two = Tmdb::Client.movie(movie_two_results.movies.first.tmdb_id)
+          movie_one = Tmdb::Client.movie_data(movie_one_results.movies.first.tmdb_id)
+          movie_two = Tmdb::Client.movie_data(movie_two_results.movies.first.tmdb_id)
           OpenStruct.new(
             movie_one: movie_one,
             movie_two: movie_two,
@@ -104,116 +108,121 @@ module Tmdb
       end
 
       def person_autocomplete(query)
-        data = get_parsed_multi_search_results(query)
+        url = url_for_multi_search(query)
+        data = get_data(url)&.dig(:results)
         person_results = data.select{ |result| result[:media_type] == "person"}
         person_results.map{ |result| result[:name] }.uniq
       end
 
       def person_detail_search(person_id)
-        bio_results = get_parsed_person_bio(person_id)
-        movie_credits_results = get_parsed_person_movie_credits(person_id)
-        tv_credits_results = get_parsed_person_tv_credits(person_id)
+        person_url = url_for_person_data(person_id)
+        person_data = get_data(person_url)
+
+        movie_credits_url = url_for_person_movie_credits(person_id)
+        movie_credits_data = get_data(movie_credits_url)
+
+        tv_credits_url = url_for_person_tv_credits(person_id)
+        tv_credits_data = get_data(tv_credits_url)
 
         OpenStruct.new(
           person_id: person_id,
-          profile: MoviePersonProfile.parse_result(bio_results),
-          movie_credits: MoviePersonCredits.parse_result(movie_credits_results),
-          tv_credits: TVPersonCredits.parse_result(tv_credits_results)
+          profile: MoviePersonProfile.parse_result(person_data),
+          movie_credits: MoviePersonCredits.parse_result(movie_credits_data),
+          tv_credits: TVPersonCredits.parse_result(tv_credits_data)
         )
       end
 
       def tv_actor_appearance_credits(credit_id)
-        data = get_parsed_credit(credit_id)
+        url = url_for_credits_data(credit_id)
+        data = get_data(url)
         TVActorCredit.parse_record(data)
       end
 
       def tv_series_autocomplete(query)
-        data = get_parsed_tv_search_results(query)
+        url = url_for_tv_series_search(query)
+        data = get_data(url)&.dig(:results)
         data.map{ |d| d[:name] }.uniq
       end
 
       def tv_series_search(query)
-        data = get_parsed_tv_search_results(query)
+        url = url_for_tv_series_search(query)
+        data = get_data(url)&.dig(:results)
         TVSeries.parse_search_records(data) if data.present?
       end
 
       def tv_series(series_id)
-        data = get_parsed_tv_series_data(series_id)
+        url = url_for_tv_series_data(series_id)
+        data = get_data(url)
         TVSeries.parse_record(data, series_id)
       end
 
       def tv_season(series:, season_number:)
-        season_data = get_parsed_tv_season_data(series: series, season_number: season_number)
+        url = url_for_tv_season_data(series: series, season_number: season_number)
+        data = get_data(url)
         TVSeason.parse_record(
           series: series,
-          season_data: season_data
+          season_data: data
         )
       end
 
       def tv_episode(series_id:, season_number:, episode_number:)
-        episode_data = get_parsed_tv_episode_data(
+        url = url_for_tv_episode_data(
           series_id: series_id,
           season_number: season_number,
           episode_number: episode_number
         )
-        TVEpisode.parse_record(episode_data)
+        data = get_data(url)
+        TVEpisode.parse_record(data)
       end
 
       private
 
-      def get_parsed_credit(credit_id)
-        url = "#{BASE_URL}/credit/#{credit_id}?api_key=#{API_KEY}"
+      def url_for_credits_data(credit_id)
+        "#{BASE_URL}/credit/#{credit_id}?api_key=#{API_KEY}"
+      end
+
+      def url_for_person_data(person_id)
+        "#{BASE_URL}/person/#{person_id}?api_key=#{API_KEY}"
+      end
+
+      def url_for_person_movie_credits(person_id)
+        "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{API_KEY}"
+      end
+
+      def url_for_person_tv_credits(person_id)
+        "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{API_KEY}"
+      end
+
+      def url_for_movie_data(movie_id)
+        "#{BASE_URL}/movie/#{movie_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+      end
+
+      def url_for_movie_search(query)
+        "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
+      end
+
+      def url_for_tv_series_data(series_id)
+        "#{BASE_URL}/tv/#{series_id}?api_key=#{API_KEY}&append_to_response=credits"
+      end
+
+      def url_for_tv_season_data(series:, season_number:)
+        "#{BASE_URL}/tv/#{series.show_id}/season/#{season_number}?api_key=#{API_KEY}&append_to_response=credits"
+      end
+
+      def url_for_tv_episode_data(series_id:, season_number:, episode_number:)
+        "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{API_KEY}"
+      end
+
+      def url_for_tv_series_search(query)
+        "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{query}"
+      end
+
+      def url_for_multi_search(query)
+        "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{query}"
+      end
+
+      def get_data(url)
         JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_person_bio(person_id)
-        url = "#{BASE_URL}/person/#{person_id}?api_key=#{API_KEY}"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_person_movie_credits(person_id)
-        url = "#{BASE_URL}/person/#{person_id}/movie_credits?api_key=#{API_KEY}"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_person_tv_credits(person_id)
-        url = "#{BASE_URL}/person/#{person_id}/tv_credits?api_key=#{API_KEY}"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_movie_data(movie_id)
-        url = "#{BASE_URL}/movie/#{movie_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_tv_series_data(series_id)
-        url = "#{BASE_URL}/tv/#{series_id}?api_key=#{API_KEY}&append_to_response=credits"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_tv_season_data(series:, season_number:)
-        url = "#{BASE_URL}/tv/#{series.show_id}/season/#{season_number}?api_key=#{API_KEY}&append_to_response=credits"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_tv_episode_data(series_id:, season_number:, episode_number:)
-        url = "#{BASE_URL}/tv/#{series_id}/season/#{season_number}/episode/#{episode_number}?api_key=#{API_KEY}"
-        JSON.parse(open(url).read, symbolize_names: true)
-      end
-
-      def get_parsed_tv_search_results(query)
-        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{query}"
-        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
-      end
-
-      def get_parsed_multi_search_results(query)
-        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{query}"
-        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
-      end
-
-      def get_parsed_movie_search_results(query)
-        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
-        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
     end
   end
