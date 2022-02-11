@@ -115,8 +115,11 @@ module Tmdb
       end
 
       def person_detail_search(person_id)
-        person_url = url_for_person_data(person_id)
-        person_data = get_data(person_url)
+        person_params = { person_id: person_id }
+        person_data = request(:person_data, person_params)
+
+        # person_url = url_for_person_data(person_id)
+        # person_data = get_data(person_url)
 
         movie_credits_url = url_for_person_movie_credits(person_id)
         movie_credits_data = get_data(movie_credits_url)
@@ -176,6 +179,16 @@ module Tmdb
       end
 
       private
+
+      def request(endpoint, params)
+        endpoints = {
+          credits_data: "/credit/#{params[:credit_id]}?api_key=#{API_KEY}",
+          person_data: "/person/#{params[:person_id]}?api_key=#{API_KEY}",
+          person_movie_credits: "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}"
+        }
+        url = "#{BASE_URL}#{endpoints[endpoint]}"
+        JSON.parse(open(url).read, symbolize_names: true)
+      end
 
       def url_for_credits_data(credit_id)
         "#{BASE_URL}/credit/#{credit_id}?api_key=#{API_KEY}"
