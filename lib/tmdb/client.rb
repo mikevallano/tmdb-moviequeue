@@ -21,8 +21,8 @@ module Tmdb
         )
       end
 
-      def get_movie_data(tmdb_id)
-        data = get_parsed_movie_data(tmdb_id)
+      def get_movie_data(tmdb_movie_id)
+        data = get_parsed_movie_data(tmdb_movie_id)
         MovieMore.initialize_from_parsed_data(data)
       end
 
