@@ -66,7 +66,7 @@ module Tmdb
         editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
 
         OpenStruct.new(
-          movie: movie(tmdb_movie_id),
+          movie: get_movie_data(tmdb_movie_id),
           actors: MovieCast.parse_results(data[:credits][:cast]),
           directors: MovieDirecting.parse_results(director_credits),
           editors: MovieEditing.parse_results(editor_credits),

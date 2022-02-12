@@ -121,7 +121,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.movie' do
+    describe '.get_movie_data' do
       it 'returns a MovieMore object with data' do
         allow(described_class).to receive(:get_parsed_movie_data).and_return(parsed_movie_data)
         movie = described_class.get_movie_data(movie_id)
