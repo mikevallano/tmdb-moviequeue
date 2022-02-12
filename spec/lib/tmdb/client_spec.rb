@@ -124,7 +124,7 @@ RSpec.describe Tmdb::Client do
     describe '.movie' do
       it 'returns a MovieMore object with data' do
         allow(described_class).to receive(:get_parsed_movie_data).and_return(parsed_movie_data)
-        movie = described_class.movie(movie_id)
+        movie = described_class.get_movie_data(movie_id)
         expect(movie.title).to eq('Serenity')
         expect(movie.overview).to eq('it got revers')
       end
