@@ -55,6 +55,8 @@ module Tmdb
 
       def movie(movie_id)
         data = get_parsed_movie_data(movie_id)
+      def get_movie_data(tmdb_movie_id)
+        data = get_parsed_movie_data(tmdb_movie_id)
         MovieMore.parse_result(data)
       end
 
