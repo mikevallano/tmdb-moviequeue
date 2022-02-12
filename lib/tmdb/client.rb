@@ -21,28 +21,29 @@ module Tmdb
         )
       end
 
-      def movies_for_actor(actor_name:, page:, sort_by:)
-        person_data = get_parsed_person_search_results(actor_name).first
+      def get_movies_for_actor(actor_name:, page:, sort_by:)
+        person_url = url_for_person_search(actor_name)
+        person_data = get_data(person_url)&.dig(:results)&.first
         if person_data.blank?
-          OpenStruct.new(
-            not_found_message: "No person matches found for '#{actor_name}'."
-          )
+          OpenStruct.new(not_found_message: "No person matches found for '#{actor_name}'.")
         else
-          movie_results = get_parsed_movie_discover_results(
+          movie_url = url_for_movie_discover_search(
             people: person_data[:id],
             page: page,
             sort_by: sort_by
           )
-          movie_data = movie_results&.dig(:results)
-          not_found_message = "No movies found for '#{actor_name}'." if movie_data.blank?
-          total_pages = movie_results&.dig(:total_pages)
+          movie_data = get_data(movie_url)
+          movie_results = movie_data&.dig(:results)
+          total_pages = movie_data&.dig(:total_pages)
+
+          not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
           current_page = page.to_i
 
           OpenStruct.new(
             id: person_data[:id],
             actor: person_data,
             actor_name: person_data[:name],
-            movies: MovieSearch.parse_results(movie_data),
+            movies: MovieSearch.parse_results(movie_results),
             not_found_message: not_found_message,
             current_page: current_page,
             previous_page: (current_page - 1 if current_page > 1),
@@ -123,8 +124,8 @@ module Tmdb
         if not_found_message.present?
           OpenStruct.new(not_found_message: not_found_message)
         else
-          movie_one = Tmdb::Client.movie(movie_one_results.movies.first.tmdb_id)
-          movie_two = Tmdb::Client.movie(movie_two_results.movies.first.tmdb_id)
+          movie_one = get_movie_data(movie_one_results.movies.first.tmdb_id)
+          movie_two = get_movie_data(movie_two_results.movies.first.tmdb_id)
           OpenStruct.new(
             movie_one: movie_one,
             movie_two: movie_two,
@@ -244,10 +245,9 @@ module Tmdb
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
-      def get_parsed_person_search_results(person_name)
+      def url_for_person_search(person_name)
         searchable_name = I18n.transliterate(person_name)
-        url = "#{BASE_URL}/search/person?api_key=#{API_KEY}&query=#{searchable_name}"
-        JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
+        "#{BASE_URL}/search/person?api_key=#{API_KEY}&query=#{searchable_name}"
       end
 
       def get_parsed_movie_search_results(movie_title)
@@ -256,7 +256,7 @@ module Tmdb
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
-      def get_parsed_movie_discover_results(params)
+      def url_for_movie_discover_search(params)
         url = "#{BASE_URL}/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
         url += "&with_people=#{params[:people]}" if params[:people].present?
         url += "&with_genres=#{params[:genre]}" if params[:genre].present?
@@ -271,11 +271,11 @@ module Tmdb
         elsif params[:year].present?
           url += "&primary_release_year=#{params[:year]}"
         end
-        data = JSON.parse(open(url).read, symbolize_names: true)
-        {
-          results: data&.dig(:results),
-          total_pages: data&.dig(:total_pages),
-        }
+        url
+      end
+
+      def get_data(url)
+        JSON.parse(open(url).read, symbolize_names: true)
       end
     end
   end

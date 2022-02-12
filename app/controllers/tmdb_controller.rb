@@ -30,7 +30,7 @@ class TmdbController < ApplicationController
 
   def movie_more
     if params[:tmdb_id]
-      @movie = Tmdb::Client.movie(params[:tmdb_id])
+      @movie = Tmdb::Client.get_movie_data(params[:tmdb_id])
     else
       redirect_to api_search_path
     end
@@ -54,10 +54,10 @@ class TmdbController < ApplicationController
   # single actor search
   def actor_search
     if params[:actor].present?
-      @results = Tmdb::Client.movies_for_actor(
+      @results = Tmdb::Client.get_movies_for_actor(
         actor_name: params[:actor],
-        page: (params[:page] || 1),
-        sort_by: (params[:sort_by] || 'popularity')
+        page: (params[:page].presence || 1),
+        sort_by: (params[:sort_by].presence || 'popularity')
       )
     end
   end

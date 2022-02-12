@@ -46,12 +46,12 @@ class MoviesController < ApplicationController
 
   def modal
     @list = List.find(params[:list_id]) if params[:list_id].present?
-    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || Tmdb::Client.movie(params[:tmdb_id])
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || Tmdb::Client.get_movie_data(params[:tmdb_id])
     respond_to :js
   end
 
   def modal_close
-    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || Tmdb::Client.movie(params[:tmdb_id])
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id]) || Tmdb::Client.get_movie_data(params[:tmdb_id])
     respond_to :js
   end
 

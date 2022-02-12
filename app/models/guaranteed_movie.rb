@@ -9,7 +9,7 @@ class GuaranteedMovie
     private
 
     def create_from_api_data(tmdb_id)
-      movie = Tmdb::Client.movie(tmdb_id)
+      movie = Tmdb::Client.get_movie_data(tmdb_id)
       Movie.create(
         title: movie.title,
         tmdb_id: movie.tmdb_id,
