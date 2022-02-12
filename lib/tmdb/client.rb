@@ -3,7 +3,7 @@
 module Tmdb
   class Client
     class Error < StandardError; end
-    BASE_URL = 'https://api.themoviedb.org/3'.freeze
+    BASE_URL = 'https://api.themoviedb.org/3'
     API_KEY = ENV['tmdb_api_key']
 
     class << self
@@ -62,14 +62,14 @@ module Tmdb
 
       def movie_cast(tmdb_movie_id)
         data = get_parsed_movie_data(tmdb_movie_id)
-        director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
-        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
+        director_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Director' }
+        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Editor' }
 
         OpenStruct.new(
           movie: get_movie_data(tmdb_movie_id),
           actors: MovieCast.parse_results(data[:credits][:cast]),
           directors: MovieDirecting.parse_results(director_credits),
-          editors: MovieEditing.parse_results(editor_credits),
+          editors: MovieEditing.parse_results(editor_credits)
         )
       end
 
