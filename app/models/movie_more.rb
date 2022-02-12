@@ -28,15 +28,7 @@ class MovieMore
     @vote_average = args[:vote_average]
   end
 
-  def self.parse_result(result)
-    Movie.find_by(tmdb_id: result[:id]) || tmdb_info(result)
-  end
-
-  def times_seen_by(user)
-    0
-  end
-
-  def self.tmdb_info(result)
+  def self.initialize_from_parsed_data(result)
     release_date = Date.parse(result[:release_date]) if result[:release_date].present?
     vote_average = result[:vote_average].present? ? result[:vote_average].round(1) : 0
     runtime = result[:runtime].presence || 0
@@ -72,5 +64,9 @@ class MovieMore
       trailer: trailer,
       vote_average: vote_average
     )
+  end
+
+  def times_seen_by(user)
+    0
   end
 end

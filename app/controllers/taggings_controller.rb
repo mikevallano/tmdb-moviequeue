@@ -34,7 +34,7 @@ class TaggingsController < ApplicationController
 
   def set_movie
     if params[:tmdb_id].present?
-      @movie = GuaranteedMovie.find(params[:tmdb_id])
+      @movie = GuaranteedMovie.find_or_create(params[:tmdb_id])
     else
       @movie = Movie.friendly.find(params[:movie_id])
     end
