@@ -233,25 +233,21 @@ module Tmdb
       end
 
       def get_parsed_tv_search_results(series_name)
-        searchable_name = I18n.transliterate(series_name)
-        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{searchable_name}"
+        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{searchable_query(series_name)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_multi_search_results(query)
-        searchable_query = I18n.transliterate(query)
-        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{searchable_query}"
+        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{searchable_query(query)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def url_for_person_search(person_name)
-        searchable_name = I18n.transliterate(person_name)
-        "#{BASE_URL}/search/person?api_key=#{API_KEY}&query=#{searchable_name}"
+        "#{BASE_URL}/search/person?api_key=#{API_KEY}&query=#{searchable_query(person_name)}"
       end
 
       def get_parsed_movie_search_results(movie_title)
-        searchable_title = I18n.transliterate(movie_title)
-        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{searchable_title}"
+        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{searchable_query(movie_title)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
@@ -271,6 +267,12 @@ module Tmdb
           url += "&primary_release_year=#{params[:year]}"
         end
         url
+      end
+
+      def searchable_query(query)
+        # If a user searches for a name that starts with an `&` the api call fails.
+        # This ensures no non alphanumeric characters make it into the query string.
+        I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
       end
 
       def get_data(url)
