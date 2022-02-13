@@ -24,33 +24,32 @@ module Tmdb
       def get_movies_for_actor(actor_name:, page:, sort_by:)
         person_url = url_for_person_search(actor_name)
         person_data = get_data(person_url)&.dig(:results)&.first
-        if person_data.blank?
-          OpenStruct.new(not_found_message: "No person matches found for '#{actor_name}'.")
-        else
-          movie_url = url_for_movie_discover_search(
-            people: person_data[:id],
-            page: page,
-            sort_by: sort_by
-          )
-          movie_data = get_data(movie_url)
-          movie_results = movie_data&.dig(:results)
-          total_pages = movie_data&.dig(:total_pages)
 
-          not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
-          current_page = page.to_i
+        return OpenStruct.new(not_found_message: "No person matches found for '#{actor_name}'.") if person_data.blank?
 
-          OpenStruct.new(
-            id: person_data[:id],
-            actor: person_data,
-            actor_name: person_data[:name],
-            movies: MovieSearch.parse_results(movie_results),
-            not_found_message: not_found_message,
-            current_page: current_page,
-            previous_page: (current_page - 1 if current_page > 1),
-            next_page: (current_page + 1 unless current_page >= total_pages),
-            total_pages: total_pages
-          )
-        end
+        movie_url = url_for_movie_discover_search(
+          people: person_data[:id],
+          page: page,
+          sort_by: sort_by
+        )
+        movie_data = get_data(movie_url)
+        movie_results = movie_data&.dig(:results)
+        total_pages = movie_data&.dig(:total_pages)
+
+        not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
+        current_page = page.to_i
+
+        OpenStruct.new(
+          id: person_data[:id],
+          actor: person_data,
+          actor_name: person_data[:name],
+          movies: MovieSearch.parse_results(movie_results),
+          not_found_message: not_found_message,
+          current_page: current_page,
+          previous_page: (current_page - 1 if current_page > 1),
+          next_page: (current_page + 1 unless current_page >= total_pages),
+          total_pages: total_pages
+        )
       end
 
       def get_movie_data(tmdb_movie_id)
