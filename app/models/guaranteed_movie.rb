@@ -2,8 +2,12 @@
 
 class GuaranteedMovie
   class << self
-    def find(tmdb_id)
+    def find_or_create(tmdb_id)
       Movie.find_by(tmdb_id: tmdb_id) || create_from_api_data(tmdb_id)
+    end
+
+    def find_or_initialize_from_api(tmdb_id)
+      Movie.find_by(tmdb_id: tmdb_id) || Tmdb::Client.get_movie_data(tmdb_id)
     end
 
     private

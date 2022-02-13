@@ -88,7 +88,7 @@ module Tmdb
           raise Error.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}")
         end
 
-        updated_data = MovieMore.initialize_from_parsed_data((api_result)
+        updated_data = MovieMore.initialize_from_parsed_data(api_result)
 
         if movie.title != updated_data.title
           puts "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
