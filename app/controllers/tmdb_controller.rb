@@ -30,7 +30,7 @@ class TmdbController < ApplicationController
 
   def movie_more
     if params[:tmdb_id]
-      @movie = Tmdb::Client.movie_data(params[:tmdb_id])
+      @movie = GuaranteedMovie.find_or_initialize_from_api(params[:tmdb_id])
     else
       redirect_to api_search_path
     end

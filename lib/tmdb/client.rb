@@ -22,10 +22,10 @@ module Tmdb
         )
       end
 
-      def movie_data(movie_id)
+      def get_movie_data(tmdb_movie_id)
         url = url_for_movie_data(movie_id)
         data = get_data(url)
-        MovieMore.parse_result(data)
+        MovieMore.initialize_from_parsed_data(data)
       end
 
       def movie_cast(tmdb_movie_id)
@@ -35,7 +35,7 @@ module Tmdb
         editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
 
         OpenStruct.new(
-          movie: movie(tmdb_movie_id),
+          movie: self.get_movie_data(tmdb_movie_id),
           actors: MovieCast.parse_results(data[:credits][:cast]),
           directors: MovieDirecting.parse_results(director_credits),
           editors: MovieEditing.parse_results(editor_credits),
@@ -60,7 +60,7 @@ module Tmdb
           raise Error.new("API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}")
         end
 
-        updated_data = MovieMore.tmdb_info(api_result)
+        updated_data = MovieMore.initialize_from_parsed_data(api_result)
 
         if movie.title != updated_data.title
           puts "Movie title doesn't match. tmdb_id: #{tmdb_id}. Current title: #{movie.title}. Title in TMDB: #{updated_data.title}"
@@ -96,8 +96,8 @@ module Tmdb
         if not_found_message.present?
           OpenStruct.new(not_found_message: not_found_message)
         else
-          movie_one = Tmdb::Client.movie_data(movie_one_results.movies.first.tmdb_id)
-          movie_two = Tmdb::Client.movie_data(movie_two_results.movies.first.tmdb_id)
+          movie_one = get_movie_data(movie_one_results.movies.first.tmdb_id)
+          movie_two = get_movie_data.movie_data(movie_two_results.movies.first.tmdb_id)
           OpenStruct.new(
             movie_one: movie_one,
             movie_two: movie_two,
