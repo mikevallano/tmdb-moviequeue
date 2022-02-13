@@ -25,7 +25,7 @@ module Tmdb
         person_url = url_for_person_search(actor_name)
         person_data = get_data(person_url)&.dig(:results)&.first
 
-        return OpenStruct.new(not_found_message: "No person matches found for '#{actor_name}'.") if person_data.blank?
+        return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
 
         movie_url = url_for_movie_discover_search(
           people: person_data[:id],

@@ -13,7 +13,7 @@
   <% end %>
 
 <% else %><!-- Display the movie results -->
-  <p class="button-main"><%= link_to "#{@results.actor_name}'s Full Credits & Bio", actor_more_path(actor_id: @actor1_id), id: "bio_and_credits_link_actor_search" %></p>
+  <p class="button-main"><%= link_to "#{@results.actor_name}'s Full Credits & Bio", actor_more_path(actor_id: @results.id), id: "bio_and_credits_link_actor_search" %></p>
   <h2>Movies that <%= @results.actor_name %> has been in.</h2>
 
   <div class="row">
