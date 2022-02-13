@@ -52,6 +52,98 @@ module Tmdb
         )
       end
 
+      def search_movies_between_two_actors(actor1:, actor2:, page:, sort_by:)
+        actor1_url = url_for_person_search(actor1)
+        actor2_url = url_for_person_search(actor2)
+        actor1_results = get_data(actor1_url).dig(:results)&.first
+        actor2_results = get_data(actor2_url).dig(:results)&.first
+
+        person_not_found = false
+        not_found_message = 'No results found for'
+        if actor1_results.blank?
+          person_not_found = true
+          not_found_message += " #{actor1}"
+        end
+        if actor2_results.blank?
+          person_not_found = true
+          not_found_message += " #{actor2}"
+        end
+
+        if person_not_found
+          OpenStruct.new(not_found_message: not_found_message)
+        else
+          actor1_id = actor1_results&.dig(:id)
+          actor2_id = actor2_results&.dig(:id)
+          movie_url = url_for_movie_discover_search(
+            people: "#{actor1_id},#{actor2_id}",
+            page: page,
+            sort_by: sort_by
+          )
+          movie_data = get_data(movie_url)
+          movie_results = movie_data.dig(:results)
+          actor_names = "#{actor1} & #{actor2}"
+          movie_results.blank? ? (not_found_message += actor_names) : not_found_message = nil
+          current_page = page.to_i
+
+          OpenStruct.new(
+            actor_names: actor_names,
+            common_movies: movie_results,
+            not_found_message: not_found_message,
+            current_page: current_page,
+            previous_page: (current_page - 1 if current_page > 1),
+            next_page: (current_page + 1 unless current_page >= movie_data.dig(:total_pages)),
+            total_pages: movie_data.dig(:total_pages)
+          )
+        end
+      end
+
+      # def movies_between_multiple_actors_search(actor_names:, **params)
+      #   names = actor_names.uniq.reject{|name| name == ''}.presence || params[:paginate_names].presence
+      #   return if names.empty?
+      #
+      #   actor_results = names.compact.map do |name|
+      #     person_url = url_for_person_search(name)
+      #     get_data(person_url)
+      #   end.compact
+      #   # person_data = actor_results.map do |data|
+      #   #   data&.dig(:results)
+      #   # end
+      #
+      #   person_ids = actor_results.map do |actor|
+      #     actor.dig(:results)&.first&.dig(:id)
+      #   end.join(',')
+      #
+      #   actor_names = actor_results.map do |actor|
+      #     actor.dig(:results).first&.dig(:name)
+      #   end
+      #
+      #   not_found_messages = actor_results.select do |result|
+      #     result.not_found_message.presence
+      #   end.join(',')
+      #
+      #   if not_found_messages.present?
+      #     OpenStruct.new(not_found_message: not_found_messages)
+      #   else
+      #     movie_results = url_for_movie_discover_search(
+      #       people: person_ids,
+      #       page: params[:page],
+      #       sort_by: params[:sort_by]
+      #     )
+      #
+      #     current_page = params[:page].to_i
+      #     OpenStruct.new(
+      #       # actors: person_data,
+      #       actor_names: actor_names,
+      #       common_movies: movie_results.data,
+      #       not_found_message: nil,
+      #       current_page: current_page,
+      #       previous_page: (current_page - 1 if current_page > 1),
+      #       next_page: (current_page + 1 unless current_page >= movie_results.total_pages),
+      #       total_pages: movie_results.total_pages
+      #     )
+      #   end
+      # end
+
       def get_movie_data(tmdb_movie_id)
         data = get_parsed_movie_data(tmdb_movie_id)
         MovieMore.initialize_from_parsed_data(data)

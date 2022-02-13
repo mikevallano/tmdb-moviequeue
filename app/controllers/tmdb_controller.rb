@@ -67,13 +67,33 @@ class TmdbController < ApplicationController
     if params[:actor] && params[:actor2]
       params[:actor] = I18n.transliterate(params[:actor])
       params[:actor2] = I18n.transliterate(params[:actor2])
-      params[:page] = params[:page] || 1
-      params[:sort_by] = params[:sort_by] || "popularity"
+      params[:page] = params[:page].presence || 1
+      params[:sort_by] = params[:sort_by].presence || "popularity"
 
       # TODO: move to separate query
       tmdb_handler_discover_search(params)
+      @results = Tmdb::Client.search_movies_between_two_actors(
+        actor1: params[:actor],
+        actor2: params[:actor2],
+        page: (params[:page].presence || 1),
+        sort_by: (params[:sort_by].presence || "popularity")
+      )
     end
   end
+
+  # def two_actor_search
+  #   if (params[:actor] && params[:actor2]) || params[:paginate_names].present?
+  #     @results = Tmdb::Client.movies_between_multiple_actors_search(
+  #       actor_names: [
+  #         params[:actor],
+  #         params[:actor2]
+  #       ],
+  #       paginate_names: params[:paginate_names],
+  #       page: (params[:page].presence || 1),
+  #       sort_by: (params[:sort_by].presence || "popularity")
+  #     )
+  #   end
+  # end
 
   def actor_more
     @actor = Tmdb::Client.person_detail_search(params[:actor_id])
