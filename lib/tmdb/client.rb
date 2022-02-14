@@ -23,7 +23,7 @@ module Tmdb
 
       def get_movies_for_actor(actor_name:, page:, sort_by:)
         person_url = url_for_person_search(actor_name)
-        person_data = get_data(person_url)&.dig(:results)&.first
+        person_data = request_data_from_api(person_url)&.dig(:results)&.first
 
         return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
 
@@ -32,7 +32,7 @@ module Tmdb
           page: page,
           sort_by: sort_by
         )
-        movie_data = get_data(movie_url)
+        movie_data = request_data_from_api(movie_url)
         movie_results = movie_data&.dig(:results)
         total_pages = movie_data&.dig(:total_pages)
 
@@ -275,7 +275,7 @@ module Tmdb
         I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
       end
 
-      def get_data(url)
+      def request_data_from_api(url)
         JSON.parse(open(url).read, symbolize_names: true)
       end
     end
