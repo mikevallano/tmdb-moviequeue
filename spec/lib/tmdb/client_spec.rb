@@ -184,7 +184,7 @@ RSpec.describe Tmdb::Client do
 
         it 'updates the movie' do
           VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
-            expect { subject }.to change { movie.reload.updated_at }
+            expect { subject }.to(change { movie.reload.updated_at })
           end
         end
       end
@@ -193,7 +193,7 @@ RSpec.describe Tmdb::Client do
         before { movie.update(tmdb_id: 'wrong') }
         it 'raises an error and does not update the movie' do
           VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie') do
-            expect { subject }.not_to change { movie.reload.updated_at }
+            expect { subject }.not_to(change { movie.reload.updated_at })
           end
         end
       end
@@ -208,7 +208,7 @@ RSpec.describe Tmdb::Client do
 
         it 'still updates the movie' do
           VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title') do
-            expect { subject }.to change { movie.reload.updated_at }
+            expect { subject }.to(change { movie.reload.updated_at })
           end
         end
       end

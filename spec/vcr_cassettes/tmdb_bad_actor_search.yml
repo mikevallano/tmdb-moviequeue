@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=&sjhskjhdf*s7
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=sjhskjhdfs7
     body:
       encoding: US-ASCII
       string: ''
@@ -15,8 +15,8 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 422
-      message: Unknown
+      code: 200
+      message: OK
     headers:
       Content-Type:
       - application/json;charset=utf-8
@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 11 Nov 2021 00:55:33 GMT
+      - Sun, 13 Feb 2022 16:51:15 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -35,17 +35,21 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
       X-Cache:
-      - Error from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 5f1f38c95605e9427bedb183f565ce23.cloudfront.net (CloudFront)
+      - 1.1 d6af36beca3f7783d95ace5e26a5af90.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DFW53-C1
+      - DFW55-C3
       X-Amz-Cf-Id:
-      - 9xanigjES3ffLYseg6OMPjCsSG2DZLT0Sc3plgvQES4DvNEwYGIaRg==
+      - E-1b2tJrszVPMS-vJfnGN4DNhcDds_-vIa0itCH4rSfVux2kb0BHNg==
     body:
-      encoding: UTF-8
-      string: '{"errors":["query must be provided"]}'
-    http_version: 
-  recorded_at: Thu, 11 Nov 2021 00:55:33 GMT
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
+    http_version:
+  recorded_at: Sun, 13 Feb 2022 16:51:15 GMT
 recorded_with: VCR 5.0.0

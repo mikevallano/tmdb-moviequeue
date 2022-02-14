@@ -3,7 +3,7 @@
 module Tmdb
   class Client
     class Error < StandardError; end
-    BASE_URL = 'https://api.themoviedb.org/3'.freeze
+    BASE_URL = 'https://api.themoviedb.org/3'
     API_KEY = ENV['tmdb_api_key']
 
     class << self
@@ -21,6 +21,37 @@ module Tmdb
         )
       end
 
+      def get_movies_for_actor(actor_name:, page:, sort_by:)
+        person_url = url_for_person_search(actor_name)
+        person_data = request_data_from_api(person_url)&.dig(:results)&.first
+
+        return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
+
+        movie_url = url_for_movie_discover_search(
+          people: person_data[:id],
+          page: page,
+          sort_by: sort_by
+        )
+        movie_data = request_data_from_api(movie_url)
+        movie_results = movie_data&.dig(:results)
+        total_pages = movie_data&.dig(:total_pages)
+
+        not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
+        current_page = page.to_i
+
+        OpenStruct.new(
+          id: person_data[:id],
+          actor: person_data,
+          actor_name: person_data[:name],
+          movies: MovieSearch.parse_results(movie_results),
+          not_found_message: not_found_message,
+          current_page: current_page,
+          previous_page: (current_page - 1 if current_page > 1),
+          next_page: (current_page + 1 unless current_page >= total_pages),
+          total_pages: total_pages
+        )
+      end
+
       def get_movie_data(tmdb_movie_id)
         data = get_parsed_movie_data(tmdb_movie_id)
         MovieMore.initialize_from_parsed_data(data)
@@ -28,14 +59,14 @@ module Tmdb
 
       def movie_cast(tmdb_movie_id)
         data = get_parsed_movie_data(tmdb_movie_id)
-        director_credits = data[:credits][:crew].select { |crew| crew[:job] == "Director" }
-        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == "Editor" }
+        director_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Director' }
+        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Editor' }
 
         OpenStruct.new(
-          movie: self.get_movie_data(tmdb_movie_id),
+          movie: get_movie_data(tmdb_movie_id),
           actors: MovieCast.parse_results(data[:credits][:cast]),
           directors: MovieDirecting.parse_results(director_credits),
-          editors: MovieEditing.parse_results(editor_credits),
+          editors: MovieEditing.parse_results(editor_credits)
         )
       end
 
@@ -201,19 +232,51 @@ module Tmdb
         JSON.parse(open(url).read, symbolize_names: true)
       end
 
-      def get_parsed_tv_search_results(query)
-        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{query}"
+      def get_parsed_tv_search_results(series_name)
+        url = "#{BASE_URL}/search/tv?api_key=#{API_KEY}&query=#{searchable_query(series_name)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
       def get_parsed_multi_search_results(query)
-        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{query}"
+        url = "#{BASE_URL}/search/multi?api_key=#{API_KEY}&query=#{searchable_query(query)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
       end
 
-      def get_parsed_movie_search_results(query)
-        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
+      def url_for_person_search(person_name)
+        "#{BASE_URL}/search/person?api_key=#{API_KEY}&query=#{searchable_query(person_name)}"
+      end
+
+      def get_parsed_movie_search_results(movie_title)
+        url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{searchable_query(movie_title)}"
         JSON.parse(open(url).read, symbolize_names: true)&.dig(:results)
+      end
+
+      def url_for_movie_discover_search(params)
+        url = "#{BASE_URL}/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
+        url += "&with_people=#{params[:people]}" if params[:people].present?
+        url += "&with_genres=#{params[:genre]}" if params[:genre].present?
+        url += "&with_companies=#{params[:company]}" if params[:company].present?
+        url += "&certification=#{params[:mpaa_rating]}" if params[:mpaa_rating].present?
+        url += "&sort_by=#{params[:sort_by]}.desc" if params[:sort_by].present?
+        url += "&page=#{params[:page]}"
+        if params[:year].present? && params[:year_select].present?
+          url += "&primary_release_year=#{params[:year]}" if params[:year_select] == 'exact'
+          url += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:year_select] == 'before'
+          url += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:year_select] == 'after'
+        elsif params[:year].present?
+          url += "&primary_release_year=#{params[:year]}"
+        end
+        url
+      end
+
+      def searchable_query(query)
+        # If a user searches for a name that starts with an `&` the api call fails.
+        # This ensures no non alphanumeric characters make it into the query string.
+        I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
+      end
+
+      def request_data_from_api(url)
+        JSON.parse(open(url).read, symbolize_names: true)
       end
     end
   end
