@@ -21,17 +21,16 @@ module Tmdb
       end
 
       def get_movies_for_actor(actor_name:, page:, sort_by:)
-        person_url = url_for_person_search(actor_name)
-        person_data = request_data_from_api(person_url)&.dig(:results)&.first
+        person_data = request(:person_search, query: actor_name)&.dig(:results)&.first
 
         return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
 
-        movie_url = url_for_movie_discover_search(
+        movie_params = {
           people: person_data[:id],
           page: page,
           sort_by: sort_by
-        )
-        movie_data = request_data_from_api(movie_url)
+        }
+        movie_data = request(:discover_search, movie_params)
         movie_results = movie_data&.dig(:results)
         total_pages = movie_data&.dig(:total_pages)
 
@@ -200,6 +199,7 @@ module Tmdb
         endpoints = {
           credits_data: "/credit/#{params[:credit_id]}?api_key=#{API_KEY}",
           person_data: "/person/#{params[:person_id]}?api_key=#{API_KEY}",
+          person_search: "/search/person?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
           person_movie_credits: "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}",
           person_tv_credits: "/person/#{params[:person_id]}/tv_credits?api_key=#{API_KEY}",
           movie_search: "/search/movie?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
@@ -238,10 +238,6 @@ module Tmdb
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
         I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
-      end
-
-      def request_data_from_api(url)
-        JSON.parse(open(url).read, symbolize_names: true)
       end
     end
   end
