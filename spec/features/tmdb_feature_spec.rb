@@ -1,16 +1,15 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.feature "TMDB feature spec", :type => :feature do
-
   feature "User can perform various searches using the TMDB api" do
-
     let(:user) { FactoryBot.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
     let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
 
     describe "search by title" do
-
       before(:each) do
         sign_in_user(user)
         visit(api_search_path)
@@ -54,7 +53,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "users searches for an actor not found and the page indicates results not found" do
         bad_api_actor_search
-        expect(page).to have_content("No results")
+        expect(page).to have_content("No actors found for")
       end
 
     end #search by actor
@@ -389,10 +388,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         end
         expect(page).to have_css("img[src*='https://image.tmdb.org']")
       end
-
     end #actor searches
-
-
   end
-
-end #final
+end
