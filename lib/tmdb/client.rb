@@ -196,41 +196,40 @@ module Tmdb
       private
 
       def request(endpoint, params)
-        endpoints = {
-          credits_data: "/credit/#{params[:credit_id]}?api_key=#{API_KEY}",
-          person_data: "/person/#{params[:person_id]}?api_key=#{API_KEY}",
-          person_search: "/search/person?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
-          person_movie_credits: "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}",
-          person_tv_credits: "/person/#{params[:person_id]}/tv_credits?api_key=#{API_KEY}",
-          movie_search: "/search/movie?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
-          movie_data: "/movie/#{params[:movie_id]}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases",
-          tv_series_search: "/search/tv?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
-          tv_series_data: "/tv/#{params[:series_id]}?api_key=#{API_KEY}&append_to_response=credits",
-          tv_season_data: "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits",
-          tv_episode_data: "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}",
-          multi_search: "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}",
-          discover_search: url_for_movie_discover_search(params)
-        }
-        url = "#{BASE_URL}#{endpoints[endpoint]}"
-        JSON.parse(open(url).read, symbolize_names: true)
+        api_path = case endpoint
+          when :credits_data then "/credit/#{params[:credit_id]}?api_key=#{API_KEY}"
+          when :person_data then "/person/#{params[:person_id]}?api_key=#{API_KEY}"
+          when :person_search then "/search/person?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+          when :person_movie_credits then "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}"
+          when :person_tv_credits then "/person/#{params[:person_id]}/tv_credits?api_key=#{API_KEY}"
+          when :movie_search then "/search/movie?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+          when :movie_data then "/movie/#{params[:movie_id]}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+          when :tv_series_search then "/search/tv?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+          when :tv_series_data then "/tv/#{params[:series_id]}?api_key=#{API_KEY}&append_to_response=credits"
+          when :tv_season_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits"
+          when :tv_episode_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}"
+          when :multi_search then "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+          when :discover_search then url_for_movie_discover_search(params)
+        end
+        JSON.parse(open("#{BASE_URL}#{api_path}").read, symbolize_names: true)
       end
 
       def url_for_movie_discover_search(params)
-        url = "/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
-        url += "&with_people=#{params[:people]}" if params[:people].present?
-        url += "&with_genres=#{params[:genre]}" if params[:genre].present?
-        url += "&with_companies=#{params[:company]}" if params[:company].present?
-        url += "&certification=#{params[:mpaa_rating]}" if params[:mpaa_rating].present?
-        url += "&sort_by=#{params[:sort_by]}.desc" if params[:sort_by].present?
-        url += "&page=#{params[:page]}"
+        api_path = "/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
+        api_path += "&with_people=#{params[:people]}" if params[:people].present?
+        api_path += "&with_genres=#{params[:genre]}" if params[:genre].present?
+        api_path += "&with_companies=#{params[:company]}" if params[:company].present?
+        api_path += "&certification=#{params[:mpaa_rating]}" if params[:mpaa_rating].present?
+        api_path += "&sort_by=#{params[:sort_by]}.desc" if params[:sort_by].present?
+        api_path += "&page=#{params[:page]}"
         if params[:year].present? && params[:year_select].present?
-          url += "&primary_release_year=#{params[:year]}" if params[:year_select] == 'exact'
-          url += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:year_select] == 'before'
-          url += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:year_select] == 'after'
+          api_path += "&primary_release_year=#{params[:year]}" if params[:year_select] == 'exact'
+          api_path += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:year_select] == 'before'
+          api_path += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:year_select] == 'after'
         elsif params[:year].present?
-          url += "&primary_release_year=#{params[:year]}"
+          api_path += "&primary_release_year=#{params[:year]}"
         end
-        url
+        api_path
       end
 
       def searchable_query(query)
