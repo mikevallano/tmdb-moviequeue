@@ -8,20 +8,20 @@ module Tmdb
 
     class << self
       def movie_search(movie_title)
-        data = request(:movie_search, query: movie_title)&.dig(:results)
-        not_found = "No results for '#{query}'." if data.blank?
+        data = request(:movie_search, query: movie_title)[:results]
+        not_found = "No results for '#{movie_title}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
 
         OpenStruct.new(
           movie_title: movie_title,
           not_found_message: not_found,
-          query: query,
+          query: movie_title,
           movies: movies
         )
       end
 
       def get_movies_for_actor(actor_name:, page:, sort_by:)
-        person_data = request(:person_search, query: actor_name)&.dig(:results)&.first
+        person_data = request(:person_search, query: actor_name)[:results]&.first
 
         return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
 
@@ -31,8 +31,8 @@ module Tmdb
           sort_by: sort_by
         }
         movie_data = request(:discover_search, movie_params)
-        movie_results = movie_data&.dig(:results)
-        total_pages = movie_data&.dig(:total_pages)
+        movie_results = movie_data[:results]
+        total_pages = movie_data&.fetch(:total_pages)
 
         not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
         current_page = page.to_i
@@ -57,19 +57,20 @@ module Tmdb
 
       def movie_cast(tmdb_movie_id)
         data = request(:movie_data, movie_id: tmdb_movie_id)
-        director_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Director' }
-        editor_credits = data[:credits][:crew].select { |crew| crew[:job] == 'Editor' }
+
+        director_credits = data.dig(:credits, :crew)&.select { |crew| crew[:job] == 'Director' }
+        editor_credits = data.dig(:credits, :crew)&.select { |crew| crew[:job] == 'Editor' }
 
         OpenStruct.new(
           movie: get_movie_data(tmdb_movie_id),
-          actors: MovieCast.parse_results(data[:credits][:cast]),
+          actors: MovieCast.parse_results(data.dig(:credits, :cast)),
           directors: MovieDirecting.parse_results(director_credits),
           editors: MovieEditing.parse_results(editor_credits)
         )
       end
 
       def movie_autocomplete(query)
-        data = request(:movie_search, query: query)&.dig(:results)
+        data = request(:movie_search, query: query)[:results]
         data.map { |d| d[:title] }.uniq
       end
 
@@ -139,10 +140,8 @@ module Tmdb
       end
 
       def person_autocomplete(query)
-        data = request(:multi_search, query: query)&.dig(:results)
-        data.select { |result| result[:media_type] == 'person' }
-            .map { |result| result[:name] }
-            .uniq
+        data = request(:multi_search, query: query)[:results]
+        data.select { |result| result[:media_type] == 'person' }&.map { |result| result[:name] }&.uniq
       end
 
       def person_detail_search(person_id)
@@ -164,12 +163,12 @@ module Tmdb
       end
 
       def tv_series_autocomplete(query)
-        data = request(:tv_series_search, query: query)&.dig(:results)
+        data = request(:tv_series_search, query: query)[:results]
         data.map { |d| d[:name] }.uniq
       end
 
       def tv_series_search(query)
-        data = request(:tv_series_search, query: query)&.dig(:results)
+        data = request(:tv_series_search, query: query)[:results]
         TVSeries.parse_search_records(data) if data.present?
       end
 
