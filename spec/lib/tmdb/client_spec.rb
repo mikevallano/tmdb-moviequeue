@@ -546,7 +546,7 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns a list of only Series names' do
-        allow(described_class).to receive(:request).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(results: parsed_tv_search_results)
         suggestions = described_class.tv_series_autocomplete('foo')
         expect(suggestions).to eq(['Freaks and Geeks', 'Freaks!'])
       end
@@ -571,7 +571,7 @@ RSpec.describe Tmdb::Client do
         }]
       end
       before do
-        allow(described_class).to receive(:request).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(results: parsed_tv_search_results)
       end
       it 'returns an array of TVSeries objects with data' do
         series = described_class.tv_series_search('foo').first
@@ -590,7 +590,7 @@ RSpec.describe Tmdb::Client do
     end
 
     describe '.tv_series' do
-      let(:parsed_tv_search_results) do
+      let(:parsed_tv_series_data) do
         {
           backdrop_path: '/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg',
           first_air_date: '1989-12-17',
@@ -624,7 +624,7 @@ RSpec.describe Tmdb::Client do
         }
       end
       before do
-        allow(described_class).to receive(:request).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(parsed_tv_series_data)
       end
       it 'returns a TVSeries object with data' do
         series = described_class.tv_series('foo')
