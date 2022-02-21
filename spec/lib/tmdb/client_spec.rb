@@ -642,7 +642,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.tv_season' do
+    describe '.get_tv_season_data' do
       let(:tv_series) { build(:tv_series, show_id: 1) }
       let(:parsed_tv_season_data) do
         {
@@ -689,7 +689,7 @@ RSpec.describe Tmdb::Client do
       end
       it 'returns a TVSeason object with data' do
         allow(described_class).to receive(:request).and_return(parsed_tv_season_data)
-        season = described_class.tv_season(series: tv_series, season_number: 'foo')
+        season = described_class.get_tv_season_data(series: tv_series, season_number: 'foo')
 
         expect(season.series.show_id).to eq(1)
         expect(season.show_id).to eq(1)
