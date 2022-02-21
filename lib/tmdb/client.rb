@@ -142,7 +142,7 @@ module Tmdb
         end
       end
 
-      def person_autocomplete(query)
+      def get_person_names(query)
         data = request(:multi_search, query: query)[:results]
         data.select { |result| result[:media_type] == 'person' }&.map { |result| result[:name] }&.uniq
       end

@@ -223,7 +223,7 @@ RSpec.describe Tmdb::Client do
   end
 
   describe 'person methods' do
-    describe '.person_autocomplete' do
+    describe '.get_person_names' do
       it 'returns a list of unique actor names' do
         parsed_data = [
           { media_type: 'movie', original_title: 'Jennifer Lopez: Dance Again' },
@@ -231,7 +231,7 @@ RSpec.describe Tmdb::Client do
           { media_type: 'person', name: 'Jennifer Gray' }
         ]
         allow(described_class).to receive(:request).and_return(results: parsed_data)
-        names = described_class.person_autocomplete("doesn't matter")
+        names = described_class.get_person_names("doesn't matter")
         expect(names).to eq(['Jennifer Lopez', 'Jennifer Gray'])
         expect(names).to_not include('Jennifer Lopez: Dance Again')
       end
