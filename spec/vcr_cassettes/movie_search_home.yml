@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Fargo
+    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=fargo
     body:
       encoding: US-ASCII
       string: ''
@@ -170,6 +170,6 @@ http_interactions:
         dinghy..","popularity":2.503,"poster_path":"/7hECU7adEOpjXfQNxT6CS6wRY0u.jpg","release_date":"1945-12-15","title":"Dakota","video":false,"vote_average":5.2,"vote_count":20},{"adult":false,"backdrop_path":"/w16gPP7CgfR7bsUw21Gyk1qa2HA.jpg","genre_ids":[28,35,80],"id":213681,"original_language":"en","original_title":"Masterminds","overview":"A
         night guard at an armored car company in the Southern U.S. organizes one of
         the biggest bank heists in American history.","popularity":19.418,"poster_path":"/4CXgye1p8Vr7taDG389QhhHDUZ4.jpg","release_date":"2016-09-29","title":"Masterminds","video":false,"vote_average":5.7,"vote_count":1439}],"total_pages":1,"total_results":17}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 11 Nov 2021 01:36:05 GMT
 recorded_with: VCR 5.0.0

@@ -74,6 +74,7 @@ module Tmdb
         data.map { |d| d[:title] }.uniq
       end
 
+      # TODO: Move this to the Movie class as update_with_api_data
       def update_movie(movie)
         # I'm not sure why this method uses HTTParty instead
         tmdb_id = movie.tmdb_id.to_s
