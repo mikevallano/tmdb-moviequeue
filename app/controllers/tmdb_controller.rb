@@ -19,7 +19,7 @@ class TmdbController < ApplicationController
   end
 
   def movie_autocomplete
-    results = Tmdb::Client.movie_autocomplete(params[:term])
+    results = Tmdb::Client.get_movie_titles(params[:term])
     render json: results
   end
 

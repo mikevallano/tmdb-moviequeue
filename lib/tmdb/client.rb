@@ -71,7 +71,7 @@ module Tmdb
         )
       end
 
-      def movie_autocomplete(query)
+      def get_movie_titles(query)
         data = request(:movie_search, query: query)[:results]
         data.map { |d| d[:title] }.uniq
       end

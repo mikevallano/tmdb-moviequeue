@@ -151,7 +151,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.movie_autocomplete' do
+    describe '.get_movie_titles' do
       it 'returns a list of unique movie names' do
         parsed_data = [
           { title: 'A' },
@@ -160,7 +160,7 @@ RSpec.describe Tmdb::Client do
           { title: 'C' }
         ]
         allow(described_class).to receive(:request).and_return(results: parsed_data)
-        names = described_class.movie_autocomplete("doesn't matter")
+        names = described_class.get_movie_titles("doesn't matter")
         expect(names).to eq(%w[A B C])
       end
     end
