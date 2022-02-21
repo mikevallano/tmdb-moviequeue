@@ -170,7 +170,7 @@ module Tmdb
         data.map { |d| d[:name] }.uniq
       end
 
-      def tv_series_search(query)
+      def get_tv_series_search_results(query)
         data = request(:tv_series_search, query: query)[:results]
         TVSeries.parse_search_records(data) if data.present?
       end
