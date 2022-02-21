@@ -57,7 +57,7 @@ module Tmdb
         MovieMore.initialize_from_parsed_data(data)
       end
 
-      def movie_cast(tmdb_movie_id)
+      def get_movie_cast(tmdb_movie_id)
         data = request(:movie_data, movie_id: tmdb_movie_id)
 
         director_credits = data.dig(:credits, :crew)&.select { |crew| crew[:job] == 'Director' }

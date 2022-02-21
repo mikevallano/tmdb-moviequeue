@@ -125,28 +125,28 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.movie_cast' do
+    describe '.get_movie_cast' do
       before do
         allow(described_class).to receive(:request).and_return(parsed_movie_data)
       end
 
       it 'returns movie data' do
-        cast = described_class.movie_cast(movie_id)
+        cast = described_class.get_movie_cast(movie_id)
         expect(cast.movie.title).to eq('Serenity')
       end
 
       it 'returns actor data' do
-        cast = described_class.movie_cast(movie_id)
+        cast = described_class.get_movie_cast(movie_id)
         expect(cast.actors.first.name).to eq('Nathan Fillion')
       end
 
       it 'returns director data' do
-        cast = described_class.movie_cast(movie_id)
+        cast = described_class.get_movie_cast(movie_id)
         expect(cast.directors.first.name).to eq('Joss Whedon')
       end
 
       it 'returns editor data' do
-        cast = described_class.movie_cast(movie_id)
+        cast = described_class.get_movie_cast(movie_id)
         expect(cast.editors.first.name).to eq('Lisa Lassek')
       end
     end
