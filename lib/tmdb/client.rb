@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Tmdb
-  class Client
+  module Client
     class Error < StandardError; end
     BASE_URL = 'https://api.themoviedb.org/3'
     API_KEY = ENV['tmdb_api_key']
