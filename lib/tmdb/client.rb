@@ -23,7 +23,9 @@ module Tmdb
       def get_movies_for_actor(actor_name:, page:, sort_by:)
         person_data = request(:person_search, query: actor_name)[:results]&.first
 
-        return OpenStruct.new(not_found_message: "No actors found for '#{actor_name}'.") if person_data.blank?
+        return OpenStruct.new(
+          not_found_message: "No actors found for '#{actor_name}'."
+        ) if person_data.blank?
 
         movie_params = {
           people: person_data[:id],
