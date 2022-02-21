@@ -31,7 +31,7 @@ module FeatureHelpers
 
   def api_search_for_movie
     VCR.use_cassette('fill_in_title_search') do
-      fill_in "movie_title", with: 'fargo'
+      fill_in "movie_title", with: 'Fargo'
     end
      VCR.use_cassette('tmdb_search') do
       click_button "search_by_title_button"
@@ -87,7 +87,7 @@ module FeatureHelpers
 
   def bad_api_actor_search
     VCR.use_cassette('tmdb_bad_actor_search') do
-      fill_in "actor_name_actor_search", with: '&sjhskjhdf*s7'
+      fill_in "actor_name_actor_search", with: 'sjhskjhdf*s7'
       click_button "submit_button_actor_search"
     end
   end

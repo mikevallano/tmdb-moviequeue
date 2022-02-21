@@ -24,11 +24,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_search_for_movie
         expect(page).to have_content("No results")
       end
-
-    end #search by title
+    end
 
     describe "search by actor" do
-
       before(:each) do
         sign_in_user(user)
         visit(actor_search_path)
@@ -55,11 +53,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_actor_search
         expect(page).to have_content("No actors found for")
       end
-
     end #search by actor
 
     describe "search by two actors" do
-
       before(:each) do
         sign_in_user(user)
         visit(two_actor_search_path)
@@ -78,11 +74,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_two_actor_search
         expect(page).to have_content("No results")
       end
-
     end #search by two actors
 
     describe "search by two movies" do
-
       before(:each) do
         sign_in_user(user)
       end
@@ -106,7 +100,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           fill_in "movie2_field_two_movie_search", with: @movie_query2
           click_button "search_button_two_movie_search"
         end
-        expect(page).to have_content("No results for '#{@movie_query1.titlecase}'.")
+        expect(page).to have_content("No results for '#{@movie_query1}'.")
       end
 
       scenario "two movies search indicates second movie not found if search is bad" do
@@ -118,13 +112,11 @@ RSpec.feature "TMDB feature spec", :type => :feature do
           fill_in "movie2_field_two_movie_search", with: @movie_query2
           click_button "Search"
         end
-        expect(page).to have_content("No results for '#{@movie_query2.titlecase}'.")
+        expect(page).to have_content("No results for '#{@movie_query2}'.")
       end
-
     end #search by two movies
 
     describe "discover searches" do
-
       before(:each) do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
@@ -226,11 +218,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       #   wait_for_ajax
       #   expect(page).to have_selector("#modal_link_275")
       # end
-
     end #discover searches
 
     describe "movie more info results" do
-
       before(:each) do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
@@ -273,7 +263,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         wait_for_ajax
         expect(page).to have_content("Steve Buscemi")
       end
-
     end #movie more info results
 
     xdescribe "movie added to the database" do
@@ -307,11 +296,9 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         #has mpaa rating
         expect(Movie.last.mpaa_rating).to eq("R")
       end
-
     end #movie added to the database
 
     describe "actor searches that drill down to tv" do
-
       before(:each) do
         sign_in_user(user)
         visit(actor_search_path)

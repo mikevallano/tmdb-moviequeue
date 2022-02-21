@@ -36,7 +36,7 @@ RSpec.describe Tmdb::Client do
       context 'when no results are found' do
         let(:searched_title) { 'kjdhfkgjfgh' }
         before do
-          allow(described_class).to receive(:get_parsed_movie_search_results).and_return([])
+          allow(described_class).to receive(:request).and_return({ results: [] })
         end
 
         it 'returns the movie_title' do
@@ -46,12 +46,12 @@ RSpec.describe Tmdb::Client do
 
         it 'returns an object with a not-found message' do
           results = described_class.movie_search(searched_title)
-          expect(results.not_found_message).to eq("No results for 'Kjdhfkgjfgh'.")
+          expect(results.not_found_message).to eq("No results for 'kjdhfkgjfgh'.")
         end
 
         it 'returns the string that was queried' do
           results = described_class.movie_search(searched_title)
-          expect(results.query).to eq('Kjdhfkgjfgh')
+          expect(results.query).to eq('kjdhfkgjfgh')
         end
 
         it 'returns nil for movies' do
@@ -95,7 +95,7 @@ RSpec.describe Tmdb::Client do
           ]
         end
         before do
-          allow(described_class).to receive(:get_parsed_movie_search_results).and_return(parsed_results)
+          allow(described_class).to receive(:request).and_return({results: parsed_results})
         end
 
         it 'returns the movie_title' do
@@ -108,11 +108,6 @@ RSpec.describe Tmdb::Client do
           expect(results.not_found_message).to eq(nil)
         end
 
-        it 'returns the transformed query' do
-          results = described_class.movie_search(searched_title)
-          expect(results.query).to eq('Star Trek')
-        end
-
         it 'returns a list of movie objects' do
           movies = described_class.movie_search(searched_title).movies
           expect(movies.first.title).to eq('Star Trek')
@@ -123,7 +118,7 @@ RSpec.describe Tmdb::Client do
 
     describe '.get_movie_data' do
       it 'returns a MovieMore object with data' do
-        allow(described_class).to receive(:get_parsed_movie_data).and_return(parsed_movie_data)
+        allow(described_class).to receive(:request).and_return(parsed_movie_data)
         movie = described_class.get_movie_data(movie_id)
         expect(movie.title).to eq('Serenity')
         expect(movie.overview).to eq('it got revers')
@@ -132,7 +127,7 @@ RSpec.describe Tmdb::Client do
 
     describe '.movie_cast' do
       before do
-        allow(described_class).to receive(:get_parsed_movie_data).and_return(parsed_movie_data)
+        allow(described_class).to receive(:request).and_return(parsed_movie_data)
       end
 
       it 'returns movie data' do
@@ -164,7 +159,7 @@ RSpec.describe Tmdb::Client do
           { title: 'B' },
           { title: 'C' }
         ]
-        allow(described_class).to receive(:get_parsed_movie_search_results).and_return(parsed_data)
+        allow(described_class).to receive(:request).and_return(results: parsed_data)
         names = described_class.movie_autocomplete("doesn't matter")
         expect(names).to eq(%w[A B C])
       end
@@ -235,7 +230,7 @@ RSpec.describe Tmdb::Client do
           { media_type: 'person', name: 'Jennifer Lopez' },
           { media_type: 'person', name: 'Jennifer Gray' }
         ]
-        allow(described_class).to receive(:get_parsed_multi_search_results).and_return(parsed_data)
+        allow(described_class).to receive(:request).and_return(results: parsed_data)
         names = described_class.person_autocomplete("doesn't matter")
         expect(names).to eq(['Jennifer Lopez', 'Jennifer Gray'])
         expect(names).to_not include('Jennifer Lopez: Dance Again')
@@ -433,9 +428,9 @@ RSpec.describe Tmdb::Client do
       end
 
       before do
-        allow(described_class).to receive(:get_parsed_person_bio).and_return(person_bio_data)
-        allow(described_class).to receive(:get_parsed_person_movie_credits).and_return(person_movie_credit_data)
-        allow(described_class).to receive(:get_parsed_person_tv_credits).and_return(person_tv_credit_data)
+        allow(described_class).to receive(:request).with(:person_data, {person_id: person_id}).and_return(person_bio_data)
+        allow(described_class).to receive(:request).with(:person_movie_credits, {person_id: person_id}).and_return(person_movie_credit_data)
+        allow(described_class).to receive(:request).with(:person_tv_credits, {person_id: person_id}).and_return(person_tv_credit_data)
       end
 
       it 'returns a person_id' do
@@ -526,7 +521,7 @@ RSpec.describe Tmdb::Client do
         }
       end
       before do
-        allow(described_class).to receive(:get_parsed_credit).and_return(parsed_credits)
+        allow(described_class).to receive(:request).and_return(parsed_credits)
       end
 
       it 'returns tv_actor_credit data' do
@@ -551,7 +546,7 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns a list of only Series names' do
-        allow(described_class).to receive(:get_parsed_tv_search_results).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(results: parsed_tv_search_results)
         suggestions = described_class.tv_series_autocomplete('foo')
         expect(suggestions).to eq(['Freaks and Geeks', 'Freaks!'])
       end
@@ -576,7 +571,7 @@ RSpec.describe Tmdb::Client do
         }]
       end
       before do
-        allow(described_class).to receive(:get_parsed_tv_search_results).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(results: parsed_tv_search_results)
       end
       it 'returns an array of TVSeries objects with data' do
         series = described_class.tv_series_search('foo').first
@@ -595,7 +590,7 @@ RSpec.describe Tmdb::Client do
     end
 
     describe '.tv_series' do
-      let(:parsed_tv_search_results) do
+      let(:parsed_tv_series_data) do
         {
           backdrop_path: '/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg',
           first_air_date: '1989-12-17',
@@ -629,7 +624,7 @@ RSpec.describe Tmdb::Client do
         }
       end
       before do
-        allow(described_class).to receive(:get_parsed_tv_series_data).and_return(parsed_tv_search_results)
+        allow(described_class).to receive(:request).and_return(parsed_tv_series_data)
       end
       it 'returns a TVSeries object with data' do
         series = described_class.tv_series('foo')
@@ -693,7 +688,7 @@ RSpec.describe Tmdb::Client do
         }
       end
       it 'returns a TVSeason object with data' do
-        allow(described_class).to receive(:get_parsed_tv_season_data).and_return(parsed_tv_season_data)
+        allow(described_class).to receive(:request).and_return(parsed_tv_season_data)
         season = described_class.tv_season(series: tv_series, season_number: 'foo')
 
         expect(season.series.show_id).to eq(1)
@@ -736,7 +731,7 @@ RSpec.describe Tmdb::Client do
         }
       end
       it 'returns a TVEpisode object with data' do
-        allow(described_class).to receive(:get_parsed_tv_episode_data).and_return(parsed_tv_episode_data)
+        allow(described_class).to receive(:request).and_return(parsed_tv_episode_data)
         episode = described_class.tv_episode(series_id: tv_series.show_id, season_number: 'foo', episode_number: 'foo')
         expect(episode.episode_id).to eq(37107)
         expect(episode.episode_number).to eq(3)

@@ -33,21 +33,21 @@ class MovieMore
     vote_average = result[:vote_average].present? ? result[:vote_average].round(1) : 0
     runtime = result[:runtime].presence || 0
 
-    trailer = if result[:trailers][:youtube].present?
+    trailer = if result.dig(:trailers, :youtube).present?
       result[:trailers][:youtube][0][:source].presence
     end
 
-    us_movie_releases = result[:releases][:countries].select { |country| country[:iso_3166_1] == "US" }
+    us_movie_releases = result.dig(:releases, :countries)&.select { |country| country[:iso_3166_1] == "US" }
     mpaa_rating = us_movie_releases.present? && us_movie_releases.first[:certification].present? ? us_movie_releases.first[:certification] : 'NR'
-    first_director = result[:credits][:crew].find {|crew| crew[:department] == 'Directing'}.presence || {}
+    first_director = result.dig(:credits, :crew)&.find {|crew| crew[:department] == 'Directing'}.presence || {}
     new(
-      actors: result[:credits][:cast].map { |cast| cast[:name] },
+      actors: result.dig(:credits, :cast)&.map { |cast| cast[:name] },
       adult: result[:adult],
       backdrop_path: result[:backdrop_path],
-      crew: result[:credits][:crew],
+      crew: result.dig(:credits, :crew),
       director: first_director[:name],
       director_id: first_director[:id],
-      genres: result[:genres].map { |genre| genre[:name] },
+      genres: result[:genres]&.map { |genre| genre[:name] },
       imdb_id: result[:imdb_id],
       in_db: Movie.exists?(tmdb_id: result[:tmdb_id]),
       lists: nil,
