@@ -123,7 +123,7 @@ module Tmdb
         raise Error, "#{movie.title} failed update. #{e.message}"
       end
 
-      def common_actors_between_movies(movie_one_title, movie_two_title)
+      def get_common_actors_between_movies(movie_one_title, movie_two_title)
         movie_one_results = get_movie_search_results(movie_one_title)
         movie_two_results = get_movie_search_results(movie_two_title)
         not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
