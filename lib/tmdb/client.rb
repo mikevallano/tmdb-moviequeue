@@ -160,7 +160,7 @@ module Tmdb
         )
       end
 
-      def tv_actor_appearance_credits(credit_id)
+      def get_actor_tv_appearance_credits(credit_id)
         data = request(:credits_data, credit_id: credit_id)
         TVActorCredit.parse_record(data)
       end

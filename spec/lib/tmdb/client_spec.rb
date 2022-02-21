@@ -472,7 +472,7 @@ RSpec.describe Tmdb::Client do
   end
 
   describe 'tv methods' do
-    describe '.tv_actor_appearance_credits' do
+    describe '.get_actor_tv_appearance_credits' do
       let(:parsed_credits) do
         {
           media: {
@@ -525,7 +525,7 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns tv_actor_credit data' do
-        person = described_class.tv_actor_appearance_credits('foo')
+        person = described_class.get_actor_tv_appearance_credits('foo')
         expect(person).to be_instance_of(TVActorCredit)
         expect(person.actor_id).to eq(21731)
         expect(person.actor_name).to eq('Michael McKean')
