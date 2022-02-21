@@ -7,7 +7,7 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
-      def movie_search(movie_title)
+      def get_movie_search_results(movie_title)
         data = request(:movie_search, query: movie_title)[:results]
         not_found = "No results for '#{movie_title}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
@@ -124,8 +124,8 @@ module Tmdb
       end
 
       def common_actors_between_movies(movie_one_title, movie_two_title)
-        movie_one_results = movie_search(movie_one_title)
-        movie_two_results = movie_search(movie_two_title)
+        movie_one_results = get_movie_search_results(movie_one_title)
+        movie_two_results = get_movie_search_results(movie_two_title)
         not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
         if not_found_message.present?

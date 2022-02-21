@@ -8,7 +8,7 @@ class TmdbController < ApplicationController
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
-      @search_results = Tmdb::Client.movie_search(@movie_title)
+      @search_results = Tmdb::Client.get_movie_search_results(@movie_title)
     end
   end
 

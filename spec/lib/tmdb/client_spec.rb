@@ -32,7 +32,7 @@ RSpec.describe Tmdb::Client do
         ] } }
     end
 
-    describe '.movie_search' do
+    describe '.get_movie_search_results' do
       context 'when no results are found' do
         let(:searched_title) { 'kjdhfkgjfgh' }
         before do
@@ -40,22 +40,22 @@ RSpec.describe Tmdb::Client do
         end
 
         it 'returns the movie_title' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.movie_title).to eq(searched_title)
         end
 
         it 'returns an object with a not-found message' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.not_found_message).to eq("No results for 'kjdhfkgjfgh'.")
         end
 
         it 'returns the string that was queried' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.query).to eq('kjdhfkgjfgh')
         end
 
         it 'returns nil for movies' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.movies).to eq(nil)
         end
       end
@@ -99,17 +99,17 @@ RSpec.describe Tmdb::Client do
         end
 
         it 'returns the movie_title' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.movie_title).to eq(searched_title)
         end
 
         it 'returns a not_found mesage that is nil' do
-          results = described_class.movie_search(searched_title)
+          results = described_class.get_movie_search_results(searched_title)
           expect(results.not_found_message).to eq(nil)
         end
 
         it 'returns a list of movie objects' do
-          movies = described_class.movie_search(searched_title).movies
+          movies = described_class.get_movie_search_results(searched_title).movies
           expect(movies.first.title).to eq('Star Trek')
           expect(movies.second.title).to eq('Star Trek: Nemesis')
         end
