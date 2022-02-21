@@ -189,7 +189,7 @@ module Tmdb
         )
       end
 
-      def tv_episode(series_id:, season_number:, episode_number:)
+      def get_tv_episode_data(series_id:, season_number:, episode_number:)
         params = { series_id: series_id, season_number: season_number, episode_number: episode_number }
         data = request(:tv_episode_data, params)
         TVEpisode.parse_record(data)

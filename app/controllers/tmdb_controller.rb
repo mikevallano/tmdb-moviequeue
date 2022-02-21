@@ -118,7 +118,7 @@ class TmdbController < ApplicationController
       series: @series,
       season_number: season_number
     )
-    @episode = Tmdb::Client.tv_episode(
+    @episode = Tmdb::Client.get_tv_episode_data(
       series_id: series_id,
       season_number: season_number,
       episode_number: params[:episode_number]
