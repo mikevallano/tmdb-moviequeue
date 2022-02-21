@@ -589,7 +589,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.tv_series' do
+    describe '.get_tv_series_data' do
       let(:parsed_tv_series_data) do
         {
           backdrop_path: '/hpU2cHC9tk90hswCFEpf5AtbqoL.jpg',
@@ -627,7 +627,7 @@ RSpec.describe Tmdb::Client do
         allow(described_class).to receive(:request).and_return(parsed_tv_series_data)
       end
       it 'returns a TVSeries object with data' do
-        series = described_class.tv_series('foo')
+        series = described_class.get_tv_series_data('foo')
         expect(series.show_id).to eq('foo')
         expect(series.first_air_date).to eq('12/17/1989')
         expect(series.last_air_date).to eq(nil)

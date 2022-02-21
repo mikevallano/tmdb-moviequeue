@@ -175,7 +175,7 @@ module Tmdb
         TVSeries.parse_search_records(data) if data.present?
       end
 
-      def tv_series(series_id)
+      def get_tv_series_data(series_id)
         data = request(:tv_series_data, series_id: series_id)
         TVSeries.parse_record(data, series_id)
       end
