@@ -539,7 +539,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.tv_series_autocomplete' do
+    describe '.get_tv_series_names' do
       let(:parsed_tv_search_results) do
         [{ id: 2382, name: 'Freaks and Geeks' },
          { id: 97018, name: 'Freaks!' }]
@@ -547,7 +547,7 @@ RSpec.describe Tmdb::Client do
 
       it 'returns a list of only Series names' do
         allow(described_class).to receive(:request).and_return(results: parsed_tv_search_results)
-        suggestions = described_class.tv_series_autocomplete('foo')
+        suggestions = described_class.get_tv_series_names('foo')
         expect(suggestions).to eq(['Freaks and Geeks', 'Freaks!'])
       end
     end

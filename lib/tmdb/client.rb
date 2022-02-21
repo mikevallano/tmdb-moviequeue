@@ -165,7 +165,7 @@ module Tmdb
         TVActorCredit.parse_record(data)
       end
 
-      def tv_series_autocomplete(query)
+      def get_tv_series_names(query)
         data = request(:tv_series_search, query: query)[:results]
         data.map { |d| d[:name] }.uniq
       end
