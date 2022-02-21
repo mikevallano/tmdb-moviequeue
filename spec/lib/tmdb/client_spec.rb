@@ -237,7 +237,7 @@ RSpec.describe Tmdb::Client do
       end
     end
 
-    describe '.person_detail_search' do
+    describe '.get_person_profile_data' do
       let(:person_id) { '2387' }
       let(:person_bio_data) do
         { name: 'Patrick Stewart',
@@ -434,12 +434,12 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns a person_id' do
-        person = described_class.person_detail_search(person_id)
+        person = described_class.get_person_profile_data(person_id)
         expect(person.person_id).to eq(person_id)
       end
 
       it 'returns profile data' do
-        person = described_class.person_detail_search(person_id)
+        person = described_class.get_person_profile_data(person_id)
         expect(person.profile.person_id).to eq(person_id)
         expect(person.profile.name).to eq('Patrick Stewart')
         expect(person.profile.profile_path).to eq('/wEy5qSDT5jT3ZASc2hbwi59voPL.jpg')
@@ -448,7 +448,7 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns movie credit data' do
-        person = described_class.person_detail_search(person_id)
+        person = described_class.get_person_profile_data(person_id)
         expect(person.movie_credits).to be_instance_of(MoviePersonCredits)
         expect(person.movie_credits.actor.first.character).to eq('Captain Jean-Luc Picard')
         expect(person.movie_credits.directing.first.title).to eq('Sleepwalk with Me')
@@ -459,7 +459,7 @@ RSpec.describe Tmdb::Client do
       end
 
       it 'returns tv credit data' do
-        person = described_class.person_detail_search(person_id)
+        person = described_class.get_person_profile_data(person_id)
         expect(person.tv_credits).to be_instance_of(TVPersonCredits)
         expect(person.tv_credits.actor.first.character).to eq('Self')
         expect(person.tv_credits.directing.first.show_name).to eq('Laverne & Shirley')

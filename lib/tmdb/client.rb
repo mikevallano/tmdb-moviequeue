@@ -147,7 +147,7 @@ module Tmdb
         data.select { |result| result[:media_type] == 'person' }&.map { |result| result[:name] }&.uniq
       end
 
-      def person_detail_search(person_id)
+      def get_person_profile_data(person_id)
         person_data = request(:person_data, person_id: person_id)
         movie_credits_data = request(:person_movie_credits, person_id: person_id)
         tv_credits_data = request(:person_tv_credits, person_id: person_id)
