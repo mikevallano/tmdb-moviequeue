@@ -8,23 +8,23 @@ class TmdbController < ApplicationController
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
-      @search_results = Tmdb::Client.movie_search(@movie_title)
+      @search_results = Tmdb::Client.get_movie_search_results(@movie_title)
     end
   end
 
   def two_movie_search
     if params[:movie_one] && params[:movie_two]
-      @search_results = Tmdb::Client.common_actors_between_movies(params[:movie_one], params[:movie_two])
+      @search_results = Tmdb::Client.get_common_actors_between_movies(params[:movie_one], params[:movie_two])
     end
   end
 
   def movie_autocomplete
-    results = Tmdb::Client.movie_autocomplete(params[:term])
+    results = Tmdb::Client.get_movie_titles(params[:term])
     render json: results
   end
 
   def person_autocomplete
-    results = Tmdb::Client.person_autocomplete(params[:term])
+    results = Tmdb::Client.get_person_names(params[:term])
     render json: results
   end
 
@@ -47,7 +47,7 @@ class TmdbController < ApplicationController
 
   def full_cast
     if params[:tmdb_id]
-      @cast = Tmdb::Client.movie_cast(params[:tmdb_id])
+      @cast = Tmdb::Client.get_movie_cast(params[:tmdb_id])
     end
   end
 
@@ -76,35 +76,35 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = Tmdb::Client.person_detail_search(params[:actor_id])
+    @actor = Tmdb::Client.get_person_profile_data(params[:actor_id])
   end
 
   def actor_credit
     credit_id = params[:credit_id]
-    @credit = Tmdb::Client.tv_actor_appearance_credits(credit_id)
+    @credit = Tmdb::Client.get_actor_tv_appearance_credits(credit_id)
   end
 
   def tv_series_search
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
-      @search_results = Tmdb::Client.tv_series_search(query)
+      @search_results = Tmdb::Client.get_tv_series_search_results(query)
     end
   end
 
   def tv_series_autocomplete
-    autocomplete_results = Tmdb::Client.tv_series_autocomplete(params[:term])
+    autocomplete_results = Tmdb::Client.get_tv_series_names(params[:term])
     render json: autocomplete_results
   end
 
   def tv_series
     show_id = params[:show_id]
-    @series = Tmdb::Client.tv_series(show_id)
+    @series = Tmdb::Client.get_tv_series_data(show_id)
   end
 
   def tv_season
-    @series = Tmdb::Client.tv_series(params[:show_id])
-    @season = Tmdb::Client.tv_season(
+    @series = Tmdb::Client.get_tv_series_data(params[:show_id])
+    @season = Tmdb::Client.get_tv_season_data(
       series: @series,
       season_number: params[:season_number]
     )
@@ -113,12 +113,12 @@ class TmdbController < ApplicationController
   def tv_episode
     series_id = params[:show_id]
     season_number = params[:season_number]
-    @series = Tmdb::Client.tv_series(series_id)
-    @season = Tmdb::Client.tv_season(
+    @series = Tmdb::Client.get_tv_series_data(series_id)
+    @season = Tmdb::Client.get_tv_season_data(
       series: @series,
       season_number: season_number
     )
-    @episode = Tmdb::Client.tv_episode(
+    @episode = Tmdb::Client.get_tv_episode_data(
       series_id: series_id,
       season_number: season_number,
       episode_number: params[:episode_number]
@@ -127,7 +127,7 @@ class TmdbController < ApplicationController
 
   def director_search
     if params[:director_id]
-      @director = Tmdb::Client.person_detail_search(params[:director_id])
+      @director = Tmdb::Client.get_person_profile_data(params[:director_id])
     end
   end
 

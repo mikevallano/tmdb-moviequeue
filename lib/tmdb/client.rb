@@ -7,7 +7,7 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
-      def movie_search(movie_title)
+      def get_movie_search_results(movie_title)
         data = request(:movie_search, query: movie_title)[:results]
         not_found = "No results for '#{movie_title}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
@@ -57,7 +57,7 @@ module Tmdb
         MovieMore.initialize_from_parsed_data(data)
       end
 
-      def movie_cast(tmdb_movie_id)
+      def get_movie_cast(tmdb_movie_id)
         data = request(:movie_data, movie_id: tmdb_movie_id)
 
         director_credits = data.dig(:credits, :crew)&.select { |crew| crew[:job] == 'Director' }
@@ -71,7 +71,7 @@ module Tmdb
         )
       end
 
-      def movie_autocomplete(query)
+      def get_movie_titles(query)
         data = request(:movie_search, query: query)[:results]
         data.map { |d| d[:title] }.uniq
       end
@@ -123,9 +123,9 @@ module Tmdb
         raise Error, "#{movie.title} failed update. #{e.message}"
       end
 
-      def common_actors_between_movies(movie_one_title, movie_two_title)
-        movie_one_results = movie_search(movie_one_title)
-        movie_two_results = movie_search(movie_two_title)
+      def get_common_actors_between_movies(movie_one_title, movie_two_title)
+        movie_one_results = get_movie_search_results(movie_one_title)
+        movie_two_results = get_movie_search_results(movie_two_title)
         not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
         if not_found_message.present?
@@ -142,12 +142,12 @@ module Tmdb
         end
       end
 
-      def person_autocomplete(query)
+      def get_person_names(query)
         data = request(:multi_search, query: query)[:results]
         data.select { |result| result[:media_type] == 'person' }&.map { |result| result[:name] }&.uniq
       end
 
-      def person_detail_search(person_id)
+      def get_person_profile_data(person_id)
         person_data = request(:person_data, person_id: person_id)
         movie_credits_data = request(:person_movie_credits, person_id: person_id)
         tv_credits_data = request(:person_tv_credits, person_id: person_id)
@@ -160,27 +160,27 @@ module Tmdb
         )
       end
 
-      def tv_actor_appearance_credits(credit_id)
+      def get_actor_tv_appearance_credits(credit_id)
         data = request(:credits_data, credit_id: credit_id)
         TVActorCredit.parse_record(data)
       end
 
-      def tv_series_autocomplete(query)
+      def get_tv_series_names(query)
         data = request(:tv_series_search, query: query)[:results]
         data.map { |d| d[:name] }.uniq
       end
 
-      def tv_series_search(query)
+      def get_tv_series_search_results(query)
         data = request(:tv_series_search, query: query)[:results]
         TVSeries.parse_search_records(data) if data.present?
       end
 
-      def tv_series(series_id)
+      def get_tv_series_data(series_id)
         data = request(:tv_series_data, series_id: series_id)
         TVSeries.parse_record(data, series_id)
       end
 
-      def tv_season(series:, season_number:)
+      def get_tv_season_data(series:, season_number:)
         params = { series_id: series.show_id, season_number: season_number }
         data = request(:tv_season_data, params)
         TVSeason.parse_record(
@@ -189,7 +189,7 @@ module Tmdb
         )
       end
 
-      def tv_episode(series_id:, season_number:, episode_number:)
+      def get_tv_episode_data(series_id:, season_number:, episode_number:)
         params = { series_id: series_id, season_number: season_number, episode_number: episode_number }
         data = request(:tv_episode_data, params)
         TVEpisode.parse_record(data)
