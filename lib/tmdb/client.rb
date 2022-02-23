@@ -21,6 +21,8 @@ module Tmdb
       end
 
       def get_movies_for_actor(actor_name:, page:, sort_by:)
+        page = page.presence || 1
+        sort_by = sort_by.presence || 'popularity'
         person_data = request(:person_search, query: actor_name)[:results]&.first
 
         return OpenStruct.new(
@@ -140,6 +142,52 @@ module Tmdb
             not_found_message: nil
           )
         end
+      end
+
+      def get_common_movies_between_multiple_actors(actor_names: nil, paginate_actor_names: nil, page: nil, sort_by: nil)
+        page = page.presence || 1
+        sort_by = sort_by.presence || 'popularity'
+        names = actor_names.uniq.reject{|name| name == ''}.compact.presence || paginate_actor_names.presence.split(';')
+        return if names.blank?
+
+        not_found_messages = []
+        person_ids = []
+        actor_names = []
+        actor_results ||= names.compact.each do |name|
+          data = request(:person_search, query: name)[:results]&.first
+          if data.blank?
+            not_found_messages << "No actor found for '#{name}'."
+          else
+            person_ids << data[:id]
+            actor_names << data[:name]
+          end
+        end
+
+        return OpenStruct.new(
+          not_found_message: not_found_messages.compact.join(' ')
+        ) if not_found_messages.present?
+
+        movie_response = request(:discover_search,
+          people: person_ids.join(','),
+          page: page,
+          sort_by: sort_by
+        )
+
+        return OpenStruct.new(
+          not_found_message: "No results for movies with #{actor_names.to_sentence}."
+        ) if movie_response[:results].blank?
+
+        current_page = page.to_i
+        OpenStruct.new(
+          actor_names: actor_names,
+          paginate_actor_names: actor_names.join(';'),
+          common_movies: MovieSearch.parse_results(movie_response[:results]),
+          not_found_message: nil,
+          current_page: current_page,
+          previous_page: (current_page - 1 if current_page > 1),
+          next_page: (current_page + 1 unless current_page >= movie_response[:total_pages]),
+          total_pages: movie_response[:total_pages]
+        )
       end
 
       def get_person_names(query)
