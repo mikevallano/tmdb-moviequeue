@@ -220,6 +220,70 @@ RSpec.describe Tmdb::Client do
         end
       end
     end
+
+    describe '.get_common_movies_between_multiple_actors' do
+      let(:actor_1_results) do
+        {
+          id: 1743,
+          actor: {name: 'Denise Crosby'},
+          not_found_message: nil
+        }
+      end
+      let(:actor_2_results) do
+        {
+          id: 11065,
+          actor: {name: 'Wilford Brimley'},
+          not_found_message: nil
+        }
+      end
+      let(:common_movies_results) do
+        {:page=>1,
+         :results=>
+          [{:adult=>false,
+            :backdrop_path=>nil,
+            :genre_ids=>[27, 878],
+            :id=>114540,
+            :original_title=>"Mutant Species",
+            :poster_path=>"/wdWit3RNCo90HrwiNAGlHo0W5h6.jpg",
+            :release_date=>"1995-01-19",
+            :title=>"Mutant Species",
+            :vote_count=>7}],
+         :total_pages=>1,
+         :total_results=>1}
+      end
+      context 'when 1 actor isnt found' do
+        it 'returns a no-found message for that actor' do
+          allow(described_class).to receive(:get_movies_for_actor)
+            .with(actor_name: 'foo', page: 1, sort_by: 'popularity')
+            .and_return(OpenStruct.new(not_found_message: "No actors found for 'foo'."))
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: ['foo'])
+
+          expect(results.not_found_message).to eq("No actors found for 'foo'.")
+        end
+      end
+
+      context 'when both actors are not found' do
+        it 'returns a not-found messages for each missing actor' do
+          allow(described_class).to receive(:get_movies_for_actor)
+            .with(actor_name: 'foo', page: 1, sort_by: 'popularity')
+            .and_return(OpenStruct.new(not_found_message: "No actors found for 'foo'."))
+          allow(described_class).to receive(:get_movies_for_actor)
+            .with(actor_name: 'bar', page: 1, sort_by: 'popularity')
+            .and_return(OpenStruct.new(not_found_message: "No actors found for 'bar'."))
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: ['foo', 'bar'])
+
+          expect(results.not_found_message).to eq("No actors found for 'foo'. No actors found for 'bar'.")
+        end
+      end
+
+      context 'when both actors are found but share no movies' do
+        # {:page=>1, :results=>[], :total_pages=>0, :total_results=>0}
+
+      end
+
+      context 'when both actors are found and share movies' do
+      end
+    end
   end
 
   describe 'person methods' do
