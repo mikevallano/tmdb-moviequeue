@@ -25,9 +25,11 @@ module Tmdb
         sort_by = sort_by.presence || 'popularity'
         person_data = request(:person_search, query: actor_name)[:results]&.first
 
-        return OpenStruct.new(
-          not_found_message: "No actors found for '#{actor_name}'."
-        ) if person_data.blank?
+        if person_data.blank?
+          return OpenStruct.new(
+            not_found_message: "No actors found for '#{actor_name}'."
+          )
+        end
 
         movie_params = {
           people: person_data[:id],
@@ -147,7 +149,7 @@ module Tmdb
       def get_common_movies_between_multiple_actors(actor_names: nil, paginate_actor_names: nil, page: nil, sort_by: nil)
         page = page.presence || 1
         sort_by = sort_by.presence || 'popularity'
-        names = actor_names.uniq.reject{|name| name == ''}.compact.presence || paginate_actor_names.presence.split(';')
+        names = actor_names.uniq.reject { |name| name == '' }.compact.presence || paginate_actor_names.presence.split(';')
         return if names.blank?
 
         not_found_messages = []
@@ -164,19 +166,22 @@ module Tmdb
           end
         end
 
-        return OpenStruct.new(
-          not_found_message: not_found_messages.compact.join(' ')
-        ) if not_found_messages.present?
+        if not_found_messages.present?
+          return OpenStruct.new(
+            not_found_message: not_found_messages.compact.join(' ')
+          )
+        end
 
         movie_response = request(:discover_search,
-          people: person_ids.join(','),
-          page: page,
-          sort_by: sort_by
-        )
+                                 people: person_ids.join(','),
+                                 page: page,
+                                 sort_by: sort_by)
 
-        return OpenStruct.new(
-          not_found_message: "No results for movies with #{actor_names.to_sentence}."
-        ) if movie_response[:results].blank?
+        if movie_response[:results].blank?
+          return OpenStruct.new(
+            not_found_message: "No results for movies with #{actor_names.to_sentence}."
+          )
+        end
 
         current_page = page.to_i
         OpenStruct.new(
@@ -285,6 +290,7 @@ module Tmdb
 
       def searchable_query(query)
         return unless query.present?
+
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
         I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
