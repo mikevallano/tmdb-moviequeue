@@ -76,6 +76,13 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         bad_api_two_actor_search(actor1, actor2)
         expect(page).to have_content("No actor found for '#{actor1}'. No actor found for '#{actor2}'.")
       end
+
+      scenario "gracefully handles when a user searches for actor names with a munch of symbols" do
+        actor1 = '^%^&^*(&GHJHG)'
+        actor2 = '$#$%RYTF^&^&'
+        bad_api_two_actor_search(actor1, actor2)
+        expect(page).to have_content("No actor found for '#{actor1}'. No actor found for '#{actor2}'.")
+      end
     end
 
     describe "common actors between two movies" do
