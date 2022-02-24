@@ -3,6 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe Tmdb::Client do
+  describe 'any method that uses a query search string' do
+    context 'when a user searches for a bunch non-alphanumeric characters' do
+      let(:searched_title) { '&^%$#@#$%' }
+      it 'returns no movie results' do
+        results = described_class.get_movie_search_results(searched_title)
+        expect(results.movies).to be(nil)
+      end
+
+      it 'returns a not-found message' do
+        results = described_class.get_movie_search_results(searched_title)
+        expect(results.not_found_message).to eq("No results for '#{searched_title}'.")
+      end
+    end
+  end
+
   describe 'movie methods' do
     let(:movie_id) { 16320 }
     let(:parsed_movie_data) do
