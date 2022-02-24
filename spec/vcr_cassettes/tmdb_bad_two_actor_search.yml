@@ -104,4 +104,56 @@ http_interactions:
       string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
     http_version:
   recorded_at: Thu, 24 Feb 2022 01:01:07 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=RYTF
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 24 Feb 2022 01:01:07 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 430a5c7d468e3c5a94e3cb6e4a5ab50e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW56-P5
+      X-Amz-Cf-Id:
+      - hiV6fGChlzgs6Tz4wVwHiAJOlOu9HkSi8LOBmxnVOvItm_7s1xcwZw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
+    http_version:
+  recorded_at: Thu, 24 Feb 2022 01:01:07 GMT
 recorded_with: VCR 5.0.0

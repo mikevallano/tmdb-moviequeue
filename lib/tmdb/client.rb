@@ -252,6 +252,8 @@ module Tmdb
       private
 
       def request(endpoint, params)
+        return { results: [] } if params[:query].present? && searchable_query(params[:query]).empty?
+
         api_path = case endpoint
           when :credits_data then "/credit/#{params[:credit_id]}?api_key=#{API_KEY}"
           when :person_data then "/person/#{params[:person_id]}?api_key=#{API_KEY}"
@@ -290,7 +292,6 @@ module Tmdb
 
       def searchable_query(query)
         return unless query.present?
-
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
         I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
