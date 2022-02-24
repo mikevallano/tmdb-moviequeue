@@ -36,7 +36,7 @@ RSpec.describe Tmdb::Client do
       context 'when no results are found' do
         let(:searched_title) { 'kjdhfkgjfgh' }
         before do
-          allow(described_class).to receive(:request).and_return({ results: [] })
+          allow(described_class).to receive(:request).and_return(results: [])
         end
 
         it 'returns the movie_title' do
@@ -95,7 +95,7 @@ RSpec.describe Tmdb::Client do
           ]
         end
         before do
-          allow(described_class).to receive(:request).and_return({results: parsed_results})
+          allow(described_class).to receive(:request).and_return(results: parsed_results)
         end
 
         it 'returns the movie_title' do
@@ -222,66 +222,85 @@ RSpec.describe Tmdb::Client do
     end
 
     describe '.get_common_movies_between_multiple_actors' do
-      let(:actor_1_results) do
-        {
-          id: 1743,
-          actor: {name: 'Denise Crosby'},
-          not_found_message: nil
-        }
-      end
+      let(:actor1_id) { 1743 }
+      let(:actor1_name) { 'Denise Crosby' }
+      let(:actor_1_results) { { results: [{ id: actor1_id, name: actor1_name }] } }
+      let(:actor2_id) { 11065 }
+      let(:actor2_name) { 'Wilford Brimley' }
       let(:actor_2_results) do
-        {
-          id: 11065,
-          actor: {name: 'Wilford Brimley'},
-          not_found_message: nil
-        }
+        { results: [{ id: actor2_id, name: actor2_name }] }
       end
+      let(:no_common_movies_response) { { page: 1, results: [], total_pages: 0, total_results: 0 } }
+      let(:movie_title) { 'Mutant Species' }
       let(:common_movies_results) do
-        {:page=>1,
-         :results=>
-          [{:adult=>false,
-            :backdrop_path=>nil,
-            :genre_ids=>[27, 878],
-            :id=>114540,
-            :original_title=>"Mutant Species",
-            :poster_path=>"/wdWit3RNCo90HrwiNAGlHo0W5h6.jpg",
-            :release_date=>"1995-01-19",
-            :title=>"Mutant Species",
-            :vote_count=>7}],
-         :total_pages=>1,
-         :total_results=>1}
+        { page: 1,
+          results: [{ adult: false,
+                      backdrop_path: nil,
+                      genre_ids: [27, 878],
+                      id: 114540,
+                      original_title: movie_title,
+                      poster_path: '/wdWit3RNCo90HrwiNAGlHo0W5h6.jpg',
+                      release_date: '1995-01-19',
+                      title: movie_title,
+                      vote_count: 7 }],
+          total_pages: 1,
+          total_results: 1 }
       end
       context 'when 1 actor isnt found' do
-        it 'returns a no-found message for that actor' do
-          allow(described_class).to receive(:get_movies_for_actor)
-            .with(actor_name: 'foo', page: 1, sort_by: 'popularity')
-            .and_return(OpenStruct.new(not_found_message: "No actors found for 'foo'."))
+        it 'returns a not-found message for that actor' do
+          allow(described_class).to receive(:request).with(:person_search, query: 'foo').and_return(results: [])
           results = described_class.get_common_movies_between_multiple_actors(actor_names: ['foo'])
-
-          expect(results.not_found_message).to eq("No actors found for 'foo'.")
+          expect(results.not_found_message).to eq("No actor found for 'foo'.")
         end
       end
 
       context 'when both actors are not found' do
         it 'returns a not-found messages for each missing actor' do
-          allow(described_class).to receive(:get_movies_for_actor)
-            .with(actor_name: 'foo', page: 1, sort_by: 'popularity')
-            .and_return(OpenStruct.new(not_found_message: "No actors found for 'foo'."))
-          allow(described_class).to receive(:get_movies_for_actor)
-            .with(actor_name: 'bar', page: 1, sort_by: 'popularity')
-            .and_return(OpenStruct.new(not_found_message: "No actors found for 'bar'."))
-          results = described_class.get_common_movies_between_multiple_actors(actor_names: ['foo', 'bar'])
-
-          expect(results.not_found_message).to eq("No actors found for 'foo'. No actors found for 'bar'.")
+          allow(described_class).to receive(:request).with(:person_search, query: 'foo').and_return(results: [])
+          allow(described_class).to receive(:request).with(:person_search, query: 'bar').and_return(results: [])
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: %w[foo bar])
+          expect(results.not_found_message).to eq("No actor found for 'foo'. No actor found for 'bar'.")
         end
       end
 
       context 'when both actors are found but share no movies' do
-        # {:page=>1, :results=>[], :total_pages=>0, :total_results=>0}
-
+        it 'returns a message saying there are no results for these actors' do
+          allow(described_class).to receive(:request).with(:person_search, query: actor1_name).and_return(actor_1_results)
+          allow(described_class).to receive(:request).with(:person_search, query: actor2_name).and_return(actor_2_results)
+          allow(described_class).to receive(:request)
+            .with(:discover_search, page: 1, people: "#{actor1_id},#{actor2_id}", sort_by: 'popularity')
+            .and_return(no_common_movies_response)
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
+          expect(results.not_found_message).to eq("No results for movies with #{actor1_name} and #{actor2_name}.")
+        end
       end
 
       context 'when both actors are found and share movies' do
+        before do
+          allow(described_class).to receive(:request).with(:person_search, query: actor1_name).and_return(actor_1_results)
+          allow(described_class).to receive(:request).with(:person_search, query: actor2_name).and_return(actor_2_results)
+          allow(described_class).to receive(:request)
+            .with(:discover_search, page: 1, people: "#{actor1_id},#{actor2_id}", sort_by: 'popularity')
+            .and_return(common_movies_results)
+        end
+
+        it 'returns the actor names' do
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
+          expect(results.actor_names).to eq([actor1_name, actor2_name])
+        end
+
+        it 'has no not-found messaging' do
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
+          expect(results.not_found_message).to eq(nil)
+        end
+
+        it 'returns a MovieSearch object with movie data' do
+          results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
+          expect(results.common_movies.length).to eq(common_movies_results[:results].length)
+
+          first_movie = results.common_movies
+          expect(first_movie.title).to eq(movie_title)
+        end
       end
     end
   end
@@ -492,9 +511,9 @@ RSpec.describe Tmdb::Client do
       end
 
       before do
-        allow(described_class).to receive(:request).with(:person_data, {person_id: person_id}).and_return(person_bio_data)
-        allow(described_class).to receive(:request).with(:person_movie_credits, {person_id: person_id}).and_return(person_movie_credit_data)
-        allow(described_class).to receive(:request).with(:person_tv_credits, {person_id: person_id}).and_return(person_tv_credit_data)
+        allow(described_class).to receive(:request).with(:person_data, person_id: person_id).and_return(person_bio_data)
+        allow(described_class).to receive(:request).with(:person_movie_credits, person_id: person_id).and_return(person_movie_credit_data)
+        allow(described_class).to receive(:request).with(:person_tv_credits, person_id: person_id).and_return(person_tv_credit_data)
       end
 
       it 'returns a person_id' do
