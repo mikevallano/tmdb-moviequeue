@@ -20,6 +20,19 @@ module Tmdb
         )
       end
 
+      def get_advanced_movie_search_results(params)
+        data = request(:discover_search, params)[:results]
+        not_found = "No results for '#{params}'." if data.blank?
+        movies = MovieSearch.parse_results(data) if data.present?
+
+        OpenStruct.new(
+          # movie_title: movie_title,
+          not_found_message: not_found,
+          # query: movie_title,
+          movies: movies
+        )
+      end
+
       def get_movies_for_actor(actor_name:, page:, sort_by:)
         page = page.presence || 1
         sort_by = sort_by.presence || 'popularity'
