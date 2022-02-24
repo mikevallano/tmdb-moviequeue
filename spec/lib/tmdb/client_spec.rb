@@ -297,9 +297,7 @@ RSpec.describe Tmdb::Client do
         it 'returns a MovieSearch object with movie data' do
           results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
           expect(results.common_movies.length).to eq(common_movies_results[:results].length)
-
-          first_movie = results.common_movies
-          expect(first_movie.title).to eq(movie_title)
+          expect(results.common_movies.first.title).to eq(movie_title)
         end
       end
     end
