@@ -156,7 +156,7 @@ module Tmdb
         person_ids = []
         actor_names = []
 
-        actor_results ||= names.compact.each do |name|
+        names.compact.each do |name|
           data = request(:person_search, query: name)[:results]&.first
           if data.blank?
             not_found_messages << "No actor found for '#{name}'."
