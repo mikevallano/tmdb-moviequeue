@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?*&%5E&api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=kjshfkajfhg
     body:
       encoding: US-ASCII
       string: ''
@@ -15,8 +15,8 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 422
-      message: Unknown
+      code: 200
+      message: OK
     headers:
       Content-Type:
       - application/json;charset=utf-8
@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 11 Nov 2021 00:55:34 GMT
+      - Thu, 24 Feb 2022 01:01:01 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -35,17 +35,125 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
       X-Cache:
-      - Error from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 a553956551fbf0c4a86ccb4e98efd3cb.cloudfront.net (CloudFront)
+      - 1.1 e6552b5b0ecd114591ab94e378fc89f8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DFW53-C1
+      - DFW56-P5
       X-Amz-Cf-Id:
-      - CciZ4c3-XqISorG6UMLUF04u3cCnPOSQ6QRVao2wc6LvNLUGtl98Ow==
+      - WUY699KBa6Kiet4IJnqQRs5GnWcJNuQYnbC67U9Ta0bVc0JMC-A-zw==
     body:
-      encoding: UTF-8
-      string: '{"errors":["query must be provided"]}'
-    http_version: 
-  recorded_at: Thu, 11 Nov 2021 00:55:34 GMT
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
+    http_version:
+  recorded_at: Thu, 24 Feb 2022 01:01:01 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=iooitiyutiy
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 24 Feb 2022 01:01:07 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 430a5c7d468e3c5a94e3cb6e4a5ab50e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW56-P5
+      X-Amz-Cf-Id:
+      - hiV6fGChlzgs6Tz4wVwHiAJOlOu9HkSi8LOBmxnVOvItm_7s1xcwZw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
+    http_version:
+  recorded_at: Thu, 24 Feb 2022 01:01:07 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=RYTF
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 24 Feb 2022 01:01:07 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 430a5c7d468e3c5a94e3cb6e4a5ab50e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW56-P5
+      X-Amz-Cf-Id:
+      - hiV6fGChlzgs6Tz4wVwHiAJOlOu9HkSi8LOBmxnVOvItm_7s1xcwZw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":0,"total_results":0}'
+    http_version:
+  recorded_at: Thu, 24 Feb 2022 01:01:07 GMT
 recorded_with: VCR 5.0.0

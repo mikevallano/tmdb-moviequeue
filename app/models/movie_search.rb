@@ -25,7 +25,7 @@ class MovieSearch
         else
           @title = result[:title]
           @release_date = result[:release_date]
-          @vote_average = result[:vote_average].round(1)
+          @vote_average = result[:vote_average]&.round(1)
           @overview = result[:overview]
           @backdrop_path = result[:backdrop_path]
           @poster_path = result[:poster_path]
@@ -40,5 +40,3 @@ class MovieSearch
   end
 
 end
-
-

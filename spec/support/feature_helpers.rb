@@ -100,10 +100,10 @@ module FeatureHelpers
     end
   end
 
-  def bad_api_two_actor_search
+  def bad_api_two_actor_search(actor1, actor2)
     VCR.use_cassette('tmdb_bad_two_actor_search') do
-      fill_in "actor1_field_two_actor_search", with: '&*&*&^'
-      fill_in "actor2_field_two_actor_search", with: 'skjsdf&*sfsd%'
+      fill_in "actor1_field_two_actor_search", with: actor1
+      fill_in "actor2_field_two_actor_search", with: actor2
       click_button "search_button_two_actor_search"
     end
   end
