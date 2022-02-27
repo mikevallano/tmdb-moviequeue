@@ -7,7 +7,7 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
-      def get_movie_search_results(movie_title)
+      def get_movie_title_search_results(movie_title)
         data = request(:movie_search, query: movie_title)[:results]
         not_found = "No results for '#{movie_title}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
@@ -21,30 +21,43 @@ module Tmdb
       end
 
       def get_advanced_movie_search_results(params)
+        searched_terms = SearchParamParser.parse_movie_params_for_display(params)
         data = if params[:actor_name].present?
           person_id = request(:person_search, query: params[:actor_name])[:results]&.first&.dig(:id)
+          if person_id.blank?
+            return OpenStruct.new(not_found_message: "No results for #{params[:actor_name]}.")
+          end
+
           request(:discover_search, params.merge(people: person_id))
         else
           request(:discover_search, params)
         end
 
         movie_results = data.dig(:results)
-        not_found = "No results for provided parameters." if movie_results.blank?
-        movies = MovieSearch.parse_results(movie_results) if movie_results.present?
+
+        if movie_results.blank?
+          return OpenStruct.new(not_found_message: "No results for #{searched_terms}.")
+        end
+
+        movies = MovieSearch.parse_results(movie_results)
         total_pages = data.fetch(:total_pages)
         current_page = params[:page].to_i
 
         OpenStruct.new(
-          sort_by: params[:sort_by],
-          genre: params[:genre],
-          company: params[:company],
-          date: params[:date],
-          timeframe: params[:timeframe],
-          mpaa_rating: params[:mpaa_rating],
-          actor_name: params[:actor_name],
-          movies: movies,
-          not_found_message: not_found,
+          searched_terms: searched_terms,
+          searched_params: {
+            actor_name: params[:actor_name],
+            company: params[:company],
+            date: params[:date],
+            genre: params[:genre],
+            mpaa_rating: params[:mpaa_rating],
+            sort_by: params[:sort_by],
+            timeframe: params[:timeframe],
+            year: params[:year]
+          },
           page: params[:page],
+          movies: movies,
+          not_found_message: nil,
           current_page: current_page,
           previous_page: (current_page - 1 if current_page > 1),
           next_page: (current_page + 1 unless current_page >= total_pages),
@@ -160,8 +173,8 @@ module Tmdb
       end
 
       def get_common_actors_between_movies(movie_one_title, movie_two_title)
-        movie_one_results = get_movie_search_results(movie_one_title)
-        movie_two_results = get_movie_search_results(movie_two_title)
+        movie_one_results = get_movie_title_search_results(movie_one_title)
+        movie_two_results = get_movie_title_search_results(movie_two_title)
         not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
         if not_found_message.present?

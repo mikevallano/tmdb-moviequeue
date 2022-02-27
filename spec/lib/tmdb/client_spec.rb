@@ -7,12 +7,12 @@ RSpec.describe Tmdb::Client do
     context 'when a user searches for a bunch non-alphanumeric characters' do
       let(:searched_title) { '&^%$#@#$%' }
       it 'returns no movie results' do
-        results = described_class.get_movie_search_results(searched_title)
+        results = described_class.get_movie_title_search_results(searched_title)
         expect(results.movies).to be(nil)
       end
 
       it 'returns a not-found message' do
-        results = described_class.get_movie_search_results(searched_title)
+        results = described_class.get_movie_title_search_results(searched_title)
         expect(results.not_found_message).to eq("No results for '#{searched_title}'.")
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe Tmdb::Client do
         ] } }
     end
 
-    describe '.get_movie_search_results' do
+    describe '.get_movie_title_search_results' do
       context 'when no results are found' do
         let(:searched_title) { 'kjdhfkgjfgh' }
         before do
@@ -55,22 +55,22 @@ RSpec.describe Tmdb::Client do
         end
 
         it 'returns the movie_title' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.movie_title).to eq(searched_title)
         end
 
         it 'returns an object with a not-found message' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.not_found_message).to eq("No results for 'kjdhfkgjfgh'.")
         end
 
         it 'returns the string that was queried' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.query).to eq('kjdhfkgjfgh')
         end
 
         it 'returns nil for movies' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.movies).to eq(nil)
         end
       end
@@ -114,20 +114,72 @@ RSpec.describe Tmdb::Client do
         end
 
         it 'returns the movie_title' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.movie_title).to eq(searched_title)
         end
 
         it 'returns a not_found mesage that is nil' do
-          results = described_class.get_movie_search_results(searched_title)
+          results = described_class.get_movie_title_search_results(searched_title)
           expect(results.not_found_message).to eq(nil)
         end
 
         it 'returns a list of movie objects' do
-          movies = described_class.get_movie_search_results(searched_title).movies
+          movies = described_class.get_movie_title_search_results(searched_title).movies
           expect(movies.first.title).to eq('Star Trek')
           expect(movies.second.title).to eq('Star Trek: Nemesis')
         end
+      end
+    end
+
+    describe 'get_advanced_movie_search_results' do
+      context 'when a valid actor name is provided' do
+        it 'includes an actor in the search params'
+      end
+
+      context 'when an invalid actor name is provided' do
+        it 'returns a not-found message about the actor name'
+      end
+
+      context 'when year is provided' do
+        it 'returns movies for this exact year'
+      end
+
+      context "when 'year' and a 'timeframe' of 'before' is provided" do
+        it 'returns movies from before this year'
+      end
+
+      context "when 'year' and a 'timeframe' of 'after' is provided" do
+        it 'returns movies from after this year'
+      end
+
+      context 'when genre is provided' do
+        it 'returns movies for this genre'
+      end
+
+      context 'when rating is provided' do
+        it 'returns movies for this rating'
+      end
+
+      context 'when sort-by is provided' do
+        it 'returns movies forted by this value'
+      end
+
+      context 'when no movies matches are found' do
+        it 'returns a not-found message about all of the searched terms'
+      end
+
+      context 'when movies matches are found' do
+        it 'returns movie data'
+        it 'returns pagination data'
+        it 'returns the searched terms in a human-readable format'
+        it 'returns the actor_name value'
+        it 'returns the sort_by value'
+        it 'returns the genre value'
+        it 'returns the company value'
+        it 'returns the date value'
+        it 'returns the year value'
+        it 'returns the timeframe value'
+        it 'returns the mpaa_rating value'
       end
     end
 

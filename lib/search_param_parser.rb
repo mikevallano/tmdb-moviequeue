@@ -14,8 +14,7 @@ module SearchParamParser
       sort_by: (params[:sort_by].presence || 'popularity')
     }
 
-    year = params[:date][:year] if params[:date].present?
-    output[:year] = year
+    output[:year] = params[:year].presence || params&.dig(:date)&.dig(:year).presence
     output.select { |_k, v| v.present? }
   end
 
@@ -30,7 +29,7 @@ module SearchParamParser
       output[:genre_display] = "#{genre_selected} movies"
     end
 
-    year = params[:date][:year] if params[:date].present?
+    year = params[:year].presence || params&.dig(:date)&.dig(:year).presence
     if year.present?
       output[:year_display] =
         case params[:timeframe]

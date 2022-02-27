@@ -28,12 +28,12 @@
 <% end %>
 
 <% if @data&.movies.blank? && @data&.not_found_message.present? %>
-  <h2>Hmm. No results found for: <%= @params_for_view %></h2>
+  <h2>Hmm. <%= @data.not_found_message %></h2>
   <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
 <% end %>
 
 <% if @data&.movies.present? %>
-  <h2>Here are the results for: <%= "#{@params_for_view}" %></h2>
+  <h2>Here are the results for: <%= "#{@data.searched_terms}" %></h2>
   <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path %> </p>
 
   <div id="discover_search_loop">
@@ -41,36 +41,18 @@
   </div>
 
   <div class='row'>
-    <p class="button-main"><%= link_to "Search Again", two_actor_search_path, id: "two_actor_search_again_link" %></p>
+    <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
   </div>
 
   <div class='row mt-5'>
     <span class="button-main mr-5">
-      <%= link_to "Previous page", discover_search_path(
-        sort_by: @data.sort_by,
-        date: @data.date,
-        genre: @data.genre,
-        actor_name: @data.actor_name,
-        company: @data.company,
-        mpaa_rating: @data.mpaa_rating,
-        timeline: @data.timeline,
-        page: @data.previous_page
-      ) if @data.previous_page.present? %>
+      <%= link_to "Previous page", discover_search_path(@data.searched_params.merge(page: @data.previous_page)) if @data.previous_page.present? %>
     </span>
 
     <%= "Page #{@data.current_page} of #{@data.total_pages}" %>
 
     <span class="button-main ml-5">
-      <%= link_to "Next page", discover_search_path(
-        sort_by: @data.sort_by,
-        date: @data.date,
-        genre: @data.genre,
-        actor_name: @data.actor_name,
-        company: @data.company,
-        mpaa_rating: @data.mpaa_rating,
-        timeline: @data.timeline,
-        page: @data.next_page
-      ) if @data.next_page.present? %>
+      <%= link_to "Next page", discover_search_path(@data.searched_params.merge(page: @data.next_page)) if @data.next_page.present? %>
     </span>
   </div>
 <% end %>
