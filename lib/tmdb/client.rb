@@ -23,13 +23,16 @@ module Tmdb
       def get_advanced_movie_search_results(params)
         data = if params[:actor_name].present?
           person_id = request(:person_search, query: params[:actor_name])[:results]&.first&.dig(:id)
-          request(:discover_search, params.merge(people: person_id))[:results]
+          request(:discover_search, params.merge(people: person_id))
         else
-          request(:discover_search, params)[:results]
+          request(:discover_search, params)
         end
 
-        not_found = "No results for '#{params}'." if data.blank?
-        movies = MovieSearch.parse_results(data) if data.present?
+        movie_results = data.dig(:results)
+        not_found = "No results for provided parameters." if movie_results.blank?
+        movies = MovieSearch.parse_results(movie_results) if movie_results.present?
+        total_pages = data.fetch(:total_pages)
+        current_page = params[:page].to_i
 
         OpenStruct.new(
           sort_by: params[:sort_by],
@@ -316,7 +319,6 @@ module Tmdb
         elsif params[:year].present?
           api_path += "&primary_release_year=#{params[:year]}"
         end
-        binding.pry
         api_path
       end
 
