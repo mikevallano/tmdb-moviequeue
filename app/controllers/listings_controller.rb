@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ListingsController < ApplicationController
-  include TmdbHandler
-
   before_action :authenticate_user!
 
   def create

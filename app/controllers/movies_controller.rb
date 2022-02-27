@@ -5,7 +5,6 @@ class MoviesController < ApplicationController
   before_action :restrict_to_admin!, only: :update
   before_action :set_movie, only: [:update]
   include SortingHandler
-  include TmdbHandler
 
   def index
     if params["tag"]
