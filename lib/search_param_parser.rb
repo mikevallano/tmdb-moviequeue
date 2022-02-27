@@ -3,13 +3,9 @@
 module SearchParamParser
   def self.parse_movie_params(params)
     output = {
-      actor: params[:actor],
-      actor2: params[:actor2],
+      actor_name: params[:actor_name],
       year: nil,
-      exact_year: nil,
-      year_select: params[:year_select],
-      before_year: nil,
-      after_year: nil,
+      timeframe: params[:timeframe],
       genre: params[:genre],
       company: params[:company],
       mpaa_rating: params[:mpaa_rating],
@@ -19,18 +15,13 @@ module SearchParamParser
 
     year = params[:date][:year] if params[:date].present?
     output[:year] = year
-    if year.present?
-      output[:exact_year] = year if params[:year_select].blank? || params[:year_select] == 'exact'
-      output[:before_year] = "#{year}-01-01" if params[:year_select] == 'before'
-      output[:after_year] = "#{year}-12-31" if params[:year_select] == 'after'
-    end
     output.select { |_k, v| v.present? }
   end
 
   def self.parse_movie_params_for_display(params)
     output = {}
-    output[:actor_display] = "#{params[:actor].titlecase} movies" if params[:actor].present?
-    output[:rating_display] = "Rated #{params[:mpaa_rating]}" if params[:mpaa_rating].present?
+    output[:actor_name_display] = "#{params[:actor_name].titlecase} movies" if params[:actor_name].present?
+    output[:mpaa_rating_display] = "Rated #{params[:mpaa_rating]}" if params[:mpaa_rating].present?
 
     if params[:genre].present?
       genres = Movie::GENRES.to_h
@@ -41,7 +32,7 @@ module SearchParamParser
     year = params[:date][:year] if params[:date].present?
     if year.present?
       output[:year_display] =
-        case params[:year_select]
+        case params[:timeframe]
         when 'before' then "before #{year}"
         when 'after' then "after #{year}"
         else "from #{year}"

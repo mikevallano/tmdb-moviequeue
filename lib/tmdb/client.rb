@@ -21,15 +21,31 @@ module Tmdb
       end
 
       def get_advanced_movie_search_results(params)
-        data = request(:discover_search, params)[:results]
+        data = if params[:actor_name].present?
+          person_id = request(:person_search, query: params[:actor_name])[:results]&.first&.dig(:id)
+          request(:discover_search, params.merge(people: person_id))[:results]
+        else
+          request(:discover_search, params)[:results]
+        end
+
         not_found = "No results for '#{params}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
 
         OpenStruct.new(
-          # movie_title: movie_title,
+          sort_by: params[:sort_by],
+          genre: params[:genre],
+          company: params[:company],
+          date: params[:date],
+          timeframe: params[:timeframe],
+          mpaa_rating: params[:mpaa_rating],
+          actor_name: params[:actor_name],
+          movies: movies,
           not_found_message: not_found,
-          # query: movie_title,
-          movies: movies
+          page: params[:page],
+          current_page: current_page,
+          previous_page: (current_page - 1 if current_page > 1),
+          next_page: (current_page + 1 unless current_page >= total_pages),
+          total_pages: total_pages
         )
       end
 
@@ -293,13 +309,14 @@ module Tmdb
         api_path += "&certification=#{params[:mpaa_rating]}" if params[:mpaa_rating].present?
         api_path += "&sort_by=#{params[:sort_by]}.desc" if params[:sort_by].present?
         api_path += "&page=#{params[:page]}"
-        if params[:year].present? && params[:year_select].present?
-          api_path += "&primary_release_year=#{params[:year]}" if params[:year_select] == 'exact'
-          api_path += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:year_select] == 'before'
-          api_path += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:year_select] == 'after'
+        if params[:year].present? && params[:timeframe].present?
+          api_path += "&primary_release_year=#{params[:year]}" if params[:timeframe] == 'exact'
+          api_path += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:timeframe] == 'before'
+          api_path += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:timeframe] == 'after'
         elsif params[:year].present?
           api_path += "&primary_release_year=#{params[:year]}"
         end
+        binding.pry
         api_path
       end
 
