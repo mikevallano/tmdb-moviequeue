@@ -5,12 +5,13 @@ module SearchParamParser
     output = {
       actor_name: params[:actor_name],
       year: nil,
+      year_display: nil,
       timeframe: params[:timeframe],
       genre: params[:genre],
       company: params[:company],
       mpaa_rating: params[:mpaa_rating],
       page: (params[:page].presence || 1),
-      sort_by: (params[:sort_by].presence || 'revenue')
+      sort_by: (params[:sort_by].presence || 'popularity')
     }
 
     year = params[:date][:year] if params[:date].present?
