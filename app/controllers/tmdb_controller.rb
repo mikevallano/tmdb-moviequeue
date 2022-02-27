@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class TmdbController < ApplicationController
-  before_action :authenticate_user!
-
   require 'open-uri'
-  include TmdbHandler
+  before_action :authenticate_user!
 
   def search
     if @movie_title = params[:movie_title] || params[:movie_title_header]
@@ -140,7 +138,6 @@ class TmdbController < ApplicationController
     return if passed_params.blank?
 
     searchable_params = SearchParamParser.parse_movie_params(passed_params)
-    tmdb_handler_discover_search(searchable_params)
     @data = Tmdb::Client.get_advanced_movie_search_results(searchable_params)
     @params_for_view = SearchParamParser.parse_movie_params_for_display(passed_params)
   end
