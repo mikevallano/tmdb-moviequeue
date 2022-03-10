@@ -47,6 +47,14 @@ RSpec.describe Tmdb::Client do
         ] } }
     end
 
+    let(:discover_data) do
+      {
+        results: [parsed_movie_data],
+        total_pages: 2,
+        page: 1
+      }
+    end
+
     describe '.get_movie_title_search_results' do
       context 'when no results are found' do
         let(:searched_title) { 'kjdhfkgjfgh' }
@@ -133,53 +141,195 @@ RSpec.describe Tmdb::Client do
 
     describe 'get_advanced_movie_search_results' do
       context 'when a valid actor name is provided' do
-        it 'includes an actor in the search params'
+        it 'includes an actor in the search params' do
+          allow(described_class).to receive(:request).with(:person_search, query: 'foo').and_return(results: [id: 1])
+          expect(described_class).to receive(:request).with(:discover_search, people: 1).and_return(results: [])
+          described_class.get_advanced_movie_search_results(actor_name: 'foo')
+        end
       end
 
       context 'when an invalid actor name is provided' do
-        it 'returns a not-found message about the actor name'
-      end
-
-      context 'when year is provided' do
-        it 'returns movies for this exact year'
-      end
-
-      context "when 'year' and a 'timeframe' of 'before' is provided" do
-        it 'returns movies from before this year'
-      end
-
-      context "when 'year' and a 'timeframe' of 'after' is provided" do
-        it 'returns movies from after this year'
-      end
-
-      context 'when genre is provided' do
-        it 'returns movies for this genre'
-      end
-
-      context 'when rating is provided' do
-        it 'returns movies for this rating'
-      end
-
-      context 'when sort-by is provided' do
-        it 'returns movies forted by this value'
+        it 'returns a not-found message about the actor name' do
+          allow(described_class).to receive(:request).with(:person_search, query: 'foo').and_return(results: [])
+          result = described_class.get_advanced_movie_search_results(actor_name: 'foo')
+          expect(result.not_found_message).to eq("No results for actor 'foo'.")
+        end
       end
 
       context 'when no movies matches are found' do
-        it 'returns a not-found message about all of the searched terms'
+        it 'returns a not-found message about all of the searched terms' do
+          stub_const('Movie::GENRES', GENRES = [['foo', 42]].freeze)
+          allow(described_class).to receive(:request).with(:discover_search, genre: 42).and_return(results: [])
+          result = described_class.get_advanced_movie_search_results(genre: 42)
+          expect(result.not_found_message).to eq('No results for foo movies.')
+        end
       end
 
       context 'when movies matches are found' do
-        it 'returns movie data'
-        it 'returns pagination data'
-        it 'returns the searched terms in a human-readable format'
-        it 'returns the actor_name value'
-        it 'returns the sort_by value'
-        it 'returns the genre value'
-        it 'returns the company value'
-        it 'returns the date value'
-        it 'returns the year value'
-        it 'returns the timeframe value'
-        it 'returns the mpaa_rating value'
+        let(:params) { {foo: 'bar'} }
+        let(:person_name) { 'foo' }
+        before do
+          allow(described_class).to receive(:request).with(:discover_search, params).and_return(discover_data)
+        end
+
+        it 'returns movie data' do
+          results = described_class.get_advanced_movie_search_results(params)
+          expect(results.movies.length).to eq(1)
+        end
+
+        it 'returns pagination data' do
+          results = described_class.get_advanced_movie_search_results(params)
+          expect(results.page).to eq(1)
+          expect(results.previous_page).to eq(nil)
+          expect(results.current_page).to eq(1)
+          expect(results.next_page).to eq(2)
+          expect(results.total_pages).to eq(2)
+        end
+
+        context 'returning the searched arguments' do
+          before do
+            allow(described_class).to receive(:request).with(:person_search, query: person_name).and_return(person_data)
+            allow(described_class).to receive(:request)
+              .with(:discover_search, params.except(:actor_name).merge(people: 111))
+              .and_return(discover_data)
+          end
+          let(:person_name) { 'Jeff' }
+          let(:params) do
+            {
+              actor_name: person_name,
+              company: 'JeffCo',
+              date: '1990-01-01',
+              genre: 42,
+              mpaa_rating: 'R',
+              sort_by: 45,
+              timeframe: 'after',
+              year: '1990'
+            }
+          end
+          let(:person_data) { { results: [ id: 111 ] } }
+
+          it 'returns the searched params' do
+            # allow(described_class).to receive(:request).with(:person_search, query: person_name).and_return(person_data)
+            # allow(described_class).to receive(:request)
+            #   .with(:discover_search, params.except(:actor_name).merge(people: 111))
+            #   .and_return(discover_data)
+            results = described_class.get_advanced_movie_search_results(params)
+            expect(results.searched_params).to eq(params)
+          end
+
+          it 'returns the searched terms in a human-readable format' do
+            stub_const('Movie::GENRES', GENRES = [['Action', 42]].freeze)
+            stub_const('Movie::SORT_BY', SORT_BY = [['Revenue', 45]].freeze)
+            results = described_class.get_advanced_movie_search_results(params)
+            expect(results.searched_terms).to eq('Jeff movies, Rated R, Action movies, after 1990, sorted by Revenue')
+          end
+        end
+      end
+    end
+
+    describe 'private.build_url' do
+      context 'when year is provided and no timeframe is given' do
+        it 'includes an exact year in the query string' do
+          params = [:discover_search, {year: '1980'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&primary_release_year=1980')
+        end
+      end
+
+      context "when 'year' and a 'timeframe' of 'exact' is provided" do
+        it 'defaults to "exact"' do
+          params = [:discover_search, {year: '1980', timeframe: 'exact'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&primary_release_year=1980')
+        end
+      end
+
+      context "when 'year' and a 'timeframe' of 'before' is provided" do
+        it 'includes the less-than date in the API query string' do
+          params = [:discover_search, {year: '1980', timeframe: 'before'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&primary_release_date.lte=1980-01-01')
+        end
+      end
+
+      context "when 'year' and a 'timeframe' of 'after' is provided" do
+        it 'includes the the greater than date in the API query string' do
+          params = [:discover_search, {year: '1980', timeframe: 'after'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&primary_release_date.gte=1980-12-31')
+        end
+      end
+
+      context 'when "people" is provided' do
+        it 'includes the genre in the API query string' do
+          params = [:discover_search, {people: 42}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&with_people=42')
+        end
+      end
+
+      context 'when "genre" is provided' do
+        it 'includes the genre in the API query string' do
+          params = [:discover_search, {genre: 42}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&with_genres=42')
+        end
+      end
+
+      context 'when rating is provided' do
+        it 'includes the rating in the API query string' do
+          params = [:discover_search, {mpaa_rating: 'foo'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&certification=foo')
+        end
+      end
+
+      context 'when sort-by is provided' do
+        it 'includes the sort-by the API query string' do
+          params = [:discover_search, {sort_by: 'foo'}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&sort_by=foo.desc')
+        end
+      end
+
+      context 'when sort-by is not provided' do
+        it 'defaults to "popularity"' do
+          params = [:discover_search, {}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&sort_by=popularity.desc')
+        end
+      end
+
+      context 'when "page" is provided' do
+        it 'includes the page in the API query string' do
+          params = [:discover_search, {page: 2}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&page=2')
+        end
+      end
+
+      context 'when "page" is not provided' do
+        it 'defaults to page 1 in the API query string' do
+          params = [:discover_search, {}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&page=1')
+        end
+      end
+
+      context 'when multiple params are provided' do
+        it 'includes them all' do
+          params = [:discover_search, {sort_by: 'foo', genre: 28, mpaa_rating: 'R', year: 2021, timeframe: 'after', page: 2}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&with_genres=28&certification=R&sort_by=foo.desc&page=2&primary_release_date.gte=2021-12-31')
+        end
+      end
+
+      context 'when no params are provided' do
+        it 'still includes certification, page, and sort-by' do
+          params = [:discover_search, {}]
+          url = described_class.send(:build_url, *params)
+          expect(url).to include('&certification_country=US&sort_by=popularity.desc&page=1')
+        end
       end
     end
 
@@ -335,7 +485,7 @@ RSpec.describe Tmdb::Client do
           allow(described_class).to receive(:request).with(:person_search, query: actor1_name).and_return(actor_1_results)
           allow(described_class).to receive(:request).with(:person_search, query: actor2_name).and_return(actor_2_results)
           allow(described_class).to receive(:request)
-            .with(:discover_search, page: 1, people: "#{actor1_id},#{actor2_id}", sort_by: 'popularity')
+            .with(:discover_search, page: nil, people: "#{actor1_id},#{actor2_id}", sort_by: nil)
             .and_return(no_common_movies_response)
           results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
           expect(results.not_found_message).to eq("No results for movies with #{actor1_name} and #{actor2_name}.")
@@ -347,7 +497,7 @@ RSpec.describe Tmdb::Client do
           allow(described_class).to receive(:request).with(:person_search, query: actor1_name).and_return(actor_1_results)
           allow(described_class).to receive(:request).with(:person_search, query: actor2_name).and_return(actor_2_results)
           allow(described_class).to receive(:request)
-            .with(:discover_search, page: 1, people: "#{actor1_id},#{actor2_id}", sort_by: 'popularity')
+            .with(:discover_search, page: nil, people: "#{actor1_id},#{actor2_id}", sort_by: nil)
             .and_return(common_movies_results)
         end
 
