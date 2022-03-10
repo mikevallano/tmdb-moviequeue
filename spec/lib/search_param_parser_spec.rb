@@ -167,7 +167,7 @@ describe SearchParamParser do
         it 'does not set any of the year keys' do
           result = described_class.parse_movie_params_for_display(
             timeframe: '',
-            date: ''
+            date: { year: '' }
           )
           expect(result).to eq('')
         end
