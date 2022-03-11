@@ -76,8 +76,7 @@ module Tmdb
         }
         movie_data = request(:discover_search, movie_params)
         movie_results = movie_data[:results]
-        total_pages = movie_data&.fetch(:total_pages)
-
+        total_pages = movie_data&.fetch(:total_pages).zero? ? 1 : movie_data&.fetch(:total_pages)
         not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
         current_page = movie_data[:page]
 
@@ -337,7 +336,7 @@ module Tmdb
         return unless query.present?
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
-        I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
+        I18n.transliterate(query).gsub(/[^0-9a-z ]/i, '')
       end
     end
   end
