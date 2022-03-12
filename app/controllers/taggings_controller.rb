@@ -2,8 +2,6 @@ class TaggingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_movie, only: [:create, :destroy]
 
-  include TmdbHandler
-
   def create
     @list = List.find(params[:list_id]) if params[:list_id].present?
     Tagging.create_taggings(params[:tag_list], @movie.id, current_user)

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ScreeningsController < ApplicationController
-  include TmdbHandler
-
   before_action :authenticate_user!
   before_action :set_movie, only: [:index, :new, :edit, :create, :update, :destroy]
   before_action :set_screening, only: [:edit, :update, :destroy]

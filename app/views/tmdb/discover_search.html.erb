@@ -1,54 +1,56 @@
-<% content_for(:title, "Search for Movies") %>
+<% content_for(:title, "Advanced Movie Search") %>
 
 <h1>Advanced Search</h1>
 
-<% if !@movies.present? && !@not_found.present? %>
-
-<h2>All fields are optional. Search by whatever you want.</h2>
-
+<% if @data.blank? %>
+  <h2>All fields are optional. Search by whatever you want.</h2>
   <%= form_tag '/tmdb/discover_search', { class: 'form-class', id: 'discover-search', role: 'form', method: :get } do %>
-  <div class="row">
-    <%= text_field_tag :actor, nil, class: "form-control search-form autocomplete-search-field", id: "actor_field_discover_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
-    <%= select_tag :genre, options_for_select(Movie::GENRES), { class: "form-control search-form", id: "genre_field_discover_search", :include_blank => "Pick a genre" } %></br>
-    <%= select_year(0, {:prompt => "Enter a year", :start_year => DateTime.now.year, :end_year => DateTime.now.year - 100}, {:field_name => :year, :prefix => :year, :id => "year_field_discover_search", class: "form-control search-form" }) %>
-    <%= select_tag :year_select, options_for_select(Movie::YEAR_SELECT), { class: "form-control search-form", id: "year_select_discover_search", :include_blank => "Year select" } %></br>
-    <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), { class: "form-control search-form", id: "mpaa_field_discover_search", :include_blank => "Pick a rating" } %></br>
-    <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control search-form", id: "sort_by_discover_search", :include_blank => "Sort by" } %>
-  </br>
     <div class="row">
-      <br></br><br></br>
-      <p><%= submit_tag "Search", id: "search_button_discover_search", class: "form-control-submit search-form-submit" %></p>
-    </div> <!-- row -->
-  </div> <!-- row -->
-  <% end %> <!-- #search form do -->
-
-<% else %> <!-- #if !@movies.present? -->
-
-  <% if @not_found.present? %>
-      <h2>Hmm. <%= @not_found %></h2>
-      <p>Check your spelling and try again.</p>
-      <p class="button-main"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
-    <% else %><!--  #if @not_found.present? -->
-      <% content_for(:title, "Search Results") %>
-      <h2>Here are the results for: <%= "#{@params_for_view}" %></h2>
-      <br>
-      <p class="button-main"><%= link_to "Search Again", discover_search_path %> </p>
-
-    <div id ="discover_search_loop">
-      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies } %>
+      <%= text_field_tag :actor_name, nil, class: "form-control search-form autocomplete-search-field", id: "actor_name_field_discover_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
+      <%= select_tag :genre, options_for_select(Movie::GENRES), { class: "form-control search-form", id: "genre_field_discover_search", include_blank: "Pick a genre" } %><br>
+      <%= select_year(0,
+      { prompt: "Enter a year", start_year: DateTime.now.year, end_year: DateTime.now.year - 100 },
+      { field_name: :year,
+        prefix: :year,
+        id: "year_field_discover_search",
+        class: "form-control search-form" }
+        )%>
+        <%= select_tag :timeframe, options_for_select(Movie::YEAR_SELECT), { class: "form-control search-form", id: "year_select_discover_search", include_blank: "Year select" } %><br>
+        <%= select_tag :mpaa_rating, options_for_select(Movie::MPAA_RATINGS), { class: "form-control search-form", id: "mpaa_field_discover_search", include_blank: "Pick a rating" } %><br>
+        <%= select_tag :sort_by, options_for_select(Movie::SORT_BY), { class: "form-control search-form", id: "sort_by_discover_search", include_blank: "Sort by" } %>
     </div>
+    <div class="row">
+      <p><%= submit_tag "Search", id: "search_button_discover_search", class: "form-control-submit search-form-submit" %></p>
+    </div>
+  <% end %> <!-- form -->
+<% end %>
 
+<% if @data&.movies.blank? && @data&.not_found_message.present? %>
+  <h2>Hmm. <%= @data.not_found_message %></h2>
+  <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
+<% end %>
 
-      <%= "Page #{@page} of #{@total_pages}" %></br>
+<% if @data&.movies.present? %>
+  <h2>Here are the results for: <%= "#{@data.searched_terms}" %></h2>
+  <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path %> </p>
 
-      <% if @previous_page.present? %>
-        <%= link_to "Previous page", discover_search_path(sort_by: @sort_by, date: @date, genre: @genre, actor: @actor, actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, year_select: @year_select, page: "#{@previous_page}") %>
-      <% end %>
+  <div id="discover_search_loop">
+    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @data.movies } %>
+  </div>
 
-      <% if @next_page.present? %>
-        <%= link_to "Next page", discover_search_path(sort_by: @sort_by, year: @year, genre: @genre, actor: @actor, actor2: @actor2, company: @company, mpaa_rating: @mpaa_rating, year_select: @year_select, page: "#{@next_page}") %>
-      <% end %>
+  <div class='row'>
+    <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
+  </div>
 
-  <% end %><!--  #if @not_found.present? -->
+  <div class='row mt-5'>
+    <span class="button-main mr-5">
+      <%= link_to "Previous page", discover_search_path(@data.searched_params.merge(page: @data.previous_page)) if @data.previous_page.present? %>
+    </span>
 
-<% end %> <!-- #if !@movies.present? -->
+    <%= "Page #{@data.current_page} of #{@data.total_pages}" %>
+
+    <span class="button-main ml-5">
+      <%= link_to "Next page", discover_search_path(@data.searched_params.merge(page: @data.next_page)) if @data.next_page.present? %>
+    </span>
+  </div>
+<% end %>

@@ -7,7 +7,7 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
-      def get_movie_search_results(movie_title)
+      def get_movie_title_search_results(movie_title)
         data = request(:movie_search, query: movie_title)[:results]
         not_found = "No results for '#{movie_title}'." if data.blank?
         movies = MovieSearch.parse_results(data) if data.present?
@@ -20,9 +20,47 @@ module Tmdb
         )
       end
 
+      def get_advanced_movie_search_results(params)
+        searched_terms = SearchParamParser.parse_movie_params_for_display(params)
+        data = if params[:actor_name].present?
+         person_id = request(:person_search, query: params[:actor_name])&.dig(:results)&.first&.dig(:id)
+         return OpenStruct.new(not_found_message: "No results for actor '#{params[:actor_name]}'.") if person_id.blank?
+
+          request(:discover_search, params.except(:actor_name).merge(people: person_id))
+        else
+          request(:discover_search, params.except(:actor_name))
+        end
+
+        movie_results = data.dig(:results)
+        return OpenStruct.new(not_found_message: "No results for #{searched_terms}.") if movie_results.blank?
+
+        movies = MovieSearch.parse_results(movie_results)
+        total_pages = data.fetch(:total_pages)
+        current_page = data[:page]
+
+        OpenStruct.new(
+          searched_terms: searched_terms,
+          searched_params: {
+            actor_name: params[:actor_name],
+            company: params[:company],
+            date: params[:date],
+            genre: params[:genre],
+            mpaa_rating: params[:mpaa_rating],
+            sort_by: params[:sort_by],
+            timeframe: params[:timeframe],
+            year: params[:year]
+          },
+          page: current_page,
+          movies: movies,
+          not_found_message: nil,
+          current_page: current_page,
+          previous_page: (current_page - 1 if current_page > 1),
+          next_page: (current_page + 1 unless current_page >= total_pages),
+          total_pages: total_pages
+        )
+      end
+
       def get_movies_for_actor(actor_name:, page:, sort_by:)
-        page = page.presence || 1
-        sort_by = sort_by.presence || 'popularity'
         person_data = request(:person_search, query: actor_name)[:results]&.first
 
         if person_data.blank?
@@ -38,10 +76,9 @@ module Tmdb
         }
         movie_data = request(:discover_search, movie_params)
         movie_results = movie_data[:results]
-        total_pages = movie_data&.fetch(:total_pages)
-
+        total_pages = movie_data&.fetch(:total_pages).zero? ? 1 : movie_data&.fetch(:total_pages)
         not_found_message = "No movies found for '#{actor_name}'." if movie_results.blank?
-        current_page = page.to_i
+        current_page = movie_data[:page]
 
         OpenStruct.new(
           id: person_data[:id],
@@ -128,8 +165,8 @@ module Tmdb
       end
 
       def get_common_actors_between_movies(movie_one_title, movie_two_title)
-        movie_one_results = get_movie_search_results(movie_one_title)
-        movie_two_results = get_movie_search_results(movie_two_title)
+        movie_one_results = get_movie_title_search_results(movie_one_title)
+        movie_two_results = get_movie_title_search_results(movie_two_title)
         not_found_message = movie_one_results.not_found_message.presence || movie_two_results.not_found_message.presence
 
         if not_found_message.present?
@@ -147,8 +184,6 @@ module Tmdb
       end
 
       def get_common_movies_between_multiple_actors(actor_names: nil, paginate_actor_names: nil, page: nil, sort_by: nil)
-        page = page.presence || 1
-        sort_by = sort_by.presence || 'popularity'
         names = actor_names.uniq.reject { |name| name == '' }.compact.presence || paginate_actor_names.presence.split(';')
         return if names.blank?
 
@@ -183,7 +218,7 @@ module Tmdb
           )
         end
 
-        current_page = page.to_i
+        current_page = movie_response[:page]
         OpenStruct.new(
           actor_names: actor_names,
           paginate_actor_names: actor_names.join(';'),
@@ -254,36 +289,43 @@ module Tmdb
       def request(endpoint, params)
         return { results: [] } if params[:query].present? && searchable_query(params[:query]).empty?
 
-        api_path = case endpoint
-          when :credits_data then "/credit/#{params[:credit_id]}?api_key=#{API_KEY}"
-          when :person_data then "/person/#{params[:person_id]}?api_key=#{API_KEY}"
-          when :person_search then "/search/person?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
-          when :person_movie_credits then "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}"
-          when :person_tv_credits then "/person/#{params[:person_id]}/tv_credits?api_key=#{API_KEY}"
-          when :movie_search then "/search/movie?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
-          when :movie_data then "/movie/#{params[:movie_id]}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
-          when :tv_series_search then "/search/tv?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
-          when :tv_series_data then "/tv/#{params[:series_id]}?api_key=#{API_KEY}&append_to_response=credits"
-          when :tv_season_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits"
-          when :tv_episode_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}"
-          when :multi_search then "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
-          when :discover_search then url_for_movie_discover_search(params)
-        end
-        JSON.parse(open("#{BASE_URL}#{api_path}").read, symbolize_names: true)
+        api_path = build_url(endpoint, params)
+        response = open("#{BASE_URL}#{api_path}").read
+        JSON.parse(response, symbolize_names: true)
       end
 
-      def url_for_movie_discover_search(params)
+      def build_url(endpoint, params)
+        case endpoint
+        when :discover_search then build_url_for_movie_discover_search(params)
+        when :credits_data then "/credit/#{params[:credit_id]}?api_key=#{API_KEY}"
+        when :person_data then "/person/#{params[:person_id]}?api_key=#{API_KEY}"
+        when :person_search then "/search/person?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+        when :person_movie_credits then "/person/#{params[:person_id]}/movie_credits?api_key=#{API_KEY}"
+        when :person_tv_credits then "/person/#{params[:person_id]}/tv_credits?api_key=#{API_KEY}"
+        when :movie_search then "/search/movie?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+        when :movie_data then "/movie/#{params[:movie_id]}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+        when :tv_series_search then "/search/tv?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+        when :tv_series_data then "/tv/#{params[:series_id]}?api_key=#{API_KEY}&append_to_response=credits"
+        when :tv_season_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits"
+        when :tv_episode_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}"
+        when :multi_search then "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+        end
+      end
+
+      def build_url_for_movie_discover_search(params)
+        page = params[:page].presence || 1
+        sort_by = params[:sort_by].presence || 'popularity'
         api_path = "/discover/movie?api_key=#{ENV['tmdb_api_key']}&certification_country=US"
         api_path += "&with_people=#{params[:people]}" if params[:people].present?
         api_path += "&with_genres=#{params[:genre]}" if params[:genre].present?
         api_path += "&with_companies=#{params[:company]}" if params[:company].present?
         api_path += "&certification=#{params[:mpaa_rating]}" if params[:mpaa_rating].present?
-        api_path += "&sort_by=#{params[:sort_by]}.desc" if params[:sort_by].present?
-        api_path += "&page=#{params[:page]}"
-        if params[:year].present? && params[:year_select].present?
-          api_path += "&primary_release_year=#{params[:year]}" if params[:year_select] == 'exact'
-          api_path += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:year_select] == 'before'
-          api_path += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:year_select] == 'after'
+        api_path += "&sort_by=#{sort_by}.desc"
+        api_path += "&page=#{page}"
+        if params[:year].present? && params[:timeframe].present?
+          api_path += "&primary_release_year=#{params[:year]}" if params[:timeframe] == 'exact'
+          api_path += "&primary_release_date.lte=#{params[:year]}-01-01" if params[:timeframe] == 'before'
+          api_path += "&primary_release_date.gte=#{params[:year]}-12-31" if params[:timeframe] == 'after'
         elsif params[:year].present?
           api_path += "&primary_release_year=#{params[:year]}"
         end
@@ -294,7 +336,7 @@ module Tmdb
         return unless query.present?
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
-        I18n.transliterate(query.gsub(/[^0-9a-z ]/i, ''))
+        I18n.transliterate(query).gsub(/[^0-9a-z ]/i, '')
       end
     end
   end
