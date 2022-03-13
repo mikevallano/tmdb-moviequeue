@@ -158,7 +158,7 @@ RSpec.describe Tmdb::Client do
 
       context 'when no movies matches are found' do
         it 'returns a not-found message about all of the searched terms' do
-          stub_const('Movie::GENRES', GENRES = [['foo', 42]].freeze)
+          stub_const('MovieDataService::GENRES', GENRES = [['foo', 42]].freeze)
           allow(described_class).to receive(:request).with(:discover_search, genre: 42).and_return(results: [])
           result = described_class.get_advanced_movie_search_results(genre: 42)
           expect(result.not_found_message).to eq('No results for foo movies.')
@@ -218,8 +218,8 @@ RSpec.describe Tmdb::Client do
           end
 
           it 'returns the searched terms in a human-readable format' do
-            stub_const('Movie::GENRES', GENRES = [['Action', 42]].freeze)
-            stub_const('Movie::SORT_BY', SORT_BY = [['Revenue', 45]].freeze)
+            stub_const('MovieDataService::GENRES', GENRES = [['Action', 42]].freeze)
+            stub_const('MovieDataService::SORT_BY', SORT_BY = [['Revenue', 45]].freeze)
             results = described_class.get_advanced_movie_search_results(params)
             expect(results.searched_terms).to eq('Jeff movies, Rated R, Action movies, after 1990, sorted by Revenue')
           end
@@ -379,62 +379,6 @@ RSpec.describe Tmdb::Client do
         allow(described_class).to receive(:request).and_return(results: parsed_data)
         names = described_class.get_movie_titles("doesn't matter")
         expect(names).to eq(%w[A B C])
-      end
-    end
-
-    describe '.update_movie' do
-      let(:movie) { create(:movie_in_tmdb) }
-      let(:tmdb_id) { movie.tmdb_id }
-      subject { Tmdb::Client.update_movie(movie) }
-
-      context 'with a valid movie' do
-        it 'returns true' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
-            expect(subject).to eq(true)
-          end
-        end
-
-        it 'updates the movie' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
-            expect { subject }.to(change { movie.reload.updated_at })
-          end
-        end
-      end
-
-      context 'when no movie found from api response' do
-        before { movie.update(tmdb_id: 'wrong') }
-        it 'raises an error and does not update the movie' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_an_invalid_movie') do
-            expect { subject }.not_to(change { movie.reload.updated_at })
-          end
-        end
-      end
-
-      context 'when the title does not match' do
-        before { movie.update(title: 'Fargowrong') }
-        it 'does not raise an error' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title') do
-            expect { subject }.not_to raise_error
-          end
-        end
-
-        it 'still updates the movie' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_wrong_title') do
-            expect { subject }.to(change { movie.reload.updated_at })
-          end
-        end
-      end
-
-      context 'with outdated info' do
-        let(:wrong_mpaa_rating) { 'G' }
-        let(:correct_mpaa_rating) { 'R' }
-        before { movie.update(mpaa_rating: wrong_mpaa_rating) }
-        it 'updates movie with latest tmdb info' do
-          VCR.use_cassette('tmdb_handler_update_movie_with_outdated_info') do
-            subject
-            expect(movie.reload.mpaa_rating).to eq(correct_mpaa_rating)
-          end
-        end
       end
     end
 
