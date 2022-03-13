@@ -29,7 +29,7 @@ module MovieDataService
   def self.update_movie(movie)
     # I'm not sure why this method uses HTTParty instead
     tmdb_id = movie.tmdb_id.to_s
-    movie_url = "#{BASE_URL}/movie/#{tmdb_id}?api_key=#{API_KEY}&append_to_response=trailers,credits,releases"
+    movie_url = "#{Tmdb::Client::BASE_URL}/movie/#{tmdb_id}?api_key=#{Tmdb::Client::API_KEY}&append_to_response=trailers,credits,releases"
     api_result = begin
                    HTTParty.get(movie_url).deep_symbolize_keys
                  rescue StandardError
