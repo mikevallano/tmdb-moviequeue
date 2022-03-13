@@ -24,7 +24,7 @@ module SearchParamParser
     output[:mpaa_rating_display] = "Rated #{params[:mpaa_rating]}" if params[:mpaa_rating].present?
 
     if params[:genre].present?
-      genres = Movie::GENRES.to_h
+      genres = MovieDataService::GENRES.to_h
       genre_selected = genres.key(params[:genre].to_i)
       output[:genre_display] = "#{genre_selected} movies"
     end
@@ -40,7 +40,7 @@ module SearchParamParser
     end
 
     if params[:sort_by].present?
-      sort_options = Movie::SORT_BY.to_h
+      sort_options = MovieDataService::SORT_BY.to_h
       sort_key = sort_options.key(params[:sort_by])
       output[:sort_display] = "sorted by #{sort_key}"
     end
