@@ -51,7 +51,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
