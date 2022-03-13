@@ -55,7 +55,7 @@ describe SearchParamParser do
     end
 
     context 'genre_display' do
-      before { stub_const('Movie::GENRES', GENRES = [['Cat', 42]].freeze) }
+      before { stub_const('MovieDataService::GENRES', GENRES = [['Cat', 42]].freeze) }
       context 'when genre is present' do
         it 'sets the genre_display to a genre name' do
           result = described_class.parse_movie_params_for_display(genre: 42)
@@ -88,7 +88,7 @@ describe SearchParamParser do
     end
 
     context 'sort_display' do
-      before { stub_const('Movie::SORT_BY', SORT_BY = [['Fancy Foo', 'foo']].freeze) }
+      before { stub_const('MovieDataService::SORT_BY', SORT_BY = [['Fancy Foo', 'foo']].freeze) }
       context 'when sort_by is present' do
         it 'sets the sort_display to a sorting option name' do
           result = described_class.parse_movie_params_for_display(sort_by: 'foo')

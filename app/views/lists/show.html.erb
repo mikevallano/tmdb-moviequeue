@@ -10,7 +10,7 @@
 
 
   <%= form_tag user_list_path(@list.owner, @list), { class: "form-class", id: "list-show-sort", role: "form", method: :get } do %>
-    <%= select_tag :sort_by, options_for_select(Movie::LIST_SORT_OPTIONS, @sort_by), { class: "form-control index-sort-dropdown", :include_blank => "Sort by", id: "list_sort_options" } %>
+    <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), { class: "form-control index-sort-dropdown", :include_blank => "Sort by", id: "list_sort_options" } %>
     <%= submit_tag "Sort", id: "list_sort_button" %>
   <% end %>
   <br>
