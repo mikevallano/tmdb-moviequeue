@@ -183,25 +183,6 @@ module Tmdb
           total_pages: movie_response[:total_pages]
         )
       end
-
-      def get_person_names(query)
-        data = request(:multi_search, query: query)[:results]
-        data.select { |result| result[:media_type] == 'person' }&.map { |result| result[:name] }&.uniq
-      end
-
-      def get_person_profile_data(person_id)
-        person_data = request(:person_data, person_id: person_id)
-        movie_credits_data = request(:person_movie_credits, person_id: person_id)
-        tv_credits_data = request(:person_tv_credits, person_id: person_id)
-
-        OpenStruct.new(
-          person_id: person_id,
-          profile: MoviePersonProfile.parse_result(person_data),
-          movie_credits: MoviePersonCredits.parse_result(movie_credits_data),
-          tv_credits: TVPersonCredits.parse_result(tv_credits_data)
-        )
-      end
-
       def get_actor_tv_appearance_credits(credit_id)
         data = request(:credits_data, credit_id: credit_id)
         TVActorCredit.parse_record(data)
