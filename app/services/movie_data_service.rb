@@ -249,5 +249,56 @@ module MovieDataService
         total_pages: movie_response[:total_pages]
       )
     end
+
+    def get_common_actors_for_director(director_name)
+      person_data = Tmdb::Client.request(:person_search, query: director_name)[:results]&.first
+      # person_data.keys
+      # [:adult, :gender, :id, :known_for, :known_for_department, :name, :popularity, :profile_path]
+      # id: 7399, name: 'Ben Stiller'
+      if person_data.blank?
+        return OpenStruct.new(
+          not_found_message: "No directors found for '#{director_name}'."
+        )
+      end
+
+      person_credits = Tmdb::Client.request(:person_movie_credits, person_id: person_data[:id])
+      # person_credits.keys => [:cast, :crew, :id]
+      movie_ids = person_credits[:crew].select { |crew| crew[:job] == 'Director' }.map { |movie| movie[:id] }
+      # movie_ids = [movie_ids.first]
+      actors = {}
+      movie_ids.each do |id|
+        movie_credits = Tmdb::Client.request(:movie_data, movie_id: id)
+        cast_members = movie_credits.dig(:credits, :cast).map {|cast| cast[:name] }
+# binding.pry
+        cast_members.each do |person|
+          if actors[person].present?
+            actors[person] += 1
+          else
+            actors[person] = 1
+          end
+        end
+      end
+
+      actors.select { |k, v| v > 1 }.sort_by { |k, v| -v }.to_h
+
+      binding.pry
+
+
+      # total_pages = movie_data&.fetch(:total_pages).zero? ? 1 : movie_data&.fetch(:total_pages)
+      # not_found_message = "No movies found for '#{director_name}'." if movie_results.blank?
+      # current_page = movie_data[:page]
+      #
+      # OpenStruct.new(
+      #   id: person_data[:id],
+      #   actor: person_data,
+      #   actor_name: person_data[:name],
+      #   movies: MovieSearch.parse_results(movie_results),
+      #   not_found_message: not_found_message,
+      #   current_page: current_page,
+      #   previous_page: (current_page - 1 if current_page > 1),
+      #   next_page: (current_page + 1 unless current_page >= total_pages),
+      #   total_pages: total_pages
+      # )
+    end
   end
 end
