@@ -1,0 +1,26 @@
+<h1>Common Actors in a Director's Movies</h1>
+
+<% if @results.nil? %>
+  <p>Enter a director name to find out what actors frequently appear in their films.</p>
+  <%= form_tag '/tmdb/director_common_actors', { class: "form-class", id: "director-common-actors", role: "form", method: :get } do %>
+  <%= text_field_tag :director_name, nil, class: "form-control search-form autocomplete-search-field", id: "director_name_field", placeholder: "Enter a director's name", data: { autocomplete_source: person_autocomplete_path } %>
+  <%= submit_tag "Search", id: "foo", class: "form-control-submit search-form-submit" %>
+  <% end %>
+
+<% else %><!-- a search has been made -->
+  <% if @results.not_found_message.present? %>
+    <h2>Hmm. <%= @results.not_found_message %></h2>
+    <p> Check your spelling and try again.</p>
+
+  <% else %> <!-- movies were found -->
+    <h2><%= @results.director_name %> has directed <%= @results.movies_count %> movies and these actors have been in at least <%= @results.minimum_movie_count %> of them:</h2>
+    <ul>
+      <% @results.actors.each do |actor| %>
+        <li><%= link_to "#{actor.name}", actor_more_path(actor_id: actor.id) %> (<%= actor.count %>)</li>
+      <% end %>
+    </ul>
+    <br>
+  <% end %>
+
+  <p class="button-main"><%= link_to "Search Again", director_common_actors_path %> </p>
+<% end %>

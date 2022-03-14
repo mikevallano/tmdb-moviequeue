@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get 'tmdb/actor_credit', to: 'tmdb#actor_credit', as: :actor_credit
   get 'tmdb/two_actor_search', to: 'tmdb#two_actor_search', as: :two_actor_search
   get 'tmdb/director_search', to: 'tmdb#director_search', as: :director_search
+  get 'tmdb/director_common_actors', to: 'tmdb#director_common_actors', as: :director_common_actors
   get 'tmdb/tv_episode', to: 'tmdb#tv_episode', as: :tv_episode
   get 'tmdb/tv_series', to: 'tmdb#tv_series', as: :tv_series
   get 'tmdb/tv_series_search', to: 'tmdb#tv_series_search', as: :tv_series_search

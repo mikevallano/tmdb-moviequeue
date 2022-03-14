@@ -249,5 +249,54 @@ module MovieDataService
         total_pages: movie_response[:total_pages]
       )
     end
+
+    def get_common_actors_for_director(director_name)
+      person_data = Tmdb::Client.request(:person_search, query: director_name)[:results]&.first
+      if person_data.blank?
+        return OpenStruct.new(
+          not_found_message: "No directors found for '#{director_name}'."
+        )
+      end
+
+      person_credits = Tmdb::Client.request(:person_movie_credits, person_id: person_data[:id])
+      directed_movie_ids = person_credits[:crew].select { |crew| crew[:job] == 'Director' }.map { |movie| movie[:id] }
+
+      if directed_movie_ids.blank?
+        return OpenStruct.new(
+          not_found_message: "No movies found for '#{director_name}'."
+        )
+      end
+
+      minimum_movie_count = 3
+      if directed_movie_ids.length < minimum_movie_count
+        return OpenStruct.new(
+          not_found_message: "A director must have at least #{minimum_movie_count} movies for us to make a comparison."
+        )
+      end
+
+      actors = {}
+      directed_movie_ids.each do |id|
+        movie_credits = Tmdb::Client.request(:movie_data, movie_id: id)
+        cast_members = movie_credits.dig(:credits, :cast).map {|cast| OpenStruct.new(id: cast[:id], name: cast[:name]) }
+        cast_members.each do |person|
+          if actors[person.id].present?
+            actors[person.id].count += 1
+          else
+            actors[person.id] = OpenStruct.new(id: person.id, name: person.name, count: 1)
+          end
+        end
+      end
+
+      ordered_actors = actors.select { |k, v| v.count >= minimum_movie_count }.sort_by { |k, v| -v.count }.to_h.values
+
+      OpenStruct.new(
+        director_id: person_data[:id],
+        director_name: person_data[:name],
+        movies_count: directed_movie_ids.length,
+        not_found_message: nil,
+        actors: ordered_actors,
+        minimum_movie_count: minimum_movie_count
+      )
+    end
   end
 end
