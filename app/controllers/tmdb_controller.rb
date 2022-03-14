@@ -132,6 +132,12 @@ class TmdbController < ApplicationController
     end
   end
 
+  def director_common_actors
+    if params[:director_name]
+      @results = MovieDataService.get_common_actors_for_director(params[:director_name])
+    end
+  end
+
   def discover_search
     form_params = %i[sort_by date year genre actor_name company mpaa_rating timeframe page]
     passed_params = params.slice(*form_params).select { |_k, v| v.present? }
