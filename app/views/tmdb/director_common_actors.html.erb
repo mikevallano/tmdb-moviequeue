@@ -13,14 +13,14 @@
     <p> Check your spelling and try again.</p>
 
   <% else %> <!-- movies were found -->
-    <h2><%= link_to "#{@results.movie_one.title}", movie_more_path(tmdb_id: @results.movie_one.tmdb_id) %> and <%= link_to "#{@results.movie_two.title}", movie_more_path(tmdb_id: @results.movie_two.tmdb_id) %> have <%= pluralize(@results.common_actors.size, "actor") %> in common:</h2>
+    <h2><%= @results.director_name %> has directed <%= @results.movies_count %> movies and these actors have been in at least <%= @results.minimum_movie_count %> of them:</h2>
     <ul>
-      <% @results.common_actors.each do |actor| %>
-        <li><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)) %></li>
+      <% @results.actors.each do |actor| %>
+        <li><%= link_to "#{actor.name}", actor_more_path(actor_id: actor.id) %> (<%= actor.count %>)</li>
       <% end %>
     </ul>
     <br>
   <% end %>
 
-  <p class="button-main"><%= link_to "Search Again", director_common_actors %> </p>
+  <p class="button-main"><%= link_to "Search Again", director_common_actors_path %> </p>
 <% end %>
