@@ -1,0 +1,26 @@
+<h1>Common Actors in a Director's Movies</h1>
+
+<% if @results.nil? %>
+  <p>Enter a director name to find out what actors frequently appear in their films.</p>
+  <%= form_tag '/tmdb/director_common_actors', { class: "form-class", id: "director-common-actors", role: "form", method: :get } do %>
+  <%= text_field_tag :director_name, nil, class: "form-control search-form autocomplete-search-field", id: "director_name_field", placeholder: "Enter a director's name", data: { autocomplete_source: person_autocomplete_path } %>
+  <%= submit_tag "Search", id: "foo", class: "form-control-submit search-form-submit" %>
+  <% end %>
+
+<% else %><!-- a search has been made -->
+  <% if @results.not_found_message.present? %>
+    <h2>Hmm. <%= @results.not_found_message %></h2>
+    <p> Check your spelling and try again.</p>
+
+  <% else %> <!-- movies were found -->
+    <h2><%= link_to "#{@results.movie_one.title}", movie_more_path(tmdb_id: @results.movie_one.tmdb_id) %> and <%= link_to "#{@results.movie_two.title}", movie_more_path(tmdb_id: @results.movie_two.tmdb_id) %> have <%= pluralize(@results.common_actors.size, "actor") %> in common:</h2>
+    <ul>
+      <% @results.common_actors.each do |actor| %>
+        <li><%= link_to "#{actor}", actor_search_path(actor: I18n.transliterate(actor)) %></li>
+      <% end %>
+    </ul>
+    <br>
+  <% end %>
+
+  <p class="button-main"><%= link_to "Search Again", director_common_actors %> </p>
+<% end %>
