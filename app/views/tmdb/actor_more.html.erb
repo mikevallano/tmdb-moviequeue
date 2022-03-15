@@ -1,30 +1,32 @@
 <article id="profile">
   <div class="row">
     <div class="summary-box">
-      <%= image_tag(TmdbImageService.image_url(file_path: @actor.profile.profile_path, size: :medium, image_type: :profile)) %>
+      <%= image_tag(TmdbImageService.image_url(file_path: @results.actor.profile.profile_path, size: :medium, image_type: :profile)) %>
       <div class="contents">
-        <h1><%= @actor.profile.name %></h1>
-        <h2>Born: <%= display_birthday_info(@actor.profile) %></h2>
-        <p class="bio"><%= @actor.profile.bio %></p>
+        <h1><%= @results.actor.profile.name %></h1>
+        <h2>Born: <%= display_birthday_info(@results.actor.profile) %></h2>
+        <p class="bio"><%= @results.actor.profile.bio %></p>
       </div> <!-- contents -->
     </div> <!-- summary-box -->
   </div> <!-- row -->
 
   <div class="row">
     <div class="credits">
-      <%= render partial: "movie_credits", locals: { person_profile: @actor.profile, movie_credits: @actor.movie_credits } %>
+      <%= render partial: "movie_credits", locals: { person_profile: @results.actor.profile, movie_credits: @results.actor.movie_credits } %>
 
-      <%= render partial: "tv_credits", locals: { tv_credits: @actor.tv_credits, actor_id: @actor.person_id }  %>
+      <%= render partial: "seen_movie_credits", locals: { person_profile: @results.actor.profile, movie_credits: @results.actor.movie_credits, movies_seen: @results.movies_seen } %>
 
-      <%= render partial: "director_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+      <%= render partial: "tv_credits", locals: { tv_credits: @results.actor.tv_credits, actor_id: @results.actor.person_id }  %>
 
-      <%= render partial: "producer_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+      <%= render partial: "director_credits", locals: { movie_credits: @results.actor.movie_credits, tv_credits: @results.actor.tv_credits }  %>
 
-      <%= render partial: "editor_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+      <%= render partial: "producer_credits", locals: { movie_credits: @results.actor.movie_credits, tv_credits: @results.actor.tv_credits }  %>
 
-      <%= render partial: "writer_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+      <%= render partial: "editor_credits", locals: { movie_credits: @results.actor.movie_credits, tv_credits: @results.actor.tv_credits }  %>
 
-      <%= render partial: "screenplay_credits", locals: { movie_credits: @actor.movie_credits, tv_credits: @actor.tv_credits }  %>
+      <%= render partial: "writer_credits", locals: { movie_credits: @results.actor.movie_credits, tv_credits: @results.actor.tv_credits }  %>
+
+      <%= render partial: "screenplay_credits", locals: { movie_credits: @results.actor.movie_credits, tv_credits: @results.actor.tv_credits }  %>
     </div>
   </div>
 </article>

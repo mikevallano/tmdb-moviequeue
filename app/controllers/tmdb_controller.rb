@@ -77,7 +77,10 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = PersonDataService.get_person_profile_data(params[:actor_id])
+    @results = OpenStruct.new(
+      actor: PersonDataService.get_person_profile_data(params[:actor_id]),
+      movies_seen: current_user.watched_movies.pluck(:tmdb_id)
+    )
   end
 
   def actor_credit

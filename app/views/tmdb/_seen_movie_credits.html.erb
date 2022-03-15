@@ -1,0 +1,15 @@
+<h3>
+  Movie's I've Seen
+</h3>
+<ul>
+  <% movie_credits.actor.each do |credit| %>
+    <% if movies_seen.include?(credit.tmdb_id) %>
+      <li>
+        <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
+        <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
+        <%= display_actor_age_at_release(person_profile.birthday, credit.date) %>
+        <%= "as #{credit.character}" if credit.character.present? %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
