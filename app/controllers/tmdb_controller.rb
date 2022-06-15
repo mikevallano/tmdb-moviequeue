@@ -77,7 +77,14 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    @actor = PersonDataService.get_person_profile_data(params[:actor_id])
+    actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
+    movies_seen = current_user.watched_movies.pluck(:tmdb_id)
+    actor_movies_seen = actor_data.movie_credits.actor.select { |m| movies_seen.include?(m.tmdb_id) }
+
+    @data = OpenStruct.new(
+      actor: actor_data,
+      movies_seen: actor_movies_seen
+    )
   end
 
   def actor_credit
@@ -127,9 +134,7 @@ class TmdbController < ApplicationController
   end
 
   def director_search
-    if params[:director_id]
-      @director = PersonDataService.get_person_profile_data(params[:director_id])
-    end
+    @director = PersonDataService.get_person_profile_data(params[:director_id]) if params[:director_id]
   end
 
   def discover_search
