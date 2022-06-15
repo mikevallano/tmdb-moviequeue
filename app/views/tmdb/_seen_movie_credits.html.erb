@@ -1,9 +1,9 @@
-<h3>
-  Movies I've Seen
-</h3>
-<ul>
-  <% movie_credits.actor.each do |credit| %>
-    <% if movies_seen.include?(credit.tmdb_id) %>
+<% if movies_seen.any? %>
+  <h3>
+    Movies I've Seen
+  </h3>
+  <ul>
+    <% movies_seen.each do |credit| %>
       <li>
         <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
         <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
@@ -11,5 +11,5 @@
         <%= "as #{credit.character}" if credit.character.present? %>
       </li>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+<% end %>
