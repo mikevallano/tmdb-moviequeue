@@ -1,14 +1,17 @@
 <% if movies_seen.any? %>
   <h3>
-    Movies I've Seen
+    Movies I've Seen (<%= movies_seen.count %>)
   </h3>
   <ul>
     <% movies_seen.each do |credit| %>
       <li>
-        <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
+        <%= credit.user_last_screening.date_watched %>: <%= link_to credit.title, movie_more_path(tmdb_id: "#{credit.tmdb_id}") %>
         <%= "| #{credit.date}" if credit.date != "Date unavailable" %>
         <%= display_actor_age_at_release(person_profile.birthday, credit.date) %>
         <%= "as #{credit.character}" if credit.character.present? %>
+        <% if credit.user_rating.present? %>
+          | <%= credit.user_rating %>/10 <icon class="fa fa-heart"></icon>
+        <% end %>
       </li>
     <% end %>
   </ul>

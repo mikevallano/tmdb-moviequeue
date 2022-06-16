@@ -78,13 +78,21 @@ class TmdbController < ApplicationController
 
   def actor_more
     actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
-    movies_seen = current_user.watched_movies.pluck(:tmdb_id)
-    actor_movies_seen = actor_data.movie_credits.actor.select { |m| movies_seen.include?(m.tmdb_id) }
 
-    @data = OpenStruct.new(
-      actor: actor_data,
-      movies_seen: actor_movies_seen
-    )
+    watched_movies = current_user.watched_movies
+    watched_movie_tmdb_ids = watched_movies.pluck(:tmdb_id)
+    user_seen_actor_movie_credits = actor_data.movie_credits.actor.select { |wm| watched_movie_tmdb_ids.include?(wm.tmdb_id) }
+
+    actor_data.user_seen_movies = user_seen_actor_movie_credits.map do |movie_credit|
+      db_movie_id = watched_movies.find { |wm| wm.tmdb_id == movie_credit.tmdb_id }.id
+      movie_credit.user_rating = Rating.find_by(user_id: current_user.id, movie_id: db_movie_id)&.value
+      movie_credit.user_last_screening = Screening.where(user_id: current_user.id, movie_id: db_movie_id)
+                                                  .order(date_watched: :desc)
+                                                  .first
+      movie_credit
+    end
+
+    @actor = actor_data
   end
 
   def actor_credit
@@ -93,7 +101,7 @@ class TmdbController < ApplicationController
   end
 
   def tv_series_search
-    query = show_title = params[:show_title] || params[:show_title_header]
+    query = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
       @search_results = TvSeriesDataService.get_tv_series_search_results(query)
