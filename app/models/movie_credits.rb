@@ -1,7 +1,6 @@
 class MovieCredits
 
   def initialize(adult, credit_id, department, job, tmdb_id, title, poster_path, date, character)
-
     @adult = adult
     @credit_id = credit_id
     @department = department
@@ -11,10 +10,9 @@ class MovieCredits
     @poster_path = poster_path
     @date = date
     @character = character
+  end
 
-  end #init
-
-  attr_accessor :adult, :credit_id, :department, :job, :tmdb_id, :title, :poster_path, :date, :character
+  attr_accessor :adult, :credit_id, :department, :job, :tmdb_id, :title, :poster_path, :date, :character, :user_rating, :user_last_screening
 
   def self.parse(json)
     @credits = []
