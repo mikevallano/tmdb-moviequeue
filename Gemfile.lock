@@ -354,6 +354,7 @@ DEPENDENCIES
   coveralls (= 0.8.11)
   database_cleaner
   devise
+  execjs
   factory_bot_rails
   ffaker
   figaro

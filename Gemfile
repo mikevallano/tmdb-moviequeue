@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'json'
 gem 'bigdecimal', '1.3.5'
+gem 'execjs'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
