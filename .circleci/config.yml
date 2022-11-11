@@ -31,9 +31,9 @@ jobs:
 
       - restore_cache:
           keys:
-          - v3-dependencies-{{ checksum "Gemfile.lock" }}
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v3-dependencies-
+          - v1-dependencies-
 
       - run:
           name: install dependencies
@@ -42,7 +42,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v3-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
 
       # Database setup
