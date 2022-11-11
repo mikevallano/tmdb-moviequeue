@@ -2,10 +2,13 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.4.0
+
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.3-node-browsers
+      - image: cimg/ruby:2.7.6-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -23,6 +26,8 @@ jobs:
 
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
       - restore_cache:
           keys:
@@ -33,7 +38,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle install --jobs=3 --retry=3 --path vendor/bundle
+            gem install bundler:2.0.0.pre.3 && bundle _2.0.0.pre.3_ --jobs=3 --retry=3 --path vendor/bundle
       - save_cache:
           paths:
             - ./vendor/bundle

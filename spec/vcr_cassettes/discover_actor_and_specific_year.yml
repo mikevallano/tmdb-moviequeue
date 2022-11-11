@@ -70,7 +70,6 @@ http_interactions:
         Mr. Blonde, bickering weasel Mr. Pink and Nice Guy Eddie -- unravel.","poster_path":"/lsBnfheKZBO3UKU7lVHIeGZLWuF.jpg","release_date":"1992-09-02","title":"Reservoir
         Dogs","video":false,"vote_average":8.2,"vote_count":11126}],"known_for_department":"Acting","name":"Steve
         Buscemi","popularity":14.094,"profile_path":"/lQKdHMxfYcCBOvwRKBAxPZVNtkg.jpg"}],"total_pages":1,"total_results":1}'
-    http_version: 
   recorded_at: Thu, 11 Nov 2021 01:04:21 GMT
 - request:
     method: get
@@ -158,7 +157,6 @@ http_interactions:
         cross-cuts between the two kidnappings and the background of corrupt politics
         and virtuoso jazz music. It all takes place in Kansas City in 1934.","popularity":3.099,"poster_path":"/6feBsNmMDAFoIzZlZRLw00BhJXI.jpg","release_date":"1996-08-16","title":"Kansas
         City","video":false,"vote_average":6.5,"vote_count":44}],"total_pages":1,"total_results":5}'
-    http_version: 
   recorded_at: Thu, 11 Nov 2021 01:04:21 GMT
 - request:
     method: get
@@ -246,6 +244,55 @@ http_interactions:
         cross-cuts between the two kidnappings and the background of corrupt politics
         and virtuoso jazz music. It all takes place in Kansas City in 1934.","popularity":3.099,"poster_path":"/6feBsNmMDAFoIzZlZRLw00BhJXI.jpg","release_date":"1996-08-16","title":"Kansas
         City","video":false,"vote_average":6.5,"vote_count":44}],"total_pages":1,"total_results":5}'
-    http_version: 
   recorded_at: Thu, 11 Nov 2021 01:04:21 GMT
-recorded_with: VCR 5.0.0
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification_country=US&page=1&primary_release_year=1996&sort_by=popularity.desc&with_people=884
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 11 Nov 2022 16:56:40 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding,Accept-Encoding
+      - Origin
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 37bad45581ee2b4b4bc9ea274d2d53d6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW56-P5
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - ovcCVh6TMpgCHRbuZ6qVKOfql7LAX33j-HkxJVRr6vtL8FADHJzRrw==
+      Age:
+      - '1'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJwYWdlIjoxLCJyZXN1bHRzIjpbeyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvNzQ3ZGdEZkw1ZDhlc29iazdoNG9kYU9GaFVxLmpwZyIsImdlbnJlX2lkcyI6WzgwLDE4LDUzXSwiaWQiOjI3NSwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJlbiIsIm9yaWdpbmFsX3RpdGxlIjoiRmFyZ28iLCJvdmVydmlldyI6IkplcnJ5LCBhIHNtYWxsLXRvd24gTWlubmVzb3RhIGNhciBzYWxlc21hbiBpcyBidXJzdGluZyBhdCB0aGUgc2VhbXMgd2l0aCBkZWJ0Li4uIGJ1dCBoZSdzIGdvdCBhIHBsYW4uIEhlJ3MgZ29pbmcgdG8gaGlyZSB0d28gdGh1Z3MgdG8ga2lkbmFwIGhpcyB3aWZlIGluIGEgc2NoZW1lIHRvIGNvbGxlY3QgYSBoZWZ0eSByYW5zb20gZnJvbSBoaXMgd2VhbHRoeSBmYXRoZXItaW4tbGF3LiBJdCdzIGdvaW5nIHRvIGJlIGEgc25hcCBhbmQgbm9ib2R5J3MgZ29pbmcgdG8gZ2V0IGh1cnQuLi4gdW50aWwgcGVvcGxlIHN0YXJ0IGR5aW5nLiBFbnRlciBQb2xpY2UgQ2hpZWYgTWFyZ2UsIGEgY29mZmVlLWRyaW5raW5nLCBwYXJrYS13ZWFyaW5nIC0gYW5kIGV4dHJlbWVseSBwcmVnbmFudCAtIGludmVzdGlnYXRvciB3aG8nbGwgc3RvcCBhdCBub3RoaW5nIHRvIGdldCBoZXIgbWFuLiBBbmQgaWYgeW91IHRoaW5rIGhlciBzbWFsbC10aW1lIGludmVzdGlnYXRpdmUgc2tpbGxzIHdpbGwgZ2l2ZSB0aGUgY3Jvb2tzIGEgcnVuIGZvciB0aGVpciByYW5zb20uLi4geW91IGJldGNoYSEiLCJwb3B1bGFyaXR5IjoxNy4zMDQsInBvc3Rlcl9wYXRoIjoiL3J0N2NwRXIxdVA2UlRaeWtCRmhCVGNSYUt2Ry5qcGciLCJyZWxlYXNlX2RhdGUiOiIxOTk2LTAzLTA4IiwidGl0bGUiOiJGYXJnbyIsInZpZGVvIjpmYWxzZSwidm90ZV9hdmVyYWdlIjo3LjksInZvdGVfY291bnQiOjY3MDh9LHsiYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9wYXRoIjoiLzd2Mjc3am10RzRHZlp3TTdqUWRiVFYwV3FkWi5qcGciLCJnZW5yZV9pZHMiOlsyOCwxMiw4NzgsNTNdLCJpZCI6MTAwNjEsIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJvcmlnaW5hbF90aXRsZSI6IkVzY2FwZSBmcm9tIEwuQS4iLCJvdmVydmlldyI6IlRoaXMgdGltZSwgYSBjYXRhY2x5c21pYyB0ZW1ibG9yIGhpdHMgTG9zIEFuZ2VsZXMsIHR1cm5pbmcgaXQgaW50byBhbiBpc2xhbmQuIFRoZSBwcmVzaWRlbnQgdmlld3MgdGhlIHF1YWtlIGFzIGEgc2lnbiBmcm9tIGFib3ZlLCBleHBlbHMgTG9zIEFuZ2VsZXMgZnJvbSB0aGUgY291bnRyeSBhbmQgbWFrZXMgaXQgYSBwZW5hbCBjb2xvbnkgZm9yIHRob3NlIGZvdW5kIGd1aWx0eSBvZiBtb3JhbCBjcmltZXMuIFdoZW4gaGlzIGRhdWdodGVyLCBwYXJ0IG9mIGEgcmVzaXN0YW5jZSBtb3ZlbWVudCwgc3RlYWxzIHRoZSBjb250cm9sIHVuaXQgZm9yIGEgZG9vbXNkYXkgd2VhcG9uLCBTbmFrZSBhZ2FpbiBnZXRzIHRhcHBlZCB0byBzYXZlIHRoZSBkYXkuIiwicG9wdWxhcml0eSI6MTEuNzE4LCJwb3N0ZXJfcGF0aCI6Ii8zTDlsTDJlVXNtTE5OZkVOUHdOT2M4Mkh6cHcuanBnIiwicmVsZWFzZV9kYXRlIjoiMTk5Ni0wOC0wOSIsInRpdGxlIjoiRXNjYXBlIGZyb20gTC5BLiIsInZpZGVvIjpmYWxzZSwidm90ZV9hdmVyYWdlIjo1LjksInZvdGVfY291bnQiOjExNzl9LHsiYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9wYXRoIjoiLzc5RXlJdHNFbDdwbklPMGpGaTVIRE1oc2lPTi5qcGciLCJnZW5yZV9pZHMiOlsxOCwxMDc0OV0sImlkIjoxODIwMywib3JpZ2luYWxfbGFuZ3VhZ2UiOiJlbiIsIm9yaWdpbmFsX3RpdGxlIjoiQmlnIE5pZ2h0Iiwib3ZlcnZpZXciOiJQcmltbyBhbmQgU2Vjb25kbywgdHdvIGltbWlncmFudCBicm90aGVycywgcGluIHRoZWlyIGhvcGVzIG9uIGEgYmFucXVldCBob25vcmluZyBMb3VpcyBQcmltYSB0byBzYXZlIHRoZWlyIHN0cnVnZ2xpbmcgcmVzdGF1cmFudC4iLCJwb3B1bGFyaXR5Ijo5LjExNywicG9zdGVyX3BhdGgiOiIvbm5RckpUNExDajZ2MkxqYm9Vb2drY1JVUEJyLmpwZyIsInJlbGVhc2VfZGF0ZSI6IjE5OTYtMDktMjAiLCJ0aXRsZSI6IkJpZyBOaWdodCIsInZpZGVvIjpmYWxzZSwidm90ZV9hdmVyYWdlIjo2LjksInZvdGVfY291bnQiOjE3MX0seyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvekJBNldRdU9FQ1NsR2hjUThVNDBKTmNNNG92LmpwZyIsImdlbnJlX2lkcyI6WzE4LDM1XSwiaWQiOjI3ODQ1LCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfdGl0bGUiOiJUcmVlcyBMb3VuZ2UiLCJvdmVydmlldyI6IlRvbW15IGhhcyBsb3N0IGhpcyBqb2IsIGhpcyBsb3ZlIGFuZCBoaXMgbGlmZS4gSGUgbGl2ZXMgaW4gYSBzbWFsbCBhcGFydG1lbnQgYWJvdmUgdGhlIFRyZWVzIExvdW5nZSwgYSBiYXIgd2hpY2ggaGUgZnJlcXVlbnRzIGFsb25nIHdpdGggYSBmZXcgb3RoZXIgcmVndWxhcnMgd2l0aG91dCBsaXZlcy4gSGUgZ2V0cyBhIGpvYiBkcml2aW5nIGFuIGljZSBjcmVhbSB0cnVjayBhbmQgZW5kcyB1cCBnZXR0aW5nIGludm9sdmVkIHdpdGggdGhlIHNldmVudGVlbi15ZWFyLW9sZCBuaWVjZSBvZiBoaXMgZXgtZ2lybGZyaWVuZC4gVGhpcyBnZXRzIGhpbSBpbnRvIHNlcmlvdXMgdHJvdWJsZSB3aXRoIGhlciBmYXRoZXIuIiwicG9wdWxhcml0eSI6Ni41NjIsInBvc3Rlcl9wYXRoIjoiLzJEdG9WaEk5UmtBckdiemt2Y3RHeFk1NzhRTi5qcGciLCJyZWxlYXNlX2RhdGUiOiIxOTk2LTA1LTExIiwidGl0bGUiOiJUcmVlcyBMb3VuZ2UiLCJ2aWRlbyI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6Ni45LCJ2b3RlX2NvdW50IjoxNDN9LHsiYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9wYXRoIjoiL2tZeGJPZkNuaHg0djY2dVdYUjlLUE5IY3l5Ri5qcGciLCJnZW5yZV9pZHMiOls1MywxOCwxMDQwMiw4MF0sImlkIjoyMjQ3OSwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJlbiIsIm9yaWdpbmFsX3RpdGxlIjoiS2Fuc2FzIENpdHkiLCJvdmVydmlldyI6IlJvYmVydCBBbHRtYW4ncyBzdG9yeSDigJMgYSByaWZmIG9uIHJhY2UsIGNsYXNzLCBhbmQgcG93ZXIg4oCTIGNyb3NzLWN1dHMgYmV0d2VlbiB0d28ga2lkbmFwcGluZ3MgYW5kIGEgYmFja2dyb3VuZCBvZiBjb3JydXB0IHBvbGl0aWNzIGFuZCB2aXJ0dW9zbyBqYXp6IG11c2ljLiBJdCBhbGwgdGFrZXMgcGxhY2UgaW4gS2Fuc2FzIENpdHkgaW4gMTkzNC4iLCJwb3B1bGFyaXR5Ijo0LjQwNywicG9zdGVyX3BhdGgiOiIvNmZlQnNObU1EQUZvSXpabFpSTHcwMEJoSlhJLmpwZyIsInJlbGVhc2VfZGF0ZSI6IjE5OTYtMDgtMTYiLCJ0aXRsZSI6IkthbnNhcyBDaXR5IiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjYuMywidm90ZV9jb3VudCI6NTh9LHsiYWR1bHQiOmZhbHNlLCJiYWNrZHJvcF9wYXRoIjpudWxsLCJnZW5yZV9pZHMiOltdLCJpZCI6NzA5MDA4LCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfdGl0bGUiOiJCbGFjayBLaXRlcyIsIm92ZXJ2aWV3IjoiQmFzZWQgb24gMTk5MiBqb3VybmFscyBvZiBCb3NuaWFuIHZpc3VhbCBhcnRpc3QgQWxtYSBIYWpyaWMgd2hvIHdhcyBmb3JjZWQgaW50byBhIGJhc2VtZW50IHNoZWx0ZXIgdG8gc3Vydml2ZSB0aGUgc2llZ2Ugb2YgU2FyYWpldm8sIEJsYWNrIEtpdGVzIHNraWxsZnVsbHkgbWVyZ2VzIHRoZSByZWFsaXR5LWJhc2VkIGNvbnRlbnQgb2YgaGVyIGpvdXJuYWwgd2l0aCBpbnRlcnByZXRpdmUgdmlzdWFsIG1hdGVyaWFsIHRvIHJldmVhbCB0aGUgc2ltcGxlLCBzb21ldGltZXMgYmVhdXRpZnVsLCB5ZXQgYnJ1dGFsIHRydXRoIG9mIGhlciBleGlzdGVuY2UuIE5vbi1saW5lYXIsIGRyZWFtbGlrZSBhbmQgc3BlY3RyYWwsIEJsYWNrIEtpdGVzIGlzIGEgdGVzdGFtZW50IHRvIGFydGlzdHJ5LCBpbWFnaW5hdGlvbiBhbmQgdGhlIHJlc2lsaWVuY3kgb2YgdGhlIGh1bWFuIHBzeWNoZS4gRmVhdHVyZXMgc2Vuc2l0aXZlIHBlcmZvcm1hbmNlcyBieSBTdGV2ZSBCdXNjZW1pLCBNaW1pIEdvZXNlIGFuZCBNaXJhIEZ1cmxhbiwgYSBwcm9taW5lbnQgYWN0cmVzcyBmcm9tIHRoZSBmb3JtZXIgWXVnb3NsYXZpYSwgYXMgdGhlIG5hcnJhdG9yLiIsInBvcHVsYXJpdHkiOjAuNiwicG9zdGVyX3BhdGgiOiIvaVdLVVpCQVFQb0N6enFUNldGbU9zMzZubFVMLmpwZyIsInJlbGVhc2VfZGF0ZSI6IjE5OTYtMDctMTgiLCJ0aXRsZSI6IkJsYWNrIEtpdGVzIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjAsInZvdGVfY291bnQiOjB9XSwidG90YWxfcGFnZXMiOjEsInRvdGFsX3Jlc3VsdHMiOjZ9
+  recorded_at: Fri, 11 Nov 2022 16:56:41 GMT
+recorded_with: VCR 6.1.0

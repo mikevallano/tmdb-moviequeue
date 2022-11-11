@@ -18,6 +18,7 @@ require 'support/mailer_helpers'
 require 'support/vcr'
 require 'capybara/email/rspec'
 require 'support/wait_for_ajax'
+require 'webdrivers/chromedriver'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -29,6 +30,28 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+  ## Hack to support tests in rails 4
+  # a workaround to avoid MonitorMixin double-initialize error
+  # https://github.com/rails/rails/issues/34790#issuecomment-681034561
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
+    if Gem::Version.new(Rails.version) < Gem::Version.new('5.0.0')
+      class ActionController::TestResponse < ActionDispatch::TestResponse
+        def recycle!
+          if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.7.0')
+            @mon_data = nil
+            @mon_data_owner_object_id = nil
+          else
+            @mon_mutex = nil
+            @mon_mutex_owner_object_id = nil
+          end
+          initialize
+        end
+      end
+    else
+      $stderr.puts "Monkeypatch for ActionController::TestResponse is no longer needed"
+    end
+  end
 
 # Potential fix for CI problems
 # capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
