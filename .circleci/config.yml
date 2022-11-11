@@ -36,19 +36,19 @@ jobs:
             gem install bundler:2.0.0.pre.3 && bundle _2.0.0.pre.3_ --jobs=3 --retry=3 --path vendor/bundle
       - orbs:
           browser-tools: circleci/browser-tools@1.4.0
-        jobs:
-          test:
-            executor: browser-tools/default
-            steps:
-              - browser-tools/install-browser-tools:
-                  chrome-version: 107.0.5304.110
-              - run:
-                  command: |
-                    google-chrome --version
-                    geckodriver --version
-                    chromedriver --version
-                    java -jar /usr/local/bin/selenium.jar --version
-                  name: Check install
+          jobs:
+            test:
+              executor: browser-tools/default
+              steps:
+                - browser-tools/install-browser-tools:
+                    chrome-version: 107.0.5304.110
+                - run:
+                    command: |
+                      google-chrome --version
+                      geckodriver --version
+                      chromedriver --version
+                      java -jar /usr/local/bin/selenium.jar --version
+                    name: Check install
       - save_cache:
           paths:
             - ./vendor/bundle
