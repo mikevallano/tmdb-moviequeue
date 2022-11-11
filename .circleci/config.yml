@@ -26,18 +26,23 @@ jobs:
 
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "Gemfile.lock" }}
+          - v3-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v2-dependencies-
+          - v3-dependencies-
 
       - run:
           name: install dependencies
           command: |
             gem install bundler:2.0.0.pre.3 && bundle _2.0.0.pre.3_ --jobs=3 --retry=3 --path vendor/bundle
+      - run:
+          name: Setup Chrome
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt install ./google-chrome-stable_current_amd64.deb
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v2-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v3-dependencies-{{ checksum "Gemfile.lock" }}
 
 
       # Database setup
