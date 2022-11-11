@@ -8,7 +8,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 
-gem 'json'
 gem 'bigdecimal', '1.3.5'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -44,8 +43,6 @@ group :development, :test do
   gem 'capybara-email'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
-  # gem 'spring-commands-rspec'
-  # gem 'spring'
 end
 
 group :test do
@@ -53,7 +50,6 @@ group :test do
     gem 'capybara'
     gem 'database_cleaner'
     gem 'launchy'
-    # gem 'selenium-webdriver'
     gem 'webdrivers'
     gem 'vcr'
     gem 'webmock'
