@@ -1,4 +1,4 @@
-class Screening < ActiveRecord::Base
+class Screening < ApplicationRecord
   validates_presence_of :user
   validates_presence_of :movie
 

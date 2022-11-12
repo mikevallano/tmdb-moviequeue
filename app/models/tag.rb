@@ -1,4 +1,4 @@
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
 
   validates :name, :uniqueness => :true, :presence => true, length: { maximum: 25 }
 

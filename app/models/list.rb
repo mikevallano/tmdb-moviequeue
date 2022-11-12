@@ -1,4 +1,4 @@
-class List < ActiveRecord::Base
+class List < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: [:history, :scoped], :scope => :owner
 
