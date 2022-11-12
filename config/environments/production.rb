@@ -4,6 +4,8 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
+  config.enable_dependency_loading = true
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
@@ -13,23 +15,6 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-
-  # This was sugested to be removed by the rails app:update task when upgrading to rails 5.1
-  config.action_mailer.smtp_settings = {
-     address: "smtp.sendgrid.net",
-     port: 587,
-     domain: 'heroku.com',
-     authentication: "plain",
-     enable_starttls_auto: true,
-     user_name: 'apikey',
-     password: ENV['SENDGRID_API_KEY']
-   }
-
-   # ActionMailer Config
-   config.action_mailer.default_url_options = { :host => 'http://www.flicksonlists.com/' }
-   config.action_mailer.delivery_method = :smtp
-   config.action_mailer.perform_deliveries = true
-   config.action_mailer.raise_delivery_errors = false
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
