@@ -2,11 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.7.6'
 gem 'puma', '4.3.12'
-gem 'rails', '5.0.7'
+gem 'rails', '5.1.7'
 gem 'pg', '~> 0.18'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
 
 gem 'bigdecimal', '1.3.5'
 gem 'jquery-rails'
@@ -25,7 +24,6 @@ gem 'stamp'
 gem 'sentry-raven'
 
 group :development do
-  gem 'web-console', '~> 2.0'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
