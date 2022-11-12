@@ -11,7 +11,7 @@ module Tmdb
         return { results: [] } if params[:query].present? && searchable_query(params[:query]).empty?
 
         api_path = build_url(endpoint, params)
-        response = open("#{BASE_URL}#{api_path}").read
+        response = URI.open("#{BASE_URL}#{api_path}").read
         JSON.parse(response, symbolize_names: true)
       end
 
