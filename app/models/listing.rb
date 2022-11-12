@@ -1,4 +1,4 @@
-class Listing < ActiveRecord::Base
+class Listing < ApplicationRecord
   belongs_to :list
   belongs_to :movie
   belongs_to :user

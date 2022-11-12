@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Movie < ActiveRecord::Base
+class Movie < ApplicationRecord
   self.per_page = 20
 
   extend FriendlyId

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.6'
 gem 'puma', '4.3.12'
-gem 'rails', '4.2.10'
+gem 'rails', '5.0.7'
 gem 'pg', '~> 0.18'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -34,7 +34,6 @@ group :development, :test do
   gem 'pry'
   gem 'ffaker'
   gem 'awesome_print'
-  gem 'quiet_assets'
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
@@ -46,6 +45,7 @@ group :development, :test do
 end
 
 group :test do
+    gem 'rails-controller-testing'
     gem 'shoulda-matchers'
     gem 'capybara'
     gem 'database_cleaner'

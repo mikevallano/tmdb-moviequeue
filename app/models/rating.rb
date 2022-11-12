@@ -1,4 +1,4 @@
-class Rating < ActiveRecord::Base
+class Rating < ApplicationRecord
   validates_presence_of :value
   validates :user_id, :uniqueness => { :scope => :movie_id }, :presence => true
   validates_presence_of :movie
