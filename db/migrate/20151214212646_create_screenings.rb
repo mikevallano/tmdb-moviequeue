@@ -1,4 +1,4 @@
-class CreateScreenings < ActiveRecord::Migration
+class CreateScreenings < ActiveRecord::Migration[5.1]
   def change
     create_table :screenings do |t|
       t.references :user, index: true, foreign_key: true
