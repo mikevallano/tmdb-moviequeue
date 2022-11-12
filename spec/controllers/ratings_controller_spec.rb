@@ -25,28 +25,28 @@ RSpec.describe RatingsController, type: :controller do
   shared_examples_for 'logged in access' do
     describe "GET #index" do
       it "assigns all ratings as @ratings" do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
         expect(assigns(:ratings)).to eq([rating])
       end
     end
 
     describe "GET #show" do
       it "assigns the requested rating as @rating" do
-        get :show, { :movie_id => movie.id, :id => rating.to_param }
+        get :show, params: { :movie_id => movie.id, :id => rating.to_param }
         expect(assigns(:rating)).to eq(rating)
       end
     end
 
     describe "GET #new" do
       it "assigns a new rating as @rating" do
-        get :new, { :movie_id => movie.id }
+        get :new, params: { :movie_id => movie.id }
         expect(assigns(:rating)).to be_a_new(Rating)
       end
     end
 
     describe "GET #edit" do
       it "assigns the requested rating as @rating" do
-        get :edit, { :movie_id => movie.id, :id => rating.to_param }
+        get :edit, params: { :movie_id => movie.id, :id => rating.to_param }
         expect(assigns(:rating)).to eq(rating)
       end
     end
@@ -55,30 +55,30 @@ RSpec.describe RatingsController, type: :controller do
       context "with valid params" do
         it "creates a new Rating" do
           expect {
-            post :create, { :rating => { user_id: user.id, movie_id: movie.id, value: 9 }, movie_id: movie.id }
+            post :create, params: { :rating => { user_id: user.id, movie_id: movie.id, value: 9 }, movie_id: movie.id }
           }.to change(Rating, :count).by(1)
         end
 
         it "assigns a newly created rating as @rating" do
-          post :create, { :rating => { user_id: user.id, movie_id: movie2.id, value: 9 }, movie_id: movie2.id }
+          post :create, params: { :rating => { user_id: user.id, movie_id: movie2.id, value: 9 }, movie_id: movie2.id }
           expect(assigns(:rating)).to be_a(Rating)
           expect(assigns(:rating)).to be_persisted
         end
 
         it "redirects to the movie" do
-          post :create, { :rating => { user_id: user.id, movie_id: movie3.id, value: 9 }, movie_id: movie3.id }
+          post :create, params: { :rating => { user_id: user.id, movie_id: movie3.id, value: 9 }, movie_id: movie3.id }
           expect(response).to redirect_to(movie_url(movie3))
         end
       end
 
       context "with invalid params" do
         it "assigns a newly created but unsaved rating as @rating" do
-          post :create, { :rating => invalid_attributes, movie_id: movie.id }
+          post :create, params: { :rating => invalid_attributes, movie_id: movie.id }
           expect(assigns(:rating)).to be_a_new(Rating)
         end
 
         it "re-renders the 'new' template" do
-          post :create, { :rating => invalid_attributes, movie_id: movie.id }
+          post :create, params: { :rating => invalid_attributes, movie_id: movie.id }
           expect(response).to render_template("new")
         end
       end
@@ -89,30 +89,30 @@ RSpec.describe RatingsController, type: :controller do
         let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 2) }
 
         it "updates the requested rating" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           rating.reload
           expect(rating.value).to eq(2)
         end
 
         it "assigns the requested rating as @rating" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           expect(assigns(:rating)).to eq(rating)
         end
 
         it "redirects to the movie" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
           expect(response).to redirect_to(movie_path(movie))
         end
       end
 
       context "with invalid params" do
         it "assigns the rating as @rating" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
           expect(assigns(:rating)).to eq(rating)
         end
 
         it "re-renders the 'edit' template" do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
           expect(response).to render_template("edit")
         end
       end
@@ -122,12 +122,12 @@ RSpec.describe RatingsController, type: :controller do
       it "destroys the requested rating" do
         rating
         expect {
-          delete :destroy, { :id => rating.id, movie_id: movie.id }
+          delete :destroy, params: { :id => rating.id, movie_id: movie.id }
         }.to change(Rating, :count).by(-1)
       end
 
       it "redirects to the movie" do
-        delete :destroy, { :id => rating.to_param, movie_id: movie.id }
+        delete :destroy, params: { :id => rating.to_param, movie_id: movie.id }
         expect(response).to redirect_to(movie_url(movie))
       end
     end
@@ -137,28 +137,28 @@ RSpec.describe RatingsController, type: :controller do
   shared_examples_for 'restricted access when not logged in' do
     describe "GET #index" do
       before(:example) do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
       end
       it { is_expected.to redirect_to new_user_session_path }
     end
 
     describe "GET #show" do
       before(:example) do
-        get :show, { :movie_id => movie.id, :id => rating.to_param }
+        get :show, params: { :movie_id => movie.id, :id => rating.to_param }
       end
         it { is_expected.to redirect_to new_user_session_path }
     end
 
     describe "GET #new" do
       before(:example) do
-        get :new, { :movie_id => movie.id }
+        get :new, params: { :movie_id => movie.id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
 
     describe "GET #edit" do
       before(:example) do
-        get :edit, { :movie_id => movie.id, :id => rating.to_param }
+        get :edit, params: { :movie_id => movie.id, :id => rating.to_param }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
@@ -166,14 +166,14 @@ RSpec.describe RatingsController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-         post :create, { :rating => { user_id: user.id, movie_id: movie.id, value: 9 }, movie_id: movie.id }
+         post :create, params: { :rating => { user_id: user.id, movie_id: movie.id, value: 9 }, movie_id: movie.id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
 
       context "with invalid params" do
         before(:example) do
-          post :create, { :rating => invalid_attributes, movie_id: movie.id }
+          post :create, params: { :rating => invalid_attributes, movie_id: movie.id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -184,7 +184,7 @@ RSpec.describe RatingsController, type: :controller do
         let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 5) }
 
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => new_attributes }
         end
 
        it { is_expected.to redirect_to new_user_session_path }
@@ -192,7 +192,7 @@ RSpec.describe RatingsController, type: :controller do
 
       context "with invalid params" do
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating.to_param, :rating => invalid_attributes }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -200,7 +200,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "DELETE #destroy" do
       before(:example) do
-        delete :destroy, { :id => rating.id, movie_id: movie.id }
+        delete :destroy, params: { :id => rating.id, movie_id: movie.id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
@@ -210,21 +210,21 @@ RSpec.describe RatingsController, type: :controller do
   shared_examples_for 'users can only access their own ratings' do
     describe "GET #index" do
       it "ratings index page shows all users' ratings" do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
         expect(assigns(:ratings)).to include(rating2)
       end
     end
 
     describe "GET #show" do
       before(:example) do
-        get :show, { :movie_id => movie.id, :id => rating2.to_param }
+        get :show, params: { :movie_id => movie.id, :id => rating2.to_param }
       end
      it { is_expected.to redirect_to(movie_path(movie))}
     end
 
     describe "GET #edit" do
       before(:example) do
-        get :edit, { :movie_id => movie.id, :id => rating2.to_param }
+        get :edit, params: { :movie_id => movie.id, :id => rating2.to_param }
       end
      it { is_expected.to redirect_to(movie_path(movie))}
     end
@@ -233,14 +233,14 @@ RSpec.describe RatingsController, type: :controller do
       context "with valid params" do
         let(:new_attributes) { FactoryBot.attributes_for(:rating, value: 5) }
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating2.to_param, :rating => new_attributes }
         end
        it { is_expected.to redirect_to(movie_path(movie))}
       end
 
       context "with invalid params" do
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => rating2.to_param, :rating => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => rating2.to_param, :rating => invalid_attributes }
         end
        it { is_expected.to redirect_to(movie_path(movie))}
       end
@@ -248,7 +248,7 @@ RSpec.describe RatingsController, type: :controller do
 
     describe "DELETE #destroy" do
       before(:example) do
-        delete :destroy, { :id => rating2.id, movie_id: movie.id }
+        delete :destroy, params: { :id => rating2.id, movie_id: movie.id }
       end
       it { is_expected.to redirect_to(movie_path(movie))}
     end

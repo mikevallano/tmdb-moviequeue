@@ -24,21 +24,21 @@ RSpec.describe ScreeningsController, type: :controller do
   shared_examples_for 'logged in access' do
     describe "GET #index" do
       it "assigns all screenings as @screenings" do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
         expect(assigns(:screenings)).to eq([screening])
       end
     end
 
     describe "GET #new" do
       it "assigns a new screening as @screening" do
-        get :new, { :movie_id => movie.id }
+        get :new, params: { :movie_id => movie.id }
         expect(assigns(:screening)).to be_a_new(Screening)
       end
     end
 
     describe "GET #edit" do
       it "assigns the requested screening as @screening" do
-        get :edit, { :movie_id => movie.id, :id => screening.to_param }
+        get :edit, params: { :movie_id => movie.id, :id => screening.to_param }
         expect(assigns(:screening)).to eq(screening)
       end
     end
@@ -47,18 +47,18 @@ RSpec.describe ScreeningsController, type: :controller do
       context "with valid params" do
         it "creates a new Screening" do
           expect {
-            post :create, { :screening => valid_attributes, movie_id: movie.id }
+            post :create, params: { :screening => valid_attributes, movie_id: movie.id }
           }.to change(Screening, :count).by(1)
         end
 
         it "assigns a newly created screening as @screening" do
-          post :create, { :screening => valid_attributes, movie_id: movie.id }
+          post :create, params: { :screening => valid_attributes, movie_id: movie.id }
           expect(assigns(:screening)).to be_a(Screening)
           expect(assigns(:screening)).to be_persisted
         end
 
         it "redirects to screenings index" do
-          post :create, { :screening => valid_attributes, movie_id: movie.id }
+          post :create, params: { :screening => valid_attributes, movie_id: movie.id }
           expect(response).to redirect_to(movie_screenings_path(movie))
         end
       end
@@ -66,7 +66,7 @@ RSpec.describe ScreeningsController, type: :controller do
       context "with invalid params" do
         it "if no movie_id is passed, it raises an error" do
           expect {
-          post :create, { :screening => invalid_attributes, movie_id: nil }
+          post :create, params: { :screening => invalid_attributes, movie_id: nil }
           }.to raise_error
         end
       end
@@ -77,25 +77,25 @@ RSpec.describe ScreeningsController, type: :controller do
         let(:new_attributes) { FactoryBot.attributes_for(:screening, notes: "epic notes!") }
 
         it "updates the requested screening" do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
           screening.reload
           expect(screening.notes).to eq("epic notes!")
         end
 
         it "assigns the requested screening as @screening" do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => valid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => valid_attributes }
           expect(assigns(:screening)).to eq(screening)
         end
 
         it "redirects to screenings index" do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => valid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => valid_attributes }
           expect(response).to redirect_to(movie_screenings_path(movie))
         end
       end
 
       context "with invalid params" do
         it "assigns the screening as @screening" do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
           expect(assigns(:screening)).to eq(screening)
         end
       end
@@ -104,12 +104,12 @@ RSpec.describe ScreeningsController, type: :controller do
     describe "DELETE #destroy" do
       it "destroys the requested screening" do
         expect {
-          delete :destroy, { :id => screening.id, movie_id: movie.id }
+          delete :destroy, params: { :id => screening.id, movie_id: movie.id }
         }.to change(Screening, :count).by(-1)
       end
 
       it "redirects to screenings index" do
-        delete :destroy, { :id => screening.to_param, movie_id: movie.id }
+        delete :destroy, params: { :id => screening.to_param, movie_id: movie.id }
         expect(response).to redirect_to(movie_screenings_path(movie))
       end
     end
@@ -119,21 +119,21 @@ RSpec.describe ScreeningsController, type: :controller do
   shared_examples_for 'restricted access when not logged in' do
     describe "GET #index" do
       before(:example) do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
       end
       it { is_expected.to redirect_to new_user_session_path }
     end
 
     describe "GET #new" do
       before(:example) do
-        get :new, { :movie_id => movie.id }
+        get :new, params: { :movie_id => movie.id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
 
     describe "GET #edit" do
       before(:example) do
-        get :edit, { :movie_id => movie.id, :id => screening.to_param }
+        get :edit, params: { :movie_id => movie.id, :id => screening.to_param }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
@@ -141,14 +141,14 @@ RSpec.describe ScreeningsController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-         post :create, { :screening => valid_attributes, movie_id: movie.id }
+         post :create, params: { :screening => valid_attributes, movie_id: movie.id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
 
       context "with invalid params" do
         before(:example) do
-          post :create, { :screening => invalid_attributes, movie_id: movie.id }
+          post :create, params: { :screening => invalid_attributes, movie_id: movie.id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -159,7 +159,7 @@ RSpec.describe ScreeningsController, type: :controller do
         let(:new_attributes) { FactoryBot.attributes_for(:screening, notes: "epic notes!") }
 
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => new_attributes }
         end
 
        it { is_expected.to redirect_to new_user_session_path }
@@ -167,7 +167,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
       context "with invalid params" do
         before(:example) do
-          put :update, { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
+          put :update, params: { :movie_id => movie.id, :id => screening.to_param, :screening => invalid_attributes }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -175,7 +175,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
     describe "DELETE #destroy" do
       before(:example) do
-        delete :destroy, { :id => screening.id, movie_id: movie.id }
+        delete :destroy, params: { :id => screening.id, movie_id: movie.id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
@@ -185,7 +185,7 @@ RSpec.describe ScreeningsController, type: :controller do
   shared_examples_for 'users can only access their own screenings' do
     describe "GET #index" do
       it "screenings index page shows only current users' screenings" do
-        get :index, { :movie_id => movie.id }
+        get :index, params: { :movie_id => movie.id }
         expect(assigns(:screenings)).to eq([screening])
         expect(assigns(:screenings)).not_to include(screening2)
       end
@@ -194,7 +194,7 @@ RSpec.describe ScreeningsController, type: :controller do
     describe "GET #edit" do
      it "it raises an exception if user visits another users edit review page" do
         expect {
-          get :edit, { :movie_id => movie.id, :id => screening2.to_param }
+          get :edit, params: { :movie_id => movie.id, :id => screening2.to_param }
           }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
@@ -205,7 +205,7 @@ RSpec.describe ScreeningsController, type: :controller do
 
         it "it raises an exception if user tries to update another users's screening"  do
           expect {
-            put :update, { :movie_id => movie.id, :id => screening2.to_param, :screening => new_attributes }
+            put :update, params: { :movie_id => movie.id, :id => screening2.to_param, :screening => new_attributes }
             }.to raise_exception(ActiveRecord::RecordNotFound)
         end
       end
@@ -213,7 +213,7 @@ RSpec.describe ScreeningsController, type: :controller do
       context "with invalid params" do
         it "it raises an exception if user tries to update another users's screening" do
           expect {
-            put :update, { :movie_id => movie.id, :id => screening2.to_param, :screening => invalid_attributes }
+            put :update, params: { :movie_id => movie.id, :id => screening2.to_param, :screening => invalid_attributes }
             }.to raise_exception(ActiveRecord::RecordNotFound)
         end
       end
@@ -222,7 +222,7 @@ RSpec.describe ScreeningsController, type: :controller do
     describe "DELETE #destroy" do
      it "it raises an exception if user tries to delete another user's screening" do
         expect {
-          delete :destroy, { :id => screening2.id, movie_id: movie.id }
+          delete :destroy, params: { :id => screening2.id, movie_id: movie.id }
           }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end

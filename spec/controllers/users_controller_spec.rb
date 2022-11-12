@@ -15,7 +15,7 @@ RSpec.describe UsersController, type: :controller do
 
     describe "GET #show" do
       it "returns http success" do
-        get :show, { :id => user.to_param }
+        get :show, params: { :id => user.to_param }
         expect(response).to have_http_status(:success)
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe UsersController, type: :controller do
     describe "Users can't access other users' profile page" do
       before(:example) do
         current_user2
-        get :show, { :id => user.to_param }
+        get :show, params: { :id => user.to_param }
       end
       it { is_expected.to redirect_to root_path }
     end
@@ -39,7 +39,7 @@ RSpec.describe UsersController, type: :controller do
 
     describe "GET #show" do
       before(:example) do
-        get :show, { :id => user.to_param }
+        get :show, params: { :id => user.to_param }
       end
         it { is_expected.to redirect_to new_user_session_path }
     end

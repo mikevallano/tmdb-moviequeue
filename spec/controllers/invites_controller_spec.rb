@@ -23,25 +23,25 @@ RSpec.describe InvitesController, type: :controller do
       context "with valid params" do
         it "creates a new Invite" do
           expect {
-            post :create, { :invite => valid_attributes }
+            post :create, params: { :invite => valid_attributes }
           }.to change(Invite, :count).by(1)
         end
 
         it "assigns a newly created invite as @invite" do
-          post :create, { :invite => valid_attributes }
+          post :create, params: { :invite => valid_attributes }
           expect(assigns(:invite)).to be_a(Invite)
           expect(assigns(:invite)).to be_persisted
         end
 
         it "redirects to the created invite" do
-          post :create, :invite => valid_attributes
+          post :create, params: { :invite => valid_attributes }
           expect(response).to redirect_to(user_list_path(invite.sender, invite.list))
         end
       end #valid params context
 
       context "with invalid params" do
         it "redirects the user back to the list page" do
-          post :create, { :invite => invalid_attributes }
+          post :create, params: { :invite => invalid_attributes }
           expect(response).to redirect_to(user_list_path(invite.sender, invite.list))
         end
       end #invalid params context
@@ -57,14 +57,14 @@ RSpec.describe InvitesController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-         post :create, :invite => valid_attributes
+         post :create, params: { :invite => valid_attributes }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
 
       context "with invalid params" do
         before(:example) do
-          post :create, :invite => invalid_attributes
+          post :create, params: { :invite => invalid_attributes }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
