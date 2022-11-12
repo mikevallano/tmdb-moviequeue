@@ -27,12 +27,6 @@ RSpec.describe InvitesController, type: :controller do
           }.to change(Invite, :count).by(1)
         end
 
-        it "assigns a newly created invite as @invite" do
-          post :create, params: { :invite => valid_attributes }
-          expect(assigns(:invite)).to be_a(Invite)
-          expect(assigns(:invite)).to be_persisted
-        end
-
         it "redirects to the created invite" do
           post :create, params: { :invite => valid_attributes }
           expect(response).to redirect_to(user_list_path(invite.sender, invite.list))

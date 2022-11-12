@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :list do
-    owner_id { 1 }
+    association :owner, factory: :user
     sequence(:name) { |n| "list name#{n}" }
     is_main { false }
     is_public { false }

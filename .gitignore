@@ -12,6 +12,7 @@
 !/log/.keep
 /tmp
 
+.DS_Store
 rubberduck.txt
 tester.rb
 tester2.rb

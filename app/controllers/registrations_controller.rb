@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
-  prepend_before_filter :require_no_authentication, only: [:new, :create, :cancel]
-  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy]
+  prepend_before_action :require_no_authentication, only: [:new, :create, :cancel]
+  prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy]
   after_action :add_queue
 
   # GET /resource/sign_up
@@ -71,6 +71,7 @@ class RegistrationsController < Devise::RegistrationsController
           :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key
       end
+      # bypass_sign_in(user)
       sign_in resource_name, resource, bypass: true
       respond_with resource, location: after_update_path_for(resource)
     else
