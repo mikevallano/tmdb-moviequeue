@@ -67,7 +67,7 @@ RSpec.describe ScreeningsController, type: :controller do
         it "if no movie_id is passed, it raises an error" do
           expect {
           post :create, params: { :screening => invalid_attributes, movie_id: nil }
-          }.to raise_error
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
