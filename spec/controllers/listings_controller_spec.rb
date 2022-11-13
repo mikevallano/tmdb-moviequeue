@@ -21,14 +21,14 @@ RSpec.describe ListingsController, type: :controller do
     describe "GET #create" do
       it "creates a new listing" do
         expect {
-          post :create, :listing => { movie_id: movie2.id, list_id: list.id, user_id: user.id }, tmdb_id: tmdb_id2
+          post :create, params: { listing: { movie_id: movie2.id, list_id: list.id, user_id: user.id }, tmdb_id: tmdb_id2 }
         }.to change(Listing, :count).by(1)
       end
     end
 
     describe "PUT #update" do
       it "updates the priority" do
-        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
+        put :update, params: { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
         listing.reload
         expect(listing.priority).to eq(4)
       end
@@ -37,12 +37,12 @@ RSpec.describe ListingsController, type: :controller do
     describe "GET #destroy" do
       it "destroys the requested listing" do
         expect {
-            delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+            delete :destroy, params: { :list_id => listing.list_id, movie_id: listing.movie_id }
           }.to change(Listing, :count).by(-1)
       end
 
       it "redirects to movies path after deleting" do
-        delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+        delete :destroy, params: { :list_id => listing.list_id, movie_id: listing.movie_id }
         expect(response).to redirect_to(user_list_path(listing.list.owner, listing.list))
       end
     end
@@ -54,14 +54,14 @@ RSpec.describe ListingsController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         before(:example) do
-         post :create, :listing => { movie_id: movie.id }, tmdb_id: tmdb_id
+         post :create, params: { listing: { movie_id: movie.id }, tmdb_id: tmdb_id }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
 
       context "with invalid params" do
         before(:example) do
-          post :create, :listing => { movie_id: nil }, tmdb_id: nil
+          post :create, params: { listing: { movie_id: nil }, tmdb_id: nil }
         end
         it { is_expected.to redirect_to new_user_session_path }
       end
@@ -69,7 +69,7 @@ RSpec.describe ListingsController, type: :controller do
 
     describe "PUT #update" do
       before(:example) do
-        put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
+        put :update, params: { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
       end
 
      it { is_expected.to redirect_to new_user_session_path }
@@ -77,7 +77,7 @@ RSpec.describe ListingsController, type: :controller do
 
     describe "DELETE #destroy" do
       before(:example) do
-        delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+        delete :destroy, params: { :list_id => listing.list_id, movie_id: listing.movie_id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
@@ -87,7 +87,7 @@ RSpec.describe ListingsController, type: :controller do
   shared_examples_for "does not let a user update or delete another users listing" do
 
     it "doesn't let a user update another user's listing" do
-      put :update, { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
+      put :update, params: { :list_id => listing.list_id, movie_id: listing.movie_id, priority: 4}
       expect(response).to redirect_to(user_lists_path(user2))
       listing.reload
       expect(listing.priority).not_to eq(4)
@@ -95,12 +95,12 @@ RSpec.describe ListingsController, type: :controller do
 
     it "doesn't let a user destroy another user's listing" do
       expect {
-          delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+          delete :destroy, params: { :list_id => listing.list_id, movie_id: listing.movie_id }
         }.to change(Listing, :count).by(0)
     end
 
     it "redirects the wrong user trying to update another user's listing" do
-      delete :destroy, { :list_id => listing.list_id, movie_id: listing.movie_id }
+      delete :destroy, params: { :list_id => listing.list_id, movie_id: listing.movie_id }
       expect(response).to redirect_to(user_lists_path(user2))
     end
 

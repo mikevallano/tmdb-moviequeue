@@ -1,6 +1,6 @@
 class Invite < ApplicationRecord
-  belongs_to :sender, :class_name => "User"
-  belongs_to :receiver, :class_name => "User"
+  belongs_to :sender, class_name: 'User'
+  belongs_to :receiver, class_name: 'User', optional: true
   belongs_to :list
 
   validates_presence_of :email

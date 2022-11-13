@@ -22,7 +22,7 @@ RSpec.describe MoviesController, type: :controller do
 
     describe "GET #show" do
       it "assigns the requested movie as @movie" do
-        get :show, {id: movie.to_param}
+        get :show, params: {id: movie.to_param}
         expect(assigns(:movie)).to eq(movie)
       end
     end
@@ -32,33 +32,41 @@ RSpec.describe MoviesController, type: :controller do
         let(:current_user) { login_with(admin_user) }
         it 'updates the movie' do
           patch :update,
-                { id: movie.id,
-                  tmdb_id: movie.tmdb_id,
-                  trailer: youtube_id }
+                  params: {
+                    id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: youtube_id
+                  }
           expect(movie.reload.trailer).to eq(youtube_id)
         end
 
         it 'strips full youtube url' do
           patch :update,
-                { id: movie.id,
-                  tmdb_id: movie.tmdb_id,
-                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
+                  params: {
+                    id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: "https://www.youtube.com/watch?v=#{youtube_id}"
+                  }
           expect(movie.reload.trailer).to eq(youtube_id)
         end
 
         it 'strips youtube url with additional params' do
           patch :update,
-                { id: movie.id,
-                  tmdb_id: movie.tmdb_id,
-                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}&ab_channel=A24" }
+                  params: {
+                    id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: "https://www.youtube.com/watch?v=#{youtube_id}&ab_channel=A24"
+                  }
           expect(movie.reload.trailer).to eq(youtube_id)
         end
 
         it 'redirects to the movie show page, trailer-section' do
           patch :update,
-                { id: movie.id,
-                  tmdb_id: movie.tmdb_id,
-                  trailer: "https://www.youtube.com/watch?v=#{youtube_id}" }
+                  params: {
+                    id: movie.id,
+                    tmdb_id: movie.tmdb_id,
+                    trailer: "https://www.youtube.com/watch?v=#{youtube_id}"
+                  }
           expect(response).to redirect_to(movie_path(movie, anchor: 'trailer-section'))
         end
 
@@ -71,18 +79,22 @@ RSpec.describe MoviesController, type: :controller do
           it 'leaves non-youtube urls as-is' do
             trailer = 'https://www.example.com'
             patch :update,
-                  { id: movie.id,
-                    tmdb_id: movie.tmdb_id,
-                    trailer: trailer }
+                    params: {
+                      id: movie.id,
+                      tmdb_id: movie.tmdb_id,
+                      trailer: trailer
+                    }
             expect(movie.reload.trailer).to eq(trailer)
           end
 
           it 'handles empty trailer urls' do
             trailer = ''
             patch :update,
-                  { id: movie.id,
-                    tmdb_id: movie.tmdb_id,
-                    trailer: trailer }
+                    params: {
+                      id: movie.id,
+                      tmdb_id: movie.tmdb_id,
+                      trailer: trailer
+                    }
             expect(movie.reload.trailer).to eq(trailer)
           end
         end
@@ -93,9 +105,11 @@ RSpec.describe MoviesController, type: :controller do
         it 'does not update the movie' do
           @request.env['HTTP_REFERER'] = movie_path(movie)
           patch :update,
-                  { id: movie.id,
+                  params: {
+                    id: movie.id,
                     tmdb_id: movie.tmdb_id,
-                    trailer: youtube_id }
+                    trailer: youtube_id
+                  }
             expect(movie.reload.trailer).not_to eq(youtube_id)
             expect(response).to redirect_to(movie_path(movie))
             expect(flash[:alert]).to eq('Must be an admin to access that feature')
@@ -118,7 +132,7 @@ RSpec.describe MoviesController, type: :controller do
     describe "GET #show" do
       before(:example) do
         movie
-        get :show, {id: movie.to_param}
+        get :show, params: {id: movie.to_param}
       end
         it { is_expected.to redirect_to new_user_session_path }
     end

@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :invite do
     email { FFaker::Internet.email }
-    sender_id { 1 }
-    receiver_id { 2 }
+    association :sender, factory: :user
+    association :receiver, factory: :user
     token { 'token1234' }
     list
 

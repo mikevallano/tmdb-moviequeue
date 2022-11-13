@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def restrict_to_admin!
     return if current_user.admin?
-    redirect_to :back, alert: 'Must be an admin to access that feature'
+    redirect_back(fallback_location: root_path, alert: 'Must be an admin to access that feature')
   end
 
   def configure_permitted_parameters

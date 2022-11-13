@@ -30,6 +30,7 @@ RSpec.describe List, type: :model do
     end
 
     it "belongs has an owner_id" do
+      list.save
       expect(list.owner_id).not_to be nil
     end
 

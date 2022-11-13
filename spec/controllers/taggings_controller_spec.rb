@@ -17,7 +17,7 @@ RSpec.describe TaggingsController, type: :controller do
         current_user
         movie
         expect {
-          post :create, tagging: {}, movie_id: movie.id, tag_list: tag_list
+          post :create, params: { tagging: {}, movie_id: movie.id, tag_list: tag_list }
         }.to change(Tagging, :count).by(2)
       end
 
@@ -25,11 +25,11 @@ RSpec.describe TaggingsController, type: :controller do
         current_user
         movie
         expect {
-          post :create, tagging: {}, movie_id: movie.id, tag_list: tag_list
+          post :create, params: { tagging: {}, movie_id: movie.id, tag_list: tag_list }
         }.to change(Tagging, :count).by(2)
 
         expect {
-          post :create, tagging: {}, movie_id: movie.id, tag_list: tag_list
+          post :create, params: { tagging: {}, movie_id: movie.id, tag_list: tag_list }
         }.to change(Tagging, :count).by(0)
 
       end
@@ -37,7 +37,7 @@ RSpec.describe TaggingsController, type: :controller do
       it "redirects to movie by default" do
         current_user
         movie
-        post :create, tagging: {}, movie_id: movie.id, tag_list: tag_list
+        post :create, params: { tagging: {}, movie_id: movie.id, tag_list: tag_list }
 
         expect(response).to redirect_to(movie_path(movie)) #redirects to movie by default
       end
@@ -49,7 +49,7 @@ RSpec.describe TaggingsController, type: :controller do
         tagging
 
         expect {
-            delete :destroy, { tag_id: tagging.tag_id, movie_id: tagging.movie_id, format: :js }
+            delete :destroy, params: { tag_id: tagging.tag_id, movie_id: tagging.movie_id, format: :js }
           }.to change(Tagging, :count).by(-1)
       end
 
@@ -57,7 +57,7 @@ RSpec.describe TaggingsController, type: :controller do
         current_user
         tagging
 
-        delete :destroy, { tag_id: 0, movie_id: tagging.movie_id, format: :js }
+        delete :destroy, params: { tag_id: 0, movie_id: tagging.movie_id, format: :js }
         expect(assigns(:error)).to be_present
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe TaggingsController, type: :controller do
     describe "POST #create" do
       before(:example) do
         invalid_user
-        post :create, tagging: {}, movie_id: movie.id, tag_list: tag_list
+        post :create, params: { tagging: {}, movie_id: movie.id, tag_list: tag_list }
       end
       it { is_expected.to redirect_to new_user_session_path }
     end
@@ -78,7 +78,7 @@ RSpec.describe TaggingsController, type: :controller do
       before(:example) do
         invalid_user
         tagging
-        delete :destroy, { tag_id: tagging.tag_id, movie_id: tagging.movie_id }
+        delete :destroy, params: { tag_id: tagging.tag_id, movie_id: tagging.movie_id }
       end
      it { is_expected.to redirect_to new_user_session_path }
     end
