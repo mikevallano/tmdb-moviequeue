@@ -12,6 +12,11 @@
 !/log/.keep
 /tmp
 
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
 .DS_Store
 rubberduck.txt
 tester.rb
