@@ -23,6 +23,9 @@ gem 'rack-mini-profiler'
 gem 'stamp'
 gem 'sentry-raven'
 
+# Use ActiveStorage variant
+# gem 'mini_magick', '~> 4.8'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
