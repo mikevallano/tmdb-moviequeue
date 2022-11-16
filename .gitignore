@@ -12,6 +12,17 @@
 !/log/.keep
 /tmp
 
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+
+
 .DS_Store
 rubberduck.txt
 tester.rb
@@ -23,3 +34,6 @@ coverage/
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
