@@ -15,13 +15,9 @@
 
 * The site is available at [http://www.flicksonlists.com/](http://www.flicksonlists.com/)
 
-* Ruby version: 2.5.3
+* See gemfile for rails/ruby versions.
 
-* Rails version: 4.2.10
-
-* PostgreSQL v9.3.4
-
-* No special database setup instructions. `$ rake db:setup` will do it.
+* No special database setup instructions. `$ rails db:setup` will do it.
 
 * No special server info. It's using Puma, and `$ rails s` will do it.
 
@@ -34,7 +30,7 @@
 * The data is gathered from the awesome API available from TMDB: <https://www.themoviedb.org/documentation/api>, which is managed in the tmdb_controller and the tmdb_handler module in the lib directory. You will need to sign up at TMDB and get your own API key, which is referenced as an environment variable throughout this project.
 
 ## Creators and Maintainers:
-This site was built to solve our own problem of movie management, which started as a crappy Google sheet, then evolved to a very basic Rails app, to what it is here in all its glory.  The other puropse was to build a Rails app that showcased our Rails skills. "We" are [Mike](https://github.com/mikevallano?tab=repositories) (back end) and [Anne](https://github.com/lortza?tab=repositories) (front end).
+This site was built to solve our own problem of movie management, which started as a crappy Google sheet, then evolved to a Rails app.  The other puropse was to build a Rails app that showcased our Rails skills. "We" are [Mike](https://github.com/mikevallano?tab=repositories) (back end) and [Anne](https://github.com/lortza?tab=repositories) (front end).
 
 ## Wiki
 
