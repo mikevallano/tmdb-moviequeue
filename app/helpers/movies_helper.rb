@@ -74,8 +74,9 @@ module MoviesHelper
   private
 
   def movie_actors_display(movie, qty)
-    raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link'
+    raw(movie.actors.first(qty).map do |actor_name|
+      # link_to actor_name, actor_search_path(actor: I18n.transliterate(actor_name)), class: 'cast-name-link'
+      link_to actor_name, actor_more_path(actor_id: nil, actor_name: actor_name), class: 'cast-name-link'
     end.join(""))
   end
 

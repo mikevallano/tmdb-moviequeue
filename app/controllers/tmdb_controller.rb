@@ -77,7 +77,12 @@ class TmdbController < ApplicationController
   end
 
   def actor_more
-    actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
+    actor_id = if params[:actor_name].present?
+      PersonDataService.get_person_id(params[:actor_name])
+    else
+      params[:actor_id]
+    end
+    actor_data = PersonDataService.get_person_profile_data(actor_id)
     movies_seen = current_user.watched_movies.pluck(:tmdb_id)
     actor_movies_seen = actor_data.movie_credits.actor.select { |m| movies_seen.include?(m.tmdb_id) }
 
