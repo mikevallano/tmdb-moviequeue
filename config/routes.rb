@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Blazer::Engine, at: "blazer"
   root 'pages#home'
 
   devise_for :users, :controllers => {:registrations => "registrations"}
