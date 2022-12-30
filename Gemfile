@@ -22,6 +22,7 @@ gem 'coveralls', '0.8.11', require: false
 gem 'rack-mini-profiler'
 gem 'stamp'
 gem 'sentry-raven'
+gem 'blazer' # SQL admin interface
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
