@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVCreditSeason
   attr_accessor :air_date, :episode_count, :id, :name, :overview, :poster_path, :season_number, :show_id
 
@@ -12,14 +14,14 @@ class TVCreditSeason
     @show_id = show_id
   end
 
-  def self.parse_records(json)
-    json.map do |record|
+  def self.parse_records(records)
+    records.map do |record|
       parse_record(record)
     end.sort_by { |r| r.season_number }
   end
 
   def self.parse_record(record)
-    air_date = Date.parse(record[:air_date]).stamp("1/2/2001") if record[:air_date].present?
+    air_date = Date.parse(record[:air_date]).stamp('1/2/2001') if record[:air_date].present?
     new(
       air_date: air_date,
       episode_count: record[:episode_count],

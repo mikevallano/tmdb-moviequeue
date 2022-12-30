@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVActorCredit
   attr_accessor :show_name, :show_id, :actor_name, :actor_id, :character, :seasons, :episodes, :profile_path, :known_for
 

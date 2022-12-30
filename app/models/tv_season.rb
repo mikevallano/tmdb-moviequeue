@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVSeason
   attr_accessor :series, :show_id, :air_date, :name, :overview, :season_id, :poster_path, :season_number, :credits, :cast_members, :episodes
 
