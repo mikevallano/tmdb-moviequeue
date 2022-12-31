@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVCastMember
   attr_accessor :actor_id, :credit_id, :name, :character_name, :profile_path, :order
 
@@ -21,8 +23,8 @@ class TVCastMember
     )
   end
 
-  def self.parse_records(json)
-    json.map do |record|
+  def self.parse_records(records)
+    records.map do |record|
       parse_record(record)
     end.sort_by { |r| r.order }
   end

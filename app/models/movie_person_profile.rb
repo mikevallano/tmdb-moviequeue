@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class MoviePersonProfile
+  attr_accessor :person_id, :name, :bio, :birthday, :deathday, :profile_path
+
   def initialize(args)
     @person_id = args[:person_id]
     @profile_path = args[:profile_path]
@@ -8,8 +12,6 @@ class MoviePersonProfile
     @deathday = args[:deathday]
   end
 
-  attr_accessor :person_id, :name, :bio, :birthday, :deathday, :profile_path
-
   WIKIPEDIA_CREDIT = {
     starting: 'From Wikipedia, the free encyclopedia.',
     trailing: 'Description above from Wikipedia.',
@@ -18,7 +20,7 @@ class MoviePersonProfile
 
   class << self
     def parse_result(result)
-      MoviePersonProfile.new(
+      new(
         person_id: result[:id],
         profile_path: result[:profile_path],
         name: result[:name],
@@ -27,6 +29,8 @@ class MoviePersonProfile
         deathday: parse_date(result[:deathday])
       )
     end
+
+    private
 
     def parse_bio(biography)
       return 'Bio not available.' if biography.blank?

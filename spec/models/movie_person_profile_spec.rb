@@ -92,16 +92,16 @@ RSpec.describe MoviePersonProfile, type: :model do
     end
   end
 
-  describe '.parse_bio' do
+  describe 'private.parse_bio' do
     it 'returns a biography if one is present' do
       bio = results_for_known_person[:biography]
 
-      expect(MoviePersonProfile.parse_bio(bio).present?).to be true
+      expect(MoviePersonProfile.send(:parse_bio, bio).present?).to be true
     end
 
     it 'returns a "not available" message if no bio is present' do
       bio = results_for_known_person_without_details[:biography]
-      parsed_bio = MoviePersonProfile.parse_bio(bio.clone)
+      parsed_bio = MoviePersonProfile.send(:parse_bio, bio.clone)
       message = 'not available'
 
       expect(parsed_bio.downcase.include?(message)).to be true
@@ -109,71 +109,72 @@ RSpec.describe MoviePersonProfile, type: :model do
 
     it 'replaces carriage returns with <br>' do
       bio = results_for_known_person[:biography]
-      parsed_bio = MoviePersonProfile.parse_bio(bio.clone)
+      parsed_bio = MoviePersonProfile.send(:parse_bio, bio.clone)
 
       expect(parsed_bio.downcase.include?('<br>')).to be true
       expect(parsed_bio.downcase.include?("\r\n")).to be false
     end
   end
 
-  describe '.standardize_wikipedia_credit' do
+  describe 'private.standardize_wikipedia_credit' do
     it 'removes starting Wikipedia credit if there is one' do
       bio = results_for_known_person[:biography]
-      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+      stripped_bio = MoviePersonProfile.send(:standardize_wikipedia_credit, bio.clone)
 
       expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:starting])).to be false
     end
 
     it 'removes trailing Wikipedia credit if there is one' do
       bio = results_for_known_person[:biography]
-      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+      stripped_bio = MoviePersonProfile.send(:standardize_wikipedia_credit, bio.clone)
 
       expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing])).to be false
     end
 
     it 'appends "Bio from Wikipedia" if there were any Wikipedia credits' do
       bio = results_for_known_person[:biography]
-      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+      stripped_bio = MoviePersonProfile.send(:standardize_wikipedia_credit, bio.clone)
 
       expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:standard])).to be true
     end
 
     it 'appends nothing if there were not any Wikipedia credits' do
       bio = results_for_unknown_person[:biography]
-      stripped_bio = MoviePersonProfile.standardize_wikipedia_credit(bio.clone)
+      stripped_bio = MoviePersonProfile.send(:standardize_wikipedia_credit, bio.clone)
 
       expect(stripped_bio.include?(MoviePersonProfile::WIKIPEDIA_CREDIT[:standard])).to be false
     end
   end
 
-  describe '.wikipedia_credit?' do
+  describe 'private.wikipedia_credit?' do
     it 'returns true if a starting Wikipedia credit exists' do
       bio = "#{MoviePersonProfile::WIKIPEDIA_CREDIT[:starting]} Bio Goes here."
-      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
+
+      expect(MoviePersonProfile.send(:wikipedia_credit?, bio)).to be true
     end
 
     it 'returns true if a trailing Wikipedia credit exists' do
       bio = "Bio Goes here. #{MoviePersonProfile::WIKIPEDIA_CREDIT[:trailing]}"
-      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be true
+      expect(MoviePersonProfile.send(:wikipedia_credit?, bio)).to be true
     end
 
     it 'returns false if there is no credit for Wikipedia' do
       bio = 'Bio Goes here.'
-      expect(MoviePersonProfile.wikipedia_credit?(bio)).to be false
+      expect(MoviePersonProfile.send(:wikipedia_credit?, bio)).to be false
     end
   end
 
-  describe '.parse_date' do
+  describe 'private.parse_date' do
     it 'returns an empty string if there is no date provided' do
       birthday = nil
-      parsed_birthday = MoviePersonProfile.parse_date(birthday)
+      parsed_birthday = MoviePersonProfile.send(:parse_date, birthday)
 
       expect(parsed_birthday).to eq('')
     end
 
     it 'returns the date in string format if there is a date provided' do
       birthday = '2018-01-31'
-      parsed_birthday = MoviePersonProfile.parse_date(birthday)
+      parsed_birthday = MoviePersonProfile.send(:parse_date, birthday)
 
       expect(parsed_birthday).to eq(birthday)
     end
