@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TVPersonCredits
   attr_accessor :directing, :editing, :writing, :screenplay, :producer, :actor
 

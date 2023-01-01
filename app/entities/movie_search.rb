@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MovieSearch
   attr_accessor :title, :in_db, :tmdb_id, :release_date, :vote_average, :overview, :backdrop_path, :poster_path, :tags, :lists
 
