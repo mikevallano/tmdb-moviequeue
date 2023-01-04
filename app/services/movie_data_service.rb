@@ -14,7 +14,6 @@ module MovieDataService
   ["unwatched movies", "unwatched movies"], ["only show unwatched", "only show unwatched"],
   ["only show watched", "only show watched"], ["movies not on a list", "movies not on a list"] ]
 
-  # TODO: move these into a TMDB::MenuOptions module
   GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
   ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
   ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],
@@ -249,6 +248,36 @@ module MovieDataService
         next_page: (current_page + 1 unless current_page >= movie_response[:total_pages]),
         total_pages: movie_response[:total_pages]
       )
+    end
+
+    def get_movie_streaming_service_providers(movie)
+      results = Tmdb::Client.request(:streaming_service_providers, movie_id: movie.tmdb_id).dig(:results, :US)
+      preferred_providers = [
+        { name: 'Netflix', pay_model: 'try', url: "http://www.netflix.com/search/#{movie.title}"},
+        { name: 'Amazon Prime Video', pay_model: 'try', url: "https://www.amazon.com/s?k=#{movie.title.gsub(' ', '+')}&i=instant-video"},
+        { name: 'Amazon Video', pay_model: 'try', url: "https://www.amazon.com/s?k=#{movie.title.gsub(' ', '+')}&i=instant-video"},
+        { name: 'YouTube', pay_model: 'try', url: "https://www.youtube.com/results?search_query=#{movie.title}+full+movie #{movie.release_date.stamp('2001') if movie.release_date.present?}"},
+        { name: 'Vudu', pay_model: 'try', url: "https://www.vudu.com/content/movies/search?searchString=#{movie.title}"},
+      ]
+      return preferred_providers if results.nil?
+
+      free_provider_names = results[:flatrate]&.map { |result| result[:provider_name] } || []
+      rent_provider_names = results[:rent]&.map { |result| result[:provider_name] } || []
+      buy_provider_names = results[:buy]&.map { |result| result[:provider_name] } || []
+
+      preferred_providers.map do |provider|
+        pay_model = if free_provider_names.include?(provider[:name])
+          'free'
+        elsif rent_provider_names.include?(provider[:name])
+          'rent'
+        elsif buy_provider_names.include?(provider[:name])
+          'buy'
+        else
+          'try'
+        end
+
+        { name: provider[:name], url: provider[:url], pay_model: pay_model }
+      end
     end
   end
 end
