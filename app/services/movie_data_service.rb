@@ -14,6 +14,7 @@ module MovieDataService
   ["unwatched movies", "unwatched movies"], ["only show unwatched", "only show unwatched"],
   ["only show watched", "only show watched"], ["movies not on a list", "movies not on a list"] ]
 
+  # TODO: move these into a TMDB::MenuOptions module
   GENRES = [["Action", 28], ["Adventure", 12], ["Animation", 16], ["Comedy", 35], ["Crime", 80],
   ["Documentary", 99], ["Drama", 18], ["Family", 10751], ["Fantasy", 14], ["Foreign", 10769], ["History", 36],
   ["Horror", 27], ["Music", 10402], ["Mystery", 9648], ["Romance", 10749], ["Science Fiction", 878], ["TV Movie", 10770],
@@ -76,7 +77,7 @@ module MovieDataService
     def get_movie_title_search_results(movie_title)
       data = Tmdb::Client.request(:movie_search, query: movie_title)[:results]
       not_found = "No results for '#{movie_title}'." if data.blank?
-      movies = MovieSearch.parse_results(data) if data.present?
+      movies = MovieSearchResult.build_list(data) if data.present?
 
       OpenStruct.new(
         movie_title: movie_title,
@@ -100,7 +101,7 @@ module MovieDataService
       movie_results = data.dig(:results)
       return OpenStruct.new(not_found_message: "No results for #{searched_terms}.") if movie_results.blank?
 
-      movies = MovieSearch.parse_results(movie_results)
+      movies = MovieSearchResult.build_list(movie_results)
       total_pages = data.fetch(:total_pages)
       current_page = data[:page]
 
@@ -150,7 +151,7 @@ module MovieDataService
         id: person_data[:id],
         actor: person_data,
         actor_name: person_data[:name],
-        movies: MovieSearch.parse_results(movie_results),
+        movies: MovieSearchResult.build_list(movie_results),
         not_found_message: not_found_message,
         current_page: current_page,
         previous_page: (current_page - 1 if current_page > 1),
@@ -241,7 +242,7 @@ module MovieDataService
       OpenStruct.new(
         actor_names: actor_names,
         paginate_actor_names: actor_names.join(';'),
-        common_movies: MovieSearch.parse_results(movie_response[:results]),
+        common_movies: MovieSearchResult.build_list(movie_response[:results]),
         not_found_message: nil,
         current_page: current_page,
         previous_page: (current_page - 1 if current_page > 1),
