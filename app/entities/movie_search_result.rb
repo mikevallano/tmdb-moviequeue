@@ -21,7 +21,7 @@ class MovieSearchResult
       new(
         title: result[:title],
         in_db: false,
-        tmdb_id: tmdb_id = result[:id],
+        tmdb_id: result[:id],
         release_date: result[:release_date],
         vote_average: result[:vote_average]&.round(1),
         overview: result[:overview],
@@ -29,5 +29,9 @@ class MovieSearchResult
         poster_path: result[:poster_path]
       )
     end
+  end
+
+  def streaming_service_providers
+    @streaming_service_providers ||= MovieDataService.get_movie_streaming_service_providers(self)
   end
 end

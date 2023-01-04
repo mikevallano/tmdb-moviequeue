@@ -24,7 +24,7 @@
           <%= link_to image_for(@movie), link_to_movie(@movie), id: "movie_show_link_movie_partial" if @movie.poster_path.present? %>
           <div class="mobile">
             <%= render 'movies/movie_screening', movie: @movie %>
-            <%= render "movies/movie_watch_info", movie: @movie %>
+            <%= render "movies/movie_streaming_service_providers", streaming_service_providers: @movie.streaming_service_providers %>
           </div> <!-- mobile -->
         </div> <!-- sidebar -->
       </div><!-- col-xs-3 -->
