@@ -330,7 +330,7 @@ RSpec.describe MovieDataService do
         expect(results.not_found_message).to eq(nil)
       end
 
-      it 'returns a MovieSearch object with movie data' do
+      it 'returns a MovieSearchResult object with movie data' do
         results = described_class.get_common_movies_between_multiple_actors(actor_names: [actor1_name, actor2_name])
         expect(results.common_movies.length).to eq(common_movies_results[:results].length)
         expect(results.common_movies.first.title).to eq(movie_title)
