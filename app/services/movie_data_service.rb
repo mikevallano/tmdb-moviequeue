@@ -251,7 +251,7 @@ module MovieDataService
     end
 
     def get_movie_streaming_service_providers(movie)
-      results = Tmdb::Client.request(:streaming_service_providers, movie_id: movie.tmdb_id).dig(:results, :US)
+      results = Tmdb::Client.request(:streaming_service_providers, movie_id: movie.tmdb_id)&.dig(:results, :US)
       preferred_providers = [
         { name: 'Netflix', pay_model: 'try', url: "http://www.netflix.com/search/#{movie.title}"},
         { name: 'Amazon Prime Video', pay_model: 'try', url: "https://www.amazon.com/s?k=#{movie.title.gsub(' ', '+')}&i=instant-video"},

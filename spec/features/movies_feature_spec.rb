@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Movies feature spec", :type => :feature do
-
   feature "Movies views" do
-
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
     let(:user) { create(:user) }
@@ -22,9 +20,15 @@ RSpec.feature "Movies feature spec", :type => :feature do
     let(:tag) { create(:tag, name: "hilarious") }
     let(:screening) { create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
     let(:review) { create(:review, user_id: user.id, movie_id: movie.id, body: "it were awesome") }
-
+    let(:streaming_service_providers) {[
+      { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
+      { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
+    ]}
 
     describe "movie show page functionality" do
+      before do
+        allow(MovieDataService).to receive(:get_movie_streaming_service_providers).and_return(streaming_service_providers)
+      end
 
       scenario "users can visit the movie show page, which has a slugged url" do
         sign_in_user(user)
@@ -80,7 +84,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         expect(movie.reload.trailer).to eq(youtube_id) #updates the trailer
       end
 
-      scenario 'non-admin shoudl not see trailer btn' do
+      scenario 'non-admin should not see trailer button' do
         sign_in_user(user)
         visit(movie_path(movie))
         expect(page).not_to have_selector('#add-trailer-btn')
@@ -146,10 +150,14 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       end #movie is on a list
 
+      scenario "the user can see streaming service options" do
+        sign_in_user(user)
+        visit(movie_path(movie))
+        expect(page).to have_content("FakeFlix")
+      end
     end #movie show page
 
     describe "without js" do
-
       before(:each) do
         sign_in_user(user)
         listing
@@ -172,7 +180,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
     end #without js
 
     describe "movies index functionality" do
-
       scenario "movies are paginated on the movies index page" do
         sign_in_user(user)
         30.times { create(:movie) }
@@ -230,7 +237,11 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       end #tagging context
 
-      context "pagingation" do
+      context "pagination" do
+        before do
+          allow(MovieDataService).to receive(:get_movie_streaming_service_providers)
+                                 .and_return(streaming_service_providers)
+        end
 
         scenario "movies index paginates the movies by tag" do
           sign_in_user(user)
@@ -246,12 +257,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
             create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
             counter += 1
           end
-          # visit root_path
-          # visit movies_path
-          # @movie = Movie.first
-          # find("#modal_link_#{@movie.tmdb_id}")
-          # find("#modal_link_#{@movie.tmdb_id}").click
-          # click_link "hilarious"
           visit('/tags/hilarious')
           find(".pagination", match: :first)
           click_link "Next"
@@ -284,6 +289,8 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       context "rating, reviews, marking watched" do
         before(:each) do
+          allow(MovieDataService).to receive(:get_movie_streaming_service_providers)
+                                 .and_return(streaming_service_providers)
           listing
           page.driver.browser.manage.window.resize_to(1280,800)
           sign_in_user(user)
@@ -345,7 +352,6 @@ RSpec.feature "Movies feature spec", :type => :feature do
           expect(page).not_to have_selector("#mark_watched_link_movies_partial")
           expect(page).to have_selector("#add_screening_link_movies_partial")
         end
-
       end #rating, reviews, marking watched
 
       context "sorting" do
@@ -426,10 +432,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         end #sort by title
 
 
-      end #sorting context
-
-    end # index page functionality
-
-  end #feature do
-
-end #final
+      end # sorting
+    end # movies index page
+  end
+end
