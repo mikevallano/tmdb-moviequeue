@@ -30,8 +30,4 @@ class MovieSearchResult
       )
     end
   end
-
-  def streaming_service_providers
-    @streaming_service_providers ||= MovieDataService.get_movie_streaming_service_providers(self)
-  end
 end
