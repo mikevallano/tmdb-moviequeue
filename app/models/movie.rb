@@ -110,4 +110,8 @@ class Movie < ApplicationRecord
     when 5 then "Top"
     end
   end
+
+  def streaming_service_providers
+    @streaming_service_providers ||= MovieDataService.get_movie_streaming_service_providers(self)
+  end
 end

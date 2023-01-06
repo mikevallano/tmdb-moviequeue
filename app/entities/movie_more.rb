@@ -69,4 +69,8 @@ class MovieMore
   def times_seen_by(user)
     0
   end
+
+  def streaming_service_providers
+    @streaming_service_providers ||= MovieDataService.get_movie_streaming_service_providers(self)
+  end
 end

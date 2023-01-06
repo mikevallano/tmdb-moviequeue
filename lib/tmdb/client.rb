@@ -3,6 +3,7 @@
 module Tmdb
   module Client
     class Error < StandardError; end
+    # API Docs: https://developers.themoviedb.org/3/getting-started/introduction
     BASE_URL = 'https://api.themoviedb.org/3'
     API_KEY = ENV['tmdb_api_key']
 
@@ -32,6 +33,7 @@ module Tmdb
         when :tv_season_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits"
         when :tv_episode_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}"
         when :multi_search then "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
+        when :streaming_service_providers then "/movie/#{params[:movie_id]}/watch/providers?api_key=#{API_KEY}"
         end
       end
 

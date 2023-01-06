@@ -59,6 +59,15 @@ module MoviesHelper
     output.prepend(" | ")
   end
 
+  def display_pay_model_icon(movie_pay_model)
+    case movie_pay_model
+      when 'try' then 'search_check'
+      when 'free' then 'emoji_emotions'
+      when 'rent' then 'paid'
+      when 'buy' then 'shopping_bag'
+    end
+  end
+
   def movie_cast_display(movie, qty)
     cast = movie_actors_display(movie, qty)
     cast += movie_director_display(movie)

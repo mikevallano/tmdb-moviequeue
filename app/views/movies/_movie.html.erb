@@ -15,7 +15,7 @@
             <%= link_to image_for(movie), link_to_movie(movie), id: "movie_more_link_movie_partial" %>
           <div class="watch-info">
             <%= render 'movies/movie_screening', movie: movie %>
-            <%= render "movies/movie_watch_info", movie: movie %>
+            <%= render "movies/movie_streaming_service_providers", streaming_service_providers: movie.streaming_service_providers %>
           </div><!-- watch-info -->
         </div> <!-- col-xs-3 -->
 

@@ -106,18 +106,23 @@ color: white !important;
 }
 
 
-/* BOOTSTRAP AND FONT AWESOME */
+/* BOOTSTRAP */
 
 .well {
   background-color: lighten($primary-background-color, 10%);
   border: 0px;
   overflow: auto;
-} /* .well */
+}
 
-.fa {
-  line-height: 1.2;
-} /* .fa */
+/* FONT AWESOME */
+.fa { line-height: 1.2; }
 
+/* MATERIAL ICONS: https://fonts.google.com/ */
+.material-symbols-outlined {
+  font-size: 1.5rem;
+  position: relative;
+  bottom: -0.2em;
+}
 
 
 /* NOTICES & ALERTS */

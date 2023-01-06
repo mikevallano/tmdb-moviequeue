@@ -21,7 +21,7 @@ class MovieSearchResult
       new(
         title: result[:title],
         in_db: false,
-        tmdb_id: tmdb_id = result[:id],
+        tmdb_id: result[:id],
         release_date: result[:release_date],
         vote_average: result[:vote_average]&.round(1),
         overview: result[:overview],
