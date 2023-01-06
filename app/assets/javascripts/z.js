@@ -1,4 +1,4 @@
-var delayTime = 550; // ex: 600ms = 0.6sec
+var delayTime = 500; // ex: 500ms = 0.5sec
 
 $(document).ready(function () {
   $('.autocomplete-auto-submit').each(function(){
