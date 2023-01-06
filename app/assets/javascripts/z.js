@@ -1,4 +1,6 @@
-$(document).ready(function(){
+var delayTime = 550; // ex: 600ms = 0.6sec
+
+$(document).ready(function () {
   $('.autocomplete-auto-submit').each(function(){
     var form = $(this)
     var source = form.data('autocomplete-source')
@@ -6,6 +8,7 @@ $(document).ready(function(){
     form.autocomplete({
       source: source,
       minLength: 4,
+      delay: delayTime,
       select: function (event, ui) {
         $(this).closest(".autocomplete-auto-submit").val(ui.item.value);
         $(this).closest("form").submit();
@@ -16,6 +19,7 @@ $(document).ready(function(){
 
   $( ".autocomplete-search-field" ).autocomplete({
     minLength: 4,
+    delay: delayTime,
     source: $(".autocomplete-search-field").data("autocomplete-source")
   });
 
