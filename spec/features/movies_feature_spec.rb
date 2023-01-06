@@ -257,6 +257,12 @@ RSpec.feature "Movies feature spec", :type => :feature do
             create(:tagging, movie_id: counter, user_id: user.id, tag_id: tag.id)
             counter += 1
           end
+          # visit root_path
+          # visit movies_path
+          # @movie = Movie.first
+          # find("#modal_link_#{@movie.tmdb_id}")
+          # find("#modal_link_#{@movie.tmdb_id}").click
+          # click_link "hilarious"
           visit('/tags/hilarious')
           find(".pagination", match: :first)
           click_link "Next"
