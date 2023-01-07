@@ -21,7 +21,8 @@ gem 'will_paginate'
 gem 'coveralls', '0.8.11', require: false
 gem 'rack-mini-profiler'
 gem 'stamp'
-gem 'sentry-raven'
+gem 'sentry-ruby'
+gem 'sentry-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

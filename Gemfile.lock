@@ -103,10 +103,6 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faraday (2.6.0)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
     ffaker (2.21.0)
     ffi (1.15.5)
     figaro (1.2.0)
@@ -171,6 +167,8 @@ GEM
     nenv (0.3.0)
     nio4r (2.5.8)
     nokogiri (1.13.9-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.9-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
@@ -280,7 +278,6 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.11.0)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -300,8 +297,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-raven (3.1.2)
-      faraday (>= 1.0)
+    sentry-rails (5.7.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.7.0)
+    sentry-ruby (5.7.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     shellany (0.0.1)
     shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
@@ -351,6 +351,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -386,7 +387,8 @@ DEPENDENCIES
   rubocop-rspec
   sass-rails
   sdoc (~> 0.4.0)
-  sentry-raven
+  sentry-rails
+  sentry-ruby
   shoulda-matchers
   stamp
   terminal-notifier-guard
