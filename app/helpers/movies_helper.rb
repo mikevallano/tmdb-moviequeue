@@ -34,12 +34,12 @@ module MoviesHelper
   end
 
   def trailer_placeholder_text(movie)
-    change_or_add = movie.trailer.present? ? 'change the' : 'add a'
-    "To #{change_or_add} trailer, enter the YouTube URL"
+    change_or_add = movie.trailer.present? ? 'Change' : 'Add'
+    "Enter YouTube URL to #{change_or_add} Trailer"
   end
 
   def trailer_button_text(movie)
-    movie.trailer.present? ? 'Change trailer' : 'Add a trailer'
+    movie.trailer.present? ? 'Change' : '+ Add'
   end
 
   def movie_stats_display(movie)
@@ -65,6 +65,24 @@ module MoviesHelper
       when 'free' then 'emoji_emotions'
       when 'rent' then 'paid'
       when 'buy' then 'shopping_bag'
+    end
+  end
+
+  def firstify_number(number)
+    if number.to_s[-2..-1] == '11'
+      "#{number}th"
+    elsif number.to_s[-1] == '1'
+      "#{number}st"
+    elsif number.to_s[-2..-1] == '12'
+      "#{number}th"
+    elsif number.to_s[-1] == '2'
+      "#{number}nd"
+    elsif number.to_s[-2..-1] == '13'
+      "#{number}th"
+    elsif number.to_s[-1] == '3'
+      "#{number}rd"
+    else
+    "#{number}th"
     end
   end
 

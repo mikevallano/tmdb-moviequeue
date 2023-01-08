@@ -77,24 +77,24 @@ describe MoviesHelper, type: :helper do
   describe 'trailer placeholder text' do
     it 'renders correct placeholder text for a movie with a trailer' do
       allow(movie).to receive(:trailer).and_return('trailerlink')
-      expect(helper.trailer_placeholder_text(movie)).to include('change the trailer')
+      expect(helper.trailer_placeholder_text(movie)).to include('Change')
     end
 
     it 'renders correct placeholder text for a movie without a trailer' do
       allow(movie).to receive(:trailer).and_return(nil)
-      expect(helper.trailer_placeholder_text(movie)).to include('add a trailer')
+      expect(helper.trailer_placeholder_text(movie)).to include('Add')
     end
   end
 
   describe 'trailer button text' do
     it 'renders correct button text for a movie with a trailer' do
       allow(movie).to receive(:trailer).and_return('trailerlink')
-      expect(helper.trailer_button_text(movie)).to eq('Change trailer')
+      expect(helper.trailer_button_text(movie)).to eq('Change')
     end
 
     it 'renders correct button text for a movie without a trailer' do
       allow(movie).to receive(:trailer).and_return(nil)
-      expect(helper.trailer_button_text(movie)).to eq('Add a trailer')
+      expect(helper.trailer_button_text(movie)).to eq('+ Add')
     end
   end
 
@@ -173,6 +173,40 @@ describe MoviesHelper, type: :helper do
     it 'returns nil if there is no runtime' do
       movie.runtime = nil
       expect(runtime_display(movie)).to eq(nil)
+    end
+  end
+
+  describe 'firstify_number' do
+    it 'appends "st" to any number ending in 1' do
+      aggregate_failures 'numbers ending in 1' do
+        expect(firstify_number(1)).to eq('1st')
+        expect(firstify_number(21)).to eq('21st')
+        expect(firstify_number(301)).to eq('301st')
+      end
+    end
+
+    it 'appends "nd" to any number ending in 2' do
+      aggregate_failures 'numbers ending in 2' do
+        expect(firstify_number(2)).to eq('2nd')
+        expect(firstify_number(42)).to eq('42nd')
+        expect(firstify_number(302)).to eq('302nd')
+      end
+    end
+
+    it 'appends "rd" to any number ending in 3' do
+      aggregate_failures 'numbers ending in 3' do
+        expect(firstify_number(3)).to eq('3rd')
+        expect(firstify_number(43)).to eq('43rd')
+        expect(firstify_number(303)).to eq('303rd')
+      end
+    end
+
+    it 'handles outliers in the teens (11, 12, 13)' do
+      aggregate_failures 'numbers ending in 2' do
+        expect(firstify_number(111)).to eq('111th')
+        expect(firstify_number(212)).to eq('212th')
+        expect(firstify_number(313)).to eq('313th')
+      end
     end
   end
 end

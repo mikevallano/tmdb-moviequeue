@@ -3,6 +3,8 @@
 module Tmdb
   module Client
     class Error < StandardError; end
+    require 'open-uri'
+
     # API Docs: https://developers.themoviedb.org/3/getting-started/introduction
     BASE_URL = 'https://api.themoviedb.org/3'
     API_KEY = ENV['tmdb_api_key']

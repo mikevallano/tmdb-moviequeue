@@ -1,0 +1,22 @@
+<% if movie.trailer.present? %>
+  <div class="embed-container">
+    <iframe src="https://www.youtube.com/embed/<%= movie.trailer %>?rel=0" allowfullscreen></iframe>
+  </div>
+<% else %>
+  <p class="sidebar-button trailer-button">
+    <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer">
+      <i class="fa fa-chevron-circle-right"></i> Watch the Trailer
+    </a>
+  </p>
+<% end %> <!-- #if trailer present -->
+
+<% if current_user.admin? %>
+  <%= form_tag(movie_path(movie), { class: "form-class", id: "add-trailer", method: :patch } ) do %>
+    <%= text_field_tag :trailer, nil,
+                        { placeholder: trailer_placeholder_text(movie),
+                          class: 'form-control',
+                          id: "trailer-text-field" } %>
+    <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
+    <%= submit_tag trailer_button_text(movie), id: "add-trailer-btn", class: "form-control-submit", disabled: 'disabled' %>
+  <% end %> <!-- # tag form loop -->
+<% end %> <!-- # if admin? -->
