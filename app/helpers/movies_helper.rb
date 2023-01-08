@@ -34,12 +34,12 @@ module MoviesHelper
   end
 
   def trailer_placeholder_text(movie)
-    change_or_add = movie.trailer.present? ? 'change the' : 'add a'
-    "To #{change_or_add} trailer, enter the YouTube URL"
+    change_or_add = movie.trailer.present? ? 'Change' : 'Add'
+    "Enter YouTube URL to #{change_or_add} Trailer"
   end
 
   def trailer_button_text(movie)
-    movie.trailer.present? ? 'Change trailer' : 'Add a trailer'
+    movie.trailer.present? ? 'Change' : '+ Add'
   end
 
   def movie_stats_display(movie)
