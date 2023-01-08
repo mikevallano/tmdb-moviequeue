@@ -1,0 +1,8 @@
+<% if @movie.production_companies.present? %>
+  <p><strong>Production Companies:</strong>
+    <% @movie.production_companies.each do |company| %>
+      <%= link_to "#{company[:name]}", discover_search_path(company: company[:id], sort_by: "release_date") %>
+      <%= ", " unless company == @movie.production_companies.last %>
+    <% end %>
+  </p>
+<% end %>
