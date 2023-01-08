@@ -77,24 +77,24 @@ describe MoviesHelper, type: :helper do
   describe 'trailer placeholder text' do
     it 'renders correct placeholder text for a movie with a trailer' do
       allow(movie).to receive(:trailer).and_return('trailerlink')
-      expect(helper.trailer_placeholder_text(movie)).to include('change the trailer')
+      expect(helper.trailer_placeholder_text(movie)).to include('Change')
     end
 
     it 'renders correct placeholder text for a movie without a trailer' do
       allow(movie).to receive(:trailer).and_return(nil)
-      expect(helper.trailer_placeholder_text(movie)).to include('add a trailer')
+      expect(helper.trailer_placeholder_text(movie)).to include('Add')
     end
   end
 
   describe 'trailer button text' do
     it 'renders correct button text for a movie with a trailer' do
       allow(movie).to receive(:trailer).and_return('trailerlink')
-      expect(helper.trailer_button_text(movie)).to eq('Change trailer')
+      expect(helper.trailer_button_text(movie)).to eq('Change')
     end
 
     it 'renders correct button text for a movie without a trailer' do
       allow(movie).to receive(:trailer).and_return(nil)
-      expect(helper.trailer_button_text(movie)).to eq('Add a trailer')
+      expect(helper.trailer_button_text(movie)).to eq('+ Add')
     end
   end
 
