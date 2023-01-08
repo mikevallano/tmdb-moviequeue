@@ -68,6 +68,24 @@ module MoviesHelper
     end
   end
 
+  def firstify_number(number)
+    if number.to_s[-2..-1] == '11'
+      "#{number}th"
+    elsif number.to_s[-1] == '1'
+      "#{number}st"
+    elsif number.to_s[-2..-1] == '12'
+      "#{number}th"
+    elsif number.to_s[-1] == '2'
+      "#{number}nd"
+    elsif number.to_s[-2..-1] == '13'
+      "#{number}th"
+    elsif number.to_s[-1] == '3'
+      "#{number}rd"
+    else
+    "#{number}th"
+    end
+  end
+
   def movie_cast_display(movie, qty)
     cast = movie_actors_display(movie, qty)
     cast += movie_director_display(movie)

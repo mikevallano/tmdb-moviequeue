@@ -6,7 +6,6 @@
         </div><!-- partial-spacer -->
 
         <% if movie.in_db && movie.lists.by_user(current_user).present? %>
-
         <div class="partial-spacer ui-front">
           <!-- ui-front is needed for jquery autocomplete in the modal -->
           <div id="movie_on_lists_<%= "#{movie.tmdb_id}" %>">
@@ -19,30 +18,33 @@
         </div><!-- partial-spacer -->
 
         <% if @list.present? && current_user.all_lists.include?(@list) %>
-
           <div class="partial-spacer">
             <div id="list_priority_<%= "#{movie.tmdb_id}" %>">
               <%= render 'movies/movie_list_priority', movie: movie %>
             </div>
-          </div> <!-- partial-spacer -->
+    </div>
           <% end %> <!-- #if @list.present? && current_user.all_lists.include?(@list)  -->
 
-        <% else %><!-- movie.in_db && movie.lists.by_user -->
-
+<% else %><!-- !movie.in_db or no user lists for movie -->
         <div class="partial-spacer ui-front">
           <!-- ui-front is needed for jquery autocomplete in the modal -->
           <div id="movie_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_add_to_first_list', movie: movie %>
           </div>
-        </div> <!-- partial-spacer -->
-
+  </div>
         <% end %><!-- movie.in_db && movie.lists.by_user -->
+
+<div class="partial-spacer">
+  <div id="movie_show_seen_<%= "#{movie.tmdb_id}" %>" class="partial-spacer">
+    <%= render "movies/movie_show_screening", movie: movie %>
+  </div>
+</div>
 
         <div class="partial-spacer">
           <div id="movie_rated_<%= "#{movie.tmdb_id}" %>">
             <%= render 'movies/movie_rating', movie: movie %>
           </div>
-        </div> <!-- partial-spacer -->
+</div>
 
         <div class="partial-spacer">
            <div id="movie_reviewed_<%= "#{movie.tmdb_id}" %>">
