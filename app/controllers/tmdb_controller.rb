@@ -76,14 +76,38 @@ class TmdbController < ApplicationController
     end
   end
 
+  # def actor_more
+  #   actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
+  #   movies_seen = current_user.watched_movies.pluck(:tmdb_id)
+  #   actor_movies_seen = actor_data.movie_credits.actor.select { |m| movies_seen.include?(m.tmdb_id) }
+
+  #   @data = OpenStruct.new(
+  #     actor: actor_data,
+  #     movies_seen: actor_movies_seen
+  #   )
+  # end
+
   def actor_more
     actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
-    movies_seen = current_user.watched_movies.pluck(:tmdb_id)
-    actor_movies_seen = actor_data.movie_credits.actor.select { |m| movies_seen.include?(m.tmdb_id) }
+    actor_movie_ids = actor_data.movie_credits.actor.map { |m| m.tmdb_id }
+    user_movies_seen = current_user.watched_movies.where(tmdb_id: actor_movie_ids).uniq
+
+    movies_seen = user_movies_seen.map do |movie|
+      credit = actor_data.movie_credits.actor.find { |m| m.tmdb_id == movie.tmdb_id }
+      {
+        movie_id: movie.id,
+        release_year: credit.date,
+        title: movie.title,
+        character: credit.character,
+        birthday: actor_data.profile.birthday,
+        last_watched_date: movie.most_recent_screening_by(current_user)
+      }
+    end
+
 
     @data = OpenStruct.new(
       actor: actor_data,
-      movies_seen: actor_movies_seen
+      movies_seen: movies_seen
     )
   end
 
