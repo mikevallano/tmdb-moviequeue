@@ -4,9 +4,9 @@ class Movie < ApplicationRecord
   self.per_page = 20
 
   extend FriendlyId
-  friendly_id :title, :use => :history
+  friendly_id :title, use: :history
 
-  validates :tmdb_id, :uniqueness => :true, :presence => true
+  validates :tmdb_id, uniqueness: :true, presence: true
 
   has_many :listings
   has_many :lists, through: :listings
@@ -16,7 +16,7 @@ class Movie < ApplicationRecord
   has_many :reviews
   has_many :ratings
   has_many :screenings
-  has_many :viewers, :through => :screenings, :source => :user
+  has_many :viewers, through: :screenings, source: :user
 
   attr_accessor :production_companies
 
@@ -54,7 +54,7 @@ class Movie < ApplicationRecord
   end
 
   def self.by_recently_watched_by_user(user)
-    joins(:screenings).where(screenings: { user_id: user.id }).order("screenings.date_watched").reverse
+    joins(:screenings).where(screenings: { user_id: user.id }).order('screenings.date_watched').reverse
   end
 
   # Since search results are treated as @movie instances, this determines if a @movie is in the database
@@ -77,7 +77,7 @@ class Movie < ApplicationRecord
   end
 
   def most_recent_screening_by(user)
-    screenings.by_user(user).sort_by(&:date_watched).last.date_watched.stamp("1/2/2001")
+    screenings.by_user(user).sort_by(&:date_watched).last.date_watched.stamp('1/2/2001')
   end
 
   def date_added_to_list(list)
@@ -93,7 +93,7 @@ class Movie < ApplicationRecord
   end
 
   def self.by_genre(genre)
-    where("genres && ARRAY[?]::varchar[]", genre)
+    where('genres && ARRAY[?]::varchar[]', genre)
   end
 
   def priority(list)
@@ -103,11 +103,11 @@ class Movie < ApplicationRecord
   def priority_text(list)
     priority = listings.find_by(list_id: list.id)&.priority
     case priority
-    when 1 then "Bottom"
-    when 2 then "Low"
-    when 3 then "Normal"
-    when 4 then "High"
-    when 5 then "Top"
+    when 1 then 'Bottom'
+    when 2 then 'Low'
+    when 3 then 'Normal'
+    when 4 then 'High'
+    when 5 then 'Top'
     end
   end
 

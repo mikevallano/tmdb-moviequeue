@@ -4,49 +4,49 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   extend FriendlyId
-  friendly_id :username, :use => :history
+  friendly_id :username, use: :history
 
   def should_generate_new_friendly_id?
     username_changed?
   end
 
-  validates :username, :presence => true, :uniqueness => true
+  validates :username, presence: true, uniqueness: true
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.]*\z/
 
-  has_many :lists, :foreign_key => "owner_id", dependent: :destroy
+  has_many :lists, foreign_key: 'owner_id', dependent: :destroy
   has_many :listings, through: :lists, dependent: :destroy
 
-  has_many :memberships, :foreign_key => "member_id", dependent: :destroy
-  has_many :member_lists, :through => :memberships,
-  :source => :list
+  has_many :memberships, foreign_key: 'member_id', dependent: :destroy
+  has_many :member_lists, through: :memberships,
+  source: :list
 
   has_many :member_listings, through: :member_lists,
-  :source => :listings
+  source: :listings
 
   has_many :movies, through: :listings
-  has_many :member_movies, :through => :member_lists,
-  :source => :movies, dependent: :destroy
+  has_many :member_movies, through: :member_lists,
+  source: :movies, dependent: :destroy
 
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
-  has_many :sent_invites, :class_name => "Invite",
-  :foreign_key => "sender_id", dependent: :destroy
+  has_many :sent_invites, class_name: 'Invite',
+  foreign_key: 'sender_id', dependent: :destroy
 
-  has_many :received_invites, :class_name => "Invite",
-  :foreign_key => "receiver_id", dependent: :destroy
+  has_many :received_invites, class_name: 'Invite',
+  foreign_key: 'receiver_id', dependent: :destroy
 
   has_many :reviews, dependent: :destroy
   has_many :reviewed_movies, through: :reviews,
-  :source => :movie
+  source: :movie
 
   has_many :ratings, dependent: :destroy
   has_many :rated_movies, through: :ratings,
-  :source => :movie
+  source: :movie
 
   has_many :screenings, dependent: :destroy
   has_many :watched_movies, through: :screenings,
-  :source => :movie
+  source: :movie
 
   def all_lists
     (self.lists | self.member_lists).uniq
@@ -127,7 +127,7 @@ class User < ApplicationRecord
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions.to_hash).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
     else
       where(conditions.to_hash).first
     end

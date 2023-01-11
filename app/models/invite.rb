@@ -4,7 +4,7 @@ class Invite < ApplicationRecord
   belongs_to :list
 
   validates_presence_of :email
-  validates_format_of :email, :with => /\A.+@.+\z/
+  validates_format_of :email, with: /\A.+@.+\z/
 
   require 'securerandom'
 
