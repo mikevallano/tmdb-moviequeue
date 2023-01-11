@@ -14,7 +14,7 @@
     <div class="credits">
       <%= render partial: "movie_credits", locals: { person_profile: @data.actor.profile, movie_credits: @data.actor.movie_credits } %>
 
-      <%= render partial: "seen_movie_credits", locals: { person_profile: @data.actor.profile, movies_seen: @data.movies_seen } %>
+      <%= render partial: "seen_movie_credits", locals: { movies_seen: @data.movies_seen } %>
 
       <%= render partial: "tv_credits", locals: { tv_credits: @data.actor.tv_credits, actor_id: @data.actor.person_id }  %>
 
