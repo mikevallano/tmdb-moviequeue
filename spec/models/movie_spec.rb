@@ -110,39 +110,35 @@ RSpec.describe Movie, type: :model do
         membership1; membership2
       end
 
-      it 'sorts by watched by user' do
-        expect(Movie.by_watched_by_user(list, user).first).to eq(fargo)
+      it '#by_watched_by_user' do
+        create(:screening, user: user2, movie: no_country, date_watched: 1.day.ago)
+        create(:screening, user: user2, movie: no_country, date_watched: 1.week.ago)
+        create(:screening, user: user2, movie: no_country, date_watched: 1.month.ago)
+        expect(user.watched_movies.distinct).to eq([fargo])
+        expect(user2.watched_movies.distinct).to eq([no_country])
+        expect(Movie.by_watched_by_user(list, user).map(&:title)).to eq([fargo.title, no_country.title])
+        expect(Movie.by_watched_by_user(list, user2).map(&:title)).to eq([no_country.title, fargo.title])
       end
 
-      it 'sorts by watched by members' do
-        Listing.destroy_all
-        new_listing1 = create(:listing,
-                              list_id: list.id,
-                              movie_id: no_country.id,
-                              priority: 5,
-                              created_at: 3.days.ago)
-        new_listing2 = create(:listing,
-                              list_id: list.id,
-                              movie_id: fargo.id,
-                              priority: 5,
-                              created_at: 1.day.ago)
-        user.screenings.destroy_all
-        expect(list.movies.first.title).to eq('Fargo')
-        user.screenings << no_country_screening
-        expect(user.screenings.count).to eq(1)
-        expect(user.screenings.first.movie.title).to eq(no_country.title)
-        expect(Movie.by_watched_by_members(list).first.title).to eq(no_country.title)
+      it '#by_unwatched_by_user' do
+        create(:screening, user: user2, movie: no_country, date_watched: 1.day.ago)
+        create(:screening, user: user2, movie: no_country, date_watched: 1.week.ago)
+        create(:screening, user: user2, movie: no_country, date_watched: 1.month.ago)
+        expect(user.watched_movies.distinct).to eq([fargo])
+        expect(user2.watched_movies.distinct).to eq([no_country])
+        expect(Movie.by_unwatched_by_user(list, user).map(&:title)).to eq([no_country.title, fargo.title])
+        expect(Movie.by_unwatched_by_user(list, user2).map(&:title)).to eq([fargo.title, no_country.title])
       end
 
-      it 'sorts by unwatched by user' do
-        expect(Movie.by_unwatched_by_user(list, user).first).to eq(no_country)
-      end
-
-      it 'sorts by recently watched by user' do
-        user.screenings << no_country_screening
-        fargo_screening.update(date_watched: 3.days.ago.to_date)
-        no_country_screening.update(date_watched: 5.days.ago.to_date)
-        expect(Movie.by_recently_watched_by_user(user).first).to eq(fargo)
+      it '#by_recently_watched_by_user' do
+        create(:screening, user: user, movie: no_country, date_watched: 1.day.ago)
+        create(:screening, user: user, movie: no_country, date_watched: 1.week.ago)
+        create(:screening, user: user, movie: no_country, date_watched: 1.month.ago)
+        create(:listing, list: list, movie: lebowski)
+        fargo_screening.update(date_watched: 1.hour.ago)
+        expect(user.watched_movies.distinct).to match_array([fargo, no_country])
+        expect(user.all_movies).to match_array([fargo, no_country, lebowski])
+        expect(Movie.by_recently_watched_by_user(user).map(&:title)).to eq([fargo.title, no_country.title, lebowski.title])
       end
 
       it 'returns count of times a user has seen a movie' do

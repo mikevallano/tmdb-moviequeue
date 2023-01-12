@@ -11,7 +11,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:movie) { FactoryBot.create(:movie) }
     let(:movie2) { FactoryBot.create(:movie) }
     let(:fargo) { FactoryBot.create(:movie, title: "Fargo", runtime: 90,
-      vote_average: 8, release_date: Date.today - 8000) }
+      vote_average: 8, release_date: Date.today - 8000, tmdb_id: 275) }
     let(:no_country) { FactoryBot.create(:movie, title: "No Country for Old Men", runtime: 100,
       vote_average: 9, release_date: Date.today - 6000) }
     let(:fargo_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: fargo.id) }
@@ -185,12 +185,12 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "user can update a listing's priority", js: true do
-        listing
+        create(:listing, list: list, movie: fargo)
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
-        find("#modal_link_#{movie.tmdb_id}")
-        find("#modal_link_#{movie.tmdb_id}").click
+        find("#modal_link_#{fargo.tmdb_id}")
+        find("#modal_link_#{fargo.tmdb_id}").click
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
         wait_for_ajax
@@ -284,8 +284,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           user.watched_movies << no_country
           select "recently watched", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-          expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         context "sub-sort by member" do
@@ -345,9 +344,9 @@ RSpec.feature "Lists feature spec", :type => :feature do
             select "recently watched", :from => "sort_by"
             click_button "list_sort_button"
             select "#{@current_user.username}", :from => "member"
+            expect(@current_user).to eq(user)
             click_button "list_sort_watched_by_button"
-            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
+            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
           end
 
         end #sub-sort by member

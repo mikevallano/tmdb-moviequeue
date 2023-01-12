@@ -8,7 +8,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
     let(:user2) { create(:user) }
     let(:admin_user) { create(:user, admin: true) }
     let(:list) { create(:list, owner_id: user.id) }
-    let(:movie) { create(:movie, title: "Fargo", genres: ["Crime"]) }
+    let(:movie) { create(:movie_in_tmdb, genres: ["Crime"]) }
     let(:movie2) { create(:movie) }
     let(:fargo) { create(:movie, title: "Fargo", runtime: 90,
       vote_average: 8, release_date: Date.today - 8000, tmdb_id: 275) }
@@ -57,7 +57,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
         sign_in_user(user)
         listing
         visit(movie_path(movie))
-        expect(page).to have_css("img[src*='https://image.tmdb.org/t/p/w185/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg']")
+        expect(page).to have_css("img[src*='https://image.tmdb.org/t/p/w185#{movie.poster_path}']")
       end #genres are links
 
       scenario "movie show page does not have rating, reviews, or mark as watched unless it's on a list" do
@@ -171,6 +171,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
       end
 
       scenario "movie reviewed by user shows link to the review show path" do
+        # needs to use move in tmdb
         screening
         review
         visit(movie_path(movie))

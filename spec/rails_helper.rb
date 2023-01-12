@@ -46,7 +46,9 @@ Capybara.register_driver :chrome do |app|
   # Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
 
-# use selenium_chrome to actually see what's doing
+# To actually see the tests in the browser locally,
+# use selenium_chrome instead of selenium_chrome_headless
+# Capybara.javascript_driver = :selenium_chrome
 Capybara.javascript_driver = :selenium_chrome_headless
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

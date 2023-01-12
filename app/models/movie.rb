@@ -21,12 +21,12 @@ class Movie < ApplicationRecord
   attr_accessor :production_companies
 
   scope :by_title, -> { order(:title) }
-  scope :by_shortest_runtime, -> { order(:runtime) }
-  scope :by_longest_runtime, -> { order(:runtime).reverse_order }
-  scope :by_recent_release_date, -> { order(:release_date).reverse_order }
-  scope :by_highest_vote_average, -> { order(:vote_average).reverse_order }
+  scope :by_shortest_runtime, -> { order(runtime: :asc) }
+  scope :by_longest_runtime, -> { order(runtime: :desc) }
+  scope :by_recent_release_date, -> { order(release_date: :desc) }
+  scope :by_highest_vote_average, -> { order(vote_average: :desc) }
   scope :default_list_order, -> (list) do
-    list.movies.order('CAST(listings.created_at as DATE) desc, listings.priority desc')
+    list.movies.order('listings.created_at DESC, listings.priority DESC')
   end
 
   def self.by_tag_and_user(tag, user)
@@ -34,27 +34,44 @@ class Movie < ApplicationRecord
   end
 
   def self.by_highest_priority(list)
-    list.movies.sort_by { |movie| movie.priority(list) }.reverse
+    list.movies.order('listings.priority DESC')
   end
 
   def self.by_recently_added(list)
-    list.movies.sort_by { |movie| movie.date_added_to_list(list) }.reverse
+    list.movies.order('listings.created_at DESC')
+  end
+
+  def self.screenings_join_query(user)
+    join_query = <<~SQL.squish
+      LEFT OUTER JOIN screenings
+        ON screenings.movie_id = movies.id
+        AND screenings.user_id = #{user.id}
+    SQL
+    select('movies.*, max(screenings.date_watched) AS max_date_watched')
+      .joins(join_query)
+      .group('movies.id')
   end
 
   def self.by_watched_by_user(list, user)
-    list.movies.sort_by { |movie| movie.viewers.include?(user) ? 0 : 1  }
-  end
-
-  def self.by_watched_by_members(list)
-    list.movies.sort_by { |movie| (movie.viewers.pluck(:id) & list.members.ids).any? ? 0 : 1  }
+    list
+      .movies
+      .screenings_join_query(user)
+      .order('max_date_watched DESC nulls last, movies.vote_average DESC')
   end
 
   def self.by_unwatched_by_user(list, user)
-    list.movies.sort_by { |movie| movie.viewers.include?(user) ? 1 : 0  }
+    list
+      .movies
+      .screenings_join_query(user)
+      .order('max_date_watched nulls first, movies.vote_average DESC')
   end
 
+  # TODO: this should be the same query as user#all_movies_by_recently_watched
   def self.by_recently_watched_by_user(user)
-    joins(:screenings).where(screenings: { user_id: user.id }).order('screenings.date_watched').reverse
+    user
+      .all_movies
+      .screenings_join_query(user)
+      .order('max_date_watched DESC nulls last, movies.vote_average DESC')
   end
 
   # Since search results are treated as @movie instances, this determines if a @movie is in the database
@@ -67,7 +84,7 @@ class Movie < ApplicationRecord
   end
 
   def self.watched_by_user(user)
-    user.watched_movies.uniq
+    user.watched_movies.distinct
   end
 
   def self.unwatched_by_user(user)
@@ -77,7 +94,7 @@ class Movie < ApplicationRecord
   end
 
   def most_recent_screening_by(user)
-    screenings.by_user(user).sort_by(&:date_watched).last.date_watched.stamp('1/2/2001')
+    screenings.by_user(user).maximum(:date_watched).stamp('1/2/2001')
   end
 
   def date_added_to_list(list)
@@ -85,11 +102,11 @@ class Movie < ApplicationRecord
   end
 
   def self.tagged_with(tag_name, userlist)
-    Tag.by_user_or_list(userlist).find_by_name!(tag_name).movies.uniq
+    Tag.by_user_or_list(userlist).find_by_name!(tag_name).movies.distinct
   end
 
   def tag_list(userlist)
-    tags.by_user_or_list(userlist).map
+    tags.by_user_or_list(userlist)
   end
 
   def self.by_genre(genre)
@@ -100,6 +117,7 @@ class Movie < ApplicationRecord
     listings.find_by(list_id: list.id).priority
   end
 
+  # TODO: thhis should be in a view helper
   def priority_text(list)
     priority = listings.find_by(list_id: list.id)&.priority
     case priority
