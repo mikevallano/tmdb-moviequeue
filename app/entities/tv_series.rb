@@ -56,4 +56,14 @@ class TVSeries
       actors: actors
     )
   end
+
+  def streaming_service_providers
+    @streaming_service_providers ||= StreamingServiceProviderDataService.get_providers(
+      tmdb_id: self.show_id,
+      title: self.show_name,
+      media_type: 'tv',
+      media_format: 'episodes',
+      release_date: self.first_air_date
+    )
+  end
 end
