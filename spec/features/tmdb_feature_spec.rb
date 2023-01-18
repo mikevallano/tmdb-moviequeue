@@ -8,6 +8,12 @@ RSpec.feature "TMDB feature spec", :type => :feature do
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
     let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
+    let(:streaming_service_providers) do
+      [
+        { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
+        { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
+      ]
+    end
 
     describe "search by title" do
       before(:each) do
@@ -231,6 +237,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     describe "movie more info results" do
       before(:each) do
+        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return(streaming_service_providers)
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(api_search_path)
@@ -251,6 +258,15 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         expect(page).to have_content("Steve Buscemi")
         #director
         expect(page).to have_content("Joel Coen")
+      end
+
+      scenario 'movie more shows streaming service providers', js: true do
+        find("#movie_more_link_movie_partial").click
+        wait_for_ajax
+        aggregate_failures 'service provider content' do
+          expect(page).to have_content("Try on FakeFlix")
+          expect(page).to have_content("Rent on Foodoo")
+        end
       end
 
       # TODO: Either get this working or remove it. See issue #247
@@ -309,10 +325,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     describe "actor searches that drill down to tv" do
       before(:each) do
-        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return([
-          { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
-          { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
-        ])
+        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return(streaming_service_providers)
         sign_in_user(user)
         visit(actor_search_path)
         api_actor_search_buscemi
@@ -355,6 +368,19 @@ RSpec.feature "TMDB feature spec", :type => :feature do
         end
         click_link "5"
         expect(page).to have_content("Season 5")
+      end #actor tv more
+
+      scenario "tv series displays streaming service providers" do
+        VCR.use_cassette("tmdb_actor_more") do
+          click_link_or_button "bio_and_credits_link_actor_search"
+        end
+        VCR.use_cassette("actor_tv_more") do
+          click_link "The Simpsons"
+        end
+        aggregate_failures 'service provider content' do
+          expect(page).to have_content("Try on FakeFlix")
+          expect(page).to have_content("Rent on Foodoo")
+        end
       end #actor tv more
 
       xscenario "actor more info page links tv credits to credit url" do

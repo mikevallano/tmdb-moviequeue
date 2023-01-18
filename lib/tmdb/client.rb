@@ -35,7 +35,7 @@ module Tmdb
         when :tv_season_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}?api_key=#{API_KEY}&append_to_response=credits"
         when :tv_episode_data then "/tv/#{params[:series_id]}/season/#{params[:season_number]}/episode/#{params[:episode_number]}?api_key=#{API_KEY}"
         when :multi_search then "/search/multi?api_key=#{API_KEY}&query=#{searchable_query(params[:query])}"
-        when :streaming_service_providers then "/#{params[:media_type]}/#{params[:tmdb_id]}/watch/providers?api_key=#{API_KEY}&watch_region=US"
+        when :streaming_service_providers then "/#{params[:media_type]}/#{params[:tmdb_id]}/watch/providers?api_key=#{API_KEY}"
         end
       end
 

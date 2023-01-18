@@ -38,12 +38,12 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 ads:
-                  [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26},
-                  {:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Amazon Video", :display_priority=>38},
-                  {:logo_path=>"/xL9SUR.jpg", :provider_id=>358, :provider_name=>"YouTube", :display_priority=>51}],
+                  [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Netflix", display_priority: 26},
+                  {logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "Amazon Video", display_priority: 38},
+                  {logo_path: "/xL9SUR.jpg", provider_id: 358, provider_name: "YouTube", display_priority: 51}],
                 subscribe:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
-                  {:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Amazon Prime Video", :display_priority=>4}],
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4},
+                  {logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Amazon Prime Video", display_priority: 4}],
               }
             }
           }
@@ -64,15 +64,15 @@ RSpec.describe StreamingServiceProviderDataService do
         it 'returns our default providers with a pay_model of "try"' do
           response_data = {
             free:
-              [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Starz Roku Premium Channel", :display_priority=>26}],
+              [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Starz Roku Premium Channel", display_priority: 26}],
             flatrate:
-              [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Starz Roku Premium Channel", :display_priority=>26}],
+              [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Starz Roku Premium Channel", display_priority: 26}],
             buy:
-              [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Apple iTunes", :display_priority=>4},
-              {:logo_path=>"/kJlVJL.jpg", :provider_id=>352, :provider_name=>"AMC on Demand", :display_priority=>130}],
+              [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Apple iTunes", display_priority: 4},
+              {logo_path: "/kJlVJL.jpg", provider_id: 352, provider_name: "AMC on Demand", display_priority: 130}],
             rent:
-              [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Microsoft Store", :display_priority=>4},
-              {:logo_path=>"/kJlVJL.jpg", :provider_id=>352, :provider_name=>"Google Play Movies", :display_priority=>130}]
+              [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Microsoft Store", display_priority: 4},
+              {logo_path: "/kJlVJL.jpg", provider_id: 352, provider_name: "Google Play Movies", display_priority: 130}]
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
@@ -93,7 +93,7 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 free:
-                  [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}]
+                  [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Netflix", display_priority: 26}]
               }
             }
           }
@@ -111,7 +111,7 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 flatrate:
-                  [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}]
+                  [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Netflix", display_priority: 26}]
               }
             }
           }
@@ -129,7 +129,7 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 rent:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Netflix", :display_priority=>4}]
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Netflix", display_priority: 4}]
               }
             }
           }
@@ -146,7 +146,7 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 buy:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Netflix", :display_priority=>4}]
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Netflix", display_priority: 4}]
               }
             }
           }
@@ -164,7 +164,7 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 flatrate:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Netflix", :display_priority=>4}]
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Netflix", display_priority: 4}]
               }
             }
           }
@@ -181,9 +181,9 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 flatrate:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4}],
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4}],
                 rent:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4}],
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4}],
               }
             }
           }
@@ -200,9 +200,9 @@ RSpec.describe StreamingServiceProviderDataService do
               results: {
                 US: {
                   buy:
-                    [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4}],
+                    [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4}],
                   rent:
-                    [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4}],
+                    [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4}],
                 }
               }
             }
@@ -219,15 +219,15 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 flatrate:
-                  [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26},
-                  {:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Vudu", :display_priority=>38}],
+                  [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Netflix", display_priority: 26},
+                  {logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "Vudu", display_priority: 38}],
                 buy:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
-                  {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12},
-                  {:logo_path=>"/oIkQkE.jpg", :provider_id=>192, :provider_name=>"YouTube", :display_priority=>14}],
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4},
+                  {logo_path: "/5NyLm4.jpg", provider_id: 10, provider_name: "Amazon Video", display_priority: 12},
+                  {logo_path: "/oIkQkE.jpg", provider_id: 192, provider_name: "YouTube", display_priority: 14}],
                 rent:
-                  [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
-                  {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12}],
+                  [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4},
+                  {logo_path: "/5NyLm4.jpg", provider_id: 10, provider_name: "Amazon Video", display_priority: 12}],
               }
             }
           }
@@ -250,11 +250,11 @@ RSpec.describe StreamingServiceProviderDataService do
             results: {
               US: {
                 flatrate:
-                  [{:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Starz", :display_priority=>38}],
+                  [{logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "Starz", display_priority: 38}],
                 buy:
-                  [{:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Google Play Movies", :display_priority=>38}],
+                  [{logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "Google Play Movies", display_priority: 38}],
                 rent:
-                  [{:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"AMC on Demand", :display_priority=>38}]
+                  [{logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "AMC on Demand", display_priority: 38}]
               }
             }
           }
@@ -285,16 +285,16 @@ RSpec.describe StreamingServiceProviderDataService do
           results: {
             US: {
               free:
-                [{:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Vudu", :display_priority=>38}],
+                [{logo_path: "/eWp5Ld.jpg", provider_id: 43, provider_name: "Vudu", display_priority: 38}],
               flatrate:
-                [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}],
+                [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Netflix", display_priority: 26}],
               buy:
-                [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
-                {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12},
-                {:logo_path=>"/oIkQkE.jpg", :provider_id=>192, :provider_name=>"YouTube", :display_priority=>14}],
+                [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4},
+                {logo_path: "/5NyLm4.jpg", provider_id: 10, provider_name: "Amazon Video", display_priority: 12},
+                {logo_path: "/oIkQkE.jpg", provider_id: 192, provider_name: "YouTube", display_priority: 14}],
               rent:
-                [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
-                {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12}],
+                [{logo_path: "/peURlL.jpg", provider_id: 2, provider_name: "Vudu", display_priority: 4},
+                {logo_path: "/5NyLm4.jpg", provider_id: 10, provider_name: "Amazon Video", display_priority: 12}],
             }
           }
         }
@@ -308,7 +308,6 @@ RSpec.describe StreamingServiceProviderDataService do
           expect(results.find {|r| r[:name] == 'YouTube'}[:pay_model] ).to eq('buy')
           expect(results.find {|r| r[:name] == 'Vudu'}[:pay_model] ).to eq('free')
         end
-
       end
     end
   end
