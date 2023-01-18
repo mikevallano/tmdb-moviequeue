@@ -309,6 +309,10 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
     describe "actor searches that drill down to tv" do
       before(:each) do
+        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return([
+          { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
+          { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
+        ])
         sign_in_user(user)
         visit(actor_search_path)
         api_actor_search_buscemi
@@ -323,10 +327,6 @@ RSpec.feature "TMDB feature spec", :type => :feature do
       end #actor more info search
 
       scenario "actor more info page links movies to movie_more_info path" do
-        allow(MovieDataService).to receive(:get_movie_streaming_service_providers).and_return([
-          { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
-          { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
-        ])
         VCR.use_cassette("tmdb_actor_more") do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
