@@ -6,7 +6,7 @@ module StreamingServiceProviderDataService
       params = { tmdb_id: tmdb_id, media_type: media_type }
       results = Tmdb::Client.request(:streaming_service_providers, params)&.dig(:results, :US)
 
-      parameterized_title = ActiveSupport::Inflector.parameterize(title, separator: '+')
+      parameterized_title = title.parameterize(separator: '+')
       default_providers = [
         # Find more providers at TMDB's watch_provider partner: https://www.justwatch.com/us
         {
