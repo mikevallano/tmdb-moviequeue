@@ -112,6 +112,12 @@ class Movie < ApplicationRecord
   end
 
   def streaming_service_providers
-    @streaming_service_providers ||= MovieDataService.get_movie_streaming_service_providers(self)
+    @streaming_service_providers ||= StreamingServiceProviderDataService.get_providers(
+      tmdb_id: self.tmdb_id,
+      title: self.title,
+      media_type: 'movie',
+      media_format: 'movie',
+      release_date: self.release_date
+    )
   end
 end

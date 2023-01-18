@@ -27,7 +27,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
     describe "movie show page functionality" do
       before do
-        allow(MovieDataService).to receive(:get_movie_streaming_service_providers).and_return(streaming_service_providers)
+        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return(streaming_service_providers)
       end
 
       scenario "users can visit the movie show page, which has a slugged url" do
@@ -239,7 +239,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       context "pagination" do
         before do
-          allow(MovieDataService).to receive(:get_movie_streaming_service_providers)
+          allow(StreamingServiceProviderDataService).to receive(:get_providers)
                                  .and_return(streaming_service_providers)
         end
 
@@ -295,7 +295,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
 
       context "rating, reviews, marking watched" do
         before(:each) do
-          allow(MovieDataService).to receive(:get_movie_streaming_service_providers)
+          allow(StreamingServiceProviderDataService).to receive(:get_providers)
                                  .and_return(streaming_service_providers)
           listing
           page.driver.browser.manage.window.resize_to(1280,800)
