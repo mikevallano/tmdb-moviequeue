@@ -5,26 +5,34 @@ module StreamingServiceProviderDataService
     def get_providers(tmdb_id:, title:, media_type:, media_format:, release_date: nil)
       params = { tmdb_id: tmdb_id, media_type: media_type }
       results = Tmdb::Client.request(:streaming_service_providers, params)&.dig(:results, :US)
+
+      parameterized_title = ActiveSupport::Inflector.parameterize(title, separator: '+')
       default_providers = [
+        # Find more providers at TMDB's watch_provider partner: https://www.justwatch.com/us
+        {
+          name: 'Hoopla',
+          pay_model: 'try',
+          url: "https://www.hoopladigital.com/search?q=#{parameterized_title}&scope=everything&type=direct&kindId=7"
+        },
         {
           name: 'Netflix',
           pay_model: 'try',
-          url: "http://www.netflix.com/search/#{title}"
+          url: "http://www.netflix.com/search/?q=#{title}"
         },
         {
           name: 'Amazon Prime Video',
           pay_model: 'try',
-          url: "https://smile.amazon.com/s?k=#{title.gsub(' ', '+')}&i=instant-video"
+          url: "https://smile.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },
         {
           name: 'Amazon Video',
           pay_model: 'try',
-          url: "https://smile.amazon.com/s?k=#{title.gsub(' ', '+')}&i=instant-video"
+          url: "https://smile.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },
         {
           name: 'YouTube',
           pay_model: 'try',
-          url: "https://www.youtube.com/results?search_query=#{title}+full+#{media_format} #{release_date&.stamp('2001')}"
+          url: "https://www.youtube.com/results?search_query=#{parameterized_title}+full+#{media_format} #{release_date&.stamp('2001')}"
         },
         {
           name: 'Vudu',

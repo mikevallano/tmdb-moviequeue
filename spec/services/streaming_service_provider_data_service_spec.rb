@@ -6,7 +6,7 @@ RSpec.describe StreamingServiceProviderDataService do
   describe 'get_providers' do
     let(:movie_title) { 'Fake' }
     let(:movie) { build(:movie, title: movie_title, release_date: '2023-01-01') }
-    let(:movie_args) {
+    let(:movie_args) do
       {
         tmdb_id: movie.tmdb_id,
         title: movie.title,
@@ -14,7 +14,7 @@ RSpec.describe StreamingServiceProviderDataService do
         media_format: 'movie',
         release_date: movie.release_date
       }
-    }
+    end
 
     describe 'when the API does not return any data' do
       it 'returns our default providers with a pay_model of "try"' do
@@ -32,7 +32,7 @@ RSpec.describe StreamingServiceProviderDataService do
     end
 
     describe 'when the API does return results' do
-      describe 'but the results do not have free, rent, or buy pay model options' do
+      describe 'but the results do not have free, flatrate, rent, or buy pay model options' do
         it 'returns our default providers with a pay_model of "try"' do
           response_data = {
             results: {
@@ -60,9 +60,11 @@ RSpec.describe StreamingServiceProviderDataService do
         end
       end
 
-      describe 'but none of the preferred_providers are represented in the free, rent, or buy options' do
+      describe 'but none of the preferred_providers are represented in the free, flatrate, rent, or buy options' do
         it 'returns our default providers with a pay_model of "try"' do
           response_data = {
+            free:
+              [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Starz Roku Premium Channel", :display_priority=>26}],
             flatrate:
               [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Starz Roku Premium Channel", :display_priority=>26}],
             buy:
@@ -90,6 +92,24 @@ RSpec.describe StreamingServiceProviderDataService do
           response_data = {
             results: {
               US: {
+                free:
+                  [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}]
+              }
+            }
+          }
+
+          allow(Tmdb::Client).to receive(:request).and_return(response_data)
+          results = StreamingServiceProviderDataService.get_providers(movie_args)
+
+          expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
+        end
+      end
+
+      describe 'when a preferred provider appears in the results for this movies flatrate options' do
+        it 'returns this provider with a pay_model of "free"' do
+          response_data = {
+            results: {
+              US: {
                 flatrate:
                   [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}]
               }
@@ -101,11 +121,10 @@ RSpec.describe StreamingServiceProviderDataService do
 
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
         end
-
       end
 
       describe 'when a preferred provider appears in the results for this movies rent options' do
-        it 'returns this provider with a pay_model of "free"' do
+        it 'returns this provider with a pay_model of "rent"' do
           response_data = {
             results: {
               US: {
@@ -122,7 +141,7 @@ RSpec.describe StreamingServiceProviderDataService do
       end
 
       describe 'when a preferred provider appears in the results for this movies buy options' do
-        it 'returns this provider with a pay_model of "free"' do
+        it 'returns this provider with a pay_model of "buy"' do
           response_data = {
             results: {
               US: {
@@ -248,6 +267,48 @@ RSpec.describe StreamingServiceProviderDataService do
             expect(results.find {|r| r[:name] == 'AMC on Demand'}).to be(nil)
           end
         end
+      end
+    end
+
+    describe 'when searching for providers for a TV series' do
+      let(:tv_args) do
+        {
+          tmdb_id: 'foo',
+          title: 'foo',
+          media_type: 'tv',
+          media_format: 'episodes'
+        }
+      end
+
+      it "returns each provider with preferring free, then rent, then buy, and then 'try' for ones that weren't found" do
+        response_data = {
+          results: {
+            US: {
+              free:
+                [{:logo_path=>"/eWp5Ld.jpg", :provider_id=>43, :provider_name=>"Vudu", :display_priority=>38}],
+              flatrate:
+                [{:logo_path=>"/5OAb2w.jpg", :provider_id=>634, :provider_name=>"Netflix", :display_priority=>26}],
+              buy:
+                [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
+                {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12},
+                {:logo_path=>"/oIkQkE.jpg", :provider_id=>192, :provider_name=>"YouTube", :display_priority=>14}],
+              rent:
+                [{:logo_path=>"/peURlL.jpg", :provider_id=>2, :provider_name=>"Vudu", :display_priority=>4},
+                {:logo_path=>"/5NyLm4.jpg", :provider_id=>10, :provider_name=>"Amazon Video", :display_priority=>12}],
+            }
+          }
+        }
+        allow(Tmdb::Client).to receive(:request).and_return(response_data)
+        results = StreamingServiceProviderDataService.get_providers(tv_args)
+
+        aggregate_failures "expected pay_model levels per provider" do
+          expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
+          expect(results.find {|r| r[:name] == 'Amazon Prime Video'}[:pay_model] ).to eq('try')
+          expect(results.find {|r| r[:name] == 'Amazon Video'}[:pay_model] ).to eq('rent')
+          expect(results.find {|r| r[:name] == 'YouTube'}[:pay_model] ).to eq('buy')
+          expect(results.find {|r| r[:name] == 'Vudu'}[:pay_model] ).to eq('free')
+        end
+
       end
     end
   end

@@ -62,8 +62,7 @@ class TVSeries
       tmdb_id: self.show_id,
       title: self.show_name,
       media_type: 'tv',
-      media_format: 'episodes',
-      release_date: self.first_air_date
+      media_format: 'episodes'
     )
   end
 end
