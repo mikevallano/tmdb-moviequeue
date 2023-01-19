@@ -1,8 +1,8 @@
-@import "colors";
-@import "fonts";
+@import "variables";
+
 
 article#review {
-  margin-top: 5%; 
+  margin-top: 5%;
   padding-bottom: 5px;
   border-bottom: 1px solid $light-blue;
   p {
@@ -14,12 +14,12 @@ article#review {
      font-size: 300%;
      vertical-align: -15px;
      color: $dark-blue;
-     font-family: $header-family; 
+     font-family: $header-family;
    } /* .quote-marks */
-     
+
    .button-main {
-     font-size: 100%; 
+     font-size: 100%;
      // margin-top: 10%;
    } /* .button-main */
-      
+
 } /* article#review */

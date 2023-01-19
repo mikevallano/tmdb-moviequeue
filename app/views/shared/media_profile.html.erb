@@ -1,0 +1,36 @@
+<article class="media-profile">
+  <div class="row media-profile--desktop-only">
+    <div class="col-xs-12">
+      <div class="media_profile__splash-container">
+        <div class="splash-container__backdrop-image">
+          <%= image_tag(
+            TmdbImageService.image_url(file_path: @media.backdrop_path, size: :large, image_type: :backdrop),
+            title: "#{@media.title} backdrop image",
+            alt: "#{@media.title} backdrop image"
+          ) %>
+        </div>
+      </div>
+    </div> <!-- col-xs-12 -->
+  </div> <!-- row -->
+
+  <div class="row">
+    <div class="media-profile__sidebar mt-10">
+      <%= image_tag(
+        TmdbImageService.image_url(file_path: @media.poster_path, size: :large, image_type: :poster),
+        title: "#{@media.title} backdrop image",
+        alt: "#{@media.title} backdrop image",
+      ) %>
+      <%= render 'movies/movie_screening', movie: @media unless @media.is_a? TVSeries %>
+      <%= render "shared/streaming_service_providers", streaming_service_providers: @media.streaming_service_providers %>
+    </div>
+
+    <div class="media-profile__main-content">
+      <h1 class="mt-10"><%= @media.title %></h1>
+      <% if @media.is_a? TVSeries  %>
+        <%= render "shared/tv_series_profile_content", media: @media %>
+      <% else %>
+        <%= render "shared/movie_profile_content", media: @media %>
+      <% end %>
+    </div>
+  </div> <!-- row -->
+</article>

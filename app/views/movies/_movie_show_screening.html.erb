@@ -1,6 +1,6 @@
-
-<% if current_user.watched_movies.include?(@movie) %> <!-- #if movie has been seen -->
-  <p>
+<p class="mb-10">
+  <!-- #if movie has been seen -->
+  <% if current_user.watched_movies.include?(@movie) %>
     <span class="material-symbols-outlined">videocam</span>
     <span class="pseudo-header"> Last Watched:</span> <%= @movie.most_recent_screening_by(current_user) %>,
     your <%= firstify_number(@movie.times_seen_by(current_user)) %> screening.
@@ -10,12 +10,9 @@
         id: "add_screening_link_movies_partial"
       %>
     </span>
-  </p>
-
-<% else %> <!-- #if movie has been seen -->
-  <p>
+  <!-- # if movie has been seen -->
+  <% else %>
     <span class="material-symbols-outlined">videocam</span>
     <span class="pseudo-header"> Last Watched:</span> You haven't seen this one yet
-
-  </p>
-<% end %> <!-- #if movie has been seen -->
+  <% end %> <!-- #if movie has been seen -->
+</p>

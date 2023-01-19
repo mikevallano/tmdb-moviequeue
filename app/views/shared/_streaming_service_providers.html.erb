@@ -1,5 +1,5 @@
 <% streaming_service_providers.each do |provider| %>
-  <p class="sidebar-button">
+  <p class="media-profile__button--sidebar">
     <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:name] %>" title="<%= provider[:name] %>">
        <span class="material-symbols-outlined"><%= display_pay_model_icon(provider[:pay_model]) %></span>
        <%= provider[:pay_model].titleize %> on <%= provider[:name] %>

@@ -1,11 +1,11 @@
 <div id="movie_seen_<%= "#{movie.tmdb_id}" %>">
 
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
-  <p class="sidebar-button">
+  <p class="media-profile__button--sidebar">
     <%= link_to '<i class="fa fa-check-square-o"></i> Watched. Add/View Screenings'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial" %>
   </p>
 <% else %> <!-- #if movie has been seen -->
-  <p class="sidebar-button">
+  <p class="media-profile__button--sidebar">
     <%= link_to '<i class="fa fa-square-o"></i> Mark as Watched'.html_safe, screenings_path(
         screening: { location_watched: current_user.default_location },
         tmdb_id: movie.tmdb_id,

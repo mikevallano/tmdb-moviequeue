@@ -1,17 +1,12 @@
-   <% if @movie.in_db && @movie.lists.by_user(current_user).present? %>
-
-    <div id="movie_show_on_lists_<%= "#{@movie.tmdb_id}" %>">
-      <%= render 'movies/movie_on_lists', movie: @movie %>
-    </div>
-
-    <div id="movie_show_other_list_<%= "#{@movie.tmdb_id}" %>">
-      <%= render 'movies/movie_add_to_another_list', movie: @movie %>
-    </div>
-
-  <% else %> <!-- # if @movie.in_db && @movie.lists.by_user(current_user).present? -->
-
-    <div id="movie_show_add_to_first_list_<%= "#{@movie.tmdb_id}" %>">
-     <%= render 'movies/movie_add_to_first_list', movie: @movie %>
-    </div>
-
-  <% end %> <!-- # if @movie.in_db && @movie.lists.by_user(current_user).present? -->
+<% if movie.in_db && movie.lists.by_user(current_user).present? %>
+  <div id="movie_show_on_lists_<%= "#{movie.tmdb_id}" %>">
+    <%= render 'movies/movie_on_lists', movie: movie %>
+  </div>
+  <div id="movie_show_other_list_<%= "#{movie.tmdb_id}" %>">
+    <%= render 'movies/movie_add_to_another_list', movie: movie %>
+  </div>
+  <% else %> <!-- # if movie.in_db && movie.lists.by_user(current_user).present? -->
+  <div id="movie_show_add_to_first_list_<%= "#{movie.tmdb_id}" %>">
+    <%= render 'movies/movie_add_to_first_list', movie: movie %>
+  </div>
+<% end %> <!-- # if movie.in_db && movie.lists.by_user(current_user).present? -->

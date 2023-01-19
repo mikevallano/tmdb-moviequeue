@@ -1,9 +1,9 @@
 <% if movie.trailer.present? %>
-  <div class="embed-container">
+  <div class="media-profile__video-embed-container">
     <iframe src="https://www.youtube.com/embed/<%= movie.trailer %>?rel=0" allowfullscreen></iframe>
   </div>
 <% else %>
-  <p class="sidebar-button trailer-button">
+  <p class="media-profile__button--sidebar media-profile__button--trailer">
     <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer">
       <i class="fa fa-chevron-circle-right"></i> Watch the Trailer
     </a>
