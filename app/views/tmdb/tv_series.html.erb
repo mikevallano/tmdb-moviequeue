@@ -1,4 +1,4 @@
-<article id="profile">
+<article id="profile" class='movie-show'>
   <div class="row">
     <div class="col-xs-12">
       <div class="summary-box">
@@ -15,35 +15,43 @@
   </div> <!-- row -->
 
   <div class="row">
-    <div class="col-xs-3">
-      <div class="sidebar">
-        <%= render "shared/streaming_service_providers", streaming_service_providers: @series.streaming_service_providers %>
+    <div class="movie-bottom-details">
+      <div class="col-xs-3">
+        <div class="sidebar">
+            <div class="mobile">
+            <%= render "shared/streaming_service_providers", streaming_service_providers: @series.streaming_service_providers %>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="col-xs-9">
-      <div class="tv-credits">
-        <% if @series.seasons.present? %>
-          <h2>Seasons: |
-            <% @series.seasons.each do |season| %>
-            <%= link_to season_number_display(season), tv_season_path(show_id: @series.show_id, season_number: season, show_name: @series.show_name) %> |
-            <% end %>
-          </h2>
-        <% end %><!-- if @series.seasons.present? -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="tv-credits">
+            <% if @series.seasons.present? %>
+              <h2>Seasons: |
+                <% @series.seasons.each do |season| %>
+                <%= link_to season_number_display(season), tv_season_path(show_id: @series.show_id, season_number: season, show_name: @series.show_name) %> |
+                <% end %>
+              </h2>
+            <% end %><!-- if @series.seasons.present? -->
 
-        <% if @series.actors.present? %>
-          <h2>Show Cast:</h2>
-          <% @series.actors.each do |actor| %>
-            <div class="headshot-container">
-              <%= headshot_for(actor) %>
-              <div class="name-block">
-                <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}")) %></p>
-                <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
-              </div> <!-- name-block -->
-            </div> <!-- headshot-container -->
-          <% end %><!-- actors each do -->
-        <% end %><!-- if @series.actors.present? -->
-      </div>
-    </div> <!-- credits -->
-  </div> <!-- row -->
+            <% if @series.actors.present? %>
+              <h2>Show Cast:</h2>
+              <% @series.actors.each do |actor| %>
+                <div class="headshot-container">
+                  <%= headshot_for(actor) %>
+                  <div class="name-block">
+                    <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}")) %></p>
+                    <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+                  </div> <!-- name-block -->
+                </div> <!-- headshot-container -->
+              <% end %><!-- actors each do -->
+            <% end %><!-- if @series.actors.present? -->
+          </div>
+        </div> <!-- col 12 -->
+      </div> <!-- row -->
+    </div> <!-- col 9 -->
+  </div> <!-- row  with sidebar -->
 </article>
