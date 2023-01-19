@@ -22,12 +22,12 @@ module StreamingServiceProviderDataService
         {
           name: 'Amazon Prime Video',
           pay_model: 'try',
-          url: "https://smile.amazon.com/s?k=#{parameterized_title}&i=instant-video"
+          url: "https://www.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },
         {
           name: 'Amazon Video',
           pay_model: 'try',
-          url: "https://smile.amazon.com/s?k=#{parameterized_title}&i=instant-video"
+          url: "https://www.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },
         {
           name: 'YouTube',
