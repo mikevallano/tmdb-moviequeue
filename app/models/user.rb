@@ -49,71 +49,92 @@ class User < ApplicationRecord
   source: :movie
 
   def all_lists
-    (self.lists | self.member_lists).uniq
+    list_ids = lists.pluck(:id)
+    member_list_ids = member_lists.pluck(:id)
+    ids = (list_ids + member_list_ids).uniq
+    List.where(id: ids)
   end
 
   def all_listings
-    (self.listings | self.member_listings)
+    listing_ids = listings.pluck(:id)
+    member_listing_ids = member_listings.pluck(:id)
+    ids = (listing_ids + member_listing_ids).uniq
+    Listing.where(id: ids)
   end
 
   def lists_except_movie(movie = nil)
-    if movie.present? && movie.in_db
-      (all_lists - movie.lists.by_user(self))
-        .sort_by { |list| list.name.downcase }
-    else
-      all_lists_by_name
-    end
+    return all_lists_by_name unless movie&.in_db
+    movie_list_ids = movie.lists.by_user(self).pluck(:id)
+    all_lists.where.not(id: movie_list_ids)
   end
 
   def all_lists_by_name
-    self.all_lists.sort_by { |list| list.name.downcase }
+    # TODO: not sure what this is acting weird
+    # all_lists.order('lower(name) ASC')
+    all_lists.sort_by { |list| list.name.downcase }
   end
 
   def all_movies
-    (self.movies.all + self.member_movies.all + self.watched_movies.all).uniq
+    list_movie_ids = movies.pluck(:id)
+    member_movie_ids = member_movies.pluck(:id)
+    watched_movie_ids = watched_movies.pluck(:id)
+    all_ids = (list_movie_ids + member_movie_ids + watched_movie_ids).uniq
+    Movie.where(id: all_ids)
   end
 
   def all_movies_by_title
-    self.all_movies.sort_by { |movie| movie.title }
+    all_movies.order(title: :asc)
   end
 
   def all_movies_by_shortest_runtime
-    self.all_movies.sort_by { |movie| movie.runtime }
+    all_movies.order(runtime: :asc)
   end
 
   def all_movies_by_longest_runtime
-    self.all_movies.sort_by { |movie| movie.runtime }.reverse
+    all_movies.order(runtime: :desc)
   end
 
   def all_movies_by_recent_release_date
-    self.all_movies.sort_by { |movie| movie.release_date }.reverse
+    all_movies.order(release_date: :desc)
   end
 
   def all_movies_by_highest_vote_average
-    self.all_movies.sort_by { |movie| movie.vote_average }.reverse
+    all_movies.order(vote_average: :desc)
   end
 
   def all_movies_by_recently_watched
-    watched = self.watched_movies.order('screenings.date_watched').reverse.uniq
-    (watched + all_movies).uniq
+    Movie.by_recently_watched_by_user(self)
   end
 
+  # TODO: Rename or remove for clairity. It means not _your_ lists
   def all_movies_not_on_a_list
-    on_lists = self.movies.all
-    on_member_lists = self.member_movies
-    not_on_a_list = (self.all_movies - on_lists - on_member_lists).uniq
+    movie_listing_ids = listings.pluck(:movie_id).uniq
+    all_movies.where.not(id: movie_listing_ids)
   end
 
   def all_movies_by_unwatched
-    self.all_movies.sort_by { |movie| [ movie.viewers.include?(self) ? 1 : 0, movie.vote_average ]  }
+    Movie
+      .where(id: all_movies.pluck(:id))
+      .screenings_join_query(self)
+      .order('max_date_watched ASC nulls first, movies.vote_average DESC')
   end
 
+  # TODO: what's the difference between this and all_movies_by_recently_watched?
   def all_movies_by_watched
-    self.all_movies.sort_by { |movie| movie.viewers.include?(self) ? 0 : 1  }
+    Movie.by_recently_watched_by_user(self)
   end
 
   def movies_by_genre(genre)
-    (self.movies.by_genre(genre) | self.member_movies.by_genre(genre))
+    list_movie_ids = movies.pluck(:id)
+    member_movie_ids = member_movies.pluck(:id)
+    ids = (list_movie_ids + member_movie_ids).uniq
+    Movie.where(id: ids).by_genre(genre)
+  end
+
+  def watched_movies_with_max_screening_date
+    watched_movies
+      .select("movies.*, MAX(TO_CHAR(screenings.date_watched, 'mm/dd/yyyy')) AS max_screening_date")
+      .group('movies.id')
   end
 
   def login=(login)

@@ -4,7 +4,9 @@ FactoryBot.define do
     sequence(:tmdb_id) { |n| n + 10 }
     imdb_id { FFaker::Product.model }
     backdrop_path { '/lGAaaOzqw8nc14HOgSP58TWWo1y.jpg' }
-    poster_path { '/aZeX4XNSqa08TdMHRB1gDLO6GOi.jpg' }
+    # this will lead to a broken link, but it helps with feature specs
+    # to know which movie it is, rather than hard-coding a specific movie
+    poster_path { "#{title}.jpg" }
     release_date { '2015-12-07' }
     overview { FFaker::HipsterIpsum.paragraph }
     trailer { 'h2tY82z3xXU' }

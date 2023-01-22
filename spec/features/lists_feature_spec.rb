@@ -27,6 +27,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:public_listing) { FactoryBot.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
     let(:list_name) { FFaker::HipsterIpsum.words(1).join(' ') }
     let(:list_description) { FFaker::HipsterIpsum.phrase }
+    let(:streaming_service_providers) {[
+      { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
+      { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
+    ]}
 
 
     describe "crud actions for lists" do
@@ -145,6 +149,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
     end
 
     describe "movie management" do
+      before do
+        allow(MovieDataService)
+          .to receive(:get_movie_streaming_service_providers)
+          .and_return(streaming_service_providers)
+      end
 
       xscenario "users can add a movie to their list", js: true do
         # TODO: failing due to list selection. See issue #247
@@ -185,12 +194,12 @@ RSpec.feature "Lists feature spec", :type => :feature do
       end
 
       scenario "user can update a listing's priority", js: true do
-        listing
+        create(:listing, list: list, movie: fargo)
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
-        find("#modal_link_#{movie.tmdb_id}")
-        find("#modal_link_#{movie.tmdb_id}").click
+        find("#modal_link_#{fargo.tmdb_id}")
+        find("#modal_link_#{fargo.tmdb_id}").click
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
         wait_for_ajax
@@ -284,8 +293,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
           user.watched_movies << no_country
           select "recently watched", :from => "sort_by"
           click_button "list_sort_button"
-          expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-          expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
+          expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
         end
 
         context "sub-sort by member" do
@@ -345,9 +353,9 @@ RSpec.feature "Lists feature spec", :type => :feature do
             select "recently watched", :from => "sort_by"
             click_button "list_sort_button"
             select "#{@current_user.username}", :from => "member"
+            expect(@current_user).to eq(user)
             click_button "list_sort_watched_by_button"
-            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
+            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
           end
 
         end #sub-sort by member

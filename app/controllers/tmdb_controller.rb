@@ -79,7 +79,11 @@ class TmdbController < ApplicationController
   def actor_more
     actor_data = PersonDataService.get_person_profile_data(params[:actor_id])
     actor_movie_ids = actor_data.movie_credits.actor.map { |m| m.tmdb_id }
-    user_movies_seen = current_user.watched_movies.where(tmdb_id: actor_movie_ids).uniq
+    user_movies_seen =
+      current_user
+      .watched_movies_with_max_screening_date
+      .where(tmdb_id: actor_movie_ids)
+      .distinct
 
     seen_movie_details = user_movies_seen.map do |movie|
       credit = actor_data.movie_credits.actor.find { |m| m.tmdb_id == movie.tmdb_id }
@@ -89,7 +93,7 @@ class TmdbController < ApplicationController
         title: movie.title,
         character: credit.character,
         birthday: actor_data.profile.birthday,
-        last_watched_date: movie.most_recent_screening_by(current_user)
+        last_watched_date: movie.max_screening_date
       }
     end
 

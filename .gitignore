@@ -30,6 +30,7 @@ tester2.rb
 tester.html.erb
 tester2.html.erb
 tester.js.erb
+misc.sql
 coverage/
 
 # Ignore application configuration
