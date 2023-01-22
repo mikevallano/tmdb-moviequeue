@@ -11,7 +11,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:movie) { FactoryBot.create(:movie) }
     let(:movie2) { FactoryBot.create(:movie) }
     let(:fargo) { FactoryBot.create(:movie, title: "Fargo", runtime: 90,
-      vote_average: 8, release_date: Date.today - 8000, tmdb_id: 275) }
+      vote_average: 8, release_date: Date.today - 8000) }
     let(:no_country) { FactoryBot.create(:movie, title: "No Country for Old Men", runtime: 100,
       vote_average: 9, release_date: Date.today - 6000) }
     let(:fargo_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: fargo.id) }
@@ -27,6 +27,10 @@ RSpec.feature "Lists feature spec", :type => :feature do
     let(:public_listing) { FactoryBot.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
     let(:list_name) { FFaker::HipsterIpsum.words(1).join(' ') }
     let(:list_description) { FFaker::HipsterIpsum.phrase }
+    let(:streaming_service_providers) {[
+      { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
+      { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
+    ]}
 
 
     describe "crud actions for lists" do
@@ -145,6 +149,11 @@ RSpec.feature "Lists feature spec", :type => :feature do
     end
 
     describe "movie management" do
+      before do
+        allow(MovieDataService)
+          .to receive(:get_movie_streaming_service_providers)
+          .and_return(streaming_service_providers)
+      end
 
       xscenario "users can add a movie to their list", js: true do
         # TODO: failing due to list selection. See issue #247
