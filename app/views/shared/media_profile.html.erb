@@ -21,7 +21,7 @@
       <div class="col-xs-3">
         <div class="sidebar">
           <%= image_tag(
-            TmdbImageService.image_url(file_path: @media.poster_path, size: :large, image_type: :poster),
+            TmdbImageService.image_url(file_path: @media.poster_path, size: :medium, image_type: :poster),
             title: "#{@media.title} backdrop image",
             alt: "#{@media.title} backdrop image",
             id: "movie_show_link_movie_partial"
