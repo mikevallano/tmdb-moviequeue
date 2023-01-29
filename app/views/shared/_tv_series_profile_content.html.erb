@@ -1,4 +1,4 @@
-<p class="media-profile__stats">TV Series | Aired: <%= media.first_air_date %> to <%= media.last_air_date %> | Seasons: <%= media.number_of_seasons %> | Episodes: <%= media.number_of_episodes %> </p>
+<p>TV Series | Aired: <%= media.first_air_date %> to <%= media.last_air_date %> | Seasons: <%= media.number_of_seasons %> | Episodes: <%= media.number_of_episodes %> </p>
 <p><%= media&.overview %></p>
 
 <% if media.seasons.present? %>
