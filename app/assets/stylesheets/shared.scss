@@ -1,5 +1,5 @@
-@import "colors";
-@import "fonts";
+@import "variables";
+
 
 body {
   background-color: $primary-background-color;
@@ -175,7 +175,9 @@ color: white !important;
 
 /* UTILITIES */
 .mt-5 { margin-top: 5px; }
+.mt-10 { margin-top: 10px; }
 .mb-5 { margin-bottom: 5px; }
+.mb-10 { margin-bottom: 10px; }
 .mr-5 { margin-right: 5px; }
 .ml-5 { margin-left: 5px; }
 .txt-sm { font-size: 1rem; }

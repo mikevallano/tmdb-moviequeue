@@ -1,0 +1,43 @@
+<!-- BASIC MOVIE DETAILS -->
+  <p>
+    <%= movie_stats_display(media) %>
+    <%= movie_genres_display(media) %>
+  </p>
+  <p><%= movie_cast_display(media, 4) %></p>
+  <p><%= media&.overview %></p>
+
+  <!-- LISTS AND TAGS -->
+  <div id="movie_tagged_<%= media.tmdb_id %>" class='mb-10'>
+    <%= render "movies/movie_tag", movie: media %>
+  </div>
+
+  <div id="movie_show_listings_<%= media.tmdb_id %>" class="mb-10">
+    <%= render "movies/movie_show_list_manage", movie: media %>
+  </div>
+
+  <!-- TRAILER COMPANIES -->
+  <div id='trailer-section' class='mb-10'>
+    <%= render "movies/movie_trailer", movie: media %>
+  </div>
+
+  <!-- PRODUCTION COMPANIES -->
+  <%= render "movies/movie_production_companies", movie: media %>
+
+  <!-- RATINGS AND REVIEWS -->
+  <div class="well well-sm">
+    <div id="movie_show_seen_<%= media.tmdb_id %>" class="partial-spacer">
+      <%= render "movies/movie_show_screening", movie: media %>
+    </div>
+
+    <div id="movie_show_rated_<%= media.tmdb_id %>" class="partial-spacer">
+      <%= render 'movies/movie_rating', movie: media %>
+    </div>
+
+    <div id="movie_show_reviewed_<%= media.tmdb_id %>" class="partial-spacer">
+      <%= render 'movies/movie_review', movie: media %>
+    </div>
+
+    <% if current_user.admin? && media.in_db %>
+      <p class="button-main"><%= link_to '<i class="fa fa-refresh"></i> Update Movie Data'.html_safe, update_tmdb_data_path(tmdb_id: media.tmdb_id), id: "update_movie_link_movie_show" %></p>
+    <% end %>
+  </div> <!-- well well-sm -->

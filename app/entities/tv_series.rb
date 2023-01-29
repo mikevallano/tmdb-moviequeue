@@ -2,6 +2,7 @@
 
 class TVSeries
   attr_accessor :show_id, :first_air_date, :last_air_date, :show_name, :backdrop_path, :poster_path, :number_of_episodes, :number_of_seasons, :overview, :seasons, :actors
+  alias_attribute :title, :show_name
 
   def initialize(show_id:, first_air_date:, last_air_date:, show_name:, backdrop_path:, poster_path:, number_of_episodes:, number_of_seasons:, overview:, seasons:, actors:)
     @show_id = show_id

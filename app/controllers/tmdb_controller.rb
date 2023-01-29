@@ -29,7 +29,8 @@ class TmdbController < ApplicationController
 
   def movie_more
     if params[:tmdb_id]
-      @movie = GuaranteedMovie.find_or_initialize_from_api(params[:tmdb_id])
+      @media = GuaranteedMovie.find_or_initialize_from_api(params[:tmdb_id])
+      render 'shared/media_profile'
     else
       redirect_to api_search_path
     end
@@ -124,7 +125,8 @@ class TmdbController < ApplicationController
 
   def tv_series
     show_id = params[:show_id]
-    @series = TvSeriesDataService.get_tv_series_data(show_id)
+    @media = TvSeriesDataService.get_tv_series_data(show_id)
+    render 'shared/media_profile'
   end
 
   def tv_season
