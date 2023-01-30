@@ -5,7 +5,9 @@
   <%= text_field_tag :show_title, nil,
     class: "form-control search-form autocomplete-auto-submit",
     placeholder: "Enter TV Show Title",
-    data: { autocomplete_source: tv_series_autocomplete_path }  %>
+    required: true,
+    data: { autocomplete_source: tv_series_autocomplete_path }
+  %>
   <%= submit_tag "Search", id: "submit_button_tv_series_search", class: "form-control-submit search-form-submit" %>
 <% end %>
 <br>

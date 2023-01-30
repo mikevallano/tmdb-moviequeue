@@ -3,6 +3,52 @@
 require 'rails_helper'
 
 RSpec.describe Tmdb::Client do
+  describe 'request' do
+    let(:empty_result_set) { { results: [] } }
+
+    describe 'when there are empty params provided' do
+      it 'returns an empty result set' do
+        expect(Tmdb::Client.request('foo_endpoint', {})).to eq(empty_result_set)
+      end
+    end
+
+    describe 'when there are no params provided' do
+      it 'returns an empty result set' do
+        expect(Tmdb::Client.request('foo_endpoint', nil)).to eq(empty_result_set)
+      end
+    end
+
+    describe 'when :query params key is present' do
+      describe 'and the value is an empty string' do
+        it 'returns an empty result set' do
+          expect(Tmdb::Client.request('foo_endpoint', { query: '' })).to eq(empty_result_set)
+        end
+      end
+
+      describe 'and the string has searchable characters' do
+        it 'makes the request' do
+          params = { query: 'Sandra Bullock' }
+          allow(JSON).to receive(:parse).and_return('success')
+          expect(Tmdb::Client.request('foo_endpoint', params)).to eq('success')
+        end
+      end
+
+      describe 'but the string does not contain searchable characters' do
+        it 'returns an empty result set' do
+          expect(Tmdb::Client.request('foo_endpoint', { query: '&!*' })).to eq(empty_result_set)
+        end
+      end
+    end
+
+    describe 'when keys other than :query are present' do
+      params = { people: 18277, page: nil, sort_by: "" }
+      it 'makes the request' do
+        allow(JSON).to receive(:parse).and_return('success')
+        expect(Tmdb::Client.request('foo_endpoint', params)).to eq('success')
+      end
+    end
+  end
+
   describe 'private.build_url' do
     context 'when a user searches for a bunch non-alphanumeric characters as a query string' do
       let(:searched_string) { '&^%$#@#$%' }

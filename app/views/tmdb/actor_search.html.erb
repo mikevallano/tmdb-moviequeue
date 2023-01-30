@@ -3,8 +3,17 @@
 <h1>Search by Actor</h1>
 <% if @results&.actor.blank? %> <!-- Display the search form -->
   <%= form_tag '/tmdb/actor_search', { class: "form-class", id: "actor-search", role: "form", method: :get } do %>
-    <%= text_field_tag :actor, nil, class: "form-control search-form autocomplete-search-field", id: "actor_name_actor_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
-    <%= select_tag :sort_by, options_for_select(MovieDataService::SORT_BY), {:prompt => "Sort by...", class: "form-control search-form", :include_blank => false } %>
+    <%= text_field_tag :actor, nil,
+      class: "form-control search-form autocomplete-search-field",
+      id: "actor_name_actor_search",
+      required: true,
+      placeholder: "Enter Actor Name",
+      data: { autocomplete_source: person_autocomplete_path }
+    %>
+    <%= select_tag :sort_by,
+      options_for_select(MovieDataService::SORT_BY),
+      { prompt: "Sort by...", class: "form-control search-form", include_blank: false }
+    %>
     <%= submit_tag "Search", id: "submit_button_actor_search", class: "form-control-submit search-form-submit" %>
   <% end %>
 <% end %>
