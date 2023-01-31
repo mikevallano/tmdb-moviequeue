@@ -11,7 +11,7 @@ module Tmdb
 
     class << self
       def request(endpoint, params)
-        return { results: [] } if params[:query].present? && searchable_query(params[:query]).empty?
+        return { results: [] } if invalid_params?(params)
 
         api_path = build_url(endpoint, params)
         response = URI.open("#{BASE_URL}#{api_path}").read
@@ -59,8 +59,15 @@ module Tmdb
         api_path
       end
 
+      def invalid_params?(params)
+        # The :query key does not have to be present, but if it is present, it has to be valid
+        params.blank? ||
+        params[:query] == '' ||
+        (params[:query].present? && searchable_query(params[:query]).empty?)
+      end
+
       def searchable_query(query)
-        return unless query.present?
+        return nil unless query.present?
         # If a user searches for a name that starts with an `&` the api call fails.
         # This ensures no non alphanumeric characters make it into the query string.
         I18n.transliterate(query).gsub(/[^0-9a-z ]/i, '')

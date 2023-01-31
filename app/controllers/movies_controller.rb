@@ -38,7 +38,7 @@ class MoviesController < ApplicationController
 
   def show
     @media = Movie.friendly.find(params[:id])
-    return redirect_to movie, status: :moved_permanently if request.path != movie_path(@media)
+    return redirect_to movie_path(@media), status: :moved_permanently if request.path != movie_path(@media)
 
     render 'shared/media_profile'
   end

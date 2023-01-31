@@ -1,29 +1,37 @@
 <% content_for(:title, "Search by Movie Title") %>
 
-<% if !@movie_title.present? %>
+<% if @movie_title.blank? %>
   <h1 id="search_by_title_header">Search for a Movie by Title</h1>
-  <%= form_tag '/tmdb/search', { class: "form-class", id: "movie-title-search", role: "form", method: :get } do %>
-    <%= text_field_tag :movie_title, nil, class: "form-control search-form search-form autocomplete-auto-submit", id: "movie_field_movie_search", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
+  <%= form_tag '/tmdb/search', { class: "form-class mb-10", id: "movie-title-search", role: "form", method: :get } do %>
+    <%= text_field_tag :movie_title, nil,
+      class: "form-control search-form search-form autocomplete-auto-submit",
+      id: "movie_field_movie_search",
+      required: true,
+      placeholder: "Enter Movie Title",
+      data: { autocomplete_source: movie_autocomplete_path }
+    %>
     <%= submit_tag "Search", id: "search_by_title_button", class: "form-control-submit search-form-submit" %>
   <% end %>
-  <br>
 
 <% else %>
-
   <% if @search_results.not_found_message.present? %>
     <h2>Hmm. <%= @search_results.not_found_message %></h2>
     <p>Check your spelling and try again.</p>
     <p class="button-main"><%= link_to "Search Again", api_search_path %> </p>
 
   <% else %> <!-- # if @search_results.not_found_message.present? -->
-    <h2>Movies matching '<%= @search_results.query %>'</h2>
+    <h2 class="mb-10">Movies matching '<%= @search_results.query %>'</h2>
 
-    <br>
-      <%= form_tag '/tmdb/search', { class: "form-class", id: "movie-title-search-again", role: "form", method: :get } do %>
-        <%= text_field_tag :movie_title, nil, class: "form-control search-form autocomplete-auto-submit", id: "movie_field_movie_search_again", placeholder: "Enter movie title", data: { autocomplete_source: movie_autocomplete_path }  %>
-        <%= submit_tag "Search Again", id: "search_by_title_again_button", class: "form-control-submit search-form-submit" %>
-      <% end %>
-    </br>
+    <%= form_tag '/tmdb/search', { class: "form-class mb-10", id: "movie-title-search-again", role: "form", method: :get } do %>
+      <%= text_field_tag :movie_title, nil,
+        class: "form-control search-form autocomplete-auto-submit",
+        id: "movie_field_movie_search_again",
+        required: true,
+        placeholder: "Enter movie title",
+        data: { autocomplete_source: movie_autocomplete_path }
+      %>
+      <%= submit_tag "Search Again", id: "search_by_title_again_button", class: "form-control-submit search-form-submit" %>
+    <% end %>
 
     <div id ="movies_search_loop">
       <%= render partial: 'movies/movie_partial_loop', locals: { movies: @search_results.movies } %>
