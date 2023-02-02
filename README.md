@@ -1,6 +1,7 @@
 # Flicks On Lists
 
-[![Build Status](https://travis-ci.org/mikevallano/tmdb-moviequeue.svg?branch=master)](https://travis-ci.org/mikevallano/tmdb-moviequeue) [![Code Climate](https://codeclimate.com/github/mikevallano/tmdb-moviequeue/badges/gpa.svg)](https://codeclimate.com/github/mikevallano/tmdb-moviequeue) [![Coverage Status](https://coveralls.io/repos/github/mikevallano/tmdb-moviequeue/badge.svg?branch=master)](https://coveralls.io/github/mikevallano/tmdb-moviequeue?branch=master)
+[![Build Status](https://travis-ci.org/mikevallano/tmdb-moviequeue.svg?branch=master)](https://travis-ci.org/mikevallano/tmdb-moviequeue)
+[![Code Climate](https://codeclimate.com/github/mikevallano/tmdb-moviequeue/badges/gpa.svg)](https://codeclimate.com/github/mikevallano/tmdb-moviequeue)
 
 ## This Rails app helps movie viewing in a few ways:
 

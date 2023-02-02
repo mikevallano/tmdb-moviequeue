@@ -18,7 +18,6 @@ gem 'friendly_id'
 gem 'httparty'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
-gem 'coveralls', '0.8.11', require: false
 gem 'rack-mini-profiler'
 gem 'stamp'
 gem 'sentry-ruby'
