@@ -8,7 +8,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.6-node-browsers
+      - image: cimg/ruby:2.7-browsers
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -26,20 +26,7 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: Install Chrome
-          command: |
-            curl -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo dpkg -i google-chrome.deb
-            sudo apt-get -f install
-      - run:
-          name: Install ChromeDriver
-          command: |
-            LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-            curl -O https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/local/bin/
-            sudo chmod +x /usr/local/bin/chromedriver
+      - browser-tools/install-browser-tools
 
       - restore_cache:
           keys:
