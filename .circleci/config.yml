@@ -8,7 +8,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.6-node
+      - image: cimg/ruby:2.7-browsers
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -26,8 +26,7 @@ jobs:
 
     steps:
       - checkout
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-browser-tools
 
       - restore_cache:
           keys:
