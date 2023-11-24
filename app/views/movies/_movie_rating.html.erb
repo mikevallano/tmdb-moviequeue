@@ -5,7 +5,7 @@
         <icon class="fa fa-heart"></icon>
         <span class="pseudo-header"> Your Enjoyment:</span> <%= movie.ratings.by_user(current_user).first.value %>/10
         <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe,
-                    movie_rating_path(movie, movie.ratings.by_user(current_user).first),
+                    edit_movie_rating_path(movie, movie.ratings.by_user(current_user).first),
                     id: "show_rating_link_movies_partial"
         %>
       </p>
