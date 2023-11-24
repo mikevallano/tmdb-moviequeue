@@ -41,6 +41,8 @@
             <li><%= link_to 'Public Lists', public_lists_path, id: "public_lists_nav_link" %></li>
             <li><%= link_to 'Manage My Lists', user_lists_path(current_user), id: "my_lists_nav_link" %></li>
             <li role="separator" class="divider"></li>
+            <li><%= link_to 'My Top-Rated Movies', user_ratings_path(current_user) %></li>
+            <li role="separator" class="divider"></li>
             <% current_user.all_lists_by_name.each do |list| %>
               <li><%= link_to "#{list.name}", user_list_path(list.owner, list) %></li>
             <% end %><!-- lists.each -->
