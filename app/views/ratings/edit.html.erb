@@ -1,5 +1,6 @@
+<%= link_to('<- Back', :back) %>
+
 <h1>Editing Rating</h1>
+<p>for <%= link_to @movie.title, @movie %></p>
 
 <%= render 'form' %>
-
-<p class="button-main"><%= link_to "Back to Rating", movie_rating_path(@movie, @rating) %>  <%= link_to "Back to #{@movie.title}", @movie %>
