@@ -3,8 +3,9 @@ class Users::RatingsController < ApplicationController
 
   def index
     @ratings = current_user.ratings
+      .includes(:movie)
       .where(value: 8..Float::INFINITY)
       .order(value: :desc)
-      .paginate(:page => params[:page], per_page: 20)
+      .paginate(page: params[:page], per_page: 20)
   end
 end
