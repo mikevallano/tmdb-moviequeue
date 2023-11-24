@@ -1,0 +1,28 @@
+<h1>Your Highest-Rated Movies</h1>
+<p>Movies you've given an 8, 9, or 10</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Movie Title</th>
+      <th>Value</th>
+      <th>Date Rated</th>
+      <th>Manage</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ratings.each do |rating| %>
+      <tr>
+        <td><%= link_to(rating.movie.title, movie_path(rating.movie)) %></td>
+        <td><%= rating.value %></td>
+        <td><%= rating.created_at.stamp("01-31-2001") %></td>
+        <td>
+          <p class="button-main">
+            <%= link_to 'Edit', edit_movie_rating_path(rating.movie, rating) %>
+          </p>
+        </td>
+      </tr>
+    <% end %><!-- each rating -->
+  </tbody>
+</table>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show], as: :user do
     resources :lists
+    get 'ratings', to: 'users/ratings#index'
   end
 
   resources :screenings, only: :create
