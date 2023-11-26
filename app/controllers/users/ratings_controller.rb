@@ -5,7 +5,7 @@ class Users::RatingsController < ApplicationController
     @ratings = current_user.ratings
       .includes(:movie)
       .where(value: 8..Float::INFINITY)
-      .order(value: :desc)
+      .order(value: :desc, id: :desc)
       .paginate(page: params[:page], per_page: 20)
   end
 end
