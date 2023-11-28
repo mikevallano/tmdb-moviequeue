@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   include SortingHandler
 
   def public
-    @lists = List.public_lists.paginate(:page => params[:page])
+    @lists = List.public_lists.paginate(page: params[:page])
   end
 
   def index
@@ -23,7 +23,7 @@ class ListsController < ApplicationController
     end
 
     unless current_user.all_lists.include?(@list)
-      @movies = @list.movies.paginate(:page => params[:page], per_page: 20)
+      @movies = @list.movies.paginate(page: params[:page], per_page: 20)
       render :public_show
     end
 
