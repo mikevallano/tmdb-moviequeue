@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 ruby '2.7.8'
 gem 'puma', '4.3.12'
-gem 'rails', '5.2.8'
-gem 'pg', '~> 0.18'
+gem 'rails', '~> 6.0'
+gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
