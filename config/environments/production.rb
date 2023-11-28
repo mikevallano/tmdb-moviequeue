@@ -70,6 +70,23 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
+
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 587,
+    domain: 'heroku.com',
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY']
+  }
+
+  # ActionMailer Config
+  config.action_mailer.default_url_options = { host: 'http://www.flicksonlists.com/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
   # Log disallowed deprecations.
   config.active_support.disallowed_deprecation = :log
 
