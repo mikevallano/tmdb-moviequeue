@@ -35,14 +35,12 @@ group :development, :test do
   gem 'pry'
   gem 'ffaker'
   gem 'awesome_print'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
   gem 'rubocop-rspec'
   gem 'letter_opener'
   gem 'capybara-email'
-  gem 'guard-rspec', require: false
-  gem 'terminal-notifier-guard'
 end
 
 group :test do
