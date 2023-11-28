@@ -38,6 +38,6 @@ module TmdbMoviequeue
       request_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
-    config.autoload_paths += Dir["#{config.root}/lib"]
+    config.autoload_paths += Dir["#{config.root}/app/lib"]
   end
 end
