@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TvSeriesDataService do
+RSpec.describe TVSeriesDataService do
   let(:api) { Tmdb::Client }
 
   describe '.get_actor_tv_appearance_credits' do
