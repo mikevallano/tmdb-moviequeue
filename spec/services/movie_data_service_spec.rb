@@ -345,7 +345,6 @@ RSpec.describe MovieDataService do
 
     context 'with a valid movie' do
       it 'returns true' do
-        puts "ENV['tmdb_api_key'].length : #{ENV['tmdb_api_key'].length} ******&&&&&&&"
         VCR.use_cassette('tmdb_handler_update_movie_with_a_valid_movie') do
           expect(subject).to eq(true)
         end
