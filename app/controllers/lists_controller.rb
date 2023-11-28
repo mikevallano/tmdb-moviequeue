@@ -19,7 +19,7 @@ class ListsController < ApplicationController
 
   def show
     if request.path != user_list_path(@list.owner, @list)
-      return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
+      return redirect_to user_list_path(@list.owner, @list), status: :moved_permanently
     end
 
     unless current_user.all_lists.include?(@list)
