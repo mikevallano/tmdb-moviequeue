@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TvSeriesHelper
+module TVSeriesHelper
   def image_for_tv_poster(series)
     title = series.show_name
     if series.poster_path.present?

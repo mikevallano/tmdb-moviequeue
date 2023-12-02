@@ -33,7 +33,7 @@ class ListingsController < ApplicationController
     @movie = Movie.friendly.find(params[:movie_id])
     @list = List.friendly.find(params[:list_id])
     respond_to do |format|
-      if @listing.update_attributes(:priority => @priority)
+      if @listing.update!(priority: @priority)
         format.js {}
         format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Priority added.' }
         format.json { render :show, status: :ok, location: @listing }

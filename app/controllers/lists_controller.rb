@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   include SortingHandler
 
   def public
-    @lists = List.public_lists.paginate(:page => params[:page])
+    @lists = List.public_lists.paginate(page: params[:page])
   end
 
   def index
@@ -19,11 +19,11 @@ class ListsController < ApplicationController
 
   def show
     if request.path != user_list_path(@list.owner, @list)
-      return redirect_to user_list_path(@list.owner, @list), :status => :moved_permanently
+      return redirect_to user_list_path(@list.owner, @list), status: :moved_permanently
     end
 
     unless current_user.all_lists.include?(@list)
-      @movies = @list.movies.paginate(:page => params[:page], per_page: 20)
+      @movies = @list.movies.paginate(page: params[:page], per_page: 20)
       render :public_show
     end
 

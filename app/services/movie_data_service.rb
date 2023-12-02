@@ -36,13 +36,13 @@ module MovieDataService
                    rescue StandardError
                      nil
                    end
-      raise Error, "API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}" unless api_result
+      raise StandardError, "API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}" unless api_result
 
       if api_result[:status_code] == 34 && api_result[:status_message]&.include?('could not be found')
         puts "Movie not found, so not updated. Title: #{movie.title}. tmdb_id: #{tmdb_id}"
         return
       elsif api_result[:id]&.to_s != tmdb_id
-        raise Error, "API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}"
+        raise StandardError, "API request failed for movie: #{movie.title}. tmdb_id: #{tmdb_id}"
       end
 
       updated_data = MovieMore.initialize_from_parsed_data(api_result)
@@ -70,7 +70,7 @@ module MovieDataService
         updated_at: Time.current
       )
     rescue ActiveRecord::RecordInvalid => e
-      raise Error, "#{movie.title} failed update. #{e.message}"
+      raise StandardError, "#{movie.title} failed update. #{e.message}"
     end
 
     def get_movie_title_search_results(movie_title)

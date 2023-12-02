@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TvSeriesDataService
+module TVSeriesDataService
   class << self
     def get_tv_series_names(query)
       data = Tmdb::Client.request(:tv_series_search, query: query)[:results]

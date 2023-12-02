@@ -107,31 +107,31 @@ class TmdbController < ApplicationController
 
   def actor_credit
     credit_id = params[:credit_id]
-    @credit = TvSeriesDataService.get_actor_tv_appearance_credits(credit_id)
+    @credit = TVSeriesDataService.get_actor_tv_appearance_credits(credit_id)
   end
 
   def tv_series_search
     query = show_title = params[:show_title] || params[:show_title_header]
     if query.present?
       @query = I18n.transliterate(query)
-      @search_results = TvSeriesDataService.get_tv_series_search_results(query)
+      @search_results = TVSeriesDataService.get_tv_series_search_results(query)
     end
   end
 
   def tv_series_autocomplete
-    autocomplete_results = TvSeriesDataService.get_tv_series_names(params[:term])
+    autocomplete_results = TVSeriesDataService.get_tv_series_names(params[:term])
     render json: autocomplete_results
   end
 
   def tv_series
     show_id = params[:show_id]
-    @media = TvSeriesDataService.get_tv_series_data(show_id)
+    @media = TVSeriesDataService.get_tv_series_data(show_id)
     render 'shared/media_profile'
   end
 
   def tv_season
-    @series = TvSeriesDataService.get_tv_series_data(params[:show_id])
-    @season = TvSeriesDataService.get_tv_season_data(
+    @series = TVSeriesDataService.get_tv_series_data(params[:show_id])
+    @season = TVSeriesDataService.get_tv_season_data(
       series: @series,
       season_number: params[:season_number]
     )
@@ -140,12 +140,12 @@ class TmdbController < ApplicationController
   def tv_episode
     series_id = params[:show_id]
     season_number = params[:season_number]
-    @series = TvSeriesDataService.get_tv_series_data(series_id)
-    @season = TvSeriesDataService.get_tv_season_data(
+    @series = TVSeriesDataService.get_tv_series_data(series_id)
+    @season = TVSeriesDataService.get_tv_season_data(
       series: @series,
       season_number: season_number
     )
-    @episode = TvSeriesDataService.get_tv_episode_data(
+    @episode = TVSeriesDataService.get_tv_episode_data(
       series_id: series_id,
       season_number: season_number,
       episode_number: params[:episode_number]

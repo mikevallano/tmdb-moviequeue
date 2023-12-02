@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 ruby '2.7.8'
 gem 'puma', '4.3.12'
-gem 'rails', '5.2.8'
-gem 'pg', '~> 0.18'
+gem 'rails', '~> 6.0'
+gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
@@ -35,14 +35,12 @@ group :development, :test do
   gem 'pry'
   gem 'ffaker'
   gem 'awesome_print'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
   gem 'rubocop-rspec'
   gem 'letter_opener'
   gem 'capybara-email'
-  gem 'guard-rspec', require: false
-  gem 'terminal-notifier-guard'
 end
 
 group :test do
