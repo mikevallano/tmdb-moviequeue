@@ -156,7 +156,7 @@ GEM
     mini_portile2 (2.8.5)
     minitest (5.20.0)
     multi_xml (0.6.0)
-    net-imap (0.4.6)
+    net-imap (0.4.7)
       date
       net-protocol
     net-pop (0.1.2)
@@ -165,7 +165,7 @@ GEM
       timeout
     net-smtp (0.4.0)
       net-protocol
-    nio4r (2.6.1)
+    nio4r (2.7.0)
     nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -252,14 +252,14 @@ GEM
     rspec-mocks (3.12.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-rails (5.0.3)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
-      railties (>= 5.2)
-      rspec-core (~> 3.10)
-      rspec-expectations (~> 3.10)
-      rspec-mocks (~> 3.10)
-      rspec-support (~> 3.10)
+    rspec-rails (6.1.0)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
     rspec-support (3.12.1)
     rubocop (1.31.0)
       parallel (~> 1.10)
@@ -367,11 +367,11 @@ DEPENDENCIES
   pry
   puma (= 4.3.12)
   rack-mini-profiler
-  rails (~> 6.0)
+  rails (~> 6.1.0)
   rails-controller-testing
   rails-erd
   rails_12factor
-  rspec-rails (~> 5.0.0)
+  rspec-rails (~> 6.1.0)
   rubocop-rspec
   sass-rails
   sdoc (~> 0.4.0)
