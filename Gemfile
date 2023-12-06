@@ -7,7 +7,7 @@ gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
-gem 'bigdecimal', '2.0.0'
+gem 'bigdecimal', '3.1.3'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
