@@ -7,7 +7,7 @@ class TaggingsController < ApplicationController
     Tagging.create_taggings(params[:tag_list], @movie.id, current_user)
 
     respond_to do |format|
-      format.js {}
+      format.turbo_stream {}
       format.html { redirect_to movie_path(@movie), notice: 'Tag was added.' }
     end
   end
