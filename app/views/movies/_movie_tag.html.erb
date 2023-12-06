@@ -1,5 +1,4 @@
 <%= turbo_frame_tag "taggings_#{dom_id(movie)}" do %>
-<p>
   <icon class="fa fa-tags"></icon>
   <span class="pseudo-header"> Tags:</span>
   <% if movie.tags.present? %>
@@ -9,26 +8,23 @@
           tag_path(tag.name,
           list_id: @list.id),
           id: "tag_link_movies_partial" %>
-        <%= link_to "",
+        <%= button_to "",
           delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]),
           id: "remove_tag_link_movies_partial_on_list",
           method: :delete,
-          remote: false,
           class: "fa fa-times-circle mr-5" if current_user.tags.include?(tag) %>
       <% end %> <!-- #tag loop -->
     <% else %><!-- # shared list logic else -->
       <% movie.tags.by_user_or_list(current_user).each do |tag| %>
         <%= link_to "#{tag.name}", tag_path(tag.name), id: "tag_link_movies_partial" %>
-          <%= link_to "",
+          <%= button_to "",
           delete_tagging_path(tag.id, movie.id, page: params[:page]),
           id: "remove_tag_link_movies_partial",
           method: :delete,
-          remote: false,
           class: "fa fa-times-circle mr-5" %>
       <% end %> <!-- #tag loop -->
     <% end %><!-- # shared list logic -->
   <% end %> <!-- # if tags.present? -->
-</p>
 
 <%= form_tag(taggings_path, class: "form-class", id: "tag-form-modal" ) do %>
   <%= text_field_tag :tag_list, nil, { placeholder: "Separate by commas", class: 'form-control', id: "tag-list-modal" } %>

@@ -16,10 +16,12 @@ class TaggingsController < ApplicationController
     @tagging = current_user.taggings.find_by("tag_id = ? AND movie_id = ?", params[:tag_id], params[:movie_id])
     respond_to do |format|
       if @tagging && @tagging.destroy
-        format.js {}
+        format.turbo_stream {}
+        format.html { redirect_to movie_path(@movie), notice: 'Tag was destroyed.' }
       else
         @error = "Unable to delete tag. tag_id: #{params[:tag_id] || 'none'}. movie_id: #{params[:movie_id] || 'none'}"
-        format.js {}
+        format.turbo_stream {}
+        format.html { redirect_to movie_path(@movie), notice: 'Tag was NOT destroyed.' }
       end
     end
   end

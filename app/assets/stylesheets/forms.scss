@@ -1,16 +1,16 @@
-@import "variables";
-
+@import 'variables';
 
 div {
-  &.field, &.actions {
+  &.field,
+  &.actions {
     margin-bottom: 10px;
     label {
       font-family: $header-family;
       // font-size: .9em;
     } /* label */
-  }/* field actions */
-}/* div */
-input[type="submit"] {
+  } /* field actions */
+} /* div */
+input[type='submit'] {
   color: $light-blue;
   border: 1px solid $dark-blue;
   padding: 5px 20px;
@@ -20,8 +20,8 @@ input[type="submit"] {
     color: $light-blue;
     background-color: darken($dark-blue, 10%);
     text-decoration: none;
-  }/* hover */
-}/* input */
+  } /* hover */
+} /* input */
 
 .share-container {
   border: 1px solid $dark-blue;
@@ -37,7 +37,6 @@ input[type="submit"] {
   clear: both;
   width: 100%;
 } /* .form-label */
-
 
 .form-container {
   width: 60%;
@@ -64,7 +63,6 @@ input[type="submit"] {
   // padding: 0;
 } /* .submit */
 
-
 /* SEARCH FORM PAGES ONLY */
 .search-form {
   width: 40%;
@@ -85,16 +83,15 @@ input[type="submit"] {
 } /* .search-form-header */
 
 /* LIST EDIT ONLY */
-.edit-form, .edit-form-submit {
+.edit-form,
+.edit-form-submit {
   margin-bottom: 15px;
   clear: both;
 } /* .edit-form */
 
 .edit-form-submit {
-   float: left;
+  float: left;
 } /* .edit-form-submit */
-
-
 
 /* MOVIE INDEX PAGE ONLY */
 .index-sort-dropdown {
@@ -103,8 +100,6 @@ input[type="submit"] {
   margin-right: 10px;
   margin-bottom: 10px;
 } /* .index-sort-dropdown */
-
-
 
 /* HOME PAGE SIGN IN & UP PAGES ONLY */
 .pages-form {
@@ -120,14 +115,25 @@ input[type="submit"] {
   width: auto;
 } /* .pages-form-submit */
 
+// SMALL X TO DELETE TAGS OR LISTS THAT NEED TO BE BUTTON_TO
+
+form.button_to {
+  display: inline-block;
+  & button {
+    background: none;
+    border: none;
+    color: $light-blue;
+    padding: 0;
+  }
+}
+
+form#tag-form-modal {
+  margin-top: 10px;
+}
 
 @media screen and (max-width: 600px) {
-
   .search-form {
     width: 100%;
     margin-bottom: 2%;
   } /* .search-form */
-
 } /* 600px */
-
-
