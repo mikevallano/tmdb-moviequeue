@@ -7,6 +7,8 @@ gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
+gem 'hotwire-rails'
+gem 'importmap-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
@@ -22,6 +24,8 @@ gem 'stamp'
 gem 'sentry-ruby'
 gem 'sentry-rails'
 gem 'sprockets-rails'
+gem 'stimulus-rails'
+gem 'turbo-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -53,3 +57,6 @@ group :test do
     gem 'vcr'
     gem 'webmock'
 end
+
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"
