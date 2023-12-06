@@ -401,7 +401,7 @@ DEPENDENCIES
   pry
   puma (= 6.4.0)
   rack-mini-profiler
-  rails (~> 7.1.0)
+  rails (~> 7.1.2)
   rails-controller-testing
   rails-erd
   rails_12factor
