@@ -1,5 +1,9 @@
 import 'controllers'
 import '@hotwired/turbo-rails'
+import 'jquery'
+import 'jquery-autocomplete'
+import 'bootstrap'
+import './newz.js'
 
 document.addEventListener('turbo:load', () => {
   console.log('loaded turbo!')

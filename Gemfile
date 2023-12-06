@@ -12,7 +12,7 @@ gem 'importmap-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '~> 2.6.1', group: :doc
 gem 'devise'
 gem 'figaro'
 gem 'friendly_id'
