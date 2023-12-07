@@ -157,3 +157,8 @@ button.close {
 div.sidebar-button {
   margin: 10px 0;
 }
+
+input[type='submit']:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
