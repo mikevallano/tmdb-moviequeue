@@ -52,7 +52,7 @@ class ListingsController < ApplicationController
     @movie = Movie.find(params[:movie_id])
     @listing.destroy
     respond_to do |format|
-      format.js {}
+      format.turbo_stream
       format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Movie was removed from list.' }
       format.json { head :no_content }
     end

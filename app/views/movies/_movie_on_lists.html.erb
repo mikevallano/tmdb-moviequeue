@@ -1,14 +1,14 @@
-<p><icon class="fa fa-list-ul"></icon><span class="pseudo-header"> Lists:</span>
+<icon class="fa fa-list-ul"></icon><span class="pseudo-header"> Lists:</span>
   <% movie.lists.by_user(current_user).each do |list| %>
    <%= link_to "  #{list.name} ",
       user_list_path(list.owner, list.slug),
-      id: "show_list_link_on_list_movies_partial" %>
-    <%= link_to "", delete_listing_path(list.id, movie.id),
+      id: "show_list_link_on_list_movies_partial",
+      data: {turbo_frame: '_top'} %>
+    <%= button_to "", delete_listing_path(list.id, movie.id),
+      form_class: 'small-x',
       id: "remove_movie_link_movies_partial",
       class: "fa fa-times-circle mr-5",
       method: :delete,
-      remote: true,
       data: { confirm: "You are taking this movie out of your " + list.name + " list. Are you sure you want to do that?" } %>
   <% end %> <!-- # list loop -->
-</p>
 
