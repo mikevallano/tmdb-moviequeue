@@ -1,5 +1,5 @@
 <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
-  <div class='mb-10 partial-spacer'>
+  <div class='mb-10'>
     <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
       <p>
         <icon class="fa fa-edit"></icon>

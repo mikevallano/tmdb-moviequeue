@@ -25,15 +25,15 @@
 
   <!-- RATINGS AND REVIEWS -->
   <div class="well well-sm">
-    <div id="movie_show_seen_<%= media.tmdb_id %>">
+    <div id="movie_show_seen_<%= media.tmdb_id %>" class='partial-spacer'>
       <%= render "movies/movie_show_screening", movie: media %>
     </div>
 
-    <div id="movie_show_rated_<%= media.tmdb_id %>">
+    <div id="movie_show_rated_<%= media.tmdb_id %>" class='partial-spacer'>
         <%= render 'movies/movie_rating', movie: media %>
     </div>
 
-    <div id="movie_show_reviewed_<%= media.tmdb_id %>">
+    <div id="movie_show_reviewed_<%= media.tmdb_id %>" class='partial-spacer'>
       <%= render 'movies/movie_review', movie: media %>
     </div>
 
