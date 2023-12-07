@@ -1,3 +1,4 @@
+<div class="partial-spacer">
 <p class="mb-10">
   <!-- #if movie was watched -->
   <% if current_user.watched_movies.include?(movie) %>
@@ -16,3 +17,4 @@
     <span class="pseudo-header"> Last Watched:</span> You haven't seen this one yet
   <% end %>
 </p>
+</div>
