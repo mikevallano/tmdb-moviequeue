@@ -117,7 +117,7 @@ input[type='submit'] {
 
 // SMALL X TO DELETE TAGS OR LISTS THAT NEED TO BE BUTTON_TO
 
-form.button_to {
+form.button_to.small-x {
   display: inline-block;
   & button {
     background: none;

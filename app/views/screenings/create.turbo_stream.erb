@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "movie_seen_#{@movie.tmdb_id}", partial: 'movies/movie_screening', locals: { movie: @movie } %>
+<%= turbo_stream.replace "movie_rated_#{@movie.tmdb_id}", partial: 'movies/movie_rating', locals: { movie: @movie } %>
+<%= turbo_stream.replace "movie_show_seen_#{@movie.tmdb_id}", partial: 'movies/movie_show_screening', locals: { movie: @movie } %>

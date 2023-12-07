@@ -28,9 +28,9 @@ class ScreeningsController < ApplicationController
 
     respond_to do |format|
       if @screening.save
+        format.turbo_stream {}
         format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully created.' }
         format.json { render :show, status: :created, location: @screening }
-        format.js {}
       else
         format.html { render :new }
         format.json { render json: @screening.errors, status: :unprocessable_entity }

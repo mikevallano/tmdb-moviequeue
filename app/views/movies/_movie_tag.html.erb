@@ -12,7 +12,7 @@
           delete_tagging_path(tag.id, movie.id, list_id: @list.id, page: params[:page]),
           id: "remove_tag_link_movies_partial_on_list",
           method: :delete,
-          class: "fa fa-times-circle mr-5" if current_user.tags.include?(tag) %>
+          class: "fa fa-times-circle mr-5 small-x" if current_user.tags.include?(tag) %>
       <% end %> <!-- #tag loop -->
     <% else %><!-- # shared list logic else -->
       <% movie.tags.by_user_or_list(current_user).each do |tag| %>
@@ -21,7 +21,7 @@
           delete_tagging_path(tag.id, movie.id, page: params[:page]),
           id: "remove_tag_link_movies_partial",
           method: :delete,
-          class: "fa fa-times-circle mr-5" %>
+          class: "fa fa-times-circle mr-5 small-x" %>
       <% end %> <!-- #tag loop -->
     <% end %><!-- # shared list logic -->
   <% end %> <!-- # if tags.present? -->
