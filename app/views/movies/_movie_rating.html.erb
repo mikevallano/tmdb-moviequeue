@@ -6,12 +6,13 @@
         <span class="pseudo-header"> Your Enjoyment:</span> <%= movie.ratings.by_user(current_user).first.value %>/10
         <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe,
                     edit_movie_rating_path(movie, movie.ratings.by_user(current_user).first),
-                    id: "show_rating_link_movies_partial"
+                    id: "show_rating_link_movies_partial",
+                    data: {turbo_frame: '_top'}
         %>
       </p>
 
     <% else %> <!-- #if movie has been rated -->
-        <%= form_for [movie, Rating.new], class: "form-class", id: "modal-rating", remote: true do |f| %>
+        <%= form_for [movie, Rating.new], class: "form-class", id: "modal-rating", data: {controller: 'auto-submit', action: 'input->auto-submit#submit'} do |f| %>
           <%= f.hidden_field :user_id, value: current_user.id %>
           <%= f.hidden_field :movie_id, value: movie.id %>
           <%= hidden_field_tag :from, "list_show" if @list.present? %>
