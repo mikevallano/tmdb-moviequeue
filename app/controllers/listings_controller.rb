@@ -13,7 +13,7 @@ class ListingsController < ApplicationController
 
     respond_to do |format|
       if listing.save
-        format.js {}
+        format.turbo_stream
         format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'added to your list.' }
         format.json { render :show, status: :created, location: listing }
       else

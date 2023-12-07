@@ -1,17 +1,14 @@
 
   <% if current_user.lists_except_movie(movie).count > 0 %>
-    <%= form_for(Listing.new, class: "form-class", id: "modal-add-to-other-list", remote: true) do |f| %>
-      <%= text_field_tag  'list_dropdown',
-                          nil,
-                          class: "form-control add-to-other-list list-dropdown",
-                          id: "add-to-list-dropdown-#{movie.tmdb_id}",
-                          placeholder: 'Add to another list',
-                          data: { autocomplete_source: list_autocomplete_dropdown(movie) }  %>
+    <%= form_for(Listing.new, class: "form-class", id: "modal-add-to-other-list", data: {controller: 'auto-submit', action: 'input->auto-submit#submit'}) do |f| %>
+    <%= f.select :list_id, list_add_dropdown(movie),
+                      {include_blank: 'Add to another list'}, {
+                      class: "form-control add-to-other-list list-dropdown",
+                      id: "add-to-list-dropdown-#{movie.tmdb_id}" } %>
 
-      <%= hidden_field_tag 'listing[list_id]', '', id: 'list_autocomplete_val', class: 'list-id-field' %>
       <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
       <%= hidden_field_tag :user_id, current_user.id %>
       <%= f.submit "+ Add", id: "add_to_list_button_movies_partial", class: "form-control-submit" %>
-    <% end %> <!-- # add to list form -->
+    <% end %>
     </p>
   <% end %>
