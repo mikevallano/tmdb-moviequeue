@@ -25,16 +25,16 @@ class ListingsController < ApplicationController
 
   def update
     @listing = Listing.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
-    unless current_user.all_listings.include?(@listing)
-      redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
-    end
+    # unless current_user.all_listings.include?(@listing)
+    #   redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
+    # end
     @priority = params[:priority]
-    @movies = @movies = current_user.all_movies
+    # @movies = @movies = current_user.all_movies
     @movie = Movie.friendly.find(params[:movie_id])
     @list = List.friendly.find(params[:list_id])
     respond_to do |format|
       if @listing.update!(priority: @priority)
-        format.js {}
+        format.turbo_stream
         format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Priority added.' }
         format.json { render :show, status: :ok, location: @listing }
       else
@@ -54,7 +54,6 @@ class ListingsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Movie was removed from list.' }
-      format.json { head :no_content }
     end
   end
 

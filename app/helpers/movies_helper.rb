@@ -108,7 +108,7 @@ module MoviesHelper
 
   def movie_actors_display(movie, qty)
     raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link'
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link', data: {turbo: false}
     end.join(""))
   end
 

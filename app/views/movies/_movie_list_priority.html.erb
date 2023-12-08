@@ -1,7 +1,7 @@
 
   <p class="fa fa-tasks"><span class="pseudo-header"> Priority on <%= "#{@list.name}" %>:</span> <%= movie.priority_text(@list) %></p>
 
-  <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { class: "form-class", id: "modal-priority", remote: true, method: :patch } ) do %>
+  <p><%= form_tag( { controller: :listings, action: :update, list_id: @list.id, movie_id: movie.id }, { class: "form-class", id: "modal-priority", method: :patch, data: {controller: 'auto-submit', action: 'input->auto-submit#submit'} } ) do %>
       <%= select_tag :priority, options_for_select(Listing::PRIORITIES, current_priority(@list, movie) ), { class: "form-control", :include_blank => false, id: "priority_number_field_movies_partial" } %>
       <%= hidden_field_tag(:user_id, current_user.id) %>
       <%= submit_tag "Prioritize", id: "add_priority_button_movies_partial", class: "form-control-submit" %>

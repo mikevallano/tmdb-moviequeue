@@ -46,7 +46,9 @@ class MoviesController < ApplicationController
   def modal
     @list = List.find(params[:list_id]) if params[:list_id].present?
     @movie = GuaranteedMovie.find_or_initialize_from_api(params[:tmdb_id])
-    respond_to :js
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 
   def modal_close
