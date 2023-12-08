@@ -25,9 +25,10 @@ class ListingsController < ApplicationController
 
   def update
     @listing = Listing.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
-    # unless current_user.all_listings.include?(@listing)
-    #   redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
-    # end
+    # TODO: refactor to be more efficient
+    unless current_user.all_listings.include?(@listing)
+      redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
+    end
     @priority = params[:priority]
     # @movies = @movies = current_user.all_movies
     @movie = Movie.friendly.find(params[:movie_id])
@@ -46,6 +47,7 @@ class ListingsController < ApplicationController
 
   def destroy
     @listing = Listing.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
+    # TODO: refactor this to be more efficient
     unless current_user.all_listings.include?(@listing)
       redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
     end

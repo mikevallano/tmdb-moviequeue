@@ -49,7 +49,7 @@ RSpec.describe TaggingsController, type: :controller do
         tagging
 
         expect {
-            delete :destroy, params: { tag_id: tagging.tag_id, movie_id: tagging.movie_id, format: :js }
+            delete :destroy, params: { tag_id: tagging.tag_id, movie_id: tagging.movie_id, format: :turbo_stream }
           }.to change(Tagging, :count).by(-1)
       end
 
@@ -57,7 +57,7 @@ RSpec.describe TaggingsController, type: :controller do
         current_user
         tagging
 
-        delete :destroy, params: { tag_id: 0, movie_id: tagging.movie_id, format: :js }
+        delete :destroy, params: { tag_id: 0, movie_id: tagging.movie_id, format: :turbo_stream }
         expect(assigns(:error)).to be_present
       end
     end
