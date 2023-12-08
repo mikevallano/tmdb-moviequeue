@@ -39,13 +39,13 @@ document.addEventListener('turbo:load', function () {
   // })
 
   // Generic selector to trigger autocomplete on the movie show page
-  $('.list-dropdown').autocomplete({
-    source: $('.list-dropdown').data('autocomplete-source'),
-    minLength: 0,
-    select: function (event, ui) {
-      handleAddToListAutocompleteSelect($('.list-dropdown'), ui)
-    },
-  })
+  // $('.list-dropdown').autocomplete({
+  //   source: $('.list-dropdown').data('autocomplete-source'),
+  //   minLength: 0,
+  //   select: function (event, ui) {
+  //     handleAddToListAutocompleteSelect($('.list-dropdown'), ui)
+  //   },
+  // })
 
   $('.ui-autocomplete-input').click(triggerClickForListAutocomplete)
 })
