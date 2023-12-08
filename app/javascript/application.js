@@ -1,7 +1,7 @@
 import 'controllers'
 import '@hotwired/turbo-rails'
 import 'jquery'
-import 'jquery-autocomplete'
+import 'jquery-ui'
 import 'bootstrap'
 import './newz.js'
 
