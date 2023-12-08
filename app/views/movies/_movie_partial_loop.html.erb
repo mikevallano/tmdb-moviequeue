@@ -7,7 +7,7 @@
       <!-- On Desktop: Always display the modal -->
       <p id="modal-trigger">
         <%= button_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
-                                      data: { target: "#myModal_#{movie.tmdb_id}", controller: 'trailer', action: 'click->trailer#modalTester' },
+                                      data: { target: "#myModal_#{movie.tmdb_id}", controller: 'modal', action: 'click->modal#open' },
                                       id: "modal_link_#{movie.tmdb_id}",
                                       class: 'modal-linker'
         %>

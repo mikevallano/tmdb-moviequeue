@@ -20,23 +20,4 @@ export default class extends Controller {
     const trailerSubmitButton = document.querySelector('#add-trailer-btn')
     trailerSubmitButton.disabled = !isValidUrl(event.target.value)
   }
-
-  modalTester() {
-    console.log('this.element.dataset:', this.element.dataset)
-    const modalId = this.element.dataset.target
-    console.log('modalId:', modalId)
-    const modalEl = $(`${modalId}`)
-    console.log('modalEl:', modalEl)
-    setTimeout(() => {
-      console.log('showing modal?')
-      $(`${modalId}`).modal('show')
-    }, 500)
-    // console.log('got clicked')
-    // $('#exampleModal').modal('show')
-  }
-
-  modalCloseTester() {
-    $('.modal').modal('hide')
-    location.reload()
-  }
 }
