@@ -92,9 +92,9 @@ module MovieDataService
        person_id = Tmdb::Client.request(:person_search, query: params[:actor_name])&.dig(:results)&.first&.dig(:id)
        return OpenStruct.new(not_found_message: "No results for actor '#{params[:actor_name]}'.") if person_id.blank?
 
-        Tmdb::Client.request(:discover_search, params.except(:actor_name).merge(people: person_id))
+        Tmdb::Client.request(:discover_search, **params.except(:actor_name).merge(people: person_id))
       else
-        Tmdb::Client.request(:discover_search, params.except(:actor_name))
+        Tmdb::Client.request(:discover_search, **params.except(:actor_name))
       end
 
       movie_results = data.dig(:results)

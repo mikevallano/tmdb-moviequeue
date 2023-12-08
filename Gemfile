@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '2.7.8'
+ruby '3.0.0'
 gem 'puma', '4.3.12'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1.0'
 gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
-gem 'bigdecimal', '1.3.5'
+gem 'bigdecimal', '2.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
@@ -35,7 +35,7 @@ group :development, :test do
   gem 'pry'
   gem 'ffaker'
   gem 'awesome_print'
-  gem 'rspec-rails', '~> 5.0.0'
+  gem 'rspec-rails', '~> 6.1.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
   gem 'rubocop-rspec'

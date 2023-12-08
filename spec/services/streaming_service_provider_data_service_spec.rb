@@ -20,7 +20,7 @@ RSpec.describe StreamingServiceProviderDataService do
       it 'returns our default providers with a pay_model of "try"' do
         allow(Tmdb::Client).to receive(:request).and_return(nil)
 
-        results = StreamingServiceProviderDataService.get_providers(movie_args)
+        results = StreamingServiceProviderDataService.get_providers(**movie_args)
         aggregate_failures "all default providers appear with 'try'" do
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('try')
           expect(results.find {|r| r[:name] == 'Amazon Prime Video'}[:pay_model] ).to eq('try')
@@ -49,7 +49,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
           aggregate_failures "all default providers appear with 'try'" do
             expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('try')
             expect(results.find {|r| r[:name] == 'Amazon Prime Video'}[:pay_model] ).to eq('try')
@@ -76,7 +76,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
           aggregate_failures "all default providers appear with 'try'" do
             expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('try')
             expect(results.find {|r| r[:name] == 'Amazon Prime Video'}[:pay_model] ).to eq('try')
@@ -99,7 +99,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
 
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
         end
@@ -117,7 +117,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
 
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
         end
@@ -134,7 +134,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('rent')
         end
@@ -151,7 +151,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('buy')
         end
@@ -169,7 +169,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Vudu'}[:pay_model] ).to eq('try')
         end
@@ -188,7 +188,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           expect(results.find {|r| r[:name] == 'Vudu'}[:pay_model] ).to eq('free')
         end
@@ -207,7 +207,7 @@ RSpec.describe StreamingServiceProviderDataService do
               }
             }
             allow(Tmdb::Client).to receive(:request).and_return(response_data)
-            results = StreamingServiceProviderDataService.get_providers(movie_args)
+            results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
             expect(results.find {|r| r[:name] == 'Vudu'}[:pay_model] ).to eq('rent')
         end
@@ -232,7 +232,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
           aggregate_failures "expected pay_model levels per provider" do
             expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
@@ -260,7 +260,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          results = StreamingServiceProviderDataService.get_providers(movie_args)
+          results = StreamingServiceProviderDataService.get_providers(**movie_args)
           aggregate_failures "expecting to not find any of these non-preferred providers" do
             expect(results.find {|r| r[:name] == 'Starz'}).to be(nil)
             expect(results.find {|r| r[:name] == 'Google Play Movies'}).to be(nil)
@@ -299,7 +299,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
         }
         allow(Tmdb::Client).to receive(:request).and_return(response_data)
-        results = StreamingServiceProviderDataService.get_providers(tv_args)
+        results = StreamingServiceProviderDataService.get_providers(**tv_args)
 
         aggregate_failures "expected pay_model levels per provider" do
           expect(results.find {|r| r[:name] == 'Netflix'}[:pay_model] ).to eq('free')
