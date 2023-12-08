@@ -124,7 +124,7 @@ RSpec.feature "Movies feature spec", :type => :feature do
             fill_in "tag_list", with: "dark comedy"
             click_button "add_tags_button_movies_partial", match: :first
             expect(page).to have_content("dark-comedy")
-            click_link "remove_tag_link_movies_partial"
+            click_button "remove_tag_link_movies_partial"
             expect(page).not_to have_content("dark-comedy")
           end
 

@@ -4,9 +4,9 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
   feature "User can access lists and movies they're members of" do
 
-    let(:user1) { FactoryBot.create(:user) }
-    let(:user2) { FactoryBot.create(:user) }
-    let(:user3) { FactoryBot.create(:user) }
+    let!(:user1) { FactoryBot.create(:user) }
+    let!(:user2) { FactoryBot.create(:user) }
+    let!(:user3) { FactoryBot.create(:user) }
     let(:movie1) { FactoryBot.create(:movie) }
     let(:list) { FactoryBot.create(:list, owner_id: user1.id) }
     let(:listing1) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie1.id) }
@@ -74,10 +74,14 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       end
 
       scenario "users update priorities on lists they're a member of", js: true do
+        puts "user2.email : #{user2.email} *****"
         page.driver.browser.manage.window.resize_to(1280,800)
+        puts "current_url before sign_in : #{current_url} *****"
         sign_in_user(user2)
         visit(user_list_path(user1, list))
-        find("#modal_link_#{movie1.tmdb_id}").click
+        sleep(1)
+        puts "current_url : #{current_url} *****"
+        click_button("modal_link_#{movie1.tmdb_id}")
         wait_for_ajax
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
