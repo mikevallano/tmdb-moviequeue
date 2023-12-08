@@ -1,3 +1,5 @@
+<!--TODO: this is not currently being used-->
+
 <%= form_for(Listing.new) do |f| %>
   <%= f.collection_select :list_id, current_user.lists_except_movie(@movie), :id, :name %>
   <%= hidden_field_tag :tmdb_id, @tmdb_id %>

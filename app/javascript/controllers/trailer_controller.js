@@ -34,4 +34,9 @@ export default class extends Controller {
     // console.log('got clicked')
     // $('#exampleModal').modal('show')
   }
+
+  modalCloseTester() {
+    $('.modal').modal('hide')
+    location.reload()
+  }
 }

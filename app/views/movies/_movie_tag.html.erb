@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "taggings_#{dom_id(movie)}" do %>
+<%= turbo_frame_tag "taggings_#{movie.tmdb_id}" do %>
   <icon class="fa fa-tags"></icon>
   <span class="pseudo-header"> Tags:</span>
   <% if movie.tags.present? %>
