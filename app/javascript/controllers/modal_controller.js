@@ -18,5 +18,9 @@ export default class extends Controller {
 
   close() {
     $('.modal').modal('hide')
+    // this hack was in place before.
+    // for some reason when clicking the close button,
+    // the page will be frozen unless reloading
+    location.reload()
   }
 }

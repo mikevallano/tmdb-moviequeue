@@ -7,7 +7,7 @@
         <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe,
                     edit_movie_rating_path(movie, movie.ratings.by_user(current_user).first),
                     id: "show_rating_link_movies_partial",
-                    data: {turbo_frame: '_top'}
+                    data: {turbo_frame: '_top', turbo: false}
         %>
       </p>
 

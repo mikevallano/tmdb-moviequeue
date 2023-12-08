@@ -9,7 +9,9 @@ module ListsHelper
   end #public_private_indicator
 
   def current_priority(list, movie)
-    Listing.find_by(list_id: list.id, movie_id: movie.id).priority
+    # see issue #394. the safe navigation fixes it, but worth
+    # more of a look
+    Listing.find_by(list_id: list.id, movie_id: movie.id)&.priority
   end
 
 end #ListsHelper
