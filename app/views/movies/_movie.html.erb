@@ -37,7 +37,7 @@
       </div><!-- body -->
 
       <div class="modal-footer">
-        <p class="btn btn-default"><%= link_to "Movie Details", link_to_movie(movie), id: "movie_show_link_movie_partial" %></p>
+        <p class="btn btn-default"><%= link_to "Movie Details", link_to_movie(movie), id: "movie_show_link_movie_partial", data: {turbo_frame: '_top'} %></p>
         <%= link_to "Close", '#',
         data: { controller: 'trailer', action: 'click->trailer#modalCloseTester' },
         id: "modal_close_link_#{@movie.tmdb_id}", :class => "btn btn-default" %>
