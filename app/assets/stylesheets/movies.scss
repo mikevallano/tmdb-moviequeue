@@ -65,6 +65,15 @@ article.tile-cover-pic {
    background-color: $primary-background-color;
 } /* .modal-dialog */
 
+#modal-trigger {
+  margin: 0;
+}
+
+button.modal-linker {
+  padding: 0;
+  border: 0;
+}
+
 .modal {
   img {
     border: 1px solid #000;
