@@ -18,6 +18,7 @@
 
     <!-- Check device width for responsive media queries -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= tag :meta, name: :rails_env, content: Rails.env %>
 
     <%= favicon_link_tag "favicon.png" %>
     <%= javascript_importmap_tags %>
