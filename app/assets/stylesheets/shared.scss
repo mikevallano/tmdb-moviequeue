@@ -1,4 +1,5 @@
-@import 'variables';
+@import "variables";
+
 
 body {
   background-color: $primary-background-color;
@@ -7,9 +8,7 @@ body {
   line-height: 18px;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   font-family: $header-family;
 } /* h1, h2, h3 */
 
@@ -27,10 +26,7 @@ h3 {
   letter-spacing: 2px;
 } /* h3 */
 
-p,
-ol,
-ul,
-td {
+p, ol, ul, td {
   font-family: $body-family;
   font-size: 13px;
   line-height: 18px;
@@ -64,9 +60,7 @@ a.cast-name-link {
   padding: 1px 4px;
   border-radius: 3px;
   margin-right: 3px;
-  &:visited {
-    color: $light-blue;
-  }
+  &:visited { color: $light-blue; }
   &:hover {
     color: $light-blue;
     background-color: darken($dark-blue, 10%);
@@ -76,21 +70,19 @@ a.cast-name-link {
 
 /* FORM PLACEHOLDER TEXT */
 input::-webkit-input-placeholder {
-  color: white !important;
+color: white !important;
 }
 
-input:-moz-placeholder {
-  /* Firefox 18- */
-  color: white !important;
+input:-moz-placeholder { /* Firefox 18- */
+color: white !important;
 }
 
-input::-moz-placeholder {
-  /* Firefox 19+ */
-  color: white !important;
+input::-moz-placeholder {  /* Firefox 19+ */
+color: white !important;
 }
 
 input:-ms-input-placeholder {
-  color: white !important;
+color: white !important;
 }
 
 #header-movie-search input::-webkit-input-placeholder {
@@ -98,14 +90,12 @@ input:-ms-input-placeholder {
   text-align: left;
 }
 
-#header-movie-search input:-moz-placeholder {
-  /* Firefox 18- */
+#header-movie-search input:-moz-placeholder { /* Firefox 18- */
   color: #262626 !important;
   text-align: center;
 }
 
-#header-movie-search input::-moz-placeholder {
-  /* Firefox 19+ */
+#header-movie-search input::-moz-placeholder {  /* Firefox 19+ */
   color: #262626 !important;
   text-align: center;
 }
@@ -114,6 +104,7 @@ input:-ms-input-placeholder {
   color: #262626 !important;
   text-align: center;
 }
+
 
 /* BOOTSTRAP */
 
@@ -124,9 +115,7 @@ input:-ms-input-placeholder {
 }
 
 /* FONT AWESOME */
-.fa {
-  line-height: 1.2;
-}
+.fa { line-height: 1.2; }
 
 /* MATERIAL ICONS: https://fonts.google.com/ */
 .material-symbols-outlined {
@@ -134,6 +123,7 @@ input:-ms-input-placeholder {
   position: relative;
   bottom: -0.2em;
 }
+
 
 /* NOTICES & ALERTS */
 
@@ -182,28 +172,33 @@ input:-ms-input-placeholder {
   text-transform: uppercase;
 } /* .pseudo-header */
 
+
 /* UTILITIES */
-.mt-5 {
-  margin-top: 5px;
-}
-.mt-10 {
-  margin-top: 10px;
-}
-.mb-5 {
-  margin-bottom: 5px;
-}
-.mb-10 {
-  margin-bottom: 10px;
-}
-.mr-5 {
-  margin-right: 5px;
-}
-.ml-5 {
-  margin-left: 5px;
-}
-.txt-sm {
-  font-size: 1rem;
-}
+.mt-5 { margin-top: 5px; }
+.mt-10 { margin-top: 10px; }
+.mb-5 { margin-bottom: 5px; }
+.mb-10 { margin-bottom: 10px; }
+.mr-5 { margin-right: 5px; }
+.ml-5 { margin-left: 5px; }
+.txt-sm { font-size: 1rem; }
+
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 900px) {
+  .share-container {
+    margin-top: 20px;
+    width: 100%;
+    min-width: 250px;
+    clear: both;
+  } /* .share-container */
+
+  .form-container {
+    width: 100%;
+    float: left;
+    margin-right: 20px;
+  } /* .form-container */
+
+} /* 900px */
 
 ul.ui-autocomplete {
   list-style: none;
@@ -225,32 +220,11 @@ ul.ui-autocomplete li:hover {
   color: white;
 }
 
-// only for header tho?
-// ul.ui-autocomplete {
-//   position: relative;
-//   left: 515px !important;
-// }
-
-/* MEDIA QUERIES */
-@media screen and (max-width: 900px) {
-  .share-container {
-    margin-top: 20px;
-    width: 100%;
-    min-width: 250px;
-    clear: both;
-  } /* .share-container */
-
-  .form-container {
-    width: 100%;
-    float: left;
-    margin-right: 20px;
-  } /* .form-container */
-} /* 900px */
-
 @media screen and (max-width: 360px) {
   .col-xs-3 {
     width: 100%;
     clear: both;
     margin-bottom: 10px;
   } /* .col-xs-3 */
+
 } /* 360px */
