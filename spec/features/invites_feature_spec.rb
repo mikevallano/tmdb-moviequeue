@@ -86,7 +86,7 @@ RSpec.feature "Invites feature spec", :type => :feature do
         visit(edit_user_list_path(user1, list))
         fill_in "invite_email", with: user2.email
         click_button "send_invite_button_list_edit"
-        click_link "sign_out_nav_link"
+        click_button "sign_out_nav_link"
 
         sign_in_user(user2)
         visit(user_list_path(user1, Invite.last.list))

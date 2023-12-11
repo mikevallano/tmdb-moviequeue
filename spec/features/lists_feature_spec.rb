@@ -371,7 +371,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
       scenario  "user's can't view or edit another user's list (without being a member)" do
         sign_in_and_create_list
         @list = List.last
-        click_link "sign_out_nav_link"
+        click_button "sign_out_nav_link"
         sign_in_user(user2)
 
         visit(user_list_path(user, @list))
@@ -424,7 +424,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
             FactoryBot.create(:listing, list_id: public_list.id, movie_id: Movie.find(counter).id, user_id: user.id)
             counter += 1
           end
-          click_link "sign_out_nav_link"
+          click_button "sign_out_nav_link"
           sign_in_user(user2)
           click_link "public_lists_nav_link"
           click_link "#{public_list.name.titlecase}"
@@ -439,7 +439,7 @@ RSpec.feature "Lists feature spec", :type => :feature do
         it "should paginate the lists on the all lists page" do
           sign_in_user(user)
           30.times { FactoryBot.create(:list, is_public: true, owner: user) }
-          click_link "sign_out_nav_link"
+          click_button "sign_out_nav_link"
           sign_in_user(user2)
           click_link "public_lists_nav_link"
           expect(page).to have_content("Next")
