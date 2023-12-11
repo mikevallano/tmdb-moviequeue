@@ -1,1 +1,6 @@
-<%= turbo_stream.replace "taggings_#{@movie.tmdb_id}", partial: 'movies/movie_tag', locals: { movie: @movie } %>
+<%= turbo_stream.replace(
+      "taggings_#{@movie.tmdb_id}",
+      partial: 'movies/movie_tag',
+      locals: { movie: @movie }
+    )
+%>
