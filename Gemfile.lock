@@ -399,7 +399,7 @@ DEPENDENCIES
   capybara
   capybara-email
   database_cleaner
-  devise
+  devise (~> 4.9.1)
   factory_bot_rails
   ffaker
   figaro
