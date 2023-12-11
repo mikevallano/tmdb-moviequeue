@@ -117,7 +117,7 @@ module MoviesHelper
   end
 
   def full_cast_link(movie)
-    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show"
+    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show", data: {turbo_frame: '_top', turbo: false}
   end
 
   def runtime_display(movie)
