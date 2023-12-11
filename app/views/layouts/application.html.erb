@@ -12,8 +12,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all'%>
     <%= javascript_include_tag 'application' %>
+    <%= javascript_import_module_tag "autocomplete" %>
     <%= csrf_meta_tags %>
 
+    <!--TODO: use importmap for this-->
     <script src="//use.fontawesome.com/16a020f0b8.js"></script>
 
     <!-- Check device width for responsive media queries -->
