@@ -3,7 +3,7 @@ import '@hotwired/turbo-rails'
 import 'jquery'
 import 'jquery-ui'
 import 'bootstrap'
-// import './newz.js'
+import './newz.js'
 
 console.log('in application.js')
 
