@@ -10,7 +10,6 @@ else {
   $("#movie_show_listings_<%= @movie.tmdb_id %>").html("<%= j(render partial: 'movies/movie_show_list_manage', locals: {movie: @movie}) %>");
 }
 
-// OMG
 <%# On a list view, we need to specify the movie
 so we use the movie's tmdb_id %>
 var $listPageDropdown = $("#myModal_<%= @movie.tmdb_id %>").find("#add-to-list-dropdown-" + "<%= @movie.tmdb_id %>");

@@ -4,9 +4,9 @@ RSpec.feature "Memberships feature spec", :type => :feature do
 
   feature "User can access lists and movies they're members of" do
 
-    let!(:user1) { FactoryBot.create(:user) }
-    let!(:user2) { FactoryBot.create(:user) }
-    let!(:user3) { FactoryBot.create(:user) }
+    let(:user1) { FactoryBot.create(:user) }
+    let(:user2) { FactoryBot.create(:user) }
+    let(:user3) { FactoryBot.create(:user) }
     let(:movie1) { FactoryBot.create(:movie) }
     let(:list) { FactoryBot.create(:list, owner_id: user1.id) }
     let(:listing1) { FactoryBot.create(:listing, list_id: list.id, movie_id: movie1.id) }

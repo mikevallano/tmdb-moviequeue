@@ -13,7 +13,7 @@ export default class extends Controller {
     const modalId = this.element.dataset.target
     setTimeout(() => {
       $(`${modalId}`).modal('show')
-    }, 900)
+    }, 400)
   }
 
   close() {
