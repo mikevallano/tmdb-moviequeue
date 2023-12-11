@@ -182,24 +182,7 @@ color: white !important;
 .ml-5 { margin-left: 5px; }
 .txt-sm { font-size: 1rem; }
 
-
-/* MEDIA QUERIES */
-@media screen and (max-width: 900px) {
-  .share-container {
-    margin-top: 20px;
-    width: 100%;
-    min-width: 250px;
-    clear: both;
-  } /* .share-container */
-
-  .form-container {
-    width: 100%;
-    float: left;
-    margin-right: 20px;
-  } /* .form-container */
-
-} /* 900px */
-
+// AUTO COMPLETE autocomplete
 ul.ui-autocomplete {
   list-style: none;
   max-width: 450px;
@@ -219,6 +202,30 @@ ul.ui-autocomplete li:hover {
   background: darkgrey;
   color: white;
 }
+
+// jquery autocomplete renders a div
+// that sticks around with the value of the
+// autocomplete.
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 900px) {
+  .share-container {
+    margin-top: 20px;
+    width: 100%;
+    min-width: 250px;
+    clear: both;
+  } /* .share-container */
+
+  .form-container {
+    width: 100%;
+    float: left;
+    margin-right: 20px;
+  } /* .form-container */
+
+} /* 900px */
 
 @media screen and (max-width: 360px) {
   .col-xs-3 {

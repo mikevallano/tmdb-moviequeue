@@ -30,7 +30,6 @@ class ListingsController < ApplicationController
       redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
     end
     @priority = params[:priority]
-    # @movies = @movies = current_user.all_movies
     @movie = Movie.friendly.find(params[:movie_id])
     @list = List.friendly.find(params[:list_id])
     respond_to do |format|

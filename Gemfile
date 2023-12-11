@@ -9,8 +9,6 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'hotwire-rails'
 gem 'importmap-rails'
-# gem 'jquery-rails'
-# gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 2.6.1', group: :doc
 gem 'devise', '~> 4.9.1'

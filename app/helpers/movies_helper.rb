@@ -92,7 +92,8 @@ module MoviesHelper
     cast += full_cast_link(movie)
   end
 
-  # here
+  # TODO: This is not used since we're not using autocomplete
+  # on add to list functionality. Keeping in case we want to use in the future.
   def list_autocomplete_dropdown(movie)
     current_user.lists_except_movie(movie)
       .map{ |list| {label: list.name, id: list.id} }
