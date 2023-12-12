@@ -74,7 +74,6 @@ RSpec.feature "Memberships feature spec", :type => :feature do
       end
 
       scenario "users update priorities on lists they're a member of", js: true do
-        puts "user2.email : #{user2.email} *****"
         page.driver.browser.manage.window.resize_to(1280,800)
         puts "current_url before sign_in : #{current_url} *****"
         sign_in_user(user2)

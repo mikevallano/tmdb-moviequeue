@@ -5,8 +5,6 @@
                       {include_blank: 'Add to a list'}, {
                       class: "form-control add-to-other-list list-dropdown",
                       id: "add-to-list-dropdown-#{movie.tmdb_id}" } %>
-
-        <%#= hidden_field_tag 'listing[list_id]', '', id: 'list_autocomplete_val', class: 'list-id-field' %>
         <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= hidden_field_tag :from, "first_list" %>
