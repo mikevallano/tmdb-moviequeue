@@ -1,4 +1,7 @@
-<% content_for(:title, @movie.title) %>
+<div class="movie-show-page mt-5">
+  <% if @movie.backdrop_path.present? %>
+    <%= render 'shared/media_backdrop', media: @movie %>
+  <% end %>
 
- <%= render "movie_show" %>
-
+  <%= render "movies/movie_deets", movie: @movie, modal: false %>
+</div>

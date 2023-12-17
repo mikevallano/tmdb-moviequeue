@@ -53,10 +53,9 @@ module MoviesHelper
   end
 
   def movie_genres_display(movie)
-    output = raw(movie.genres.map do |genre|
+    raw(movie.genres.map do |genre|
       link_to genre, genre_path(genre)
     end.join(", "))
-    output.prepend(" | ")
   end
 
   def display_pay_model_icon(movie_pay_model)
@@ -107,10 +106,11 @@ module MoviesHelper
 
   private
 
+  # TODO: fix up commas
   def movie_actors_display(movie, qty)
     raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link', data: {turbo: false}
-    end.join(""))
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link mr-5', data: {turbo: false}
+    end.join(", "))
   end
 
   def movie_director_display(movie)

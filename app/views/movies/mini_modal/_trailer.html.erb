@@ -1,0 +1,11 @@
+<div id="trailer_<%= "#{movie.tmdb_id}" %>">
+  <% if movie.trailer.present? %>
+    <div class="embed-container">
+      <iframe src="https://www.youtube.com/embed/<%= movie.trailer %>?rel=0" allowfullscreen></iframe>
+    </div>
+  <% else %>
+      <a href="https://www.youtube.com/results?search_query=<%= movie.title %>+movie+official+trailer" target="_blank" alt="Search for the Trailer" class='trailer-link'>
+        <i class="fa fa-chevron-circle-right"></i> Watch the Trailer
+      </a>
+  <% end %>
+</div>

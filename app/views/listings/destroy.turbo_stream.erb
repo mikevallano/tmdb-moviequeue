@@ -1,18 +1,6 @@
 <%= turbo_stream.update(
       "movie_on_lists_#{@movie.tmdb_id}",
-      partial: 'movies/movie_on_lists',
-      locals: { movie: @movie }
-    )
-%>
-<%= turbo_stream.update(
-      "movie_other_list_#{@movie.tmdb_id}",
-      partial: 'movies/movie_add_to_another_list',
-      locals: { movie: @movie }
-    )
-%>
-<%= turbo_stream.update(
-      "movie_show_listings_#{@movie.tmdb_id}",
-      partial: 'movies/movie_show_list_manage',
+      partial: 'movies/lists',
       locals: { movie: @movie }
     )
 %>

@@ -20,12 +20,12 @@ module StreamingServiceProviderDataService
           url: "http://www.netflix.com/search/?q=#{title}"
         },
         {
-          name: 'Amazon Prime Video',
+          name: 'Amazon Prime',
           pay_model: 'try',
           url: "https://www.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },
         {
-          name: 'Amazon Video',
+          name: 'Amazon',
           pay_model: 'try',
           url: "https://www.amazon.com/s?k=#{parameterized_title}&i=instant-video"
         },

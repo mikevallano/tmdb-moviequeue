@@ -1,0 +1,26 @@
+
+<%= turbo_frame_tag 'movie_partial_loop' do %>
+<div class="row tile-container">
+  <% movies.each do |movie| %>
+    <article class="tile-cover-pic">
+      <!-- MODAL TRIGGER 1 of 2 -->
+      <!-- On Desktop: Always display the modal -->
+      <p id="modal-trigger">
+        <%= button_to image_for(movie), movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
+                                      data: { target: "#myModal_#{movie.tmdb_id}", controller: 'modal', action: 'click->modal#open' },
+                                      id: "modal_link_#{movie.tmdb_id}",
+                                      class: 'modal-linker'
+        %>
+      </p>
+      <!-- MODAL TRIGGER 2 of 2 -->
+      <!-- On Mobile: skip the modal and go straight to a show page -->
+      <p id="modal-trigger-mobile">
+        <%= link_to image_for(movie), movie_more_path(tmdb_id: movie.tmdb_id) %>
+      </p>
+
+      <div id="movies_partial_<%= "#{movie.tmdb_id}" %>"></div>
+    </article> <!-- tile-cover-pic -->
+  <% end %><!-- movies.each -->
+</div> <!-- row tile container-->
+<% end %>
+</div>

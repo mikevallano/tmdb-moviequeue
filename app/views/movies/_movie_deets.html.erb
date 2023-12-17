@@ -1,0 +1,23 @@
+  <div class="movie-flex">
+    <div class="watch-info">
+      <div class="image-screenings-providers-container">
+        <%= link_to image_for(movie), link_to_movie(movie), data: { turbo: false } %>
+        <div class="screenings-providiers-container">
+          <%= render 'movies/screenings', movie: movie %>
+          <%= render "shared/streaming_service_providers", streaming_service_providers: movie.streaming_service_providers %>
+        </div>
+      </div>
+    </div>
+
+    <div class="movie-details">
+      <%= render 'movies/stats_cast_overview', movie: movie, modal: modal %>
+
+      <div class='movie-interactions mt-10'>
+        <%= render 'movies/tags_lists_last_watched', movie: movie %>
+      </div>
+
+      <div class="mt-10">
+        <%= render "movies/movie_trailer", movie: movie %>
+      </div>
+    </div>
+  </div>

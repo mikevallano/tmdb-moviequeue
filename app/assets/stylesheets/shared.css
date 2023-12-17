@@ -1,0 +1,32 @@
+.pseudo-header {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+/* // jquery AUTO COMPLETE autocomplete */
+ul.ui-autocomplete {
+  list-style: none;
+  max-width: 450px;
+  padding: 0;
+}
+
+ul.ui-autocomplete li {
+  text-align: left;
+  background: white;
+  color: black;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 5px;
+}
+
+ul.ui-autocomplete li:hover {
+  background: darkgrey;
+  color: white;
+}
+
+/* jquery autocomplete renders a div */
+/* that sticks around with the value of the */
+/* autocomplete. */
+.ui-helper-hidden-accessible {
+  display: none;
+}

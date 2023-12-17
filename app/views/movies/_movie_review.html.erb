@@ -1,14 +1,16 @@
-<% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
-  <div class='mb-10'>
-    <% if current_user.reviewed_movies.include?(movie) %> <!-- #if movie has been reviewed -->
-      <p>
-        <icon class="fa fa-edit"></icon>
-        <span class="pseudo-header"> My Review:</span>
-        <%= truncate(movie.reviews.by_user(current_user).first.body, length: 100, separator: ' ') %>
-        <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Review'.html_safe, movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_partial" %>
-      </p>
-    <% else %> <!-- #if movie has been reviewed -->
-      <p class="button-main"><%= link_to "+ Write a Review", new_movie_review_path(movie), id: "new_review_link_movies_partial" %></p>
-    <% end %> <!-- #if movie has been reviewed -->
-  </div>
-<% end %><!-- current_user.watched_movies.include?(movie) -->
+<div id="review_<%= "#{movie.tmdb_id}" %>">
+  <% if current_user.watched_movies.include?(movie) %>
+    <div class='movie-reviews'>
+      <% if current_user.reviewed_movies.include?(movie) %>
+        <p>
+          <icon class="fa fa-edit"></icon>
+          <span class="pseudo-header"> My Review:</span>
+          <%= truncate(movie.reviews.by_user(current_user).first.body, length: 100, separator: ' ') %>
+          <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Review'.html_safe, movie_review_path(movie, movie.reviews.by_user(current_user).first), id: "show_review_link_movies_partial" %>
+        </p>
+      <% else %>
+        <p class="button-main"><%= link_to "+ Write a Review", new_movie_review_path(movie), id: "new_review_link_movies_partial" %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

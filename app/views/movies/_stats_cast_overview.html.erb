@@ -1,0 +1,19 @@
+<div class="stats-cast-overview mt-10">
+  <% if modal %>
+    <h2><%= link_to "#{movie.title}", link_to_movie(movie), data: { turbo: false } %></h2>
+    <%= movie_genres_display(movie) %>
+    <div class='movie-stats mt-10'><%= movie_stats_display(movie) %></div>
+    <div class='movie-cast mt-10'><%= movie_cast_display(movie, 3) %></div>
+    <div class="movie-overview mt-10">
+      <%= truncate(movie.overview, length: 300, separator: ' ') %>  <%= link_to '<i class="fa fa-chevron-circle-right"></i> Full Details'.html_safe, link_to_movie(movie) %>
+    </div>
+  <% else %>
+    <h2><%= movie.title %></h2>
+    <%= movie_genres_display(movie) %>
+    <div class='movie-stats mt-10'><%= movie_stats_display(movie) %></div>
+    <div class='movie-cast mt-10'><%= movie_cast_display(movie, 5) %></div>
+    <div class="movie-overview mt-10">
+      <%= movie.overview %>
+    </div>
+  <% end %>
+</div>

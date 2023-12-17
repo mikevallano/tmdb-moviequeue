@@ -1,7 +1,6 @@
 <% content_for(:title, @list.name) %>
-
 <div class="row">
-  <h1><%= @list.name %> <span class="count">(<%= pluralize(@list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(@list) %>"><icon></span></h1>
+  <h2><%= @list.name %> <span class="count">(<%= pluralize(@list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(@list) %>"><icon></span></h2>
   <p>by <%= @list.owner.username %></p>
 
   <% if @list.description.present? %>
@@ -23,9 +22,7 @@
   <% end %> <!-- # if @sort_by = "watched movies" && @list.members.present? -->
 </div> <!-- row -->
 
-<div id ="list_show_loop">
   <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies, list: @list } %>
-</div>
 
 <div class="row tile-container">
    <center>

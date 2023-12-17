@@ -1,0 +1,28 @@
+<div class="modal-content mt-5">
+  <span class='close' data-controller='modal' data-action='click->modal#closeModal'>
+    &times;
+  </span>
+
+  <div class="movie-flex">
+    <div class="trailer-container mt-10">
+      <%= render "movies/mini_modal/trailer", movie: movie %>
+    </div>
+    <div class="watch-info">
+      <%= render 'movies/screenings', movie: movie %>
+      <%= render "movies/mini_modal/streaming_service_providers",
+          streaming_service_providers: movie.streaming_service_providers %>
+    </div>
+
+    <div class="movie-details">
+      <%= render 'movies/stats_cast_overview', movie: movie, modal: true %>
+
+    <div class="mt-10">
+      <%= render 'movies/lists', movie: movie %>
+    </div>
+
+    <div class="mt-10">
+      <%= render 'movies/movie_rating', movie: movie %>
+    </div>
+    </div>
+  </div>
+</div>

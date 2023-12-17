@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --color-primary: #020d18;
+  --color-secondary: #f1c40f;
+  --color-links: lightblue;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  background: var(--color-primary);
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-links);
+}

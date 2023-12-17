@@ -1,0 +1,19 @@
+<div id="screenings_<%= "#{movie.tmdb_id}" %>">
+  <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
+    <div class='manage-screenings'>
+      <%= link_to '<i class="fa fa-check-square-o"></i> Watched <span class="material-symbols-outlined edit-note">edit_note</span>'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial", data: {turbo_frame: '_top'} %>
+    </div>
+  <% else %> <!-- #if movie has been seen -->
+    <div class='manage-screenings'>
+      <%= button_to '<i class="fa fa-square-o"></i> Mark Watched'.html_safe, screenings_path(
+          screening: { location_watched: current_user.default_location },
+          tmdb_id: movie.tmdb_id,
+          from: 'movies_index',
+          page: params[:page]
+        ),
+        method: :post,
+        id: 'mark_watched_link_movies_partial',
+        remote: true %>
+    </div>
+  <% end %>
+</div>
