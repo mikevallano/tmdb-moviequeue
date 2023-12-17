@@ -1,0 +1,6 @@
+<%= turbo_stream.update(
+      "movies_partial_#{@movie.tmdb_id}",
+      partial: 'movies/movie',
+      locals: { movie: @movie }
+    )
+%>

@@ -32,6 +32,6 @@
     <%= f.text_area :notes %>
   </div>
   <div class="actions">
-    <%= f.submit "Save", id: "screening_submit_button_screening_form" %>
+    <%= f.submit "Save", id: "screening_submit_button_screening_form", data: {turbo: 'false'} %>
   </div>
 <% end %>

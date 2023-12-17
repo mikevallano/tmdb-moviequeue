@@ -120,6 +120,21 @@ input[type="submit"] {
   width: auto;
 } /* .pages-form-submit */
 
+// SMALL X TO DELETE TAGS OR LISTS THAT NEED TO BE BUTTON_TO
+form.small-x {
+  display: inline-block;
+  & button {
+    background: none;
+    border: none;
+    color: $light-blue;
+    padding: 0;
+  }
+}
+
+form#tag-form-modal,
+form#new_listing {
+  margin-top: 10px;
+}
 
 @media screen and (max-width: 600px) {
 
@@ -129,5 +144,3 @@ input[type="submit"] {
   } /* .search-form */
 
 } /* 600px */
-
-

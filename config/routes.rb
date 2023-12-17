@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :screenings, only: :create
 
-  get 'movies/modal', to: 'movies#modal', as: :movie_modal
+  post 'movies/modal', to: 'movies#modal', as: :movie_modal
   get 'movies/modal_close', to: 'movies#modal_close', as: :movie_modal_close
   resources :movies, only: [:index, :show, :update] do
     resources :reviews

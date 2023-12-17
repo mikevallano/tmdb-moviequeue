@@ -116,7 +116,7 @@ button.close {
 
 /* MOVIE SHOW PAGE SIDEBAR */
 .sidebar-button {
-  a {
+  a, button {
     width: 100%;
     display: block;
     color: $light-gray;
@@ -136,4 +136,17 @@ button.close {
       text-decoration: none;
     }
   } /* a */
+}
+
+.sidebar-button button {
+  background: none;
+}
+
+div.sidebar-button {
+  margin: 10px 0;
 } /* .sidebar-button */
+
+input[type='submit']:disabled {
+  background: grey;
+  cursor: not-allowed;
+}

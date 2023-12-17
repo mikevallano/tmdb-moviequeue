@@ -1,0 +1,12 @@
+<%= turbo_stream.update(
+      "movie_rated_#{@movie.tmdb_id}",
+      partial: 'movies/movie_rating',
+      locals: { movie: @movie }
+    )
+%>
+<%= turbo_stream.update(
+      "movie_show_rated_#{@movie.tmdb_id}",
+      partial: 'movies/movie_rating',
+      locals: { movie: @movie }
+    )
+%>

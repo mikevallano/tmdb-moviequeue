@@ -29,7 +29,7 @@ class RatingsController < ApplicationController
 
     respond_to do |format|
       if @rating.save
-        format.js {}
+        format.turbo_stream
         format.html { redirect_to movie_path(@movie), notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else

@@ -11,12 +11,12 @@
 <% end %> <!-- #if trailer present -->
 
 <% if current_user.admin? %>
-  <%= form_tag(movie_path(movie), { class: "form-class", id: "add-trailer", method: :patch } ) do %>
+  <%= form_tag(movie_path(movie), { class: "form-class", id: "add-trailer", method: :patch, data: {controller: 'trailer', action: 'input->trailer#validateInput'} } ) do %>
     <%= text_field_tag :trailer, nil,
                         { placeholder: trailer_placeholder_text(movie),
                           class: 'form-control',
                           id: "trailer-text-field" } %>
     <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
-    <%= submit_tag trailer_button_text(movie), id: "add-trailer-btn", class: "form-control-submit", disabled: 'disabled' %>
+    <%= submit_tag trailer_button_text(movie), id: "add-trailer-btn", class: "form-control-submit" %>
   <% end %> <!-- # tag form loop -->
 <% end %> <!-- # if admin? -->

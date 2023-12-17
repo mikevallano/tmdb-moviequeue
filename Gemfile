@@ -7,11 +7,11 @@ gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'hotwire-rails'
+gem 'importmap-rails'
 gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'devise'
+gem 'sdoc', '~> 2.6.1', group: :doc
+gem 'devise', '~> 4.9.3'
 gem 'figaro'
 gem 'friendly_id'
 gem 'httparty'
@@ -22,6 +22,8 @@ gem 'stamp'
 gem 'sentry-ruby'
 gem 'sentry-rails'
 gem 'sprockets-rails'
+gem 'stimulus-rails'
+gem 'turbo-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -53,3 +55,6 @@ group :test do
     gem 'vcr'
     gem 'webmock'
 end
+
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"

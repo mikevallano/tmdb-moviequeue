@@ -1,0 +1,36 @@
+<!--This 'first_list' logic already existed. It's overly complex, but keeping it
+for now until we redo frontend logic-->
+
+<% if @from == 'first_list' %>
+  <%= turbo_stream.update(
+        "movie_modal_innard_#{@movie.tmdb_id}",
+        partial: 'movies/movie_modal_innard',
+        locals: { movie: @movie }
+      )
+  %>
+  <%= turbo_stream.update(
+        "movie_show_list_manage_#{@movie.tmdb_id}",
+        partial: 'movies/movie_show_list_manage',
+        locals: { movie: @movie }
+      )
+  %>
+<% else %>
+  <%= turbo_stream.update(
+        "movie_on_lists_#{@movie.tmdb_id}",
+        partial: 'movies/movie_on_lists',
+        locals: { movie: @movie }
+      )
+  %>
+  <%= turbo_stream.update(
+      "movie_other_list_#{@movie.tmdb_id}",
+      partial: 'movies/movie_add_to_another_list',
+      locals: { movie: @movie }
+      )
+  %>
+  <%= turbo_stream.update(
+        "movie_show_listings_#{@movie.tmdb_id}",
+        partial: 'movies/movie_show_list_manage',
+        locals: { movie: @movie }
+      )
+  %>
+<% end %>

@@ -29,9 +29,11 @@
       <%= render "movies/movie_show_screening", movie: media %>
     </div>
 
+    <%= turbo_frame_tag "movie_rating_#{media.tmdb_id}" do %>
     <div id="movie_show_rated_<%= media.tmdb_id %>" class="partial-spacer">
-      <%= render 'movies/movie_rating', movie: media %>
+        <%= render 'movies/movie_rating', movie: media %>
     </div>
+    <% end %>
 
     <div id="movie_show_reviewed_<%= media.tmdb_id %>" class="partial-spacer">
       <%= render 'movies/movie_review', movie: media %>

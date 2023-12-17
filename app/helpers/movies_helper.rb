@@ -92,9 +92,16 @@ module MoviesHelper
     cast += full_cast_link(movie)
   end
 
+  # TODO: This is not used since we're not using autocomplete
+  # on add to list functionality. Keeping in case we want to use in the future.
   def list_autocomplete_dropdown(movie)
     current_user.lists_except_movie(movie)
       .map{ |list| {label: list.name, id: list.id} }
+  end
+
+  def list_add_dropdown(movie)
+    current_user.lists_except_movie(movie)
+      .map{ |list| [list.name, list.id] }
   end
 
 
@@ -102,7 +109,7 @@ module MoviesHelper
 
   def movie_actors_display(movie, qty)
     raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link'
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link', data: {turbo: false}
     end.join(""))
   end
 
@@ -111,7 +118,7 @@ module MoviesHelper
   end
 
   def full_cast_link(movie)
-    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show"
+    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show", data: {turbo_frame: '_top', turbo: false}
   end
 
   def runtime_display(movie)

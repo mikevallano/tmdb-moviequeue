@@ -182,6 +182,33 @@ color: white !important;
 .ml-5 { margin-left: 5px; }
 .txt-sm { font-size: 1rem; }
 
+// AUTO COMPLETE autocomplete
+ul.ui-autocomplete {
+  list-style: none;
+  max-width: 450px;
+  padding: 0;
+}
+
+ul.ui-autocomplete li {
+  text-align: left;
+  background: white;
+  color: black;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 5px;
+}
+
+ul.ui-autocomplete li:hover {
+  background: darkgrey;
+  color: white;
+}
+
+// jquery autocomplete renders a div
+// that sticks around with the value of the
+// autocomplete.
+.ui-helper-hidden-accessible {
+  display: none;
+}
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 900px) {

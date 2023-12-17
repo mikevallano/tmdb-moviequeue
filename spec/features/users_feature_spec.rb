@@ -79,14 +79,14 @@ RSpec.feature "Users feature spec", :type => :feature do
 
     scenario "user can sign out" do
       sign_in_user(existing_user)
-      click_link "sign_out_nav_link"
+      click_button "sign_out_nav_link"
       expect(page).to have_content("Signed out successfully")
     end
 
     scenario "user can reset their password" do
 
       sign_in_user(existing_user)
-      click_link "sign_out_nav_link"
+      click_button "sign_out_nav_link"
       click_link "sign_in_nav_link"
       click_link "Forgot your password?"
       fill_in "Email", with: existing_user.email

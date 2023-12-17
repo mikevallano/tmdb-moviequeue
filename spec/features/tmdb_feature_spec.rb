@@ -23,7 +23,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "users searches for a movie by title and the API returns results" do
         api_search_for_movie
-        expect(page).to have_selector("a", id: /modal_link/)
+        expect(page).to have_selector("button", id: /modal_link/)
       end
 
       scenario "users searches a movie not found and the page indicates movie not found" do
@@ -40,7 +40,7 @@ RSpec.feature "TMDB feature spec", :type => :feature do
 
       scenario "users searches for an actor and the API returns results" do
         api_actor_search
-        expect(page).to have_selector("a", id: /modal_link/)
+        expect(page).to have_selector("button", id: /modal_link/)
         expect(page).to have_content("Next page")
       end
 
