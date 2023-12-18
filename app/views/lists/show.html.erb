@@ -1,33 +1,28 @@
 <% content_for(:title, @list.name) %>
-<div class="row">
-  <h2><%= @list.name %> <span class="count">(<%= pluralize(@list.movies.size, "Movie") %>) <icon class="<%= public_private_indicator(@list) %>"><icon></span></h2>
-  <p>by <%= @list.owner.username %></p>
 
-  <% if @list.description.present? %>
-    <p><%= @list.description %></p>
-  <% end %> <!-- #if description.present -->
+<h2><%= @list.name %>
+  <span>
+    (<%= pluralize(@list.movies.size, "Movie") %>)
+    <icon class="<%= public_private_indicator(@list) %>"><icon>
+  </span>
+</h2>
+<p>by <%= @list.owner.username %></p>
 
-  <%= form_tag user_list_path(@list.owner, @list), { class: "form-class", id: "list-show-sort", role: "form", method: :get } do %>
-    <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), { class: "form-control index-sort-dropdown", :include_blank => "Sort by", id: "list_sort_options" } %>
-    <%= submit_tag "Sort", id: "list_sort_button" %>
+<% if @list.description.present? %>
+  <p><%= @list.description %></p>
+<% end %>
+
+<%= form_tag user_list_path(@list.owner, @list), { method: :get, data: { controller: 'auto-submit', action: 'input->auto-submit#submit' } } do %>
+  <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), {  include_blank: "Sort by" } %>
+<% end %>
+
+<% if @sort_by.present? && @list.members.present? && @watched_sorts.include?(@sort_by) %>
+  <%= form_tag user_list_path(@list.owner, @list), { method: :get, data: { controller: 'auto-submit', action: 'input->auto-submit#submit' } } do %>
+    <%= select_tag :member, options_from_collection_for_select(@list.members, :id, :username, @member), { include_blank: "By which member?: " } %>
+    <%= hidden_field_tag(:sort_by, @sort_by) %>
   <% end %>
-  <br>
+<% end %>
 
-  <% if @sort_by.present? && @list.members.present? && @watched_sorts.include?(@sort_by) %>
-    <%= form_tag user_list_path(@list.owner, @list), { class: "form-class", id: "list-show-member-sort", role: "form", method: :get } do %>
-      <%= select_tag :member, options_from_collection_for_select(@list.members, :id, :username, @member), { class: "form-control index-sort-dropdown", :include_blank => "By which member?: " } %>
-      <%= hidden_field_tag(:sort_by, @sort_by) %>
-      <%= submit_tag "Sort", id: "list_sort_watched_by_button" %>
-    <% end %>
-  <% end %> <!-- # if @sort_by = "watched movies" && @list.members.present? -->
-</div> <!-- row -->
+<%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies, list: @list } %>
 
-  <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies, list: @list } %>
-
-<div class="row tile-container">
-   <center>
-    <div class="pagination">
-      <p><%= will_paginate @movies %></p>
-    </div><!-- pagination -->
-  </center>
-</div>
+<div class='text-center'><%= will_paginate @movies %></div>
