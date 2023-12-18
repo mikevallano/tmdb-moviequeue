@@ -8,6 +8,10 @@ module ListsHelper
     end #if
   end #public_private_indicator
 
+  def public_private_display(list)
+    list.is_public ? 'Public' : 'Private'
+  end
+
   def current_priority(list, movie)
     # see issue #394. the safe navigation fixes it, but worth
     # more of a look

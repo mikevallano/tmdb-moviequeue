@@ -1,12 +1,35 @@
 <% content_for(:title, "My Lists") %>
 
-<div class="row">
-  <h1>My Movie Lists</h1>
+<h1>My Movie Lists</h1>
 
-  <div class="pull-right">
-     <p class="button-main"><%= link_to '<i class="fa fa-plus"></i> New List'.html_safe, new_user_list_path(current_user), id: 'new_list_link_list_index' %></p>
-  </div> <!-- pull-right -->
-</div> <!-- row -->
+<%= link_to 'New List'.html_safe, new_user_list_path(current_user), class: 'btn' %></p>
 
-<%= render "lists/list" %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Movie Count</th>
+      <th>Public/Private</th>
+      <th>View</th>
+      <th>Manage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lists.order(name: :asc).each do |list| %>
+      <tr>
+        <td><%= link_to list.name.titlecase, user_list_path(list.owner, list) %></td>
+        <td><%= list.description %></td>
+        <td><%= list.movies.size %></td>
+        <td><%= public_private_display(list) %></td>
+        <td><%= link_to 'View', user_list_path(list.owner, list), class: 'btn btn-sm' %></td>
+        <td>
+          <% if current_user == list.owner %>
+            <%= link_to 'Manage', edit_user_list_path(list.owner, list), class: 'btn btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
