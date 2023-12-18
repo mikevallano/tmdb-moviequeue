@@ -47,4 +47,9 @@ form.new-edit textarea {
 form.new-edit label {
   font-weight: 500;
   color: var(--color-secondary);
+  display: block;
+}
+
+form.new-edit input[type='submit'] {
+  display: block;
 }

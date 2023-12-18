@@ -13,10 +13,6 @@
 
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
-  <div>
-    <%= f.select(:value, Rating::VALUES, { prompt: "Out of 10" }) %>
-  </div>
-  <div>
-    <%= f.submit "Submit" %>
-  </div>
+  <%= f.select :value, Rating::VALUES, { prompt: "Out of 10" } %>
+  <%= f.submit "Submit" %>
 <% end %>

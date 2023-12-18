@@ -13,7 +13,7 @@
 
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
-  <%= f.label :body, "Your Review:", class: 'block' %>
+  <%= f.label :body, "Your Review:" %>
   <%= f.text_area :body %>
-  <%= f.submit "Submit", class: 'block' %>
+  <%= f.submit "Submit" %>
 <% end %>

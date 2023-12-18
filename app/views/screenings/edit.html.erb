@@ -3,7 +3,7 @@
 <%= link_to 'Back', movie_screenings_path(@movie), class: 'btn inline-block mt-10' %>
 
 <h1>Edit Screening</h1>
-<h2>Your <%= @screening.date_watched.stamp("12-31-2016") %> Screening of <%= @movie.title %></h2>
+<h2>Your <%= @screening.date_watched.stamp("12-31-2016") %> Screening of <%= link_to @movie.title, @movie %></h2>
 
 <%= render partial: 'form', locals: { movie: @movie, screening: @screening } %>
 
