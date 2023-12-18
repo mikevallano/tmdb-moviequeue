@@ -1,7 +1,7 @@
-<h1>Edit Your Review of <%= @movie.title %></h1>
+<%= link_to 'Back', :back, class: 'btn inline-block mt-10' %>
+
+<h1>Edit Your Review of <%= link_to @movie.title, @movie %></h1>
 
 <%= render 'form' %>
 
-<p class="button-main">
-  <%= link_to 'Cancel Changes', movie_review_path(@movie, @review) %> 
-</p>
+<%= link_to 'Cancel Changes', movie_review_path(@movie, @review), class: 'btn' %>
