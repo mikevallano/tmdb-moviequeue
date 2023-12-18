@@ -39,6 +39,12 @@ form.new-edit input, textarea, select {
   height: 2rem;
 }
 
+form.new-edit input[type='text'],
+form.new-edit input[type='email'],
+form.new-edit input[type='password'] {
+  padding: 10px;
+}
+
 form.new-edit textarea {
   height: 200px;
   padding: 10px;
