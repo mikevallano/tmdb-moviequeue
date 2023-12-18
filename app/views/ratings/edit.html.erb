@@ -1,6 +1,5 @@
-<%= link_to('<- Back', :back) %>
+<%= link_to 'Back', :back, class: 'btn inline-block mt-10' %>
 
-<h1>Editing Rating</h1>
-<p>for <%= link_to @movie.title, @movie %></p>
+<h1>Editing Rating for <%= link_to @movie.title, @movie %></h1>
 
 <%= render 'form' %>
