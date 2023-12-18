@@ -1,0 +1,13 @@
+<tr>
+  <td><%= link_to list.name.titlecase, user_list_path(list.owner, list) %></td>
+  <td><%= list.description %></td>
+  <td><%= list.movies.size %></td>
+  <td><%= public_private_display(list) %></td>
+  <td><%= link_to 'View', user_list_path(list.owner, list), class: 'btn btn-sm' %></td>
+  <td><%= list.owner.username %></td>
+  <td>
+    <% if current_user == list.owner %>
+      <%= link_to 'Manage', edit_user_list_path(list.owner, list), class: 'btn btn-sm' %>
+    <% end %>
+  </td>
+</tr>

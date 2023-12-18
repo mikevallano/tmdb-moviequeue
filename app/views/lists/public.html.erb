@@ -1,15 +1,9 @@
 <% content_for(:title, "Public Lists") %>
 
-<div class="row">
-  <h1>Public Movie Lists</h1>
-  <h2>Browse lists other users have compiled.</h2>
+<h2>Browse lists other users have compiled.</h2>
 
+<%= link_to 'New List', new_user_list_path(current_user), class: 'btn' %>
 
-  <div class="pull-right">
-    <p class="button-main"><%= link_to '<i class="fa fa-plus"></i> New List'.html_safe, new_user_list_path(current_user), id: 'new_list_link_list_index' %></p>
-  </div> <!-- pull-right -->
-</div> <!-- row -->
+<%= render "lists/list_index", lists: @lists %>
 
-  <%= render "lists/list" %>
-
-<p><%= will_paginate @lists %></p>
+<%= will_paginate @lists %>

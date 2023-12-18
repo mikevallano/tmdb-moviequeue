@@ -22,11 +22,6 @@ class ListsController < ApplicationController
       return redirect_to user_list_path(@list.owner, @list), status: :moved_permanently
     end
 
-    unless current_user.all_lists.include?(@list)
-      @movies = @list.movies.paginate(page: params[:page], per_page: 20)
-      render :public_show
-    end
-
     @sort_by = params[:sort_by]
     @member = params[:member]
     if @sort_by.present?

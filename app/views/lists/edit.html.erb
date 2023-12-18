@@ -1,26 +1,25 @@
 <% content_for(:title, "Editing #{@list.name}") %>
 
 <h1>Editing: <%= @list.name %></h1>
-  <div class="mt-10 mb-10">
-    <%= link_to 'Cancel', user_lists_path(current_user), class: 'btn' %>
-    <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list), class: 'btn' %>
-  </div>
+<div class="mt-10 mb-10">
+  <%= link_to 'Cancel', user_lists_path(current_user), class: 'btn' %>
+  <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list), class: 'btn' %>
+</div>
 
+<%= render 'form' %>
 
-  <%= render 'form' %>
+<hr />
+<h2>Invite a User to Share this List!</h2>
+<p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thing.</p>
 
-  <hr />
-  <h2>Invite a User to Share this List!</h2>
-  <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thing.</p>
+<%= form_for(Invite.new, html: {class: 'new-edit'}) do |f| %>
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+  <%= f.hidden_field :list_id, value: @list.id %>
 
-  <%= form_for(Invite.new, html: {class: 'new-edit'}) do |f| %>
-    <%= f.hidden_field :sender_id, value: current_user.id %>
-    <%= f.hidden_field :list_id, value: @list.id %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
 
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+  <%= f.submit "Send invite" %>
+<% end %>
 
-    <%= f.submit "Send invite" %>
-  <% end %>
-
-  <%= link_to 'Delete List', user_list_path(@list.owner, @list), class: 'btn', method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %>
+<%= link_to 'Delete List', user_list_path(@list.owner, @list), class: 'btn', method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %>
