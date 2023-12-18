@@ -26,8 +26,16 @@ table, th, td {
   border: 1px solid white;
 }
 
+table th {
+  font-size: 1.3rem;
+}
+
 table td {
   padding: 15px;
+}
+
+table th {
+  padding: 5px;
 }
 
 /* // jquery AUTO COMPLETE autocomplete */

@@ -3,18 +3,23 @@
 <h1>Screenings for <%= link_to "#{@movie.title}", movie_path(@movie) %></h1>
 
 <table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Location/Notes</th>
+      <th>Manage</th>
+    </tr>
+  </thead>
   <tbody>
     <% @screenings.order("date_watched DESC").each do |screening| %>
       <tr>
         <td><%= screening.date_watched.stamp("1/2/2001") %></td>
         <td>
-          <p>
-            <strong><%= screening.location_watched %></strong><br />
-            <%= screening.notes %>
-          </p>
+          <strong class='block'><%= screening.location_watched %></strong>
+          <%= screening.notes %>
         </td>
-        <td>
-          <%= link_to 'Edit', edit_movie_screening_path(@movie, screening) %>
+        <td class='text-center'>
+          <%= link_to 'Edit', edit_movie_screening_path(@movie, screening), class: 'btn btn-sm' %>
         </td>
       </tr>
     <% end %>
