@@ -4,3 +4,11 @@
 .mb-10 { margin-bottom: 10px; }
 .mr-5 { margin-right: 5px; }
 .ml-5 { margin-left: 5px; }
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}

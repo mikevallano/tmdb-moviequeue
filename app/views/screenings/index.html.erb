@@ -2,7 +2,7 @@
 
 <h1>Screenings for <%= link_to "#{@movie.title}", movie_path(@movie) %></h1>
 
-<table class="table">
+<table>
   <tbody>
     <% @screenings.order("date_watched DESC").each do |screening| %>
       <tr>
@@ -21,9 +21,5 @@
   </tbody>
 </table>
 
-<br>
-
-<p class="button-main">
-  <%= link_to '+ New Screening', new_movie_screening_path(@movie) %>
-  <%= link_to "Back to " + @movie.title, movie_path(@movie) %>
-</p>
+<%= link_to '+ New Screening', new_movie_screening_path(@movie), class: 'btn' %>
+<%= link_to "Back to " + @movie.title, movie_path(@movie), class: 'btn' %>
