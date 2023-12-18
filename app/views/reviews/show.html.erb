@@ -1,6 +1,4 @@
-<h1>My Review</h1>
-
-<%= link_to "#{@review.movie.title}", movie_path(@review.movie) %>
+<h1>My Review of <%= link_to "#{@review.movie.title}", movie_path(@review.movie) %></h1>
 
 <div class='mt-10 mb-20'>
   <%= @review.body %>

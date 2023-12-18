@@ -1,8 +1,7 @@
 <% content_for(:title, "Add a Screening") %>
 
-<h1>New Screening</h1>
+<h1>New Screening for <%= link_to @movie.title, @movie %></h1>
 
 <%= render partial: 'form', locals: { movie: @movie, screening: @screening } %>
 
 <%= link_to 'See All Screenings', movie_screenings_path(@movie), class: 'btn' %>
-<%= link_to 'Back To ' + @movie.title, movie_path(@movie), class: 'btn' %>

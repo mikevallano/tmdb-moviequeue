@@ -42,6 +42,8 @@ form.new-edit input, textarea, select {
 form.new-edit textarea {
   height: 200px;
   padding: 10px;
+  font-family: inherit;
+  font-size: 1rem;
 }
 
 form.new-edit label {
@@ -52,4 +54,10 @@ form.new-edit label {
 
 form.new-edit input[type='submit'] {
   display: block;
+}
+
+@media (max-width: 768px) {
+  form.new-edit input, textarea, select {
+    width: 85%;
+  }
 }

@@ -1,6 +1,5 @@
-<h1>Reviews for <%= @movie.title %></h1>
+<h1>Reviews for <%= link_to @movie.title, @movie %></h1>
 
-<%= link_to 'Back to ' + @movie.title, movie_path(@movie), class: 'btn' %>
 <%= link_to '+ Write a Review', new_movie_review_path(@movie), class: 'btn' %>
 
 <% @reviews.each do |review| %>

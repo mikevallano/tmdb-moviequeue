@@ -1,4 +1,4 @@
-<h1>Your Rating for <%= @movie.title %></h1>
+<h1>Your Rating for <%= link_to @movie.title, @movie %></h1>
 
 <h2>You gave <%= @rating.movie.title %> a <%= @rating.value %> out of 10.</h2>
 
