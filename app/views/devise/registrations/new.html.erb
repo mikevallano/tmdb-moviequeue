@@ -1,50 +1,31 @@
 <% content_for(:title, "Sign Up") %>
 
-<article id="page">
-  <div class="jumbotron">
-    <div class="well">
 
-      <h1><span class="fa fa-step-forward"></span> Flicks On Lists</h1>
+<h1><span class="fa fa-step-forward"></span> Flicks On Lists</h1>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'new-edit' }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
 
-        <% if @token.present? %>
-          <%= hidden_field_tag :token, @token %>
-        <% end %>
+  <% if @token.present? %>
+    <%= hidden_field_tag :token, @token %>
+  <% end %>
 
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, class: "form-control pages-form" %>
-        </div>
+  <%= f.label :email %>
+  <%= f.email_field :email, autofocus: true %>
 
-        <div class="field">
-          <%= f.label :username %><br />
-          <%= f.text_field :username, class: "form-control pages-form" %>
-        </div>
+  <%= f.label :username %>
+  <%= f.text_field :username %>
 
-        <div class="field">
-          <%= f.label :password %>
-        <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
-          <%= f.password_field :password, autocomplete: "off", class: "form-control pages-form" %>
-        </div>
+  <%= f.label :password %>
+  <% if @minimum_password_length %>
+    <p>(<%= @minimum_password_length %> characters minimum)</p>
+  <% end %>
+  <%= f.password_field :password, autocomplete: "off" %>
 
-        <div class="field">
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control pages-form" %>
-        </div>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, autocomplete: "off" %>
 
-        <div class="actions">
-          <%= f.submit "Sign up", id: "sign_up_button_new_registration" %>
-        </div>
-      <% end %><!-- form_for -->
+  <%= f.submit "Sign up" %>
+<% end %>
 
-    <div class="sign-in-links">
-      <%= render "devise/shared/links" %>
-    </div> <!-- sign-in-links -->
-
-    </div> <!-- well -->
-  </div> <!-- jumbotron -->
-</article>
+<%= render "devise/shared/links" %>
