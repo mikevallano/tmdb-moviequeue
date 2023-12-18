@@ -12,6 +12,7 @@
       <th>Movie Count</th>
       <th>Public/Private</th>
       <th>View</th>
+      <th>Owner</th>
       <th>Manage</th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
         <td><%= list.movies.size %></td>
         <td><%= public_private_display(list) %></td>
         <td><%= link_to 'View', user_list_path(list.owner, list), class: 'btn btn-sm' %></td>
+        <td><%= list.owner.username %></td>
         <td>
           <% if current_user == list.owner %>
             <%= link_to 'Manage', edit_user_list_path(list.owner, list), class: 'btn btn-sm' %>

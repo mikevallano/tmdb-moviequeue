@@ -45,6 +45,10 @@ form.new-edit input[type='password'] {
   padding: 10px;
 }
 
+form.new-edit input[type='checkbox'] {
+  width: 25px;
+}
+
 form.new-edit textarea {
   height: 200px;
   padding: 10px;

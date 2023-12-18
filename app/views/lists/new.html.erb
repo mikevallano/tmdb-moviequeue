@@ -4,6 +4,4 @@
 
 <%= render 'form' %>
 
-<p class="button-main">
-  <%= link_to ' Cancel', user_lists_path(current_user) %>
-</p>
+<%= link_to ' Cancel', user_lists_path(current_user), class: 'btn' %>
