@@ -2,7 +2,7 @@
 
 <%= link_to 'Back to Settings', user_path(current_user), class: 'btn inline-block mb-10' %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'new-edit' }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form' }) do |f| %>
   <%= render 'devise/shared/error_messages', resource: resource %>
 
   <%= f.label :email %>

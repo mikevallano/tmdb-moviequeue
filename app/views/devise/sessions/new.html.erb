@@ -2,7 +2,7 @@
 
 <h1><span class="fa fa-step-forward"></span> Flicks On Lists</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'new-edit' }) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form' }) do |f| %>
   <%= f.label :login, "Sign in with Email or Username" %>
   <%= f.text_field :login, autofocus: true %>
 

@@ -3,7 +3,7 @@
 
 <h1><span class="fa fa-step-forward"></span> Flicks On Lists</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'new-edit' }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form' }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <% if @token.present? %>

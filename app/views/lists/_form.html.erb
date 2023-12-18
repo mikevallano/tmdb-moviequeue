@@ -1,5 +1,5 @@
 
-<%= form_for([current_user, @list], html: {class: 'new-edit'}) do |f| %>
+<%= form_for([current_user, @list], html: {class: 'form'}) do |f| %>
   <% if @list.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@list.errors.count, "error") %> prohibited this list from being saved:</h2>

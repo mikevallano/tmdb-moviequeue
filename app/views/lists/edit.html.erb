@@ -12,7 +12,7 @@
 <h2>Invite a User to Share this List!</h2>
 <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thing.</p>
 
-<%= form_for(Invite.new, html: {class: 'new-edit'}) do |f| %>
+<%= form_for(Invite.new, html: {class: 'form'}) do |f| %>
   <%= f.hidden_field :sender_id, value: current_user.id %>
   <%= f.hidden_field :list_id, value: @list.id %>
 
