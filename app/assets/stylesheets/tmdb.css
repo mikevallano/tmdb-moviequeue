@@ -1,0 +1,71 @@
+.cast-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 187px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.cast-container .name-block {
+  position: relative;
+  top: -50px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.season-poster-overview-container {
+  display: flex;
+  gap: 10px;
+}
+
+.episode-container {
+  display: flex;
+  gap: 100px;
+  padding: 10px;
+}
+
+.episode-image-overview-container {
+  flex: 0 0 50%;
+}
+
+.guest-stars-container {
+  flex-grow: 3;
+}
+
+.guest-stars-container ul {
+  padding-left: 15px;
+}
+
+.episode-container img {
+  display: block;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .episode-container {
+    display: block;
+  }
+}
+
+/* pixel 6 */
+@media (max-width: 415px) {
+  .headshot-container img {
+    width: 170px;
+  }
+  .cast-container {
+    grid-template-columns: 170px 170px;
+    column-gap: 20px;
+    row-gap: 5px;
+  }
+}
+
+/* pixel 4 */
+@media (max-width: 354px) {
+  .headshot-container img {
+    width: 140px;
+  }
+  .cast-container {
+    column-gap: 20px;
+    row-gap: 5px;
+    grid-template-columns: 140px 140px;
+  }
+}

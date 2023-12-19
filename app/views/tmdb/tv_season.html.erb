@@ -2,35 +2,34 @@
   <%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> / <%= @season.name %>
 </h2>
 
-<div>
+<div class="season-poster-overview-container">
   <%= image_tag(
     TmdbImageService.image_url(file_path: @season.poster_path, size: :medium, image_type: :poster),
-    class: 'pull-left',
-    style: 'padding-right: 20px;'
     ) if @season.poster_path.present? %>
   <p><%= @season.overview %></p>
 </div>
 
-<div class="row", style="clear: both;">
+<div>
   <% if @season.cast_members.present? %>
     <h2><%= @season.name %> Cast</h2>
+     <div class="cast-container">
       <% @season.cast_members.each do |actor| %>
         <div class="headshot-container">
           <%= headshot_for(actor) %>
           <div class="name-block">
             <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
             <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
-          </div> <!-- name-block -->
-        </div> <!-- headshot-container -->
-      <% end %><!-- actors each do -->
-  <% end %> <!-- if actors present? -->
-</div> <!-- row -->
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
 <hr>
 
 <h2><%= @season.name %> Episodes</h2>
 <% @season.episodes.each do |episode| %>
-  <div class='row'>
     <h2>
       <%= link_to "#{episode.episode_number}. #{episode.name}",
         tv_episode_path(
@@ -38,32 +37,29 @@
           season_number: @season.season_number,
           episode_number: episode.episode_number) %>
     </h2>
-    <div class='col-sm-6'>
-      <p>
+    <div class="episode-container">
+      <div class="episode-image-overview-container">
         <%= image_tag(
           TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)
         ) if episode.still_path.present? %>
-      </p>
-      <p>
         <%= episode.overview %>
         <% if episode.air_date.present? %>
           (Aired on <%= episode.air_date.stamp("01-02-2001") %>)
         <% end %>
-      </p>
-    </div>
-    <% if episode.guest_stars.present? %>
-    <div class='col-sm-6'>
-      <h3 style='margin-top: 0;'>Guest Stars</h3>
-      <ul>
-        <% episode.guest_stars.each do |guest| %>
-          <li>
-            <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
-            <%= "as #{guest.character_name}" if guest.character_name.present? %>
-          </li>
+      </div>
+      <div class="guest-stars-container">
+        <% if episode.guest_stars.present? %>
+          <h3 class='mb-10'>Guest Stars</h3>
+          <ul>
+            <% episode.guest_stars.each do |guest| %>
+              <li>
+                <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+                <%= "as #{guest.character_name}" if guest.character_name.present? %>
+              </li>
+            <% end %>
+          </ul>
         <% end %>
-      </ul>
+      </div>
     </div>
-    <% end %><!-- if guest star present-->
-  </div>
   <hr>
 <% end %>
