@@ -1,30 +1,32 @@
-<article id="profile">
-  <div class="row">
-    <div class="summary-box">
-      <%= image_tag(TmdbImageService.image_url(file_path: @director.profile.profile_path, size: :medium, image_type: :profile)) %>
-      <div class="contents">
-        <h1><%= @director.profile.name %></h1>
-        <h2>Born: <%= display_birthday_info(@director.profile) %></h2>
-        <p class="bio"><%= @director.profile.bio %></p>
-      </div> <!-- contents -->
-    </div> <!-- summary-box -->
-  </div> <!-- row -->
+<div class='person-more credits mt-10'>
+  <%= render 'tmdb/image_and_bio', profile: @director.profile %>
 
-  <div class="row">
-    <div class="credits">
+  <div class='credits-container mt-10'>
+    <section class='credits-section'>
       <%= render partial: "director_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "producer_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "editor_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "writer_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "screenplay_credits", locals: { movie_credits: @director.movie_credits, tv_credits: @director.tv_credits }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "movie_credits", locals: { movie_credits: @director.movie_credits, person_profile: @director.profile }  %>
+    </section>
 
+    <section class='credits-section'>
       <%= render partial: "tv_credits", locals: { tv_credits: @director.tv_credits, actor_id: @director.person_id }  %>
-    </div>
-  </div>
-</article>
+    </section>
+</div>
