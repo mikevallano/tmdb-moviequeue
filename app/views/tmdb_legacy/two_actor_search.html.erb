@@ -1,0 +1,45 @@
+<% content_for(:title, "Search by Actors") %>
+
+<h1>Find Common Movies Between Actors</h1>
+<% if @results&.actor_names.blank? %>
+  <% if @results&.not_found_message %>
+    <h2><%= @results.not_found_message %></h2>
+  <% else %>
+    <p>Enter two actors to see the movies they've been in together.</p>
+  <% end %>
+  <%= form_tag '/tmdb/two_actor_search', { class: "form-class", id: "two-actor-search", role: "form", method: :get } do %>
+    <%= text_field_tag :actor, nil,
+      class: "form-control search-form autocomplete-search-field",
+      id: "actor1_field_two_actor_search",
+      required: true,
+      placeholder: "Enter Actor One's Name",
+      data: { autocomplete_source: person_autocomplete_path }
+    %>
+    <%= text_field_tag :actor2, nil,
+      class: "form-control search-form autocomplete-search-field",
+      id: "actor2_field_two_actor_search",
+      required: true,
+      placeholder: "Enter Actor Two's Name",
+      data: { autocomplete_source: person_autocomplete_path }
+    %>
+    <%= submit_tag "Search", id: "search_button_two_actor_search", class: "form-control-submit search-form-submit" %>
+  <% end %>
+
+<% else %>
+  <h2 class='mb-5'>
+    <%= @results.actor_names.to_sentence %>
+    <%= "have been in #{@results.common_movies.size} movies together:" %>
+  </h2>
+
+  <div id ="two_actor_search_loop">
+    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @results.common_movies } %>
+  </div> <!-- movies_actor_search_loop -->
+
+  <p class="button-main mt-5"><%= link_to "Search Again", two_actor_search_path, id: "two_actor_search_again_link" %></p>
+
+  <div class='row mt-5'>
+    <span class="button-main"><%= link_to "Previous page", two_actor_search_path(paginate_actor_names: @results.paginate_actor_names, page: "#{@results.previous_page}") if @results.previous_page.present? %></span>
+    <%= "Page #{@results.current_page} of #{@results.total_pages}" %>
+    <span class="button-main"><%= link_to "Next page", two_actor_search_path(paginate_actor_names: @results.paginate_actor_names, page: "#{@results.next_page}") if @results.next_page.present? %></span>
+  </div>
+<% end %> <!-- # @results.not_found_message.present? -->

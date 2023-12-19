@@ -1,32 +1,45 @@
-<article id="profile">
-  <div class="row">
-    <div class="summary-box">
-      <%= image_tag(TmdbImageService.image_url(file_path: @data.actor.profile.profile_path, size: :medium, image_type: :profile)) %>
-      <div class="contents">
-        <h1><%= @data.actor.profile.name %></h1>
-        <h2>Born: <%= display_birthday_info(@data.actor.profile) %></h2>
-        <p class="bio"><%= @data.actor.profile.bio %></p>
-      </div> <!-- contents -->
-    </div> <!-- summary-box -->
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="credits">
-      <%= render partial: "movie_credits", locals: { person_profile: @data.actor.profile, movie_credits: @data.actor.movie_credits } %>
-
-      <%= render partial: "seen_movie_credits", locals: { movies_seen: @data.movies_seen } %>
-
-      <%= render partial: "tv_credits", locals: { tv_credits: @data.actor.tv_credits, actor_id: @data.actor.person_id }  %>
-
-      <%= render partial: "director_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
-
-      <%= render partial: "producer_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
-
-      <%= render partial: "editor_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
-
-      <%= render partial: "writer_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
-
-      <%= render partial: "screenplay_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+<div class='actor-more credits mt-10'>
+  <div class='image-and-bio'>
+    <%= image_tag(TmdbImageService.image_url(file_path: @data.actor.profile.profile_path, size: :medium, image_type: :profile)) %>
+    <div>
+      <h1 class='mb-5'><%= @data.actor.profile.name %></h1>
+      <h2 class='mt-0'>Born: <%= display_birthday_info(@data.actor.profile) %></h2>
+      <p class="bio"><%= @data.actor.profile.bio %></p>
     </div>
   </div>
-</article>
+    <%= link_to 'Movie Poster View', actor_movie_posters_uri(@data.actor.profile), class: 'inline-block mt-10' %>
+
+  <div class='credits-container mt-10'>
+    <section class='credits-section'>
+      <%= render partial: "movie_credits", locals: { person_profile: @data.actor.profile, movie_credits: @data.actor.movie_credits } %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "tv_credits", locals: { tv_credits: @data.actor.tv_credits, actor_id: @data.actor.person_id }  %>
+    </section>
+
+    <section class='credits-section seen-movies'>
+      <%= render partial: "seen_movie_credits", locals: { movies_seen: @data.movies_seen } %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "director_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "producer_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "editor_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "writer_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+    </section>
+
+    <section class='credits-section'>
+      <%= render partial: "screenplay_credits", locals: { movie_credits: @data.actor.movie_credits, tv_credits: @data.actor.tv_credits }  %>
+    </section>
+  </div>
+</div>

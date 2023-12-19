@@ -1,0 +1,45 @@
+<% content_for(:title, "Actor Search") %>
+
+<h1>Search by Actor</h1>
+<% if @results&.actor.blank? %> <!-- Display the search form -->
+  <%= form_tag '/tmdb/actor_search', { class: "form-class", id: "actor-search", role: "form", method: :get } do %>
+    <%= text_field_tag :actor, nil,
+      class: "form-control search-form autocomplete-search-field",
+      id: "actor_name_actor_search",
+      required: true,
+      placeholder: "Enter Actor Name",
+      data: { autocomplete_source: person_autocomplete_path }
+    %>
+    <%= select_tag :sort_by,
+      options_for_select(MovieDataService::SORT_BY),
+      { prompt: "Sort by...", class: "form-control search-form", include_blank: false }
+    %>
+    <%= submit_tag "Search", id: "submit_button_actor_search", class: "form-control-submit search-form-submit" %>
+  <% end %>
+<% end %>
+
+<% if @results&.not_found_message.present? %>
+  <h2><%= @results.not_found_message %></h2>
+  <p class="button-main"><%= link_to "#{@results.actor_name}'s Full Credits & Bio", actor_more_path(actor_id: @results.id), id: "bio_and_credits_link_actor_search" %></p>
+  <br>
+  <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_again_link" %></p></br>
+<% end %>
+
+<% if @results&.movies.present? %><!-- Display the movie results -->
+  <p class="button-main"><%= link_to "#{@results.actor_name}'s Full Credits & Bio", actor_more_path(actor_id: @results.id), id: "bio_and_credits_link_actor_search" %></p>
+  <h2>Movies that <%= @results.actor_name %> has been in.</h2>
+
+  <div class="row">
+    <div id ="movies_actor_search_loop">
+      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @results.movies } %>
+    </div>
+  </div>
+
+  <p class="button-main"><%= link_to "Search Again", actor_search_path, id: "actor_search_again_link" %></p></br>
+
+  <div class="row">
+    <span class="button-main"><%= link_to "Previous page", actor_search_path(actor: "#{@results.actor_name}", page: "#{@results.previous_page}", sort_by: params["sort_by"]) if @results.previous_page.present? %></span>
+    <%= "Page #{@results.current_page} of #{@results.total_pages}" %>
+    <span class="button-main"><%= link_to "Next page", actor_search_path(actor: "#{@results.actor_name}", page: "#{@results.next_page}", sort_by: params["sort_by"]) if @results.next_page.present? %></span>
+  </div>
+<% end %>

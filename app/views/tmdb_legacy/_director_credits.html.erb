@@ -1,0 +1,13 @@
+<h3>Director Credits (<%= movie_credits.directing.size + tv_credits.directing.size %>)</h3>
+  <p>Movies (<%= movie_credits.directing.size %>) </p>
+    <ul>
+      <% movie_credits.directing.each do |credit| %>
+        <%= render "movie_credit_loop", credit: credit %>
+      <% end %>
+    </ul>
+  <p>TV (<%= tv_credits.directing.size %>)</p>
+    <ul>
+      <% tv_credits.directing.each do |credit| %>
+        <%= render "tv_credit_loop", credit: credit %>
+      <% end %>
+    </ul>

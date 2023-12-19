@@ -1,0 +1,29 @@
+<% content_for(:title, "Search by TV Show Title") %>
+
+<h1 id="search_by_title_header">Search for a TV Show by Title</h1>
+<%= form_tag '/tmdb/tv_series_search', { class: "form-class", id: "show-title-search", role: "form", method: :get } do %>
+  <%= text_field_tag :show_title, nil,
+    class: "form-control search-form autocomplete-auto-submit",
+    placeholder: "Enter TV Show Title",
+    required: true,
+    data: { autocomplete_source: tv_series_autocomplete_path }
+  %>
+  <%= submit_tag "Search", id: "submit_button_tv_series_search", class: "form-control-submit search-form-submit" %>
+<% end %>
+<br>
+
+<% if @query.present? && @search_results.blank? %>
+  <h2>Hmm. We couldn't find anything for "<%= @query %>".</h2>
+  <p>Check your spelling and try again.</p>
+<% end %>
+
+<% if @search_results.present? %>
+  <h2>TV Shows matching "<%= @query %>"</h2>
+  <div class='row tile-container'>
+    <% @search_results.each do |result| %>
+    <article class="tile-cover-pic">
+      <%= link_to image_for_tv_poster(result), tv_series_path(show_id: result.show_id) %>
+    </article>
+    <% end %>
+  </div>
+<% end %>
