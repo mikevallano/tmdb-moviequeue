@@ -70,3 +70,9 @@ ul.ui-autocomplete li:hover {
 .ui-helper-hidden-accessible {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+}
