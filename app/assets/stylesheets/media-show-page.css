@@ -90,19 +90,3 @@ a.streaming-provider {
     margin-top: 5px;
   }
 }
-
-/* pixel 6 */
-@media (max-width: 415px) {
-  .movies-container {
-    gap: 10px;
-    grid-template-columns: 170px 170px;
-  }
-}
-
-/* pixel 4 */
-@media (max-width: 354px) {
-  .movies-container {
-    gap: 10px;
-    grid-template-columns: 150px 150px;
-  }
-}

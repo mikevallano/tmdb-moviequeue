@@ -39,6 +39,10 @@
   gap: 10px;
 }
 
+.season-poster-overview-container img {
+  max-height: 278px;
+}
+
 .episode-container {
   display: flex;
   gap: 100px;
