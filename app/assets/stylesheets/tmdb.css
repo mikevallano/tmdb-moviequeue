@@ -1,6 +1,7 @@
 .cast-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 187px);
+  grid-template-columns: repeat(auto-fit, 125px);
+  grid-template-rows: repeat(auto-fit, 225px);
   gap: 10px;
   justify-content: center;
 }
@@ -10,6 +11,14 @@
   top: -50px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.7);
+}
+
+.cast-container .name-block p {
+  font-size: 0.85rem;
+}
+
+.seasons-container *:not(h2) {
+  font-size: 1.2rem;
 }
 
 .season-poster-overview-container {

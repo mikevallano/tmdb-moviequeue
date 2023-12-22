@@ -1,7 +1,8 @@
-<div class="movie-show-page mt-5">
+<div class="movie-show-page media-show-page mt-5">
   <% if @movie.backdrop_path.present? %>
     <%= render 'shared/media_backdrop', media: @movie %>
   <% end %>
 
+  <!--TODO: change modal to is_modal-->
   <%= render "movies/movie_deets", movie: @movie, modal: false %>
 </div>
