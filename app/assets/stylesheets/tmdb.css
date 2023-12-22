@@ -6,8 +6,21 @@
   justify-content: center;
 }
 
+.season-cast .cast-container {
+  grid-template-rows: repeat(auto-fit, 275px);
+}
+
+.headshot-container img {
+  width: 125px;
+}
+
+.headshot-container {
+  width: 125px;
+}
+
 .cast-container .name-block {
   position: relative;
+  width: 125px;
   top: -50px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.7);
@@ -65,6 +78,10 @@
     column-gap: 20px;
     row-gap: 5px;
   }
+
+  .cast-container .name-block {
+    width: 170px;
+  }
 }
 
 /* pixel 4 */
@@ -76,5 +93,9 @@
     column-gap: 20px;
     row-gap: 5px;
     grid-template-columns: 140px 140px;
+  }
+
+  .cast-container .name-block {
+    width: 140px;
   }
 }
