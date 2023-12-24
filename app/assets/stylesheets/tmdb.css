@@ -21,7 +21,8 @@
 .cast-container .name-block {
   position: relative;
   width: 125px;
-  top: -50px;
+  top: -60px;
+  min-height: 60px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.7);
 }
@@ -34,12 +35,12 @@
   font-size: 1.2rem;
 }
 
-.season-poster-overview-container {
+.poster-overview-container {
   display: flex;
   gap: 10px;
 }
 
-.season-poster-overview-container img {
+.poster-overview-container img {
   max-height: 278px;
 }
 

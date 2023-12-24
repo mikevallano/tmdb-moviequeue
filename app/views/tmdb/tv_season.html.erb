@@ -2,7 +2,7 @@
   <%= link_to "#{@series.show_name}", tv_series_path(show_id: @series.show_id) %> / <%= @season.name %>
 </h2>
 
-<div class="season-poster-overview-container">
+<div class="poster-overview-container">
   <%= image_tag(
     TmdbImageService.image_url(file_path: @season.poster_path, size: :medium, image_type: :poster),
     ) if @season.poster_path.present? %>
