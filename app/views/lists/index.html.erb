@@ -4,4 +4,16 @@
 
 <%= link_to 'New List'.html_safe, new_user_list_path(current_user), class: 'btn' %></p>
 
-<%= render 'lists/list_index', lists: @lists %>
+<div class="lists-container mt-10">
+  <% @lists.order(name: :asc).each do |list| %>
+    <div class="list">
+      <%= link_to list.name.titlecase, user_list_path(list.owner, list) %> (<%= list.movies.size %>)
+      <p><%= list.description %></p>
+      <p>Owner: <%= list.owner.username %></p>
+      <%= link_to 'View', user_list_path(list.owner, list) %>
+        <% if current_user == list.owner %>
+          / <%= link_to 'Manage', edit_user_list_path(list.owner, list) %>
+        <% end %>
+    </div>
+  <% end %>
+</div>
