@@ -4,53 +4,41 @@
 
 <% if @data.blank? %>
   <h2>All fields are optional. Search by whatever you want.</h2>
-  <%= form_tag '/tmdb/discover_search', { class: 'form-class', id: 'discover-search', role: 'form', method: :get } do %>
-    <div class="row">
-      <%= text_field_tag :actor_name, nil, class: "form-control search-form autocomplete-search-field", id: "actor_name_field_discover_search", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
-      <%= select_tag :genre, options_for_select(MovieDataService::GENRES), { class: "form-control search-form", id: "genre_field_discover_search", include_blank: "Pick a genre" } %><br>
-      <%= select_year(0,
-      { prompt: "Enter a year", start_year: DateTime.now.year, end_year: DateTime.now.year - 100 },
-      { field_name: :year,
-        prefix: :year,
-        id: "year_field_discover_search",
-        class: "form-control search-form" }
+  <%= form_tag '/tmdb/discover_search', { class: 'form', method: :get } do %>
+      <div>
+        <%= text_field_tag :actor_name, nil, class: "autocomplete-search-field", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
+        <%= select_tag :genre, options_for_select(MovieDataService::GENRES), include_blank: "Pick a genre" %>
+      </div>
+      <div>
+        <%= select_year(0,
+          { prompt: "Enter a year", start_year: DateTime.now.year, end_year: DateTime.now.year - 100 },
+          { field_name: :year, prefix: :year }
         )%>
-        <%= select_tag :timeframe, options_for_select(MovieDataService::YEAR_SELECT), { class: "form-control search-form", id: "year_select_discover_search", include_blank: "Year select" } %><br>
-        <%= select_tag :mpaa_rating, options_for_select(MovieDataService::MPAA_RATINGS), { class: "form-control search-form", id: "mpaa_field_discover_search", include_blank: "Pick a rating" } %><br>
-        <%= select_tag :sort_by, options_for_select(MovieDataService::SORT_BY), { class: "form-control search-form", id: "sort_by_discover_search", include_blank: "Sort by" } %>
-    </div>
-    <div class="row">
-      <p><%= submit_tag "Search", id: "search_button_discover_search", class: "form-control-submit search-form-submit" %></p>
-    </div>
-  <% end %> <!-- form -->
+        <%= select_tag :timeframe, options_for_select(MovieDataService::YEAR_SELECT), {include_blank: "Year select" } %>
+      </div>
+        <%= select_tag :mpaa_rating, options_for_select(MovieDataService::MPAA_RATINGS), { include_blank: "Pick a rating" } %>
+        <%= select_tag :sort_by, options_for_select(MovieDataService::SORT_BY), {  include_blank: "Sort by" } %>
+      <%= submit_tag "Search" %>
+  <% end %>
 <% end %>
 
 <% if @data&.movies.blank? && @data&.not_found_message.present? %>
   <h2>Hmm. <%= @data.not_found_message %></h2>
-  <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
+  <%= link_to "Search Again", discover_search_path %>
 <% end %>
 
 <% if @data&.movies.present? %>
   <h2>Here are the results for: <%= "#{@data.searched_terms}" %></h2>
-  <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path %> </p>
+  <%= link_to "Search Again", discover_search_path %>
 
-  <div id="discover_search_loop">
-    <%= render partial: 'movies/movie_partial_loop', locals: { movies: @data.movies } %>
-  </div>
+  <%= render partial: 'movies/movie_partial_loop', locals: { movies: @data.movies } %>
 
-  <div class='row'>
-    <p class="button-main mt-5"><%= link_to "Search Again", discover_search_path, id: "discover_search_nav_link" %></p>
-  </div>
-
-  <div class='row mt-5'>
-    <span class="button-main mr-5">
-      <%= link_to "Previous page", discover_search_path(@data.searched_params.merge(page: @data.previous_page)) if @data.previous_page.present? %>
-    </span>
+ <!--TODO: Add common pagination-->
+  <div class='text-center'>
+    <%= link_to "Previous page", discover_search_path(@data.searched_params.merge(page: @data.previous_page)) if @data.previous_page.present? %>
 
     <%= "Page #{@data.current_page} of #{@data.total_pages}" %>
 
-    <span class="button-main ml-5">
-      <%= link_to "Next page", discover_search_path(@data.searched_params.merge(page: @data.next_page)) if @data.next_page.present? %>
-    </span>
+    <%= link_to "Next page", discover_search_path(@data.searched_params.merge(page: @data.next_page)) if @data.next_page.present? %>
   </div>
 <% end %>

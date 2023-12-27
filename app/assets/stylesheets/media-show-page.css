@@ -33,7 +33,7 @@
 a.streaming-provider {
   display: block;
   font-size: 0.9rem;
-  line-height: 0.5rem;
+  line-height: 1rem;
 }
 
 .manage-screenings .material-symbols-outlined.edit-note {
@@ -60,10 +60,6 @@ a.streaming-provider {
 }
 
 @media (max-width: 768px) {
-  .media-show-page {
-    padding: 0 2rem;
-  }
-
   .media-show-page .backdrop-image {
     display: none;
   }

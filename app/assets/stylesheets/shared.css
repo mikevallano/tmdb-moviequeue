@@ -73,6 +73,6 @@ ul.ui-autocomplete li:hover {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0;
+    padding: 0 10px;
   }
 }
