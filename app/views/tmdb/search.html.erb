@@ -1,5 +1,13 @@
 <% content_for(:title, "Search by Movie Title") %>
 
+<div class="other-search-options">
+  <%= link_to 'TV Series search', tv_series_search_path, class: 'btn btn-sm' %>
+  <%= link_to 'Search by actor', actor_search_path, class: 'btn btn-sm' %>
+  <%= link_to 'Advanced search', discover_search_path, class: 'btn btn-sm' %>
+  <%= link_to 'Common movies between 2 actors', two_actor_search_path, class: 'btn btn-sm' %>
+  <%= link_to 'Common actors between 2 movies', two_movie_search_path, class: 'btn btn-sm' %>
+</div>
+
 <% if @movie_title.blank? %>
   <h1>Search for a Movie by Title</h1>
   <%= form_tag '/tmdb/search', { class: "form", method: :get } do %>

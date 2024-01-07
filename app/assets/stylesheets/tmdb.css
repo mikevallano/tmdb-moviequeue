@@ -87,6 +87,11 @@ ul.common-actor-results li {
   flex-direction: column;
 }
 
+.other-search-options {
+  display: flex;
+  gap: 5px;
+}
+
 @media (max-width: 768px) {
   .episode-container {
     display: block;
