@@ -18,7 +18,7 @@
   width: 125px;
 }
 
-.cast-container .name-block {
+.name-block {
   position: relative;
   width: 125px;
   top: -60px;
@@ -27,7 +27,7 @@
   background: rgba(0, 0, 0, 0.7);
 }
 
-.cast-container .name-block p {
+.name-block p {
   font-size: 0.85rem;
 }
 
@@ -73,9 +73,27 @@ ul.common-actor-results li {
   line-height: 1.5rem;
 }
 
+.full-cast-container {
+  display: flex;
+}
+
+.full-cast-actors {
+  flex: 1 1 75%;
+}
+
+.full-cast-directors-editors {
+  flex: 1 1 25%;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (max-width: 768px) {
   .episode-container {
     display: block;
+  }
+
+  .full-cast-container {
+    flex-direction: column;
   }
 }
 
@@ -90,7 +108,7 @@ ul.common-actor-results li {
     row-gap: 5px;
   }
 
-  .cast-container .name-block {
+  .name-block {
     width: 170px;
   }
 }
@@ -106,7 +124,7 @@ ul.common-actor-results li {
     grid-template-columns: 140px 140px;
   }
 
-  .cast-container .name-block {
+  .name-block {
     width: 140px;
   }
 }
