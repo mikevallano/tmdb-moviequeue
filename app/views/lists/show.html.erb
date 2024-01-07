@@ -3,14 +3,11 @@
 <h2><%= @list.name %>
   <span>
     (<%= pluralize(@list.movies.size, "Movie") %>)
-    <icon class="<%= public_private_indicator(@list) %>"><icon>
   </span>
 </h2>
-<p>by <%= @list.owner.username %></p>
+<p class='inline'>by <%= @list.owner.username %></p>
+<%= link_to 'Edit', edit_user_list_path(@list.owner, @list) if @list.owner.email == current_user.email %>
 
-<% if @list.description.present? %>
-  <p><%= @list.description %></p>
-<% end %>
 
 <%= form_tag user_list_path(@list.owner, @list), { method: :get, data: { controller: 'auto-submit', action: 'input->auto-submit#submit' } } do %>
   <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), {  include_blank: "Sort by" } %>
