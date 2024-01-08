@@ -17,10 +17,7 @@
 }
 
 .movies-container__poster:hover {
-  transform: scale(1.2);
-  /* transform-origin: top; */
   cursor: pointer;
-  transition-delay: 0.4s;
 }
 
 
@@ -34,6 +31,12 @@ button.modal-linker {
   display: flex;
 }
 
+@media (min-width: 768px) {
+  .movies-container__poster:hover {
+    transform: scale(1.2);
+    transition-delay: 0.4s;
+  }
+}
 
 /* pixel 6 */
 @media (max-width: 415px) {
