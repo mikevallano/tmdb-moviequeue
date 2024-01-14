@@ -10,7 +10,7 @@
 
 
 <%= form_tag user_list_path(@list.owner, @list), { method: :get, data: { controller: 'auto-submit', action: 'input->auto-submit#submit' } } do %>
-  <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), {  include_blank: "Sort by" } %>
+  <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), {  include_blank: "Sort by", class: 'list-sort' } %>
 <% end %>
 
 <% if @sort_by.present? && @list.members.present? && @watched_sorts.include?(@sort_by) %>
