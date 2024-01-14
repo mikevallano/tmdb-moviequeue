@@ -20,6 +20,10 @@ h2 {
   margin-bottom: 5px;
 }
 
+.pagination {
+  padding-bottom: 10px;
+}
+
 table {
   margin: 20px 0;
   padding: 20px;
