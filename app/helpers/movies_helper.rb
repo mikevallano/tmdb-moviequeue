@@ -100,7 +100,7 @@ module MoviesHelper
 
   def list_add_dropdown(movie)
     current_user.lists_except_movie(movie)
-      .map{ |list| [list.name, list.id] }
+      .map{ |list| [list.name, list.id] }.sort
   end
 
 
