@@ -48,6 +48,7 @@
   display: flex;
   gap: 100px;
   padding: 10px;
+  border-bottom: 1px solid white;
 }
 
 .episode-image-overview-container {
@@ -65,6 +66,7 @@
 .episode-container img {
   display: block;
   margin-bottom: 10px;
+  max-width: 100%;
 }
 
 ul.common-actor-results li {

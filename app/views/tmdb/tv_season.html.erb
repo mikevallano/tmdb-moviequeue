@@ -27,39 +27,44 @@
 </div>
 
 <hr>
-
 <h2><%= @season.name %> Episodes</h2>
+
 <% @season.episodes.each do |episode| %>
-    <h2>
-      <%= link_to "#{episode.episode_number}. #{episode.name}",
-        tv_episode_path(
-          show_id: @series.show_id,
-          season_number: @season.season_number,
-          episode_number: episode.episode_number) %>
-    </h2>
-    <div class="episode-container">
-      <div class="episode-image-overview-container">
-        <%= image_tag(
-          TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)
-        ) if episode.still_path.present? %>
-        <%= episode.overview %>
-        <% if episode.air_date.present? %>
-          (Aired on <%= episode.air_date.stamp("01-02-2001") %>)
-        <% end %>
+    <details class='mb-20'>
+      <summary><h3 class='inline-block'><%= episode.episode_number %>. <%= episode.name %></h3></summary>
+
+      <div class="episode-container">
+        <div class="episode-image-overview-container">
+          <%= image_tag(TmdbImageService.image_url(
+              file_path: episode.still_path,
+              size: :large,
+              image_type: :still)) if episode.still_path.present? %>
+
+          <p><%= link_to 'Full Episode Details', tv_episode_path(
+                show_id: @series.show_id,
+                season_number: @season.season_number,
+                episode_number: episode.episode_number) %></p>
+
+          <% if episode.air_date.present? %>
+            <p>Aired: <%= episode.air_date.stamp("01-02-2001") %></p>
+          <% end %>
+
+          <p><%= episode.overview %></p>
+        </div>
+
+        <div class="guest-stars-container">
+          <% if episode.guest_stars.present? %>
+            <h3 class='mb-10'>Guest Stars</h3>
+            <ul>
+              <% episode.guest_stars.each do |guest| %>
+                <li>
+                  <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+                  <%= "as #{guest.character_name}" if guest.character_name.present? %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
       </div>
-      <div class="guest-stars-container">
-        <% if episode.guest_stars.present? %>
-          <h3 class='mb-10'>Guest Stars</h3>
-          <ul>
-            <% episode.guest_stars.each do |guest| %>
-              <li>
-                <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
-                <%= "as #{guest.character_name}" if guest.character_name.present? %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    </div>
-  <hr>
+    </details>
 <% end %>
