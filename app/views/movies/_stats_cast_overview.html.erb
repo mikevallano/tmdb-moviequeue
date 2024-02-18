@@ -1,5 +1,5 @@
 <div class="stats-cast-overview mt-10">
-  <% if modal %>
+  <% if is_modal %>
     <h2><%= link_to "#{movie.title}", link_to_movie(movie), data: { turbo: false } %></h2>
     <%= movie_genres_display(movie) %>
     <div class='movie-stats mt-10'><%= movie_stats_display(movie) %></div>
