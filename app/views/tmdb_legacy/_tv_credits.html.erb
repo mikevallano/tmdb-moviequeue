@@ -1,9 +1,0 @@
-<h3>TV Credits (<%= tv_credits.actor.size %>)</h3>
-<ul>
-  <% tv_credits.actor.each do |credit| %>
-    <li><%= link_to "#{credit.show_name}", tv_series_path(show_id: credit.show_id, actor_id: actor_id) %>
-    <%= "| as #{credit.character}" if credit.character.present? %> |
-    <%= link_to " Appearance Details", actor_credit_path(actor_id: actor_id, credit_id: credit.credit_id,
-    show_name: "#{credit.show_name}"), id: "appearance_details_#{credit.show_name.downcase}" %></li>
-  <% end %>
-</ul>

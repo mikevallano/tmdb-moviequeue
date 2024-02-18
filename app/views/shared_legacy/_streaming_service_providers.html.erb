@@ -1,9 +1,0 @@
-<% streaming_service_providers.each do |provider| %>
-  <p class="sidebar-button">
-    <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:name] %>" title="<%= provider[:name] %>">
-       <span class="material-symbols-outlined"><%= display_pay_model_icon(provider[:pay_model]) %></span>
-       <%= provider[:pay_model].titleize %> on <%= provider[:name] %>
-    </a>
-  </p>
-<% end %>
-<p class='txt-sm'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
