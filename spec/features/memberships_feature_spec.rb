@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Memberships feature spec", :type => :feature do
+RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
 
   feature "User can access lists and movies they're members of" do
 

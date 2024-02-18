@@ -23,7 +23,7 @@ RSpec.describe MoviesController, type: :controller do
     describe "GET #show" do
       it "assigns the requested movie as @movie" do
         get :show, params: {id: movie.to_param}
-        expect(assigns(:media)).to eq(movie)
+        expect(assigns(:movie)).to eq(movie)
       end
     end
 

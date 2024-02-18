@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Pages feature spec", :type => :feature do
+RSpec.feature "Pages feature spec", type: :feature, feature: :true do
 
   let(:user) { FactoryBot.create(:user) }
 

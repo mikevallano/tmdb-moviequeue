@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Movies feature spec", :type => :feature do
+RSpec.feature "Movies feature spec", type: :feature, feature: :true do
   feature "Movies views" do
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }

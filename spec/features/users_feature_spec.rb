@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Users feature spec", :type => :feature do
+RSpec.feature "Users feature spec", type: :feature, feature: :true do
 
   feature "Users can sign up, sign in, log out, have a list, and visit profile" do
     let(:email) { FFaker::Internet.email }
