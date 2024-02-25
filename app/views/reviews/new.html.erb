@@ -1,5 +1,5 @@
-<h1>Write a Review for <%= @movie.title %></h1>
+<h1>Write a Review for <%= link_to @movie.title, @movie %></h1>
 
 <%= render 'form' %>
 
-<p class="button-main"><%= link_to 'Cancel', movie_path(@movie) %></p>
+<%= link_to 'Cancel', movie_path(@movie), class: 'btn' %>

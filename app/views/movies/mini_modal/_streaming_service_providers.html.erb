@@ -1,0 +1,20 @@
+<div class="streaming-providers mt-10">
+  <!--TODO: this is a temporary hack for MVP-->
+  <% if streaming_service_providers.filter { |p| p[:pay_model] == 'free' }.blank? %>
+    <% streaming_service_providers.filter { |p| p[:name] == 'Amazon Video' }.each do |provider| %>
+      <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:name] %>" title="<%= provider[:name] %>" class='streaming-provider'>
+        <span class="material-symbols-outlined"><%= display_pay_model_icon(provider[:pay_model]) %></span>
+          <%= provider[:pay_model].titleize %> on <%= provider[:name] %>
+        </a>
+    <% end %>
+  <% else %>
+    <% streaming_service_providers.filter { |p| p[:pay_model] == 'free' }.each do |provider| %>
+      <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:name] %>" title="<%= provider[:name] %>" class='streaming-provider'>
+        <span class="material-symbols-outlined"><%= display_pay_model_icon(provider[:pay_model]) %></span>
+          <%= provider[:pay_model].titleize %> on <%= provider[:name] %>
+        </a>
+    <% end %>
+  <% end %>
+
+  <p class='txt-sm avaliablity'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
+</div>

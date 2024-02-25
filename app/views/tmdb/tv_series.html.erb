@@ -1,0 +1,7 @@
+<div class="tv-series-show-page media-show-page mt-10">
+  <% if @media.backdrop_path.present? %>
+    <%= render 'shared/media_backdrop', media: @media %>
+  <% end %>
+
+  <%= render "shared/tv_series_profile_content", media: @media %>
+</div>

@@ -14,17 +14,13 @@ class ListsController < ApplicationController
     unless @owner == current_user
       redirect_to user_lists_path(current_user), notice: "Those aren't your lists"
     end
-    @lists = current_user.all_lists
+    @lists = current_user.all_lists.includes(:owner)
+    @list_movie_count = Listing.where(list: @lists).group(:list_id).count
   end
 
   def show
     if request.path != user_list_path(@list.owner, @list)
       return redirect_to user_list_path(@list.owner, @list), status: :moved_permanently
-    end
-
-    unless current_user.all_lists.include?(@list)
-      @movies = @list.movies.paginate(page: params[:page], per_page: 20)
-      render :public_show
     end
 
     @sort_by = params[:sort_by]

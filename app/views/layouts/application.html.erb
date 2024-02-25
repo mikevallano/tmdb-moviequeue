@@ -2,8 +2,6 @@
 <html>
   <head>
     <title><%= raw page_title %></title>
-    <!-- Bootstrap 3.0.2 -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Nixie+One|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <!-- Material Icons and Material Symbols are different. This stylesheet only accesses Material Symbols.
@@ -31,7 +29,6 @@
     <div class="container">
       <p id="notice"><%= notice %></p>
       <p id="alert"><%= alert %></p>
-      <%= render "shared/overlay_modal" %>
       <%= yield %>
     </div>
   </body>

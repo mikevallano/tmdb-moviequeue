@@ -241,7 +241,8 @@ RSpec.describe ListsController, type: :controller do
       end
     end
 
-    describe "GET #show when the list is public" do
+    # TODO: remove in https://github.com/mikevallano/tmdb-moviequeue/issues/403
+    xdescribe "GET #show when the list is public" do
 
       it "shows the public_show template if current_user.all_lists doesn't include list" do
         public_list

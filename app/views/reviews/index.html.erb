@@ -1,26 +1,15 @@
-<h1>Reviews for <%= @movie.title %></h1>
+<h1>Reviews for <%= link_to @movie.title, @movie %></h1>
 
-<p class="button-main">
-  <%= link_to 'Back to ' + @movie.title, movie_path(@movie) %>
-  <%= link_to '+ Write a Review', new_movie_review_path(@movie) %>
-</p>
+<%= link_to '+ Write a Review', new_movie_review_path(@movie), class: 'btn' %>
 
 <% @reviews.each do |review| %>
-  <article id="review">
-
   <h2>On <%= review.created_at.stamp("12-25-2001") %>, <%= review.user.username.titlecase %> said:</h2>
-  <p>
-    <span class="quote-marks">“</span>
-      <%= review.body %>
-    <span class="quote-marks">”</span>
-  </p>
+  <div class='mb-20'>
+    <%= review.body %>
+  </div>
 
-    <% if current_user == review.user %>
-      <p class="button-main">
-        <%= link_to 'Edit Review', edit_movie_review_path(@movie, review) %>
-        <%= link_to 'Delete', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' } %>
-      </p>
-    <% end %><!-- if current_user == review.user -->
-
-  </article>
-<% end %><!-- reviews.each -->
+  <% if current_user == review.user %>
+    <%= link_to 'Edit Review', edit_movie_review_path(@movie, review), class: 'btn' %>
+    <%= link_to 'Delete', movie_review_path(@movie, review), class: 'btn', method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+<% end %>

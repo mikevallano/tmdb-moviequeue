@@ -1,42 +1,25 @@
 <% content_for(:title, "Editing #{@list.name}") %>
 
-<div class="row">
 <h1>Editing: <%= @list.name %></h1>
-  <div class="pull-right">
-    <p class="button-main">
-      <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list) %>
-      <%= link_to 'Delete List', user_list_path(@list.owner, @list), id: "destroy_list_link_list_show", method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %>
-      <%= link_to 'Cancel', user_lists_path(current_user) %>
-    </p>
-  </div> <!-- pull-right -->
-</div> <!-- row -->
+<div class="mt-10 mb-10">
+  <%= link_to 'Cancel', user_lists_path(current_user), class: 'btn' %>
+  <%= link_to 'Show Movies in List', user_list_path(@list.owner_id, @list), class: 'btn' %>
+</div>
 
-<div class="row">
+<%= render 'form' %>
 
-  <div class="form-container">
-    <%= render 'form' %>
-  </div> <!-- form-container -->
+<hr />
+<h2>Invite a User to Share this List!</h2>
+<p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thing.</p>
 
-    <div class="share-container">
-     <h2>Invite a User to Share this List!</h2>
-     <p>When you invite a user, you will both have access to add and remove movies to this list. Perfect for households and datenights, it's a group thang.</p>
+<%= form_for(Invite.new, html: {class: 'form'}) do |f| %>
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+  <%= f.hidden_field :list_id, value: @list.id %>
 
-      <%= form_for(Invite.new) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
 
-        <%= f.hidden_field :sender_id, value: current_user.id %>
-        <%= f.hidden_field :list_id, value: @list.id %>
+  <%= f.submit "Send invite" %>
+<% end %>
 
-        <div class="field">
-          <%= f.label :email %><br>
-          <%= f.text_field :email, class: "form-control edit-form" %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Send invite", id: "send_invite_button_list_edit" %>
-        </div>
-      <% end %><!-- form_for -->
-    </div> <!-- share-container -->
-
-</div> <!-- row -->
-
-
+<%= button_to 'Delete List', user_list_path(@list.owner, @list), method: :delete, class: 'btn', data: { turbo_confirm: 'Are you sure? The list will be deleted for you and any members.' } %>

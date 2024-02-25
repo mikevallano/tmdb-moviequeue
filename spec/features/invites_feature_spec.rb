@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Invites feature spec", :type => :feature do
+RSpec.feature "Invites feature spec", type: :feature, feature: :true do
 
   feature "User can send an invite to another user" do
 

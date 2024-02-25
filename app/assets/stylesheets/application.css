@@ -12,8 +12,10 @@
  *
  *= require_tree .
  *= require_self
+ *= base
  *= buttons
  *= forms
+ *= header
  *= layouts
  *= listings
  *= lists

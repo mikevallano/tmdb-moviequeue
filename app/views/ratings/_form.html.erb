@@ -1,4 +1,4 @@
-<%= form_for([@movie, @rating]) do |f| %>
+<%= form_for([@movie, @rating], html: { class: 'form' }) do |f| %>
   <% if @rating.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@rating.errors.count, "error") %> prohibited this rating from being saved:</h2>
@@ -13,10 +13,6 @@
 
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: @movie.id %>
-  <div class="field">
-    <%= f.select(:value, Rating::VALUES, { prompt: "Out of 10" }, { class: "form-control", id: "rating_value_field_rating_form" }) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Submit", id: "rating_submit_button_rating_form", class: "form-control-submit" %>
-  </div>
+  <%= f.select :value, Rating::VALUES, { prompt: "Out of 10" } %>
+  <%= f.submit "Submit" %>
 <% end %>

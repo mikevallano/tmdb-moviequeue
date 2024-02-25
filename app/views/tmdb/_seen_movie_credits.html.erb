@@ -9,7 +9,7 @@
         <%= "| #{credit[:release_year]}" if credit[:release_year] != "Date unavailable" %>
         <%= display_actor_age_at_release(credit[:birthday], credit[:release_year]) %>
         <%= "as #{credit[:character]}" if credit[:character].present? %>
-        | <span class='material-symbols-outlined'>videocam</span> <%= credit[:last_watched_date] %>
+        | <span class='material-symbols-outlined videocam'>videocam</span> <%= credit[:last_watched_date] %>
       </li>
     <% end %>
   </ul>

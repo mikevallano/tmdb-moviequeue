@@ -1,0 +1,8 @@
+<div class='image-and-bio'>
+  <%= image_tag(TmdbImageService.image_url(file_path: profile.profile_path, size: :medium, image_type: :profile)) %>
+  <div>
+    <h1 class='mb-5'><%= profile.name %></h1>
+    <h2 class='mt-0'>Born: <%= display_birthday_info(profile) %></h2>
+    <p class="bio"><%= profile.bio %></p>
+  </div>
+</div>

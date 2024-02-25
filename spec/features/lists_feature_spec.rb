@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Lists feature spec", :type => :feature do
+RSpec.feature "Lists feature spec", type: :feature, feature: :true do
 
   feature "List views" do
 

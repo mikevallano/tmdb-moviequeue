@@ -1,4 +1,4 @@
-<%= form_for([movie, screening]) do |f| %>
+<%= form_for([movie, screening], html: {class: 'form'}) do |f| %>
   <% if screening.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
@@ -13,25 +13,16 @@
 
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :movie_id, value: movie.id %>
-  <div class="field">
-    <%= f.label :date_watched, "Date Watched" %><br>
-    <%= f.date_field :date_watched %>
-  </div>
-  <div class="field">
-    <%= f.label :location_watched, 'Location Watched' %>
-    <span>
-      <%= link_to 'set default location',
-                  user_path(current_user),
-                  title: 'Set a default location for where you watch movies most frequently.'
-      %>
-    </span><br/>
-    <%= f.text_field :location_watched %>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Save", id: "screening_submit_button_screening_form", data: {turbo: 'false'} %>
-  </div>
+  <%= f.label :date_watched, 'Date Watched' %>
+  <%= f.date_field :date_watched %>
+  <%= f.label :location_watched, 'Location Watched' %>
+  <%= link_to 'set default location',
+              user_path(current_user),
+              title: 'Set a default location for where you watch movies most frequently.',
+              class: 'block'
+  %>
+  <%= f.text_field :location_watched %>
+  <%= f.label :notes %>
+  <%= f.text_area :notes %>
+  <%= f.submit 'Save', data: {turbo: 'false'} %>
 <% end %>

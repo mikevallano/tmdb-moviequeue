@@ -1,0 +1,82 @@
+.pseudo-header {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.container {
+  padding: 0 20px 20px;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+h2 {
+  margin: 1rem 0;
+}
+
+.devise-account-links a {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.pagination {
+  padding-bottom: 10px;
+}
+
+table {
+  margin: 20px 0;
+  padding: 20px;
+  width: 60%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid white;
+}
+
+table th {
+  font-size: 1.3rem;
+}
+
+table td {
+  padding: 15px;
+}
+
+table th {
+  padding: 5px;
+}
+
+/* // jquery AUTO COMPLETE autocomplete */
+ul.ui-autocomplete {
+  list-style: none;
+  max-width: 450px;
+  padding: 0;
+}
+
+ul.ui-autocomplete li {
+  text-align: left;
+  background: white;
+  color: black;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 5px;
+}
+
+ul.ui-autocomplete li:hover {
+  background: darkgrey;
+  color: white;
+}
+
+/* jquery autocomplete renders a div */
+/* that sticks around with the value of the */
+/* autocomplete. */
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+}

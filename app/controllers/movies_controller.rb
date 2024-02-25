@@ -30,17 +30,18 @@ class MoviesController < ApplicationController
 
   def update
     if @movie.update(required_params)
-      redirect_to movie_path(@movie, anchor: 'trailer-section')
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to movie_path(@movie, anchor: 'trailer-section') }
+      end
     else
       redirect_to movie_path(@movie), notice: @movie.errors.full_messages
     end
   end
 
   def show
-    @media = Movie.friendly.find(params[:id])
-    return redirect_to movie_path(@media), status: :moved_permanently if request.path != movie_path(@media)
-
-    render 'shared/media_profile'
+    @movie = Movie.friendly.find(params[:id])
+    return redirect_to movie_path(@movie), status: :moved_permanently if request.path != movie_path(@movie)
   end
 
   def modal

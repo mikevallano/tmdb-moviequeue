@@ -1,0 +1,10 @@
+<div class="backdrop-splash-container">
+  <div class="backdrop-image">
+    <%= image_tag(
+      TmdbImageService.image_url(file_path: media.backdrop_path, size: :large, image_type: :backdrop),
+      title: "#{media.title} backdrop image",
+      alt: "#{media.title} backdrop image"
+    ) %>
+  </div>
+  <div id="gradient-box"></div>
+</div>

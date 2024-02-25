@@ -3,46 +3,42 @@
 <div class="full-cast">
   <h1>Full cast for <%= link_to "#{@cast.movie.title}", movie_more_path(tmdb_id: @cast.movie.tmdb_id) %></h1>
 
-  <div class="row">
-    <div class="col-xs-8">
-      <h2>Actors:</h2>
-      <% @cast.actors.each do |actor| %>
-        <div class="headshot-container">
-          <%= link_to headshot_for(actor), actor_more_path(actor_id: actor.actor_id) %>
-          <div class="name-block">
-            <p class="actor"><%= link_to truncate(actor.name, length: 18 ), actor_more_path(actor_id: actor.actor_id) %></p>
-            <p>as <%= truncate(actor.character_name, length: 18, separator: " ") %><p>
-          </div> <!-- name-block -->
-        </div> <!-- headshot-container -->
-      <% end %><!-- actors each do -->
-    </div> <!-- col-xs-8 -->
+    <h2>Actors:</h2>
+  <div class="full-cast-container">
+  <div class="full-cast-actors cast-container">
+    <% @cast.actors.each do |actor| %>
+      <div class="headshot-container">
+        <%= link_to headshot_for(actor), actor_more_path(actor_id: actor.actor_id) %>
+        <div class="name-block">
+          <p class="actor"><%= link_to truncate(actor.name, length: 18 ), actor_more_path(actor_id: actor.actor_id) %></p>
+          <p>as <%= truncate(actor.character_name, length: 18, separator: " ") %><p>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-    <div class="col-xs-4">
-      <div class="row">
-        <h2>Directors:</h2>
-        <% @cast.directors.each do |director| %>
-          <div class="headshot-container">
-            <%= link_to headshot_for(director), director_search_path(director_id: director.director_id) %>
-            <div class="name-block">
-              <p class="actor"><%= link_to truncate(director.name, length: 18 ), director_search_path(director_id: director.director_id) %></p>
-              <p><%= director.job %><p>
-            </div> <!-- name-block -->
-          </div> <!-- headshot-container -->
-        <% end %><!-- directors each do -->
-      </div> <!-- row -->
+  <div class="full-cast-directors-editors">
+    <h2>Directors:</h2>
+    <% @cast.directors.each do |director| %>
+      <div class="headshot-container">
+        <%= link_to headshot_for(director), director_search_path(director_id: director.director_id) %>
+        <div class="name-block">
+          <p class="actor"><%= link_to truncate(director.name, length: 18 ), director_search_path(director_id: director.director_id) %></p>
+          <p><%= director.job %><p>
+        </div>
+      </div>
+    <% end %>
 
-      <div class="row">
-        <h2>Editors:</h2>
-        <% @cast.editors.each do |editor| %>
-          <div class="headshot-container">
-            <%= link_to headshot_for(editor), director_search_path(director_id: editor.editor_id) %>
-            <div class="name-block">
-              <p class="actor"><%= link_to truncate(editor.name, length: 18 ), director_search_path(director_id: editor.editor_id) %></p>
-              <p><%= editor.job %><p>
-            </div> <!-- name-block -->
-          </div> <!-- headshot-container -->
-        <% end %><!-- editors each do -->
-      </div> <!-- row -->
-    </div> <!-- col-xs-4 -->
-  </div> <!-- row -->
+    <h2>Editors:</h2>
+    <% @cast.editors.each do |editor| %>
+      <div class="headshot-container">
+        <%= link_to headshot_for(editor), director_search_path(director_id: editor.editor_id) %>
+        <div class="name-block">
+          <p class="actor"><%= link_to truncate(editor.name, length: 18 ), director_search_path(director_id: editor.editor_id) %></p>
+          <p><%= editor.job %><p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  </div>
 </div> <!-- full-cast -->

@@ -1,0 +1,13 @@
+.lists-container {
+  padding: 10px;
+}
+
+.list {
+  border: 1px solid var(--color-secondary);
+  padding: 5px;
+}
+
+
+select.list-sort {
+  width: 70px;
+}

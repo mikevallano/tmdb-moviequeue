@@ -1,7 +1,6 @@
-<h3>
-  <%= link_to 'Movie Poster View', actor_movie_posters_uri(person_profile), style: 'float: right;' %>
-  Movie Credits (<%= movie_credits.actor.size %>)
-</h3>
+<div class="mb-10">
+  <h3>Movie Credits (<%= movie_credits.actor.size %>)</h3>
+</div>
 <ul>
   <% movie_credits.actor.each do |credit| %>
     <li>

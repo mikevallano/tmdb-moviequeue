@@ -1,0 +1,137 @@
+.cast-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 125px);
+  grid-template-rows: repeat(auto-fit, 225px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.season-cast .cast-container {
+  grid-template-rows: repeat(auto-fit, 275px);
+}
+
+.headshot-container img {
+  width: 125px;
+}
+
+.headshot-container {
+  width: 125px;
+}
+
+.name-block {
+  position: relative;
+  width: 125px;
+  top: -60px;
+  min-height: 60px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.name-block p {
+  font-size: 0.85rem;
+}
+
+.seasons-container *:not(h2) {
+  font-size: 1.2rem;
+}
+
+.poster-overview-container {
+  display: flex;
+  gap: 10px;
+}
+
+.poster-overview-container img {
+  max-height: 278px;
+}
+
+.episode-container {
+  display: flex;
+  gap: 100px;
+  padding: 10px;
+  border-bottom: 1px solid white;
+}
+
+.episode-image-overview-container {
+  flex: 0 0 50%;
+}
+
+.guest-stars-container {
+  flex-grow: 3;
+}
+
+.guest-stars-container ul {
+  padding-left: 15px;
+}
+
+.episode-container img {
+  display: block;
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+
+ul.common-actor-results li {
+  list-style: none;
+  padding-left: 5px;
+  line-height: 1.5rem;
+}
+
+.full-cast-container {
+  display: flex;
+}
+
+.full-cast-actors {
+  flex: 1 1 75%;
+}
+
+.full-cast-directors-editors {
+  flex: 1 1 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.other-search-options {
+  display: flex;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .episode-container {
+    display: block;
+  }
+
+  .full-cast-container {
+    flex-direction: column;
+  }
+}
+
+/* pixel 6 */
+@media (max-width: 415px) {
+  .headshot-container img {
+    width: 170px;
+  }
+  .cast-container {
+    grid-template-columns: 170px 170px;
+    column-gap: 20px;
+    row-gap: 5px;
+  }
+
+  .name-block {
+    width: 170px;
+  }
+}
+
+/* pixel 4 */
+@media (max-width: 354px) {
+  .headshot-container img {
+    width: 140px;
+  }
+  .cast-container {
+    column-gap: 20px;
+    row-gap: 5px;
+    grid-template-columns: 140px 140px;
+  }
+
+  .name-block {
+    width: 140px;
+  }
+}

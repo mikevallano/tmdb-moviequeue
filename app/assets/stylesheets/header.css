@@ -1,0 +1,40 @@
+.main-nav {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.main-nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-nav ul li {
+  list-style: none;
+  padding: 10px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.main-nav #sign_out_nav_link {
+  color: white;
+}
+
+.main-nav form.header-movie-search input {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+@media (max-width: 700px) {
+  .main-nav form.header-movie-search input, #sign_out_nav_link {
+    display: none;
+  }
+
+  .main-nav li:first-of-type {
+    display: none;
+  }
+}

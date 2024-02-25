@@ -1,0 +1,76 @@
+.person-more {
+  margin: auto;
+  width: 80%;
+}
+
+.image-and-bio {
+  border-radius: 5px;
+  background-color: #507b9a;
+  display: flex;
+  gap: 10px;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.person-more img {
+  height: 298px;
+}
+
+.person-more h2 {
+  font-size: 1.1rem;
+}
+
+.bio {
+  font-size: 0.9rem;
+}
+
+.credits ul {
+  padding-top: 10px;
+}
+
+.credits ul li {
+  list-style: none;
+  line-height: 1.2rem;
+  font-size: 0.85rem;
+}
+
+.credits h3 {
+  border-bottom: 2px solid white;
+  margin-top: 10px;
+}
+
+.credits-heading-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.credits-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.credits-section {
+  flex: 0 0 48%;
+  margin: 0 5px;
+}
+
+.credits .material-symbols-outlined.videocam {
+  font-size: 1rem;
+  position: relative;
+  top: 3px;
+}
+
+@media (max-width: 768px) {
+  .credits {
+    width: 100%;
+  }
+  .image-and-bio {
+    display: block;
+  }
+  .credits-container {
+    flex-direction: column;
+  }
+  .seen-movies {
+    order: -1;
+  }
+}

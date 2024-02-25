@@ -1,0 +1,24 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  background: var(--color-primary);
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-links);
+}
+
+p {
+  font-size: 1rem;
+  margin: 5px 0;
+}

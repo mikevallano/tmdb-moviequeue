@@ -4,12 +4,10 @@
   Episode <%= @episode.episode_number %>
 </h2>
 
-<div>
-  <h1><%= @episode.name %></h1>
+<h1><%= @episode.name %></h1>
+<div class='poster-overview-container'>
   <%= image_tag(
-    TmdbImageService.image_url(file_path: @episode.still_path, size: :medium, image_type: :still),
-    class: 'pull-left',
-    style: 'padding-right: 20px;'
+    TmdbImageService.image_url(file_path: @episode.still_path, size: :medium, image_type: :still)
   ) if @episode.still_path.present? %>
   <p>
     <%= @episode.overview %>
@@ -19,26 +17,26 @@
   </p>
 </div>
 
-<div class="row", style="clear: both;">
-  <h2>Cast</h2>
-  <% @season.cast_members.each do |actor| %>
+<h2>Cast</h2>
+<div class="cast-container">
+<% @season.cast_members.each do |actor| %>
+  <div class="headshot-container">
+  <%= headshot_for(actor) %>
+    <div class="name-block">
+      <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+      <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+    </div>
+  </div>
+<% end %>
+<% if @episode.guest_stars.present? %>
+  <% @episode.guest_stars.each do |actor| %>
     <div class="headshot-container">
     <%= headshot_for(actor) %>
       <div class="name-block">
         <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
         <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
-      </div> <!-- name-block -->
-    </div> <!-- headshot-container -->
+      </div>
+    </div>
   <% end %>
-  <% if @episode.guest_stars.present? %>
-    <% @episode.guest_stars.each do |actor| %>
-      <div class="headshot-container">
-      <%= headshot_for(actor) %>
-        <div class="name-block">
-          <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-          <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
-        </div> <!-- name-block -->
-      </div> <!-- headshot-container -->
-    <% end %>
-  <% end %>
-</div> <!-- row -->
+<% end %>
+</div>

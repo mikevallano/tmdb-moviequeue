@@ -1,11 +1,8 @@
-<h1>User Ratings for <%= @movie.title %></h1>
+<h1>User Ratings for <%= link_to @movie.title, @movie %></h1>
 
-<p class="button-main">
-  <%= link_to 'Back to ' + @movie.title, movie_path(@movie) %>
-  <%= link_to '+ New Rating', new_movie_rating_path(@movie) %>
-</p>
+<%= link_to '+ New Rating', new_movie_rating_path(@movie), class: 'btn' %>
 
-<table class="table">
+<table>
   <thead>
     <tr>
       <th>User</th>
@@ -23,13 +20,11 @@
         <td><%= rating.value %></td>
         <td>
         <% if current_user == rating.user %>
-        <p class="button-main">
-          <%= link_to 'Edit', edit_movie_rating_path(@movie, rating) %>
-          <%= link_to 'Delete', movie_rating_path(@movie, rating), method: :delete, data: { confirm: 'Are you sure you want to delete this rating? This action cannot be undone.' } %>
-          </p>
-        <% end %><!-- if current user -->
+          <%= link_to 'Edit', edit_movie_rating_path(@movie, rating), class: 'btn' %>
+          <%= link_to 'Delete', movie_rating_path(@movie, rating), class: 'btn', method: :delete, data: { confirm: 'Are you sure you want to delete this rating? This action cannot be undone.' } %>
+        <% end %>
         </td>
       </tr>
-    <% end %><!-- each rating -->
+    <% end %>
   </tbody>
 </table>

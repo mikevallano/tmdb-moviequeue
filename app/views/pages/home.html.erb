@@ -1,42 +1,20 @@
 <% content_for(:title, "Flicks on Lists. Find movies. Track what you watch. Share lists.") %>
-<article id="page">
-  <div class="jumbotron">
-    <div class="well">
-      <div class="row">
-        <h1><span class="fa fa-step-forward"></span> FlicksOnLists</h1>
-        <h2>Find movies. Track what you watch. Share lists.</h2>
-      </div> <!-- row -->
 
-      <div class="row">
-      <div class="search-bar">
+<h1><span class="fa fa-step-forward"></span> FlicksOnLists</h1>
+<h2>Find movies. Track what you watch. Share lists.</h2>
 
-        <% if current_user.present? %>
-          <%= form_tag '/tmdb/search', { class: "form-class", id: "home-page-search", role: "form", method: :get } do %>
-          <%= text_field_tag :movie_title, nil, class: "form-control search-form autocomplete-auto-submit", id: "homepage-search-field", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
-          <%= submit_tag "Search", id: "search_by_title_home_button", class: "home-submit" %>
-          <% end %><!-- form_tag -->
-          </div> <!-- search-bar -->
-        </div> <!-- row -->
+<% if current_user.present? %>
+  <%= form_tag '/tmdb/search', { method: :get } do %>
+    <%= text_field_tag :movie_title, nil, class: "autocomplete-auto-submit", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
+    <%= submit_tag "Search" %>
+  <% end %>
 
-      <hr>
-
-      <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by movie title", api_search_path, id: "movie_title_search_link_homepage" %> </p>
-      <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by actor", actor_search_path, id: "actor_search_link_homepage" %> </p>
-      <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by all sorts of things", discover_search_path, id: "discover_search_link_homepage" %> </p>
-
-    <% else %>
-
-      <div class="button-holder">
-        <p class="button-large"><%= link_to "Sign Up", new_user_registration_path, id: "sign_up_home_link" %></p>
-        <p>Have an account?</p>
-        <p class="button-main"><%= link_to "Sign In", new_user_session_path, id: "sign_in_home_link" %></p>
-      </div> <!-- button holder -->
-
-    <% end %><!-- current_user? -->
-
-    </div> <!-- well -->
-  </div> <!-- jumbotron -->
-</article>
-
-
-
+  <hr>
+  <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by movie title", api_search_path %> </p>
+  <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by actor", actor_search_path %> </p>
+  <p><icon class="fa fa-chevron-circle-right"></icon><%= link_to " Search by all sorts of things", discover_search_path %></p>
+<% else %>
+  <%= link_to "Sign Up", new_user_registration_path, class: 'btn' %>
+  <p class='mt-10 mb-10'>Have an account?</p>
+  <%= link_to "Sign In", new_user_session_path, class: 'btn' %>
+<% end %>

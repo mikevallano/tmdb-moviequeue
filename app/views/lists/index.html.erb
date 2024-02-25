@@ -1,12 +1,15 @@
 <% content_for(:title, "My Lists") %>
 
-<div class="row">
-  <h1>My Movie Lists</h1>
+<h1>My Movie Lists</h1>
 
-  <div class="pull-right">
-     <p class="button-main"><%= link_to '<i class="fa fa-plus"></i> New List'.html_safe, new_user_list_path(current_user), id: 'new_list_link_list_index' %></p>
-  </div> <!-- pull-right -->
-</div> <!-- row -->
+<%= link_to 'New List'.html_safe, new_user_list_path(current_user), class: 'btn' %></p>
 
-<%= render "lists/list" %>
-
+<div class="lists-container mt-10">
+  <div class="list"><%= link_to 'My Top-Rated Movies', user_ratings_path(current_user) %></div>
+  <% @lists.order(name: :asc).each do |list| %>
+    <div class="list">
+      <%= link_to list.name.titlecase, user_list_path(list.owner, list) %>
+      (<%= @list_movie_count[list.id] %>)
+    </div>
+  <% end %>
+</div>
