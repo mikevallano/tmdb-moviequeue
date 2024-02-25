@@ -6,12 +6,6 @@
   margin: 0;
 }
 
-:root {
-  --color-primary: #020d18;
-  --color-secondary: #f1c40f;
-  --color-links: lightblue;
-}
-
 body {
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
