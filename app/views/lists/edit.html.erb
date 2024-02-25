@@ -22,4 +22,4 @@
   <%= f.submit "Send invite" %>
 <% end %>
 
-<%= link_to 'Delete List', user_list_path(@list.owner, @list), class: 'btn', method: :delete, data: { confirm: "Whoah there. Deleting this list will remove all unwatched movies from your library. If you there other members, it will delete the list for them too. You can edit the name/description of the list, and remove/add movies instead. If you really want to delete though, go ahead. Don't say we didn't warn you." } %>
+<%= button_to 'Delete List', user_list_path(@list.owner, @list), method: :delete, class: 'btn', data: { turbo_confirm: 'Are you sure? The list will be deleted for you and any members.' } %>
