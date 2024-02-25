@@ -14,7 +14,8 @@ class ListsController < ApplicationController
     unless @owner == current_user
       redirect_to user_lists_path(current_user), notice: "Those aren't your lists"
     end
-    @lists = current_user.all_lists
+    @lists = current_user.all_lists.includes(:owner)
+    @list_movie_count = Listing.where(list: @lists).group(:list_id).count
   end
 
   def show

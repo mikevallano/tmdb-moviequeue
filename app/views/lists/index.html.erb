@@ -8,7 +8,8 @@
   <div class="list"><%= link_to 'My Top-Rated Movies', user_ratings_path(current_user) %></div>
   <% @lists.order(name: :asc).each do |list| %>
     <div class="list">
-      <%= link_to list.name.titlecase, user_list_path(list.owner, list) %> (<%= list.movies.size %>)
+      <%= link_to list.name.titlecase, user_list_path(list.owner, list) %>
+      (<%= @list_movie_count[list.id] %>)
     </div>
   <% end %>
 </div>
