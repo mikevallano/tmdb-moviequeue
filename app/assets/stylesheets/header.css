@@ -1,6 +1,7 @@
 .main-nav {
   background: var(--color-secondary);
   color: var(--color-primary);
+  overflow: auto;
 }
 
 .main-nav ul {
@@ -28,6 +29,33 @@
   border-radius: 3px;
   padding: 5px;
 }
+
+.menu-item { width: auto; }
+
+/* hide the inputs/checkmarks and submenu */
+.menu-item input, ul.dropdown-items {
+  display: none;
+  position: absolute;
+  width: inherit;
+}
+
+.menu-item input, ul.dropdown-items li:hover {
+  background: hsl(48, 89%, 60%);
+}
+
+.menu-item label {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* show the submenu when input is checked */
+.menu-item input:checked~ul.dropdown-items {
+  display: block;
+  background: hsl(48, 89%, 45%);
+  margin-top: 20px;
+}
+
 
 @media (max-width: 700px) {
   .main-nav form.header-movie-search input, #sign_out_nav_link {
