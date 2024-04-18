@@ -1,5 +1,11 @@
 :root {
-  --color-primary: #020d18;
-  --color-secondary: #f1c40f;
+  --yellow: hsl(48, 89%, 50%); /* #f1c40f */
+  --lighter-yellow: hsl(48, 89%, 60%);
+  --darker-yellow: hsl(48, 89%, 45%);
+
+  --color-primary: #020d18; /* hsl(210, 85%, 5%) */
+  --color-secondary: var(--yellow);
+  --color-secondary-lighter: var(--lighter-yellow);
+  --color-secondary-darker: var(--darker-yellow);
   --color-links: lightblue;
 }
