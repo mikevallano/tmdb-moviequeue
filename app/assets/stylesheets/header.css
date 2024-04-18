@@ -1,12 +1,18 @@
+:root {
+  --nav-bar-height: 56px;
+}
+
 .main-nav {
   background: var(--color-secondary);
   color: var(--color-primary);
   overflow: auto;
-  padding: .5rem;
+  padding: 0 .75rem;
+  height: var(--nav-bar-height);
 }
 
 .main-nav ul {
   display: flex;
+  height: inherit;
   justify-content: space-between;
   align-items: center;
 }
@@ -32,7 +38,7 @@
 
 .dropdown-header { width: auto; }
 
-/* hide the inputs/checkmarks and submenu */
+/* Hide the inputs, checkmarks, and submenu */
 .dropdown-header input, ul.dropdown-items {
   display: none;
   position: absolute;
@@ -53,15 +59,9 @@
   cursor: pointer;
 }
 
-/* show the submenu when input is checked */
+/* Show the submenu when input is checked */
 .dropdown-header input:checked~ul.dropdown-items {
   display: block;
   background: var(--color-secondary-darker);
-  margin-top: 1.25rem;
-}
-
-@media (max-width: 700px) {
-  .dropdown-header input:checked~ul.dropdown-items {
-    margin-top: .55rem;
-  }
+  top: var(--nav-bar-height);
 }
