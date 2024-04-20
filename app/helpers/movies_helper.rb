@@ -106,19 +106,18 @@ module MoviesHelper
 
   private
 
-  # TODO: fix up commas
   def movie_actors_display(movie, qty)
     raw(movie.actors.first(qty).map do |actor|
-      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link mr-5', data: {turbo: false}
+      link_to actor, actor_search_path(actor: I18n.transliterate(actor)), class: 'cast-name-link', data: {turbo: false}
     end.join(", "))
   end
 
   def movie_director_display(movie)
-    link_to "#{movie.director} (director)", director_search_path(director_id: movie.director_id, name: I18n.transliterate(movie.director)), class: 'cast-name-link' if movie.director.present?
+    link_to ", #{movie.director} (director)", director_search_path(director_id: movie.director_id, name: I18n.transliterate(movie.director)), class: 'cast-name-link' if movie.director.present?
   end
 
   def full_cast_link(movie)
-    link_to '<i class="fa fa-chevron-circle-right"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show", data: {turbo_frame: '_top', turbo: false}
+    link_to '<i class="fa fa-chevron-circle-right ml-5"></i> Full Cast'.html_safe, full_cast_path(tmdb_id: movie.tmdb_id), id: "full_cast_link_movie_show", data: {turbo_frame: '_top', turbo: false}
   end
 
   def runtime_display(movie)
