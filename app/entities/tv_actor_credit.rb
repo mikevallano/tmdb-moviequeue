@@ -18,12 +18,12 @@ class TVActorCredit
   def self.parse_record(record)
     seasons = TVCreditSeason.parse_records(record[:media][:seasons]).presence if record[:media][:seasons].present?
     episodes = TVEpisode.parse_records(record[:media][:episodes]).presence if record[:media][:episodes].present?
-
+    episodes_by_number = episodes.sort_by { |e|e.episode_number } if episodes.present?
     new(
       actor_name: record[:person][:name],
       actor_id: record[:person][:id],
       character: record[:media][:character],
-      episodes: episodes,
+      episodes: episodes_by_number,
       known_for: record[:person][:known_for],
       profile_path: record[:person][:profile_path],
       show_id: record[:media][:id],
