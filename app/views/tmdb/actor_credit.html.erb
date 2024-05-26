@@ -1,41 +1,53 @@
 <h1>
-  <%= link_to "#{@credit.actor_name}", actor_more_path(actor_id: @credit.actor_id) %> <%= "as #{@credit.character}" if @credit.character.present? %> on <%= link_to "#{@credit.show_name}", tv_series_path(show_id: @credit.show_id) %>
+  Episodes with <%= link_to "#{@credit.actor_name}", actor_more_path(actor_id: @credit.actor_id) %>
+  <%= "as #{@credit.character}" if @credit.character.present? %>
+  on <%= link_to "#{@credit.show_name}", tv_series_path(show_id: @credit.show_id) %>
 </h1>
-<%= link_to "Back to Actor Profile", actor_more_path(actor_id: @credit.actor_id), class: 'btn' %>
+<%= link_to "Actor Profile", actor_more_path(actor_id: @credit.actor_id), class: 'btn' %>
 
 <% if @credit.episodes.present? %>
-  <h2>Episodes with <%= @credit.actor_name %></h2>
-  <table>
-    <tbody>
-      <% @credit.episodes.each do |episode| %>
-        <tr>
-          <td>
-            <h2>Air date: <%= episode.air_date %></h2>
-            <p><%= "Overview: #{episode.overview}" if episode.overview.present? %></p>
-            <p><%= link_to "Season: #{episode.season_number}", tv_season_path(season_number: episode.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %>, Episode: <%= episode.episode_number %></p>
-            <% if episode.still_path.present? %>
-              <p>
-                <%= image_tag(TmdbImageService.image_url(file_path: episode.still_path, size: :medium, image_type: :still)) %>
-              </p>
+  <% @credit.episodes.group_by {|c| c.season_number}.each do |season| %>
+    <details open>
+      <summary class='mt-10'><h2 class='inline-block'>Season <%= season.first %></h2></summary>
+
+      <% season.last.each do |episode| %>
+        <h3 class='mt-10'>
+          <%= episode.episode_number %>.
+          <%= link_to episode.name, tv_episode_path(
+                    show_id: @credit.show_id,
+                    season_number: episode.season_number,
+                    episode_number: episode.episode_number) %>
+        </h3>
+        <div class="episode-container">
+          <div class="episode-image-overview-container">
+            <%= image_tag(TmdbImageService.image_url(
+                file_path: episode.still_path,
+                size: :large,
+                image_type: :still)) if episode.still_path.present? %>
+
+            <% if episode.air_date.present? %>
+              <p>Aired: <%= episode.air_date.stamp("01-02-2001") %></p>
             <% end %>
-          </td>
-        </tr>
+
+            <p><%= episode.overview %></p>
+          </div>
+
+          <div class="guest-stars-container">
+            <% if episode.guest_stars.present? %>
+              <h3 class='mb-10'>Guest Stars</h3>
+              <ul>
+                <% episode.guest_stars.each do |guest| %>
+                  <li>
+                    <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+                    <%= "as #{guest.character_name}" if guest.character_name.present? %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </details>
+  <% end %>
 <% end %>
 
-<% if @credit.seasons.present? %>
-<h2>Seasons with <%= @credit.actor_name %></h2>
-<table>
-  <% @credit.seasons.each do |season| %>
-  <tr>
-    <td>
-      <%= image_tag(TmdbImageService.image_url(file_path: season.poster_path, size: :xsmall, image_type: :poster)) if season.poster_path.present? %>
-    </td>
-    <td><%= link_to "Season: #{season_number_display(season.season_number)}", tv_season_path(season_number: season.season_number, show_id: @credit.show_id, actor_id: @credit.actor_id) %></td>
-    <td>Air date: <%= season.air_date %></td>
-  </tr>
-  <% end %>
-</table>
-<% end %>
