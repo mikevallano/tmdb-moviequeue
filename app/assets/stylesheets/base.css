@@ -22,3 +22,10 @@ p {
   font-size: 1rem;
   margin: 5px 0;
 }
+
+@media (max-width: 768px) {
+
+  a {
+    line-height: 1.7rem;
+  }
+}
