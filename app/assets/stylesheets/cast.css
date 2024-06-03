@@ -35,15 +35,6 @@
   font-size: 1.2rem;
 }
 
-.poster-overview-container {
-  display: flex;
-  gap: 10px;
-}
-
-.poster-overview-container img {
-  max-height: 278px;
-}
-
 .episode-container {
   display: flex;
   gap: 100px;

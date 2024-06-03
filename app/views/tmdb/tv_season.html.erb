@@ -9,24 +9,28 @@
   <p><%= @season.overview %></p>
 </div>
 
+<hr>
+
 <div class='season-cast'>
   <% if @season.cast_members.present? %>
-    <h2><%= @season.name %> Cast</h2>
-     <div class="cast-container">
-      <% @season.cast_members.each do |actor| %>
-        <div class="headshot-container">
-          <%= headshot_for(actor) %>
-          <div class="name-block">
-            <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-            <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+    <details class='mb-20'>
+      <summary><h2 class='inline-block'><%= @season.name %> Cast</h2></summary>
+
+      <div class="cast-container">
+        <% @season.cast_members.each do |actor| %>
+          <div class="headshot-container">
+            <%= headshot_for(actor) %>
+            <div class="name-block">
+              <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+              <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    </details>
   <% end %>
 </div>
 
-<hr>
 <h2><%= @season.name %> Episodes</h2>
 
 <% @season.episodes.each do |episode| %>
@@ -58,8 +62,10 @@
             <ul>
               <% episode.guest_stars.each do |guest| %>
                 <li>
-                  <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+                  <%= link_to guest.name, actor_more_path(actor_id: guest.actor_id) %>
                   <%= "as #{guest.character_name}" if guest.character_name.present? %>
+                  | <%= link_to "Episodes", actor_credit_path(actor_id: guest.actor_id, credit_id: guest.credit_id,
+    show_name: "#{@series.show_name}"), id: "appearance_details_#{@series.show_name.downcase}" %>
                 </li>
               <% end %>
             </ul>

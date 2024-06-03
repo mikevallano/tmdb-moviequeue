@@ -5,17 +5,11 @@
 </h2>
 
 <h1><%= @episode.name %></h1>
-<div class='poster-overview-container'>
-  <%= image_tag(
-    TmdbImageService.image_url(file_path: @episode.still_path, size: :medium, image_type: :still)
-  ) if @episode.still_path.present? %>
-  <p>
-    <%= @episode.overview %>
-    <% if @episode.air_date.present? %>
-      Aired on <%= @episode.air_date.stamp("01-02-2001") %>
-    <% end %>
-  </p>
-</div>
+<%= image_tag(TmdbImageService.image_url(file_path: @episode.still_path, size: :large, image_type: :still)) if @episode.still_path.present? %>
+<% if @episode.air_date.present? %>
+  <p>Aired on <%= @episode.air_date.stamp("01-02-2001") %></p>
+<% end %>
+<p><%= @episode.overview %></p>
 
 <h2>Cast</h2>
 <div class="cast-container">

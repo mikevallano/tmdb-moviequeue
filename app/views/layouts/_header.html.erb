@@ -1,19 +1,28 @@
 <nav class="main-nav">
   <ul>
-    <li><%= link_to 'Home', root_path %></li>
+    <li class="mobile-hidden"><%= link_to 'Home', root_path %></li>
     <% if current_user.present? %>
       <li><%= link_to 'My Movies', movies_path %></li>
       <li><%= link_to 'My Lists', user_lists_path(current_user) %></li>
-      <li><%= link_to 'TNG', '/tmdb/tv_series?show_id=655' %></li>
+      <li class="dropdown-header">
+        <input id="quick-links" type="checkbox" name="quick-links" />
+        <label for="quick-links">Quick Links</label>
+        <ul class="dropdown-items">
+          <li><%= link_to 'Glow Up', '/tmdb/tv_series?show_id=87387' %></li>
+          <li><%= link_to 'Parks & Rec', '/tmdb/tv_series?show_id=8592' %></li>
+          <li><%= link_to 'Resident Alien', '/tmdb/tv_series?show_id=96580' %></li>
+          <li><%= link_to 'Voyager', '/tmdb/tv_series?show_id=1855' %></li>
+        </ul>
+      </li>
       <li><%= link_to 'Search', api_search_path %></li>
     <% end %>
-    <li>
+    <li class="mobile-hidden">
       <%= form_tag '/tmdb/search',
         { class: "header-movie-search", method: :get } do %>
           <%= text_field_tag :movie_title_header, nil, class: "autocomplete-auto-submit", placeholder: "Search for a Movie", data: { autocomplete_source: movie_autocomplete_path } %>
       <% end %>
     </li>
-    <li>
+    <li class="mobile-hidden">
       <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, id: "sign_out_nav_link", class: 'button_to' if current_user.present? %>
     </li>
   </ul>
