@@ -131,11 +131,11 @@ RSpec.describe Movie, type: :model do
       end
 
       it '#by_recently_watched_by_user' do
-        create(:screening, user: user, movie: no_country, date_watched: 1.day.ago)
+        create(:screening, user: user, movie: no_country, date_watched: 3.days.ago)
         create(:screening, user: user, movie: no_country, date_watched: 1.week.ago)
         create(:screening, user: user, movie: no_country, date_watched: 1.month.ago)
         create(:listing, list: list, movie: lebowski)
-        fargo_screening.update(date_watched: 1.hour.ago)
+        fargo_screening.update(date_watched: 1.day.ago)
         expect(user.watched_movies.distinct).to match_array([fargo, no_country])
         expect(user.all_movies).to match_array([fargo, no_country, lebowski])
         expect(Movie.by_recently_watched_by_user(user).map(&:title)).to eq([fargo.title, no_country.title, lebowski.title])
