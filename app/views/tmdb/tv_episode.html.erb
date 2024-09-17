@@ -13,21 +13,25 @@
 
 <h2>Cast</h2>
 <div class="cast-container">
-<% @season.cast_members.each do |actor| %>
-  <div class="headshot-container">
-  <%= headshot_for(actor) %>
-    <div class="name-block">
-      <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
-      <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+  <% @season.cast_members.each do |actor| %>
+    <div class="headshot-container">
+    <%= headshot_for(actor) %>
+      <div class="name-block">
+        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_more_path(actor_id: actor.actor_id)  %></p>
+        <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
+
 <% if @episode.guest_stars.present? %>
+<h2>Guests</h2>
+<div class="cast-container">
   <% @episode.guest_stars.each do |actor| %>
     <div class="headshot-container">
     <%= headshot_for(actor) %>
       <div class="name-block">
-        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_search_path(actor: I18n.transliterate("#{actor.name}"))  %></p>
+        <p class="actor"><%= link_to "#{truncate(actor.name, length: 18, escape: false)}", actor_credit_path(actor_id: actor.actor_id, credit_id: actor.credit_id, show_name: "#{@series.show_name}")  %></p>
         <p>as <%= truncate(actor.character_name, length: 18, escape: false) %><p>
       </div>
     </div>
