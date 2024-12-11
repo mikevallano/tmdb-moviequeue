@@ -12,11 +12,7 @@
   </thead>
   <tbody>
     <% @viewings.order(ended_at: :desc, started_at: :desc).each do |viewing| %>
-      <tr>
-        <td><%= link_to viewing.title, viewing.url %></td>
-        <td><%= viewing.started_at.stamp("1/2/2001") %></td>
-        <td><%= viewing.ended_at&.stamp("1/2/2001") %></td>
-      </tr>
+      <%= render partial: 'viewing_table_row', locals: { viewing: viewing } %>
     <% end %>
   </tbody>
 </table>

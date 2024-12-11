@@ -11,3 +11,7 @@
   <%= render 'tv_series_viewings/navbar_dropdown' %>
 <% end %>
 
+<!-- Replace the row in the index page table -->
+<%= turbo_stream.replace dom_id(@viewing) do %>
+  <%= render partial: 'viewing_table_row', locals: { viewing: @viewing } %>
+<% end %>

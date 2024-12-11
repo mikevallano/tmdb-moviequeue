@@ -1,0 +1,14 @@
+<%= tag.tr id: dom_id(viewing) do %>
+  <td><%= link_to viewing.title, viewing.url %></td>
+  <td><%= viewing.started_at.stamp("1/2/2001") %></td>
+  <td>
+    <% if viewing.active? %>
+      <%= button_to 'Mark as Finished Watching', 
+          tv_series_viewing_path(id: viewing.id, show_id: viewing.show_id, title: viewing.title),
+          method: :patch,
+          remote: true %>
+    <% else %>
+      <%= viewing.ended_at.stamp("1/2/2001") %>
+    <% end %>
+  </td>
+<% end %>

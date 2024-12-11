@@ -1,23 +1,16 @@
 <div id='js_tv_series_viewings_buttons_toggle'>
   <% if current_user.tv_series_viewings.active.find_by(show_id: show_id).present? %>
     <div class='manage-screenings'>
-      <%= button_to '<span class="material-symbols-outlined">bookmark_remove</span> Mark as Finished Watching'.html_safe, tv_series_viewing_path(
-          id: show_id,
-          show_id: show_id,
-          title: title,
-        ),
+      <%= button_to '<span class="material-symbols-outlined">bookmark_remove</span> Mark as Finished Watching'.html_safe, 
+        tv_series_viewing_path(id: show_id, show_id: show_id, title: title),
         method: :patch,
-        id: 'js_mark_finished_watching_link',
         remote: true %>
     </div>
   <% else %>
     <div class='manage-screenings'>
-      <%= button_to '<span class="material-symbols-outlined">bookmark_add</span> Add to Currently-Watching'.html_safe, tv_series_viewings_path(
-          show_id: show_id,
-          title: title,
-        ),
+      <%= button_to '<span class="material-symbols-outlined">bookmark_add</span> Add to Currently-Watching'.html_safe, 
+        tv_series_viewings_path(show_id: show_id, title: title),
         method: :post,
-        id: 'js_mark_currently_watching_link',
         remote: true %>
     </div>
   <% end %>
