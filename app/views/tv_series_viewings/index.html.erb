@@ -1,0 +1,24 @@
+<% content_for(:title, "TV Series Viewings") %>
+
+<h1>My TV Series Viewings</h1>
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th>TV Series</th>
+      <th>Started Watching</th>
+      <th>Stopped Watching</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @viewings.order(ended_at: :desc).each do |viewing| %>
+      <tr>
+        <td><%= link_to viewing.title, viewing.url %></td>
+        <td><%= viewing.started_at.stamp("1/2/2001") %></td>
+        <td><%= viewing.ended_at&.stamp("1/2/2001") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

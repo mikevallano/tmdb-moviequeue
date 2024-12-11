@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :screenings, only: :create
+  resources :tv_series_viewings, only: :index
 
   post 'movies/modal', to: 'movies#modal', as: :movie_modal
   get 'movies/modal_close', to: 'movies#modal_close', as: :movie_modal_close
