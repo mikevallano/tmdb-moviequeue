@@ -49,6 +49,10 @@
   padding: .75rem;
 }
 
+.dropdown-header .dropdown-items hr {
+  border-color: var(--color-secondary);
+}
+
 .dropdown-header input, ul.dropdown-items li:hover {
   background: var(--color-secondary-lighter);
 }
