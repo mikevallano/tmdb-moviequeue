@@ -1,0 +1,13 @@
+<% if current_user.tv_series_viewings.any? %>
+  <li id="js_main_nav_tv_series_viewings" class="dropdown-header">
+    <input id="my-shows" type="checkbox" name="my-shows" />
+    <label for="my-shows">My Shows</label>
+    <ul class="dropdown-items">
+      <li><%= link_to 'See Viewing History', tv_series_viewings_path %></li>
+      <hr>
+        <% current_user.tv_series_viewings.active.each do |show| %>
+          <li><%= link_to show.title, show.url %></li>
+        <% end %>
+    </ul>
+  </li>
+<% end %>

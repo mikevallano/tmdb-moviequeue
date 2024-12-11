@@ -3,19 +3,7 @@
     <li class="mobile-hidden"><%= link_to 'Home', root_path %></li>
     <% if current_user.present? %>
       <li><%= link_to 'My Movies', user_lists_path(current_user) %></li>
-      <% if current_user.tv_series_viewings.any? %>
-        <li class="dropdown-header">
-          <input id="my-shows" type="checkbox" name="my-shows" />
-          <label for="my-shows">My Shows</label>
-          <ul class="dropdown-items">
-            <li><%= link_to 'See Viewing History', tv_series_viewings_path %></li>
-            <hr>
-            <% current_user.tv_series_viewings.active.each do |show| %>
-              <li><%= link_to show.title, show.url %></li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
+      <%= render 'tv_series_viewings/navbar_dropdown' %>
       <li><%= link_to 'Search', api_search_path %></li>
     <% end %>
     <li class="mobile-hidden">
