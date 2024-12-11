@@ -14,7 +14,7 @@
     </li>
 
     <% if current_user.present? %>
-      <li class="dropdown-header">
+      <li class="dropdown-header mobile-hidden">
         <input id="quick-links" type="checkbox" name="quick-links" />
         <label for="quick-links"><%= current_user.username %></label>
         <ul class="dropdown-items">
