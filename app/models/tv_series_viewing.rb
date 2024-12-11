@@ -7,6 +7,8 @@
 class TVSeriesViewing < ApplicationRecord
   belongs_to :user
   # TODO: add uniqueness to user_id, show_id...?
+  # validates :show_id, uniqueness: {scope: :user_id, case_sensitive: false}
+  # 
   
   # validates :username, presence: true, uniqueness: true
 
