@@ -24,14 +24,14 @@
 
 * There are no special rake tasks or seeds.
 
-* Simply running `$ rsepc` will run the test suite, which uses Selenium, and therefore launches Firefox.
+* Simply running `$ rspec` will run the test suite, which uses Selenium, and therefore launches Firefox.
 
 * There are no background jobs.
 
-* The data is gathered from the awesome API available from TMDB: <https://www.themoviedb.org/documentation/api>, which is managed in the tmdb_controller and the tmdb_handler module in the lib directory. You will need to sign up at TMDB and get your own API key, which is referenced as an environment variable throughout this project.
+* The data is gathered from the awesome API available from TMDB: <https://www.themoviedb.org/documentation/api>, which is managed in the tmdb_controller and the tmdb_handler module in the lib directory. You will need to sign up at TMDB and get your own API key, which is referenced as an environment variable throughout this project. You can do whatever method you prefer for storing API keys. An easy way to add it to your local environment is running this in your console `export tmdb_api_key=YOU-API-KEY`.
 
 ## Creators and Maintainers:
-This site was built to solve our own problem of movie management, which started as a crappy Google sheet, then evolved to a Rails app.  The other puropse was to build a Rails app that showcased our Rails skills. "We" are [Mike](https://github.com/mikevallano?tab=repositories) (back end) and [Anne](https://github.com/lortza?tab=repositories) (front end).
+This site was built to solve our own problem of movie management, which started as a crappy Google sheet, then evolved to a Rails app.  The other purpose was to build a Rails app that showcased our Rails skills. "We" are [Mike](https://github.com/mikevallano?tab=repositories) (back end) and [Anne](https://github.com/lortza?tab=repositories) (front end).
 
 ## Wiki
 
