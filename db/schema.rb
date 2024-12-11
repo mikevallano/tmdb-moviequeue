@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_180716) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "tv_series_viewings", force: :cascade do |t|
+  create_table "tv_series_viewings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.string "url", null: false

@@ -1,6 +1,6 @@
 class CreateTVSeriesViewings < ActiveRecord::Migration[7.1]
   def change
-    create_table :tv_series_viewings do |t|
+    create_table :tv_series_viewings, id: :uuid do |t|
       t.references :user, null: false, foreign_key: true
       t.string :title, null: false
       t.string :url, null: false
