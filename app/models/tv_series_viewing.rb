@@ -12,7 +12,7 @@ class TVSeriesViewing < ApplicationRecord
   validates :ended_at, uniqueness: { scope: [:user_id, :show_id] }
   validates_presence_of :title, :url, :show_id, :started_at
   
-  scope :active, -> {where(ended_at: nil) }
+  scope :active, -> { where(ended_at: nil) }
   
   def active?
     ended_at.nil?
