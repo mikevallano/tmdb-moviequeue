@@ -2,21 +2,8 @@
   <ul>
     <li class="mobile-hidden"><%= link_to 'Home', root_path %></li>
     <% if current_user.present? %>
-      <li><%= link_to 'My Movies', movies_path %></li>
-      <li><%= link_to 'My Lists', user_lists_path(current_user) %></li>
-      <li class="dropdown-header">
-        <input id="quick-links" type="checkbox" name="quick-links" />
-        <label for="quick-links">Quick Links</label>
-        <ul class="dropdown-items">
-          <li><%= link_to 'Brooklyn Nine Nine', '/tmdb/tv_series?show_id=48891' %></li>
-          <li><%= link_to 'DS9', '/tmdb/tv_series?show_id=580' %></li>
-          <li><%= link_to 'Enterprise', '/tmdb/tv_series?show_id=314' %></li>
-          <li><%= link_to 'Monk', '/tmdb/tv_series?show_id=1695' %></li>
-          <li><%= link_to 'Parks & Rec', '/tmdb/tv_series?show_id=8592' %></li>
-          <li><%= link_to 'Resident Alien', '/tmdb/tv_series?show_id=96580' %></li>
-          <li><%= link_to 'The Good Place', '/tmdb/tv_series?show_id=66573' %></li>
-        </ul>
-      </li>
+      <li><%= link_to 'My Movies', user_lists_path(current_user) %></li>
+      <%= render 'tv_series_viewings/navbar_dropdown' %>
       <li><%= link_to 'Search', api_search_path %></li>
     <% end %>
     <li class="mobile-hidden">
@@ -25,8 +12,16 @@
           <%= text_field_tag :movie_title_header, nil, class: "autocomplete-auto-submit", placeholder: "Search for a Movie", data: { autocomplete_source: movie_autocomplete_path } %>
       <% end %>
     </li>
-    <li class="mobile-hidden">
-      <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, id: "sign_out_nav_link", class: 'button_to' if current_user.present? %>
-    </li>
+
+    <% if current_user.present? %>
+      <li class="dropdown-header mobile-hidden">
+        <input id="quick-links" type="checkbox" name="quick-links" />
+        <label for="quick-links"><%= current_user.username %></label>
+        <ul class="dropdown-items">
+          <li><%= link_to 'Settings', user_path(current_user) %></li>
+          <li><%= button_to 'Sign Out', destroy_user_session_path, method: :delete, id: "sign_out_nav_link", class: 'button_to' %></li>
+        </ul>
+      </li>
+    <% end %>
   </ul>
 </nav>

@@ -48,6 +48,8 @@ class User < ApplicationRecord
   has_many :watched_movies, through: :screenings,
   source: :movie
 
+  has_many :tv_series_viewings
+
   def all_lists
     list_ids = lists.pluck(:id)
     member_list_ids = member_lists.pluck(:id)

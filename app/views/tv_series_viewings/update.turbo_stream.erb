@@ -1,0 +1,17 @@
+<!-- Replace the toggle buttons -->
+<%= turbo_stream.replace "js_tv_series_viewings_buttons_toggle" do %>
+  <%= render "tv_series_viewings/buttons_toggle", 
+    show_id: @viewing.show_id, 
+    title: @viewing.title 
+  %>
+<% end %>
+
+<!-- Replace the navbar dropdown with currently active shows -->
+<%= turbo_stream.replace "js_main_nav_tv_series_viewings" do %>
+  <%= render 'tv_series_viewings/navbar_dropdown' %>
+<% end %>
+
+<!-- Replace the row in the index page table -->
+<%= turbo_stream.replace dom_id(@viewing) do %>
+  <%= render partial: 'viewing_table_row', locals: { viewing: @viewing } %>
+<% end %>

@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '3.2.2'
-gem 'puma', '6.4.2'
+ruby File.read(".ruby-version").strip
+
 gem 'rails', '~> 7.1.3'
+gem 'puma', '6.4.2'
 gem 'pg', '~> 1.1'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'

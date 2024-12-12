@@ -1,0 +1,20 @@
+<% content_for(:title, "TV Series Viewings") %>
+
+<h1>My TV Series Viewings</h1>
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th>TV Series</th>
+      <th>Started Watching</th>
+      <th>Stopped Watching</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @viewings.order(ended_at: :desc, started_at: :desc).each do |viewing| %>
+      <%= render partial: 'viewing_table_row', locals: { viewing: viewing } %>
+    <% end %>
+  </tbody>
+</table>
+
+
