@@ -5,7 +5,7 @@
     <ul class="dropdown-items">
       <li><%= link_to 'See Viewing History', tv_series_viewings_path %></li>
       <hr>
-        <% current_user.tv_series_viewings.active.each do |show| %>
+        <% current_user.tv_series_viewings.active.order(title: :asc).each do |show| %>
           <li><%= link_to show.title, show.url %></li>
         <% end %>
     </ul>
