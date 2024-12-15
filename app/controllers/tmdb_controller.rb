@@ -126,7 +126,7 @@ class TmdbController < ApplicationController
   def tv_series
     show_id = params[:show_id]
     @media = TVSeriesDataService.get_tv_series_data(show_id)
-    @tv_series_viewing = current_user.tv_series_viewings.active.find_by(show_id: show_id)
+    @active_tv_series_viewing = current_user.tv_series_viewings.active.find_by(show_id: show_id)
   end
 
   def tv_season
