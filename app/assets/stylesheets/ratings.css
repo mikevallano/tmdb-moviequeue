@@ -1,9 +1,5 @@
 @media (max-width: 768px) {
   table.highest-rated-movies {
-    margin: auto;
-  }
-
-  table.highest-rated-movies thead th {
-    font-size: 1rem;
+    width: 100%;
   }
 }
