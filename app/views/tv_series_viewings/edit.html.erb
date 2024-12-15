@@ -1,0 +1,38 @@
+<% content_for(:title, "Edit Viewing Dates") %>
+
+<h1>Edit Viewing Dates for <%= link_to @tv_series_viewing.title, @tv_series_viewing.url %></h1>
+
+<%= form_with(model: @tv_series_viewing, data: {turbo: false}, html: {class: 'form'}) do |form| %>
+  <% if @tv_series_viewing.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@tv_series_viewing.errors.count, "error") %> prohibited this tv_series_viewing from being saved:</h2>
+
+      <ul>
+        <% @tv_series_viewing.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :started_at, style: "display: block" %>
+    <%= form.date_field :started_at %>
+  </div>
+
+  <div>
+    <%= form.label :ended_at, style: "display: block" %>
+    <%= form.date_field :ended_at %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<details class='mt-20 mb-20'>
+  <summary><h3 class='inline-block'>Delete?</h3></summary>
+
+  <p>Deleting this viewing cannot be undone.</p>
+  <%= button_to "Delete viewing", tv_series_viewing_path(@tv_series_viewing), data: { confirm: 'Are you sure?' }, method: :delete %>
+</details>

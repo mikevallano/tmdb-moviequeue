@@ -9,7 +9,7 @@
       ) if media.poster_path.present? %>
 
       <div class="screenings-providers-container">
-        <%= render "tv_series_viewings/buttons_toggle", show_id: media.show_id, title: media.show_name %>
+        <%= render "tv_series_viewings/buttons_toggle", active_tv_series_viewing: tv_series_viewing, show_id: media.show_id, title: media.show_name %>
         <%= render "shared/streaming_service_providers", streaming_service_providers: media.streaming_service_providers %>
       </div>
     </div>

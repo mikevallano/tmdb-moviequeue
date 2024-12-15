@@ -3,12 +3,10 @@
   <td><%= viewing.started_at.stamp("1/2/2001") %></td>
   <td>
     <% if viewing.active? %>
-      <%= button_to 'Mark as Finished Watching', 
-          tv_series_viewing_path(id: viewing.id, show_id: viewing.show_id, title: viewing.title),
-          method: :patch,
-          remote: true %>
+      Present
     <% else %>
       <%= viewing.ended_at.stamp("1/2/2001") %>
     <% end %>
   </td>
+  <td><%= link_to "Edit", edit_tv_series_viewing_path(viewing) %></td>
 <% end %>
