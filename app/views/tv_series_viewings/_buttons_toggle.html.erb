@@ -1,8 +1,8 @@
 <div id='js_tv_series_viewings_buttons_toggle'>
-  <% if current_user.tv_series_viewings.active.find_by(show_id: show_id).present? %>
+  <% if active_tv_series_viewing.present? %>
     <div class='manage-screenings'>
       <%= button_to '<span class="material-symbols-outlined">bookmark_remove</span> Mark as Finished Watching'.html_safe, 
-        tv_series_viewing_path(id: show_id, show_id: show_id, title: title),
+        tv_series_viewing_path(id: active_tv_series_viewing.id, params: {tv_series_viewing: {ended_at: Time.current}}),
         method: :patch,
         remote: true %>
     </div>

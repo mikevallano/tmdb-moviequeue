@@ -1,8 +1,9 @@
 <!-- Replace the toggle buttons -->
 <%= turbo_stream.replace "js_tv_series_viewings_buttons_toggle" do %>
   <%= render "tv_series_viewings/buttons_toggle", 
-    show_id: @viewing.show_id, 
-    title: @viewing.title 
+    active_tv_series_viewing: @active_tv_series_viewing,
+    show_id: @tv_series_viewing.show_id, 
+    title: @tv_series_viewing.title 
   %>
 <% end %>
 
@@ -12,6 +13,6 @@
 <% end %>
 
 <!-- Replace the row in the index page table -->
-<%= turbo_stream.replace dom_id(@viewing) do %>
-  <%= render partial: 'viewing_table_row', locals: { viewing: @viewing } %>
+<%= turbo_stream.replace dom_id(@tv_series_viewing) do %>
+  <%= render partial: 'viewing_table_row', locals: { viewing: @tv_series_viewing } %>
 <% end %>

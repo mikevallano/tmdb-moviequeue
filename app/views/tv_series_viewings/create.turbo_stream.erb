@@ -1,8 +1,9 @@
 <!-- Replace the toggle buttons -->
 <%= turbo_stream.replace "js_tv_series_viewings_buttons_toggle" do %>
-  <%= render "tv_series_viewings/buttons_toggle", 
-    show_id: @viewing.show_id, 
-    title: @viewing.title 
+  <%= render "tv_series_viewings/buttons_toggle",
+    active_tv_series_viewing: @tv_series_viewing, 
+    show_id: @tv_series_viewing.show_id, 
+    title: @tv_series_viewing.title 
   %>
 <% end %>
 

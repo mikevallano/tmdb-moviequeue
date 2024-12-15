@@ -8,10 +8,11 @@
       <th>TV Series</th>
       <th>Started Watching</th>
       <th>Stopped Watching</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <% @viewings.order(ended_at: :desc, started_at: :desc).each do |viewing| %>
+    <% @tv_series_viewings.order(ended_at: :desc, started_at: :desc).each do |viewing| %>
       <%= render partial: 'viewing_table_row', locals: { viewing: viewing } %>
     <% end %>
   </tbody>

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :tv_series_viewing do
     user
-    title { FFaker::HipsterIpsum.phrase }
+    sequence(:title) { |n| "TV Series #{n}" }
     sequence(:url) { |n| "/example/#{n}" }
     sequence(:show_id) { |n| n * 100 }
     started_at { 1.week.ago }
