@@ -17,23 +17,29 @@ class TVSeriesViewingsController < ApplicationController
       started_at: Time.current
     )
 
-    respond_to do |format|
-      if @tv_series_viewing.save
-        format.turbo_stream {}
+    if @tv_series_viewing.save
+      respond_to do |format|
+        format.turbo_stream
         format.html { redirect_to tv_series_path(show_id: params[:show_id]), notice: 'Added to Currently Watching List.' }
-      else
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { redirect_to tv_series_path(show_id: params[:show_id]), error: 'Could not add to Currently Watching List.' }
         format.html { redirect_to tv_series_path(show_id: params[:show_id]), error: 'Could not add to Currently Watching List.' }
       end
     end
   end
 
   def update
-    respond_to do |format|
-      if @tv_series_viewing.update(tv_series_viewing_params)
-        @active_tv_series_viewing = current_user.tv_series_viewings.active.find_by(show_id: @tv_series_viewing.show_id)
-        format.turbo_stream {}
+    if @tv_series_viewing.update(tv_series_viewing_params)
+      @active_tv_series_viewing = current_user.tv_series_viewings.active.find_by(show_id: @tv_series_viewing.show_id)
+      respond_to do |format|
+        format.turbo_stream
         format.html { redirect_to tv_series_viewings_path, notice: 'Removed from Currently Watching List.' }
-      else
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { redirect_to tv_series_path(show_id: params[:show_id]), error: 'Could not remove from Currently Watching List.' }
         format.html { redirect_to tv_series_viewings_path, error: 'Could not remove from Currently Watching List.' }
       end
     end
