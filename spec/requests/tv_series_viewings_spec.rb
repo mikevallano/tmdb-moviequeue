@@ -154,46 +154,5 @@ RSpec.describe TVSeriesViewingsController, type: :request do
         expect(response).to redirect_to tv_series_viewings_url
       end
     end
-
-
-
-
-    # chatgpt
-    # let(:tv_series_viewing) { build(:tv_series_viewing) }
-    # let(:valid_params) { { tv_series_viewing: tv_series_viewing.attributes } }
-    # let(:user) { tv_series_viewing.user }
-    # describe 'POST #create' do
-    #   context 'when the request is made with Turbo' do
-    #     it 'responds with a Turbo Stream' do
-    #       post tv_series_viewings_path, params: valid_params, headers: { 'Turbo-Frame' => 'true' }
-
-    #       expect(response).to have_http_status(:ok)
-    #       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
-    #       expect(response.body).to include('<turbo-stream') # Ensure it includes Turbo stream content
-    #     end
-
-    #     it 'creates a new TVSeriesViewing' do
-    #       expect {
-    #         post tv_series_viewings_path, params: valid_params, headers: { 'Turbo-Frame' => 'true' }
-    #       }.to change(TVSeriesViewing, :count).by(1)
-    #     end
-    #   end
-
-    #   context 'when the request is made as REST' do
-    #     it 'redirects to the index page' do
-    #       post tv_series_viewings_path, params: valid_params
-
-    #       expect(response).to have_http_status(:found)
-    #       expect(response).to redirect_to(tv_series_viewings_path)
-    #     end
-
-    #     it 'creates a new TVSeriesViewing' do
-    #       expect {
-    #         post tv_series_viewings_path, params: valid_params
-    #       }.to change(TVSeriesViewing, :count).by(1)
-    #     end
-    #   end
-    # end
-
   end
 end
