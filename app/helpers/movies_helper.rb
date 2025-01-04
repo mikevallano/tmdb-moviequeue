@@ -58,15 +58,6 @@ module MoviesHelper
     end.join(", "))
   end
 
-  def display_pay_model_icon(movie_pay_model)
-    case movie_pay_model
-      when 'try' then 'search_check'
-      when 'free' then 'emoji_emotions'
-      when 'rent' then 'paid'
-      when 'buy' then 'shopping_bag'
-    end
-  end
-
   def firstify_number(number)
     if number.to_s[-2..-1] == '11'
       "#{number}th"

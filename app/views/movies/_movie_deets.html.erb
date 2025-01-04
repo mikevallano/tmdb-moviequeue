@@ -4,7 +4,7 @@
         <%= link_to image_for(movie), link_to_movie(movie), data: { turbo: false } %>
         <div class="screenings-providers-container">
           <%= render 'movies/screenings', movie: movie %>
-          <%= render "shared/streaming_service_providers", streaming_service_providers: movie.streaming_service_providers %>
+          <%= render "shared/streaming_service_providers", streaming_service_providers: movie.streaming_service_providers, search_title: movie.title %>
         </div>
       </div>
     </div>

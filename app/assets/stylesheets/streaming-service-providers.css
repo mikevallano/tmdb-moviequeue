@@ -1,0 +1,10 @@
+.streaming-service-providers-container span.material-symbols-outlined {
+  font-size: 1rem;
+}
+
+/* Separates each streaming provider by comma */
+.streaming-providers-list>:nth-of-type(n):not(:last-child) {
+  &::after {
+    content: ", ";
+  }
+}
