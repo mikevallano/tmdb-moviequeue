@@ -1,8 +1,8 @@
 <% streaming_service_providers.each do |provider| %>
-  <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:name] %>" title="<%= provider[:name] %>" class='streaming-provider'>
+  <a href="<%= provider[:url] %>" target="_blank" alt="<%= provider[:display_name] %>" title="<%= provider[:display_name] %>" class='streaming-provider'>
     <span class="material-symbols-outlined"><%= display_pay_model_icon(provider[:pay_model]) %></span>
-      <%= provider[:pay_model].titleize %> on <%= provider[:name] %>
+      <%= provider[:pay_model].titleize %> on <%= provider[:display_name] %>
     </a>
 <% end %>
 
-<p class='txt-sm avaliablity'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
+<p class='txt-sm availability'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
