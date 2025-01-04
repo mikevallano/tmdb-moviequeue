@@ -1,6 +1,6 @@
-<div class="streaming-service-providers-container">
-  <% if StreamingServiceProvider.free.any? %>
-    <div class="mt-5 mb-5">
+<div class="mt-5 streaming-service-providers-container">
+  <% if !StreamingServiceProvider.free.any? %>
+    <div class="mb-5">
       <span class="material-symbols-outlined">emoji_emotions</span> Free: 
       <span class="streaming-providers-list">
         <% StreamingServiceProvider.free.each do |provider| %>
@@ -43,5 +43,5 @@
     <% end %>
   <% end %>
 
-  <p class='text-xs mt-10'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
+  <p class='text-xs'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
 </div>

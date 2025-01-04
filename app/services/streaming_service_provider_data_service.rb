@@ -13,6 +13,7 @@ module StreamingServiceProviderDataService
       result_rent_provider_ids = results[:rent]&.map { |result| result[:provider_id] } || []
       result_buy_provider_ids = results[:buy]&.map { |result| result[:provider_id] } || []
 
+      # This method clobbers the class and allows for querying on the pay_model attribute
       StreamingServiceProvider.all.map do |provider|
         pay_model = if result_flatrate_provider_ids.include?(provider[:tmdb_provider_id]) || result_free_provider_ids.include?(provider[:tmdb_provider_id])
           'free'
