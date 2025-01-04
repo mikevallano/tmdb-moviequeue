@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip
 
 gem 'rails', '~> 7.1.3'
+gem 'active_hash', '~> 3.3', '>= 3.3.1'
 gem 'puma', '6.4.2'
 gem 'pg', '~> 1.1'
 gem 'sass-rails'

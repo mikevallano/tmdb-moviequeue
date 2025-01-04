@@ -17,12 +17,12 @@ RSpec.describe StreamingServiceProviderDataService do
     end
 
     describe 'when the API does not return any data' do
-      it 'returns our default providers with a pay_model of "try"' do
+      it 'returns our default providers with a pay_model of "not_found"' do
         allow(Tmdb::Client).to receive(:request).and_return(nil)
 
         providers = StreamingServiceProviderDataService.get_providers(**movie_args)
-        try_pay_models = providers.select {|provider| provider[:pay_model] == 'try'}
-        expect(providers.length).to eq(try_pay_models.length)
+        not_found_pay_models = providers.select {|provider| provider[:pay_model] == "not_found"}
+        expect(providers.length).to eq(not_found_pay_models.length)
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe StreamingServiceProviderDataService do
       let(:fandango_api_data) { {logo_path: "/peURlL.jpg", provider_id: 7, provider_name: "Fandango At Home", display_priority: 4} }
 
       describe 'but the results do not have free, flatrate, rent, or buy pay model options' do
-        it 'returns our default providers with a pay_model of "try"' do
+        it 'returns our default providers with a pay_model of nil' do
           response_data = {
             results: {
               US: {
@@ -48,13 +48,13 @@ RSpec.describe StreamingServiceProviderDataService do
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
           providers = StreamingServiceProviderDataService.get_providers(**movie_args)
-          try_pay_models = providers.select {|provider| provider[:pay_model] == 'try'}
-          expect(providers.length).to eq(try_pay_models.length)
+          not_found_pay_models = providers.select {|provider| provider[:pay_model] == "not_found"}
+          expect(providers.length).to eq(not_found_pay_models.length)
         end
       end
 
       describe 'but none of the preferred_providers are represented in the free, flatrate, rent, or buy options' do
-        it 'returns our default providers with a pay_model of "try"' do
+        it 'returns our default providers with a pay_model of "not_found"' do
           response_data = {
             free:
               [{logo_path: "/5OAb2w.jpg", provider_id: 634, provider_name: "Starz Roku Premium Channel", display_priority: 26}],
@@ -70,8 +70,8 @@ RSpec.describe StreamingServiceProviderDataService do
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
           providers = StreamingServiceProviderDataService.get_providers(**movie_args)
-          try_pay_models = providers.select {|provider| provider[:pay_model] == 'try'}
-          expect(providers.length).to eq(try_pay_models.length)
+          not_found_pay_models = providers.select {|provider| provider[:pay_model] == 'not_found'}
+          expect(providers.length).to eq(not_found_pay_models.length)
         end
       end
 
@@ -147,7 +147,7 @@ RSpec.describe StreamingServiceProviderDataService do
       end
 
       describe 'when a preferred provider does not appear in the results for any pay model options' do
-        it 'returns this provider with a pay_model of "try"' do
+        it 'returns this provider with a pay_model of "not_found"' do
           response_data = {
             results: {
               US: {
@@ -159,7 +159,7 @@ RSpec.describe StreamingServiceProviderDataService do
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
           results = StreamingServiceProviderDataService.get_providers(**movie_args)
 
-          expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('try')
+          expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('not_found')
         end
       end
 
@@ -202,7 +202,7 @@ RSpec.describe StreamingServiceProviderDataService do
       end
 
       describe 'when multiple preferred providers appear in multiple categories' do
-        it "returns each provider with preferring free, then rent, then buy, and then 'try' for ones that weren't found" do
+        it "returns each provider with preferring free, then rent, then buy, and then 'not_found' for ones that weren't found" do
           response_data = {
             results: {
               US: {
@@ -220,7 +220,7 @@ RSpec.describe StreamingServiceProviderDataService do
 
           aggregate_failures "expected pay_model levels per provider" do
             expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
-            expect(results.find {|r| r[:tmdb_provider_name] == amazon_prime_api_data[:provider_name]}[:pay_model] ).to eq('try')
+            expect(results.find {|r| r[:tmdb_provider_name] == amazon_prime_api_data[:provider_name]}[:pay_model] ).to eq('not_found')
             expect(results.find {|r| r[:tmdb_provider_name] == amazon_api_data[:provider_name]}[:pay_model] ).to eq('rent')
             expect(results.find {|r| r[:tmdb_provider_name] == youtube_api_data[:provider_name]}[:pay_model] ).to eq('buy')
             expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('free')
@@ -263,7 +263,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
         end
   
-        it "returns each provider with preferring free, then rent, then buy, and then 'try' for ones that weren't found" do
+        it "returns each provider with preferring free, then rent, then buy, and then 'not_found' for ones that weren't found" do
           response_data = {
             results: {
               US: {
@@ -283,7 +283,7 @@ RSpec.describe StreamingServiceProviderDataService do
   
           aggregate_failures "expected pay_model levels per provider" do
             expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
-            expect(results.find {|r| r[:tmdb_provider_name] == amazon_prime_api_data[:provider_name]}[:pay_model] ).to eq('try')
+            expect(results.find {|r| r[:tmdb_provider_name] == amazon_prime_api_data[:provider_name]}[:pay_model] ).to eq('not_found')
             expect(results.find {|r| r[:tmdb_provider_name] == amazon_api_data[:provider_name]}[:pay_model] ).to eq('rent')
             expect(results.find {|r| r[:tmdb_provider_name] == youtube_api_data[:provider_name]}[:pay_model] ).to eq('buy')
             expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('free')
