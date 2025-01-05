@@ -10,7 +10,7 @@
 
       <div class="screenings-providers-container">
         <%= render "tv_series_viewings/buttons_toggle", active_tv_series_viewing: active_tv_series_viewing, show_id: media.show_id, title: media.show_name %>
-        <%= render "shared/streaming_service_providers", streaming_service_providers: media.streaming_service_providers, search_title: media.title %>
+        <%= render "shared/streaming_service_providers", streaming_service_providers: media.streaming_service_providers(current_user), search_title: media.title %>
       </div>
     </div>
   </div>

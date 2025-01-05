@@ -9,7 +9,7 @@
     </div>
     <div class="watch-info">
       <%= render 'movies/screenings', movie: movie %>
-      <%= render 'shared/streaming_service_providers', streaming_service_providers: movie.streaming_service_providers, search_title: movie.title, mini_modal: true %>
+      <%= render 'shared/streaming_service_providers', streaming_service_providers: movie.streaming_service_providers(current_user), search_title: movie.title, mini_modal: true %>
     </div>
 
     <div class="movie-details">
