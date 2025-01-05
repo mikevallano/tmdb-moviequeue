@@ -30,20 +30,9 @@
   width: 125px;
 }
 
-a.streaming-provider {
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1rem;
-}
-
 .manage-screenings .material-symbols-outlined.edit-note {
   position: relative;
   top: 7px;
-}
-
-.txt-sm.availability {
-  font-size: 10px;
-  margin-top: 20px;
 }
 
 .media-show-page {
