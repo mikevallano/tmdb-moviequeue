@@ -48,6 +48,12 @@
   width: 60%;
 }
 
+@media (min-width: 768px) {
+  .watch-info {
+    max-width: 190px;
+  }
+}
+
 @media (max-width: 768px) {
   .media-show-page .backdrop-image {
     display: none;
