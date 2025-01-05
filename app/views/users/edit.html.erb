@@ -1,0 +1,22 @@
+<% content_for(:title, current_user.email) %>
+
+<h1>Edit Streaming Service Providers</h1>
+
+<%= form_with(model: @user, url: user_path(@user), method: :patch) do |form| %>
+  <%= render 'shared/errors', object: @user %>
+
+  <h3>Select Your Streaming Service Providers</h3>
+
+  <% StreamingServiceProvider.by_name.each do |provider| %>
+    <div>
+      <%= check_box_tag "user[streaming_service_provider_ids][]", provider.id, @user.streaming_service_providers.map(&:id).include?(provider.id), id: "provider_#{provider.id}" %>
+      <%= label_tag "provider_#{provider.id}", "#{provider.display_name} (#{provider.tmdb_provider_name})" %>
+    </div>
+  <% end %>
+
+  <!-- Add a hidden field to ensure unchecked boxes are sent -->
+  <%= hidden_field_tag "user[streaming_service_provider_ids][]", nil %>
+
+  <%= form.submit "Update" %>
+<% end %>
+

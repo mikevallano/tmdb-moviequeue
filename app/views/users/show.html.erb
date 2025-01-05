@@ -1,8 +1,20 @@
 <% content_for(:title, current_user.email) %>
 
-<h1>Profile page for <%= current_user.username %></h1>
+<h1>Settings</h1>
+
+<h2>Account details</h2>
 <p><strong>Username:</strong> <%= current_user.username %></p>
 <p><strong>Email:</strong> <%= current_user.email %></p>
 <p><strong>Default Screening Location:</strong> <%= current_user.default_location %></p>
 <p><strong>Password:</strong> **********</p>
-<p><%= link_to 'Change your password/update info', edit_user_registration_path, class: 'btn inline-block mt-10' %></p>
+
+<%= link_to 'Change your password/update info', edit_user_registration_path, class: 'btn inline-block mt-10' %>
+
+<h2>Streaming Service Providers</h2>
+<ul>
+  <% current_user.streaming_service_providers.each do |provider| %>
+    <li><%= provider.display_name %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Edit your providers', edit_user_path(current_user), class: 'btn inline-block mt-10' %>

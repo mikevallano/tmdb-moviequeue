@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :default_location, :password, :password_confirmation, :current_password])
   end
 
+  def restrict_to_content_owner!
+    unless current_user == User.friendly.find(params[:id])
+      redirect_to root_path, notice: "That's not your page"
+    end
+  end
+
   private
 
   def set_sentry_context
