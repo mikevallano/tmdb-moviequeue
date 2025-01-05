@@ -58,8 +58,9 @@ class TVSeries
     )
   end
 
-  def streaming_service_providers
-    @streaming_service_providers ||= StreamingServiceProviderDataService.get_providers(
+  def streaming_service_providers(user)
+    @streaming_service_providers ||= UserStreamingServiceProviderDataService.check_availability_for_title(
+      user: user, 
       tmdb_id: self.show_id,
       title: self.show_name,
       media_type: 'tv',

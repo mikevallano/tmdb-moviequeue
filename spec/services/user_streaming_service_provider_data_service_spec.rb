@@ -2,12 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe StreamingServiceProviderDataService do
-  describe 'get_providers' do
+RSpec.describe UserStreamingServiceProviderDataService do
+  describe 'check_availability_for_title' do
     let(:movie_title) { 'Fake' }
     let(:movie) { build(:movie, title: movie_title, release_date: '2023-01-01') }
-    let(:movie_args) do
+    let(:method_arguments) do
       {
+        user: user,
         tmdb_id: movie.tmdb_id,
         title: movie.title,
         media_type: 'movie',
@@ -20,7 +21,8 @@ RSpec.describe StreamingServiceProviderDataService do
       it 'returns our default providers with a pay_model of "not_found"' do
         allow(Tmdb::Client).to receive(:request).and_return(nil)
 
-        providers = StreamingServiceProviderDataService.get_providers(**movie_args)
+        providers = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
+        binding.pry
         not_found_pay_models = providers.select {|provider| provider[:pay_model] == "not_found"}
         expect(providers.length).to eq(not_found_pay_models.length)
       end
@@ -47,7 +49,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          providers = StreamingServiceProviderDataService.get_providers(**movie_args)
+          providers = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
           not_found_pay_models = providers.select {|provider| provider[:pay_model] == "not_found"}
           expect(providers.length).to eq(not_found_pay_models.length)
         end
@@ -69,7 +71,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          providers = StreamingServiceProviderDataService.get_providers(**movie_args)
+          providers = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
           not_found_pay_models = providers.select {|provider| provider[:pay_model] == 'not_found'}
           expect(providers.length).to eq(not_found_pay_models.length)
         end
@@ -87,7 +89,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
 
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
         end
@@ -105,7 +107,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
 
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
         end
@@ -122,7 +124,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == amazon_api_data[:provider_name]}[:pay_model] ).to eq('rent')
         end
@@ -139,7 +141,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == amazon_api_data[:provider_name]}[:pay_model] ).to eq('buy')
         end
@@ -157,7 +159,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('not_found')
         end
@@ -176,7 +178,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('free')
         end
@@ -195,7 +197,7 @@ RSpec.describe StreamingServiceProviderDataService do
               }
             }
             allow(Tmdb::Client).to receive(:request).and_return(response_data)
-            results = StreamingServiceProviderDataService.get_providers(**movie_args)
+            results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           expect(results.find {|r| r[:tmdb_provider_name] == fandango_api_data[:provider_name]}[:pay_model] ).to eq('rent')
         end
@@ -216,7 +218,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
 
           aggregate_failures "expected pay_model levels per provider" do
             expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
@@ -244,7 +246,7 @@ RSpec.describe StreamingServiceProviderDataService do
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
 
-          results = StreamingServiceProviderDataService.get_providers(**movie_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**method_arguments)
           aggregate_failures "expecting to not find any of these non-preferred providers" do
             expect(results.find {|r| r[:tmdb_provider_name] == 'Foo'}).to be(nil)
             expect(results.find {|r| r[:tmdb_provider_name] == 'Bar'}).to be(nil)
@@ -279,7 +281,7 @@ RSpec.describe StreamingServiceProviderDataService do
             }
           }
           allow(Tmdb::Client).to receive(:request).and_return(response_data)
-          results = StreamingServiceProviderDataService.get_providers(**tv_args)
+          results = UserStreamingServiceProviderDataService.check_availability_for_title(**tv_args)
   
           aggregate_failures "expected pay_model levels per provider" do
             expect(results.find {|r| r[:tmdb_provider_name] == netflix_api_data[:provider_name]}[:pay_model] ).to eq('free')
