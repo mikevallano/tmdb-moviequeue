@@ -1,47 +1,51 @@
 <div class="mt-5 streaming-service-providers-container">
-  <% if StreamingServiceProvider.free.any? %>
-    <div class="mb-5">
-      <span class="material-symbols-outlined">emoji_emotions</span> Free: 
-      <span class="streaming-providers-list">
-        <% StreamingServiceProvider.free.each do |provider| %>
-          <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
+  <% if streaming_service_providers.no_providers_selected.present? %>
+    <p>Please select Streaming Service Providers in your <%= link_to "user settings", user_path(current_user) %>.</p>
+  <% else %>
+    <% if streaming_service_providers.free.any? %>
+      <div class="mb-5">
+        <span class="material-symbols-outlined">emoji_emotions</span> Free: 
+        <span class="streaming-providers-list">
+          <% streaming_service_providers.free.each do |provider| %>
+            <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
+          <% end %>
+        </span>
+      </div>
+    <% else # if no free options %>
+      <% if streaming_service_providers.rent.any? %>
+        <%= tag.div class: "mb-5" do %>
+          <span class="material-symbols-outlined">paid</span> Rent: 
+          <span class="streaming-providers-list">
+            <% streaming_service_providers.rent.each do |provider| %>
+              <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
+            <% end %>
+          </span>
         <% end %>
-      </span>
-    </div>
-  <% else # if no free options %>
-    <% if StreamingServiceProvider.rent.any? %>
-      <%= tag.div class: "mb-5" do %>
-        <span class="material-symbols-outlined">paid</span> Rent: 
-        <span class="streaming-providers-list">
-          <% StreamingServiceProvider.rent.each do |provider| %>
-            <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
-          <% end %>
-        </span>
+      <% end %>
+
+      <% if streaming_service_providers.buy.any? %>
+        <%= tag.div class: "mb-5" do %>
+          <span class="material-symbols-outlined">shopping_bag</span> Buy: 
+          <span class="streaming-providers-list">
+            <% streaming_service_providers.buy.each do |provider| %>
+              <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
+            <% end %>
+          </span>
+        <% end %>
+      <% end %>
+
+      <% if streaming_service_providers.not_found.any? %>
+        <%= tag.div class: "#{'hidden' if local_assigns[:mini_modal]}" do %>
+          <span class="material-symbols-outlined">search_check</span> Try: 
+          <span class="streaming-providers-list">
+            <% streaming_service_providers.not_found.each do |provider| %>
+              <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
+            <% end %>
+          </span>
+        <% end %>
       <% end %>
     <% end %>
 
-    <% if StreamingServiceProvider.buy.any? %>
-      <%= tag.div class: "mb-5" do %>
-        <span class="material-symbols-outlined">shopping_bag</span> Buy: 
-        <span class="streaming-providers-list">
-          <% StreamingServiceProvider.buy.each do |provider| %>
-            <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
-          <% end %>
-        </span>
-      <% end %>
-    <% end %>
-
-    <% if StreamingServiceProvider.maybe_available.any? %>
-      <%= tag.div class: "#{'hidden' if local_assigns[:mini_modal]}" do %>
-        <span class="material-symbols-outlined">search_check</span> Try: 
-        <span class="streaming-providers-list">
-          <% StreamingServiceProvider.maybe_available.each do |provider| %>
-            <%= link_to provider.display_name, provider.title_search_url(search_title), target: "_blank", alt: provider.display_name, title: provider.display_name  %>
-          <% end %>
-        </span>
-      <% end %>
-    <% end %>
+    <p class='text-xs'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
   <% end %>
-
-  <p class='text-xs'>Availability data by <%= link_to 'JustWatch', 'https://www.justwatch.com', target: '_blank' %></p>
 </div>

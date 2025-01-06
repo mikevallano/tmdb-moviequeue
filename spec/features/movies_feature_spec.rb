@@ -27,8 +27,8 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
 
     describe 'move show page' do
       before do
-        allow(StreamingServiceProviderDataService)
-          .to receive(:get_providers)
+        allow(UserStreamingServiceProviderDataService)
+          .to receive(:check_availability_for_title)
           .and_return(streaming_service_providers)
       end
 

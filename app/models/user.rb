@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
@@ -49,6 +50,9 @@ class User < ApplicationRecord
   source: :movie
 
   has_many :tv_series_viewings
+
+  has_many :user_streaming_service_providers, dependent: :destroy
+  has_many :streaming_service_providers, through: :user_streaming_service_providers
 
   def all_lists
     list_ids = lists.pluck(:id)

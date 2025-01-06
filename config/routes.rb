@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get 'lists/public', to: 'lists#public', as: :public_lists
 
-  resources :users, only: [:show], as: :user do
+  resources :users, only: [:show, :edit, :update], as: :user do
     resources :lists
     get 'ratings', to: 'users/ratings#index'
   end

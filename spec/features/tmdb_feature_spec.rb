@@ -237,7 +237,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
     describe "movie more info results" do
       before(:each) do
-        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return(streaming_service_providers)
+        allow(UserStreamingServiceProviderDataService).to receive(:check_availability_for_title).and_return(streaming_service_providers)
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(api_search_path)
@@ -325,7 +325,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
     describe "actor searches that drill down to tv" do
       before(:each) do
-        allow(StreamingServiceProviderDataService).to receive(:get_providers).and_return(streaming_service_providers)
+        allow(UserStreamingServiceProviderDataService).to receive(:check_availability_for_title).and_return(streaming_service_providers)
         sign_in_user(user)
         visit(actor_search_path)
         api_actor_search_buscemi

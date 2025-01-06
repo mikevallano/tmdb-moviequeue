@@ -117,7 +117,7 @@ class Movie < ApplicationRecord
     listings.find_by(list_id: list.id).priority
   end
 
-  # TODO: thhis should be in a view helper
+  # TODO: this should be in a view helper
   def priority_text(list)
     priority = listings.find_by(list_id: list.id)&.priority
     case priority
@@ -129,8 +129,9 @@ class Movie < ApplicationRecord
     end
   end
 
-  def streaming_service_providers
-    @streaming_service_providers ||= StreamingServiceProviderDataService.get_providers(
+  def streaming_service_providers(user)
+    @streaming_service_providers ||= UserStreamingServiceProviderDataService.check_availability_for_title(
+      user: user,
       tmdb_id: self.tmdb_id,
       title: self.title,
       media_type: 'movie',

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_11_180716) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_05_151318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -155,6 +155,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_180716) do
     t.index ["user_id"], name: "index_tv_series_viewings_on_user_id"
   end
 
+  create_table "user_streaming_service_providers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.uuid "streaming_service_provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_streaming_service_providers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -195,4 +203,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_180716) do
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"
   add_foreign_key "tv_series_viewings", "users"
+  add_foreign_key "user_streaming_service_providers", "users"
 end
