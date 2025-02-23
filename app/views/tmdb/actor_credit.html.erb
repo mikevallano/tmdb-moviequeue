@@ -38,7 +38,7 @@
               <ul>
                 <% episode.guest_stars.each do |guest| %>
                   <li>
-                    <%= link_to "#{guest.name}", actor_search_path(actor: "#{guest.name}") %>
+                    <%= link_to "#{guest.name}", actor_more_path(actor)id: guest.actor_id) %>
                     <%= "as #{guest.character_name}" if guest.character_name.present? %>
                   </li>
                 <% end %>
