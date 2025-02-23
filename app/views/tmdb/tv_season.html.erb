@@ -63,9 +63,13 @@
               <% episode.guest_stars.each do |guest| %>
                 <li>
                   <%= link_to guest.name, actor_more_path(actor_id: guest.actor_id) %>
-                  <%= "as #{guest.character_name}" if guest.character_name.present? %>
-                  | <%= link_to "Episodes", actor_credit_path(actor_id: guest.actor_id, credit_id: guest.credit_id,
+                  <% if guest.character_name.present? %>
+                    as <%= link_to guest.character_name, actor_credit_path(actor_id: guest.actor_id, credit_id: guest.credit_id,
     show_name: "#{@series.show_name}"), id: "appearance_details_#{@series.show_name.downcase}" %>
+                  <% else %>
+                    | <%= link_to "episodes", actor_credit_path(actor_id: guest.actor_id, credit_id: guest.credit_id,
+    show_name: "#{@series.show_name}"), id: "appearance_details_#{@series.show_name.downcase}" %>
+                  <% end %>
                 </li>
               <% end %>
             </ul>

@@ -390,7 +390,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_link_or_button "bio_and_credits_link_actor_search"
         end
         VCR.use_cassette("actor_tv_credit") do
-          click_link "Appearance Details", match: :first
+          click_link "episodes", match: :first
         end
         expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "56ad478dc3a3681c34006885", show_name: "Horace and Pete"))
         expect(page).to have_content("Horace")
