@@ -1,7 +1,7 @@
 <h1>
-  Episodes with <%= link_to "#{@credit.actor_name}", actor_more_path(actor_id: @credit.actor_id) %>
+  Episodes with <%= link_to @credit.actor_name, actor_more_path(actor_id: @credit.actor_id) %>
   <%= "as #{@credit.character}" if @credit.character.present? %>
-  on <%= link_to "#{@credit.show_name}", tv_series_path(show_id: @credit.show_id) %>
+  on <%= link_to @credit.show_name, tv_series_path(show_id: @credit.show_id) %>
 </h1>
 <%= link_to "Actor Profile", actor_more_path(actor_id: @credit.actor_id), class: 'btn' %>
 
@@ -38,7 +38,7 @@
               <ul>
                 <% episode.guest_stars.each do |guest| %>
                   <li>
-                    <%= link_to "#{guest.name}", actor_more_path(actor)id: guest.actor_id) %>
+                    <%= link_to guest.name, actor_more_path(actor_id: guest.actor_id) %>
                     <%= "as #{guest.character_name}" if guest.character_name.present? %>
                   </li>
                 <% end %>
