@@ -20,9 +20,6 @@
         ) do |f| %>
       <%= f.select :list_id, list_add_dropdown(movie),
                     {include_blank: 'Add to a list'} %>
-      <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
-      <%= hidden_field_tag :user_id, current_user.id %>
-      <%= hidden_field_tag :from, "first_list" %>
-      <%#= f.submit "+ Add", id: "add_to_list_button_movies_partial", class: "form-control-submit" %>
+      <%= f.hidden_field :tmdb_id, value: movie.tmdb_id %>
     <% end %>
   </div>

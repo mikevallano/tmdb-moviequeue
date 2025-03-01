@@ -4,27 +4,33 @@ class ListingsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @from = params[:from]
-    @movie = GuaranteedMovie.find_or_create(params[:tmdb_id])
+    @movie = GuaranteedMovie.find_or_create(create_params[:tmdb_id])
 
-    listing = current_user.listings.new(listing_params)
-    listing.movie_id = @movie.id
-    listing.user_id = current_user.id
+    listing = Listing.new(
+      create_params.except(:tmdb_id).merge(movie_id: @movie.id, user_id: current_user.id)
+    )
 
     respond_to do |format|
-      if listing.save
-        format.turbo_stream
-        format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'added to your list.' }
-        format.json { render :show, status: :created, location: listing }
-      else
-        format.html { redirect_to movie_path(@movie), notice: 'error.' }
-        format.json { render json: listing.errors, status: :unprocessable_entity }
+      begin
+        if listing.save
+          format.turbo_stream
+          format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'Added to your list.' }
+          format.json { render :show, status: :created, location: listing }
+        else
+          format.turbo_stream { render turbo_stream: turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Error adding to list.' }) }
+          format.html { redirect_to movie_path(@movie), notice: 'Error.' }
+          format.json { render json: listing.errors, status: :unprocessable_entity }
+        end
+      rescue ActiveRecord::RecordNotUnique
+        format.turbo_stream { head :ok }
+        format.html { redirect_to user_list_path(listing.list.owner, listing.list)}
+        format.json { head :ok }
       end
     end
   end
 
   def update
-    @listing = Listing.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
+    @listing = Listing.find_by(list_id: update_params[:list_id], movie_id: update_params[:movie_id])
     # TODO: refactor to be more efficient
     unless current_user.all_listings.include?(@listing)
       redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
@@ -60,8 +66,12 @@ class ListingsController < ApplicationController
 
   private
 
-  def listing_params
-    params.require(:listing).permit(:list_id, :movie_id, :priority, :user_id)
+  def create_params
+    params.require(:listing).permit(:list_id, :tmdb_id, :priority)
+  end
+
+  def update_params
+    params.permit(:list_id, :movie_id, :priority)
   end
 
 end
