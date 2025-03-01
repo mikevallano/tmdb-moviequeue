@@ -20,7 +20,7 @@ jobs:
         environment: # environment variables for database
           POSTGRES_USER: circleci-demo-ruby
           POSTGRES_DB: circleci_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
     working_directory: ~/repo
 
