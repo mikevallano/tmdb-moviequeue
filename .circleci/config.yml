@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.6
+  browser-tools: circleci/browser-tools@1.5.2
 
 jobs:
   build:
@@ -16,11 +16,11 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
-      - image: circleci/postgres:9.5-alpine # database image
+      - image: postgres:14.17-alpine # database image
         environment: # environment variables for database
           POSTGRES_USER: circleci-demo-ruby
           POSTGRES_DB: circleci_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
     working_directory: ~/repo
 
