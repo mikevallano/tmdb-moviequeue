@@ -14,10 +14,11 @@ class ListingsController < ApplicationController
       begin
         if listing.save
           format.turbo_stream
-          format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'added to your list.' }
+          format.html { redirect_to user_list_path(listing.list.owner, listing.list), notice: 'Added to your list.' }
           format.json { render :show, status: :created, location: listing }
         else
-          format.html { redirect_to movie_path(@movie), notice: 'error.' }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Error adding to list.' }) }
+          format.html { redirect_to movie_path(@movie), notice: 'Error.' }
           format.json { render json: listing.errors, status: :unprocessable_entity }
         end
       rescue ActiveRecord::RecordNotUnique
