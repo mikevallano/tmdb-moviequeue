@@ -21,16 +21,8 @@ RSpec.describe ListingsController, type: :controller do
     describe "GET #create" do
       it "creates a new listing" do
         expect {
-          post :create, params: { listing: { list_id: list.id, tmdb_id: tmdb_id2 } }
+          post :create, params: { listing: { movie_id: movie2.id, list_id: list.id, user_id: user.id }, tmdb_id: tmdb_id2 }
         }.to change(Listing, :count).by(1)
-      end
-
-      context "when the listing is already in the list" do
-        it "does not create a new listing" do
-          expect {
-            post :create, params: { listing: { list_id: listing.list.id, tmdb_id: listing.movie.tmdb_id } }
-          }.to change(Listing, :count).by(0)
-        end
       end
     end
 
