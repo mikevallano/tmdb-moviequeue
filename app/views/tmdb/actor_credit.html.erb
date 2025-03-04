@@ -3,7 +3,17 @@
   <%= "as #{@credit.character}" if @credit.character.present? %>
   on <%= link_to @credit.show_name, tv_series_path(show_id: @credit.show_id) %>
 </h1>
-<%= link_to "Actor Profile", actor_more_path(actor_id: @credit.actor_id), class: 'btn' %>
+<p><%= link_to "Actor Profile", actor_more_path(actor_id: @credit.actor_id), class: 'btn' %></p>
+<br>
+
+<% if @credit.in_main_cast? %>
+  <p class="mt-10"><%= @credit.actor_name %> was in the main cast as <%= @credit.character %> for <%= @credit.seasons.size %> seasons.</p>
+  <ul>
+    <% @credit.seasons.sort_by {|season| season.season_number}.each do |season| %>
+      <li><%= link_to season.name, tv_season_path(show_id: @credit.show_id, season_number: season.season_number) %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <% if @credit.episodes.present? %>
   <% @credit.episodes.group_by {|c| c.season_number}.each do |season| %>

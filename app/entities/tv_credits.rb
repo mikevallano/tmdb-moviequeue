@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class TVCredits
-  attr_accessor :credit_id, :department, :job, :show_id, :show_name, :poster_path, :character, :first_air_date
+  attr_accessor :credit_id, :department, :job, :show_id, :show_name, :poster_path, :character, :episodes, :seasons, :first_air_date
 
-  def initialize(credit_id:, department:, job:, show_id:, show_name:, poster_path:, character:, first_air_date:)
+  def initialize(credit_id:, department:, job:, show_id:, show_name:, poster_path:, character:, episodes:, seasons:, first_air_date:)
     @credit_id = credit_id
     @department = department
     @job = job
@@ -11,6 +11,8 @@ class TVCredits
     @show_name = show_name
     @poster_path = poster_path
     @character = character
+    @episodes = episodes
+    @seasons = seasons
     @first_air_date = first_air_date
   end
 
@@ -25,6 +27,8 @@ class TVCredits
           show_name: result[:name],
           poster_path: result[:poster_path],
           character: result[:character],
+          episodes: result[:episodes],
+          seasons: result[:seasons],
           first_air_date: format_first_air_date(result[:first_air_date])
         )
       end.sort_by { |credit| credit.first_air_date }.reverse
