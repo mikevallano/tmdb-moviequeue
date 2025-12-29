@@ -16,10 +16,11 @@
 
     <%= form_for(
           Listing.new,
-          data: {controller: 'auto-submit', action: 'input->auto-submit#submit'}
+          data: {controller: 'auto-submit'}
         ) do |f| %>
       <%= f.select :list_id, list_add_dropdown(movie),
-                    {include_blank: 'Add to a list'} %>
+                    {include_blank: 'Add to a list'},
+                    {data: {action: 'change->auto-submit#submit'}} %>
       <%= hidden_field_tag :tmdb_id, movie.tmdb_id %>
       <%= hidden_field_tag :user_id, current_user.id %>
       <%= hidden_field_tag :from, "first_list" %>
