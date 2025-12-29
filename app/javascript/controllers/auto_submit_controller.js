@@ -7,13 +7,6 @@ export default class extends Controller {
   }
 
   submit(event) {
-    console.log(
-      'submit called, isSubmitting:',
-      this.isSubmitting,
-      'event:',
-      event.type
-    )
-
     // Prevent duplicate submissions - check and set flag synchronously
     if (this.isSubmitting) {
       event.preventDefault()
