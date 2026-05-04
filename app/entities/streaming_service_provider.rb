@@ -162,6 +162,22 @@ class StreamingServiceProvider < ActiveHash::Base
       search_url: "https://www.paramountplus.com/?="
     },
     {
+      id: "4309fbac-3610-420d-9298-5d4298b3d44c",
+      display_name: "Paramount+ Essential",
+      tmdb_provider_name: "Paramount Plus Essential",
+      tmdb_provider_id: 2616,
+      tmdb_logo_path: "/5wym1C0jAvJeGirPdgVpcW0CCuy.jpg",
+      search_url: "https://www.paramountplus.com/?="
+    },
+    {
+      id: "d0c601fc-a36b-4836-bdd3-ec82a69555b2",
+      display_name: "Paramount+ Premium",
+      tmdb_provider_name: "Paramount Plus Premium",
+      tmdb_provider_id: 2303,
+      tmdb_logo_path: "/fts6X10Jn4QT0X6ac3udKEn2tJA.jpg",
+      search_url: "https://www.paramountplus.com/?="
+    },
+    {
       id: "d73f7843-408d-444f-a5d9-5efa4674b7ae",
       display_name: "Paramount+Apple",
       tmdb_provider_name: "Paramount Plus Apple TV Channel ",
@@ -224,6 +240,14 @@ class StreamingServiceProvider < ActiveHash::Base
       tmdb_provider_id: 486,
       tmdb_logo_path: "/aAb9CUHjFe9Y3O57qnrJH0KOF1B.jpg",
       search_url: "https://ondemand.spectrum.net/search/?q="
+    },
+    {
+      id: "82527fd3-4aea-417f-b267-8eaa27a7e397",
+      display_name: "Tubi TV",
+      tmdb_provider_name: "Tubi TV",
+      tmdb_provider_id: 73,
+      tmdb_logo_path: "/zLYr7OPvpskMA4S79E3vlCi71iC.jpg",
+      search_url: "https://tubitv.com/search?q="
     },
     {
       id: "9c963ab2-5622-4592-ab33-b51a3c6d8d17",
