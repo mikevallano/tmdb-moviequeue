@@ -13,7 +13,7 @@ gem 'hotwire-rails'
 gem 'importmap-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 2.6.1', group: :doc
-gem 'devise', '~> 4.9.3'
+gem 'devise', '~> 5.0.3'
 gem 'figaro'
 gem 'friendly_id'
 gem 'httparty'
