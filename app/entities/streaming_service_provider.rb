@@ -210,6 +210,14 @@ class StreamingServiceProvider < ActiveHash::Base
       search_url: "https://www.peacocktv.com/watch/search?q="
     },
     {
+      id: "a038107b-d7bd-4ff9-bcd2-6fdec3028ea4",
+      display_name: 'Philo',
+      tmdb_provider_name: "Philo",
+      tmdb_provider_id: 2383,
+      tmdb_logo_path:"/ptmbGSttkyzawLbxx9MElmxKuVo.jpg",
+      search_url: "https://www.philo.com"
+    },
+    {
       id: "bbf23f2b-86e3-4635-bbba-a26ce48b14dc",
       display_name: 'Plex',
       tmdb_provider_name: "Plex",
