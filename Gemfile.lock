@@ -199,7 +199,6 @@ GEM
       timeout
     net-smtp (0.5.1)
       net-protocol
-    next_rails (1.6.0)
     nio4r (2.7.5)
     nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
@@ -432,7 +431,6 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   launchy
   letter_opener
-  next_rails
   pg (~> 1.1)
   pry
   puma (= 7.2.1)
