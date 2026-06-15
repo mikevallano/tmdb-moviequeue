@@ -1,8 +1,13 @@
+def next?
+  File.basename(__FILE__) == "Gemfile.next"
+end
 source 'https://rubygems.org'
 
 ruby File.read(".ruby-version").strip
 
-gem 'rails', '~> 7.1.3'
+gem 'next_rails'
+
+gem 'rails', '~> 7.2.0'
 gem 'active_hash', '~> 3.3', '>= 3.3.1'
 gem 'puma', '7.2.1'
 gem 'pg', '~> 1.1'
