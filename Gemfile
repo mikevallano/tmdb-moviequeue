@@ -109,6 +109,9 @@ group :development, :test do
   # RSpec-specific analysis for your projects, as an extension to RuboCop. https://github.com/rubocop/rubocop-rspec
   gem 'rubocop-rspec'
 
+  # Standard Ruby code linter and formatter https://github.com/standardrb/standard
+  # gem "standard"                    
+
   # Preview email in the default browser instead of sending it. https://github.com/ryanb/letter_opener
   gem 'letter_opener'
 
