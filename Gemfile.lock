@@ -423,7 +423,7 @@ DEPENDENCIES
   capybara
   capybara-email
   database_cleaner
-  devise
+  devise (~> 5.0)
   factory_bot_rails
   ffaker
   figaro
@@ -441,7 +441,7 @@ DEPENDENCIES
   rails (~> 8.0.0)
   rails-controller-testing
   rails-erd
-  redis
+  redis (~> 4.0)
   rspec-rails (~> 6.1.0)
   rubocop-rspec
   sdoc (~> 2.6.1)

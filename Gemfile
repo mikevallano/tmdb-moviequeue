@@ -27,13 +27,13 @@ gem "stimulus-rails"
 # gem "jbuilder"
 
 # Use Devise for Authentication https://github.com/heartcombo/devise
-gem 'devise'
+gem 'devise', '~> 5.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use Redis for Action Cable https://github.com/redis/redis-rb
-gem "redis"
+gem "redis", "~> 4.0"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 # gem "solid_cache"
