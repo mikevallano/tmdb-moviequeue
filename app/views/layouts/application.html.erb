@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
-    <title><%= raw page_title %></title>
+    <title><%= raw page_title || content_for(:title) || "FlicksOnLists" %></title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= tag :meta, name: :rails_env, content: Rails.env %>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Flicks On Lists">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Nixie+One|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <!-- Material Icons and Material Symbols are different. This stylesheet only accesses Material Symbols.
     To use Material Symbols, it will require a little more set up. -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-    <%= stylesheet_link_tag    'application', media: 'all'%>
-    <%= javascript_include_tag 'application' %>
-    <%= javascript_import_module_tag "autocomplete" %>
-    <%= csrf_meta_tags %>
+    <!-- Internal stylesheets -->
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
 
     <!--TODO: use importmap for this-->
     <script src="//use.fontawesome.com/16a020f0b8.js"></script>
-
-    <!-- Check device width for responsive media queries -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <%= tag :meta, name: :rails_env, content: Rails.env %>
-
-    <%= favicon_link_tag "favicon.png" %>
-    <%= javascript_importmap_tags %>
   </head>
+
   <body>
     <%#= render "layouts/environment_banner" %>
     <%= render "layouts/header" %>
