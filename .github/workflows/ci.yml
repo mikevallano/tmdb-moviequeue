@@ -100,6 +100,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
+          tmdb_api_key: test_api_key
         # REDIS_URL: redis://localhost:6379/0
         # Runs w/o feature tests
         run: bin/rails db:schema:load && bundle exec rspec spec --tag ~@feature
