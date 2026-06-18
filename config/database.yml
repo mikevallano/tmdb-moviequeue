@@ -15,6 +15,7 @@
 # gem 'pg'
 #
 
+
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -60,7 +61,7 @@ test:
   <<: *default
   # database: tmdb-moviequeue_test
   adapter: postgresql
-  database: tmdb-moviequeue_test
+  database: 'tmdb-moviequeue_test'
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
