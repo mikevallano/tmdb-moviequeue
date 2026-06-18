@@ -16,7 +16,6 @@ require 'support/mailer_helpers'
 require 'support/vcr'
 require 'capybara/email/rspec'
 require 'support/wait_for_ajax'
-require 'webdrivers/chromedriver'
 
 ActiveRecord::Migration.maintain_test_schema!
 

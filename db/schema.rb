@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema[7.1].define(version: 2025_03_02_154214) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "friendly_id_slugs", force: :cascade do |t|
