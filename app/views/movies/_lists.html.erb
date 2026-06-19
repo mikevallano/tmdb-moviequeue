@@ -10,7 +10,10 @@
         id: "remove_movie_link_movies_partial",
         class: "fa fa-times-circle mr-5",
         method: :delete,
-        data: { confirm: "You are taking this movie out of your " + list.name + " list. Are you sure you want to do that?" } %>
+        data: {
+          turbo_stream: true,
+          turbo_confirm: "You are taking this movie out of your " + list.name + " list. Are you sure you want to do that?"
+        } %>
     <% end %>
 
 

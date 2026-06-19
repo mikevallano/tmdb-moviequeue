@@ -1,17 +1,17 @@
 <div id='js_tv_series_viewings_buttons_toggle'>
   <% if active_tv_series_viewing.present? %>
     <div class='manage-screenings'>
-      <%= button_to '<span class="material-symbols-outlined">bookmark_remove</span> Mark as Finished Watching'.html_safe, 
+      <%= button_to '<span class="material-symbols-outlined">bookmark_remove</span> Mark as Finished Watching'.html_safe,
         tv_series_viewing_path(id: active_tv_series_viewing.id, params: {tv_series_viewing: {ended_at: Time.current}}),
         method: :patch,
-        remote: true %>
+        data: { turbo_stream: true } %>
     </div>
   <% else %>
     <div class='manage-screenings'>
-      <%= button_to '<span class="material-symbols-outlined">bookmark_add</span> Add to Currently-Watching'.html_safe, 
+      <%= button_to '<span class="material-symbols-outlined">bookmark_add</span> Add to Currently-Watching'.html_safe,
         tv_series_viewings_path(show_id: show_id, title: title),
         method: :post,
-        remote: true %>
+        data: { turbo_stream: true } %>
     </div>
   <% end %>
 </div>
