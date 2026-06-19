@@ -25,8 +25,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  # Disabled: causes CSRF 422 errors with Turbo POST requests behind Heroku SSL proxy
-  config.assume_ssl = false
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
