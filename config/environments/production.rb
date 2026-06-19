@@ -21,6 +21,9 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
+  # Set default URL options to use custom domain instead of herokuapp.com
+  config.action_controller.default_url_options = { host: 'www.flicksonlists.com', protocol: 'https' }
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
@@ -78,7 +81,7 @@ Rails.application.configure do
   }
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { host: 'http://www.flicksonlists.com/' }
+  config.action_mailer.default_url_options = { host: 'www.flicksonlists.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
