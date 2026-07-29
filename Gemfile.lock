@@ -190,6 +190,7 @@ GEM
     minitest (5.27.0)
     multi_xml (0.8.1)
       bigdecimal (>= 3.1, < 5)
+    mutex_m (0.3.0)
     net-imap (0.6.4.1)
       date
       net-protocol
@@ -213,6 +214,7 @@ GEM
       racc (~> 1.4)
     observer (0.1.2)
     orm_adapter (0.5.0)
+    ostruct (0.6.3)
     parallel (1.23.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
@@ -416,12 +418,15 @@ PLATFORMS
 DEPENDENCIES
   active_hash (~> 3.3, >= 3.3.1)
   awesome_print
+  base64
   better_errors
+  bigdecimal
   binding_of_caller
   capybara
   capybara-email
   database_cleaner
   devise (~> 5.0.3)
+  drb
   factory_bot_rails
   ffaker
   figaro
@@ -432,7 +437,9 @@ DEPENDENCIES
   jbuilder
   launchy
   letter_opener
+  mutex_m
   observer
+  ostruct
   pg (~> 1.1)
   pry
   puma (= 7.2.1)

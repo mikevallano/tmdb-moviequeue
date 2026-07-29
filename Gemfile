@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip
 
 gem 'rails', '~> 7.2.0'
-gem 'observer' # Required for Ruby 3.4+ compatibility
+
+
 gem 'active_hash', '~> 3.3', '>= 3.3.1'
 gem 'puma', '7.2.1'
 gem 'pg', '~> 1.1'
@@ -30,6 +31,15 @@ gem 'turbo-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+
+
+# Ruby 3.4+ compatibility - stdlib gems that were extracted
+gem 'observer'
+gem 'ostruct'
+gem 'base64'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
 
 group :development do
   gem 'better_errors'
