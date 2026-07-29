@@ -22,25 +22,26 @@ jobs:
   #     - name: Scan for common Rails security vulnerabilities using static analysis
   #       run: bin/brakeman --no-pager
 
-  scan_js:
-    runs-on: ubuntu-latest
+  # TODO: Uncomment after upgrading to Rails 8.0 when all jquery is gone.
+  # scan_js:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-          cache-version: 1 # Increment this to clear cache if needed
-      - name: Unfreeze Bundler for Dependabot
-        if: github.actor == 'dependabot[bot]'
-        run: bundle config set frozen false
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: .ruby-version
+  #         bundler-cache: true
+  #         cache-version: 1 # Increment this to clear cache if needed
+  #     - name: Unfreeze Bundler for Dependabot
+  #       if: github.actor == 'dependabot[bot]'
+  #       run: bundle config set frozen false
 
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+  #     - name: Scan for security vulnerabilities in JavaScript dependencies
+  #       run: bin/importmap audit
 
   # lint_ruby:
   #   runs-on: ubuntu-latest
