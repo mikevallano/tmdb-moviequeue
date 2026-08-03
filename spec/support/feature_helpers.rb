@@ -1,33 +1,42 @@
 module FeatureHelpers
 
   def sign_up_with(email, username, password)
-    visit root_path
+    # Navigate directly to registration page (no navigation click needed)
+    visit new_user_registration_path
 
-    click_link "sign_up_nav_link"
+    fill_in "Email", with: email
+    fill_in "Username", with: username
+    fill_in "Password", with: password
+    fill_in "Password confirmation", with: password
+    click_button "Sign up"
 
-    fill_in "user_email", with: email
-    fill_in "user_username", with: username
-    fill_in "user_password", with: password
-    fill_in "user_password_confirmation", with: password
-    click_button "sign_up_button_new_registration"
+    # Confirm user (bypasses email confirmation for tests)
     visit user_confirmation_path(:confirmation_token => User.last.confirmation_token)
+
+    # Sign in the newly registered user
     visit new_user_session_path
-    fill_in "user_login", with: email
-    fill_in "user_password", with: password
-    click_button "log_in_button_new_session"
+    fill_in "Sign in with Email or Username", with: email
+    fill_in "Password", with: password
+    click_button "Sign In"
+
+    # Wait for successful sign-in
+    expect(page).to have_current_path(root_path)
+
     @email = email
     @current_user = User.find_by_email(email)
   end
 
   def sign_in_user(user)
-    visit root_path
-    click_link "sign_in_nav_link"
-    sleep 0.25
-    fill_in "user_login", with: user.email
-    find("#user_password")
-    fill_in "user_password", with: user.password
-    click_button "log_in_button_new_session"
-    sleep 0.25
+    # Navigate directly to sign-in page (no navigation click needed)
+    visit new_user_session_path
+
+    fill_in "Sign in with Email or Username", with: user.email
+    fill_in "Password", with: user.password
+    click_button "Sign In"
+
+    # Wait for successful sign-in (replaces sleep)
+    expect(page).to have_current_path(root_path)
+
     @current_user = User.find_by_email(user.email)
   end
 
@@ -67,10 +76,12 @@ module FeatureHelpers
 
   def sign_in_and_create_list
     sign_in_user(user)
-    click_link "my_lists_nav_link"
-    click_link "new_list_link_list_index"
+    # Navigate directly to new list page (no navigation click needed)
+    visit new_user_list_path(user)
     fill_in "list_name_field", with: "test list one"
-    click_button "submit_list_button"
+    click_button "Save"
+    # Wait for list creation (case-insensitive to handle title case display)
+    expect(page).to have_text(/test list one/i)
   end
 
   def api_actor_search

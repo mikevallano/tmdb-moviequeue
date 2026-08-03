@@ -61,7 +61,7 @@ end
 group :test do
     gem 'rails-controller-testing'
     gem 'shoulda-matchers'
-    gem 'capybara'
+    gem 'capybara', '~> 3.40' # Ruby 3.4 compatibility (fixes Rack::Handler errors)
     gem 'database_cleaner'
     gem 'launchy'
     gem 'webdrivers'

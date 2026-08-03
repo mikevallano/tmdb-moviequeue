@@ -31,7 +31,7 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
 
       scenario "users can see their own lists that have members" do
         sign_in_user(user1)
-        click_link "my_lists_nav_link"
+        visit user_lists_path(user)
         expect(page).to have_content("#{list.name.titlecase}")
         # visit(user_list_path(user1, list))
         click_link "show_list_link_list_index", match: :first
@@ -40,7 +40,7 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
 
       scenario "users can see others' lists they're a member of" do
         sign_in_user(user2)
-        click_link "my_lists_nav_link"
+        visit user_lists_path(user)
         expect(page).to have_content("#{list.name.titlecase}")
         visit(user_list_path(user1, list))
         expect(page).to have_content("#{list.name}")
