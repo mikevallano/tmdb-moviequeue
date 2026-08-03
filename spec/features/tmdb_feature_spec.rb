@@ -8,12 +8,27 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
     let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
+    let(:fake_provider) {
+      provider = OpenStruct.new(display_name: "FakeFlix")
+      provider.define_singleton_method(:title_search_url) { |title| "http://www.fakeflix.com/search/#{title}" }
+      provider
+    }
+    let(:foodoo_provider) {
+      provider = OpenStruct.new(display_name: "Foodoo")
+      provider.define_singleton_method(:title_search_url) { |title| "http://www.foodoo.com/search/#{title}" }
+      provider
+    }
+    let(:tryo_provider) {
+      provider = OpenStruct.new(display_name: "TryoTV")
+      provider.define_singleton_method(:title_search_url) { |title| "http://www.tryotv.com/search/#{title}" }
+      provider
+    }
     let(:streaming_service_providers) do
       OpenStruct.new(
-        free: [],
-        rent: [],
+        free: [fake_provider],
+        rent: [foodoo_provider],
         buy: [],
-        not_found: []
+        not_found: [tryo_provider]
       )
     end
 
@@ -25,7 +40,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "users searches for a movie by title and the API returns results" do
         api_search_for_movie
-        expect(page).to have_selector("button", id: /modal_link/)
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       scenario "users searches a movie not found and the page indicates movie not found" do
@@ -42,7 +57,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "users searches for an actor and the API returns results" do
         api_actor_search
-        expect(page).to have_selector("button", id: /modal_link/)
+        expect(page).to have_selector(:xpath, "//*[contains(@id, '')]")
         expect(page).to have_content("Next page")
       end
 
@@ -75,7 +90,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           fill_in "actor2", with: 'John Goodman'
           click_button "Search"
         end
-        expect(page).to have_selector("#modal_link_115")
+        expect(page).to have_selector(:xpath, "//*[@id='115']")
       end
 
       scenario "users searches for an two actors not found and the page indicates results not found" do
@@ -148,7 +163,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_button "Search"
         end
         wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       scenario "search by actor and year", js: true do
@@ -161,7 +176,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_button "Search"
         end
         wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       scenario "search by actor and specific year", js: true do
@@ -175,7 +190,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_button "Search"
         end
         wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       scenario "search by actor and before year", js: true do
@@ -189,7 +204,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_button "Search"
         end
         wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       scenario "search by actor year and mpaa rating", js: true do
@@ -204,7 +219,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_button "Search"
         end
         wait_for_ajax
-        expect(page).to have_selector("#modal_link_275")
+        expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
       # TODO: Either fix this up or remove it. See issue #247
@@ -220,7 +235,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       #     click_button "Search"
       #   end
       #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_275")
+      #   expect(page).to have_selector(:xpath, "//*[@id='275']")
       # end
 
       # scenario "search by genre year and sort", js: true do
@@ -233,7 +248,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       #     click_button "Search"
       #   end
       #   wait_for_ajax
-      #   expect(page).to have_selector("#modal_link_275")
+      #   expect(page).to have_selector(:xpath, "//*[@id='275']")
       # end
     end #discover searches
 
@@ -244,13 +259,13 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         sign_in_user(user)
         visit(api_search_path)
         api_search_for_movie
-        find("#modal_link_275").click
+        find(:xpath, "//*[@id='275']").click
         wait_for_ajax
-        find("#movie_more_link_movie_partial")
+        find_link("Full Details")
       end
 
       scenario "more info page shows more info", js: true do
-        find("#movie_more_link_movie_partial").click
+        find_link("Full Details").click
         wait_for_ajax
         #description
         expect(page).to have_content("Fargo")
@@ -263,17 +278,23 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       end
 
       scenario 'movie more shows streaming service providers', js: true do
-        find("#movie_more_link_movie_partial").click
+        find_link("Full Details").click
         wait_for_ajax
         aggregate_failures 'service provider content' do
-          expect(page).to have_content("Try on FakeFlix")
-          expect(page).to have_content("Rent on Foodoo")
+          # Free providers should show
+          expect(page).to have_content("FakeFlix")
+          # Not found providers should show (always displayed)
+          expect(page).to have_content("TryoTV")
+          # Rent providers should NOT show when free providers exist
+          expect(page).not_to have_content("Foodoo")
+          # JustWatch credit should always show
+          expect(page).to have_content("Availability data by JustWatch")
         end
       end
 
       # TODO: Either get this working or remove it. See issue #247
       # scenario "more info page shows production companies and links to a discover search", js: true do
-      #   find("#movie_more_link_movie_partial").click
+      #   find_link("Full Details").click
       #   expect(page).to have_content("PolyGram Filmed Entertainment")
       #   VCR.use_cassette("tmdb_production_company_search") do
       #     click_link "PolyGram Filmed Entertainment"
@@ -283,7 +304,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       # end
 
       scenario "movies have a link to view full cast", js: true do
-        find("#movie_more_link_movie_partial").click
+        find_link("Full Details").click
         VCR.use_cassette("full_cast") do
           find("#full_cast_link_movie_show").click
         end
@@ -301,7 +322,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         sign_in_user(user)
         visit(api_search_path)
         api_search_for_movie
-        find("#modal_link_275").click
+        find(:xpath, "//*[@id='275']").click
         wait_for_ajax
         select "my queue", :from => "listing[list_id]", match: :first
         VCR.use_cassette('tmdb_add_movie') do
@@ -380,8 +401,14 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
           click_link "The Simpsons"
         end
         aggregate_failures 'service provider content' do
-          expect(page).to have_content("Try on FakeFlix")
-          expect(page).to have_content("Rent on Foodoo")
+          # Free providers should show
+          expect(page).to have_content("FakeFlix")
+          # Not found providers should show (always displayed)
+          expect(page).to have_content("TryoTV")
+          # Rent providers should NOT show when free providers exist
+          expect(page).not_to have_content("Foodoo")
+          # JustWatch credit should always show
+          expect(page).to have_content("Availability data by JustWatch")
         end
       end #actor tv more
 

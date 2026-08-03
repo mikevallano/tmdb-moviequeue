@@ -18,7 +18,7 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
        VCR.use_cassette('movie_search_home') do
         click_button "Search"
       end
-      expect(page).to have_selector("#modal_link_275")
+      expect(page).to have_selector(:xpath, "//*[@id='275']")
     end
 
     scenario "users can search for a movie from the header", js: true do
@@ -29,7 +29,7 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
        VCR.use_cassette('movie_search_header') do
         find('#header_movie_search').native.send_keys(:return)
       end
-      expect(page).to have_selector("#modal_link_275")
+      expect(page).to have_selector(:xpath, "//*[@id='275']")
     end
 
   end
