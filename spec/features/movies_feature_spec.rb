@@ -20,9 +20,15 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
     let(:tag) { create(:tag, name: "hilarious") }
     let(:screening) { create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
     let(:review) { create(:review, user_id: user.id, movie_id: movie.id, body: "it were awesome") }
+    let(:fake_provider) {
+      OpenStruct.new(
+        display_name: "FakeFlix",
+        title_search_url: ->(title) { "http://www.fakeflix.com/search/#{title}" }
+      )
+    }
     let(:streaming_service_providers) {
       OpenStruct.new(
-        free: [],
+        free: [fake_provider],
         rent: [],
         buy: [],
         not_found: []
@@ -84,16 +90,17 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           youtube_id = '73829hsuhf'
           sign_in_user(admin_user)
           visit(movie_path(movie))
-          fill_in 'trailer', with: "https://www.youtube.com/watch?v=#{youtube_id}"
-          click_button('add-trailer-btn')
+          trailer_field = find_field('trailer')
+          trailer_field.fill_in(with: "https://www.youtube.com/watch?v=#{youtube_id}")
+          trailer_field.send_keys(:return)
           sleep 0.5
           expect(movie.reload.trailer).to eq(youtube_id) #updates the trailer
         end
 
-        scenario 'non-admin should not see trailer button' do
+        scenario 'non-admin should not see trailer field' do
           sign_in_user(user)
           visit(movie_path(movie))
-          expect(page).not_to have_selector('#add-trailer-btn')
+          expect(page).not_to have_field('trailer')
         end
 
         scenario "update movie button retrieves latest info from API" do
@@ -116,16 +123,18 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
 
           scenario "users can add tags to a movie from the movie show page", js: true do
             visit(movie_path(movie))
-            fill_in "tag_list", with: "dark comedy, spooky"
-            click_button "add_tags_button_movies_partial"
+            tag_field = find_field("tag_list")
+            tag_field.fill_in(with: "dark comedy, spooky")
+            tag_field.send_keys(:return)
             expect(page).to have_content("dark-comedy")
             expect(page).to have_content("spooky")
           end #user can tag movie
 
           scenario "user can remove tags from the movie show page", js: true do
             visit(movie_path(movie))
-            fill_in "tag_list", with: "dark comedy"
-            click_button "add_tags_button_movies_partial", match: :first
+            tag_field = find_field("tag_list")
+            tag_field.fill_in(with: "dark comedy")
+            tag_field.send_keys(:return)
             expect(page).to have_content("dark-comedy")
             click_button "remove_tag_link_movies_partial"
             expect(page).not_to have_content("dark-comedy")
