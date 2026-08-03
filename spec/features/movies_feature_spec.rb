@@ -49,7 +49,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           listing
           visit(movie_path(movie))
           click_link "Crime"
-          expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
+          expect(page).to have_selector(:xpath, "//*[@id='#{movie.tmdb_id}']")
         end
 
         scenario "clicking director name goes to director results" do
@@ -209,11 +209,11 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             page.driver.browser.manage.window.resize_to(1280,800)
             sign_in_user(user)
             visit(movies_path)
-            find("#modal_link_#{movie.tmdb_id}")
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']")
           end
 
           scenario "users can tag a movie from movies index page", js: true do
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             fill_in "tag_list", with: "dark comedy, spooky"
             click_button "add_tags_button_movies_partial"
             wait_for_ajax
@@ -222,17 +222,17 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           end #user can tag movie
 
           scenario "user can click a tag to see movies with that tag", js: true do
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             fill_in "tag_list", with: "dark comedy, spooky"
             click_button "add_tags_button_movies_partial"
             wait_for_ajax
             click_link "spooky"
             wait_for_ajax
-            expect(page).to have_selector("#modal_link_#{movie.tmdb_id}")
+            expect(page).to have_selector(:xpath, "//*[@id='#{movie.tmdb_id}']")
           end
 
           scenario "user can remove tags", js: true do
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             fill_in "tag_list", with: "dark comedy"
             click_button "add_tags_button_movies_partial", match: :first
             wait_for_ajax
@@ -301,18 +301,18 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             page.driver.browser.manage.window.resize_to(1280,800)
             sign_in_user(user)
             visit(movies_path)
-            find("#modal_link_#{movie.tmdb_id}")
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']")
           end
 
           scenario "movie not yet watched doesn't show field to rate movie", js: true do
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).not_to have_selector("#show_rating_link_movies_partial")
             expect(page).not_to have_selector("#rating_submit_button_rating_form")
           end
 
           scenario "movie that has been watched shows field to rate movie", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).not_to have_selector("#show_rating_link_movies_partial")
             expect(page).to have_selector("#rating_submit_button_rating_form")
             select "5", :from => "rating[value]", match: :first
@@ -322,14 +322,14 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           scenario "movie rated by user shows link to the rating show path", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
             create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).to have_selector("#show_rating_link_movies_partial")
             expect(page).not_to have_selector("#new_rating_link_movies_partial")
           end
 
           scenario "movie watched but not yet reviewed shows link to review the movie", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).not_to have_selector("#show_review_link_movies_partial")
             expect(page).to have_selector("#new_review_link_movies_partial")
           end
@@ -337,14 +337,14 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           scenario "movie reviewed by user shows link to the rating show path", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
             create(:review, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).to have_selector("#show_review_link_movies_partial")
             expect(page).not_to have_selector("#new_review_link_movies_partial")
           end
 
           xscenario "link to mark as watched if not watched, link marks as watched", js: true do
           # TODO: Flickering. See issue #247
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).not_to have_selector("#add_screening_link_movies_partial")
             click_link "mark_watched_link_movies_partial", match: :first
             expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
@@ -354,91 +354,13 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
 
           scenario "if the movie has been watched, there is no link to mark as watched", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find("#modal_link_#{movie.tmdb_id}").click
+            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
             expect(page).not_to have_selector("#mark_watched_link_movies_partial")
             expect(page).to have_selector("#add_screening_link_movies_partial")
           end
         end #rating, reviews, marking watched
 
-        context "sorting" do
-          before(:each) do
-            sign_in_user(user)
-            fargo_listing
-            user.watched_movies << no_country
-            visit(movies_path)
-          end #before context
-
-          scenario "sort by title" do
-            select "title", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
-          end
-
-          scenario "sort by shortest runtime" do
-            select "shortest runtime", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
-          end
-
-          scenario "sort by longest runtime" do
-            select "longest runtime", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by newest release" do
-            select "newest release", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by vote average" do
-            select "vote average", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by watched movies" do
-            select "watched movies", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by unwatched movies" do
-            select "unwatched movies", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{fargo.tmdb_id}")).to be < page.body.index("modal_link_#{no_country.tmdb_id}")
-          end
-
-          scenario "sort by only show unwatched" do
-            select "only show unwatched", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page).not_to have_selector("#modal_link_#{no_country.tmdb_id}")
-            expect(page).to have_selector("#modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by only show watched" do
-            select "only show watched", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
-          end
-
-          scenario "sort by not on a list" do
-            select "movies not on a list", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page).not_to have_selector("#modal_link_#{fargo.tmdb_id}")
-            expect(page).to have_selector("#modal_link_#{no_country.tmdb_id}")
-          end
-
-          scenario "sort by recently watched" do
-            select "recently watched", :from => "sort_by"
-            click_button "sort_button_movies_index"
-            expect(page.body.index("modal_link_#{no_country.tmdb_id}")).to be < page.body.index("modal_link_#{fargo.tmdb_id}")
-          end #sort by title
-
-
-        end # sorting
+        # Sorting feature was removed from movies index page
       end # movies index page
     end
   end
