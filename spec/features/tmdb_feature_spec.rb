@@ -9,10 +9,12 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
     let(:username) { FFaker::Internet.user_name }
     let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
     let(:streaming_service_providers) do
-      [
-        { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
-        { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
-      ]
+      OpenStruct.new(
+        free: [],
+        rent: [],
+        buy: [],
+        not_found: []
+      )
     end
 
     describe "search by title" do

@@ -27,10 +27,14 @@ RSpec.feature "Lists feature spec", type: :feature, feature: :true do
     let(:public_listing) { FactoryBot.create(:listing, list_id: public_list.id, movie_id: movie2.id) }
     let(:list_name) { FFaker::HipsterIpsum.words(1).join(' ') }
     let(:list_description) { FFaker::HipsterIpsum.phrase }
-    let(:streaming_service_providers) {[
-      { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
-      { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
-    ]}
+    let(:streaming_service_providers) {
+      OpenStruct.new(
+        free: [],
+        rent: [],
+        buy: [],
+        not_found: []
+      )
+    }
 
 
     describe "crud actions for lists" do

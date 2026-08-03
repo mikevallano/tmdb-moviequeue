@@ -20,10 +20,14 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
     let(:tag) { create(:tag, name: "hilarious") }
     let(:screening) { create(:screening, user_id: @current_user.id, movie_id: Movie.last.id) }
     let(:review) { create(:review, user_id: user.id, movie_id: movie.id, body: "it were awesome") }
-    let(:streaming_service_providers) {[
-      { name: "FakeFlix", url: "http://www.fakeflix.com/search/Fake", pay_model: "try" },
-      { name: "Foodoo", url: "https://www.foodoo.com/search?searchString=Fake", pay_model: "rent" }
-    ]}
+    let(:streaming_service_providers) {
+      OpenStruct.new(
+        free: [],
+        rent: [],
+        buy: [],
+        not_found: []
+      )
+    }
 
     describe 'move show page' do
       before do
