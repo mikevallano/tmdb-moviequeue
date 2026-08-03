@@ -19,16 +19,5 @@
       <div class="mt-10">
         <%= render "movies/movie_trailer", movie: movie %>
       </div>
-
-      <% if current_user&.admin? && !is_modal %>
-        <div class="mt-10">
-          <p class=""> Does the movie data seem out-of date?</p>
-          <%= link_to "Refresh API data", movie_path(movie),
-              method: :patch,
-              id: "update_movie_link_movie_show",
-              data: { turbo_method: :patch, turbo_confirm: "Refresh movie data from TMDB?" },
-              class: "btn btn-secondary mt-10" %>
-        </div>
-      <% end %>
     </div>
   </div>
