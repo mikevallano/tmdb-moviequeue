@@ -110,7 +110,7 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     scenario "user can edit their info from the profile page" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
-      click_link "edit_user_link_profile_page"
+      click_link "Change your password/update info"
       fill_in "user_username", with: "newusername"
       fill_in "user_current_password", with: "password"
       click_button "Update"
@@ -122,7 +122,7 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     scenario "user can cancel their account from profile page" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
-      click_link "edit_user_link_profile_page"
+      click_link "Change your password/update info"
       click_link_or_button "Cancel my account"
       expect(page).to have_content("cancelled")
     end

@@ -71,9 +71,9 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "users searches for two actors and the API returns results" do
         VCR.use_cassette('tmdb_two_actor_search') do
-          fill_in "actor1_field_two_actor_search", with: 'Steve Buscemi'
-          fill_in "actor2_field_two_actor_search", with: 'John Goodman'
-          click_button "search_button_two_actor_search"
+          fill_in "actor", with: 'Steve Buscemi'
+          fill_in "actor2", with: 'John Goodman'
+          click_button "Search"
         end
         expect(page).to have_selector("#modal_link_115")
       end
@@ -101,9 +101,9 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "two movies search returns common actors in both movies" do
         visit(two_movie_search_path)
         VCR.use_cassette("tmdb_two_movie_search") do
-          fill_in "movie1_field_two_movie_search", with: "Fargo"
-          fill_in "movie2_field_two_movie_search", with: "The Big Lebowski"
-          click_button "search_button_two_movie_search"
+          fill_in "movie_one", with: "Fargo"
+          fill_in "movie_two", with: "The Big Lebowski"
+          click_button "Search"
         end
         expect(page).to have_content("Steve Buscemi")
       end
@@ -113,9 +113,9 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         movie_query1 = "sdlfkjsdflkjsdf"
         movie_query2 = "The Big Lebowski"
         VCR.use_cassette("tmdb_two_movie_search_bad_first") do
-          fill_in "movie1_field_two_movie_search", with: movie_query1
-          fill_in "movie2_field_two_movie_search", with: movie_query2
-          click_button "search_button_two_movie_search"
+          fill_in "movie_one", with: movie_query1
+          fill_in "movie_two", with: movie_query2
+          click_button "Search"
         end
         expect(page).to have_content("No results for '#{movie_query1}'.")
       end
@@ -125,8 +125,8 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         movie_query1 = "Fargo"
         movie_query2 = "sdlfkjsdflkjsdf"
         VCR.use_cassette("tmdb_two_movie_search_bad_second") do
-          fill_in "movie1_field_two_movie_search", with: movie_query1
-          fill_in "movie2_field_two_movie_search", with: movie_query2
+          fill_in "movie_one", with: movie_query1
+          fill_in "movie_two", with: movie_query2
           click_button "Search"
         end
         expect(page).to have_content("No results for '#{movie_query2}'.")
@@ -142,10 +142,10 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "search by actor returns results", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_frances_mcdormand", :record => :new_episodes) do
-          fill_in "actor_name_field_discover_search", with: "Frances McDormand"
+          fill_in "actor_name", with: "Frances McDormand"
         end
         VCR.use_cassette("discover_actor_search", :record => :new_episodes) do
-          click_button "search_button_discover_search"
+          click_button "Search"
         end
         wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
@@ -154,11 +154,11 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "search by actor and year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_name_field_discover_search", with: "Steve Buscemi"
+          fill_in "actor_name", with: "Steve Buscemi"
         end
           select "1996", :from => "date[year]"
         VCR.use_cassette("discover_actor_and_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
+          click_button "Search"
         end
         wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
@@ -167,12 +167,12 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "search by actor and specific year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_name_field_discover_search", with: "Steve Buscemi"
+          fill_in "actor_name", with: "Steve Buscemi"
         end
           select "1996", :from => "date[year]"
           select "Exact Year", :from => "timeframe"
         VCR.use_cassette("discover_actor_and_specific_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
+          click_button "Search"
         end
         wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
@@ -181,12 +181,12 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "search by actor and before year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_name_field_discover_search", with: "Steve Buscemi"
+          fill_in "actor_name", with: "Steve Buscemi"
         end
           select "1997", :from => "date[year]"
           select "Before This Year", :from => "timeframe"
          VCR.use_cassette("discover_actor_and_before_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
+          click_button "Search"
         end
         wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
@@ -195,13 +195,13 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       scenario "search by actor year and mpaa rating", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
-          fill_in "actor_name_field_discover_search", with: "Steve Buscemi"
+          fill_in "actor_name", with: "Steve Buscemi"
         end
           select "1997", :from => "date[year]"
           select "Before This Year", :from => "timeframe"
           select "R", :from => "mpaa_rating"
         VCR.use_cassette("discover_actor_mpaa_rating_and_year", :record => :new_episodes) do
-          click_button "search_button_discover_search"
+          click_button "Search"
         end
         wait_for_ajax
         expect(page).to have_selector("#modal_link_275")
@@ -212,12 +212,12 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       #   skip "vcr issues"
       #   visit(discover_search_path)
       #   VCR.use_cassette("fill_in_steve_buscemi") do
-      #     fill_in "actor_name_field_discover_search", with: "Steve Buscemi"
+      #     fill_in "actor_name", with: "Steve Buscemi"
       #   end
       #     select "1996", :from => "date[year]"
       #     select "Popularity", :from => "sort_by"
       #   VCR.use_cassette("discover_actor_year_and_sort") do
-      #     click_button "search_button_discover_search"
+      #     click_button "Search"
       #   end
       #   wait_for_ajax
       #   expect(page).to have_selector("#modal_link_275")
@@ -230,7 +230,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
       #     select "1996", :from => "date[year]"
       #     select "Crime", :from => "genre"
       #     select "Popularity", :from => "sort_by"
-      #     click_button "search_button_discover_search"
+      #     click_button "Search"
       #   end
       #   wait_for_ajax
       #   expect(page).to have_selector("#modal_link_275")
@@ -335,7 +335,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "actor search page links to actor more info search" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         expect(page).to have_content("Steve Buscemi")
         expect(page).to have_content("Born")
@@ -343,7 +343,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "actor more info page links movies to movie_more_info path" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_more_movie_link") do
           click_link "Fargo"
@@ -353,7 +353,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "actor more info page links tv shows to the tv show page" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_more") do
           click_link "The Simpsons"
@@ -363,7 +363,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "tv series page links to individual seasons" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_more") do
           click_link "The Simpsons"
@@ -374,7 +374,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "tv series displays streaming service providers" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_more") do
           click_link "The Simpsons"
@@ -389,7 +389,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         # TODO: need to update to be more general
         # See issue #247
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_credit") do
           click_link "episodes", match: :first
@@ -402,7 +402,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         # TODO: need to update to be more general
         # See issue #247
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_credit2") do
           click_link "appearance_details_portlandia", match: :first
@@ -412,7 +412,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
 
       scenario "actor more page has actor's headshot" do
         VCR.use_cassette("tmdb_actor_more") do
-          click_link_or_button "bio_and_credits_link_actor_search"
+          click_link "Full Credits & Bio", match: :first
         end
         expect(page).to have_css("img[src*='https://image.tmdb.org']")
       end

@@ -45,7 +45,7 @@ module FeatureHelpers
       fill_in "movie_title", with: 'Fargo'
     end
      VCR.use_cassette('tmdb_search') do
-      click_button "search_by_title_button"
+      click_button "Search"
     end
   end
 
@@ -86,45 +86,45 @@ module FeatureHelpers
 
   def api_actor_search
     VCR.use_cassette('tmdb_actor_search') do
-      fill_in "actor_name_actor_search", with: 'William H. Macy'
-      click_button "submit_button_actor_search"
+      fill_in "actor", with: 'William H. Macy'
+      click_button "Search"
     end
   end
 
   def api_actor_search_buscemi
     VCR.use_cassette('tmdb_actor_search_buschemi') do
-      fill_in "actor_name_actor_search", with: 'steve buscemi'
-      click_button "submit_button_actor_search"
+      fill_in "actor", with: 'steve buscemi'
+      click_button "Search"
     end
   end
 
   def bad_api_actor_search
     VCR.use_cassette('tmdb_bad_actor_search') do
-      fill_in "actor_name_actor_search", with: 'sjhskjhdf*s7'
-      click_button "submit_button_actor_search"
+      fill_in "actor", with: 'sjhskjhdf*s7'
+      click_button "Search"
     end
   end
 
   def api_two_actor_search
     VCR.use_cassette('tmdb_two_actor_search') do
-      fill_in "actor1_field_two_actor_search", with: 'Steve Buscemi'
-      fill_in "actor2_field_two_actor_search", with: 'John Goodman'
-      click_button "search_button_two_actor_search"
+      fill_in "actor", with: 'Steve Buscemi'
+      fill_in "actor2", with: 'John Goodman'
+      click_button "Search"
     end
   end
 
   def bad_api_two_actor_search(actor1, actor2)
     VCR.use_cassette('tmdb_bad_two_actor_search') do
-      fill_in "actor1_field_two_actor_search", with: actor1
-      fill_in "actor2_field_two_actor_search", with: actor2
-      click_button "search_button_two_actor_search"
+      fill_in "actor", with: actor1
+      fill_in "actor2", with: actor2
+      click_button "Search"
     end
   end
 
   def bad_api_search_for_movie
     VCR.use_cassette('tmdb_bad_movie_search') do
       fill_in "movie_title", with: 'zasdlkjfasdlkjf'
-      click_button "search_by_title_button"
+      click_button "Search"
     end
   end
 

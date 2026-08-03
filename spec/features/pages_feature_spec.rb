@@ -16,7 +16,7 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
         fill_in "movie_title", with: 'fargo'
       end
        VCR.use_cassette('movie_search_home') do
-        click_button "search_by_title_home_button"
+        click_button "Search"
       end
       expect(page).to have_selector("#modal_link_275")
     end
