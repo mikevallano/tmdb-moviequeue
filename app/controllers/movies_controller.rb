@@ -63,13 +63,13 @@ class MoviesController < ApplicationController
     if params[:tmdb_id].present?
       @movie = GuaranteedMovie.find_or_create(params[:tmdb_id])
     else
-      @movie = Movie.friendly.find(params[:movie_id])
+      @movie = Movie.friendly.find(params[:id] || params[:movie_id])
     end
   end
 
   def required_params
     trailer_url = params[:trailer]
-    params[:trailer] = trailer_url.include?('youtube.com') ? youtube_id : trailer_url
+    params[:trailer] = trailer_url.include?('youtube.com') ? youtube_id : trailer_url if trailer_url.present?
     params.permit(:trailer)
   end
 

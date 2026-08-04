@@ -22,9 +22,9 @@ module UserStreamingServiceProviderDataService
       result_free_provider_ids = results[:free]&.map { |result| result[:provider_id] } || []
       result_flatrate_provider_ids = results[:flatrate]&.map { |result| result[:provider_id] } || []
       result_rent_provider_ids = results[:rent]&.map { |result| result[:provider_id] } || []
-      result_buy_provider_ids = results[:buy]&.map { |result| result[:provider_id] } || []      
+      result_buy_provider_ids = results[:buy]&.map { |result| result[:provider_id] } || []
 
-      user.streaming_service_providers.map do |provider|
+      user.streaming_service_providers.each do |provider|
         if result_flatrate_provider_ids.include?(provider[:tmdb_provider_id]) || result_free_provider_ids.include?(provider[:tmdb_provider_id])
           available_providers[:free] << provider
         elsif result_rent_provider_ids.include?(provider[:tmdb_provider_id])

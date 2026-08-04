@@ -6,63 +6,59 @@ on:
     branches: [master]
 
 jobs:
-  # scan_ruby:
-  #   runs-on: ubuntu-latest
+  scan_ruby:
+    if: false # Disabled: Set to true to enable Brakeman security scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Scan for common Rails security vulnerabilities using static analysis
+        run: bin/brakeman --no-pager
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
+  scan_js:
+    if: false # Disabled: Enable after Rails 8.0 upgrade when all jQuery is removed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+          cache-version: 1 # Increment this to clear cache if needed
+      - name: Unfreeze Bundler for Dependabot
+        if: github.actor == 'dependabot[bot]'
+        run: bundle config set frozen false
+      - name: Scan for security vulnerabilities in JavaScript dependencies
+        run: bin/importmap audit
 
-  #     - name: Set up Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: .ruby-version
-  #         bundler-cache: true
+  lint_ruby:
+    if: false # Disabled: Set to true to enable StandardRB linting. This will also require setting up the gem.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+          cache-version: 1 # Increment this to clear cache if needed
+      - name: Unfreeze Bundler for Dependabot
+        if: github.actor == 'dependabot[bot]'
+        run: bundle config set frozen false
+      - name: Lint code for consistent style
+        run: bundle exec standardrb
 
-  #     - name: Scan for common Rails security vulnerabilities using static analysis
-  #       run: bin/brakeman --no-pager
+  feature_specs:
+    if: true # Enabled: Set to false to disable feature/system tests
 
-  # TODO: Uncomment after upgrading to Rails 8.0 when all jquery is gone.
-  # scan_js:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
-
-  #     - name: Set up Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: .ruby-version
-  #         bundler-cache: true
-  #         cache-version: 1 # Increment this to clear cache if needed
-  #     - name: Unfreeze Bundler for Dependabot
-  #       if: github.actor == 'dependabot[bot]'
-  #       run: bundle config set frozen false
-
-  #     - name: Scan for security vulnerabilities in JavaScript dependencies
-  #       run: bin/importmap audit
-
-  # lint_ruby:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
-
-  #     - name: Set up Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: .ruby-version
-  #         bundler-cache: true
-  #         cache-version: 1 # Increment this to clear cache if needed
-  #     - name: Unfreeze Bundler for Dependabot
-  #       if: github.actor == 'dependabot[bot]'
-  #       run: bundle config set frozen false
-
-  #     - name: Lint code for consistent style
-  #       run: bundle exec standardrb
-
-  test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -84,10 +80,8 @@ jobs:
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips imagemagick sqlite3
-
       - name: Checkout code
         uses: actions/checkout@v6
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -97,8 +91,57 @@ jobs:
       - name: Unfreeze Bundler for Dependabot
         if: github.actor == 'dependabot[bot]'
         run: bundle config set frozen false
+      - name: Run feature specs
+        env:
+          RAILS_ENV: test
+          # Pulls hardcoded value from GitHub secrets https://github.com/mikevallano/tmdb-moviequeue/settings/secrets/actions
+          tmdb_api_key: ${{ secrets.TMDB_API_KEY }}
+        # REDIS_URL: redis://localhost:6379/0
+        # Runs w/o feature tests
+        run: bin/rails db:schema:load && bundle exec rspec spec/features
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
 
-      - name: Run tests
+  ruby_specs:
+    if: true # Enabled: Set to false to disable unit/integration tests (non-feature specs)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+      # redis:
+      #   image: redis
+      #   ports:
+      #     - 6379:6379
+      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips imagemagick sqlite3
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+          cache-version: 1 # Increment this to clear cache if needed
+      - name: Unfreeze Bundler for Dependabot
+        if: github.actor == 'dependabot[bot]'
+        run: bundle config set frozen false
+      - name: Run backend tests
         env:
           RAILS_ENV: test
           # Pulls hardcoded value from GitHub secrets https://github.com/mikevallano/tmdb-moviequeue/settings/secrets/actions
@@ -106,7 +149,6 @@ jobs:
         # REDIS_URL: redis://localhost:6379/0
         # Runs w/o feature tests
         run: bin/rails db:schema:load && bundle exec rspec spec --tag ~@feature
-
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v7
         if: failure()
@@ -116,6 +158,7 @@ jobs:
           if-no-files-found: ignore
 
   check_seeds:
+    if: true # Enabled: Set to false to disable seed file validation
     runs-on: ubuntu-latest
     permissions:
       contents: read

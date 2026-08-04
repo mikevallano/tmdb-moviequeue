@@ -13,43 +13,37 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     end
 
     scenario "user is redirected to awaiting confirmation page after signing up" do
-      visit root_path
+      visit new_user_registration_path
 
-      click_link "sign_up_nav_link"
-
-      fill_in "user_email", with: email
-      fill_in "user_username", with: username
-      fill_in "user_password", with: "password"
-      fill_in "user_password_confirmation", with: "password"
-      click_button "sign_up_button_new_registration"
+      fill_in "Email", with: email
+      fill_in "Username", with: username
+      fill_in "Password", with: "password"
+      fill_in "Password confirmation", with: "password"
+      click_button "Sign up"
 
       expect(current_url).to eq(awaiting_confirmation_url)
     end
 
     scenario "user is sent a confirmation email after signing up" do
-      visit root_path
+      visit new_user_registration_path
 
-      click_link "sign_up_nav_link"
-
-      fill_in "user_email", with: email
-      fill_in "user_username", with: username
-      fill_in "user_password", with: "password"
-      fill_in "user_password_confirmation", with: "password"
-      click_button "sign_up_button_new_registration"
+      fill_in "Email", with: email
+      fill_in "Username", with: username
+      fill_in "Password", with: "password"
+      fill_in "Password confirmation", with: "password"
+      click_button "Sign up"
 
       expect(last_email).to have_content("To: #{email}")
     end
 
     scenario "user can not log in until confirmed" do
-      visit root_path
+      visit new_user_registration_path
 
-      click_link "sign_up_nav_link"
-
-      fill_in "user_email", with: email
-      fill_in "user_username", with: username
-      fill_in "user_password", with: "password"
-      fill_in "user_password_confirmation", with: "password"
-      click_button "sign_up_button_new_registration"
+      fill_in "Email", with: email
+      fill_in "Username", with: username
+      fill_in "Password", with: "password"
+      fill_in "Password confirmation", with: "password"
+      click_button "Sign up"
 
       visit user_lists_path(User.last)
       expect(page).to have_selector("#user_login")
@@ -58,21 +52,21 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     end
 
     scenario "existing users can sign in with email" do
-      visit root_path
-      click_link "sign_in_nav_link"
-      fill_in "user_login", with: existing_user.email
-      fill_in "user_password", with: existing_user.password
-      click_button "log_in_button_new_session"
+      visit new_user_session_path
+      fill_in "Sign in with Email or Username", with: existing_user.email
+      fill_in "Password", with: existing_user.password
+      click_button "Sign In"
+      expect(page).to have_current_path(root_path)
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("#{@current_user.username}")
     end
 
     scenario "existing user can sign in with username" do
-      visit root_path
-      click_link "sign_in_nav_link"
-      fill_in "user_login", with: existing_user.username
-      fill_in "user_password", with: existing_user.password
-      click_button "log_in_button_new_session"
+      visit new_user_session_path
+      fill_in "Sign in with Email or Username", with: existing_user.username
+      fill_in "Password", with: existing_user.password
+      click_button "Sign In"
+      expect(page).to have_current_path(root_path)
       @current_user = User.find_by_email(existing_user.email)
       expect(page).to have_content("#{@current_user.username}")
     end
@@ -84,10 +78,9 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     end
 
     scenario "user can reset their password" do
-
       sign_in_user(existing_user)
       click_button "sign_out_nav_link"
-      click_link "sign_in_nav_link"
+      visit new_user_session_path
       click_link "Forgot your password?"
       fill_in "Email", with: existing_user.email
       click_link_or_button "Send me reset password instructions"
@@ -117,7 +110,7 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     scenario "user can edit their info from the profile page" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
-      click_link "edit_user_link_profile_page"
+      click_link "Change your password/update info"
       fill_in "user_username", with: "newusername"
       fill_in "user_current_password", with: "password"
       click_button "Update"
@@ -129,7 +122,7 @@ RSpec.feature "Users feature spec", type: :feature, feature: :true do
     scenario "user can cancel their account from profile page" do
       sign_in_user(existing_user)
       visit(user_path(existing_user))
-      click_link "edit_user_link_profile_page"
+      click_link "Change your password/update info"
       click_link_or_button "Cancel my account"
       expect(page).to have_content("cancelled")
     end

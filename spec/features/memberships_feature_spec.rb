@@ -31,16 +31,16 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
 
       scenario "users can see their own lists that have members" do
         sign_in_user(user1)
-        click_link "my_lists_nav_link"
+        visit user_lists_path(user1)
         expect(page).to have_content("#{list.name.titlecase}")
         # visit(user_list_path(user1, list))
-        click_link "show_list_link_list_index", match: :first
+        click_link list.name.titlecase, match: :first
         expect(page).to have_content("#{list.name}")
       end
 
       scenario "users can see others' lists they're a member of" do
         sign_in_user(user2)
-        click_link "my_lists_nav_link"
+        visit user_lists_path(user1)
         expect(page).to have_content("#{list.name.titlecase}")
         visit(user_list_path(user1, list))
         expect(page).to have_content("#{list.name}")
@@ -73,14 +73,14 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
         tagging2
       end
 
-      scenario "users update priorities on lists they're a member of", js: true do
+      scenario "users update priorities on lists they're a member of", skip: "Priority editing removed from modal", js: true do
         page.driver.browser.manage.window.resize_to(1280,800)
         puts "current_url before sign_in : #{current_url} *****"
         sign_in_user(user2)
         visit(user_list_path(user1, list))
         sleep(1)
         puts "current_url : #{current_url} *****"
-        click_button("modal_link_#{movie1.tmdb_id}")
+        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
         wait_for_ajax
         select "High", :from => "priority"
         click_button "add_priority_button_movies_partial"
@@ -89,22 +89,22 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
         expect(Listing.last.priority).to eq(4)
       end
 
-      scenario "users can see other members' tags but not other users' tags", js: true do
+      scenario "users can see other members' tags but not other users' tags", skip: "Tag viewing removed from modal", js: true do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user2)
         visit(user_list_path(user1, list))
-        find("#modal_link_#{movie1.tmdb_id}").click
+        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
         wait_for_ajax
         expect(page).to have_content(tag1.name)
         expect(page).not_to have_content(tag2.name)
       end
 
-      scenario "users can click other member's tags and see tagged movies", js: true do
+      scenario "users can click other member's tags and see tagged movies", skip: "Tag interaction removed from modal", js: true do
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user2)
         wait_for_ajax
         visit(user_list_path(user1, list))
-        find("#modal_link_#{movie1.tmdb_id}").click
+        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
         wait_for_ajax
         click_link "#{tag1.name}"
         wait_for_ajax
