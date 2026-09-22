@@ -40,6 +40,7 @@ gem 'base64'
 gem 'bigdecimal'
 gem 'mutex_m'
 gem 'drb'
+gem 'json', '~> 2.7' # Pin to 2.x - json 3.0 removed quirks_mode breaking Rails compatibility
 
 group :development do
   gem 'better_errors'
