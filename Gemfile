@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby File.read(".ruby-version").strip
 
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 7.2.3.2'
 
 
 gem 'active_hash', '~> 3.3', '>= 3.3.1'
