@@ -58,14 +58,58 @@ RSpec.describe ListsController, type: :request do
       end
     end
 
-    context "when the list has more movies than the streaming filter allows" do
-      before { stub_const("MovieDataService::STREAMING_FILTER_MAX_MOVIES", 1) }
+    context "when the list has more than one page of movies" do
+      let(:page_two_movie) { create(:movie, title: "Page Two Movie") }
+      let(:page_one_movies) { create_list(:movie, 20) }
 
-      it "does not offer or apply the streaming filter" do
-        expect(UserStreamingServiceProviderDataService).not_to receive(:check_availability_for_movies)
+      before do
+        create(:listing, list: list, movie: page_two_movie, user: user, created_at: 1.year.ago)
+        page_one_movies.each { |movie| create(:listing, list: list, movie: movie, user: user) }
+        [available_movie, unavailable_movie].each { |movie| Listing.find_by(movie: movie).update!(created_at: 2.years.ago) }
+
+        allow(UserStreamingServiceProviderDataService).to receive(:check_availability_for_movies) do |movies:, **|
+          OpenStruct.new(available_ids: movies.map(&:id) & [available_movie.id, page_two_movie.id], failed_ids: [])
+        end
+      end
+
+      it "only checks the movies on the current page" do
+        get user_list_path(user, list, sort_by: streaming_option, page: 2)
+        expect(UserStreamingServiceProviderDataService).to have_received(:check_availability_for_movies)
+          .with(user: user, movies: match_array([page_two_movie, available_movie, unavailable_movie]))
+        expect(response.body).to include("Page Two Movie", "Barbie")
+        expect(response.body).not_to include("Oppenheimer")
+      end
+
+      it "uses from_page from the sort form when there's no page param" do
+        get user_list_path(user, list, sort_by: streaming_option, from_page: 2)
+        expect(response.body).to include("Page Two Movie")
+      end
+
+      it "keeps pagination links for the unfiltered pages, preserving the filter" do
+        get user_list_path(user, list, sort_by: streaming_option, from_page: 2)
+        page_one_link = Nokogiri::HTML(response.body).css(".pagination a").find { |link| link.text == "1" }
+        query = Rack::Utils.parse_query(URI(page_one_link[:href]).query)
+        expect(query).to include("sort_by" => streaming_option, "page" => "1")
+      end
+
+      it "sends the current page with the sort form" do
+        get user_list_path(user, list, page: 2)
+        expect(response.body).to include(%(name="from_page" id="from_page" value="2"))
+      end
+
+      it "sends the filtered page with the sort form" do
+        get user_list_path(user, list, sort_by: streaming_option, from_page: 2)
+        expect(response.body).to include(%(name="from_page" id="from_page" value="2"))
+      end
+
+      it "does not send the current page when sorted by something else" do
+        get user_list_path(user, list, sort_by: "title", page: 2)
+        expect(response.body).not_to include(%(name="from_page"))
+      end
+
+      it "explains when nothing on the page is available" do
         get user_list_path(user, list, sort_by: streaming_option)
-        expect(response.body).not_to include(%(value="#{streaming_option}"))
-        expect(response.body).to include(unavailable_movie.title)
+        expect(response.body).to include("None of the movies on this page are on your streaming services.")
       end
     end
   end

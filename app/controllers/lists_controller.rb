@@ -94,9 +94,7 @@ class ListsController < ApplicationController
     def streaming_filter_available?
       return @streaming_filter_available if defined?(@streaming_filter_available)
 
-      @streaming_filter_available = current_user.admin? &&
-        current_user.streaming_service_providers.any? &&
-        @list.movies.size <= MovieDataService::STREAMING_FILTER_MAX_MOVIES
+      @streaming_filter_available = current_user.admin? && current_user.streaming_service_providers.any?
     end
 
     def restrict_list_access

@@ -59,15 +59,19 @@ module SortingHandler
     when MovieDataService::STREAMING_SORT_OPTION
       @movies = @list.movies.default_list_order(@list)
       if streaming_filter_available?
-        availability = UserStreamingServiceProviderDataService.check_availability_for_movies(user: current_user, movies: @movies)
+        # Only the current page is checked (one TMDB request per movie). Pagination stays on the
+        # unfiltered pages, so the next page link shows the next page filtered.
+        # from_page is sent by the sort form (from the default order) so selecting the filter keeps the page being viewed.
+        @pagination_movies = @movies.paginate(page: params[:page].presence || params[:from_page].presence, per_page: 20).load
+        availability = UserStreamingServiceProviderDataService.check_availability_for_movies(user: current_user, movies: @pagination_movies)
         if availability.failed_ids.any?
-          failed_titles = Movie.where(id: availability.failed_ids).pluck(:title)
+          failed_titles = @pagination_movies.select { |movie| availability.failed_ids.include?(movie.id) }.map(&:title)
           flash.now[:alert] = "Couldn't check streaming availability for: #{failed_titles.to_sentence}"
         end
-        @movies = @movies.where(id: availability.available_ids)
+        @movies = @pagination_movies.select { |movie| availability.available_ids.include?(movie.id) }
       end
     end #case
-    @movies = @movies.paginate(:page => params[:page], per_page: 20)
+    @movies = @movies.paginate(:page => params[:page], per_page: 20) unless @pagination_movies
   end #list sort handler
 
   def movies_index_sort_handler(sort_by)
