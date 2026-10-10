@@ -10,11 +10,12 @@ module Tmdb
     API_KEY = ENV['tmdb_api_key']
 
     class << self
-      def request(endpoint, params)
+      def request(endpoint, params, timeout = nil)
         return { results: [] } if invalid_params?(params)
 
         api_path = build_url(endpoint, params)
-        response = URI.open("#{BASE_URL}#{api_path}").read
+        open_options = timeout ? { open_timeout: timeout, read_timeout: timeout } : {}
+        response = URI.open("#{BASE_URL}#{api_path}", **open_options).read
         JSON.parse(response, symbolize_names: true)
       end
 

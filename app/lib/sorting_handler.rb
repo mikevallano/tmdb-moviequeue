@@ -56,6 +56,16 @@ module SortingHandler
       else
         @movies = @list.movies.by_recently_watched_by_user(current_user)
       end
+    when MovieDataService::STREAMING_SORT_OPTION
+      @movies = @list.movies.default_list_order(@list)
+      if streaming_filter_available?
+        availability = UserStreamingServiceProviderDataService.check_availability_for_movies(user: current_user, movies: @movies)
+        if availability.failed_ids.any?
+          failed_titles = Movie.where(id: availability.failed_ids).pluck(:title)
+          flash.now[:alert] = "Couldn't check streaming availability for: #{failed_titles.to_sentence}"
+        end
+        @movies = @movies.where(id: availability.available_ids)
+      end
     end #case
     @movies = @movies.paginate(:page => params[:page], per_page: 20)
   end #list sort handler
