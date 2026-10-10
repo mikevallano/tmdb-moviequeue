@@ -19,6 +19,7 @@ gem 'devise', '~> 5.0.3'
 gem 'figaro'
 gem 'friendly_id'
 gem 'httparty'
+gem 'anthropic'
 gem 'rails_12factor', group: :production
 gem 'will_paginate'
 gem 'rack-mini-profiler'

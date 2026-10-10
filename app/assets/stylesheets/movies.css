@@ -20,6 +20,14 @@
   cursor: pointer;
 }
 
+.movies-container__labels {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
 
 button.modal-linker {
   background: none;

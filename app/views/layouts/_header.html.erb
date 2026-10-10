@@ -5,6 +5,9 @@
       <li><%= link_to 'My Movies', user_lists_path(current_user) %></li>
       <%= render 'tv_series_viewings/navbar_dropdown' %>
       <li><%= link_to 'Search', api_search_path %></li>
+      <% if current_user.admin? %>
+        <li><%= link_to 'Discover', movie_suggestions_path %></li>
+      <% end %>
     <% end %>
     <li class="mobile-hidden">
       <%= form_tag '/tmdb/search',

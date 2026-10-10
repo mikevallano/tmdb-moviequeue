@@ -10,6 +10,13 @@
         movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
         class: 'modal-linker'
       %>
+      <% if movie.respond_to?(:labels) && movie.labels.present? %>
+        <ul class="movies-container__labels">
+          <% movie.labels.each do |label| %>
+            <li><%= label %></li>
+          <% end %>
+        </ul>
+      <% end %>
     <% end %>
   <% end %>
 </div>
