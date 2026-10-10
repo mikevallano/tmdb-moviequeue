@@ -8,6 +8,8 @@ module MovieDataService
   ["recently watched", "recently watched"], ["highest priority", "highest priority"],
   ["only show unwatched", "only show unwatched"], ["only show watched", "only show watched"] ]
 
+  STREAMING_SORT_OPTION = "only show on my streaming services"
+
   MY_MOVIES_SORT_OPTIONS = [ ["title", "title"], ["shortest runtime", "shortest runtime"],
   ["longest runtime", "longest runtime"], ["newest release", "newest release"],
   ["vote average", "vote average"], ["watched movies", "watched movies"], ["recently watched", "recently watched"],

@@ -346,4 +346,70 @@ RSpec.describe UserStreamingServiceProviderDataService do
       end
     end
   end
+
+  describe 'check_availability_for_movies' do
+    let(:user) { create(:user) }
+    let(:netflix_provider) { StreamingServiceProvider.find("5a871334-7e1c-4e3a-9d3c-ba4bf9a3bc7c") }
+    let(:free_movie) { create(:movie) }
+    let(:flatrate_movie) { create(:movie) }
+    let(:rent_movie) { create(:movie) }
+    let(:other_provider_movie) { create(:movie) }
+    let(:no_data_movie) { create(:movie) }
+    let(:movies) { [free_movie, flatrate_movie, rent_movie, other_provider_movie, no_data_movie] }
+    let(:netflix_api_data) { {provider_id: 8, provider_name: "Netflix"} }
+
+    context 'when the user has no providers selected' do
+      it 'returns no ids without calling the API' do
+        expect(Tmdb::Client).not_to receive(:request)
+        availability = described_class.check_availability_for_movies(user: user, movies: movies)
+        expect(availability.available_ids).to eq([])
+        expect(availability.failed_ids).to eq([])
+      end
+    end
+
+    context 'when the user has providers selected' do
+      before do
+        user.user_streaming_service_providers.create(streaming_service_provider_id: netflix_provider.id)
+
+        responses = {
+          free_movie.tmdb_id => { results: { US: { free: [netflix_api_data] } } },
+          flatrate_movie.tmdb_id => { results: { US: { flatrate: [netflix_api_data] } } },
+          rent_movie.tmdb_id => { results: { US: { rent: [netflix_api_data] } } },
+          other_provider_movie.tmdb_id => { results: { US: { flatrate: [{provider_id: 15, provider_name: "Hulu"}] } } },
+          no_data_movie.tmdb_id => { results: {} },
+        }
+        allow(Tmdb::Client).to receive(:request) do |_endpoint, params, _timeout = nil|
+          responses[params[:tmdb_id]]
+        end
+      end
+
+      it 'returns ids of movies that are free or on a subscription for one of the providers' do
+        availability = described_class.check_availability_for_movies(user: user, movies: movies)
+        expect(availability.available_ids).to match_array([free_movie.id, flatrate_movie.id])
+        expect(availability.failed_ids).to eq([])
+      end
+
+      it 'requests with a timeout' do
+        described_class.check_availability_for_movies(user: user, movies: [free_movie])
+        expect(Tmdb::Client).to have_received(:request)
+          .with(:streaming_service_providers, hash_including(tmdb_id: free_movie.tmdb_id), described_class::MOVIE_FILTER_TIMEOUT)
+      end
+
+      {
+        'an HTTP error' => -> { OpenURI::HTTPError.new('503 Service Unavailable', StringIO.new) },
+        'a timeout' => -> { Net::ReadTimeout.new },
+        'a network error' => -> { SocketError.new },
+      }.each do |description, build_error|
+        it "returns movies that raise #{description} as failed instead of raising" do
+          allow(Tmdb::Client).to receive(:request)
+            .with(:streaming_service_providers, hash_including(tmdb_id: free_movie.tmdb_id), anything)
+            .and_raise(build_error.call)
+
+          availability = described_class.check_availability_for_movies(user: user, movies: movies)
+          expect(availability.available_ids).to eq([flatrate_movie.id])
+          expect(availability.failed_ids).to eq([free_movie.id])
+        end
+      end
+    end
+  end
 end

@@ -8,8 +8,14 @@
 <p class='inline'>by <%= @list.owner.username %></p>
 <p><%= @list.description %> <%= link_to 'Edit', edit_user_list_path(@list.owner, @list) if @list.owner.email == current_user.email %></p>
 
+<% sort_options = MovieDataService::LIST_SORT_OPTIONS %>
+<% sort_options += [[MovieDataService::STREAMING_SORT_OPTION, MovieDataService::STREAMING_SORT_OPTION]] if streaming_filter_available? %>
 <%= form_tag user_list_path(@list.owner, @list), { method: :get, data: { controller: 'auto-submit', action: 'input->auto-submit#submit' } } do %>
-  <%= select_tag :sort_by, options_for_select(MovieDataService::LIST_SORT_OPTIONS, @sort_by), {  include_blank: "Sort by", class: 'list-sort' } %>
+  <%= select_tag :sort_by, options_for_select(sort_options, @sort_by), {  include_blank: "Sort by", class: 'list-sort' } %>
+  <% from_page = @pagination_movies&.current_page || params[:page] %>
+  <% if streaming_filter_available? && from_page.present? && [nil, MovieDataService::STREAMING_SORT_OPTION].include?(@sort_by.presence) %>
+    <%= hidden_field_tag :from_page, from_page %>
+  <% end %>
 <% end %>
 
 <% if @sort_by.present? && @list.members.present? && @watched_sorts.include?(@sort_by) %>
@@ -19,6 +25,10 @@
   <% end %>
 <% end %>
 
+<% if @pagination_movies && @movies.empty? %>
+  <p>None of the movies on this page are on your streaming services.</p>
+<% end %>
+
 <%= render partial: 'movies/movie_partial_loop', locals: { movies: @movies, list: @list } %>
 
-<div class='text-center'><%= will_paginate @movies %></div>
+<div class='text-center'><%= will_paginate(@pagination_movies || @movies) %></div>

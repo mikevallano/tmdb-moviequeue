@@ -5,6 +5,8 @@ class ListsController < ApplicationController
 
   include SortingHandler
 
+  helper_method :streaming_filter_available?
+
   def public
     @lists = List.public_lists.paginate(page: params[:page])
   end
@@ -87,6 +89,12 @@ class ListsController < ApplicationController
 
     def list_params
       params.require(:list).permit(:owner_id, :name, :is_public, :description)
+    end
+
+    def streaming_filter_available?
+      return @streaming_filter_available if defined?(@streaming_filter_available)
+
+      @streaming_filter_available = current_user.admin? && current_user.streaming_service_providers.any?
     end
 
     def restrict_list_access
