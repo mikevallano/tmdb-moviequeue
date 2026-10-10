@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   get 'tmdb/tv_series_autocomplete', to: 'tmdb#tv_series_autocomplete', as: :tv_series_autocomplete
   get 'tmdb/person_autocomplete', to: 'tmdb#person_autocomplete', as: :person_autocomplete
 
+  get 'suggestions', to: 'suggestions#index', as: :movie_suggestions
+
   resources :invites, only: [:create]
 
   get 'about', to: 'pages#about', as: :about
