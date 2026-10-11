@@ -7,6 +7,10 @@ module MovieSuggestionService
   RECENT_TASTE_WINDOW = 6.months
   EXCLUSION_WINDOW = 12.months
   NOPE_LIST_NAME = 'Nope' # where movies they don't want to watch go
+  TMDB_LOOKUP_TIMEOUT = 5 # seconds, per TMDB request
+  TMDB_LOOKUP_DEADLINE = 8 # seconds, for all of a request's TMDB lookups
+  # Shared by all requests, so at most this many TMDB lookups run at once
+  TMDB_LOOKUP_POOL = Concurrent::FixedThreadPool.new(REQUESTED_COUNT)
 
   SYSTEM_PROMPT = <<~PROMPT
     You suggest movies for people who keep watchlists of movies they want to watch.
@@ -30,11 +34,15 @@ module MovieSuggestionService
       signal of what they dislike, and steer away from similar movies.
     - Mix well-known picks with less obvious ones; avoid only suggesting the most famous films.
     - Give a one-sentence reason for each suggestion, referring to the request or their taste.
+    - Before the suggestions, sum up in one sentence what ties the request together (the theme field).
   PROMPT
 
   RESPONSE_SCHEMA = {
     type: 'object',
     properties: {
+      # Having Claude describe the request before listing movies keeps it from
+      # occasionally returning a single placeholder suggestion
+      theme: { type: 'string' },
       suggestions: {
         type: 'array',
         items: {
@@ -49,12 +57,13 @@ module MovieSuggestionService
         }
       }
     },
-    required: ['suggestions'],
+    required: %w[theme suggestions],
     additionalProperties: false
   }.freeze
 
   class << self
     def get_suggestions(user:, list: nil, query: nil)
+      started_at = monotonic_now
       audience = audience_for(user: user, list: list)
       list_movies = list ? list.movies.to_a : []
       recently_watched_by_all = recently_watched_by_all(audience)
@@ -69,15 +78,29 @@ module MovieSuggestionService
         excluded_movies: (list_movies + recently_watched_by_all).uniq,
         nope_movies: nope_movies
       )
+      claude_started_at = monotonic_now
       response = Claude::Client.request_json(system: SYSTEM_PROMPT, prompt: prompt, schema: RESPONSE_SCHEMA)
 
+      tmdb_started_at = monotonic_now
       excluded_tmdb_ids = (list_movies + recently_watched_by_all + nope_movies).map(&:tmdb_id).to_set
-      suggestions = match_to_tmdb(response[:suggestions] || [])
-        .uniq(&:tmdb_id)
-        .reject { |suggestion| excluded_tmdb_ids.include?(suggestion.tmdb_id) }
+      claude_suggestions = response[:suggestions] || []
+      matched = match_to_tmdb(claude_suggestions).uniq(&:tmdb_id)
+      suggestions = matched.reject { |suggestion| excluded_tmdb_ids.include?(suggestion.tmdb_id) }
+      tmdb_finished_at = monotonic_now
 
       add_labels(suggestions, user: user, audience: audience)
       movies = sort_new_first(suggestions).first(MAX_RESULTS)
+
+      Rails.logger.info(
+        "[claude] counts suggested=#{claude_suggestions.size} matched=#{matched.size} " \
+        "not_excluded=#{suggestions.size} shown=#{movies.size} theme=#{response[:theme].inspect}"
+      )
+      Rails.logger.info(
+        "[claude] timing prep=#{(claude_started_at - started_at).round(2)}s " \
+        "claude=#{(tmdb_started_at - claude_started_at).round(2)}s " \
+        "tmdb=#{(tmdb_finished_at - tmdb_started_at).round(2)}s " \
+        "total=#{(monotonic_now - started_at).round(2)}s"
+      )
 
       OpenStruct.new(
         movies: movies,
@@ -129,7 +152,7 @@ module MovieSuggestionService
       audience.each { |person| sections << taste_section(person, asker: person == user) }
       sections << "# Not interested\n#{movie_lines(nope_movies)}" if nope_movies.any?
       sections << "# Do not suggest\n#{movie_lines(excluded_movies)}" if excluded_movies.any?
-      sections << "Suggest #{REQUESTED_COUNT} movies."
+      sections << "Suggest exactly #{REQUESTED_COUNT} movies."
       sections.join("\n\n")
     end
 
@@ -163,21 +186,41 @@ module MovieSuggestionService
     end
 
     def match_to_tmdb(suggestions)
-      suggestions.filter_map do |suggestion|
-        results = Tmdb::Client.request(:movie_search, query: suggestion[:title])[:results] || []
-        same_era = results.select do |result|
-          year = result[:release_date].to_s[0, 4].to_i
-          year.positive? && (year - suggestion[:year].to_i).abs <= 1
-        end
-        match = same_era.find { |result| result[:title].casecmp?(suggestion[:title]) } || same_era.first
-        next unless match
+      return [] if suggestions.empty?
 
-        MovieSuggestion.new(movie: MovieSearchResult.build_list([match]).first, reason: suggestion[:reason])
-      rescue StandardError => e
-        # One failed lookup shouldn't sink the rest of the suggestions
-        Rails.logger.warn("[claude] TMDB lookup failed for #{suggestion[:title].inspect}: #{e.class}: #{e.message}")
+      futures = suggestions.map do |suggestion|
+        Concurrent::Promises.future_on(TMDB_LOOKUP_POOL) do
+          Rails.application.executor.wrap { tmdb_match_for(suggestion) }
+        end
+      end
+
+      # Like Promise.allSettled, with a deadline for the whole batch
+      ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+        Concurrent::Promises.zip_futures(*futures).wait(TMDB_LOOKUP_DEADLINE)
+      end
+
+      suggestions.zip(futures).filter_map do |suggestion, future|
+        next future.value if future.fulfilled?
+
+        # Rejected (raised an error) or still pending when the deadline hit.
+        # One failed lookup shouldn't sink the rest of the suggestions.
+        failure = future.rejected? ? "#{future.reason.class}: #{future.reason.message}" : 'timed out'
+        Rails.logger.warn("[claude] TMDB lookup failed for #{suggestion[:title].inspect}: #{failure}")
         nil
       end
+    end
+
+    # The TMDB search result matching a suggestion's title and year (within a year), or nil
+    def tmdb_match_for(suggestion)
+      results = Tmdb::Client.request(:movie_search, { query: suggestion[:title] }, TMDB_LOOKUP_TIMEOUT)[:results] || []
+      same_era = results.select do |result|
+        year = result[:release_date].to_s[0, 4].to_i
+        year.positive? && (year - suggestion[:year].to_i).abs <= 1
+      end
+      match = same_era.find { |result| result[:title].casecmp?(suggestion[:title]) } || same_era.first
+      return unless match
+
+      MovieSuggestion.new(movie: MovieSearchResult.build_list([match]).first, reason: suggestion[:reason])
     end
 
     def add_labels(suggestions, user:, audience:)
@@ -213,6 +256,10 @@ module MovieSuggestionService
     # Movies nobody has listed or watched come first; otherwise keep Claude's order.
     def sort_new_first(suggestions)
       suggestions.each_with_index.sort_by { |suggestion, index| [suggestion.labels.any? ? 1 : 0, index] }.map(&:first)
+    end
+
+    def monotonic_now
+      Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
     def movie_label(movie)

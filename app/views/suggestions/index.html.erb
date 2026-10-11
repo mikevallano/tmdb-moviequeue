@@ -10,7 +10,7 @@
       include_blank: "Pick a list (optional)" %>
   </div>
   <div>
-    <%= text_area_tag :query, @query, rows: 3, maxlength: SuggestionsController::MAX_QUERY_LENGTH, placeholder: "e.g. slow-burn sci-fi like Arrival, or: like this list but lighter" %>
+    <%= text_area_tag :query, @query, rows: 3, maxlength: SuggestionsController::MAX_QUERY_LENGTH, placeholder: "Enter a prompt like 'Halloween movies like Lisa Frankenstein that are more comedy than humor.'" %>
   </div>
   <%= submit_tag "Get suggestions", data: { turbo_submits_with: "Thinking…" } %>
 <% end %>
