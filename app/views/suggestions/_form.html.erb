@@ -1,0 +1,13 @@
+<h2>Pick a list to find more like it, describe what you're in the mood for, or both.</h2>
+<%= form_tag movie_suggestions_path, { class: 'form', method: :get, data: { action: 'submit->suggestions#submit' } } do %>
+  <div>
+    <%= select_tag :list_id,
+      options_from_collection_for_select(@lists, :id, :name, @list&.id),
+      include_blank: "Pick a list (optional)",
+      data: { suggestions_target: 'list' } %>
+  </div>
+  <div>
+    <%= text_area_tag :query, @query, rows: 3, maxlength: SuggestionsController::MAX_QUERY_LENGTH, placeholder: "Enter a prompt like 'Halloween movies like Lisa Frankenstein that are more comedy than humor.'", data: { suggestions_target: 'query' } %>
+  </div>
+  <%= submit_tag "Get suggestions", data: { turbo_submits_with: "Thinking…" } %>
+<% end %>

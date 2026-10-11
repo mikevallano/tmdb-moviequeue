@@ -16,7 +16,9 @@ RSpec.describe MovieSuggestionService do
   end
 
   def stub_tmdb(title, results)
-    allow(Tmdb::Client).to receive(:request).with(:movie_search, query: title).and_return(results: results)
+    allow(Tmdb::Client).to receive(:request)
+      .with(:movie_search, { query: title }, described_class::TMDB_LOOKUP_TIMEOUT)
+      .and_return(results: results)
   end
 
   def stub_claude(suggestions)
@@ -75,12 +77,47 @@ RSpec.describe MovieSuggestionService do
         { title: 'Heat', year: 1995, reason: 'r' },
         { title: 'Ronin', year: 1998, reason: 'r' }
       ])
-      allow(Tmdb::Client).to receive(:request).with(:movie_search, query: 'Heat').and_raise(OpenURI::HTTPError.new('503', nil))
+      allow(Tmdb::Client).to receive(:request)
+        .with(:movie_search, { query: 'Heat' }, anything)
+        .and_raise(OpenURI::HTTPError.new('503', nil))
       stub_tmdb('Ronin', [tmdb_result(id: 8195, title: 'Ronin', year: 1998)])
 
       results = described_class.get_suggestions(user: user, query: 'heist movies')
 
       expect(results.movies.map(&:tmdb_id)).to eq([8195])
+    end
+
+    it 'drops suggestions whose TMDB lookup is still pending at the deadline' do
+      stub_const("#{described_class}::TMDB_LOOKUP_DEADLINE", 0.2)
+      stub_claude([
+        { title: 'Heat', year: 1995, reason: 'r' },
+        { title: 'Ronin', year: 1998, reason: 'r' }
+      ])
+      allow(Tmdb::Client).to receive(:request).with(:movie_search, { query: 'Heat' }, anything) do
+        sleep 1
+        { results: [tmdb_result(id: 949, title: 'Heat', year: 1995)] }
+      end
+      stub_tmdb('Ronin', [tmdb_result(id: 8195, title: 'Ronin', year: 1998)])
+
+      results = described_class.get_suggestions(user: user, query: 'heist movies')
+
+      expect(results.movies.map(&:tmdb_id)).to eq([8195])
+    end
+
+    it 'keeps suggestions in the order Claude returned them' do
+      titles = %w[Thief Ronin Heat Collateral]
+      stub_claude(titles.each_with_index.map { |title, i| { title: title, year: 2000 + i, reason: 'r' } })
+      titles.each_with_index do |title, i|
+        # Earlier titles respond slower, so lookups finish out of order
+        allow(Tmdb::Client).to receive(:request).with(:movie_search, { query: title }, anything) do
+          sleep 0.05 * (titles.size - i)
+          { results: [tmdb_result(id: 100 + i, title: title, year: 2000 + i)] }
+        end
+      end
+
+      results = described_class.get_suggestions(user: user, query: 'heist movies')
+
+      expect(results.movies.map(&:tmdb_id)).to eq([100, 101, 102, 103])
     end
 
     it 'handles screenings with no date watched' do
@@ -130,6 +167,23 @@ RSpec.describe MovieSuggestionService do
 
       expect(results.movies.map(&:tmdb_id)).to eq([82])
       expect(results.movies.first.labels).to eq(["partner watched #{2.months.ago.strftime('%b %Y')}"])
+    end
+
+    it "sends movies on a Bailed list as bailed and never returns them" do
+      bailed_list = create(:list, owner: user, name: 'Bailed')
+      bailed = create(:movie, title: 'Tenet', tmdb_id: 577_922, release_date: '2020-08-26')
+      create(:listing, list: bailed_list, movie: bailed, user: user)
+
+      stub_claude([{ title: 'Tenet', year: 2020, reason: 'r' }])
+      stub_tmdb('Tenet', [tmdb_result(id: 577_922, title: 'Tenet', year: 2020)])
+
+      results = described_class.get_suggestions(user: user, query: 'mind benders')
+
+      expect(results.movies).to be_empty
+      expect(Claude::Client).to have_received(:request_json) do |prompt:, **|
+        expect(prompt).to include("# Bailed\n- Tenet (2020)")
+        expect(prompt).not_to include('# Not interested')
+      end
     end
 
     it "sends movies on a shared Nope list as not interested and never returns them" do

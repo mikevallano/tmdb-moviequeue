@@ -7,6 +7,13 @@ module MovieSuggestionService
   RECENT_TASTE_WINDOW = 6.months
   EXCLUSION_WINDOW = 12.months
   NOPE_LIST_NAME = 'Nope' # where movies they don't want to watch go
+  BAILED_LIST_NAME = 'Bailed' # where movies they started watching but quit go
+  TMDB_LOOKUP_TIMEOUT = 5 # seconds, per TMDB request
+  # Seconds, for all of a request's TMDB lookups. Lookups usually finish in under a second;
+  # this plus Claude::Client::TIMEOUT_SECONDS keeps a worst-case request under Heroku's 30s limit.
+  TMDB_LOOKUP_DEADLINE = 4
+  # Shared by all requests, so at most this many TMDB lookups run at once
+  TMDB_LOOKUP_POOL = Concurrent::FixedThreadPool.new(REQUESTED_COUNT)
 
   SYSTEM_PROMPT = <<~PROMPT
     You suggest movies for people who keep watchlists of movies they want to watch.
@@ -25,16 +32,22 @@ module MovieSuggestionService
     Rules:
     - Suggest only real, released feature films. Use each film's exact English title as listed on
       TMDB and its original release year.
-    - Never suggest a movie from the "Do not suggest" or "Not interested" sections.
+    - Never suggest a movie from the "Do not suggest", "Not interested", or "Bailed" sections.
     - "Not interested" movies are ones they've decided they don't want to watch. Treat them as a
       signal of what they dislike, and steer away from similar movies.
+    - "Bailed" movies are ones they started watching and quit because they didn't like them. Treat
+      them as a strong signal of what they dislike, and steer away from similar movies.
     - Mix well-known picks with less obvious ones; avoid only suggesting the most famous films.
     - Give a one-sentence reason for each suggestion, referring to the request or their taste.
+    - Before the suggestions, sum up in one sentence what ties the request together (the theme field).
   PROMPT
 
   RESPONSE_SCHEMA = {
     type: 'object',
     properties: {
+      # Having Claude describe the request before listing movies keeps it from
+      # occasionally returning a single placeholder suggestion
+      theme: { type: 'string' },
       suggestions: {
         type: 'array',
         items: {
@@ -49,16 +62,18 @@ module MovieSuggestionService
         }
       }
     },
-    required: ['suggestions'],
+    required: %w[theme suggestions],
     additionalProperties: false
   }.freeze
 
   class << self
     def get_suggestions(user:, list: nil, query: nil)
+      started_at = monotonic_now
       audience = audience_for(user: user, list: list)
       list_movies = list ? list.movies.to_a : []
       recently_watched_by_all = recently_watched_by_all(audience)
-      nope_movies = nope_movies(audience)
+      nope_movies = movies_on_audience_lists_named(NOPE_LIST_NAME, audience)
+      bailed_movies = movies_on_audience_lists_named(BAILED_LIST_NAME, audience)
 
       prompt = build_prompt(
         list: list,
@@ -67,17 +82,32 @@ module MovieSuggestionService
         audience: audience,
         user: user,
         excluded_movies: (list_movies + recently_watched_by_all).uniq,
-        nope_movies: nope_movies
+        nope_movies: nope_movies,
+        bailed_movies: bailed_movies
       )
+      claude_started_at = monotonic_now
       response = Claude::Client.request_json(system: SYSTEM_PROMPT, prompt: prompt, schema: RESPONSE_SCHEMA)
 
-      excluded_tmdb_ids = (list_movies + recently_watched_by_all + nope_movies).map(&:tmdb_id).to_set
-      suggestions = match_to_tmdb(response[:suggestions] || [])
-        .uniq(&:tmdb_id)
-        .reject { |suggestion| excluded_tmdb_ids.include?(suggestion.tmdb_id) }
+      tmdb_started_at = monotonic_now
+      excluded_tmdb_ids = (list_movies + recently_watched_by_all + nope_movies + bailed_movies).map(&:tmdb_id).to_set
+      claude_suggestions = response[:suggestions] || []
+      matched = match_to_tmdb(claude_suggestions).uniq(&:tmdb_id)
+      suggestions = matched.reject { |suggestion| excluded_tmdb_ids.include?(suggestion.tmdb_id) }
+      tmdb_finished_at = monotonic_now
 
       add_labels(suggestions, user: user, audience: audience)
       movies = sort_new_first(suggestions).first(MAX_RESULTS)
+
+      Rails.logger.info(
+        "[claude] counts suggested=#{claude_suggestions.size} matched=#{matched.size} " \
+        "not_excluded=#{suggestions.size} shown=#{movies.size} theme=#{response[:theme].inspect}"
+      )
+      Rails.logger.info(
+        "[claude] timing prep=#{(claude_started_at - started_at).round(2)}s " \
+        "claude=#{(tmdb_started_at - claude_started_at).round(2)}s " \
+        "tmdb=#{(tmdb_finished_at - tmdb_started_at).round(2)}s " \
+        "total=#{(monotonic_now - started_at).round(2)}s"
+      )
 
       OpenStruct.new(
         movies: movies,
@@ -106,17 +136,17 @@ module MovieSuggestionService
       Movie.where(id: movie_ids).to_a
     end
 
-    # Movies on any "Nope" list belonging to (or shared with) the audience.
-    def nope_movies(audience)
-      nope_list_ids = audience
+    # Movies on any list with this name (ignoring case) belonging to (or shared with) the audience.
+    def movies_on_audience_lists_named(name, audience)
+      list_ids = audience
         .flat_map { |person| List.by_user(person) }
-        .select { |list| list.name.strip.casecmp?(NOPE_LIST_NAME) }
+        .select { |list| list.name.strip.casecmp?(name) }
         .map(&:id)
         .uniq
-      Movie.joins(:listings).where(listings: { list_id: nope_list_ids }).distinct.to_a
+      Movie.joins(:listings).where(listings: { list_id: list_ids }).distinct.to_a
     end
 
-    def build_prompt(list:, list_movies:, query:, audience:, user:, excluded_movies:, nope_movies: [])
+    def build_prompt(list:, list_movies:, query:, audience:, user:, excluded_movies:, nope_movies: [], bailed_movies: [])
       sections = []
       sections << "# Request\n#{query}" if query.present?
       if list
@@ -128,8 +158,9 @@ module MovieSuggestionService
       end
       audience.each { |person| sections << taste_section(person, asker: person == user) }
       sections << "# Not interested\n#{movie_lines(nope_movies)}" if nope_movies.any?
+      sections << "# Bailed\n#{movie_lines(bailed_movies)}" if bailed_movies.any?
       sections << "# Do not suggest\n#{movie_lines(excluded_movies)}" if excluded_movies.any?
-      sections << "Suggest #{REQUESTED_COUNT} movies."
+      sections << "Suggest exactly #{REQUESTED_COUNT} movies."
       sections.join("\n\n")
     end
 
@@ -163,21 +194,41 @@ module MovieSuggestionService
     end
 
     def match_to_tmdb(suggestions)
-      suggestions.filter_map do |suggestion|
-        results = Tmdb::Client.request(:movie_search, query: suggestion[:title])[:results] || []
-        same_era = results.select do |result|
-          year = result[:release_date].to_s[0, 4].to_i
-          year.positive? && (year - suggestion[:year].to_i).abs <= 1
-        end
-        match = same_era.find { |result| result[:title].casecmp?(suggestion[:title]) } || same_era.first
-        next unless match
+      return [] if suggestions.empty?
 
-        MovieSuggestion.new(movie: MovieSearchResult.build_list([match]).first, reason: suggestion[:reason])
-      rescue StandardError => e
-        # One failed lookup shouldn't sink the rest of the suggestions
-        Rails.logger.warn("[claude] TMDB lookup failed for #{suggestion[:title].inspect}: #{e.class}: #{e.message}")
+      futures = suggestions.map do |suggestion|
+        Concurrent::Promises.future_on(TMDB_LOOKUP_POOL) do
+          Rails.application.executor.wrap { tmdb_match_for(suggestion) }
+        end
+      end
+
+      # Like Promise.allSettled, with a deadline for the whole batch
+      ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+        Concurrent::Promises.zip_futures(*futures).wait(TMDB_LOOKUP_DEADLINE)
+      end
+
+      suggestions.zip(futures).filter_map do |suggestion, future|
+        next future.value if future.fulfilled?
+
+        # Rejected (raised an error) or still pending when the deadline hit.
+        # One failed lookup shouldn't sink the rest of the suggestions.
+        failure = future.rejected? ? "#{future.reason.class}: #{future.reason.message}" : 'timed out'
+        Rails.logger.warn("[claude] TMDB lookup failed for #{suggestion[:title].inspect}: #{failure}")
         nil
       end
+    end
+
+    # The TMDB search result matching a suggestion's title and year (within a year), or nil
+    def tmdb_match_for(suggestion)
+      results = Tmdb::Client.request(:movie_search, { query: suggestion[:title] }, TMDB_LOOKUP_TIMEOUT)[:results] || []
+      same_era = results.select do |result|
+        year = result[:release_date].to_s[0, 4].to_i
+        year.positive? && (year - suggestion[:year].to_i).abs <= 1
+      end
+      match = same_era.find { |result| result[:title].casecmp?(suggestion[:title]) } || same_era.first
+      return unless match
+
+      MovieSuggestion.new(movie: MovieSearchResult.build_list([match]).first, reason: suggestion[:reason])
     end
 
     def add_labels(suggestions, user:, audience:)
@@ -213,6 +264,10 @@ module MovieSuggestionService
     # Movies nobody has listed or watched come first; otherwise keep Claude's order.
     def sort_new_first(suggestions)
       suggestions.each_with_index.sort_by { |suggestion, index| [suggestion.labels.any? ? 1 : 0, index] }.map(&:first)
+    end
+
+    def monotonic_now
+      Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
     def movie_label(movie)
