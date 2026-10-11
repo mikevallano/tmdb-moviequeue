@@ -169,6 +169,23 @@ RSpec.describe MovieSuggestionService do
       expect(results.movies.first.labels).to eq(["partner watched #{2.months.ago.strftime('%b %Y')}"])
     end
 
+    it "sends movies on a Bailed list as bailed and never returns them" do
+      bailed_list = create(:list, owner: user, name: 'Bailed')
+      bailed = create(:movie, title: 'Tenet', tmdb_id: 577_922, release_date: '2020-08-26')
+      create(:listing, list: bailed_list, movie: bailed, user: user)
+
+      stub_claude([{ title: 'Tenet', year: 2020, reason: 'r' }])
+      stub_tmdb('Tenet', [tmdb_result(id: 577_922, title: 'Tenet', year: 2020)])
+
+      results = described_class.get_suggestions(user: user, query: 'mind benders')
+
+      expect(results.movies).to be_empty
+      expect(Claude::Client).to have_received(:request_json) do |prompt:, **|
+        expect(prompt).to include("# Bailed\n- Tenet (2020)")
+        expect(prompt).not_to include('# Not interested')
+      end
+    end
+
     it "sends movies on a shared Nope list as not interested and never returns them" do
       nope_list = create(:list, owner: partner, name: 'nope')
       create(:membership, list: nope_list, member: user)

@@ -7,6 +7,7 @@ module MovieSuggestionService
   RECENT_TASTE_WINDOW = 6.months
   EXCLUSION_WINDOW = 12.months
   NOPE_LIST_NAME = 'Nope' # where movies they don't want to watch go
+  BAILED_LIST_NAME = 'Bailed' # where movies they started watching but quit go
   TMDB_LOOKUP_TIMEOUT = 5 # seconds, per TMDB request
   TMDB_LOOKUP_DEADLINE = 8 # seconds, for all of a request's TMDB lookups
   # Shared by all requests, so at most this many TMDB lookups run at once
@@ -29,9 +30,11 @@ module MovieSuggestionService
     Rules:
     - Suggest only real, released feature films. Use each film's exact English title as listed on
       TMDB and its original release year.
-    - Never suggest a movie from the "Do not suggest" or "Not interested" sections.
+    - Never suggest a movie from the "Do not suggest", "Not interested", or "Bailed" sections.
     - "Not interested" movies are ones they've decided they don't want to watch. Treat them as a
       signal of what they dislike, and steer away from similar movies.
+    - "Bailed" movies are ones they started watching and quit because they didn't like them. Treat
+      them as a strong signal of what they dislike, and steer away from similar movies.
     - Mix well-known picks with less obvious ones; avoid only suggesting the most famous films.
     - Give a one-sentence reason for each suggestion, referring to the request or their taste.
     - Before the suggestions, sum up in one sentence what ties the request together (the theme field).
@@ -67,7 +70,8 @@ module MovieSuggestionService
       audience = audience_for(user: user, list: list)
       list_movies = list ? list.movies.to_a : []
       recently_watched_by_all = recently_watched_by_all(audience)
-      nope_movies = nope_movies(audience)
+      nope_movies = movies_on_audience_lists_named(NOPE_LIST_NAME, audience)
+      bailed_movies = movies_on_audience_lists_named(BAILED_LIST_NAME, audience)
 
       prompt = build_prompt(
         list: list,
@@ -76,13 +80,14 @@ module MovieSuggestionService
         audience: audience,
         user: user,
         excluded_movies: (list_movies + recently_watched_by_all).uniq,
-        nope_movies: nope_movies
+        nope_movies: nope_movies,
+        bailed_movies: bailed_movies
       )
       claude_started_at = monotonic_now
       response = Claude::Client.request_json(system: SYSTEM_PROMPT, prompt: prompt, schema: RESPONSE_SCHEMA)
 
       tmdb_started_at = monotonic_now
-      excluded_tmdb_ids = (list_movies + recently_watched_by_all + nope_movies).map(&:tmdb_id).to_set
+      excluded_tmdb_ids = (list_movies + recently_watched_by_all + nope_movies + bailed_movies).map(&:tmdb_id).to_set
       claude_suggestions = response[:suggestions] || []
       matched = match_to_tmdb(claude_suggestions).uniq(&:tmdb_id)
       suggestions = matched.reject { |suggestion| excluded_tmdb_ids.include?(suggestion.tmdb_id) }
@@ -129,17 +134,17 @@ module MovieSuggestionService
       Movie.where(id: movie_ids).to_a
     end
 
-    # Movies on any "Nope" list belonging to (or shared with) the audience.
-    def nope_movies(audience)
-      nope_list_ids = audience
+    # Movies on any list with this name (ignoring case) belonging to (or shared with) the audience.
+    def movies_on_audience_lists_named(name, audience)
+      list_ids = audience
         .flat_map { |person| List.by_user(person) }
-        .select { |list| list.name.strip.casecmp?(NOPE_LIST_NAME) }
+        .select { |list| list.name.strip.casecmp?(name) }
         .map(&:id)
         .uniq
-      Movie.joins(:listings).where(listings: { list_id: nope_list_ids }).distinct.to_a
+      Movie.joins(:listings).where(listings: { list_id: list_ids }).distinct.to_a
     end
 
-    def build_prompt(list:, list_movies:, query:, audience:, user:, excluded_movies:, nope_movies: [])
+    def build_prompt(list:, list_movies:, query:, audience:, user:, excluded_movies:, nope_movies: [], bailed_movies: [])
       sections = []
       sections << "# Request\n#{query}" if query.present?
       if list
@@ -151,6 +156,7 @@ module MovieSuggestionService
       end
       audience.each { |person| sections << taste_section(person, asker: person == user) }
       sections << "# Not interested\n#{movie_lines(nope_movies)}" if nope_movies.any?
+      sections << "# Bailed\n#{movie_lines(bailed_movies)}" if bailed_movies.any?
       sections << "# Do not suggest\n#{movie_lines(excluded_movies)}" if excluded_movies.any?
       sections << "Suggest exactly #{REQUESTED_COUNT} movies."
       sections.join("\n\n")
