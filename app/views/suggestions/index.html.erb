@@ -2,23 +2,35 @@
 
 <h1>Discover</h1>
 
-<h2>Pick a list to find more like it, describe what you're in the mood for, or both.</h2>
-<%= form_tag movie_suggestions_path, { class: 'form', method: :get } do %>
-  <div>
-    <%= select_tag :list_id,
-      options_from_collection_for_select(@lists, :id, :name, @list&.id),
-      include_blank: "Pick a list (optional)" %>
-  </div>
-  <div>
-    <%= text_area_tag :query, @query, rows: 3, maxlength: SuggestionsController::MAX_QUERY_LENGTH, placeholder: "Enter a prompt like 'Halloween movies like Lisa Frankenstein that are more comedy than humor.'" %>
-  </div>
-  <%= submit_tag "Get suggestions", data: { turbo_submits_with: "Thinking…" } %>
-<% end %>
+<div class="suggestions" data-controller="suggestions">
+  <% if @results %>
+    <%# Collapse the form into a summary of what was asked, so the results are front and center %>
+    <details class="suggestions__form suggestions__collapsible">
+      <summary>
+        <span class="suggestions__summary"><%= [("Like #{@list.name}" if @list), (%("#{@query.truncate(80)}") if @query)].compact.join(' · ') %></span>
+        <span class="suggestions__change">Get more suggestions</span>
+      </summary>
+      <%= render 'suggestions/form' %>
+    </details>
+  <% else %>
+    <div class="suggestions__form">
+      <%= render 'suggestions/form' %>
+    </div>
+  <% end %>
 
-<% if @results&.not_found_message.present? %>
-  <h2>Hmm. <%= @results.not_found_message %></h2>
-<% end %>
+  <div class="suggestions__loading" role="status" aria-live="polite">
+    <div class="suggestions__spinner"></div>
+    <h2 data-suggestions-target="message"></h2>
+    <p>Grab some snacks. Takes about 10 seconds.</p>
+  </div>
 
-<% if @results&.movies.present? %>
-  <%= render partial: 'movies/movie_partial_loop', locals: { movies: @results.movies } %>
-<% end %>
+  <div class="suggestions__results">
+    <% if @results&.not_found_message.present? %>
+      <h2>Hmm. <%= @results.not_found_message %></h2>
+    <% end %>
+
+    <% if @results&.movies.present? %>
+      <%= render partial: 'movies/movie_partial_loop', locals: { movies: @results.movies } %>
+    <% end %>
+  </div>
+</div>
