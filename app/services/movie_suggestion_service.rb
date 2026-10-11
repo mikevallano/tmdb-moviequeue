@@ -9,7 +9,9 @@ module MovieSuggestionService
   NOPE_LIST_NAME = 'Nope' # where movies they don't want to watch go
   BAILED_LIST_NAME = 'Bailed' # where movies they started watching but quit go
   TMDB_LOOKUP_TIMEOUT = 5 # seconds, per TMDB request
-  TMDB_LOOKUP_DEADLINE = 8 # seconds, for all of a request's TMDB lookups
+  # Seconds, for all of a request's TMDB lookups. Lookups usually finish in under a second;
+  # this plus Claude::Client::TIMEOUT_SECONDS keeps a worst-case request under Heroku's 30s limit.
+  TMDB_LOOKUP_DEADLINE = 4
   # Shared by all requests, so at most this many TMDB lookups run at once
   TMDB_LOOKUP_POOL = Concurrent::FixedThreadPool.new(REQUESTED_COUNT)
 
