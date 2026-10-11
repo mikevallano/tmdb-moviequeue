@@ -395,6 +395,19 @@ RSpec.describe UserStreamingServiceProviderDataService do
           .with(:streaming_service_providers, hash_including(tmdb_id: free_movie.tmdb_id), described_class::MOVIE_FILTER_TIMEOUT)
       end
 
+      it 'returns movies that are still pending at the deadline as failed' do
+        stub_const("#{described_class}::MOVIE_FILTER_DEADLINE", 0.2)
+        allow(Tmdb::Client).to receive(:request)
+          .with(:streaming_service_providers, hash_including(tmdb_id: free_movie.tmdb_id), anything) do
+            sleep 1
+            { results: { US: { free: [netflix_api_data] } } }
+          end
+
+        availability = described_class.check_availability_for_movies(user: user, movies: movies)
+        expect(availability.available_ids).to eq([flatrate_movie.id])
+        expect(availability.failed_ids).to eq([free_movie.id])
+      end
+
       {
         'an HTTP error' => -> { OpenURI::HTTPError.new('503 Service Unavailable', StringIO.new) },
         'a timeout' => -> { Net::ReadTimeout.new },

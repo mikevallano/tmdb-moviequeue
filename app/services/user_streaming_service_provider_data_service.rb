@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 module UserStreamingServiceProviderDataService
-  MOVIE_FILTER_TIMEOUT = 5 # seconds
+  MOVIE_FILTER_TIMEOUT = 5 # seconds, per TMDB request
+  MOVIE_FILTER_DEADLINE = 10 # seconds, for all of a page's TMDB requests
+  # Shared by all requests, so at most this many TMDB requests run at once
+  MOVIE_FILTER_POOL = Concurrent::FixedThreadPool.new(10)
 
   class << self
     def check_availability_for_title(user:, tmdb_id:, title:, media_type:, media_format:, release_date: nil)
@@ -47,25 +50,29 @@ module UserStreamingServiceProviderDataService
       user_provider_ids = user.streaming_service_providers.map(&:tmdb_provider_id)
       return availability if user_provider_ids.empty?
 
-      threads = movies.pluck(:id, :tmdb_id).map do |movie_id, tmdb_id|
-        Thread.new do
+      movie_ids_and_tmdb_ids = movies.pluck(:id, :tmdb_id)
+      futures = movie_ids_and_tmdb_ids.map do |_movie_id, tmdb_id|
+        Concurrent::Promises.future_on(MOVIE_FILTER_POOL) do
           Rails.application.executor.wrap do
             results = fetch_us_providers(tmdb_id: tmdb_id, media_type: 'movie', timeout: MOVIE_FILTER_TIMEOUT)
-            [movie_id, free_provider_ids(results).intersect?(user_provider_ids)]
-          rescue StandardError => e
-            Rails.logger.warn("Streaming availability check failed for movie #{movie_id}: #{e.class}: #{e.message}")
-            [movie_id, nil]
+            free_provider_ids(results).intersect?(user_provider_ids)
           end
         end
       end
 
+      # Like Promise.allSettled, with a deadline for the whole batch
       ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
-        threads.map(&:value).each do |movie_id, available|
-          if available.nil?
-            availability.failed_ids << movie_id
-          elsif available
-            availability.available_ids << movie_id
-          end
+        Concurrent::Promises.zip_futures(*futures).wait(MOVIE_FILTER_DEADLINE)
+      end
+
+      movie_ids_and_tmdb_ids.zip(futures).each do |(movie_id, _tmdb_id), future|
+        if future.fulfilled?
+          availability.available_ids << movie_id if future.value
+        else
+          # Rejected (raised an error) or still pending when the deadline hit
+          failure = future.rejected? ? "#{future.reason.class}: #{future.reason.message}" : 'timed out'
+          Rails.logger.warn("Streaming availability check failed for movie #{movie_id}: #{failure}")
+          availability.failed_ids << movie_id
         end
       end
 
