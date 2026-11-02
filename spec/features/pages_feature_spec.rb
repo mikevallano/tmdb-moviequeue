@@ -21,6 +21,16 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
       expect(page).to have_selector(:xpath, "//*[@id='275']")
     end
 
+    scenario "users see autocomplete suggestions when searching from the homepage", js: true do
+      allow(MovieDataService).to receive(:get_movie_titles).with('farg').and_return(['Fargo'])
+
+      fill_in "movie_title", with: 'farg'
+
+      within('.ui-autocomplete') do
+        expect(page).to have_content('Fargo')
+      end
+    end
+
     scenario "users can search for a movie from the header", js: true do
       skip "Need to switch to poltergiest"
       VCR.use_cassette('movie_title_search_header') do
