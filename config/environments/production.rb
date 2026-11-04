@@ -41,7 +41,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -72,20 +72,20 @@ Rails.application.configure do
 
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.sendgrid.net",
+    address: "smtp.resend.com",
     port: 587,
-    domain: 'heroku.com',
+    domain: 'flicksonlists.com',
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY']
+    user_name: 'resend',
+    password: ENV['RESEND_API_KEY']
   }
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { host: 'http://www.flicksonlists.com/' }
+  config.action_mailer.default_url_options = { host: 'www.flicksonlists.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Log disallowed deprecations.
   config.active_support.disallowed_deprecation = :log
