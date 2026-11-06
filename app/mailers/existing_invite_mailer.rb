@@ -3,7 +3,7 @@ class ExistingInviteMailer < ApplicationMailer
     @invite = invite
     @sender_email = @invite.sender.email
     @receiver_email = @invite.email
-    mail( :to => @receiver_email, :from => @sender_email,
+    mail( :to => @receiver_email, :reply_to => @sender_email,
       :subject => "You've been added to a shared movie list." )
   end
 end
