@@ -11,7 +11,9 @@ let(:mail) { ExistingInviteMailer.existing_invite_mailer(invite) }
     it "sends user a invite" do
       expect(mail.subject).to eq "You've been added to a shared movie list."
       expect(mail.from).to eq ['welcome@flicksonlists.com']
+      expect(mail[:from].display_names).to eq ["#{user.username} via Flicks On Lists"]
       expect(mail.reply_to).to eq [user.email]
+      expect(mail.body.encoded).to include user.username
       expect(mail.to).to eq [invite.email]
       expect(mail.body.encoded).to include user_list_path(user, list)
     end
