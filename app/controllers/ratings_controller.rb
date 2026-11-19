@@ -56,7 +56,7 @@ class RatingsController < ApplicationController
   def destroy
     @rating.destroy
     respond_to do |format|
-      format.html { redirect_to movie_path(@movie), notice: 'Rating was successfully destroyed.' }
+      format.html { redirect_to movie_path(@movie), status: :see_other, notice: 'Rating was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -17,11 +17,11 @@ class TaggingsController < ApplicationController
     respond_to do |format|
       if @tagging && @tagging.destroy
         format.turbo_stream {}
-        format.html { redirect_to movie_path(@movie), notice: 'Tag was destroyed.' }
+        format.html { redirect_to movie_path(@movie), status: :see_other, notice: 'Tag was destroyed.' }
       else
         @error = "Unable to delete tag. tag_id: #{params[:tag_id] || 'none'}. movie_id: #{params[:movie_id] || 'none'}"
         format.turbo_stream {}
-        format.html { redirect_to movie_path(@movie), notice: 'Tag was NOT destroyed.' }
+        format.html { redirect_to movie_path(@movie), status: :see_other, notice: 'Tag was NOT destroyed.' }
       end
     end
   end

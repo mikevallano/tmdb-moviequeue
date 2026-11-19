@@ -53,7 +53,7 @@ class ScreeningsController < ApplicationController
   def destroy
     @screening.destroy
     respond_to do |format|
-      format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully destroyed.' }
+      format.html { redirect_to movie_screenings_path(@movie), status: :see_other, notice: 'Screening was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

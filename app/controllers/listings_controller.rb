@@ -48,13 +48,13 @@ class ListingsController < ApplicationController
     @listing = Listing.find_by("list_id = ? AND movie_id = ?", params[:list_id], params[:movie_id])
     # TODO: refactor this to be more efficient
     unless current_user.all_listings.include?(@listing)
-      redirect_to user_lists_path(current_user), notice: 'not your listing.' and return
+      redirect_to user_lists_path(current_user), status: :see_other, notice: 'not your listing.' and return
     end
     @movie = Movie.find(params[:movie_id])
     @listing.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), notice: 'Movie was removed from list.' }
+      format.html { redirect_to user_list_path(@listing.list.owner, @listing.list), status: :see_other, notice: 'Movie was removed from list.' }
     end
   end
 
