@@ -68,4 +68,7 @@
   display: block;
   background: var(--color-secondary-darker);
   top: var(--nav-bar-height);
+  /* Above positioned page content (e.g. cast .name-block overlays),
+     below the movie modal (10) and autocomplete results (1000). */
+  z-index: 2;
 }
