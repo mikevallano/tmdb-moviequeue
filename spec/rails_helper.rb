@@ -28,10 +28,32 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+# Chrome's password manager can pop up a "save password" or "change your
+# password" (leaked password) dialog after a test signs in. That dialog
+# swallows keyboard input for the rest of the test, so typing in a field
+# silently does nothing. Turn those features off.
+def chrome_options_for_tests(headless:)
+  Selenium::WebDriver::Chrome::Options.new.tap do |options|
+    options.add_argument('--headless=new') if headless
+    options.add_argument('--disable-features=PasswordLeakDetection')
+    options.add_preference('credentials_enable_service', false)
+    options.add_preference('profile.password_manager_enabled', false)
+    options.add_preference('profile.password_manager_leak_detection', false)
+  end
+end
+
+Capybara.register_driver :chrome_headless_no_passwords do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options_for_tests(headless: true))
+end
+
+Capybara.register_driver :chrome_no_passwords do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options_for_tests(headless: false))
+end
+
 # To actually see the tests in the browser locally,
-# use selenium_chrome instead of selenium_chrome_headless
-# Capybara.javascript_driver = :selenium_chrome
-Capybara.javascript_driver = :selenium_chrome_headless
+# use :chrome_no_passwords instead of :chrome_headless_no_passwords
+# Capybara.javascript_driver = :chrome_no_passwords
+Capybara.javascript_driver = :chrome_headless_no_passwords
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 

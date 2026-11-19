@@ -153,7 +153,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         sign_in_user(user)
       end
 
-      scenario "search by actor returns results", skip: "Discover search broken in browser", js: true do
+      scenario "search by actor returns results", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_frances_mcdormand", :record => :new_episodes) do
           fill_in "actor_name", with: "Frances McDormand"
@@ -165,7 +165,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         expect(page).to have_css(".movies-container__poster")
       end
 
-      scenario "search by actor and year", skip: "Discover search broken in browser", js: true do
+      scenario "search by actor and year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_name", with: "Steve Buscemi"
@@ -178,7 +178,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
-      scenario "search by actor and specific year", skip: "Discover search broken in browser", js: true do
+      scenario "search by actor and specific year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_name", with: "Steve Buscemi"
@@ -192,7 +192,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
-      scenario "search by actor and before year", skip: "Discover search broken in browser", js: true do
+      scenario "search by actor and before year", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_name", with: "Steve Buscemi"
@@ -206,7 +206,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
 
-      scenario "search by actor year and mpaa rating", skip: "Discover search broken in browser", js: true do
+      scenario "search by actor year and mpaa rating", js: true do
         visit(discover_search_path)
         VCR.use_cassette("fill_in_steve_buscemi", :record => :new_episodes) do
           fill_in "actor_name", with: "Steve Buscemi"
@@ -287,29 +287,16 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         end
       end #actor tv more
 
-      xscenario "actor more info page links tv credits to credit url" do
-        # TODO: need to update to be more general
-        # See issue #247
-        VCR.use_cassette("tmdb_actor_more") do
-          click_link "Full Credits & Bio", match: :first
-        end
-        VCR.use_cassette("actor_tv_credit") do
-          click_link "episodes", match: :first
-        end
-        expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "56ad478dc3a3681c34006885", show_name: "Horace and Pete"))
-        expect(page).to have_content("Horace")
-      end #actor tv credit
-
-      xscenario "actor credit shows episodes the actor was in" do
-        # TODO: need to update to be more general
-        # See issue #247
+      scenario "actor more info page links tv credits to the episodes the actor was in" do
         VCR.use_cassette("tmdb_actor_more") do
           click_link "Full Credits & Bio", match: :first
         end
         VCR.use_cassette("actor_tv_credit2") do
-          click_link "appearance_details_portlandia", match: :first
+          click_link "Celery Salesman"
         end
-        expect(page).to have_content("Portlandia")
+        expect(current_url).to eq(actor_credit_url(actor_id: 884, credit_id: "532cc9c9c3a3685fe20005b6", show_name: "Portlandia"))
+        expect(page).to have_content("Episodes with Steve Buscemi as Celery Salesman on Portlandia")
+        expect(page).to have_content("Celery Guy")
       end #actor tv credit
 
       scenario "actor more page has actor's headshot" do

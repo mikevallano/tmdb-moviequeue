@@ -10,7 +10,7 @@
   <% end %>
 
   <% if current_user.admin? %>
-    <%= form_tag(movie_path(movie), { class: 'add-trailer', id: "add-trailer", method: :patch, data: {controller: 'trailer', action: 'input->trailer#validateInput'} } ) do %>
+    <%= form_tag(movie_path(movie), { class: 'add-trailer', id: "add-trailer", method: :patch } ) do %>
       <%= text_field_tag :trailer, nil, { placeholder: trailer_placeholder_text(movie) } %>
       <%= hidden_field_tag(:tmdb_id, movie.tmdb_id) %>
       <%#= submit_tag trailer_button_text(movie), id: "add-trailer-btn" %>

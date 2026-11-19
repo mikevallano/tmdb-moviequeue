@@ -157,21 +157,21 @@ RSpec.feature "Lists feature spec", type: :feature, feature: :true do
           .and_return(streaming_service_providers)
       end
 
-      xscenario "users can remove a movie from their list from the list show page", js: true do
-        # TODO: Need to investigate why confirm dialog is not found. See issue #247
+      scenario "users can remove a movie from their list from the list show page", js: true do
         listing
         page.driver.browser.manage.window.resize_to(1280,800)
         sign_in_user(user)
         visit(user_list_path(user, list))
-        find("##{movie.tmdb_id}")
-        find("##{movie.tmdb_id}").click
-        accept_confirm do
+        open_movie_modal(movie)
+        within("#modal_#{movie.tmdb_id}") do
           find("#remove_movie_link_movies_partial").click
+          expect(page).not_to have_link(list.name)
         end
-        # find("#remove_movie_link_movies_partial").click
-        # page.driver.browser.switch_to.alert.accept
-        wait_for_ajax
-        expect(page).not_to have_selector("##{movie.tmdb_id}")
+        expect(list.movies.reload).not_to include(movie)
+
+        # The poster stays on the page until it's reloaded
+        visit(user_list_path(user, list))
+        expect(page).not_to have_css("[id='#{movie.tmdb_id}']")
       end
     end #movie management
 

@@ -32,14 +32,17 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
     end
 
     scenario "users can search for a movie from the header", js: true do
-      skip "Need to switch to poltergiest"
-      VCR.use_cassette('movie_title_search_header') do
-        fill_in "movie_title_header", with: 'fargo'
+      # The header search is hidden on narrow (mobile) screens
+      page.driver.browser.manage.window.resize_to(1280,800)
+      allow(MovieDataService).to receive(:get_movie_titles).and_return(['Fargo'])
+
+      fill_in "movie_title_header", with: 'fargo'
+      # Keep the cassette open until the results render, since the search
+      # request is made by the server thread after Enter is pressed
+      VCR.use_cassette('movie_search_header') do
+        find_field("movie_title_header").send_keys(:return)
+        expect(page).to have_css("[id='275']")
       end
-       VCR.use_cassette('movie_search_header') do
-        find('#header_movie_search').native.send_keys(:return)
-      end
-      expect(page).to have_selector(:xpath, "//*[@id='275']")
     end
 
   end
