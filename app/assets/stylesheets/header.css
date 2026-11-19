@@ -72,3 +72,17 @@
      below the movie modal (10) and autocomplete results (1000). */
   z-index: 2;
 }
+
+/* The user menu is the last nav item, so open it leftward from the
+   right edge instead of running off-screen. */
+.dropdown-header--align-right ul.dropdown-items {
+  right: 0;
+  white-space: nowrap;
+}
+
+/* Make button_to items (e.g. Sign Out) line up with link items. */
+.dropdown-header ul.dropdown-items button.button_to {
+  font: inherit;
+  padding: 0;
+  text-align: left;
+}
