@@ -112,6 +112,11 @@ RSpec.describe ScreeningsController, type: :controller do
         delete :destroy, params: { :id => screening.to_param, movie_id: movie.id }
         expect(response).to redirect_to(movie_screenings_path(movie))
       end
+
+      it "redirects with 303 so Turbo follows with GET, not DELETE" do
+        delete :destroy, params: { :id => screening.to_param, movie_id: movie.id }
+        expect(response).to have_http_status(:see_other)
+      end
     end
 
   end #logged in user shared example

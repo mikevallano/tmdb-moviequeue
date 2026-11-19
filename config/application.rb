@@ -23,6 +23,8 @@ module TmdbMoviequeue
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
+    # Rails 8.1 behavior; silences deprecation warning. App code doesn't call to_time.
+    config.active_support.to_time_preserves_timezone = :zone
 
     ActiveSupport::Inflector.inflections(:en) do |inflect|
       inflect.acronym 'TV'

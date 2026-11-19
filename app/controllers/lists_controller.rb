@@ -72,11 +72,11 @@ class ListsController < ApplicationController
 
   def destroy
     unless @list.owner == current_user
-      redirect_to user_list_path(@list.owner, @list), notice: "Only list owners can delete lists." and return
+      redirect_to user_list_path(@list.owner, @list), status: :see_other, notice: "Only list owners can delete lists." and return
     end
     @list.destroy
     respond_to do |format|
-      format.html { redirect_to user_lists_url(current_user), notice: 'List was successfully destroyed.' }
+      format.html { redirect_to user_lists_url(current_user), status: :see_other, notice: 'List was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

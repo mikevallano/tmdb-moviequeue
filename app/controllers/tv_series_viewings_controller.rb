@@ -47,7 +47,7 @@ class TVSeriesViewingsController < ApplicationController
 
   def destroy
     @tv_series_viewing.destroy
-    redirect_to tv_series_viewings_path, notice: 'Successfully deleted viewing.'
+    redirect_to tv_series_viewings_path, status: :see_other, notice: 'Successfully deleted viewing.'
   end
 
   private

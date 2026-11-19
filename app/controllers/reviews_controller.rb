@@ -52,7 +52,7 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     respond_to do |format|
-      format.html { redirect_to movie_url(@movie), notice: 'Review was successfully destroyed.' }
+      format.html { redirect_to movie_url(@movie), status: :see_other, notice: 'Review was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
