@@ -8,7 +8,6 @@ gem 'rails', '~> 7.2.3.2'
 gem 'active_hash', '~> 3.3', '>= 3.3.1'
 gem 'puma', '7.2.1'
 gem 'pg', '~> 1.1'
-gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'hotwire-rails'
