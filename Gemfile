@@ -54,7 +54,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
-  gem 'rubocop-rspec'
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'letter_opener'
   gem 'capybara-email'
 end
