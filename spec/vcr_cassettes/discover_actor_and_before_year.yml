@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Steve%20Buscemi
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=Steve%20Buscemi
     body:
       encoding: US-ASCII
       string: ''
@@ -73,7 +73,7 @@ http_interactions:
   recorded_at: Thu, 11 Nov 2021 01:04:23 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=<TMDB_API_KEY>&certification=&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
     body:
       encoding: US-ASCII
       string: ''
@@ -125,7 +125,7 @@ http_interactions:
   recorded_at: Thu, 11 Nov 2021 01:04:23 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification=&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=<TMDB_API_KEY>&certification=&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=revenue.desc&with_companies=&with_genres=&with_people=884
     body:
       encoding: US-ASCII
       string: ''
@@ -177,7 +177,7 @@ http_interactions:
   recorded_at: Thu, 11 Nov 2021 01:04:23 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=popularity.desc&with_people=884
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=<TMDB_API_KEY>&certification_country=US&page=1&primary_release_date.lte=1997-01-01&sort_by=popularity.desc&with_people=884
     body:
       encoding: US-ASCII
       string: ''
