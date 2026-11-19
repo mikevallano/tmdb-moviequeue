@@ -53,6 +53,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.0'
   gem 'factory_bot_rails'
   gem 'rails-erd', require: false # generates table diagram run `bundle exec erd`
+  gem 'brakeman', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener'
@@ -65,7 +66,7 @@ group :test do
     gem 'capybara', '~> 3.40' # Ruby 3.4 compatibility (fixes Rack::Handler errors)
     gem 'database_cleaner'
     gem 'launchy'
-    gem 'webdrivers'
+    gem 'selenium-webdriver' # manages chromedriver itself (Selenium Manager)
     gem 'vcr'
     gem 'webmock'
 end

@@ -16,7 +16,6 @@ require 'support/mailer_helpers'
 require 'support/vcr'
 require 'capybara/email/rspec'
 require 'support/wait_for_ajax'
-require 'webdrivers/chromedriver'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -27,21 +26,6 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-# Potential fix for CI problems
-# capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-#   chromeOptions: {
-#     args: %w[
-#       headless disable-gpu no-sandbox
-#       --window-size=1980,1080 --enable-features=NetworkService,NetworkServiceInProcess
-#     ]
-#   }
-# )
-
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: chrome)
-  # Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
 
 # To actually see the tests in the browser locally,
