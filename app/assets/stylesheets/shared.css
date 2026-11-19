@@ -41,14 +41,22 @@ table th {
   padding: 5px;
 }
 
-/* // jquery AUTO COMPLETE autocomplete */
-ul.ui-autocomplete {
+/* Autocomplete dropdown (controllers/autocomplete_controller.js) */
+ul.autocomplete-results {
+  position: absolute;
+  z-index: 1000;
   list-style: none;
   max-width: 450px;
+  margin: 0;
   padding: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-ul.ui-autocomplete li {
+ul.autocomplete-results[hidden] {
+  display: none;
+}
+
+ul.autocomplete-results li {
   text-align: left;
   background: white;
   color: black;
@@ -57,16 +65,10 @@ ul.ui-autocomplete li {
   padding: 5px;
 }
 
-ul.ui-autocomplete li:hover {
+ul.autocomplete-results li:hover,
+ul.autocomplete-results li.active {
   background: darkgrey;
   color: white;
-}
-
-/* jquery autocomplete renders a div */
-/* that sticks around with the value of the */
-/* autocomplete. */
-.ui-helper-hidden-accessible {
-  display: none;
 }
 
 @media (max-width: 768px) {

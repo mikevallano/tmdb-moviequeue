@@ -6,7 +6,7 @@
   <h2>All fields are optional. Search by whatever you want.</h2>
   <%= form_tag '/tmdb/discover_search', { class: 'form', method: :get } do %>
       <div>
-        <%= text_field_tag :actor_name, nil, class: "autocomplete-search-field", placeholder: "Enter Actor Name", data: { autocomplete_source: person_autocomplete_path } %>
+        <%= text_field_tag :actor_name, nil, placeholder: "Enter Actor Name", data: { controller: "autocomplete", autocomplete_url_value: person_autocomplete_path } %>
         <%= select_tag :genre, options_for_select(MovieDataService::GENRES), include_blank: "Pick a genre" %>
       </div>
       <div>

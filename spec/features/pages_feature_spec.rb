@@ -26,7 +26,7 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
 
       fill_in "movie_title", with: 'farg'
 
-      within('.ui-autocomplete') do
+      within('.autocomplete-results') do
         expect(page).to have_content('Fargo')
       end
     end

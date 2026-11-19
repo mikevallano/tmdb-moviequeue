@@ -12,7 +12,7 @@
     <li class="mobile-hidden">
       <%= form_tag '/tmdb/search',
         { class: "header-movie-search", method: :get } do %>
-          <%= text_field_tag :movie_title_header, nil, class: "autocomplete-auto-submit", placeholder: "Search for a Movie", data: { autocomplete_source: movie_autocomplete_path } %>
+          <%= text_field_tag :movie_title_header, nil, placeholder: "Search for a Movie", data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path, autocomplete_submit_value: true } %>
       <% end %>
     </li>
 
