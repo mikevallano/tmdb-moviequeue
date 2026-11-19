@@ -11,7 +11,7 @@
       </p>
 
     <% else %>
-        <%= form_for [movie, Rating.new], html: { class: 'modal-rating', data: {controller: 'auto-submit', action: 'input->auto-submit#submit'} } do |f| %>
+        <%= form_for [movie, Rating.new], html: { class: 'modal-rating', data: {controller: 'auto-submit', action: 'change->auto-submit#submit'} } do |f| %>
           <%= f.hidden_field :user_id, value: current_user.id %>
           <%= f.hidden_field :movie_id, value: movie.id %>
           <%= hidden_field_tag :from, "list_show" if @list.present? %>

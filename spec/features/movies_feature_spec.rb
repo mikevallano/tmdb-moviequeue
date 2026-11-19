@@ -85,7 +85,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           expect(page).not_to have_selector("#mark_watched_link_movie_show")
         end
 
-        scenario 'update the movie trailer', skip: "Form submit via Enter key needs JS debugging", js: true do
+        scenario 'update the movie trailer', js: true do
           youtube_id = '73829hsuhf'
           sign_in_user(admin_user)
           movie.update(trailer: nil) # Clear existing trailer
@@ -93,8 +93,8 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           trailer_field = find_field('trailer')
           trailer_field.fill_in(with: "https://www.youtube.com/watch?v=#{youtube_id}")
           trailer_field.send_keys(:return)
-          wait_for_ajax
-          expect(movie.reload.trailer).to eq(youtube_id) #updates the trailer
+          expect(page).to have_css("iframe[src*='#{youtube_id}']")
+          expect(movie.reload.trailer).to eq(youtube_id)
         end
 
         scenario 'non-admin should not see trailer field' do
@@ -110,7 +110,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             listing
           end
 
-          scenario "users can add tags to a movie from the movie show page", skip: "Form submit via Enter key not working in test environment", js: true do
+          scenario "users can add tags to a movie from the movie show page", js: true do
             visit(movie_path(movie))
             tag_field = find_field("tag_list")
             tag_field.fill_in(with: "dark comedy, spooky")
@@ -121,7 +121,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             expect(page).to have_content("spooky")
           end #user can tag movie
 
-          scenario "user can remove tags from the movie show page", skip: "Needs JS debugging", js: true do
+          scenario "user can remove tags from the movie show page", js: true do
             visit(movie_path(movie))
             tag_field = find_field("tag_list")
             tag_field.fill_in(with: "dark comedy")
@@ -134,18 +134,18 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             expect(page).not_to have_content("dark-comedy")
           end
 
-          scenario "movie seen but not yet rated shows field to rate movie then shows rating after created", skip: "Dropdown auto-submit not working in test environment", js: true do
+          scenario "movie seen but not yet rated shows field to rate movie then shows rating after created", js: true do
             screening
             visit(movie_path(movie))
             expect(page).to have_selector("#rating_value")
             select "5", :from => "rating[value]"
             # Wait for Turbo to replace the rating div with the unique ID
             find("#movie_rating_#{movie.tmdb_id}")
-            expect(page).to have_content("Your Enjoyment:")
+            expect(page).to have_content(/your enjoyment:/i)
             expect(page).to have_content("5/10")
           end
 
-          scenario "unwatched movie has a button to mark as watched", skip: "this is flaky", js: true do
+          scenario "unwatched movie has a button to mark as watched", js: true do
             visit(movie_path(movie))
             expect(page).to have_button("mark_watched_link_movies_partial")
             click_button "mark_watched_link_movies_partial", match: :first
@@ -258,29 +258,27 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             page.driver.browser.manage.window.resize_to(1280,800)
             sign_in_user(user)
             visit(movies_path)
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']")
           end
 
           scenario "movie not yet watched doesn't show field to rate movie", js: true do
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
+            open_movie_modal(movie)
             expect(page).not_to have_selector("#rating_value")
           end
 
-          scenario "movie that has been watched shows field to rate movie", skip: "Modal from movies index needs JS debugging", js: true do
+          scenario "movie that has been watched shows field to rate movie", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            # Wait for modal content to load
-            expect(page).to have_selector("#rating_value", visible: true, wait: 10)
-            select "5", :from => "rating[value]", match: :first
-            expect(page).to have_content("5")
+            open_movie_modal(movie)
+            expect(page).to have_selector("#rating_value")
+            select "5", from: "rating[value]"
+            expect(page).to have_content(%r{your enjoyment:\s*5/10}i)
+            expect(Rating.last.value).to eq(5)
           end
 
-          scenario "movie rated by user shows their rating", skip: "Modal from movies index needs JS debugging", js: true do
+          scenario "movie rated by user shows their rating", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
             create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            # Wait for modal content to load
-            expect(page).to have_content("Your Enjoyment:", wait: 10)
+            open_movie_modal(movie)
+            expect(page).to have_content(%r{your enjoyment:\s*5/10}i)
             expect(page).to have_link("Edit")
           end
 
@@ -301,7 +299,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
 
           scenario "if the movie has been watched, there is no link to mark as watched", js: true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
+            open_movie_modal(movie)
             expect(page).not_to have_button("mark_watched_link_movies_partial")
           end
         end #rating, reviews, marking watched

@@ -40,6 +40,16 @@ module FeatureHelpers
     @current_user = User.find_by_email(user.email)
   end
 
+  # Clicks a movie poster's button, which loads the modal content via Turbo,
+  # and waits for the real content to replace the placeholder
+  def open_movie_modal(movie)
+    find("[id='#{movie.tmdb_id}'] .modal-linker").click
+    within("#modal_#{movie.tmdb_id}") do
+      expect(page).to have_css(".close")
+      expect(page).not_to have_css(".placeholder-content")
+    end
+  end
+
   def api_search_for_movie
     VCR.use_cassette('fill_in_title_search') do
       fill_in "movie_title", with: 'Fargo'
@@ -47,31 +57,6 @@ module FeatureHelpers
      VCR.use_cassette('tmdb_search') do
       click_button "Search"
     end
-  end
-
-  def sign_up_api_search_then_add_movie_to_list
-    sign_up_with(email, username, "password")
-    visit(api_search_path)
-    api_search_for_movie
-
-    select "my queue", :from => "listing[list_id]", match: :first
-    VCR.use_cassette('tmdb_add_movie') do
-      click_button "add_to_list_button_movies_partial", match: :first
-    end
-  end
-
-  def api_movie_more_info
-    VCR.use_cassette('tmdb_movie_more') do
-      click_link "movie_more_link_movie_partial", match: :first
-    end
-  end
-
-  def api_search_for_movie_then_movie_more
-    sign_up_with(email, username, "password")
-    visit(api_search_path)
-    api_search_for_movie
-
-    api_movie_more_info
   end
 
   def sign_in_and_create_list
