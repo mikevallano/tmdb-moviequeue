@@ -39,7 +39,7 @@ jobs:
         run: bin/importmap audit
 
   lint_ruby:
-    if: false # Disabled: Set to true to enable StandardRB linting. This will also require setting up the gem.
+    if: true # Enabled: RuboCop with .rubocop_todo.yml baseline for existing offenses
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,7 +54,7 @@ jobs:
         if: github.actor == 'dependabot[bot]'
         run: bundle config set frozen false
       - name: Lint code for consistent style
-        run: bundle exec standardrb
+        run: bundle exec rubocop --format github
 
   feature_specs:
     if: true # Enabled: Set to false to disable feature/system tests
