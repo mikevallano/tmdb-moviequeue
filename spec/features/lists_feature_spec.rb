@@ -17,7 +17,6 @@ RSpec.feature "Lists feature spec", type: :feature, feature: :true do
     let(:fargo_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: fargo.id) }
     let(:no_country_listing) { FactoryBot.create(:listing, list_id: list.id, movie_id: no_country.id) }
     let(:list) { FactoryBot.create(:list, owner_id: user.id) }
-    let(:list1) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
     let(:list2) { FactoryBot.create(:list, owner_id: user2.id) }
     let(:list3) { FactoryBot.create(:list, owner_id: user.id) }
     let(:public_list) { FactoryBot.create(:list, :owner => user, :is_public => true) }
@@ -156,27 +155,6 @@ RSpec.feature "Lists feature spec", type: :feature, feature: :true do
         allow(MovieDataService)
           .to receive(:get_movie_streaming_service_providers)
           .and_return(streaming_service_providers)
-      end
-
-      xscenario "users can add a movie to their list", js: true do
-        # TODO: failing due to list selection. See issue #247
-        list1
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user)
-        visit(api_search_path)
-        VCR.use_cassette('tmdb_search', :match_requests_on => [:body]) do
-          fill_in "movie_title", with: 'fargo'
-          click_button "search_by_title_button"
-        end
-        click_link("modal_link_275")
-        select "my queue", :from => "listing[list_id]", match: :first
-        VCR.use_cassette('tmdb_add_movie', :match_requests_on => [:body]) do
-          click_button "add_to_list_button_movies_partial", match: :first
-        end
-        wait_for_ajax
-        click_link("show_list_link_on_list_movies_partial")
-        wait_for_ajax
-        expect(page).to have_selector("#275")
       end
 
       xscenario "users can remove a movie from their list from the list show page", js: true do

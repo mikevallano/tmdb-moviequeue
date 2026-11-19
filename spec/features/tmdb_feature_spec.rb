@@ -7,7 +7,6 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
     let(:user) { FactoryBot.create(:user) }
     let(:email) { FFaker::Internet.email }
     let(:username) { FFaker::Internet.user_name }
-    let(:list) { FactoryBot.create(:list, name: "my queue", owner_id: user.id) }
     let(:fake_provider) {
       provider = OpenStruct.new(display_name: "FakeFlix")
       provider.define_singleton_method(:title_search_url) { |title| "http://www.fakeflix.com/search/#{title}" }
@@ -221,69 +220,7 @@ RSpec.feature "TMDB feature spec", type: :feature, feature: :true do
         wait_for_ajax
         expect(page).to have_selector(:xpath, "//*[@id='275']")
       end
-
-      # TODO: Either fix this up or remove it. See issue #247
-      # scenario "search by actor year and sort by popularity", js: true do
-      #   skip "vcr issues"
-      #   visit(discover_search_path)
-      #   VCR.use_cassette("fill_in_steve_buscemi") do
-      #     fill_in "actor_name", with: "Steve Buscemi"
-      #   end
-      #     select "1996", :from => "date[year]"
-      #     select "Popularity", :from => "sort_by"
-      #   VCR.use_cassette("discover_actor_year_and_sort") do
-      #     click_button "Search"
-      #   end
-      #   wait_for_ajax
-      #   expect(page).to have_selector(:xpath, "//*[@id='275']")
-      # end
-
-      # scenario "search by genre year and sort", js: true do
-      #   skip "vcr issues"
-      #   visit(discover_search_path)
-      #   VCR.use_cassette("discover_genre_year_sort") do
-      #     select "1996", :from => "date[year]"
-      #     select "Crime", :from => "genre"
-      #     select "Popularity", :from => "sort_by"
-      #     click_button "Search"
-      #   end
-      #   wait_for_ajax
-      #   expect(page).to have_selector(:xpath, "//*[@id='275']")
-      # end
     end #discover searches
-
-    xdescribe "movie added to the database" do
-      # TODO failing because the selector for adding to a list needs to autocomplete
-      # See issue #247
-      before(:each) do
-        list
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user)
-        visit(api_search_path)
-        api_search_for_movie
-        find(:xpath, "//*[@id='275']").click
-        wait_for_ajax
-        select "my queue", :from => "listing[list_id]", match: :first
-        VCR.use_cassette('tmdb_add_movie') do
-          click_button "add_to_list_button_movies_partial", match: :first
-        end
-        wait_for_ajax
-        find("#show_list_link_on_list_movies_partial")
-      end
-
-      scenario "movie is added to the database if a user adds it to their list", js: true do
-        expect(Movie.last.title).to eq("Fargo")
-        #has genres
-        expect(Movie.last.genres).to include("Crime")
-        #has actors
-        expect(Movie.last.actors).to include("Steve Buscemi")
-        #has director info
-        expect(Movie.last.director).to eq("Joel Coen")
-        expect(Movie.last.director_id).to eq(1223)
-        #has mpaa rating
-        expect(Movie.last.mpaa_rating).to eq("R")
-      end
-    end #movie added to the database
 
     describe "actor searches that drill down to tv" do
       before(:each) do

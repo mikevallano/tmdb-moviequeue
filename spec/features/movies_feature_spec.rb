@@ -201,48 +201,6 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
           expect(page).not_to have_link("Next")
         end #pagination
 
-        xcontext "tagging" do
-          # TODO: Needs to be fixed. See issue #247
-          before(:each) do
-            listing
-            page.driver.browser.manage.window.resize_to(1280,800)
-            sign_in_user(user)
-            visit(movies_path)
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']")
-          end
-
-          scenario "users can tag a movie from movies index page", js: true do
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            fill_in "tag_list", with: "dark comedy, spooky"
-            click_button "add_tags_button_movies_partial"
-            wait_for_ajax
-            expect(page).to have_content("dark-comedy")
-            expect(page).to have_content("spooky")
-          end #user can tag movie
-
-          scenario "user can click a tag to see movies with that tag", js: true do
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            fill_in "tag_list", with: "dark comedy, spooky"
-            click_button "add_tags_button_movies_partial"
-            wait_for_ajax
-            click_link "spooky"
-            wait_for_ajax
-            expect(page).to have_selector(:xpath, "//*[@id='#{movie.tmdb_id}']")
-          end
-
-          scenario "user can remove tags", js: true do
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            fill_in "tag_list", with: "dark comedy"
-            click_button "add_tags_button_movies_partial", match: :first
-            wait_for_ajax
-            expect(page).to have_content("dark-comedy")
-            find("#remove_tag_link_movies_partial").click
-            wait_for_ajax
-            expect(page).not_to have_content("dark-comedy")
-          end
-
-        end #tagging context
-
         context "pagination" do
           scenario "movies index paginates the movies by tag" do
             sign_in_user(user)
@@ -339,16 +297,6 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             # Reviews are only accessible from movie show page, not modal
             visit(movie_path(movie))
             expect(page).to have_content(movie.reviews.first.body)
-          end
-
-          xscenario "link to mark as watched if not watched, link marks as watched", js: true do
-          # TODO: Flickering. See issue #247
-            find(:xpath, "//*[@id='#{movie.tmdb_id}']").click
-            expect(page).not_to have_selector("#add_screening_link_movies_partial")
-            click_link "mark_watched_link_movies_partial", match: :first
-            expect(page).not_to have_selector("#show_review_link_movies_partial") #no link to mark as watched
-            find("#add_screening_link_movies_partial")
-            expect(page).to have_selector("#add_screening_link_movies_partial") #link to view screenings
           end
 
           scenario "if the movie has been watched, there is no link to mark as watched", js: true do
