@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/credit/532cc9c9c3a3685fe20005b6?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/credit/532cc9c9c3a3685fe20005b6?api_key=<TMDB_API_KEY>
     body:
       encoding: US-ASCII
       string: ''

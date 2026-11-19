@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=kjshfkajfhg
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=kjshfkajfhg
     body:
       encoding: US-ASCII
       string: ''
@@ -54,7 +54,7 @@ http_interactions:
   recorded_at: Thu, 24 Feb 2022 01:01:01 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=iooitiyutiy
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=iooitiyutiy
     body:
       encoding: US-ASCII
       string: ''
@@ -106,7 +106,7 @@ http_interactions:
   recorded_at: Thu, 24 Feb 2022 01:01:07 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=RYTF
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=RYTF
     body:
       encoding: US-ASCII
       string: ''

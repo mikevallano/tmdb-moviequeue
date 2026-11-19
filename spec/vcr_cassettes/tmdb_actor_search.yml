@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=William%20H%20Macy
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=William%20H%20Macy
     body:
       encoding: US-ASCII
       string: ''
@@ -74,7 +74,7 @@ http_interactions:
   recorded_at: Sat, 12 Feb 2022 22:00:12 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification_country=US&page=1&sort_by=popularity.desc&with_people=3905
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=<TMDB_API_KEY>&certification_country=US&page=1&sort_by=popularity.desc&with_people=3905
     body:
       encoding: US-ASCII
       string: ''

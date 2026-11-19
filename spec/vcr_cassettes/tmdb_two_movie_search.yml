@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Fargo
+    uri: https://api.themoviedb.org/3/search/movie?api_key=<TMDB_API_KEY>&query=Fargo
     body:
       encoding: US-ASCII
       string: ''
@@ -174,7 +174,7 @@ http_interactions:
   recorded_at: Fri, 31 Dec 2021 23:03:04 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=The%20Big%20Lebowski
+    uri: https://api.themoviedb.org/3/search/movie?api_key=<TMDB_API_KEY>&query=The%20Big%20Lebowski
     body:
       encoding: US-ASCII
       string: ''
@@ -238,7 +238,7 @@ http_interactions:
   recorded_at: Fri, 31 Dec 2021 23:03:04 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/movie/275?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&append_to_response=trailers,credits,releases
+    uri: https://api.themoviedb.org/3/movie/275?api_key=<TMDB_API_KEY>&append_to_response=trailers,credits,releases
     body:
       encoding: US-ASCII
       string: ''
@@ -303,7 +303,7 @@ http_interactions:
   recorded_at: Fri, 31 Dec 2021 23:03:04 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/movie/115?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&append_to_response=trailers,credits,releases
+    uri: https://api.themoviedb.org/3/movie/115?api_key=<TMDB_API_KEY>&append_to_response=trailers,credits,releases
     body:
       encoding: US-ASCII
       string: ''

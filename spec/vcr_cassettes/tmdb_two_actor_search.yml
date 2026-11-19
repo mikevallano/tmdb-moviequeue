@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=Steve%20Buscemi
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=Steve%20Buscemi
     body:
       encoding: US-ASCII
       string: ''
@@ -72,7 +72,7 @@ http_interactions:
   recorded_at: Thu, 24 Feb 2022 00:49:09 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/search/person?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&query=John%20Goodman
+    uri: https://api.themoviedb.org/3/search/person?api_key=<TMDB_API_KEY>&query=John%20Goodman
     body:
       encoding: US-ASCII
       string: ''
@@ -125,7 +125,7 @@ http_interactions:
   recorded_at: Thu, 24 Feb 2022 00:49:10 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/discover/movie?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188&certification_country=US&page=1&sort_by=popularity.desc&with_people=884,1230
+    uri: https://api.themoviedb.org/3/discover/movie?api_key=<TMDB_API_KEY>&certification_country=US&page=1&sort_by=popularity.desc&with_people=884,1230
     body:
       encoding: US-ASCII
       string: ''

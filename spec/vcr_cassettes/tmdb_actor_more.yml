@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/person/884?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/person/884?api_key=<TMDB_API_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -65,7 +65,7 @@ http_interactions:
   recorded_at: Sun, 13 Feb 2022 16:26:06 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/person/884/movie_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/person/884/movie_credits?api_key=<TMDB_API_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -128,7 +128,7 @@ http_interactions:
   recorded_at: Sun, 13 Feb 2022 16:26:07 GMT
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/person/884/tv_credits?api_key=3fb5f9a5dbd80d943fdccf6bd1e7f188
+    uri: https://api.themoviedb.org/3/person/884/tv_credits?api_key=<TMDB_API_KEY>
     body:
       encoding: US-ASCII
       string: ''
