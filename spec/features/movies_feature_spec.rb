@@ -270,7 +270,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             open_movie_modal(movie)
             expect(page).to have_selector("#rating_value")
             select "5", from: "rating[value]"
-            expect(page).to have_content(/your enjoyment:\s*5\/10/i)
+            expect(page).to have_content(%r{your enjoyment:\s*5/10}i)
             expect(Rating.last.value).to eq(5)
           end
 
@@ -278,7 +278,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id)
             create(:rating, user_id: @current_user.id, movie_id: @current_user.movies.last.id, value: 5)
             open_movie_modal(movie)
-            expect(page).to have_content(/your enjoyment:\s*5\/10/i)
+            expect(page).to have_content(%r{your enjoyment:\s*5/10}i)
             expect(page).to have_link("Edit")
           end
 

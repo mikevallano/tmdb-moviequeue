@@ -33,7 +33,7 @@ RSpec.feature "Pages feature spec", type: :feature, feature: :true do
 
     scenario "users can search for a movie from the header", js: true do
       # The header search is hidden on narrow (mobile) screens
-      page.driver.browser.manage.window.resize_to(1280,800)
+      page.driver.browser.manage.window.resize_to(1280, 800)
       allow(MovieDataService).to receive(:get_movie_titles).and_return(['Fargo'])
 
       fill_in "movie_title_header", with: 'fargo'
