@@ -241,24 +241,6 @@ RSpec.describe ListsController, type: :controller do
       end
     end
 
-    # TODO: remove in https://github.com/mikevallano/tmdb-moviequeue/issues/403
-    xdescribe "GET #show when the list is public" do
-
-      it "shows the public_show template if current_user.all_lists doesn't include list" do
-        public_list
-        current_user2
-        get :show, params: { :id => public_list.to_param, :user_id => user.to_param }
-        expect(response).to render_template(:public_show)
-      end
-
-      it "renders the show template if current_user.all_lists does include list" do
-        public_list
-        current_user
-        get :show, params: { :id => public_list.to_param, :user_id => user.to_param }
-        expect(response).to render_template(:show)
-      end
-    end
-
     describe "GET #show" do
       before(:example) do
         get :show, params: { :id => list2.to_param, user_id: user2.to_param }

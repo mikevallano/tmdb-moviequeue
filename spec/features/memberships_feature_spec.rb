@@ -61,57 +61,5 @@ RSpec.feature "Memberships feature spec", type: :feature, feature: :true do
 
     end #without JS
 
-    context "with JS" do
-
-      before(:each) do
-        movie1
-        list
-        listing1
-        membership1
-        membership2
-        tagging1
-        tagging2
-      end
-
-      scenario "users update priorities on lists they're a member of", skip: "Priority editing removed from modal", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
-        puts "current_url before sign_in : #{current_url} *****"
-        sign_in_user(user2)
-        visit(user_list_path(user1, list))
-        sleep(1)
-        puts "current_url : #{current_url} *****"
-        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
-        wait_for_ajax
-        select "High", :from => "priority"
-        click_button "add_priority_button_movies_partial"
-        wait_for_ajax
-        expect(page).to have_content("High")
-        expect(Listing.last.priority).to eq(4)
-      end
-
-      scenario "users can see other members' tags but not other users' tags", skip: "Tag viewing removed from modal", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user2)
-        visit(user_list_path(user1, list))
-        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
-        wait_for_ajax
-        expect(page).to have_content(tag1.name)
-        expect(page).not_to have_content(tag2.name)
-      end
-
-      scenario "users can click other member's tags and see tagged movies", skip: "Tag interaction removed from modal", js: true do
-        page.driver.browser.manage.window.resize_to(1280,800)
-        sign_in_user(user2)
-        wait_for_ajax
-        visit(user_list_path(user1, list))
-        find(:xpath, "//*[@id='#{movie1.tmdb_id}']").click
-        wait_for_ajax
-        click_link "#{tag1.name}"
-        wait_for_ajax
-        expect(page).to have_selector("#modal_link_#{movie1.tmdb_id}")
-      end
-
-    end #with JS
-
   end
 end #final
