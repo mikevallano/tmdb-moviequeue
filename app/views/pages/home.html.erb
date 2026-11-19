@@ -5,7 +5,7 @@
 
 <% if current_user.present? %>
   <%= form_tag '/tmdb/search', { method: :get } do %>
-    <%= text_field_tag :movie_title, nil, class: "autocomplete-auto-submit", placeholder: "Enter Movie Title", data: { autocomplete_source: movie_autocomplete_path }  %>
+    <%= text_field_tag :movie_title, nil, placeholder: "Enter Movie Title", data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path, autocomplete_submit_value: true }  %>
     <%= submit_tag "Search" %>
   <% end %>
 

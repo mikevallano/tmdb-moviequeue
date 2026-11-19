@@ -11,16 +11,14 @@
   <% end %>
   <%= form_tag '/tmdb/two_actor_search', { class: "form", method: :get } do %>
     <%= text_field_tag :actor, nil,
-      class: "autocomplete-search-field",
       required: true,
       placeholder: "Enter Actor One's Name",
-      data: { autocomplete_source: person_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: person_autocomplete_path }
     %>
     <%= text_field_tag :actor2, nil,
-      class: "autocomplete-search-field",
       required: true,
       placeholder: "Enter Actor Two's Name",
-      data: { autocomplete_source: person_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: person_autocomplete_path }
     %>
     <%= submit_tag "Search" %>
   <% end %>

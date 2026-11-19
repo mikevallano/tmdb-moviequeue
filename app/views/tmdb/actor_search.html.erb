@@ -4,10 +4,10 @@
 <% if @results&.actor.blank? %>
   <%= form_tag '/tmdb/actor_search', { class: "form", method: :get } do %>
     <%= text_field_tag :actor, nil,
-      class: "search-form autocomplete-search-field",
+      class: "search-form",
       required: true,
       placeholder: "Enter Actor Name",
-      data: { autocomplete_source: person_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: person_autocomplete_path }
     %>
     <%= select_tag :sort_by,
       options_for_select(MovieDataService::SORT_BY),

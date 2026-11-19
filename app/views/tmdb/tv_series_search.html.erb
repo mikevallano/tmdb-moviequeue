@@ -3,10 +3,9 @@
 <h2>Search for a TV Show by Title</h2>
 <%= form_tag '/tmdb/tv_series_search', { class: "form", method: :get } do %>
   <%= text_field_tag :show_title, nil,
-    class: "autocomplete-auto-submit",
     placeholder: "Enter TV Show Title",
     required: true,
-    data: { autocomplete_source: tv_series_autocomplete_path }
+    data: { controller: "autocomplete", autocomplete_url_value: tv_series_autocomplete_path, autocomplete_submit_value: true }
   %>
   <%= submit_tag "Search" %>
 <% end %>

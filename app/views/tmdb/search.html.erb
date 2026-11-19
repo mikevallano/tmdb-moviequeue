@@ -12,10 +12,9 @@
   <h1>Search for a Movie by Title</h1>
   <%= form_tag '/tmdb/search', { class: "form", method: :get } do %>
     <%= text_field_tag :movie_title, nil,
-      class: "autocomplete-auto-submit",
       required: true,
       placeholder: "Enter Movie Title",
-      data: { autocomplete_source: movie_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path, autocomplete_submit_value: true }
     %>
     <%= submit_tag "Search" %>
   <% end %>
@@ -32,10 +31,9 @@
     <!--TODO: clean this up to not repeat the form-->
     <%= form_tag '/tmdb/search', { method: :get } do %>
       <%= text_field_tag :movie_title, nil,
-        class: "autocomplete-auto-submit",
         required: true,
         placeholder: "Enter Movie Title",
-        data: { autocomplete_source: movie_autocomplete_path }
+        data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path, autocomplete_submit_value: true }
       %>
       <%= submit_tag "Search Again" %>
     <% end %>

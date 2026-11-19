@@ -4,16 +4,14 @@
   <p>Enter two movies and see which actors have been in both movies.</p>
   <%= form_tag '/tmdb/two_movie_search', { class: "form", method: :get } do %>
     <%= text_field_tag :movie_one, nil,
-      class: "autocomplete-search-field",
       required: true,
       placeholder: "Enter Movie Title",
-      data: { autocomplete_source: movie_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path }
     %>
     <%= text_field_tag :movie_two, nil,
-      class: "autocomplete-search-field",
       required: true,
       placeholder: "Enter Movie Title",
-      data: { autocomplete_source: movie_autocomplete_path }
+      data: { controller: "autocomplete", autocomplete_url_value: movie_autocomplete_path }
     %>
     <%= submit_tag "Search" %>
   <% end %>
