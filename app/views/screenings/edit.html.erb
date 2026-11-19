@@ -4,4 +4,4 @@
 
 <%= render partial: 'form', locals: { movie: @movie, screening: @screening } %>
 
-<%= button_to 'Delete', movie_screening_path(@movie, @screening), method: :delete, data: { confirm: 'Are you sure you want to delete this screening? This action cannot be undone.' } %>
+<%= button_to 'Delete', movie_screening_path(@movie, @screening), method: :delete %>

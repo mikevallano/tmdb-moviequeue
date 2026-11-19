@@ -10,6 +10,6 @@
 
   <% if current_user == review.user %>
     <%= link_to 'Edit Review', edit_movie_review_path(@movie, review), class: 'btn' %>
-    <%= link_to 'Delete', movie_review_path(@movie, review), class: 'btn', method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Delete', movie_review_path(@movie, review), class: 'btn', data: { turbo_method: :delete } %>
   <% end %>
 <% end %>

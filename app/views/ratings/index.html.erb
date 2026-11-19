@@ -21,7 +21,7 @@
         <td>
         <% if current_user == rating.user %>
           <%= link_to 'Edit', edit_movie_rating_path(@movie, rating), class: 'btn' %>
-          <%= link_to 'Delete', movie_rating_path(@movie, rating), class: 'btn', method: :delete, data: { confirm: 'Are you sure you want to delete this rating? This action cannot be undone.' } %>
+          <%= link_to 'Delete', movie_rating_path(@movie, rating), class: 'btn', data: { turbo_method: :delete } %>
         <% end %>
         </td>
       </tr>
