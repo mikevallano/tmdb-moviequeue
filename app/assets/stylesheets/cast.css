@@ -97,13 +97,24 @@ ul.common-actor-results li {
 
 /* pixel 6 */
 @media (max-width: 415px) {
+  /* Headshots grow on mobile, so the fixed desktop row heights would make rows overlap.
+     Let rows size to content, and cancel the space the name-block overlay leaves behind. */
+  .cast-container,
+  .season-cast .cast-container {
+    grid-template-rows: none;
+  }
+
+  .name-block {
+    margin-bottom: -60px;
+  }
+
   .headshot-container img {
     width: 170px;
   }
   .cast-container {
     grid-template-columns: 170px 170px;
     column-gap: 20px;
-    row-gap: 5px;
+    row-gap: 20px;
   }
 
   .name-block {
@@ -118,7 +129,7 @@ ul.common-actor-results li {
   }
   .cast-container {
     column-gap: 20px;
-    row-gap: 5px;
+    row-gap: 20px;
     grid-template-columns: 140px 140px;
   }
 
