@@ -39,6 +39,18 @@ RSpec.describe SuggestionsController, type: :request do
       expect(response.body).to include("nothing")
     end
 
+    it "does not scope the movie modal links to the selected list" do
+      list = create(:list, owner: user)
+      movie = create(:movie)
+      results = OpenStruct.new(movies: [movie], not_found_message: nil)
+      allow(MovieSuggestionService).to receive(:get_suggestions).and_return(results)
+
+      get movie_suggestions_path(list_id: list.id)
+
+      expect(response.body).to include(movie_modal_path(tmdb_id: movie.tmdb_id))
+      expect(response.body).not_to include("list_id=#{list.id}")
+    end
+
     it "caps the query length" do
       results = OpenStruct.new(movies: [], not_found_message: "nothing")
       expect(MovieSuggestionService).to receive(:get_suggestions)
