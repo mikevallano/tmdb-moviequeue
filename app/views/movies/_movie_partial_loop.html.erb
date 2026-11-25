@@ -7,7 +7,7 @@
     <%= render 'movies/modal_for_preload', movie: movie %>
     <%= content_tag :div, data: {controller: 'modal', action: 'click->modal#openModal'}, id: movie.tmdb_id, class: 'movies-container__poster' do %>
       <%= button_to image_for(movie),
-        movie_modal_path(tmdb_id: movie.tmdb_id, list_id: @list&.id),
+        movie_modal_path(tmdb_id: movie.tmdb_id, list_id: local_assigns[:list]&.id),
         class: 'modal-linker'
       %>
       <% if movie.respond_to?(:labels) && movie.labels.present? %>
