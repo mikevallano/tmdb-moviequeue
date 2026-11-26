@@ -1,7 +1,7 @@
 <%= turbo_stream.update(
       "screenings_#{@movie.tmdb_id}",
       partial: 'movies/screenings',
-      locals: { movie: @movie }
+      locals: { movie: @movie, in_modal: params[:in_modal].present? }
     )
 %>
 <%= turbo_stream.update(

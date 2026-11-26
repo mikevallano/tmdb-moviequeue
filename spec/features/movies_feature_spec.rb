@@ -302,6 +302,25 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             open_movie_modal(movie)
             expect(page).not_to have_button("mark_watched_link_movies_partial")
           end
+
+          scenario "if the movie has been watched, the modal shows the last watched date", js: true do
+            create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id, date_watched: '2025-01-05')
+            create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id, date_watched: '2025-03-14')
+            open_movie_modal(movie)
+            within("#modal_#{movie.tmdb_id}") do
+              expect(page).to have_content("Last watched 3/14/2025")
+              expect(page).not_to have_link("add_screening_link_movies_partial")
+            end
+          end
+
+          scenario "marking a movie watched from the modal shows the last watched date", js: true do
+            open_movie_modal(movie)
+            within("#modal_#{movie.tmdb_id}") do
+              click_button "mark_watched_link_movies_partial"
+              expect(page).to have_content("Last watched #{Date.current.stamp('1/2/2001')}")
+              expect(page).not_to have_link("add_screening_link_movies_partial")
+            end
+          end
         end #rating, reviews, marking watched
 
         # Sorting feature was removed from movies index page

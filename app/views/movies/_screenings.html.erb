@@ -1,7 +1,13 @@
 <div id="screenings_<%= "#{movie.tmdb_id}" %>">
   <% if current_user.watched_movies.include?(movie) %> <!-- #if movie has been seen -->
     <div class='manage-screenings'>
-      <%= link_to '<i class="fa fa-check-square-o"></i> Watched <span class="material-symbols-outlined edit-note">edit_note</span>'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial", data: {turbo_frame: '_top'} %>
+      <% if local_assigns[:in_modal] %>
+        <span id="last_watched_movies_partial">
+          <i class="fa fa-check-square-o"></i> Last watched <%= movie.most_recent_screening_by(current_user) %>
+        </span>
+      <% else %>
+        <%= link_to '<i class="fa fa-check-square-o"></i> Watched <span class="material-symbols-outlined edit-note">edit_note</span>'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial", data: {turbo_frame: '_top'} %>
+      <% end %>
     </div>
   <% else %> <!-- #if movie has been seen -->
     <div class='manage-screenings'>
@@ -9,7 +15,8 @@
           screening: { location_watched: current_user.default_location },
           tmdb_id: movie.tmdb_id,
           from: 'movies_index',
-          page: params[:page]
+          page: params[:page],
+          in_modal: local_assigns[:in_modal].presence
         ),
         method: :post,
         id: 'mark_watched_link_movies_partial' %>
