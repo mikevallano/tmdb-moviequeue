@@ -47,26 +47,18 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
 
-    respond_to do |format|
-      if @list.save
-        format.html { redirect_to user_lists_path(current_user), notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
-      else
-        format.html { render :new }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
+    if @list.save
+      redirect_to user_lists_path(current_user), notice: 'List was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @list.update(list_params)
-        format.html { redirect_to user_lists_path(current_user), notice: 'List was successfully updated.' }
-        format.json { render :show, status: :ok, location: @list }
-      else
-        format.html { render :edit }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
+    if @list.update(list_params)
+      redirect_to user_lists_path(current_user), notice: 'List was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -75,10 +67,7 @@ class ListsController < ApplicationController
       redirect_to user_list_path(@list.owner, @list), status: :see_other, notice: "Only list owners can delete lists." and return
     end
     @list.destroy
-    respond_to do |format|
-      format.html { redirect_to user_lists_url(current_user), status: :see_other, notice: 'List was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to user_lists_url(current_user), status: :see_other, notice: 'List was successfully destroyed.'
   end
 
   private

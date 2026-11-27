@@ -26,35 +26,24 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
 
-    respond_to do |format|
-      if @review.save
-        format.html { redirect_to movie_path(@movie), notice: 'Review was successfully created.' }
-        format.json { render :show, status: :created, location: @review }
-      else
-        format.html { render :new }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
-      end
+    if @review.save
+      redirect_to movie_path(@movie), notice: 'Review was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @review.update(review_params)
-        format.html { redirect_to movie_path(@movie), notice: 'Review was successfully updated.' }
-        format.json { render :show, status: :ok, location: @review }
-      else
-        format.html { render :edit }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
-      end
+    if @review.update(review_params)
+      redirect_to movie_path(@movie), notice: 'Review was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @review.destroy
-    respond_to do |format|
-      format.html { redirect_to movie_url(@movie), status: :see_other, notice: 'Review was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to movie_url(@movie), status: :see_other, notice: 'Review was successfully destroyed.'
   end
 
   private
