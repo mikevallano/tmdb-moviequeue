@@ -310,7 +310,17 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
             within("#modal_#{movie.tmdb_id}") do
               expect(page).to have_content("Last watched 3/14/2025")
               expect(page).not_to have_link("add_screening_link_movies_partial")
+              expect(page).to have_link("edit_screening_link_movies_partial", href: movie_screenings_path(movie))
             end
+          end
+
+          scenario "the edit screenings link in the modal goes to the screenings page", js: true do
+            create(:screening, user_id: @current_user.id, movie_id: @current_user.movies.last.id, date_watched: '2025-03-14')
+            open_movie_modal(movie)
+            within("#modal_#{movie.tmdb_id}") do
+              click_link "edit_screening_link_movies_partial"
+            end
+            expect(page).to have_current_path(movie_screenings_path(movie))
           end
 
           scenario "marking a movie watched from the modal shows the last watched date", js: true do
@@ -319,6 +329,7 @@ RSpec.feature "Movies feature spec", type: :feature, feature: :true do
               click_button "mark_watched_link_movies_partial"
               expect(page).to have_content("Last watched #{Date.current.stamp('1/2/2001')}")
               expect(page).not_to have_link("add_screening_link_movies_partial")
+              expect(page).to have_link("edit_screening_link_movies_partial")
             end
           end
         end #rating, reviews, marking watched

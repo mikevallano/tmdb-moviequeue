@@ -58,6 +58,12 @@ might be a better way to handle it */
   flex-direction: column;
 }
 
+/* modal stacks in a single column, so let watch info span the trailer's
+width instead of the show page's narrow sidebar width */
+.modal .watch-info {
+  max-width: 280px;
+}
+
 /* placeholder content to make the modal open transition smoother */
 .modal .trailer-placeholder {
   width: 278px;

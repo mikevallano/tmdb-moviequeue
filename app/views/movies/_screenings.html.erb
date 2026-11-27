@@ -5,6 +5,15 @@
         <span id="last_watched_movies_partial">
           <i class="fa fa-check-square-o"></i> Last watched <%= movie.most_recent_screening_by(current_user) %>
         </span>
+        <span class="screening-link">
+          <%= link_to '<span class="material-symbols-outlined edit-note">edit_note</span>'.html_safe,
+            movie_screenings_path(movie),
+            id: "edit_screening_link_movies_partial",
+            title: "Add/edit screenings",
+            aria: { label: "Add/edit screenings" },
+            data: { turbo_frame: '_top' }
+          %>
+        </span>
       <% else %>
         <%= link_to '<i class="fa fa-check-square-o"></i> Watched <span class="material-symbols-outlined edit-note">edit_note</span>'.html_safe, movie_screenings_path(movie), id: "add_screening_link_movies_partial", data: {turbo_frame: '_top'} %>
       <% end %>
