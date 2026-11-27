@@ -79,10 +79,47 @@ RSpec.describe Movie, type: :model do
       expect(movie).to be_valid
     end
 
-    it { is_expected.to have_many(:listings) }
+    it { is_expected.to have_many(:listings).dependent(:destroy) }
     it { is_expected.to have_many(:lists) }
+    it { is_expected.to have_many(:taggings).dependent(:destroy) }
+    it { is_expected.to have_many(:reviews).dependent(:destroy) }
+    it { is_expected.to have_many(:ratings).dependent(:destroy) }
+    it { is_expected.to have_many(:screenings).dependent(:destroy) }
 
   end #valid factory context
+
+  describe '#destroy' do
+    let(:tag) { create(:tag) }
+    let(:child_counts) do
+      [Listing, Tagging, Review, Rating, Screening].index_with { |klass| klass.where(movie_id: movie.id).count }
+    end
+
+    before do
+      create(:listing, movie: movie, list: list, user: user)
+      create(:tagging, movie: movie, tag: tag, user: user)
+      create(:review, movie: movie, user: user)
+      create(:rating, movie: movie, user: user)
+      create(:screening, movie: movie, user: user)
+    end
+
+    it 'destroys the movie' do
+      movie.destroy!
+
+      expect(described_class.exists?(movie.id)).to be(false)
+    end
+
+    it "destroys the movie's listings, taggings, reviews, ratings, and screenings" do
+      movie.destroy!
+
+      expect(child_counts.values).to all(eq(0))
+    end
+
+    it 'leaves the users, lists, and tags in place' do
+      movie.destroy!
+
+      expect([User.exists?(user.id), List.exists?(list.id), Tag.exists?(tag.id)]).to all(be(true))
+    end
+  end
 
   it "is invalid without a tmdb_id" do
     expect(invalid_movie).not_to be_valid
