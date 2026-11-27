@@ -1,6 +1,7 @@
 class Tag < ApplicationRecord
+  MAX_NAME_LENGTH = 25
 
-  validates :name, uniqueness: :true, presence: true, length: { maximum: 25 }
+  validates :name, uniqueness: :true, presence: true, length: { maximum: MAX_NAME_LENGTH }
 
   has_many :taggings
   has_many :movies, through: :taggings
