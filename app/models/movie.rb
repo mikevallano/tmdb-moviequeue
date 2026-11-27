@@ -8,14 +8,14 @@ class Movie < ApplicationRecord
 
   validates :tmdb_id, uniqueness: :true, presence: true
 
-  has_many :listings
+  has_many :listings, dependent: :destroy
   has_many :lists, through: :listings
   has_many :users, through: :listings
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
-  has_many :reviews
-  has_many :ratings
-  has_many :screenings
+  has_many :reviews, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+  has_many :screenings, dependent: :destroy
   has_many :viewers, through: :screenings, source: :user
 
   attr_accessor :production_companies
