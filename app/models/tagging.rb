@@ -16,8 +16,8 @@ class Tagging < ApplicationRecord
     @current_user = user
 
     @cleantags = tags.split(',').map do |tag|
-      tag.strip.gsub(' ','-')
-    end
+      tag.strip.gsub(' ','-').first(Tag::MAX_NAME_LENGTH)
+    end.compact_blank.uniq
 
     Tag.first_or_create_tags(@cleantags)
 
