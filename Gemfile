@@ -11,7 +11,6 @@ gem 'pg', '~> 1.1'
 
 gem 'hotwire-rails'
 gem 'importmap-rails'
-gem 'jbuilder'
 gem 'sdoc', '~> 2.6.1', group: :doc
 gem 'devise', '~> 5.0.3'
 gem 'figaro'

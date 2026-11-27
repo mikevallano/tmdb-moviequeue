@@ -31,34 +31,25 @@ class RatingsController < ApplicationController
       if @rating.save
         format.turbo_stream
         format.html { redirect_to movie_path(@movie), notice: 'Rating was successfully created.' }
-        format.json { render :show, status: :created, location: @rating }
       else
         format.html { render :new }
-        format.json { render json: @rating.errors, status: :unprocessable_entity }
       end
     end
   end
 
 
   def update
-    respond_to do |format|
-      if @rating.update(rating_params)
-        format.html { redirect_to movie_path(@movie), notice: 'Rating was successfully updated.' }
-        format.json { render :show, status: :ok, location: @rating }
-      else
-        format.html { render :edit }
-        format.json { render json: @rating.errors, status: :unprocessable_entity }
-      end
+    if @rating.update(rating_params)
+      redirect_to movie_path(@movie), notice: 'Rating was successfully updated.'
+    else
+      render :edit
     end
   end
 
 
   def destroy
     @rating.destroy
-    respond_to do |format|
-      format.html { redirect_to movie_path(@movie), status: :see_other, notice: 'Rating was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to movie_path(@movie), status: :see_other, notice: 'Rating was successfully destroyed.'
   end
 
   private

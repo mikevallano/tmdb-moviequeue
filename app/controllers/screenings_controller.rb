@@ -30,32 +30,23 @@ class ScreeningsController < ApplicationController
       if @screening.save
         format.turbo_stream {}
         format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully created.' }
-        format.json { render :show, status: :created, location: @screening }
       else
         format.html { render :new }
-        format.json { render json: @screening.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    respond_to do |format|
-      if @screening.update(screening_params)
-        format.html { redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully updated.' }
-        format.json { render :show, status: :ok, location: @screening }
-      else
-        format.html { render :edit }
-        format.json { render json: @screening.errors, status: :unprocessable_entity }
-      end
+    if @screening.update(screening_params)
+      redirect_to movie_screenings_path(@movie), notice: 'Screening was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @screening.destroy
-    respond_to do |format|
-      format.html { redirect_to movie_screenings_path(@movie), status: :see_other, notice: 'Screening was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to movie_screenings_path(@movie), status: :see_other, notice: 'Screening was successfully destroyed.'
   end
 
   private

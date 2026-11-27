@@ -7,36 +7,21 @@ class InvitesController < ApplicationController
     @invite[:token] = @invite.generate_token
     @invitee = @invite.find_invitee
 
-    if @invite.to_existing_user?
-        respond_to do |format|
-          if @invite.save
-            #round out the invites
-            @invitee.memberships << Membership.new(member_id: @invitee.id, list_id: @invite.list_id)
-            @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
-            ExistingInviteMailer.existing_invite_mailer(@invite).deliver_now
-
-            format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
-          else
-            format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
-            format.json { render json: @invite.errors, status: :unprocessable_entity }
-          end
-        end #end respond_to
-
-    else #exising user?
-
-      respond_to do |format|
-        if @invite.save
-          InviteMailer.new_invite_mailer(@invite).deliver_now
-          #assign the sender the membership as well
-          @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
-          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.' }
-          format.json { render :show, status: :created, location: @invite }
-        else
-          format.html { redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.' }
-          format.json { render json: @invite.errors, status: :unprocessable_entity }
-        end
+    if @invite.save
+      if @invite.to_existing_user?
+        #round out the invites
+        @invitee.memberships << Membership.new(member_id: @invitee.id, list_id: @invite.list_id)
+        @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
+        ExistingInviteMailer.existing_invite_mailer(@invite).deliver_now
+      else
+        InviteMailer.new_invite_mailer(@invite).deliver_now
+        #assign the sender the membership as well
+        @invite.sender.memberships << Membership.new(member_id: @invite.sender_id, list_id: @invite.list_id)
       end
-    end #determining existing user
+      redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Invite was sent.'
+    else
+      redirect_to user_list_path(@invite.sender, @invite.list), notice: 'Enter a valid email.'
+    end
   end #create
 
  private
